@@ -29,5 +29,5 @@ if settings.DEBUG:
     ]
 
 # Branding Admin
-admin.site.site_title = "Sharpness"
-admin.site.site_header = "Sharpness - Administration"
+admin.site.site_title = "Calendrier"
+admin.site.site_header = "Calendrier - Administration"
