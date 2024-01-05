@@ -1,0 +1,417 @@
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="google-site-verification" content="URAHv0L83WJ9nl0o0jYhacKXT7rCdKeu8dZYDb_ls_g" />
+    <!-- SITE META -->
+    <meta charset="utf-8">
+    {% if is_homepage %}
+        <title>Sharpness Barbershop - Coupe Homme Barbe - Genève, Lausanne</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description"
+              content="Sharpness est votre spécialiste coupe homme et barbe depuis 2005, les meilleurs barbiers à votre disposition à Genève et Lausanne.">
+        <meta name="keywords"
+              content="coupe, homme, barbe, genève, lausanne, morges, barbier, barbershop, cheveux, harley, davidson, sharpness">
+    {% else %}
+        <title>{{ barbershop.meta_title }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description"
+              content="{{ barbershop.meta_description }}">
+        <meta name="keywords"
+              content="{{ barbershop.meta_tag }}">
+    {% endif %}
+    <!-- FAVICONS -->
+    {% load static %}
+    <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{% static "images/apple-touch-icon.png" %}">
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static "images/apple-touch-icon-57x57.png" %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static "images/apple-touch-icon-72x72.png" %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static "images/apple-touch-icon-76x76.png" %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static "images/apple-touch-icon-114x114.png" %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static "images/apple-touch-icon-120x120.png" %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static "images/apple-touch-icon-144x144.png" %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static "images/apple-touch-icon-152x152.png" %}">
+
+    <!-- Bootstrap Styles -->
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    <!-- Theme Styles -->
+    <link href="{% static "css/style.css" %}" rel="stylesheet">
+    <!-- Responsive Styles -->
+    <link href="{% static "css/responsive.css" %}" rel="stylesheet">
+    <!-- Color Styles -->
+    <link href="{% static "css/colors.css" %}" rel="stylesheet">
+    <!-- For Appointment Data Picker Styles -->
+    <link href="{% static "css/jquery-ui.css" %}" rel="stylesheet">
+    <!-- For Carrousel, Description row -->
+    <link href="{% static "css/slick.css" %}" rel="stylesheet">
+    <link href="{% static "css/slick-theme.css" %}" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <!-- REVOLUTION STYLE SHEETS -->
+    <link rel="stylesheet" type="text/css" href="{% static "revolution/css/settings.css" %}">
+    <!-- REVOLUTION LAYERS STYLES -->
+    <link rel="stylesheet" type="text/css" href="{% static "revolution/css/layers.css" %}">
+    <!-- REVOLUTION NAVIGATION STYLES -->
+    <link rel="stylesheet" type="text/css" href="{% static "revolution/css/navigation.css" %}">
+    <link rel="stylesheet" href="{% static "css/select2-bootstrap.css" %}">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="loader">
+    <div class="loader-container">
+        <img src="{% static "images/load.gif" %}" class="loader-site spinner">
+    </div>
+</div>
+<!-- END PRELOADER -->
+
+<div id="wrapper">
+
+    {% include "navbar.html" %}
+    <!-- content -->
+    {% block body %}
+    {% endblock body %}
+    <!-- end content -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="widget">
+                        <div class="logo-title">
+                            <img src="{% static "images/sharpness_logo.svg" %}" style="max-height:70px" alt="">
+                        </div><!-- end widget-title -->
+                        <div class="about-widget">
+                            <p>
+                                Sharpness est votre spécialiste coupe homme et barbe depuis 2005, les meilleurs barbiers
+                                à votre disposition à Genève, Lausanne.
+                            </p>
+                            <a href="#" class="btn btn-primary">En Savoir Plus</a>
+                        </div><!-- end text-widget -->
+                    </div><!-- end widget -->
+                </div><!-- end col -->
+
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <div class="widget">
+                        <div class="widget-title">
+                            <h4>Lien du Site</h4>
+                            <hr>
+                        </div><!-- end widget-title -->
+                        <div class="link-widget">
+                            <ul>
+                                <li><a href="#">Accueil</a></li>
+                                <li><a href="#">Salons</a></li>
+                                <li><a href="#">Concept</a></li>
+                                <li><a href="#">VIP</a></li>
+                                <li><a href="#">Shop</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div><!-- end text-widget -->
+                    </div><!-- end widget -->
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </div>
+
+        <div class="copyrights">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                        <a class="topbutton dmtop"><i class="fa fa-angle-up"></i></a>
+                        <div class="copyright-text">
+                            <br/>
+                        </div>
+                        <div class="copyrights-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                        </div><!-- end social -->
+                    </div><!-- end widget -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div>
+    </footer><!-- end footer -->
+
+</div><!-- end wrapper -->
+
+<!-- Main Scripts-->
+<script src="{% static "js/jquery.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+<script src="{% static "js/jquery-ui.js" %}"></script>
+<script src="{% static "js/plugins.js" %}"></script>
+<script src="{% static "js/slick.js" %}"></script>
+<script src="{% static "js/description_animate.js" %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+<script>
+    var recaptchaCallback = function (resp) {
+        var form = document.getElementById("recaptcha-form");
+        form.querySelectorAll('button').disabled = true;
+        form.submit();
+    };
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        $('.spinner').hide();
+        $('#schedule').hide();
+
+        $('#datepicker').datepicker("option", "dateFormat", "dd/mm/yy");
+        $('#datepicker').datepicker("option", "minDate", new Date());
+
+        $('div[id^=barber-]').hide();
+        $('div[id^=service-]').hide();
+
+        function formatState (item) {
+              opt = $(item.element);
+              og = opt.closest('optgroup').attr('label');
+              return og+' | '+item.text;
+        }
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            }
+        });
+
+        $('#barber-select, #service-select, #datepicker').change(onChange);
+
+        function onChange() {
+
+            var idBarber = document.getElementById('barber-select').value;
+            var idService = document.getElementById('service-select').value;
+            var datepicker = document.getElementById('datepicker').value;
+
+            if (idBarber !== "" && idService !== "" && datepicker !== "") {
+
+                $('div #info').hide();
+                $('.spinner').show();
+                var parts = datepicker.split('/');
+
+                var d1 = new Date(parts[2], parts[1] - 1, parts[0]);
+
+                var startDate = d1.getFullYear() + "-" + (d1.getMonth() + 1) + "-" + d1.getDate();
+
+                var url = idBarber + '/' + idService + '/' + startDate;
+
+                $.ajax({
+                    url: '/agenda/' + url,
+                    type: "POST",
+                    success: function (data) {
+                        if (data) {
+                            var select = $('#ava-choices');
+                            var shedule_div = $('#schedule');
+
+                            $('.spinner').hide();
+                            shedule_div.children(".btn-group").hide();
+                            shedule_div.show();
+
+                            $("#ava-choices optgroup").remove();
+                            $("#ava-choices option").remove();
+
+                            select.select2({
+                                data: data,
+                                placeholder: "Sélectionnez une disponibilitée",
+                                templateSelection: formatState,
+                                theme: "bootstrap",
+                                width: '100%' // need to override the changed default
+                            });
+
+                        }
+                    }
+                });
+
+            }
+        }
+    });
+</script>
+
+<!-- REVOLUTION JS FILES -->
+<script type="text/javascript" src="{% static "revolution/js/jquery.themepunch.tools.min.js" %}"></script>
+<script type="text/javascript" src="{% static "revolution/js/jquery.themepunch.revolution.min.js" %}"></script>
+<!-- SLIDER REVOLUTION 5.0 EXTENSIONS  -->
+<script type="text/javascript"
+        src="{% static "revolution/js/extensions/revolution.extension.actions.min.js" %}"></script>
+<script type="text/javascript"
+        src="{% static "revolution/js/extensions/revolution.extension.carousel.min.js" %}"></script>
+<script type="text/javascript"
+        src="{% static "revolution/js/extensions/revolution.extension.kenburn.min.js" %}"></script>
+<script type="text/javascript"
+        src="{% static "revolution/js/extensions/revolution.extension.layeranimation.min.js" %}"></script>
+<script type="text/javascript"
+        src="{% static "revolution/js/extensions/revolution.extension.migration.min.js" %}"></script>
+<script type="text/javascript"
+        src="{% static "revolution/js/extensions/revolution.extension.navigation.min.js" %}"></script>
+<script type="text/javascript"
+        src="{% static "revolution/js/extensions/revolution.extension.parallax.min.js" %}"></script>
+<script type="text/javascript"
+        src="{% static "revolution/js/extensions/revolution.extension.slideanims.min.js" %}"></script>
+<script type="text/javascript"
+        src="{% static "revolution/js/extensions/revolution.extension.video.min.js" %}"></script>
+<script type="text/javascript"
+        src="{% static "js/rev_01.js" %}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_map_api }}"></script>
+
+<script type="text/javascript">
+    var map;
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map-canvas'), {
+            center: {lat: 46.416607, lng: 6.2680456},
+            scrollwheel: false,
+            navigationControl: true,
+            mapTypeControl: false,
+            scaleControl: false,
+            draggable: true,
+            zoom: 8,
+            styles: [
+                {
+                    "featureType": "administrative",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#444444"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "color": "#f2f2f2"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "saturation": -100
+                        },
+                        {
+                            "lightness": 45
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "simplified"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "labels.icon",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "color": "#f36f24"
+                        },
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                }
+            ],
+        });
+
+        google.maps.event.addListenerOnce(map, 'tilesloaded', addMarkers);
+    }
+
+    function addMarkers() {
+
+        {% for barbershop in barbershops %}
+            var point = new google.maps.LatLng({{ barbershop.location.geolocation }});
+            var marker = new google.maps.Marker({
+                position: point,
+                map: map,
+                title: '{{ barbershop.name }}',
+            });
+            marker['infowindow'] = new google.maps.InfoWindow({
+                content: "<h4>{{ barbershop.name }}</h4><p>{{ barbershop.address }}<br/>{{ barbershop.phone }}<br/>{{ barbershop.location.code }} - {{ barbershop.location.city|title }}</p>"
+            });
+            google.maps.event.addListener(marker, 'click', function () {
+                this['infowindow'].open(map, this);
+            });
+        {% endfor %}
+
+    }
+
+    google.maps.event.addDomListener(window, 'load', initMap);
+</script>
+
+<script type="text/javascript">
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-92058449-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+</body>
+</html>

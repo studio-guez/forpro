@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+    <section class="section page-banner" style="background: url('{{ barbershop.banner.url }}') repeat-x center center">
+        <div class="container clearfix" style="min-height: 75px">
+        </div>
+    </section>
+
+    <section class="section lb">
+        <div class="container">
+            <div class="row first-wrapper">
+                <div class="col-md-5 col-sm-12 col-xs-12 welcome-widget">
+                    <div class="section-title text-left">
+                        <h4>BIENVENUE</h4>
+                        <h3>{{ barbershop.name|upper }}</h3>
+                        <hr>
+                    </div><!-- end title -->
+
+                    <p>{{ barbershop.description }}</p>
+
+                    <p><b>{{ barbershop.address }}</b><br/>
+                        <b>{{ barbershop.code }} {{ barbershop.city.name }}</b></p>
+
+                    {% for schedule in schedules %}
+                        {% if schedule.barbershop.id == barbershop.id and schedule.day_id == today_id %}
+                            {% if time < schedule.closed_time and time > schedule.open_time and not schedule.is_closed %}
+                                <a href="tel:{{ barbershop.phone|cut:' ' }}" class="btn btn-primary"> Composer le
+                                    numéro </a>
+                            {% else %}
+                                <a href="mailto:{{ barbershop.email }}" class="btn btn-primary"> Nous laisser vos
+                                    coordonées </a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div><!-- end col -->
+                <div class="col-md-4 col-sm-12 col-xs-12 m30">
+                    <div class="row welcome-images">
+                        <div class="col-md-12 col-md-12 col-xs-12 img-wrap wow fadeIn" data-wow-duration="1s"
+                             data-wow-delay="0.3s">
+                            <div class="entry">
+                                {% if barbershop.picture %}
+                                <img id="image_description" src="{{ barbershop.picture.url }}"
+                                     alt="{{ barbershop.city.name|slice:":2"|lower }}"
+                                     class="img-responsive">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12 m30">
+                    <div class="section-title text-left">
+                        <h4>{{ barbershop.phone }}</h4>
+                        <h3>HORAIRES</h3>
+                        <hr>
+                    </div><!-- end title -->
+                    <ul class="openinghours">
+                        {% for schedule in barbershop.ordered_schedule_set %}
+                            <li>
+                                <span>{{ schedule.day|slice:":3"|upper }}</span>
+                                <small>
+                                    {% if schedule.is_closed %}
+                                        fermé
+                                    {% else %}
+                                        {{ schedule.open_time|time:'G' }}h - {{ schedule.closed_time|time:'G' }}h
+                                    {% endif %}
+                                </small>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- /container -->
+    </section>
+    <!-- end section -->
+
+    <section class="section">
+        {% include "barber_section.html" %}
+    </section>
+    <!-- end section -->
+
+    <section class="section nopadding lb" id="appointment">
+        {% include "appointment_section.html" %}
+    </section>
+
+    <section class="section">
+        {% include "pricing_section.html" %}
+    </section>
+
+    <section class="section lb">
+        {% include "cuts_section.html" %}
+    </section>
+
+    <!-- end section -->
+{% endblock body %}
