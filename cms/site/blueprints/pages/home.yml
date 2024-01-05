@@ -3,7 +3,7 @@ title:
   fr: Home
 
 fields:
-  content:
+  ressources:
     type: blocks
     label: Contenu
     fieldsets:
