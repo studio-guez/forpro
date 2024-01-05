@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: postgres:12.17
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: 'forpro_calendar'
+      POSTGRES_USER: 'forpro'
+      POSTGRES_PASSWORD: '***REMOVED***'
+    ports:
+      - "5432:5432"
+
+  calendar:
+    build: ./tekbackend
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate --settings=calendar.settings &&
+             python manage.py collectstatic --no-input --settings=calendar.settings &&
+             gunicorn calendar.wsgi:application --bind 0.0.0.0:8000"
+    depends_on:
+      - db
+    ports:
+      - "8001:8000"
+    environment:
+      - "DJANGO_SETTINGS_MODULE=calendar.settings"
+    restart: always
+
+  frontend:
+    build: ./website
+    ports:
+      - "3000:3000"
+    restart: always
+
+  cms:
+    image: ./cms
+    volumes:
+      - kirby_data:/var/www/html
+    depends_on:
+      - db
+    ports:
+      - "8002:80"
+    restart: always
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
+  kirby_data:
