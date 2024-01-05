@@ -1,0 +1,24 @@
+title:
+  en: Call to action
+  fr: Appel à l'action
+icon: merge
+fields:
+  text:
+    label:
+      fr: Texte
+      en: Text
+    type: text
+  link:
+    label:
+      fr: Lien
+      en: Link
+    type: url
+  styles:
+    label:
+      fr: Styles
+      en: Styles
+    type: select
+    options:
+      style1: Style 1
+      style2: Style 2
+      style3: Style 3
