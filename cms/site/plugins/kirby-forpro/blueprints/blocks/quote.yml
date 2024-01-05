@@ -1,0 +1,10 @@
+title:
+  en: Quote
+  fr: Citation
+icon: quote
+fields:
+  text:
+    label:
+      fr: Texte
+      en: Text
+    type: text

@@ -1,0 +1,40 @@
+title:
+  en: Cards
+  fr: Cartes
+icon: copy
+fields:
+  style:
+    label:
+      fr: Style
+      en: Style
+    type: select
+    options:
+      style1: Style 1
+      style2: Style 2
+  cards:
+    label:
+      fr: Liste de cartes
+      en: Cards list
+    type: structure
+    fields:
+      title:
+        label:
+          fr: Titre
+          en: Title
+        type: text
+      image:
+        label:
+          fr: Image
+          en: Image
+        type: files
+        max: 1
+      link:
+        label:
+          fr: Lien
+          en: Link
+        type: url
+      text:
+        label:
+          fr: Texte
+          en: Text
+        type: writer

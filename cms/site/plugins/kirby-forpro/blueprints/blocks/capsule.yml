@@ -1,0 +1,29 @@
+title:
+  en: Graphic Capsule
+  fr: Capsule Graphique
+icon: brush
+fields:
+  textes:
+    label:
+      en: Text
+      fr: Texte
+    type: textarea
+  lien:
+    label:
+      en: Link
+      fr: Lien
+    type: url
+  style:
+    label:
+      en: Style
+      fr: Style
+    type: select
+    options:
+      style1: Style 1
+      style2: Style 2
+  image:
+    label:
+      en: Image
+      fr: Image
+    type: image
+    max: 1
