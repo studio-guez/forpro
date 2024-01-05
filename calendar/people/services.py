@@ -6,7 +6,7 @@ from service_objects.services import Service
 
 import httplib2
 
-service_account_email = 'sharpness-django@sharpness-calendrier.iam.gserviceaccount.com'
+service_account_email = 'forpro-django@forpro-calendrier.iam.gserviceaccount.com'
 CLIENT_SECRET_FILE = 'sharpness-calendrier-21eb29905a6d.json'
 SCOPES = 'https://www.googleapis.com/auth/calendar'
 scopes = [SCOPES]
