@@ -1,0 +1,16 @@
+title:
+  en: Accueil
+  fr: Home
+
+fields:
+  content:
+    type: blocks
+    label: Contenu
+    fieldsets:
+      - cta
+      - animated-list
+      - quote
+      - content
+      - capsule
+      - cards
+      - profiles
