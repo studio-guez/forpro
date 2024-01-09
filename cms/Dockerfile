@@ -37,4 +37,4 @@ VOLUME /var/www/html
 COPY . /var/www/html/
 
 # Set server name
-RUN echo 'ServerName localhost' >> /etc/apache2/conf-available/fqdn.conf && a2enconf fqdn
+RUN echo 'ServerName api.forpro.mediumsans.studio' >> /etc/apache2/conf-available/fqdn.conf && a2enconf fqdn
