@@ -1,0 +1,11 @@
+title:
+  en: Appointments
+  fr: Rendez-vous
+icon: peoples
+fields:
+  info:
+    label:
+      fr: Rendez-vous
+      en: Appointments
+    type: info
+    text: Affiche le formulaire de prise de rendez-vous
