@@ -1,0 +1,25 @@
+tabs:
+
+  content:
+
+    label:
+      en: Content
+      fr: Contenu
+
+    icon: text
+
+    columns:
+
+      - width: 1/2
+
+        sections:
+
+          pages:
+            type: pages
+            templates:
+              - page
+              - forpro
+              - default
+              - home
+
+  seo: tabs/seo-site
