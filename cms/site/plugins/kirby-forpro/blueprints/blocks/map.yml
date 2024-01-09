@@ -1,0 +1,11 @@
+title:
+  en: Map
+  fr: Carte
+icon: map
+fields:
+  info:
+    label:
+      fr: Informations
+      en: Informations
+    type: info
+    text: Affiche le plan de la fondation
