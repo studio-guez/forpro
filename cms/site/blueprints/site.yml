@@ -16,8 +16,8 @@ tabs:
 
           pages:
             type: pages
+            creates: forpro
             templates:
-              - page
               - forpro
               - default
               - home
