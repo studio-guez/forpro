@@ -1,0 +1,56 @@
+label:
+  en: Content
+  fr: Contenu
+
+icon: text
+preset: page
+pages: false
+
+fields:
+
+  hero:
+    type: structure
+    label:
+      en: Hero
+      fr: Image d'entête
+    fields:
+      image:
+        label:
+          en: Image
+          fr: Image
+        type: files
+        max: 1
+      text:
+        label:
+          en: Text
+          fr: Texte
+        type: textarea
+
+  showMap:
+    type: toggle
+    label:
+      en: Show map
+      fr: Afficher la carte
+    width: 1/2
+
+  showNewsletter:
+    type: toggle
+    label:
+      en: Show newsletter
+      fr: Afficher la newsletter
+    width: 1/2
+
+  body:
+    type: blocks
+    label:
+      en: Content
+      fr: Contenu
+    fieldsets:
+      - cta
+      - animated-list
+      - quote
+      - content
+      - capsule
+      - cards
+      - profiles
+      - map
