@@ -8,12 +8,16 @@ Kirby::plugin('mediumsans/forpro', [
 
         'tabs/content'          => __DIR__ . '/blueprints/tabs/content.yml',
 
-        'blocks/animated-list'  => __DIR__ . '/blueprints/blocks/animated-list.yml',
         'blocks/cards'          => __DIR__ . '/blueprints/blocks/cards.yml',
+        'blocks/cards-focus'    => __DIR__ . '/blueprints/blocks/cards-focus.yml',
         'blocks/cta'            => __DIR__ . '/blueprints/blocks/cta.yml',
         'blocks/profiles'       => __DIR__ . '/blueprints/blocks/profiles.yml',
         'blocks/quote'          => __DIR__ . '/blueprints/blocks/quote.yml',
         'blocks/capsule'        => __DIR__ . '/blueprints/blocks/capsule.yml',
         'blocks/map'            => __DIR__ . '/blueprints/blocks/map.yml',
+        'blocks/body'           => __DIR__ . '/blueprints/blocks/body.yml',
+        'blocks/dropdown'       => __DIR__ . '/blueprints/blocks/dropdown.yml',
+        'blocks/list'           => __DIR__ . '/blueprints/blocks/list.yml',
+        'blocks/google-maps'    => __DIR__ . '/blueprints/blocks/google-maps.yml',
     ]
 ]);
