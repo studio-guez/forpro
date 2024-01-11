@@ -1,18 +1,31 @@
 title:
   en: Graphic Capsule
   fr: Capsule Graphique
+
 icon: brush
+
 fields:
-  textes:
+
+  title:
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    maxlength: 12
+
+  text:
     label:
       en: Text
       fr: Texte
-    type: textarea
-  lien:
-    label:
-      en: Link
-      fr: Lien
-    type: url
+    type: writer
+    nodes: false
+    marks:
+      - bold
+      - italic
+      - underline
+      - link
+    maxlength: 50
+
   style:
     label:
       en: Style
@@ -21,9 +34,10 @@ fields:
     options:
       style1: Style 1
       style2: Style 2
+
   image:
     label:
       en: Image
       fr: Image
-    type: image
+    type: files
     max: 1
