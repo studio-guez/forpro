@@ -1,0 +1,25 @@
+title:
+  fr : List
+  en : List
+
+icon: list
+
+fields:
+  list:
+    label:
+      fr: Liste
+      en: List
+    type: structure
+    fields:
+
+      key:
+        label:
+          fr: Clé
+          en: Key
+        type: text
+
+      value:
+        label:
+          fr: Valeur
+          en: Value
+        type: text
