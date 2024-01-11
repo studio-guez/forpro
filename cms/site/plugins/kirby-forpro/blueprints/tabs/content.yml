@@ -14,23 +14,34 @@ fields:
       en: Hero
       fr: Image d'entête
     fields:
-      image:
-        label:
-          en: Image
-          fr: Image
-        type: files
-        max: 1
+
       text:
+        type: text
         label:
           en: Text
           fr: Texte
-        type: textarea
 
-  showMap:
+      backGroundColor:
+        label:
+          en: Background color
+          fr: Couleur de fond
+        type: color
+        default: '#ffffff'
+        width: 1/2
+
+      textColor:
+        label:
+          en: Text color
+          fr: Couleur du texte
+        type: color
+        default: '#000000'
+        width: 1/2
+
+  showMenu:
     type: toggle
     label:
-      en: Show map
-      fr: Afficher la carte
+      en: Show menu
+      fr: Afficher dans le menu
     width: 1/2
 
   showNewsletter:
@@ -49,9 +60,26 @@ fields:
       - cta
       - animated-list
       - quote
-      - content
+      - body
       - capsule
       - cards
       - profiles
       - map
       - appointment
+      - code
+      image:
+        extends: blocks/image
+        fields:
+          location: false
+          caption: false
+          link: false
+          ratio: false
+          crop: false
+      video:
+          extends: blocks/video
+          fields:
+            caption: false
+      - dropdown
+      - cards-focus
+      - list
+      - google-maps
