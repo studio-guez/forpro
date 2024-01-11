@@ -1,0 +1,14 @@
+title:
+  fr: Google Maps
+  en: Google Maps
+
+icon: map
+
+fields:
+
+  link:
+    label:
+      fr: Lien
+      en: Link
+    type: url
+    width: 1/1
