@@ -1,43 +1,51 @@
-# TODO : Images et image dans la doc, normal ?
 title:
   en: Profiles
   fr: Profiles
+
 fields:
+
   style:
     label: Style
     type: select
     options:
       style1: Style 1
       style2: Style 2
+
   profiles:
     label: Profiles
     type: structure
+    columns:
+      title:
+        width: 1/1
     fields:
-      description:
-        label:
-          en: Description
-          fr: Description
-        type: textarea
-      images:
-        label:
-          en: Images
-          fr: Images
-        type: files
-        max: 1
-      titre:
+      title:
         label:
           fr: Titre
           en: Title
         type: text
-      sous-titre:
+      subtitle:
         label:
           fr: Sous-titre
           en: Subtitle
         type: text
-      image:
+      description:
         label:
-          fr: Image
+          en: Description
+          fr: Description
+        type: writer
+        nodes:
+          - paragraph
+          - bulletList
+          - orderedList
+        marks:
+          - bold
+          - italic
+          - underline
+          - link
+      images:
+        label:
           en: Image
+          fr: Image
         type: files
         max: 1
       lien:
@@ -45,6 +53,7 @@ fields:
           fr: Lien
           en: Link
         type: url
+
       mailto:
         label:
           fr: Mailto
