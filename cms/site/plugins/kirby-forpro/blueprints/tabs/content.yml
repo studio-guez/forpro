@@ -10,6 +10,7 @@ fields:
 
   hero:
     type: structure
+    max: 1
     label:
       en: Hero
       fr: Image d'entête
@@ -60,7 +61,6 @@ fields:
       - cta
       - animated-list
       - quote
-      - body
       - capsule
       - cards
       - profiles
@@ -79,7 +79,8 @@ fields:
           extends: blocks/video
           fields:
             caption: false
+      - body
+      - list
       - dropdown
       - cards-focus
-      - list
       - google-maps
