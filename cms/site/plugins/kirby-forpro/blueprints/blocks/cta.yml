@@ -3,16 +3,43 @@ title:
   fr: Appel à l'action
 icon: merge
 fields:
+
+  image:
+    label:
+      fr: Image
+      en: Image
+    type: files
+    required: true
+    max: 1
+
   text:
     label:
       fr: Texte
       en: Text
     type: text
+
   link:
     label:
       fr: Lien
       en: Link
     type: url
+
+  backgroundColor:
+    label:
+      fr: Couleur de fond
+      en: Background color
+    type: color
+    default: '#ffffff'
+    width: 1/2
+
+  textColor:
+    label:
+      fr: Couleur du texte
+      en: Text color
+    type: color
+    default: '#000000'
+    width: 1/2
+
   styles:
     label:
       fr: Styles

@@ -1,7 +1,9 @@
 title:
-  en: Cards
-  fr: Cartes
-icon: copy
+  en: Cards Focus
+  fr: Cartes Focus
+
+icon: dots
+
 fields:
 
   style:
@@ -12,35 +14,32 @@ fields:
     options:
       style1: Style 1
       style2: Style 2
+      style3: Style 3
 
   cards:
     label:
       fr: Liste de cartes
       en: Cards list
     type: structure
+    columns:
+      title:
+        width: 1/1
     fields:
+
       title:
         label:
           fr: Titre
           en: Title
         type: text
-      image:
+
+      subtitle:
         label:
-          fr: Image
-          en: Image
-        type: files
-        max: 1
+          fr: Sous-titre
+          en: Subtitle
+        type: text
+
       link:
         label:
           fr: Lien
           en: Link
         type: url
-      text:
-        label:
-          fr: Texte
-          en: Text
-        type: writer
-        nodes:
-          - paragraph
-          - bulletList
-          - orderedList

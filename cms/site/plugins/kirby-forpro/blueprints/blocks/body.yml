@@ -1,0 +1,30 @@
+title:
+  en: Body
+  fr: Corps de texte
+
+icon: text
+
+fields:
+
+  paragraph:
+    label:
+      fr: Paragraphe
+      en: Paragraph
+    type: writer
+    marks:
+      - bold
+      - italic
+      - underline
+      - link
+    headings:
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+    nodes:
+      - paragraph
+      - bulletList
+      - orderedList
+      - heading
+
