@@ -4,6 +4,9 @@ title:
 
 icon: list
 
+wysiwyg: false
+preview: fields
+
 fields:
   list:
     label:
