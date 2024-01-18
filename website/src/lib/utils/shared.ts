@@ -1,4 +1,5 @@
 import type {Cookies} from "@sveltejs/kit";
+import {BASE_CMS_URL} from "$lib/utils/constants";
 
 const CSRF_TOKEN_COOKIE_KEY = 'csrftoken';
 const SESSION_ID_COOKIE_KEY = 'sessionid';
@@ -40,3 +41,21 @@ export const fetchAPI = async (url: string, method: string, cookies: Cookies, bo
         console.error(error);
     }
 };
+
+export async function fetchAPIPageContent(slug: string) {
+    try {
+        const response = await fetch(`${BASE_CMS_URL}${slug}.json`, {
+            method: 'GET',
+        });
+
+        const jsonResponse = await response.json();
+
+        if (!response.ok) {
+            console.error(jsonResponse);
+            console.error(response.status);
+        }
+        return jsonResponse;
+    } catch (error) {
+        console.error(error);
+    }
+}
