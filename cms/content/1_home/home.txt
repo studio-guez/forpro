@@ -1,9 +1,0 @@
-Title: Home
-
-----
-
-ressources: [{"content":{"list":[{"text":"test"},{"text":"test"},{"text":"test"}]},"id":"5888c7fe-96b3-47b5-93d9-de41b39105d0","isHidden":false,"type":"animated-list"},{"content":{"text":"test","link":"https://test.com","styles":"style1"},"id":"89223ae0-9fe8-48fa-bfd3-110fbd045cfc","isHidden":false,"type":"cta"},{"content":{"text":"<p>test</p>"},"id":"e8e12af9-85b1-40c6-b144-fb4160ca98f3","isHidden":false,"type":"quote"},{"content":[],"id":"5ad05a4a-0c4e-4c1d-ae34-161469b0d22c","isHidden":false,"type":"content"},{"content":{"style":"style2","cards":[{"title":"","image":[],"link":"","text":"","writer":null}]},"id":"aed7fdd6-12b7-45b7-8e18-3ecd901b8abc","isHidden":false,"type":"cards"},{"content":{"style":"","profiles":[{"description":"","images":[],"titre":"","sous-titre":"","image":[],"lien":"","mailto":""}]},"id":"94c8d956-af80-4d75-b562-f963d3ac82db","isHidden":false,"type":"profiles"}]
-
-----
-
-Uuid: zvr5Bw7GzjVqevpL

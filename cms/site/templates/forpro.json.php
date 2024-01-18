@@ -16,10 +16,14 @@ function getValueNotEmpty($pageAttribute, $siteAttribute) {
     return "";
 }
 
-$json['page'] = [
+$json['options'] = [
     'showMenu' => $showMenu,
     'showNewsletter' => $showNewsletter,
-    'hero' => $hero,
+    'hero' => $hero ? [
+        'text' => $hero->text()->value(),
+        'backgroundcolor' => $hero->backgroundcolor()->value(),
+        'textcolor' => $hero->textcolor()->value(),
+    ] : [],
 ];
 
 $json['body'] = $body;
