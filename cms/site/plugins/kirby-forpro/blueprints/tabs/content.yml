@@ -12,7 +12,7 @@ fields:
     max: 1
     label:
       en: Hero
-      fr: Image d'entête
+      fr: Header
     fields:
 
       text:
