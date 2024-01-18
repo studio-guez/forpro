@@ -1,0 +1,47 @@
+title:
+  en: Graphics Capsules
+  fr: Capsules Graphiques
+icon: brush
+fields:
+
+  style:
+    label:
+      en: Style
+      fr: Style
+    type: select
+    options:
+      style1: Style 1
+      style2: Style 2
+
+  capsules:
+    label:
+      fr: Liste de capsules
+      en: Capsules list
+    type: structure
+    fields:
+      title:
+        label:
+          en: Title
+          fr: Titre
+        type: text
+        maxlength: 25
+
+      text:
+        label:
+          en: Text
+          fr: Texte
+        type: writer
+        nodes: false
+        marks:
+          - bold
+          - italic
+          - underline
+          - link
+        maxlength: 100
+
+      image:
+        label:
+          en: Image
+          fr: Image
+        type: files
+        max: 1
