@@ -3,7 +3,6 @@ label:
   fr: Contenu
 
 icon: text
-preset: page
 pages: false
 
 fields:
