@@ -2,7 +2,7 @@
 
 $json = [];
 
-$hero = $page->hero()->toStructure()->toArray()[0];
+$hero = $page->hero()->toStructure()?->get(0);
 $showMenu = $page->showMenu()->toBool();
 $showNewsletter = $page->showNewsletter()->toBool();
 $body = $page->body()->toBlocks()->toArray();
