@@ -1,20 +1,20 @@
 from django.http import JsonResponse
-from barbershop.models import Barber
+from people.models import Person
 from agenda.models import EventCategory
 from django.shortcuts import render
 from django.contrib import messages
 from agenda.models import Event
 
 
-def barber_schedule(request, barber_id, service_id, start_date):
-    barber = Barber.objects.get(id=barber_id)
+def person_schedule(person_id: int, service_id: int, start_date) -> JsonResponse:
+    person = Person.objects.get(id=person_id)
     service = EventCategory.objects.get(id=service_id)
-    availabilities = barber.availabilities_for_service(service, start_date, False)
+    availabilities = person.availabilities_for_service(service, start_date, False)
 
     return JsonResponse(availabilities, safe=False)
 
 
-def barber_schedule_validate(request, slug):
+def person_schedule_validate(request, slug: str) -> render:
     event = Event.objects.get(slug=slug)
 
     if event:

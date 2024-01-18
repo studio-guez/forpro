@@ -8,14 +8,14 @@ from django.template.loader import get_template
 from django.contrib import messages
 from django import forms
 
-from barbershop.models import Barber, Event
-from agenda.models import EventCategory
+from people.models import Person
+from agenda.models import EventCategory, Event
 from djradicale.models import DBCollection
 
 
 class AppointmentForm(forms.Form):
     services = EventCategory.objects.all()
-    barbers = Barber.objects.all()
+    barbers = Person.objects.all()
 
     srv_cho = forms.ModelChoiceField(queryset=services, empty_label="Sélectionnez un Service", widget=forms.Select(
         attrs={'class': 'selectpicker form-control',
@@ -78,7 +78,7 @@ class AppointmentForm(forms.Form):
 
 class AppointmentBarberForm(forms.Form):
     services = EventCategory.objects.all()
-    barbers = Barber.objects.all()
+    barbers = Person.objects.all()
 
     srv_cho = forms.ModelChoiceField(queryset=services, empty_label="Sélectionnez un Service", widget=forms.Select(
         attrs={'class': 'selectpicker form-control',
