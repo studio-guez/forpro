@@ -167,3 +167,5 @@ cms/!/site/sessions/index.html
 # License
 cms/site/config/.license
 
+# Content
+cms/content/*
