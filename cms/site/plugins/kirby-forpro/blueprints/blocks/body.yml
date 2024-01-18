@@ -1,18 +1,11 @@
 title:
   en: Body
   fr: Corps de texte
-
 icon: text
-
 wysiwyg: true
 preview: text
-
 fields:
-
-  paragraph:
-    label:
-      fr: Paragraphe
-      en: Paragraph
+  text:
     type: writer
     marks:
       - bold
@@ -30,4 +23,4 @@ fields:
       - bulletList
       - orderedList
       - heading
-
+    placeholder: field.blocks.text.placeholder
