@@ -27,6 +27,30 @@ class EventCategory(models.Model):
 
 
 class Event(models.Model):
+    title = models.CharField(_('Nom, Prénom du Client'), max_length=255)
+    slug = models.SlugField(_('slug'), db_index=True)
+    state = models.BooleanField('Etat', default=False)
+    previous_state = None
+    event_date = models.DateField(_('date'))
+    start_time = models.TimeField(_('start time'), blank=True, null=True)
+    end_time = models.TimeField(_('end time'), blank=True, null=True)
+    description = models.TextField(_('description'))
+    add_date = models.DateTimeField(_('add date'), auto_now_add=True)
+    mod_date = models.DateTimeField(_('modification date'), auto_now=True)
+    author = models.CharField(_('Email Client'), blank=True, null=True, max_length=150)
+    publish_date = models.DateTimeField(_('publication date'), default=datetime(2018, 3, 1, 20, 13, 56, 213157))
+    publish = models.BooleanField(_('publish'), default=True)
+    allow_comments = models.BooleanField(_('Allow comments'), default=True)
+    collection = models.ForeignKey(DBCollection, on_delete=models.DO_NOTHING, null=True)
+
+    objects = models.Manager()
+
+    class Meta:
+        verbose_name = _('Rendez-Vous')
+        verbose_name_plural = _('Rendez-Vous')
+        ordering = ['-event_date', '-start_time', '-title']
+        get_latest_by = 'event_date'
+        permissions = (("change_author", ugettext("Change author")),)
 
     @classmethod
     def create(cls, event_date, start_time, end_time, author, title, description,
@@ -41,45 +65,9 @@ class Event(models.Model):
                     publish=published, slug=slug, publish_date=publish_date, state=False, collection=collection)
         return event
 
-    class Meta:
-        verbose_name = _('Rendez-Vous')
-        verbose_name_plural = _('Rendez-Vous')
-        ordering = ['-event_date', '-start_time', '-title']
-        get_latest_by = 'event_date'
-        permissions = (("change_author", ugettext("Change author")),)
-
     def __unicode__(self):
         return _("%(title)s on %(event_date)s") % {'title': self.title,
                                                    'event_date': self.event_date}
-
-    objects = models.Manager()
-
-    # Core fields
-    title = models.CharField(_('Nom, Prénom du Client'), max_length=255)
-    slug = models.SlugField(_('slug'), db_index=True)
-
-    state = models.BooleanField('Etat', default=False)
-    previous_state = None
-
-    event_date = models.DateField(_('date'))
-
-    start_time = models.TimeField(_('start time'), blank=True, null=True)
-    end_time = models.TimeField(_('end time'), blank=True, null=True)
-
-    description = models.TextField(_('description'))
-
-    # Extra fields
-    add_date = models.DateTimeField(_('add date'), auto_now_add=True)
-    mod_date = models.DateTimeField(_('modification date'), auto_now=True)
-
-    author = models.CharField(_('Email Client'), blank=True, null=True, max_length=150)
-
-    publish_date = models.DateTimeField(_('publication date'), default=datetime(2018, 3, 1, 20, 13, 56, 213157))
-    publish = models.BooleanField(_('publish'), default=True)
-
-    allow_comments = models.BooleanField(_('Allow comments'), default=True)
-
-    collection = models.ForeignKey(DBCollection, on_delete=models.DO_NOTHING, null=True)
 
     @staticmethod
     def add_to_calendar_if_confirmed(sender, **kwargs):

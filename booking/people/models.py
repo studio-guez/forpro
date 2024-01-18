@@ -56,17 +56,6 @@ class Schedule(models.Model):
         verbose_name = u'Heure d\'ouverture'
 
 
-class Cut(models.Model):
-    name = models.CharField(u'Nom', default='', max_length=50)
-    picture = models.ImageField(u'Photo de la coupe - 600 x 600', default='')
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Coupe'
-
-
 class Person(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(u'Nom', default='', max_length=50)
