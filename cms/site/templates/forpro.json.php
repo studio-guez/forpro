@@ -1,5 +1,7 @@
 <?php
 
+require_once 'utils/Utils.php';
+
 use Kirby\Cms\App;
 use Kirby\Cms\Page;
 use Kirby\Cms\Site;
@@ -13,7 +15,12 @@ $json = [];
 $hero = $page->hero()->toStructure()?->get(0);
 $showMenu = $page->showMenu()->toBool();
 $showNewsletter = $page->showNewsletter()->toBool();
-$body = $page->body()->toBlocks()->toArray();
+$body = $page->body()->toBlocks()->map(function ($item){
+    return [
+        'image'     => Utils::getImageArrayDataInPage($item->image()->toFiles()),
+        'content'   => $item->toArray(),
+    ];
+})->data();
 
 function getValueNotEmpty($pageAttribute, $siteAttribute) {
     if($pageAttribute->isNotEmpty()) {
