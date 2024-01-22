@@ -12,6 +12,16 @@ tabs:
 
       - width: 1/2
 
+        fields:
+          files:
+            label:
+              en: Files
+              fr: Fichiers
+            type: files
+            layout: cards
+
+      - width: 1/2
+
         sections:
 
           pages:
