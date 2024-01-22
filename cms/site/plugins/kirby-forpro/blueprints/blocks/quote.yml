@@ -1,8 +1,14 @@
 title:
   en: Quote
   fr: Citation
+
 icon: quote
+
+wysiwyg: true
+preview: text
+
 fields:
+
   text:
     label:
       fr: Texte
