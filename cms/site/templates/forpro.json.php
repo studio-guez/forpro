@@ -15,6 +15,16 @@ $showMenu = $page->showMenu()->toBool();
 $showNewsletter = $page->showNewsletter()->toBool();
 $body = $page->body()->toBlocks()->toArray();
 
+$pages = $site->children();
+
+foreach ($pages as $page) {
+    $menu[] = [
+        'title' => $page->title()->value(),
+        'slug' => $page->slug(),
+        'url' => $page->url(),
+    ];
+}
+
 function getValueNotEmpty($pageAttribute, $siteAttribute) {
     if($pageAttribute->isNotEmpty()) {
         return $pageAttribute->value();
@@ -23,6 +33,11 @@ function getValueNotEmpty($pageAttribute, $siteAttribute) {
     }
     return "";
 }
+
+$json['website'] = [
+    'title' => $site->title()->value(),
+    'menu' => $menu
+];
 
 $json['options'] = [
     'showMenu' => $showMenu,
