@@ -20,7 +20,7 @@
         </p>
     </div>
     <div class="app-flex__basis-1-1">
-        <div style="font-size: 20vw; line-height: 20vw; text-align: center">FORPRO</div>
+        <div style="font-size: 20vw; line-height: 25vw; text-align: center">FORPRO</div>
     </div>
 </footer>
 
