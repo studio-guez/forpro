@@ -20,6 +20,6 @@ tabs:
             templates:
               - forpro
               - default
-              - home
+              - site-info
 
   seo: tabs/seo-site
