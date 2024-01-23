@@ -16,7 +16,7 @@ $showMenu = $page->showMenu()->toBool();
 $showNewsletter = $page->showNewsletter()->toBool();
 $body = $page->body()->toBlocks()->map(function ($item){
     return [
-        'image'     => Utils::getImageArrayDataInPage($item->image()->toFiles()),
+        'image'     => array_values( Utils::getImageArrayDataInPage($item->image()->toFiles()) ),
         'content'   => $item->toArray(),
     ];
 })->data();
