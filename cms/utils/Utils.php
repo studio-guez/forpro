@@ -1,6 +1,17 @@
 <?php
 
 class Utils {
+    static function getHeroFromPage(\Kirby\Cms\Page $kirbyPage): array
+    {
+        $hero = $kirbyPage->hero()->toStructure()?->get(0);
+
+        return $hero ? [
+            'text' => $hero->text()->value(),
+            'backgroundcolor' => $hero->backgroundcolor()->value(),
+            'textcolor' => $hero->textcolor()->value(),
+        ] : [];
+    }
+
     static function getImageArrayDataInPage(\Kirby\Cms\Files $files): array|null
     {
         return $files->map(function (\Kirby\Cms\File $item): array {
