@@ -7,6 +7,7 @@ fields:
   style:
     label: Style
     type: select
+    default: style1
     options:
       style1: Style 1
       style2: Style 2
