@@ -1,4 +1,5 @@
 <div class="s-layout"
+     class:menu-is-open="{$menuIsOpen}"
 >
   <div class="s-layout__nav-box">
     <AppNav/>
@@ -17,6 +18,7 @@
 </div>
 
 <script lang="ts">
+    import {menuIsOpen} from "../store";
     import AppNav from "$lib/components/AppNav.svelte";
     import AppFooter from "$lib/components/AppFooter.svelte";
 </script>
