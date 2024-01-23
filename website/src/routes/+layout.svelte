@@ -18,6 +18,7 @@
 </div>
 
 <script lang="ts">
+    import "../style/_main.scss"
     import {menuIsOpen} from "../store";
     import AppNav from "$lib/components/AppNav.svelte";
     import AppFooter from "$lib/components/AppFooter.svelte";
