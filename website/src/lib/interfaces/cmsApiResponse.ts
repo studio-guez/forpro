@@ -81,6 +81,7 @@ export interface IImage {
  * CTA
  */
 export interface ICta extends IBlock {
+    type: 'cta'
     content: {
         image: string[]
         text: string
