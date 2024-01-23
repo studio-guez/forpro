@@ -12,7 +12,6 @@ use Kirby\Cms\Site;
 
 $json = [];
 
-$hero = $page->hero()->toStructure()?->get(0);
 $showMenu = $page->showMenu()->toBool();
 $showNewsletter = $page->showNewsletter()->toBool();
 $body = $page->body()->toBlocks()->map(function ($item){
@@ -34,11 +33,7 @@ function getValueNotEmpty($pageAttribute, $siteAttribute) {
 $json['options'] = [
     'showMenu' => $showMenu,
     'showNewsletter' => $showNewsletter,
-    'hero' => $hero ? [
-        'text' => $hero->text()->value(),
-        'backgroundcolor' => $hero->backgroundcolor()->value(),
-        'textcolor' => $hero->textcolor()->value(),
-    ] : [],
+    'hero' => Utils::getHeroFromPage($page),
 ];
 
 $json['body'] = $body;
