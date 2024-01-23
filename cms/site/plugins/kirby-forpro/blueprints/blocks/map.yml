@@ -1,6 +1,6 @@
 title:
   en: Map
-  fr: Carte
+  fr: Plan
 
 icon: map
 
@@ -11,6 +11,7 @@ fields:
       fr: Styles
       en: Styles
     type: select
+    default: style1
     options:
       style1: Style 1
       style2: Style 2

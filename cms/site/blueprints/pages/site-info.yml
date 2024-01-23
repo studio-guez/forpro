@@ -1,0 +1,14 @@
+title:
+  en: Site info
+  fr: Informations Générales
+
+pages: false
+
+fields:
+
+  footer:
+    type: writer
+    label:
+      en: Footer description
+      fr: Déscription dans le footer
+
