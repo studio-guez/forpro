@@ -156,7 +156,7 @@ export interface ICard {
 /**
  * PROFILE
  */
-interface IProfiles extends IBlock {
+export interface IProfiles extends IBlock {
     content: {
         style: 'style1' | 'style2';
         profiles: IProfile[];
@@ -165,7 +165,7 @@ interface IProfiles extends IBlock {
 }
 
 
-interface IProfile {
+export interface IProfile {
     title: string;
     subtitle: string;
     description: string;
@@ -179,14 +179,14 @@ interface IProfile {
  * BLOCK LIST
  */
 
-interface IList extends IBlock {
+export interface IList extends IBlock {
     content: {
         list: ListItem[];
     }
     type: 'list'
 }
 
-interface ListItem {
+export interface ListItem {
     key: string;
     value: string;
 }
@@ -198,14 +198,14 @@ interface ListItem {
 /**
  * BLOCK DROPDOWN
  */
-interface IDropdown extends IBlock {
+export interface IDropdown extends IBlock {
     content: {
         dropdown: IDropdownItem[];
     }
     type: 'dropdown'
 }
 
-interface IDropdownItem {
+export interface IDropdownItem {
     title: string;
     content: string;
     link: string;
@@ -219,7 +219,7 @@ interface IDropdownItem {
 /**
  * BLOCK CARDSFOCUS
  * */
-interface ICardsFocus extends IBlock {
+export interface ICardsFocus extends IBlock {
     "content": {
         "style": "style1",
         "cards": ICardFocusItem[]
@@ -227,7 +227,7 @@ interface ICardsFocus extends IBlock {
     type: 'cards-focus'
 }
 
-interface ICardFocusItem {
+export interface ICardFocusItem {
     "title": string,
     "subtitle": string,
     "link": string
@@ -236,7 +236,7 @@ interface ICardFocusItem {
 /**
  * BODY
  */
-interface IHtmlContent extends IBlock {
+export interface IHtmlContent extends IBlock {
     "content": {
         "text": "<p>bonjour le text</p><p>bonjour me monde</p>"
     }
