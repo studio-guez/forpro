@@ -41,14 +41,26 @@ fields:
       fr: Label des créneaux
     type: text
 
-  bookingConfirmButtonLabel:
-    label:
-      en: Confirm button label
-      fr: Label du bouton de confirmation
-    type: text
-
   bookingNoSlotsLabel:
     label:
       en: No slots label
       fr: Label des créneaux indisponibles
+    type: text
+
+  bookingSlotConfirmationLabel:
+    label:
+      en: No slot confirmation label
+      fr: Label du bouton de confirmation du créneau sélectionné
+    type: text
+
+  bookingAppointmentConfirmationLabel:
+    label:
+      en: Appointment confirmation label
+      fr: Label de confirmation du rendez-vous
+    type: text
+
+  bookingAppointmentSuccessLabel:
+    label:
+      en: Appointment success label
+      fr: Label rendez-vous confirmé
     type: text
