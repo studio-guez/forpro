@@ -1,0 +1,24 @@
+label:
+  en: Booking
+  fr: Rendez-vous
+
+icon: calendar
+pages: false
+
+fields:
+
+  help:
+    type: info
+    text: "Seules les éléments de texte sont modifiables, ici. Afin de rajouter des intervenants, des services, ou autres veuillez vous rendre sur le site <a href="https://booking.for-pro.ch">d'administration des rendez-vous</a>."
+
+  bookingHeadline:
+    label:
+      en: Title
+      fr: Titre
+    type: text
+
+  bookingDescription:
+    label:
+      en: Description
+      fr: Description
+    type: textarea
