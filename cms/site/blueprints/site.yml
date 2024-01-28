@@ -32,4 +32,6 @@ tabs:
               - default
               - site-info
 
+  booking: tabs/booking
+
   seo: tabs/seo-site
