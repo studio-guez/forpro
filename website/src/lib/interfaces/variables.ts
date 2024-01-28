@@ -91,3 +91,30 @@ export interface Provider {
         }
     }
 }
+
+export interface Customer {
+    id: number,
+    firstName: string,
+    lastName: string,
+    email: string,
+    phone: string,
+    city: string,
+    zip: string,
+    timezone: string,
+    languages: string,
+    notes: string,
+}
+
+export interface Appointment {
+    id: number,
+    book: string,
+    start: string,
+    end: string,
+    hash: string,
+    location: string,
+    notes: string,
+    customerId: number,
+    providerId: number,
+    serviceId: number,
+    googleCalendarId: null|number
+}
