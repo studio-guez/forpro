@@ -1,61 +1,28 @@
-import type {Cookies} from "@sveltejs/kit";
-import {BASE_CMS_URL} from "$lib/utils/constants";
+import {EASYAPPOINTMENTS_API_TOKEN} from "$lib/utils/constants";
 
-const CSRF_TOKEN_COOKIE_KEY = 'csrftoken';
-const SESSION_ID_COOKIE_KEY = 'sessionid';
+const headers = new Headers();
+headers.append('Content-Type', 'application/json');
+headers.append('Access-Control-Allow-Origin', 'http://localhost:8003');
+headers.append('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+headers.append('Authorization', `Bearer ${EASYAPPOINTMENTS_API_TOKEN}`);
 
-export const getAuthHeaders = (cookies: Cookies) => {
-    // Use optional chaining to protect against null or undefined values
-    const csrfToken = cookies.get(CSRF_TOKEN_COOKIE_KEY);
-    const sessionId = cookies.get(SESSION_ID_COOKIE_KEY);
-
-    const headers: { [key: string]: string } = {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken || '',
-    };
-
-    if (sessionId) {
-        headers['Authorization'] = `Token ${sessionId}`;
-    }
-
+export const getHeaders = (): Headers => {
+    console.log(EASYAPPOINTMENTS_API_TOKEN)
     return headers;
-};
+}
 
-export const fetchAPI = async (url: string, method: string, cookies: Cookies, body?: any) => {
+const handleError = (errorMsg: string, error: any) => {
+    console.error(`${errorMsg}: ${error}`);
+}
+
+export const fetchFromAPI = async <T>(request: Request, errorMsg: string): Promise<T> => {
     try {
-        const response = await fetch(url, {
-            method: method,
-            credentials: 'include',
-            headers: getAuthHeaders(cookies),
-            body: JSON.stringify(body)
-        });
-
-        const jsonResponse = await response.json();
-
+        const response = await fetch(request);
         if (!response.ok) {
-            console.error(jsonResponse);
-            console.error(response.status);
+            handleError(errorMsg, new Error(errorMsg));
         }
-        return jsonResponse;
+        return await response.json() as T;
     } catch (error) {
-        console.error(error);
-    }
-};
-
-export async function fetchAPIPageContent(slug: string) {
-    try {
-        const response = await fetch(`${BASE_CMS_URL}${slug}.json`, {
-            method: 'GET',
-        });
-
-        const jsonResponse = await response.json();
-
-        if (!response.ok) {
-            console.error(jsonResponse);
-            console.error(response.status);
-        }
-        return jsonResponse;
-    } catch (error) {
-        console.error(error);
+        handleError(errorMsg, error);
     }
 }
