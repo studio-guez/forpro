@@ -32,9 +32,9 @@ Kirby::plugin('mediumsans/forpro', [
                   return [
                     'headline'      => $kirby->site()->bookingHeadline()->value(),
                     'description'   => $kirby->site()->bookingDescription()->value(),
-                    'calendarLabel' => $kirby->site()->bookingCalendarLabel()->value(),
-                    'servicesLabel' => $kirby->site()->bookingServicesLabel()->value(),
-                    'slotsLabel'    => $kirby->site()->bookingSlotsLabel()->value(),
+                    'bookingServicesLabel' => $kirby->site()->bookingServicesLabel()->value(),
+                    'bookingSlotsLabel'    => $kirby->site()->bookingSlotsLabel()->value(),
+                    'bookingCalendarLabel' => $kirby->site()->bookingCalendarLabel()->value(),
                     'bookingNoSlotsLabel'       => $kirby->site()->bookingNoSlotsLabel()->value(),
                     'bookingSlotConfirmationLabel'   => $kirby->site()->bookingSlotConfirmationLabel()->value(),
                     'bookingAppointmentConfirmationLabel' => $kirby->site()->bookingAppointmentConfirmationLabel()->value(),
