@@ -14,22 +14,24 @@ services:
       - "5432:5432"
 
   calendar:
-    build: ./tekbackend
+    build: ./easyappointments
     volumes:
-      - static_volume:/app/static
-      - media_volume:/app/media
-    command: >
-      sh -c "python manage.py wait_for_db &&
-             python manage.py migrate --settings=calendar.settings &&
-             python manage.py collectstatic --no-input --settings=calendar.settings &&
-             gunicorn calendar.wsgi:application --bind 0.0.0.0:8000"
-    depends_on:
-      - db
+      - ./easyappointments/assets/99-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+      - ./easyappointments/assets/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+      - calendar_data:/var/www/html
     ports:
-      - "8001:8000"
-    environment:
-      - "DJANGO_SETTINGS_MODULE=calendar.settings"
+      - "8003:80"
     restart: always
+    depends_on:
+      - mysql
+
+  mysql:
+    image: 'mysql:8.0'
+    volumes:
+      - './docker/mysql:/var/lib/mysql'
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=easyappointment
 
   frontend:
     build: ./website
@@ -49,6 +51,5 @@ services:
 
 volumes:
   postgres_data:
-  static_volume:
-  media_volume:
   kirby_data:
+  calendar_data:
