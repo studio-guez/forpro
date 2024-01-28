@@ -1,6 +1,7 @@
 export interface Variables {
-    readonly BASE_CMS_URL: string;
-    readonly BASE_EASYAPPOINTMENTS_URL: string;
+    readonly CMS_BASE_URL: string;
+    readonly EASYAPPOINTMENTS_BASE_URL: string;
+    readonly EASYAPPOINTMENTS_API_TOKEN: string;
 }
 
 export interface Slot {
@@ -16,4 +17,77 @@ export interface AppointmentDetails {
 export interface BookingCMSResponse {
     readonly headline: string;
     readonly description: string;
+    readonly servicesLabel: string;
+    readonly slotsLabel: string;
+    readonly bookingConfirmButtonLabel: string;
+    readonly bookingNoSlotsLabel: string;
+}
+
+export interface Service {
+    id: number,
+    name: string,
+    duration: number,
+    price: number,
+    currency: string,
+    location: string,
+    description: string,
+    availabilitiesType: string,
+    attendantsNumber: number,
+    categoryId: number | null
+}
+
+export interface Provider {
+    id: number,
+    firstName: string,
+    lastName: string,
+    email: string,
+    mobile: string,
+    phone: string,
+    address: string,
+    city: string,
+    zip: string,
+    notes: string,
+    timezone: string,
+    language: string,
+    services: string[],
+    settings: {
+        username: string,
+        password: string,
+        notifications: boolean,
+        calendarView: string,
+        googleSync: boolean,
+        googleCalendar: null,
+        googleToken: null,
+        syncFutureDays: number,
+        syncPastDays: number,
+        workingPlan: {
+            sunday: null,
+            monday: {
+                start: string,
+                end: string,
+                breaks: []
+            },
+            tuesday: {
+                start: string,
+                end: string,
+                breaks: []
+            },
+            wednesday: {
+                start: string,
+                end: string,
+                breaks: []
+            },
+            thursday: {
+                start: string,
+                end: string,
+                breaks: []
+            },
+            friday: {
+                start: string,
+                end: string,
+                breaks: []
+            },
+            saturday: null
+        }
+    }
 }
