@@ -11,7 +11,7 @@
     export let data;
     export let form;
 
-    let step = 2;
+    let step = 1;
     form = { appointment: null };
 
     const providerId = data.providerId;
@@ -132,7 +132,6 @@
                         {:else if step === 2}
                             <div class="overflow-auto px-6 pb-8 my-auto mx-auto h-full leading-6 text-gray-700">
                                 {#if !form?.appointment}
-                                    {#if form.appointment.id}
                                     <div class="flex flex-col mx-auto max-w-lg h-full text-gray-700">
                                         <div class="px-1 mt-2 text-xl font-semibold leading-7 md:mt-16">
                                             {data.content.bookingAppointmentConfirmationLabel}
