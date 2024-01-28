@@ -1,0 +1,19 @@
+title:
+  en: Accueil
+  fr: Home
+
+preset: pages
+
+fields:
+  ressources:
+    type: blocks
+    label: Contenu
+    fieldsets:
+      - cta
+      - animated-list
+      - quote
+      - content
+      - capsule
+      - cards
+      - profiles
+      - map
