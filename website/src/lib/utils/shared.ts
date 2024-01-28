@@ -7,7 +7,6 @@ headers.append('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, O
 headers.append('Authorization', `Bearer ${EASYAPPOINTMENTS_API_TOKEN}`);
 
 export const getHeaders = (): Headers => {
-    console.log(EASYAPPOINTMENTS_API_TOKEN)
     return headers;
 }
 
@@ -21,7 +20,9 @@ export const fetchFromAPI = async <T>(request: Request, errorMsg: string): Promi
         if (!response.ok) {
             handleError(errorMsg, new Error(errorMsg));
         }
-        return await response.json() as T;
+        const data = await response.json();
+        console.log(data);
+        return data as T;
     } catch (error) {
         handleError(errorMsg, error);
     }
