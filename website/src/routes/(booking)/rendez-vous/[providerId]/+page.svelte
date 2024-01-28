@@ -97,7 +97,7 @@
                             <!-- right side -->
                             <div class="flex overflow-x-hidden justify-center flex-col border-l border-solid border-gray-200 p-6 w-full text-gray-600 md:w-1/2 md:p-10">
                                 <div class="font-semibold">
-                                    {data.content.servicesLabel}
+                                    {data.content.bookingServicesLabel}
                                 </div>
                                 <div class="flex flex-wrap flex-shrink-0 -mx-2">
                                     {#each services as service}
@@ -110,7 +110,7 @@
                                     {/each}
                                 </div>
                                 <div class="mt-6 font-semibold" style="list-style: outside;">
-                                    {data.content.slotsLabel}
+                                    {data.content.bookingSlotsLabel}
                                 </div>
 
                                 <BookingSlots
