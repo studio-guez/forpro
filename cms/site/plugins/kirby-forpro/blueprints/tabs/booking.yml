@@ -22,3 +22,33 @@ fields:
       en: Description
       fr: Description
     type: textarea
+
+  bookingCalendarLabel:
+    label:
+      en: Calendar label
+      fr: Label du calendrier
+    type: text
+
+  bookingServicesLabel:
+    label:
+      en: Services label
+      fr: Label des services
+    type: text
+
+  bookingSlotsLabel:
+    label:
+      en: Slots label
+      fr: Label des créneaux
+    type: text
+
+  bookingConfirmButtonLabel:
+    label:
+      en: Confirm button label
+      fr: Label du bouton de confirmation
+    type: text
+
+  bookingNoSlotsLabel:
+    label:
+      en: No slots label
+      fr: Label des créneaux indisponibles
+    type: text
