@@ -1,6 +1,13 @@
-import {fetchAPIPageContent} from "$lib/utils/shared";
+import {fetchFromAPI} from "$lib/utils/shared";
 import {type IPage} from "$lib/interfaces/cmsApiResponse";
+import {CMS_BASE_URL} from "$lib/utils/constants";
+import type {PageLoad} from "../../.svelte-kit/types/src/routes/[slug]/$types";
 
-export async function  load(): Promise<IPage> {
-    return await fetchAPIPageContent('page-exemple') satisfies IPage
+export const load: PageLoad = async ({params}) => {
+
+    const request = new Request(`${CMS_BASE_URL}page-exemple.json`, {
+        method: 'GET',
+    })
+
+    return await fetchFromAPI<IPage>(request, 'Failed to fetch page data')
 }
