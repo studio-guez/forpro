@@ -1,0 +1,41 @@
+/*
+ * Legal Disclaimer
+ *
+ * These Fonts are licensed only for use on this domain and its subdomains:
+ * www.forpro.ch (or www.for-pro.ch)
+ *
+ * It is illegal to download or use them on other websites.
+ *
+ * While the @font-face statements below may be modified by the client, this
+ * disclaimer may not be removed.
+ *
+ */
+
+@font-face {
+	font-family: 'Jungka-ForPro';
+	src: url('./fonts/Jungka_Webfonts/Jungka-Regular.woff') format('woff'),
+		 url('./fonts/Jungka_Webfonts/Jungka-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Jungka-ForPro';
+	src: url('./fonts/Jungka_Webfonts/Jungka-RegularItalic.woff') format('woff'),
+		 url('./fonts/Jungka_Webfonts/Jungka-RegularItalic.woff2') format('woff2');
+	font-weight: 400;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'Jungka-ForPro';
+	src: url('./fonts/Jungka_Webfonts/Jungka-Medium.woff') format('woff'),
+		 url('./fonts/Jungka_Webfonts/Jungka-Medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Jungka-ForPro';
+	src: url('fonts/Jungka_Webfonts/Jungka-Bold.woff') format('woff'),
+		 url('fonts/Jungka_Webfonts/Jungka-Bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
