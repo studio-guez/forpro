@@ -1,40 +1,40 @@
-# Use official PHP image with Apache
-FROM php:8.1-apache
+FROM ubuntu:22.04
 
-# Install the PHP extensions we need
-RUN apt-get update && \
-    apt-get install -y libpng-dev libonig-dev libxml2-dev zip unzip && \
-    rm -rf /var/lib/apt/lists/* && \
-    docker-php-ext-install -j "$(nproc)" pdo_mysql mbstring xml gd
+ENV TZ=Europe/Berlin
 
-# Enable Apache mod_rewrite for URL rewrites and mod_headers for .htaccess extra headers like Access-Control-Allow-Origin-
-RUN if command -v a2enmod >/dev/null 2>&1; then \
-        a2enmod rewrite headers \
-    ;fi
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Change document root for Apache
-RUN sed -i -e 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/*.conf
-RUN sed -i -e 's|/var/www/|/var/www/html/public|g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+ARG DEBIAN_FRONTEND=noninteractive
 
-# Install Composer globally
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN apt-get update && apt-get install -y \
+  apache2 \
+  apache2-utils \
+  ca-certificates \
+  php \
+  libapache2-mod-php \
+  php-curl \
+  php-dom \
+  php-gd \
+  php-intl \
+  php-json \
+  php-mbstring \
+  php-xml \
+  php-zip && \
+  apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Set recommended PHP.ini settings for better performance.
-RUN { \
-        echo 'opcache.memory_consumption=192'; \
-        echo 'opcache.interned_strings_buffer=12'; \
-        echo 'opcache.max_accelerated_files=4000'; \
-        echo 'opcache.revalidate_freq=2'; \
-        echo 'opcache.fast_shutdown=1'; \
-    } > /usr/local/etc/php/conf.d/opcache-recommended.ini
+COPY ./conf/default.conf /etc/apache2/sites-available/000-default.conf
+
+RUN rm /var/www/html/*
+
+COPY . /var/www/html/
+
+RUN a2enmod headers rewrite
+
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 80
 
-# Define volumes for Kirby installation and content.
-VOLUME /var/www/html
-
-# Copy Kirby files into image
-COPY . /var/www/html/
-
-# Set server name
-RUN echo 'ServerName forpro-admin.sdrvl.ch' >> /etc/apache2/conf-available/fqdn.conf && a2enconf fqdn
+CMD [ "/usr/sbin/apache2ctl", "-DFOREGROUND" ]
