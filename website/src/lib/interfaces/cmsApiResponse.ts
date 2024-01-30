@@ -28,7 +28,7 @@ export interface IBody {
 export interface IBlock {
     id: string
     isHidden: boolean
-    type: 'cta' | 'quote' | 'capsules' | 'cards' | 'profiles' | 'list' | 'dropdown' | 'cards-focus' | 'body'
+    type: 'cta' | 'quote' | 'capsules' | 'cards' | 'profiles' | 'list' | 'dropdown' | 'cards-focus' | 'body' | 'map'
 }
 
 export interface ISeo {
@@ -221,7 +221,7 @@ export interface IDropdownItem {
  * */
 export interface ICardsFocus extends IBlock {
     "content": {
-        "style": "style1",
+        "style": 'entreprises' | 'entourage' | 'jeunes'
         "cards": ICardFocusItem[]
     },
     type: 'cards-focus'
@@ -241,4 +241,15 @@ export interface IHtmlContent extends IBlock {
         "text": "<p>bonjour le text</p><p>bonjour me monde</p>"
     }
     type: 'body'
+}
+
+
+/**
+ * Map
+ */
+export interface IHtmlContent extends IBlock {
+    "content": {
+        "style": "style1" | "style2"
+    },
+    type: 'map'
 }
