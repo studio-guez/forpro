@@ -6,17 +6,6 @@ icon: dots
 
 fields:
 
-  style:
-    label:
-      fr: Style
-      en: Style
-    type: select
-    default: entreprises
-    options:
-      entreprises: Entreprises
-      entourage: Entourage
-      jeunes: Jeunes
-
   cards:
     label:
       fr: Liste de cartes
@@ -26,6 +15,17 @@ fields:
       title:
         width: 1/1
     fields:
+
+      style:
+        label:
+          fr: Style
+          en: Style
+        type: select
+        default: entreprises
+        options:
+          entreprises: Entreprises
+          entourage: Entourage
+          jeunes: Jeunes
 
       title:
         label:
