@@ -221,13 +221,13 @@ export interface IDropdownItem {
  * */
 export interface ICardsFocus extends IBlock {
     "content": {
-        "style": 'entreprises' | 'entourage' | 'jeunes'
         "cards": ICardFocusItem[]
     },
     type: 'cards-focus'
 }
 
 export interface ICardFocusItem {
+    "style": 'entreprises' | 'entourage' | 'jeunes'
     "title": string,
     "subtitle": string,
     "link": string
