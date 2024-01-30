@@ -1,0 +1,27 @@
+:root {
+  //typo
+  --s-font-baseline: 20px;
+
+  // nav
+  --app-nav_height: 4rem;
+
+  //grid
+  --app-flex--gap_half:    .5rem;
+  --app-gutter_regular:  1rem;
+  --app-gutter_large:    2rem;
+
+  // graphic
+  --app-line-with: 3px;
+
+  //color
+  --app-color--pink:    rgb(245, 0, 180);
+  --app-color--green:   rgb(61, 240, 105);
+  --app-color--green--pastel:    #9bcf00;
+  --app-color--orange:  rgb(255, 105, 23);
+  --app-color--blue:    rgb(0, 0, 255);
+  --app-color--yellow:    rgb(255, 248, 0);
+  --app-color--blue--light:    rgb(185, 230, 255);
+  --app-color--purple:    #bea5e6;
+  --app-color--red:    #f2030d;
+  --app-color--grey--light: #d2d2d2;
+}
