@@ -4,7 +4,84 @@
     export let content: ICards;
 </script>
 
-<div>
-    <h2>cards</h2>
-    {content.type}
+<div class="s-cards"
+>
+    {#each content.content.cards as card}
+        <div class="s-cards__card">
+            {#if (card.image.length > 0)}
+                <img class="s-cards__card__img__item"
+                     src="{card.image[0]}"
+                     alt="illustration pour la carte"
+                />
+            {/if}
+
+            <div
+                    class="s-cards__card__content"
+            >
+                <h3 class="s-cards__card__tilte">{card.title}</h3>
+                <div>{@html card.text}</div>
+            </div>
+
+            {#if (card.link)}
+                <div style="width: 100%">
+                    <a class="s-cards__card__button app-button app-button--rounded"
+                       href="{card.link}"
+                    >En savoir plus</a>
+                </div>
+            {/if}
+        </div>
+    {/each}
 </div>
+
+
+<style lang="scss">
+    .s-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem 1rem;
+    }
+
+    .s-cards__card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .s-cards__card__img__item {
+      background: var(--app-color--blue);
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1/1;
+      border-radius: 2rem;
+      box-sizing: border-box;
+      border: solid var(--app-line-with) var(--app-color--pink);
+    }
+
+    .s-cards__card__content {
+      border: solid var(--app-line-with) var(--app-color--pink);
+      background: var(--app-color--grey--light);
+      padding: 1rem;
+      border-radius: 2rem;
+      box-sizing: border-box;
+
+      .s-cards__card__img__item + & {
+        border-top-color: var(--app-color--grey--light);
+        margin-top: -1.5rem;
+      }
+    }
+
+    .s-cards__card__button {
+      margin-top: 1rem;
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .s-cards__card__tilte {
+      color: var(--app-color--pink);
+      font-size: 1.75rem;
+      line-height: 2rem;
+      margin-top: 0;
+      text-align: center;
+    }
+</style>
