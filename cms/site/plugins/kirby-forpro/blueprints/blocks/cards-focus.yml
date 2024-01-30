@@ -11,11 +11,11 @@ fields:
       fr: Style
       en: Style
     type: select
-    default: style1
+    default: entreprises
     options:
-      style1: Style 1
-      style2: Style 2
-      style3: Style 3
+      entreprises: Entreprises
+      entourage: Entourage
+      jeunes: Jeunes
 
   cards:
     label:
