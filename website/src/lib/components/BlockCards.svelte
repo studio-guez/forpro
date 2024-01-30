@@ -9,16 +9,18 @@
     {#each content.content.cards as card}
         <div class="s-cards__card">
             {#if (card.image.length > 0)}
-                <img class="s-cards__card__img__item"
-                     src="{card.image[0]}"
-                     alt="illustration pour la carte"
-                />
+                <div class="s-cards__card__img">
+                    <img class="s-cards__card__img__item"
+                         src="{card.image[0]}"
+                         alt="illustration pour la carte"
+                    />
+                </div>
             {/if}
 
             <div
                     class="s-cards__card__content"
             >
-                <h3 class="s-cards__card__tilte">{card.title}</h3>
+                <h3 class="s-cards__card__content__tilte">{card.title}</h3>
                 <div>{@html card.text}</div>
             </div>
 
@@ -45,13 +47,25 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      flex-wrap: nowrap;
+    }
+
+    .s-cards__card__img {
+      width: 100%;
+      padding-top: 100%;
+      box-sizing: border-box;
+      flex-shrink: 0;
+      position: relative;
     }
 
     .s-cards__card__img__item {
       background: var(--app-color--blue);
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
       width: 100%;
       height: 100%;
-      aspect-ratio: 1/1;
       border-radius: 2rem;
       box-sizing: border-box;
       border: solid var(--app-line-with) var(--app-color--pink);
@@ -63,8 +77,11 @@
       padding: 1rem;
       border-radius: 2rem;
       box-sizing: border-box;
+      height: 100%;
+      flex-shrink: 1;
+      z-index: 1;
 
-      .s-cards__card__img__item + & {
+      .s-cards__card__img + & {
         border-top-color: var(--app-color--grey--light);
         margin-top: -1.5rem;
       }
@@ -75,9 +92,10 @@
       width: 100%;
       text-align: center;
       box-sizing: border-box;
+      flex-shrink: 0;
     }
 
-    .s-cards__card__tilte {
+    .s-cards__card__content__tilte {
       color: var(--app-color--pink);
       font-size: 1.75rem;
       line-height: 2rem;
