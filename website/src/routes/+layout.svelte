@@ -1,3 +1,10 @@
+<script lang="ts">
+    import "../style/_main.scss"
+    import {menuIsOpen} from "../store";
+    import AppNav from "$lib/components/AppNav.svelte";
+    import AppFooter from "$lib/components/AppFooter.svelte";
+</script>
+
 <div class="s-layout"
      class:menu-is-open="{$menuIsOpen}"
 >
@@ -10,19 +17,11 @@
     <slot/>
   </div>
 
-
   <div class="s-layout__footer-box"
   >
     <AppFooter/>
   </div>
 </div>
-
-<script lang="ts">
-    import "../style/_main.scss"
-    import {menuIsOpen} from "../store";
-    import AppNav from "$lib/components/AppNav.svelte";
-    import AppFooter from "$lib/components/AppFooter.svelte";
-</script>
 
 <style lang="scss">
   .s-layout {
@@ -55,3 +54,4 @@
     width: 100%;
   }
 </style>
+
