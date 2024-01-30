@@ -2,17 +2,6 @@ version: '3.8'
 
 services:
 
-  db:
-    image: postgres:12.17
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: 'forpro_calendar'
-      POSTGRES_USER: 'forpro'
-      POSTGRES_PASSWORD: 'forpro'
-    ports:
-      - "5432:5432"
-
   calendar:
     build: ./easyappointments
     volumes:
@@ -50,6 +39,5 @@ services:
     restart: always
 
 volumes:
-  postgres_data:
   kirby_data:
   calendar_data:
