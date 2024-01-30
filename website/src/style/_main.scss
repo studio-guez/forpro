@@ -1,21 +1,11 @@
 @import '../../node_modules/modern-normalize/modern-normalize.css';
 @import '_jungka-import.css';
+@import 'variables';
 @import "grid";
 @import "typography";
 @import "ui";
 
-:root {
-  //typo
-  --s-font-baseline: 20px;
 
-  // nav
-  --app-nav_height: 4rem;
-
-  //grid
-  --app-flex--gap_half:    .5rem;
-  --app-gutter_regular:  1rem;
-  --app-gutter_large:    2rem;
-}
 //
 html {
   font-size: var(--s-font-baseline);
