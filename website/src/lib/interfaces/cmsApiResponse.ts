@@ -115,7 +115,6 @@ export interface IQuote extends IBlock {
  */
 export interface ICapsules extends IBlock {
     content: {
-        style: 'style1' | 'style2'
         capsules: ICapsule[]
     }
     type: 'capsules'
@@ -125,6 +124,7 @@ export interface ICapsule {
     title: string
     text: string
     image: string[]
+    style: 'style1' | 'style2' | 'style3' | 'style4'
 }
 
 
