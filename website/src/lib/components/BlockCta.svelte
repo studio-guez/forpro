@@ -7,14 +7,14 @@
 </script>
 
 <a class="s-block-cta"
-   class:has-icon={image.length > 0}
+   class:has-icon={image?.length > 0}
    href="{content.content.link}"
    style="
         --s-cat-background-color: {content.content.backgroundcolor};
         --s-cat-color: {content.content.textcolor};
     "
 >
-    {#if (image.length > 0)}
+    {#if (image?.length > 0)}
         <img class="s-block-cta__icon"
              src={image[0].url}
              alt="icon illustratif pour le bouton"/>
