@@ -23,7 +23,7 @@
       border-radius: var(--app-nav_height);
       flex-direction: row;
       justify-content: space-between;
-      border: solid 3px black;
+      border: solid var(--app-line-with) black;
       background: white;
     }
 </style>
