@@ -27,3 +27,21 @@ body {
   height: 100%;
   overflow: hidden;
 }
+
+a {
+  color: inherit;
+
+  &.app-button {
+    text-decoration: none;
+  }
+}
+
+.app-remove-margin-child {
+  > *:first-child {
+    margin-top: 0 !important;
+  }
+
+  > *:last-child {
+    margin-bottom: 0 !important;
+  }
+}
