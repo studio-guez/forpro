@@ -4,22 +4,25 @@ title:
 icon: brush
 fields:
 
-  style:
-    label:
-      en: Style
-      fr: Style
-    type: select
-    default: style1
-    options:
-      style1: Style 1
-      style2: Style 2
-
   capsules:
     label:
       fr: Liste de capsules
       en: Capsules list
     type: structure
     fields:
+      style:
+        label:
+          en: Style
+          fr: Style
+        type: select
+        default: style1
+        options:
+          style1: Style 1
+          style2: Style 2
+          style3: Style 3
+          style4: Style 4
+
+
       title:
         label:
           en: Title
