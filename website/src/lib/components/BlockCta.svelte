@@ -6,7 +6,7 @@
 
 </script>
 
-<a class="s-block-cta"
+<a class="s-block-cta {content.content.styles}"
    class:has-icon={image.length > 0}
    href="{content.content.link}"
    style="
@@ -38,6 +38,10 @@
       display: block;
       line-height: 1em;
       font-size: max(4rem, 6vw);
+
+      &.style2 {
+        border-radius: 10em;
+      }
 
       &.has-icon {
         background: transparent;
