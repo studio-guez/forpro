@@ -82,3 +82,35 @@
   > .app-flex__basis-4-5  { flex-basis: calc(100% / 5 * 4);}
   > .app-flex__basis-5-5  { flex-basis: calc(100% / 5 * 5);}
 }
+
+
+[class*=app-grid--] {
+  display: grid;
+  gap: var(--app-gutter_regular);
+}
+
+.app-grid--column-1     {grid-template-columns: repeat(1,minmax(0,1fr)); }
+.app-grid--column-2     {grid-template-columns: repeat(2,minmax(0,1fr)); }
+.app-grid--column-3     {grid-template-columns: repeat(3,minmax(0,1fr)); }
+.app-grid--column-4     {grid-template-columns: repeat(4,minmax(0,1fr)); }
+.app-grid--column-5     {grid-template-columns: repeat(5,minmax(0,1fr)); }
+.app-grid--column-6     {grid-template-columns: repeat(6,minmax(0,1fr)); }
+.app-grid--column-7     {grid-template-columns: repeat(7,minmax(0,1fr)); }
+.app-grid--column-8     {grid-template-columns: repeat(8,minmax(0,1fr)); }
+.app-grid--column-9     {grid-template-columns: repeat(9,minmax(0,1fr)); }
+.app-grid--column-10    {grid-template-columns: repeat(10,minmax(0,1fr)) }
+.app-grid--column-11    {grid-template-columns: repeat(11,minmax(0,1fr)) }
+.app-grid--column-12    {grid-template-columns: repeat(12,minmax(0,1fr)) }
+.app-grid--column-13    {grid-template-columns: repeat(13,minmax(0,1fr)) }
+.app-grid--column-14    {grid-template-columns: repeat(14,minmax(0,1fr)) }
+.app-grid--column-15    {grid-template-columns: repeat(15,minmax(0,1fr)) }
+.app-grid--column-16    {grid-template-columns: repeat(16,minmax(0,1fr)) }
+.app-grid--column-17    {grid-template-columns: repeat(17,minmax(0,1fr)) }
+.app-grid--column-18    {grid-template-columns: repeat(18,minmax(0,1fr)) }
+.app-grid--column-19    {grid-template-columns: repeat(19,minmax(0,1fr)) }
+.app-grid--column-20    {grid-template-columns: repeat(20,minmax(0,1fr)) }
+.app-grid--column-21    {grid-template-columns: repeat(21,minmax(0,1fr)) }
+.app-grid--column-22    {grid-template-columns: repeat(22,minmax(0,1fr)) }
+.app-grid--column-23    {grid-template-columns: repeat(23,minmax(0,1fr)) }
+.app-grid--column-24    {grid-template-columns: repeat(24,minmax(0,1fr)) }
+
