@@ -5,6 +5,5 @@
 </script>
 
 <div>
-    <h2>Body (BlockHTMLContent)</h2>
-    {content.type}
+    {@html content.content.text}
 </div>
