@@ -5,7 +5,7 @@ import type {PageLoad} from "../../.svelte-kit/types/src/routes/[slug]/$types";
 
 export const load: PageLoad = async ({params}) => {
 
-    const request = new Request(`${CMS_BASE_URL}home.json`, {
+    const request = new Request(`${CMS_BASE_URL}/home.json`, {
         method: 'GET',
     })
 
