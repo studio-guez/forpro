@@ -17,9 +17,10 @@
     >
         {#each Object.keys(data.body) as section}
             {@const content = data.body[section].content}
+            {@const image = data.body[section].image}
 
             {#if content.type === 'cta'}
-                <BlockCta content="{content}" />
+                <BlockCta content="{content}" image="{image}"/>
 
             {:else if content.type === 'quote'}
                 <BlockQuote content="{content}" />
