@@ -3,7 +3,7 @@ FROM php:8.1-apache
 
 # Install the PHP extensions we need
 RUN apt-get update && \
-    apt-get install -y --no-install-recommits libpng-dev libonig-dev libxml2-dev zip unzip && \
+    apt-get install -y libpng-dev libonig-dev libxml2-dev zip unzip && \
     rm -rf /var/lib/apt/lists/* && \
     docker-php-ext-install -j "$(nproc)" pdo_mysql mbstring xml gd
 
@@ -37,4 +37,4 @@ VOLUME /var/www/html
 COPY . /var/www/html/
 
 # Set server name
-RUN echo 'ServerName api.forpro.mediumsans.studio' >> /etc/apache2/conf-available/fqdn.conf && a2enconf fqdn
+RUN echo 'ServerName forpro-admin.sdrvl.ch' >> /etc/apache2/conf-available/fqdn.conf && a2enconf fqdn
