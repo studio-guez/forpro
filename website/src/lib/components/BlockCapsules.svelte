@@ -4,7 +4,72 @@
     export let content: ICapsules;
 </script>
 
-<div>
-    <h2>capsule</h2>
-    {content.type}
+<div class="s-block-capsule {content.content.style} app-grid--column-2"
+>
+    {#each content.content.capsules as capsule}
+        <div class="s-block-capsule__item app-flex app-flex--column app-flex--align_center"
+        >
+            <div class="s-block-capsule__item__content">
+                <h3 class="s-block-capsule__item__content__title"
+                >{capsule.title}</h3>
+                <div class="s-block-capsule__item__content__text app-remove-margin-child"
+                >{@html capsule.text}</div>
+            </div>
+
+            {#if capsule.style === 'style1'}
+                <img class="s-block-capsule__item__img" src="/svg/Forme1-03.svg" alt="graphique pour illustrer un item"/>
+            {:else if capsule.style === 'style2' }
+                <img class="s-block-capsule__item__img" src="/svg/Forme1-11.svg" alt="graphique pour illustrer un item"/>
+            {:else if capsule.style === 'style3' }
+                <img class="s-block-capsule__item__img" src="/svg/Forme1-12.svg" alt="graphique pour illustrer un item"/>
+            {:else if capsule.style === 'style4' }
+                <img class="s-block-capsule__item__img" src="/svg/Forme1-14.svg" alt="graphique pour illustrer un item"/>
+            {/if}
+        </div>
+    {/each}
 </div>
+
+<style lang="scss">
+    .s-block-capsule__item {
+      position: relative;
+    }
+    .s-block-capsule__item__content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .s-block-capsule__item__content__title {
+      margin: 0;
+      padding: .4rem 1rem .6rem;
+      background: var(--app-color--blue);
+      color: white;
+      line-height: 1em;
+      font-size: 3vw;
+      border-radius: 10em;
+      text-align: center;
+    }
+    .s-block-capsule__item__content__text {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      color: var(--app-color--blue);
+      line-height: 1em;
+      font-size: 3vw;
+      width: 100%;
+      text-align: center;
+    }
+    .s-block-capsule__item__img {
+      display: block;
+      position: relative;
+      width: 75%;
+      height: auto;
+    }
+</style>
+
+
