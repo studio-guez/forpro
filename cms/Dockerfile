@@ -1,40 +1,15 @@
-FROM ubuntu:22.04
+FROM php:8.1-apache
 
-ENV TZ=Europe/Berlin
+RUN a2enmod ssl && a2enmod rewrite
 
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+COPY ./apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
-ARG DEBIAN_FRONTEND=noninteractive
+WORKDIR /var/www/html
 
-RUN apt-get update && apt-get install -y \
-  apache2 \
-  apache2-utils \
-  ca-certificates \
-  php \
-  libapache2-mod-php \
-  php-curl \
-  php-dom \
-  php-gd \
-  php-intl \
-  php-json \
-  php-mbstring \
-  php-xml \
-  php-zip && \
-  apt-get clean && rm -rf /var/lib/apt/lists/*
+COPY . .
 
-COPY ./conf/default.conf /etc/apache2/sites-available/000-default.conf
-
-RUN rm /var/www/html/*
-
-COPY . /var/www/html/
-
-RUN a2enmod headers rewrite
-
-COPY entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
-ENTRYPOINT ["entrypoint.sh"]
+RUN chown -R www-data:www-data .
+RUN chmod -R 755 .
 
 EXPOSE 80
-
-CMD [ "/usr/sbin/apache2ctl", "-DFOREGROUND" ]
+EXPOSE 443
