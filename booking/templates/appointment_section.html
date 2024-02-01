@@ -1,0 +1,87 @@
+{% block appointment_section %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 col-sm-12 customsection hidden-sm hidden-xs">
+                <img src="{{ barbershop.picture_appointment.url }}" alt="images">
+            </div>
+
+            <div class="col-md-7 col-sm-12">
+                <div class="box-appointment-full clearfix">
+                    <div class="appoform-wrapper">
+                        <div class="section-title text-left">
+                            <h4>Remplissez tous les champs</h4>
+                            <h3>PRENDRE RENDEZ-VOUS</h3>
+                        </div>
+                        <form id="recaptcha-form" method="post">
+                            {% csrf_token %}
+                            <fieldset class="row appoform">
+                                <div class="col-md-6 text-center">
+                                    {{ form.srv_cho }}
+                                </div>
+
+                                <div class="col-md-6">
+                                    {{ form.brb_cho }}
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input type="text" placeholder="Sélectionnez une Date" class="form-control" id="datepicker" readonly="readonly">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="sr-only">Votre Nom*</label>
+                                    {{ form.cus_name }}
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="sr-only">Votre Numéro</label>
+                                    {{ form.cus_phone }}
+                                </div>
+
+                                <div class="col-md-6">
+                                    {{ form.cus_email }}
+                                </div>
+
+                                <div class="col-md-12">
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            {% if messages.level == 20 %}
+                                                <div class="alert  alert-warning">
+                                            {% elif messages.level == 25 %}
+                                                <div class="alert alert-success">
+                                            {% elif messages.level == 25 %}
+                                                <div class="alert alert-error">
+                                            {% endif %}
+                                        {{ message }}
+                                        </div>
+                                        {% endfor %}
+                                    {% else %}
+                                    <div id="info" class="text-center">
+                                        <label style="margin: 20px">Choisissez un service, puis un barbier, ainsi qu'une date, afin
+                                            d'avoir accès à ses disponibilités !</label>
+                                    </div>
+                                    {% endif %}
+                                    <div id="schedule" style="margin: 20px 0;">
+                                        <label class="text-center">Disponibilités pour ce barbier, à partir de la date choisit : </label>
+                                        <select name="availability" id="ava-choices" class="selectpicker" placeholder="Select State">
+                                        </select>
+                                    </div>
+                                    <div class="spinner">
+                                        <div class="double-bounce1"></div>
+                                        <div class="double-bounce2"></div>
+                                    </div>
+                                    <button
+                                            data-sitekey="6LdsYEMUAAAAABNxnagMJTC6F5l02QFiPbeF7j3z"
+                                            data-callback="recaptchaCallback"
+                                            data-badge="inline"
+                                            class="g-recaptcha btn btn-primary btn-block" type="submit">
+                                        Prendre Rendez-Vous
+                                    </button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div><!-- end form-container -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock appointment_section %}
