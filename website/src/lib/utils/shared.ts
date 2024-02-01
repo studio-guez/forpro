@@ -1,10 +1,5 @@
-import {EASYAPPOINTMENTS_API_TOKEN} from "$lib/utils/constants";
-
 const headers = new Headers();
 headers.append('Content-Type', 'application/json');
-headers.append('Access-Control-Allow-Origin', 'http://localhost:8003');
-headers.append('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-headers.append('Authorization', `Bearer ${EASYAPPOINTMENTS_API_TOKEN}`);
 
 export const getHeaders = (): Headers => {
     return headers;
