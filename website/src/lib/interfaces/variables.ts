@@ -1,7 +1,6 @@
 export interface Variables {
     readonly CMS_BASE_URL: string;
-    readonly EASYAPPOINTMENTS_BASE_URL: string;
-    readonly EASYAPPOINTMENTS_API_TOKEN: string;
+    readonly BOOKING_BASE_URL: string;
 }
 
 export interface Slot {
