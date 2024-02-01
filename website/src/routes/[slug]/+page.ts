@@ -7,7 +7,7 @@ export const prerender = false;
 
 export const load: PageLoad = async ({params}) => {
 
-    const request = new Request(`${CMS_BASE_URL}${params.slug}.json`, {
+    const request = new Request(`${CMS_BASE_URL}/${params.slug}.json`, {
         method: 'GET',
     })
 
