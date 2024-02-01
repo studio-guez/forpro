@@ -1,5 +1,5 @@
 import type {Actions, PageServerLoad} from './$types';
-import {CMS_BASE_URL} from "$lib/utils/constants";
+import {variables} from "$lib/utils/constants";
 import type {BookingCMSResponse} from "$lib/interfaces/variables";
 import {
     createAppointment,
@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 export const prerender = false;
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
-    const cmsBookingUrl = `${CMS_BASE_URL}/booking`
+    const cmsBookingUrl = `${variables.CMS_BASE_URL}/booking`
     const providerId = params.providerId;
 
     let availabilities = [];

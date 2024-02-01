@@ -1,4 +1,4 @@
-import type {Slot, Service, Customer, Appointment} from '$lib/interfaces/variables';
+import type {Slot, Service, Appointment} from '$lib/interfaces/variables';
 import {
     getAppointmentsUrl,
     getAvailabilitiesUrl,
