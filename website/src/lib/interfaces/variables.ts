@@ -26,14 +26,7 @@ export interface BookingCMSResponse {
 export interface Service {
     id: number,
     name: string,
-    duration: number,
-    price: number,
-    currency: string,
-    location: string,
-    description: string,
-    availabilitiesType: string,
-    attendantsNumber: number,
-    categoryId: number | null
+    duration: string,
 }
 
 export interface Provider {
