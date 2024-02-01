@@ -1,0 +1,28 @@
+{% block cuts_section %}
+    <div class="container">
+        <div class="section-title text-center">
+            <h4>Besoin d'inspiration ?</h4>
+            <h3>Nos Coupes</h3>
+            <hr>
+        </div><!-- end title -->
+
+        <div class="gallery-widget">
+            <div class="row">
+                {% for cut in cuts %}
+                    <div class="col-md-2 col-sm-4 col-xs-4">
+                        <div class="post-media-cut entry">
+                            <img src="{{ cut.picture.url }}" alt="" class="img-responsive">
+                            <!-- end magnifier -->
+                        </div>
+                        <!-- end post-media -->
+                    </div>
+                    <!-- end col -->
+                {% endfor %}
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end gallery widget -->
+
+        <hr class="invis">
+    </div><!-- end container -->
+{% endblock %}
