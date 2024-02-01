@@ -3,10 +3,10 @@ import {CMS_BASE_URL} from "$lib/utils/constants";
 import type {BookingCMSResponse} from "$lib/interfaces/variables";
 import {
     createAppointment,
-    createCustomer,
-    getAvailableSlots, getCustomer,
+    getAvailableSlots,
     getServicesFromProvider
-} from "$lib/utils/easyappointments/api";
+} from "$lib/utils/booking/api";
+import dayjs from "dayjs";
 
 export const prerender = false;
 
@@ -14,39 +14,40 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     const cmsBookingUrl = `${CMS_BASE_URL}/booking`
     const providerId = params.providerId;
 
+    let availabilities = [];
+
     const res = await fetch(cmsBookingUrl);
     const content: BookingCMSResponse = await res.json();
 
     const services = await getServicesFromProvider(providerId);
 
-    const today = new Date().toDateString();
-    const availabilities = await getAvailableSlots(today, services[0].id, providerId);
+    const today = dayjs().format('YYYY-MM-DD');
+
+    if (services !== undefined) {
+        availabilities = await getAvailableSlots(today, services[0].id, providerId);
+    }
 
     return { content, services, providerId, availabilities };
 };
 
 export const actions = {
-    default: async ({ cookies, request }) => {
+    default: async ({ request }) => {
         const { email, firstname, lastname, phone, providerId, serviceId, notes, dateAndSlotAndDuration } = await getFormData(request);
         const { start, end } = createDates(dateAndSlotAndDuration);
-
-        let customer = await getCustomer(email);
-        if (customer) {
-            customer = customer.find((c) => c.email === email);
-        }
-
-        if (customer === undefined) {
-            customer = await createCustomer(email, firstname, lastname, phone);
-        }
 
         const appointment = await createAppointment(
             start,
             end,
             serviceId,
             providerId,
-            customer.id,
-            notes
+            notes,
+            firstname,
+            lastname,
+            phone,
+            email
         );
+
+        console.log(appointment);
 
         return { appointment };
     },
@@ -66,14 +67,16 @@ const getFormData = async (request) => {
 }
 
 const createDates = ({ date, slot, duration }) => {
-    let start = new Date(`${date}T${slot}:00`)
+    const start = dayjs(`${date}T${slot}:00`);
+    console.log(start);
 
-    // Create end date from the timestamp of start
-    let end = new Date(start.getTime() + duration * 60000);  // Convert minutes to milliseconds
+    // Create end date from start plus duration
+    const end = start.add(duration, 'minute');
+    console.log(end);
 
-    // Format iso string to be compatible with easyappointments
-    let formattedStart = start.toISOString().replace(/\.\d{3}Z$/, '').replace('T', ' ');
-    let formattedEnd = end.toISOString().replace(/\.\d{3}Z$/, '').replace('T', ' ');
+    // Format the date to be compatible with easyappointments
+    const formattedStart = start.format('YYYY-MM-DD HH:mm:ss');
+    const formattedEnd = end.format('YYYY-MM-DD HH:mm:ss');
 
     return { start: formattedStart, end: formattedEnd };
 };

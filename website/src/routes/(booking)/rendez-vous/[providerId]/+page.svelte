@@ -2,11 +2,12 @@
     import SveltyPicker, {config} from "svelty-picker";
     import {fr} from 'svelty-picker/i18n';
 
-    import {getAvailableSlots} from "$lib/utils/easyappointments/api";
+    import {getAvailableSlots} from "$lib/utils/booking/api";
     import BookingSlots from "$lib/components/BookingSlots.svelte";
     import type {Slot} from "$lib/interfaces/variables";
 
     import { enhance } from "$app/forms";
+    import dayjs from "dayjs";
 
     export let data;
     export let form;
@@ -16,13 +17,13 @@
 
     const providerId = data.providerId;
 
-    let selectedServiceId: number = data.services[0].id;
+    let selectedServiceId: number = data.services ? data.services[0].id : null;
     let selectedSlotId: number = null;
-    let selectedDate: string = null;
+    let selectedDate: string = dayjs().format('YYYY-MM-DD');
 
     let formattedDate: string = null;
 
-    let services = data.services;
+    let services = data.services ?? [];
     let slots: Slot[] = data.availabilities;
     let loading: boolean = false;
 
@@ -43,10 +44,6 @@
 
     const getServiceDuration = (id: number) => {
         return services.find(service => service.id === id).duration;
-    }
-
-    function disableDatesIfNotAvailable(date) {
-        return date.getDay() === 0 || date.getDay() === 6
     }
 </script>
 
@@ -176,8 +173,7 @@
                                         </div>
                                         <form method="POST" class="flex flex-col flex-1 justify-between mt-6 w-full" use:enhance>
                                             <input hidden name="serviceId" value={selectedServiceId}/>
-                                            <input hidden name="duration"
-                                                   value="{getServiceDuration(selectedServiceId)}"/>
+                                            <input hidden name="duration" value="{getServiceDuration(selectedServiceId)}"/>
                                             <input hidden name="providerId" value={providerId}/>
                                             <input hidden name="slot" value={selectedSlotId}/>
                                             <input hidden name="date" value={selectedDate}/>
