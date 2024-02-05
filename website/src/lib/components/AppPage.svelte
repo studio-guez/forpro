@@ -2,6 +2,7 @@
 >
     {#if (data.options.hero && data.options.hero.text)}
         <div class="s-page__hero"
+             class:first-child-is-animation={Object.values(data.body)[0]?.content?.type === 'animated-list'}
              style="background-color: {data.options.hero.backgroundcolor}">
             <h1 class="s-page__hero__title"
                 style="color: {data.options.hero.textcolor}">{data.options.hero.text}</h1>
@@ -9,6 +10,7 @@
     {/if}
 
     <div class="s-page__content app-flex app-flex--justify_center"
+         style="row-gap: 8rem"
     >
         {#each Object.keys(data.body) as section}
             {@const content = data.body[section].content}
@@ -111,12 +113,17 @@
     overflow: hidden;
     box-sizing: border-box;
     width: 100%;
-    padding: 2rem 1rem;
-    min-height: 75vh;
+    padding: 4rem 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+
+    &.first-child-is-animation {
+      padding-top: 0;
+      padding-bottom: 1rem;
+      margin-bottom: -2rem;
+    }
   }
 
 </style>

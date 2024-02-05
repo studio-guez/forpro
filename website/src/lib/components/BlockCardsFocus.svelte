@@ -6,9 +6,9 @@
     let cardsFocusElement: HTMLElement
 
     const mapImage: { entreprises: string; jeunes: string; entourage: string } = {
-        'entreprises': 'https://images.unsplash.com/photo-1494883759339-0b042055a4ee?q=80&w=2800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'entourage': 'https://images.unsplash.com/photo-1472220625704-91e1462799b2?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'jeunes': 'https://images.unsplash.com/photo-1507537509458-b8312d35a233?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'entreprises': '/Forpro©photo-RaphaelleMueller-Entreprises-2.jpg',
+        'entourage': '/Forpro©photo-RaphaelleMueller-Entourage-1.jpg',
+        'jeunes': '/Forpro©photo-RaphaelleMueller-Jeunes-1.jpg',
     }
 
     function getImageUrl(card: ICardFocusItem) {
@@ -57,15 +57,30 @@
       background: var(--app-color--blue);
       position: relative;
       overflow: hidden;
+
+      &.entreprises {
+        background: var(--app-color--blue);
+      }
+      &.jeunes {
+        background: var(--app-color--orange);
+      }
+      &.entourage {
+        background: var(--app-color--pink);
+      }
     }
 
     .s-card-focus__card__text-box {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
       z-index: 1;
       width: 100%;
+      transform: translate(-50%, -50%) scale(1.1);
+
+      .is-visible & {
+        transition: 3s cubic-bezier(0.5,0,0,1);
+        transform: translate(-50%, -50%) scale(1);
+      }
     }
 
     .s-card-focus__card__title {
@@ -74,37 +89,67 @@
       line-height: 4rem;
       text-align: center;
       width: 100%;
-      max-width: 10em;
+      max-width: 12em;
+      font-weight: 600;
     }
 
     .s-card-focus__card__subtitle {
       color: var(--app-color--blue);
+      font-weight: 500;
       font-size: 2rem;
       line-height: 2rem;
       text-align: center;
       width: 100%;
-      max-width: 10em;
+      max-width: 15em;
+      margin-top: 1rem;
     }
 
     .s-card_focus__img {
       position: relative;
       display: block;
-      mask: url('/svg/Forme1-05.svg'), url('/svg/Forme1-05.svg');
       mask-repeat: no-repeat;
       mask-origin: border-box;
       mask-position: -210%, 500%;
       animation-fill-mode: forwards !important;
+      height: 80vh;
+      width: 100%;
+      object-fit: cover;
+      mask-size: auto 90%, auto 110%;
+      mask-image: url('/svg/Pilule-0.svg'), url('/svg/Pilule-45-droite.svg');
+
+      .jeunes & {
+        mask-image: url('/svg/Ovale-0.svg'), url('/svg/Ovale-45.svg');
+      }
+
       .is-visible & {
-        animation: mask-animation 2s;
+        animation: mask-animation 2.5s cubic-bezier(0.5,0,0,1);
+      }
+
+      .is-visible.entreprises & {
+        animation: mask-animation-2 2.5s cubic-bezier(0.5,0,0,1);
       }
     }
 
     @keyframes mask-animation {
       0% {
-        mask-position: -210%, 500%;
+        mask-position: -170%, 150%;
+        transform: scale(.85);
       }
       100% {
         mask-position: 30%, 90%;
+        transform: scale(1);
+      }
+    }
+
+
+    @keyframes mask-animation-2 {
+      0% {
+        mask-position: 0% -400%, 90% -500%;
+        transform: scale(.85);
+      }
+      100% {
+        mask-position: 30%, 90%;
+        transform: scale(1);
       }
     }
 </style>
