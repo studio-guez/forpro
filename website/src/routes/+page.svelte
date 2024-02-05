@@ -26,6 +26,7 @@
 .s-page-home__header {
   position: relative;
   height: 80vh;
+  min-height: 30rem;
 }
 
 .s-page-home__header__logo {
