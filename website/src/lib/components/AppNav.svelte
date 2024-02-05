@@ -19,7 +19,7 @@
                     --app-button--color: var(--app-color--green);
                     --app-button--background-color: var(--app-color--blue);
                 "
-               href="/calendar"
+               href="/rendez-vous"
             >Prendre RDV</a>
             <div>social</div>
             <button class="s-app-nav__icon-menu"
