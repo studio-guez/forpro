@@ -33,5 +33,6 @@
         font-size: 1rem;
         padding: 1rem;
         width: 100%;
+        color: black;
     }
 </style>

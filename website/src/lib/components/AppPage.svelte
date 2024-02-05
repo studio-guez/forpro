@@ -1,10 +1,12 @@
 <main class="s-page"
 >
-    <div class="s-page__hero"
-         style="background-color: {data.options.hero.backgroundcolor}">
-        <h1 class="s-page__hero__title"
-            style="color: {data.options.hero.textcolor}">{data.options.hero.text}</h1>
-    </div>
+    {#if (data.options.hero && data.options.hero.text)}
+        <div class="s-page__hero"
+             style="background-color: {data.options.hero.backgroundcolor}">
+            <h1 class="s-page__hero__title"
+                style="color: {data.options.hero.textcolor}">{data.options.hero.text}</h1>
+        </div>
+    {/if}
 
     {#if data.options.showNewsletter}
         <div class="s-page__newsletter-box">
@@ -12,43 +14,55 @@
         </div>
     {/if}
 
-    <div class="s-page__content"
-
+    <div class="app-flex app-flex--justify_center"
     >
-        {#each Object.keys(data.body) as section}
-            {@const content = data.body[section].content}
-            {@const image = data.body[section].image}
+        <div class="s-page__content app-flex__basis-20-24"
 
-            {#if content.type === 'cta'}
-                <BlockCta content="{content}" image="{image}"/>
+        >
+            {#each Object.keys(data.body) as section}
+                {@const content = data.body[section].content}
+                {@const image = data.body[section].image}
 
-            {:else if content.type === 'quote'}
-                <BlockQuote content="{content}" />
+                {#if content.type === 'cta'}
+                    <BlockCta content="{content}" image="{image}"/>
 
-            {:else if content.type === 'capsules'}
-                <BlockCapsules content="{content}" />
+                {:else if content.type === 'quote'}
+                    <BlockQuote content="{content}" />
 
-            {:else if content.type === 'cards'}
-                <BlockCards content="{content}" />
+                {:else if content.type === 'capsules'}
+                    <BlockCapsules content="{content}" />
 
-            {:else if content.type === 'profiles'}
-                <BlockProfiles content="{content}" />
+                {:else if content.type === 'cards'}
+                    <BlockCards content="{content}" />
 
-            {:else if content.type === 'list'}
-                <BlockList content="{content}" />
+                {:else if content.type === 'profiles'}
+                    <BlockProfiles content="{content}" />
 
-            {:else if content.type === 'dropdown'}
-                <BlockDropdown content="{content}" />
+                {:else if content.type === 'list'}
+                    <BlockList content="{content}" />
 
-            {:else if content.type === 'cards-focus'}
-                <BlockCardsFocus content="{content}" />
+                {:else if content.type === 'dropdown'}
+                    <BlockDropdown content="{content}" />
 
-            {:else if content.type === 'body'}
-                <BlockHTMLContent content="{content}" />
-            {/if}
-        {/each}
-        {data.body}
+                {:else if content.type === 'cards-focus'}
+                    <BlockCardsFocus content="{content}" />
+
+                {:else if content.type === 'body'}
+                    <BlockHTMLContent content="{content}" />
+
+                {:else if content.type === 'animated-list'}
+                    {#if browser}
+                        <LottiePlayer
+                                src="/lottie/desktop-model-jeune_lottie.json"
+                                autoplay="{true}"
+                        />
+                    {/if}
+                {/if}
+
+            {/each}
+        </div>
     </div>
+
 </main>
 
 
@@ -64,6 +78,8 @@
     import BlockDropdown from "$lib/components/BlockDropdown.svelte";
     import BlockHTMLContent from "$lib/components/BlockHTMLContent.svelte";
     import BlockCardsFocus from "$lib/components/BlockCardsFocus.svelte";
+    import {browser} from "$app/environment";
+    import {LottiePlayer} from "@lottiefiles/svelte-lottie-player";
 
     export let data: IPage;
 
@@ -72,6 +88,10 @@
 <style lang="scss">
   .s-page {
     min-height: calc( 100vh - var(--app-nav_height) );
+  }
+
+  .s-page__hero__title {
+    font-weight: 600;
   }
 
   .s-page__hero {
