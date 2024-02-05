@@ -2,18 +2,22 @@
 import {siteInfo} from "../../store";
 </script>
 
-<footer class="s-footer app-grid--column-2 app-width-gutter app-grid--gap_regular"
+<footer class="s-footer app-flex"
 >
-    <div class="app-typo_text-content">
-        {@html $siteInfo.footer}
-    </div>
-    <div>
-        <p>
-            right content
-        </p>
+    <div class="app-grid--column-2 app-width-gutter app-grid--gap_regular s-footer__text">
+        <div class="app-typo_text-content">
+            {@html $siteInfo.footer}
+        </div>
+        <div>
+            <p>
+                right content
+            </p>
+        </div>
     </div>
     <div class="app-flex__basis-1-1">
-        <div style="font-size: 20vw; line-height: 25vw; text-align: center">FORPRO</div>
+        <img class="s-footer__img"
+                alt="logo fix dans le footer, simplment pour le visuel"
+                src="/logo.svg"/>
     </div>
 </footer>
 
@@ -21,6 +25,20 @@ import {siteInfo} from "../../store";
     .s-footer {
       width: 100%;
       box-sizing: border-box;
-      background: #b2b2a1;
+      background: var(--app-color-beige);
+      overflow: hidden;
+      margin-top: 5rem;
+    }
+
+    .s-footer__text {
+       padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .s-footer__img {
+      display: block;
+      width: 90%;
+      bottom: 0;
+      margin: 1rem auto;
     }
 </style>
