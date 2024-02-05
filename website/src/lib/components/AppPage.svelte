@@ -8,60 +8,73 @@
         </div>
     {/if}
 
+    <div class="s-page__content app-flex app-flex--justify_center"
+    >
+        {#each Object.keys(data.body) as section}
+            {@const content = data.body[section].content}
+            {@const image = data.body[section].image}
+
+            {#if content.type === 'cta'}
+                <div class="app-flex__basis-20-24">
+                    <BlockCta content="{content}" image="{image}"/>
+                </div>
+
+            {:else if content.type === 'quote'}
+                <div class="app-flex__basis-20-24">
+                    <BlockQuote content="{content}" />
+                </div>
+
+            {:else if content.type === 'capsules'}
+                <div class="app-flex__basis-20-24">
+                    <BlockCapsules content="{content}" />
+                </div>
+
+            {:else if content.type === 'cards'}
+                <div class="app-flex__basis-20-24">
+                    <BlockCards content="{content}" />
+                </div>
+
+            {:else if content.type === 'profiles'}
+                <div class="app-flex__basis-20-24">
+                    <BlockProfiles content="{content}" />
+                </div>
+
+            {:else if content.type === 'list'}
+                <div class="app-flex__basis-20-24">
+                    <BlockList content="{content}" />
+                </div>
+
+            {:else if content.type === 'dropdown'}
+                <div class="app-flex__basis-20-24">
+                    <BlockDropdown content="{content}" />
+                </div>
+
+            {:else if content.type === 'cards-focus'}
+                <div class="app-flex__basis-24-24">
+                    <BlockCardsFocus content="{content}" />
+                </div>
+
+            {:else if content.type === 'body'}
+                <div class="app-flex__basis-20-24">
+                    <BlockHTMLContent content="{content}" />
+                </div>
+
+            {:else if content.type === 'animated-list'}
+                {#if browser}
+                    <div class="app-flex__basis-20-24">
+                        <BlockAnimatedList/>
+                    </div>
+                {/if}
+            {/if}
+
+        {/each}
+    </div>
+
     {#if data.options.showNewsletter}
         <div class="s-page__newsletter-box">
             <AppNewsletterSignup />
         </div>
     {/if}
-
-    <div class="app-flex app-flex--justify_center"
-    >
-        <div class="s-page__content app-flex__basis-20-24"
-
-        >
-            {#each Object.keys(data.body) as section}
-                {@const content = data.body[section].content}
-                {@const image = data.body[section].image}
-
-                {#if content.type === 'cta'}
-                    <BlockCta content="{content}" image="{image}"/>
-
-                {:else if content.type === 'quote'}
-                    <BlockQuote content="{content}" />
-
-                {:else if content.type === 'capsules'}
-                    <BlockCapsules content="{content}" />
-
-                {:else if content.type === 'cards'}
-                    <BlockCards content="{content}" />
-
-                {:else if content.type === 'profiles'}
-                    <BlockProfiles content="{content}" />
-
-                {:else if content.type === 'list'}
-                    <BlockList content="{content}" />
-
-                {:else if content.type === 'dropdown'}
-                    <BlockDropdown content="{content}" />
-
-                {:else if content.type === 'cards-focus'}
-                    <BlockCardsFocus content="{content}" />
-
-                {:else if content.type === 'body'}
-                    <BlockHTMLContent content="{content}" />
-
-                {:else if content.type === 'animated-list'}
-                    {#if browser}
-                        <LottiePlayer
-                                src="/lottie/desktop-model-jeune_lottie.json"
-                                autoplay="{true}"
-                        />
-                    {/if}
-                {/if}
-
-            {/each}
-        </div>
-    </div>
 
 </main>
 
@@ -79,10 +92,10 @@
     import BlockHTMLContent from "$lib/components/BlockHTMLContent.svelte";
     import BlockCardsFocus from "$lib/components/BlockCardsFocus.svelte";
     import {browser} from "$app/environment";
-    import {LottiePlayer} from "@lottiefiles/svelte-lottie-player";
+    import BlockAnimatedList from "$lib/components/BlockAnimatedList.svelte";
 
     export let data: IPage;
-
+    console.log(data)
 </script>
 
 <style lang="scss">
