@@ -5,6 +5,7 @@
 export interface ISiteInfo {
     "title": string
     "nav": ISiteDataNavItem[]
+    footer: string
 }
 
 export interface ISiteDataNavItem {
