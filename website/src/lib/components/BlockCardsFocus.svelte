@@ -39,9 +39,6 @@
 <div class="s-card-focus"
      bind:this={cardsFocusElement}
 >
-    <h2>cardsFocus</h2>
-    {content.type}
-
     {#each content.content.cards as card}
         <div
                 class="s-card-focus__card {card.style}"

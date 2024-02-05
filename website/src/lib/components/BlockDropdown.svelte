@@ -62,10 +62,6 @@
 </div>
 
 <style lang="scss">
-  .s-dropdown {
-    padding: 5rem 0;
-  }
-
   .s-dropdown__item {
     --s-dropdown-line-width: 3px;
     --s-dropdown-line-spacing: 10px;
