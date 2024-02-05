@@ -21,6 +21,7 @@ echo json_encode([
         'uri'       => $kirbyPage->uri(),
         'hero'      => Utils::getHeroFromPage($kirbyPage),
     ])->data()),
+    'footer'     => $site->page()->content()->footer()->value(),
 ]);
 
 //'title' => $page->title()->value(),
