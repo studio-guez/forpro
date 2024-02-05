@@ -371,6 +371,10 @@
         width: 45px !important;
     }
 
+    :global(.std-btn.svelte-hexbpx.svelte-hexbpx.svelte-hexbpx:hover) {
+        border-radius: 100px !important;
+    }
+
     :root {
         /* general */
         --sdt-bg-main: transparent; /** wrap background color */
