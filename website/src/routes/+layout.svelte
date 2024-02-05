@@ -4,15 +4,15 @@
     import AppNav from "$lib/components/AppNav.svelte";
     import AppFooter from "$lib/components/AppFooter.svelte";
     import type {ISiteInfo} from "$lib/interfaces/cmsApiResponse";
-    import {fly} from "svelte/transition"
     import { page } from '$app/stores';
-    import {afterNavigate} from "$app/navigation";
+    import {beforeNavigate} from "$app/navigation";
 
     export let data: ISiteInfo;
 
     siteInfo.set(data)
 
-    afterNavigate(() => {
+    beforeNavigate(() => {
+      menuIsOpen.set(false)
       document.querySelectorAll('.s-layout').forEach(value => {
         value.scrollTo({top: 0, behavior: 'smooth'})
       })
@@ -27,11 +27,10 @@
     <AppNav/>
   </div>
 
-  {#key $page?.params.slug}
+  {#key $page.params.slug}
   <div class="s-layout__main"
-       in:fly={{x:-200, duration: 300, delay: 300 }} out:fly={{ duration: 300 }}
   >
-    <slot/>
+    <slot />
   </div>
   {/key}
 
