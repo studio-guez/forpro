@@ -12,7 +12,7 @@ use Kirby\Cms\Site;
 
 echo json_encode([
     'title' => $site->title()->value(),
-    'nav'   => $site->children()->map(fn($kirbyPage) => [
+    'nav'   => array_values($site->children()->map(fn($kirbyPage) => [
         'title'     => $kirbyPage->title()->value(),
         'heroTitle' => $kirbyPage->content()->heroTitle()->value(),
         'showmenu'  => (boolean)$kirbyPage->showmenu()->value(),
@@ -20,7 +20,7 @@ echo json_encode([
         'url'       => $kirbyPage->url(),
         'uri'       => $kirbyPage->uri(),
         'hero'      => Utils::getHeroFromPage($kirbyPage),
-    ]),
+    ])->data()),
 ]);
 
 //'title' => $page->title()->value(),
