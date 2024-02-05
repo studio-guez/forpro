@@ -31,18 +31,36 @@
     .s-block-cta__button {
       background: var(--s-cat-background-color);
       color: var(--s-cat-color);
-      padding: max(2rem, 4vw) max(4rem, 6vw);
-      align-items: center;
       box-sizing: border-box;
-      border-radius: max(1rem, 2vw);
       text-decoration: none;
       text-align: center;
       display: inline-block;
+      white-space: nowrap;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 5;
+      font-size: max(1rem, 2vw);
       line-height: 1em;
-      font-size: max(2rem, 4vw);
+
+      &.style1 {
+        width: 100%;
+
+        > * {
+          padding-top: .5rem;
+          padding-bottom: .5rem;
+            animation: scroll-animation 50s linear infinite;
+        }
+      }
 
       &.style2 {
+        font-weight: 600;
+        font-size: max(1rem, 2vw);
+        align-items: center;
+        padding: max(1rem, 2vw) max(2rem, 4vw);
         border-radius: 10em;
+        position: relative;
+        z-index: 0;
       }
 
       &.has-icon {
@@ -58,4 +76,12 @@
       margin: auto;
     }
 
+    @keyframes scroll-animation {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
 </style>

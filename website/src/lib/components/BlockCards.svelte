@@ -21,7 +21,7 @@
                     class="s-cards__card__content"
             >
                 <h3 class="s-cards__card__content__tilte">{card.title}</h3>
-                <div>{@html card.text}</div>
+                <div class="s-cards__card__content__content app-typo_text-content">{@html card.text}</div>
             </div>
 
             {#if (card.link)}
@@ -81,6 +81,10 @@
       flex-shrink: 1;
       z-index: 1;
 
+      .s-cards__card:nth-child(2n) & {
+        background: var(--app-color--pink);
+      }
+
       .s-cards__card__img + & {
         border-top-color: var(--app-color--grey--light);
         margin-top: -1.5rem;
@@ -101,5 +105,14 @@
       line-height: 2rem;
       margin-top: 0;
       text-align: center;
+      font-weight: 600;
+
+      .s-cards__card:nth-child(2n) & {
+        color: white;
+      }
+    }
+
+    .s-cards__card__content__content {
+      margin-top: 1rem;
     }
 </style>

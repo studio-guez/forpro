@@ -113,7 +113,7 @@
     transform-style: preserve-3d;
 
     @media (min-width: scss-params.$fp-breakpoint-sm) {
-      padding-top: 4rem;
+      padding-top: 1rem;
       padding-bottom: 4rem;
     }
   }

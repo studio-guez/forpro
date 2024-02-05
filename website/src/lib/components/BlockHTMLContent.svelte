@@ -4,6 +4,6 @@
     export let content: IHtmlContent;
 </script>
 
-<div>
+<div class="s-block-html app-typo_text-content app-typo_text-content--typo-large" >
     {@html content.content.text}
 </div>

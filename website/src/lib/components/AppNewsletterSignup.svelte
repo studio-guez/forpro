@@ -16,6 +16,7 @@
         border-radius: max(1rem, 2vw);
         flex-wrap: nowrap;
         gap: 1rem;
+        margin-top: 5rem;
     }
 
     .s-newsletter__symbole {
