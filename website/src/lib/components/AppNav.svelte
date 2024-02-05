@@ -5,7 +5,7 @@
 </script>
 
 <nav class="s-app-nav app-flex app-flex--justify_space-between app-flex--align_center">
-    <div class="app-flex__basis-auto"
+    <div class="app-flex__basis-auto s-app-nav__logo--box"
     >
         <a href="/"><img class="s-app-nav__logo" alt="retour à la home" src="/logo.svg"></a>
     </div>
@@ -21,7 +21,13 @@
                 "
                href="/rendez-vous"
             >Prendre RDV</a>
-            <div>social</div>
+            <div class="s-app-nav__social-icon" >
+                <img src="/social-1.svg" alt="social link" >
+                <img src="/social-2.svg" alt="social link" >
+                <img src="/social-3.svg" alt="social link" >
+                <img src="/social-4.svg" alt="social link" >
+                <img src="/social-5.svg" alt="social link" >
+            </div>
             <button class="s-app-nav__icon-menu"
                     on:click={() => menuIsOpen.set(!$menuIsOpen)}>
                 {#if ($menuIsOpen)}
@@ -57,9 +63,28 @@
       justify-content: space-between;
     }
 
+    .s-app-nav__social-icon {
+      background: var(--app-color--blue);
+      display: flex;
+      padding: .25rem 1rem;
+      gap: .5rem;
+      border-radius: 1rem;
+
+      > * {
+        display: block;
+        height: 1.5rem;
+      }
+    }
+
+    .s-app-nav__logo--box {
+      background: white;
+      padding: .5rem 1rem;
+      border-radius: 2rem;
+    }
+
     .s-app-nav__logo {
       display: block;
-      height: 1rem;
+      height: 1.15rem;
     }
 
     .s-app-nav__buttons {
@@ -68,14 +93,16 @@
     }
 
     .s-app-nav__list {
+      --position: 5px;
       border-radius: 2rem;
       background: white;
       border: solid var(--app-line-with) black;
-      position: absolute;
+      position: fixed;
       display: block;
-      top: 0;
-      right: var(--app-gutter_regular);
-      width: 50%;
+      top: var(--position);
+      right: var(--position);
+      width: calc(50% - var(--position) );
+      height: calc(100% - var(--position) * 2 );
       padding: var(--app-nav_height) 2rem 2rem;
       line-height: 1.25em;
       font-size: 2rem;
