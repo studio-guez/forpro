@@ -41,12 +41,16 @@ INSTALLED_APPS = [
     'django_csv_exports',
     'django.utils',
     'provider',
-    'captcha',
+    'booking',
+    'appointment',
     'agenda',
     'timezone_field',
+    'tinymce',
     'gunicorn',
     'djradicale',
     'django_extensions',
+    'debug_toolbar',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -86,7 +90,7 @@ WSGI_APPLICATION = 'booking.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sharpness_dev',
+        'NAME': 'booking',
         'USER': 'postgres',
         'PASSWORD': 'Welcome1234',
         'HOST': 'localhost',
