@@ -12,3 +12,18 @@ h3 {
   font-size: 2.5rem;
   line-height: 3rem;
 }
+
+
+.app-typo_text-content {
+  > *:first-child {
+    margin-top: 0;
+  }
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
