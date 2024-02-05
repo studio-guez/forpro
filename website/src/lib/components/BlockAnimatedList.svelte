@@ -11,6 +11,8 @@ import {LottiePlayer} from "@lottiefiles/svelte-lottie-player";
 
 <style lang="scss">
     .s-animated-list {
+      height: 80vh !important;
+
 
         :global(.lottie-player svg) {
           height: 80vh !important;
