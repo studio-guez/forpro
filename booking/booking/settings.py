@@ -15,6 +15,14 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 INTERNAL_IPS = ['127.0.0.1']
 
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:5173',
+    'http://localhost:8080',
+    'https://localhost:8000',
+    'https://forpro-calendar.sdrvl.ch',
+    'https://forpro-website.sdrvl.ch',
+]
+
 ADMINS = [('Samuel', 'samuel@mediumsans.studio'),]
 SERVER_EMAIL = 'django@for-pro.ch'
 
