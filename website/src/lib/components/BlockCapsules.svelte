@@ -56,6 +56,7 @@
       font-size: 3vw;
       border-radius: 10em;
       text-align: center;
+      font-weight: 500;
     }
     .s-block-capsule__item__content__text {
       padding-top: 1rem;
