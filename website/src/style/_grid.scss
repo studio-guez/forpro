@@ -11,9 +11,18 @@
 
   &.app-flex--nowrap {flex-wrap: nowrap}
 
-  &.app-flex--gap_half   {gap: var(--app-flex--gap_half)}
+  &.app-flex--gap_half    {gap: var(--app-flex--gap_half)}
   &.app-flex--gap_regular {gap: var(--app-gutter_regular)}
   &.app-flex--gap_large   {gap: var(--app-gutter_large)}
+
+  &.app-flex--column-gap_half    {column-gap: var(--app-flex--gap_half)}
+  &.app-flex--column-gap_regular {column-gap: var(--app-gutter_regular)}
+  &.app-flex--column-gap_large   {column-gap: var(--app-gutter_large)}
+
+  &.app-flex--row-gap_half    {row-gap: var(--app-flex--gap_half)}
+  &.app-flex--row-gap_regular {row-gap: var(--app-gutter_regular)}
+  &.app-flex--row-gap_large   {row-gap: var(--app-gutter_large)}
+
 
   &.app-flex--row             {flex-direction: row;}
   &.app-flex--row-reverse     {flex-direction: row-reverse;}
@@ -87,7 +96,18 @@
 [class*=app-grid--] {
   display: grid;
   gap: var(--app-gutter_regular);
+
+  &.app-grid--gap_half    {gap: var(--app-flex--gap_half)}
+  &.app-grid--gap_regular {gap: var(--app-gutter_regular)}
+  &.app-grid--gap_large   {gap: var(--app-gutter_large)}
+  &.app-grid--column-gap_half    {column-gap: var(--app-flex--gap_half)}
+  &.app-grid--column-gap_regular {column-gap: var(--app-gutter_regular)}
+  &.app-grid--column-gap_large   {column-gap: var(--app-gutter_large)}
+  &.app-grid--row-gap_half    {row-gap: var(--app-flex--gap_half)}
+  &.app-grid--row-gap_regular {row-gap: var(--app-gutter_regular)}
+  &.app-grid--row-gap_large   {row-gap: var(--app-gutter_large)}
 }
+
 
 .app-grid--column-1     {grid-template-columns: repeat(1,minmax(0,1fr)); }
 .app-grid--column-2     {grid-template-columns: repeat(2,minmax(0,1fr)); }

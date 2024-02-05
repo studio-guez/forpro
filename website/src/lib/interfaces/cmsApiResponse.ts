@@ -1,4 +1,27 @@
 /**
+ * site info
+ */
+
+export interface ISiteInfo {
+    "title": string
+    "nav": ISiteDataNavItem[]
+}
+
+export interface ISiteDataNavItem {
+    "title": string | null
+    "heroTitle": "string" | null
+    "showmenu": boolean | null
+    "slug": string | null
+    "url": string | null
+    "uri": string | null
+    "hero": {
+        "text": string | null
+        "backgroundcolor": string | null
+        "textcolor": string | null
+    } | null
+}
+
+/**
  * PAGE
  */
 export interface IPage {
@@ -28,7 +51,7 @@ export interface IBody {
 export interface IBlock {
     id: string
     isHidden: boolean
-    type: 'cta' | 'quote' | 'capsules' | 'cards' | 'profiles' | 'list' | 'dropdown' | 'cards-focus' | 'body' | 'map'
+    type: 'cta' | 'quote' | 'capsules' | 'cards' | 'profiles' | 'list' | 'dropdown' | 'cards-focus' | 'body' | 'map' | 'animated-list'
 }
 
 export interface ISeo {
