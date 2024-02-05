@@ -4,6 +4,9 @@
     <section class="s-page-home__header app-flex app-flex--column app-flex--justify_center app-flex--align_center">
         <img class="s-page-home__header__logo"
                 src="/logo.svg" alt="logo">
+        <img class="s-page-home__header__logo"
+             src="/logo.svg" alt="logo">
+
     </section>
     <AppPage
             data="{data}"
@@ -27,6 +30,10 @@
 
 .s-page-home__header__logo {
   display: block;
-  width: 75%;
+  width: 90%;
+
+  &+& {
+    margin-top: 2rem;
+  }
 }
 </style>
