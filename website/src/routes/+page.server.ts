@@ -1,9 +1,11 @@
 import {fetchFromAPI} from "$lib/utils/shared";
 import {type IPage} from "$lib/interfaces/cmsApiResponse";
 import {variables} from "$lib/utils/constants";
-import type {PageLoad} from "../../.svelte-kit/types/src/routes/[slug]/$types";
+import type {PageServerLoad} from "../../.svelte-kit/types/src/routes/$types";
 
-export const load: PageLoad = async ({params}) => {
+export const prerender = false;
+
+export const load: PageServerLoad = async () => {
 
     const request = new Request(`${variables.CMS_BASE_URL}/home.json`, {
         method: 'GET',

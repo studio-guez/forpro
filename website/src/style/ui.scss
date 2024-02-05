@@ -1,4 +1,3 @@
-button,
 .app-button {
   --app-button--color:            black;
   --app-button--background-color: white;
@@ -15,6 +14,7 @@ button,
   transform: scale(1);
   color: var(--app-button--color);
   background: var(--app-button--background-color);
+  cursor: pointer;
 
   &:after {
     content: '';

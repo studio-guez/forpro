@@ -1,8 +1,21 @@
 <script lang="ts">
     import "../style/_main.scss"
-    import {menuIsOpen} from "../store";
+    import {menuIsOpen, siteInfo} from "../store";
     import AppNav from "$lib/components/AppNav.svelte";
     import AppFooter from "$lib/components/AppFooter.svelte";
+    import type {ISiteInfo} from "$lib/interfaces/cmsApiResponse";
+    import {fly} from "svelte/transition"
+    import { page } from '$app/stores';
+    import {afterNavigate, beforeNavigate} from "$app/navigation";
+
+    export let data: ISiteInfo;
+
+    siteInfo.set(data)
+
+    afterNavigate(() => {
+      document.querySelector('.s-layout')?.scrollTo({top: 0, behavior: 'smooth'})
+    })
+
 </script>
 
 <div class="s-layout"
@@ -12,10 +25,13 @@
     <AppNav/>
   </div>
 
+  {#key $page?.params.slug}
   <div class="s-layout__main"
+       in:fly={{x:-200, duration: 300, delay: 300 }} out:fly={{ duration: 300 }}
   >
     <slot/>
   </div>
+  {/key}
 
   <div class="s-layout__footer-box"
   >

@@ -34,7 +34,13 @@
                      tabindex="0"
                 >
                     <div>{dropdown.title}</div>
-                    <div>{currentIndex}</div>
+                    <div class="s-dropdown__item__header__icon">
+                        {#if (currentIndex === index) }
+                            <img alt="fermer la description" src="/remove_FILL0_wght400_GRAD0_opsz24.svg">
+                        {:else}
+                            <img alt="ouvrir la description" src="/add_FILL0_wght400_GRAD0_opsz24.svg">
+                        {/if}
+                    </div>
                 </div>
                 {#if (currentIndex === index)}
                     <div class="s-dropdown__item__content app-remove-margin-child"
@@ -57,7 +63,7 @@
 
 <style lang="scss">
   .s-dropdown {
-    padding: 5rem 0rem;
+    padding: 5rem 0;
   }
 
   .s-dropdown__item {
@@ -112,6 +118,10 @@
       cursor: pointer;
       font-size: 1.15rem;
       line-height: 1.25rem;
+    }
+
+    .s-dropdown__item__header__icon {
+      display: block;
     }
 
     .s-dropdown__item__content {
