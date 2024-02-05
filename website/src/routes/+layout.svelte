@@ -6,14 +6,16 @@
     import type {ISiteInfo} from "$lib/interfaces/cmsApiResponse";
     import {fly} from "svelte/transition"
     import { page } from '$app/stores';
-    import {afterNavigate, beforeNavigate} from "$app/navigation";
+    import {afterNavigate} from "$app/navigation";
 
     export let data: ISiteInfo;
 
     siteInfo.set(data)
 
     afterNavigate(() => {
-      document.querySelector('.s-layout')?.scrollTo({top: 0, behavior: 'smooth'})
+      document.querySelectorAll('.s-layout').forEach(value => {
+        value.scrollTo({top: 0, behavior: 'smooth'})
+      })
     })
 
 </script>
