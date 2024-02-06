@@ -77,17 +77,6 @@
 </script>
 
 <style lang="scss">
-  :root {
-    --fp-color-creche: red;
-    --fp-color-ecole_horlogerie: blue;
-    --fp-color-hotel_entreprises: green;
-    --fp-color-foodlab: purple;
-    --fp-color-makerlab: pink;
-    --fp-color-learninglab: brown;
-    --fp-color-grandlab: gray;
-    --fp-color-accueil: lime;
-  }
-
   .s-block-space-build--nav {
     position: relative;
   }
