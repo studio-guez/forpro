@@ -6,7 +6,7 @@
     let cardsFocusElement: HTMLElement
 
     const mapImage: { entreprises: string; jeunes: string; entourage: string } = {
-        'entreprises': '/Forpro©photo-RaphaelleMueller-Entreprises-2.jpg',
+        'entreprises': '/Forpro©photo-RaphaelleMueller-Entreprises-1.jpeg',
         'entourage': '/Forpro©photo-RaphaelleMueller-Entourage-1.jpg',
         'jeunes': '/Forpro©photo-RaphaelleMueller-Jeunes-1.jpg',
     }
@@ -91,10 +91,18 @@
       width: 100%;
       max-width: 12em;
       font-weight: 600;
+
+      .jeunes & {
+        color: var(--app-color--pink);
+        text-align: left;
+        position: relative;
+        top: 20%;
+        left: -10%;
+      }
     }
 
     .s-card-focus__card__subtitle {
-      color: var(--app-color--blue);
+      color: white;
       font-weight: 500;
       font-size: 2rem;
       line-height: 2rem;
@@ -111,14 +119,21 @@
       mask-origin: border-box;
       mask-position: -210%, 500%;
       animation-fill-mode: forwards !important;
-      height: 80vh;
+      height: 90vh;
+      min-height: 35rem;
       width: 100%;
       object-fit: cover;
       mask-size: auto 90%, auto 110%;
-      mask-image: url('/svg/Pilule-0.svg'), url('/svg/Pilule-45-droite.svg');
+      mask-image: url('/svg/Pilule-45-gauche.svg'), url('/svg/Pilule-0.svg');
 
       .jeunes & {
         mask-image: url('/svg/Ovale-0.svg'), url('/svg/Ovale-45.svg');
+      }
+
+      .entreprises & {
+        mask-image: url('/svg/Feuille-1.svg'), url('/svg/Feuille-2.svg');
+        mask-size: auto 110%, auto 115%;
+        object-position: 10% 80%;
       }
 
       .is-visible & {
@@ -148,7 +163,7 @@
         transform: scale(.85);
       }
       100% {
-        mask-position: 30%, 90%;
+        mask-position: 10%, 90%;
         transform: scale(1);
       }
     }
