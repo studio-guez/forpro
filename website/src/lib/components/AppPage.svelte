@@ -97,7 +97,6 @@
     import BlockAnimatedList from "$lib/components/BlockAnimatedList.svelte";
 
     export let data: IPage;
-    console.log(data)
 </script>
 
 <style lang="scss">
