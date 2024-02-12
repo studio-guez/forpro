@@ -16,7 +16,7 @@ export const fetchFromAPI = async <T>(request: Request, errorMsg: string): Promi
             handleError(errorMsg, new Error(errorMsg));
         }
         const data = await response.json();
-        console.log(data);
+
         return data as T;
     } catch (error) {
         handleError(errorMsg, error);
