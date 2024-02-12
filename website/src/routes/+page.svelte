@@ -1,7 +1,7 @@
 <div class="s-page-home"
 
 >
-    <section class="s-page-home__header app-flex app-flex--column app-flex--justify_center app-flex--align_center">
+    <section class="s-page-home__header app-flex app-flex--column app-flex--justify_center app-flex--align_center app-flex--nowrap">
         <img class="s-page-home__header__logo"
                 src="/logo.svg" alt="logo">
         <img class="s-page-home__header__logo"
@@ -25,8 +25,7 @@
 <style lang="scss">
 .s-page-home__header {
   position: relative;
-  height: 80vh;
-  min-height: 30rem;
+  height: max(80vh, 40vw);
 }
 
 .s-page-home__header__logo {
