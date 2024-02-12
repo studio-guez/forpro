@@ -50,11 +50,9 @@
     .s-block-capsule__item__content__title {
       margin: 0;
       padding: .4rem 1rem .6rem;
-      background: var(--app-color--blue);
-      color: white;
+      color: var(--app-color--pink);
       line-height: 1em;
-      font-size: 3vw;
-      border-radius: 10em;
+      font-size: 4vw;
       text-align: center;
       font-weight: 500;
     }
@@ -63,7 +61,7 @@
       padding-bottom: 1rem;
       color: var(--app-color--blue);
       line-height: 1em;
-      font-size: 3vw;
+      font-size: 2.5vw;
       width: 100%;
       text-align: center;
     }
