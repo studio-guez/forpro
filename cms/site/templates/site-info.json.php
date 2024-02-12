@@ -15,7 +15,7 @@ echo json_encode([
     'nav'   => array_values($site->children()->map(fn($kirbyPage) => [
         'title'     => $kirbyPage->title()->value(),
         'heroTitle' => $kirbyPage->content()->heroTitle()->value(),
-        'showmenu'  => (boolean)$kirbyPage->showmenu()->value(),
+        'showmenu'  => $kirbyPage->showmenu()->value() == 'true',
         'slug'      => $kirbyPage->slug(),
         'url'       => $kirbyPage->url(),
         'uri'       => $kirbyPage->uri(),
