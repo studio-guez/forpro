@@ -12,24 +12,29 @@ import {siteInfo} from "../../store";
             <div>
                 {#each $siteInfo.nav as item}
                     {#if item.showmenu}
-                        <div><a
-                                class="s-app-nav__list__item"
+                        <div
+                                class="s-app-footer__list__item"
+                                class:is-subpage={item.title.startsWith('->')}
+                        ><a
                                 href="/{item.slug}"
-                        >{item.title}</a></div>
+                        >{item.title.replace(/^->/, '→')}</a></div>
                     {/if}
                 {/each}
             </div>
             <div>
-                <div><a
-                        class="s-app-nav__list__item"
+                <div
+                        class="s-app-footer__list__item"
+                ><a
                         href="#"
                 >Linkedin</a></div>
-                <div><a
-                        class="s-app-nav__list__item"
+                <div
+                        class="s-app-footer__list__item"
+                ><a
                         href="#"
                 >Facebook</a></div>
-                <div><a
-                        class="s-app-nav__list__item"
+                <div
+                        class="s-app-footer__list__item"
+                ><a
                         href="#"
                 >Instagram</a></div>
             </div>
@@ -61,5 +66,11 @@ import {siteInfo} from "../../store";
       width: 90%;
       bottom: 0;
       margin: 1rem auto;
+    }
+
+    .s-app-footer__list__item {
+      &.is-subpage {
+        padding-left: 1em;
+      }
     }
 </style>
