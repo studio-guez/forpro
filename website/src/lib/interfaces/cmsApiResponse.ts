@@ -52,7 +52,19 @@ export interface IBody {
 export interface IBlock {
     id: string
     isHidden: boolean
-    type: 'cta' | 'quote' | 'capsules' | 'cards' | 'profiles' | 'list' | 'dropdown' | 'cards-focus' | 'body' | 'map' | 'animated-list'
+    type: 'cta'
+        | 'quote'
+        | 'capsules'
+        | 'cards'
+        | 'profiles'
+        | 'list'
+        | 'dropdown'
+        | 'cards-focus'
+        | 'body'
+        | 'map'
+        | 'animated-list'
+        | 'google-maps'
+        | 'image'
 }
 
 export interface ISeo {
@@ -278,4 +290,26 @@ export interface IHtmlContent extends IBlock {
         "style": "style1" | "style2"
     },
     type: 'map'
+}
+
+
+/**
+ * google maps
+ */
+export interface IGoogleMaps extends IBlock {
+    "content": {
+        link: string
+    },
+    type: 'google-maps'
+}
+
+
+/**
+ * google maps
+ */
+export interface IGoogleMaps extends IBlock {
+    "content": {
+        link: string
+    },
+    type: 'image'
 }
