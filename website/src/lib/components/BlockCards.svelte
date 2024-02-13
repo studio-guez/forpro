@@ -102,7 +102,7 @@
     .s-cards__card__content__tilte {
       color: var(--app-color--pink);
       font-size: 1.75rem;
-      line-height: 2rem;
+      line-height: 1em;
       margin-top: 0;
       text-align: center;
       font-weight: 600;
