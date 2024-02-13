@@ -35,10 +35,6 @@ body {
 
 a {
   color: inherit;
-
-  &.app-button {
-    text-decoration: none;
-  }
 }
 
 .app-remove-margin-child {
@@ -49,4 +45,25 @@ a {
   > *:last-child {
     margin-bottom: 0 !important;
   }
+}
+
+// scroll
+::-webkit-scrollbar-thumb {
+  background-color: black; /* Couleur du curseur */
+  border-radius: 10px; /* Arrondi du curseur */
+}
+
+/* Barre de défilement sur hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #333; /* Couleur du curseur au survol */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Couleur de la barre de défilement */
+}
+
+/* Coin de la barre de défilement */
+::-webkit-scrollbar-corner {
+  background-color: transparent; /* Couleur du coin de la barre de défilement */
 }
