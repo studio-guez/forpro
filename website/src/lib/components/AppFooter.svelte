@@ -8,10 +8,31 @@ import {siteInfo} from "../../store";
         <div class="app-typo_text-content">
             {@html $siteInfo.footer}
         </div>
-        <div>
-            <p>
-                right content
-            </p>
+        <div class="app-grid--column-2">
+            <div>
+                {#each $siteInfo.nav as item}
+                    {#if item.showmenu}
+                        <div><a
+                                class="s-app-nav__list__item"
+                                href="/{item.slug}"
+                        >{item.title}</a></div>
+                    {/if}
+                {/each}
+            </div>
+            <div>
+                <div><a
+                        class="s-app-nav__list__item"
+                        href="#"
+                >Linkedin</a></div>
+                <div><a
+                        class="s-app-nav__list__item"
+                        href="#"
+                >Facebook</a></div>
+                <div><a
+                        class="s-app-nav__list__item"
+                        href="#"
+                >Instagram</a></div>
+            </div>
         </div>
     </div>
     <div class="app-flex__basis-1-1">
