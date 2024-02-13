@@ -64,6 +64,7 @@
       font-size: 2.5vw;
       width: 100%;
       text-align: center;
+      font-weight: 500;
     }
     .s-block-capsule__item__img {
       display: block;
