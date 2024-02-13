@@ -1,0 +1,24 @@
+<a
+        href="{content.content.link}"
+        target="_blank"
+>
+    <img
+            alt="google maps"
+            src="#"
+    />
+</a>
+
+<script lang="ts">
+    import type {IGoogleMaps} from "$lib/interfaces/cmsApiResponse.js";
+
+    export let content: IGoogleMaps
+</script>
+
+<style>
+    img {
+        background: var(--app-color--blue);
+        display: block;
+        width: 100%;
+        aspect-ratio: 2/1;
+    }
+</style>

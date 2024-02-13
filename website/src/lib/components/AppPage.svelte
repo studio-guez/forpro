@@ -61,6 +61,16 @@
                     <BlockHTMLContent content="{content}" />
                 </div>
 
+            {:else if content.type === 'map'}
+                <div class="app-flex__basis-20-24">
+                    <BlockSpaceBuilding content="{content}" />
+                </div>
+
+            {:else if content.type === 'google-maps'}
+                <div class="app-flex__basis-20-24">
+                    <BlockGoogleMaps content="{content}" />
+                </div>
+
             {:else if content.type === 'animated-list'}
                 <div class="app-flex__basis-20-24">
                     <BlockAnimatedList/>
@@ -91,8 +101,9 @@
     import BlockDropdown from "$lib/components/BlockDropdown.svelte";
     import BlockHTMLContent from "$lib/components/BlockHTMLContent.svelte";
     import BlockCardsFocus from "$lib/components/BlockCardsFocus.svelte";
-    import {browser} from "$app/environment";
     import BlockAnimatedList from "$lib/components/BlockAnimatedList.svelte";
+    import BlockSpaceBuilding from "$lib/components/BlockSpaceBuilding.svelte";
+    import BlockGoogleMaps from "$lib/components/BlockGoogleMaps.svelte";
 
     export let data: IPage;
 </script>
