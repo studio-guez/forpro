@@ -45,10 +45,12 @@
             <ul class="s-app-nav__list">
                 {#each $siteInfo.nav as item}
                     {#if item.showmenu}
-                        <li><a
-                                class="s-app-nav__list__item"
+                        <li
+                            class="s-app-nav__list__item"
+                            class:is-subpage={item.title.startsWith('->')}
+                        ><a
                                 href="/{item.slug}"
-                        >{item.title}</a></li>
+                        >{item.title.replace(/^->/, '')}</a></li>
                     {/if}
                 {/each}
             </ul>
@@ -118,6 +120,17 @@
     }
 
     .s-app-nav__list__item {
+      &.is-subpage {
+        font-size: .66em;
+        line-height: 1em;
+
+        + .s-app-nav__list__item:not(.is-subpage) {
+            margin-top: .25em;
+        }
+      }
+
+
+
       &:hover {
         color: var(--app-color--blue)
       }
