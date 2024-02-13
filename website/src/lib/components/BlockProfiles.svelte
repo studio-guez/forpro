@@ -71,7 +71,7 @@
 
     .s-profiles__profile__img {
       display: block;
-      background: var(--app-color--blue);
+      background: lightgray;
       width: 50%;
       aspect-ratio: 1/1;
       border-radius: 100%;
