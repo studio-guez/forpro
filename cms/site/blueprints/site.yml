@@ -24,13 +24,18 @@ tabs:
 
         sections:
 
+          global:
+            create: false
+            label: "Global"
+            type: pages
+            templates:
+              - site-info
+              - home
+
           pages:
             type: pages
-            creates: forpro
             templates:
               - forpro
-              - default
-              - site-info
 
   booking: tabs/booking
 

@@ -25,8 +25,8 @@
                 <img src="/social-1.svg" alt="social link" >
                 <img src="/social-2.svg" alt="social link" >
                 <img src="/social-3.svg" alt="social link" >
-                <img src="/social-4.svg" alt="social link" >
-                <img src="/social-5.svg" alt="social link" >
+<!--                <img src="/social-4.svg" alt="social link" >-->
+<!--                <img src="/social-5.svg" alt="social link" >-->
             </div>
             <button class="s-app-nav__icon-menu"
                     on:click={() => menuIsOpen.set(!$menuIsOpen)}>
@@ -41,23 +41,27 @@
     </div>
 
     {#if ($menuIsOpen)}
-        <ul class="s-app-nav__list">
-            {#each $siteInfo.nav as item}
-                {#if item.showmenu}
-                    <li><a
+        <div class="s-app-nav__list-container">
+            <ul class="s-app-nav__list">
+                {#each $siteInfo.nav as item}
+                    {#if item.showmenu}
+                        <li
                             class="s-app-nav__list__item"
-                            href="/{item.slug}"
-                    >{item.title}</a></li>
-                {/if}
-            {/each}
-        </ul>
+                            class:is-subpage={item.title.startsWith('->')}
+                        ><a
+                                href="/{item.slug}"
+                        >{item.title.replace(/^->/, '')}</a></li>
+                    {/if}
+                {/each}
+            </ul>
+        </div>
     {/if}
 </nav>
 
 <style lang="scss" >
     .s-app-nav {
       height: var(--app-nav_height);
-      padding: 1rem;
+      padding: var(--app-flex--gap_half);
       box-sizing: border-box;
       flex-direction: row;
       justify-content: space-between;
@@ -92,24 +96,41 @@
       z-index: 100;
     }
 
-    .s-app-nav__list {
+    .s-app-nav__list-container {
       --position: 5px;
-      border-radius: 2rem;
-      background: white;
-      border: solid var(--app-line-with) black;
       position: fixed;
-      display: block;
       top: var(--position);
       right: var(--position);
       width: calc(50% - var(--position) );
       height: calc(100% - var(--position) * 2 );
-      padding: var(--app-nav_height) 2rem 2rem;
+      background: white;
+      border: solid var(--app-line-with) black;
+      padding: var(--app-nav_height) .15rem 2rem 2rem;
+      border-radius: 2rem;
+    }
+
+    .s-app-nav__list {
+      padding-right: .5rem;
+      height: 100%;
+      overflow: auto;
+      display: block;
       line-height: 1.25em;
       font-size: 2rem;
       font-weight: 600;
     }
 
     .s-app-nav__list__item {
+      &.is-subpage {
+        font-size: .66em;
+        line-height: 1em;
+
+        + .s-app-nav__list__item:not(.is-subpage) {
+            margin-top: .25em;
+        }
+      }
+
+
+
       &:hover {
         color: var(--app-color--blue)
       }
