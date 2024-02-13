@@ -47,8 +47,18 @@
                 <div class="s-card-focus__card__title" >{card.title}</div>
                 <div class="s-card-focus__card__subtitle" >{card.subtitle}</div>
                 {#if (card.link)}
+                    {#if (card.style === 'entreprises')}
                     <a class="s-card-focus__card__button app-button app-button--rounded"
-                            href="{card.link}">renseignez-vous</a>
+                            href="{card.link}">Jeunes 15-25 ans</a>
+                    {/if}
+                    {#if (card.style === 'entourage')}
+                        <a class="s-card-focus__card__button app-button app-button--rounded"
+                           href="{card.link}">Parents et entourage</a>
+                    {/if}
+                    {#if (card.style === 'jeunes')}
+                        <a class="s-card-focus__card__button app-button app-button--rounded"
+                           href="{card.link}">Entreprises</a>
+                    {/if}
                 {/if}
             </div>
             <img class="s-card_focus__img" alt="juste un masque" src="{getImageUrl(card).img}" />
