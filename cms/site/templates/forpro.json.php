@@ -15,9 +15,16 @@ $json = [];
 $showMenu = $page->showMenu()->toBool();
 $showNewsletter = $page->showNewsletter()->toBool();
 $body = $page->body()->toBlocks()->map(function ($item){
+
+    $content = $item->toArray();
+
+    Utils::muteImageFilesDataIfBlocksHasKeyValue('capsules', $content);
+    Utils::muteImageFilesDataIfBlocksHasKeyValue('cards', $content);
+    Utils::muteImageFilesDataIfBlocksHasKeyValue('profiles', $content);
+
     return [
         'image'     => array_values( Utils::getImageArrayDataInPage($item->image()->toFiles()) ),
-        'content'   => $item->toArray(),
+        'content'   => $content,
     ];
 })->data();
 
