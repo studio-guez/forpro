@@ -1,16 +1,14 @@
 <script>
     import { writable } from 'svelte/store';
 
-    let sectionIsActive_popup = writable(false);
-    let sectionIsActive_MakerLab = writable(false);
-    let sectionIsActive_LearningLab = writable(false);
-    let sectionIsActive_GrandLab = writable(false);
-    let sectionIsActive_Ecole_Horlogerie = writable(false);
-    let sectionIsActive_Hotel_Entreprises = writable(false);
-    let sectionIsActive_Creche = writable(false);
-    let sectionIsActive_Foodlab = writable(false);
-
-    const spaceBuildingElement = null;
+    let sectionIsActive_popup               = writable(false);
+    let sectionIsActive_MakerLab            = writable(false);
+    let sectionIsActive_LearningLab         = writable(false);
+    let sectionIsActive_GrandLab            = writable(false);
+    let sectionIsActive_Ecole_Horlogerie    = writable(false);
+    let sectionIsActive_Hotel_Entreprises   = writable(false);
+    let sectionIsActive_Creche              = writable(false);
+    let sectionIsActive_Foodlab             = writable(false);
 
     function clearAllActiveSections() {
         sectionIsActive_popup.set(false);
@@ -22,19 +20,13 @@
         sectionIsActive_Creche.set(false);
         sectionIsActive_Foodlab.set(false);
     }
-
-    function toggleActiveSection(sectionToToggle) {
-        clearAllActiveSections();
-        sectionToToggle.set(true);
-    }
 </script>
 
 <section class="v-space-building">
     <div class="v-space-building__section-name">
         <div class:is-active="{sectionIsActive_popup}"
              on:mouseover={()   => sectionIsActive_popup.set(true)}
-             on:mouseout={()    => () => sectionIsActive_popup.set(false)}
-             on:click={()       => callbackWidthMDMaxWidth(() => goToPage('popup'), () => toggleActiveSection(sectionIsActive_popup))}
+             on:mouseout={()    => sectionIsActive_popup.set(false)}
              class="fp-heading-h5 fp-text--without-margin is-Accueil-color">
             PoPup
         </div>
