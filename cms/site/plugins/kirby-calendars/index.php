@@ -43,9 +43,6 @@ Kirby::plugin('medium-sans/kirby-calendars', [
                     require __DIR__ . '/dialogs/schedule/delete.php',
                     require __DIR__ . '/dialogs/schedule/edit.php',
                 ],
-                'dropdowns' => [
-                    require __DIR__ . '/dropdowns/calendar.php'
-                ],
             ];
         },
     ],
