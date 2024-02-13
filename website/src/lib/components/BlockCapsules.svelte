@@ -54,7 +54,7 @@
       line-height: 1em;
       font-size: 4vw;
       text-align: center;
-      font-weight: 500;
+      font-weight: 600;
     }
     .s-block-capsule__item__content__text {
       padding-top: 1rem;
