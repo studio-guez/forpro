@@ -6,9 +6,12 @@
 
 </script>
 
-<div class="s-block-cta app-flex app-flex--justify_center">
-    <a class="s-block-cta__button {content.content.styles}"
+<div class="s-block-cta app-flex app-flex--justify_center"
+     id="{content.id}"
+>
+    <a class="s-block-cta__button {content.content.styles} app-button app-button--rounded app-button--xl"
        class:has-icon={image.length > 0}
+       class:app-button--without-over-effect={image.length > 0 || content.content.styles === 'style1'}
        href="{content.content.link}"
        style="
             --s-cat-background-color: {content.content.backgroundcolor};
@@ -20,9 +23,16 @@
                  src={image[0].url}
                  alt="icon illustratif pour le bouton"/>
         {/if}
-        <div>
-            {content.content.text}
-        </div>
+        {#if (content.content.styles === 'style1')}
+            <div class="s-block-cta__text-animated">
+                <div class="s-block-cta__text-animated__text">{content.content.text}</div>
+                <div class="s-block-cta__text-animated__duplication">{content.content.text}</div>
+            </div>
+        {:else}
+            <div>
+                {content.content.text}
+            </div>
+        {/if}
     </a>
 </div>
 
@@ -40,25 +50,39 @@
       bottom: 0;
       left: 0;
       z-index: 5;
-      font-size: max(1rem, 2vw);
-      line-height: 1em;
+      border: none;
 
       &.style1 {
         width: 100%;
+        height: 2rem;
+        border-radius: 0;
+        font-weight: 400;
+        padding: 0;
 
-        > * {
+        .s-block-cta__text-animated {
+          top: 0;
+          left: 0;
           padding-top: .5rem;
           padding-bottom: .5rem;
-            animation: scroll-animation 50s linear infinite;
+          position: absolute;
+          display: flex;
+          width: auto;
+          overflow: unset;
+          //todo: dynamic timing by string length
+          animation: scroll-animation 25s linear infinite;
+
+          .s-block-cta__text-animated__text,
+          .s-block-cta__text-animated__duplication {
+            padding-left: 15em;
+            white-space: nowrap;
+            width: auto;
+          }
         }
       }
 
       &.style2 {
         font-weight: 600;
-        font-size: max(1rem, 2vw);
-        align-items: center;
-        padding: max(1rem, 2vw) max(2rem, 4vw);
-        border-radius: 10em;
+
         position: relative;
         z-index: 0;
       }
@@ -81,7 +105,7 @@
         transform: translateX(0%);
       }
       100% {
-        transform: translateX(-100%);
+        transform: translateX(-50%);
       }
     }
 </style>
