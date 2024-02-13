@@ -1,12 +1,57 @@
-<div class="s-newsletter">
-    <div class="s-newsletter__title">Restez infromez!</div>
-    <div class="app-flex app-flex--align_center app-flex--nowrap app-flex--gap_regular">
+<div class="s-newsletter"
+     id="s-newsletter"
+>
+    <div class="s-newsletter__title">Restez informé·e&nbsp;!</div>
+
+    <form class="app-flex app-flex--align_center app-flex--nowrap app-flex--gap_regular"
+          method="post"
+          action="https://newsletter.infomaniak.com/external/submit"
+          target="_blank"
+    >
         <span class="s-newsletter__symbole"
         >@</span>
         <input class="s-newsletter__input"
-               type="email" />
-    </div>
+               type="email"
+               name="email"
+               bind:value="{emailValue}"
+        />
+        <input type="hidden"
+               name="key"
+               value="eyJpdiI6IkxcL3F5NGVpMnZOSzNERm1XV0Jmek92Q3dHOVdvSERCaW5qcUFNVm5KOXRvPSIsInZhbHVlIjoiOFBTZG9GSUZhcEQzZFBvQ09tYUIyTzk5YTJ5MWc5blFkVjBXeDVTWmVFRT0iLCJtYWMiOiIzZTU3NDBkZGFkMTVkMjc1YzYxNWFmZTRhMmQxOGMwMjc4YjM4YWUyZGFhNTFlNjZlYjQ5ZTdjYmU0YjJjMDc1In0="
+        />
+        <input type="hidden"
+               name="webform_id"
+               value="12660"
+        />
+        {#if emailValue.length > 0}
+            <div
+                    class="s-newsletter__validate-box"
+                    transition:fly={{
+                        duration: 500,
+                        y: 10,
+                        opacity: 0
+                    }}
+            >
+                <input type="submit"
+                       value="valider"
+                       style="
+                                --app-button--color: var(--app-color--green);
+                                --app-button--background-color: var(--app-color--blue);
+                            "
+                       class="app-button app-button--rounded app-button--xl app-button--without-over-effect"
+                />
+            </div>
+        {/if}
+    </form>
 </div>
+
+<script lang="ts">
+    import {fly} from "svelte/transition"
+
+    let emailValue = ''
+</script>
+
+
 
 <style>
     .s-newsletter {
@@ -16,6 +61,7 @@
         box-sizing: border-box;
         border-radius: max(1rem, 2vw);
         margin-top: 5rem;
+        position: relative;
     }
 
     .s-newsletter__title {
@@ -42,5 +88,13 @@
         padding: .5vw 2vw 1.5vw;
         width: 100%;
         color: black;
+    }
+
+    .s-newsletter__validate-box {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        transform-origin: top;
     }
 </style>
