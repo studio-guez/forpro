@@ -11,8 +11,6 @@ website/node_modules
 website/build
 website/.svelte-kit
 website/package
-website/.env
-website/!.env.example
 website/vite.config.js.timestamp-*
 website/vite.config.ts.timestamp-*
 
@@ -46,3 +44,9 @@ cms/site/config/.license
 
 # Content
 cms/content/*
+
+# NODE
+cms/site/plugins/!/node_modules/*
+
+node_modules
+vendor
