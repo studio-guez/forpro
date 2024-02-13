@@ -43,7 +43,7 @@ cms/!/site/sessions/index.html
 cms/site/config/.license
 
 # Content
-cms/content/*
+cms/content
 
 # NODE
 cms/site/plugins/!/node_modules/*
