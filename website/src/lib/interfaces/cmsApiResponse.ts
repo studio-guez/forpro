@@ -171,6 +171,7 @@ export interface ICard {
     image: IImage[],
     link: "",
     text: ""
+    imageData: IImage[] | undefined
 }
 
 
@@ -196,6 +197,7 @@ export interface IProfile {
     images: string[];
     lien: string;
     mailto: string;
+    imageData: IImage[] | undefined
 }
 
 

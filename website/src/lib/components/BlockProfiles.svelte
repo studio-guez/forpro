@@ -7,11 +7,11 @@
 <div class="s-profiles {content.content.style} app-grid--column-3">
     {#each content.content.profiles as profile}
         <div class="s-profiles__profile"
-             class:with-img="{profile.images && profile.images.length > 0}"
+             class:with-img="{profile.imageData?.length > 0}"
         >
 
-            {#if (profile.images && profile.images.length > 0)}
-                <img class="s-profiles__profile__img" alt="profile illustration" src="{profile.images[0]}">
+            {#if (profile.imageData?.length > 0)}
+                <img class="s-profiles__profile__img" alt="profile illustration" src="{profile.imageData[0].resize.reg}">
             {/if}
             <h3 class="s-profiles__profile__title">{profile.title}</h3>
             <h4 class="s-profiles__profile__subtitle">{profile.subtitle}</h4>

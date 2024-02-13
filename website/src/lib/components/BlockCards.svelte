@@ -8,10 +8,10 @@
 >
     {#each content.content.cards as card}
         <div class="s-cards__card">
-            {#if (card.image.length > 0)}
+            {#if (card.imageData?.length > 0)}
                 <div class="s-cards__card__img">
                     <img class="s-cards__card__img__item"
-                         src="{card.image[0]}"
+                         src="{card.imageData[0].resize.large}"
                          alt="illustration pour la carte"
                     />
                 </div>
