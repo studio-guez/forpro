@@ -62,11 +62,9 @@
                 </div>
 
             {:else if content.type === 'animated-list'}
-                {#if browser}
-                    <div class="app-flex__basis-20-24">
-                        <BlockAnimatedList/>
-                    </div>
-                {/if}
+                <div class="app-flex__basis-20-24">
+                    <BlockAnimatedList/>
+                </div>
             {/if}
 
         {/each}
