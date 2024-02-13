@@ -57,7 +57,7 @@
 <style lang="scss" >
     .s-app-nav {
       height: var(--app-nav_height);
-      padding: 1rem;
+      padding: var(--app-flex--gap_half);
       box-sizing: border-box;
       flex-direction: row;
       justify-content: space-between;
