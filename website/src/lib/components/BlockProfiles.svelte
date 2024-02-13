@@ -55,24 +55,24 @@
       font-weight: 600;
       font-size: 1.25rem;
       line-height: 1em;
-      margin-bottom: .5em;
+      margin-top: .5em;
     }
 
     .s-profiles__profile__subtitle {
       font-weight: 500;
       font-size: 1.25rem;
       line-height: 1em;
-      margin-bottom: .5em;
     }
 
     .s-profiles__profile__description {
+      margin-top: .5em;
       margin-bottom: .5em;
     }
 
     .s-profiles__profile__img {
       display: block;
       background: var(--app-color--blue);
-      width: 33%;
+      width: 50%;
       aspect-ratio: 1/1;
       border-radius: 100%;
       margin: auto;
