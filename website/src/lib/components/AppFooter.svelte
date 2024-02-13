@@ -8,10 +8,36 @@ import {siteInfo} from "../../store";
         <div class="app-typo_text-content">
             {@html $siteInfo.footer}
         </div>
-        <div>
-            <p>
-                right content
-            </p>
+        <div class="app-grid--column-2">
+            <div>
+                {#each $siteInfo.nav as item}
+                    {#if item.showmenu}
+                        <div
+                                class="s-app-footer__list__item"
+                                class:is-subpage={item.title.startsWith('->')}
+                        ><a
+                                href="/{item.slug}"
+                        >{item.title.replace(/^->/, '→')}</a></div>
+                    {/if}
+                {/each}
+            </div>
+            <div>
+                <div
+                        class="s-app-footer__list__item"
+                ><a
+                        href="#"
+                >Linkedin</a></div>
+                <div
+                        class="s-app-footer__list__item"
+                ><a
+                        href="#"
+                >Facebook</a></div>
+                <div
+                        class="s-app-footer__list__item"
+                ><a
+                        href="#"
+                >Instagram</a></div>
+            </div>
         </div>
     </div>
     <div class="app-flex__basis-1-1">
@@ -40,5 +66,11 @@ import {siteInfo} from "../../store";
       width: 90%;
       bottom: 0;
       margin: 1rem auto;
+    }
+
+    .s-app-footer__list__item {
+      &.is-subpage {
+        padding-left: 1em;
+      }
     }
 </style>

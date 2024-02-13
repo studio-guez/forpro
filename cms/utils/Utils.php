@@ -19,6 +19,24 @@ class Utils {
         })->data();
     }
 
+    static function muteImageFilesDataIfBlocksHasKeyValue(string $contentTypeKey, &$content): void
+    {
+        if(!isset($content['content'][$contentTypeKey])) return;
+
+        foreach ($content['content'][$contentTypeKey] as &$itemArray) {
+            //todo: images with s for profiles importation | change images to image in dataBase and profiles json result
+            if(isset($itemArray['images']))    $itemArray['imageData'] = self::getImageArrayDataInArray($itemArray, 'images');
+            if(isset($itemArray['image']))     $itemArray['imageData'] = self::getImageArrayDataInArray($itemArray, 'image');
+        }
+    }
+
+    static function getImageArrayDataInArray(array &$itemArray, string $keyNameForImage): array
+    {
+        $getImageArrayData = Utils::getImageArrayDataInPage(new \Kirby\Cms\Files($itemArray[$keyNameForImage]));
+        return $itemArray['imageData'] = array_values($getImageArrayData);
+    }
+
+
     static function getJsonEncodeImageData(\Kirby\Cms\File $file): array
     {
         return [
