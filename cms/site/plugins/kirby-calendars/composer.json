@@ -1,0 +1,28 @@
+{
+  "name": "mediumsans/kirby-calendars",
+  "description": "Generate and manage Google Calendars from Kirby",
+  "license": "proprietary",
+  "type": "kirby-plugin",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Samuel Cardoso",
+      "email": "samuel@mediumsans.studio"
+    }
+  ],
+  "require": {
+    "getkirby/composer-installer": "^1.2",
+    "php": ">=8.0.0",
+    "google/apiclient": "^2.12"
+  },
+  "autoload": {
+    "psr-4": {
+      "MediumSans\\KirbyCalendars\\": "classes/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "getkirby/composer-installer": true
+    }
+  }
+}
