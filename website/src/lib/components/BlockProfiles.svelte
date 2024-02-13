@@ -76,6 +76,7 @@
       aspect-ratio: 1/1;
       border-radius: 100%;
       margin: auto;
+      object-fit: cover;
     }
 
     .s-profiles__profile__links {
