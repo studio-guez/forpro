@@ -66,6 +66,7 @@
       display: block;
       width: 100%;
       height: 100%;
+      object-fit: cover;
       border-radius: 2rem;
       box-sizing: border-box;
       border: solid var(--app-line-with) var(--app-color--pink);
