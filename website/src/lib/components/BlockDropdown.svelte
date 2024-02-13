@@ -45,12 +45,12 @@
                 {#if (currentIndex === index)}
                     <div class="s-dropdown__item__content app-remove-margin-child"
                     >{@html dropdown.content}</div>
-                {/if}
-                {#if (dropdown.link)}
-                    <a class="s-dropdown__item__button app-button app-button--rounded"
-                       style="--app-button--color: white;--app-button--background-color: blue;--app-button--border-color: blue;"
-                       href="{dropdown.link}"
-                    >pour aller plus loin</a>
+                    {#if (dropdown.link)}
+                        <a class="s-dropdown__item__button app-button app-button--rounded"
+                           style="--app-button--color: white;--app-button--background-color: blue;--app-button--border-color: blue;"
+                           href="{dropdown.link}"
+                        >pour aller plus loin</a>
+                    {/if}
                 {/if}
             </div>
 

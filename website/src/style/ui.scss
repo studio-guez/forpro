@@ -1,3 +1,7 @@
+a.app-button {
+  text-decoration: none;
+}
+
 .app-button {
   --app-button--color:            black;
   --app-button--background-color: white;
@@ -15,6 +19,7 @@
   color: var(--app-button--color);
   background: var(--app-button--background-color);
   cursor: pointer;
+  user-select: none;
 
   &:after {
     content: '';
@@ -31,7 +36,9 @@
     z-index: -1;
   }
 
-  &:hover {
+  &.app-button--without-over-effect {}
+
+  &:hover:not(.app-button--without-over-effect) {
     color: var(--app-button--background-color);
     transform: scale(1.05);
     transition: transform .25s;
@@ -44,5 +51,11 @@
 
   &.app-button--rounded {
     border-radius: 1rem;
+  }
+
+  &.app-button--xl {
+    padding: max(1rem, 2vw) max(2rem, 4vw);
+    font-size: max(1rem, 2vw);
+    border-radius: 10em;
   }
 }

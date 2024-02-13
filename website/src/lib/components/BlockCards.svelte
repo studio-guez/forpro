@@ -8,10 +8,10 @@
 >
     {#each content.content.cards as card}
         <div class="s-cards__card">
-            {#if (card.image.length > 0)}
+            {#if (card.imageData?.length > 0)}
                 <div class="s-cards__card__img">
                     <img class="s-cards__card__img__item"
-                         src="{card.image[0]}"
+                         src="{card.imageData[0].resize.large}"
                          alt="illustration pour la carte"
                     />
                 </div>
@@ -66,6 +66,7 @@
       display: block;
       width: 100%;
       height: 100%;
+      object-fit: cover;
       border-radius: 2rem;
       box-sizing: border-box;
       border: solid var(--app-line-with) var(--app-color--pink);
@@ -102,7 +103,7 @@
     .s-cards__card__content__tilte {
       color: var(--app-color--pink);
       font-size: 1.75rem;
-      line-height: 2rem;
+      line-height: 1em;
       margin-top: 0;
       text-align: center;
       font-weight: 600;

@@ -46,6 +46,20 @@
             <div class="s-card-focus__card__text-box app-flex app-flex--column app-flex--align_center app-flex--justify_center">
                 <div class="s-card-focus__card__title" >{card.title}</div>
                 <div class="s-card-focus__card__subtitle" >{card.subtitle}</div>
+                {#if (card.link)}
+                    {#if (card.style === 'entreprises')}
+                    <a class="s-card-focus__card__button app-button app-button--rounded"
+                            href="{card.link}">Jeunes 15-25 ans</a>
+                    {/if}
+                    {#if (card.style === 'entourage')}
+                        <a class="s-card-focus__card__button app-button app-button--rounded"
+                           href="{card.link}">Parents et entourage</a>
+                    {/if}
+                    {#if (card.style === 'jeunes')}
+                        <a class="s-card-focus__card__button app-button app-button--rounded"
+                           href="{card.link}">Entreprises</a>
+                    {/if}
+                {/if}
             </div>
             <img class="s-card_focus__img" alt="juste un masque" src="{getImageUrl(card).img}" />
         </div>
@@ -57,6 +71,7 @@
       background: var(--app-color--blue);
       position: relative;
       overflow: hidden;
+      user-select: none;
 
       &.entreprises {
         background: var(--app-color--blue);
@@ -94,10 +109,6 @@
 
       .jeunes & {
         color: var(--app-color--pink);
-        text-align: left;
-        position: relative;
-        top: 20%;
-        left: -10%;
       }
     }
 
@@ -112,6 +123,10 @@
       margin-top: 1rem;
     }
 
+    .s-card-focus__card__button {
+      margin-top: 1rem;
+    }
+
     .s-card_focus__img {
       position: relative;
       display: block;
@@ -120,7 +135,7 @@
       mask-position: -210%, 500%;
       animation-fill-mode: forwards !important;
       height: 90vh;
-      min-height: 35rem;
+      min-height: 50vw;
       width: 100%;
       object-fit: cover;
       mask-size: auto 90%, auto 110%;
