@@ -43,7 +43,9 @@ return [
 
             $calendarId = $data->calendarId;
             $serviceId = $data->serviceId;
-            $date = $data->date;
+            $subjectId = $data->subject;
+
+            $date = $data->slot;
             $inf = $data->infos;
 
             $infos = [
@@ -57,6 +59,7 @@ return [
                 Json::encode(
                     Calendar::addEvent(
                         $calendarId,
+                        $subjectId,
                         $serviceId,
                         $date,
                         $infos
