@@ -287,7 +287,7 @@ class Calendar
             if (!$overlap && $slotEnd <= $closingTime) {
                 $availableSlots[] = $nextSlotStart;
             }
-            
+
             $nextSlotStart = $nextSlotStart->modify('+' . $serviceDuration . ' minutes');
         }
 
