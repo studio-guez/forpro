@@ -40,6 +40,7 @@ Kirby::plugin('mediumsans/forpro', [
                     'bookingSlotConfirmationLabel'   => $kirby->site()->bookingSlotConfirmationLabel()->value(),
                     'bookingAppointmentConfirmationLabel' => $kirby->site()->bookingAppointmentConfirmationLabel()->value(),
                     'bookingAppointmentSuccessLabel' => $kirby->site()->bookingAppointmentSuccessLabel()->value(),
+                    'bookingAppointmentSelect' => $kirby->site()->bookingAppointmentSelect()->toStructure()->toArray()
                   ];
               }
             ],
