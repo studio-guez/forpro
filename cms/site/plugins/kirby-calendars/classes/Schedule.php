@@ -9,7 +9,13 @@ class Schedule
 {
     const FILENAME = 'schedules.json';
 
-    public static function findByCalendarId($id): array
+    /**
+     * Finds schedules by calendar id and returns an array of matching schedules
+     *
+     * @param string $id The calendar id to search for
+     * @return array An array of matching schedules
+     */
+    public static function findByCalendarId(string $id): array
     {
         $schedules = static::list();
         $schedules = array_filter($schedules, function ($schedule) use ($id) {
@@ -150,6 +156,13 @@ class Schedule
         return Data::write(static::file(), $schedules);
     }
 
+    /**
+     * Checks if a specific day of a schedule is closed
+     *
+     * @param mixed $id The ID of the calendar
+     * @param int $day_id The ID of the day
+     * @return bool Returns true if the day is closed, false otherwise
+     */
     public static function isClosed($id, $day_id): bool
     {
         $schedules = static::findByCalendarId($id);
@@ -159,6 +172,12 @@ class Schedule
         return $schedule[0]['is_closed'];
     }
 
+    /**
+     * Get the schedule status for a given calendar by its id
+     *
+     * @param int|string $id The calendar id
+     * @return array An array containing the status, theme and icon
+     */
     public static function getScheduleStatusForCalendar(int|string $id): array
     {
         $schedules = static::findByCalendarId($id);
@@ -172,5 +191,18 @@ class Schedule
             'theme' => $theme,
             'icon' => $icon
         ];
+    }
+
+    public static function getByCalendarIdAndDayId(string $calendarId, string $dayId): array
+    {
+        $schedules = static::findByCalendarId($calendarId);
+        return static::filterSchedulesByDayId($schedules, $dayId);
+    }
+
+    private static function filterSchedulesByDayId(array $schedules, string $dayId): array
+    {
+        return array_filter($schedules, function ($schedule) use ($dayId) {
+            return $schedule['day_id'] === $dayId;
+        });
     }
 }
