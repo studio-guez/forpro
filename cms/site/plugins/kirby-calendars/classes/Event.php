@@ -116,6 +116,8 @@ class Event
             'start_time' => $input['start_time'],
             'end_time' => $input['end_time'],
             'duration' => $input['duration'],
+            'firstname' => $input['firstname'],
+            'lastname' => $input['lastname'],
             'email' => $input['email'],
             'phone' => $input['phone'],
             'service_id' => $input['service_id'],
