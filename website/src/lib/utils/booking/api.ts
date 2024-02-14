@@ -28,6 +28,7 @@ export const getServicesFromCalendarId = async (calendarId: string): Promise<Ser
 
 export const createAppointment = async (date: string,
                                         slot: string,
+                                        subject: string,
                                         serviceId: string,
                                         calendarId: string,
                                         infos: []):
@@ -36,6 +37,7 @@ export const createAppointment = async (date: string,
     const body = {
         date: date,
         slot: slot,
+        subject: subject,
         serviceId: serviceId,
         calendarId: calendarId,
         infos: infos

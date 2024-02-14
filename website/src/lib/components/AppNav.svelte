@@ -1,19 +1,14 @@
 <script lang="ts">
-
     import {menuIsOpen, siteInfo} from "../../store";
-
 </script>
 
 <nav class="s-app-nav app-flex app-flex--justify_space-between app-flex--align_center">
-    <div class="app-flex__basis-auto s-app-nav__logo--box"
-    >
+    <div class="app-flex__basis-auto s-app-nav__logo--box">
         <a href="/"><img class="s-app-nav__logo" alt="retour à la home" src="/logo.svg"></a>
     </div>
 
-    <div class="s-app-nav__buttons app-flex__basis-auto"
-    >
-        <div class="app-flex app-flex--gap_regular app-flex--align_center"
-        >
+    <div class="s-app-nav__buttons app-flex__basis-auto">
+        <div class="app-flex app-flex--gap_regular app-flex--align_center">
             <a class="app-button app-button--rounded"
                style="
                     --app-button--color: var(--app-color--green);
@@ -21,7 +16,7 @@
                 "
                href="/rendez-vous"
             >Prendre RDV</a>
-            <div class="s-app-nav__social-icon" >
+            <div class="s-app-nav__social-icon">
                 <img src="/social-1.svg" alt="social link" >
                 <img src="/social-2.svg" alt="social link" >
                 <img src="/social-3.svg" alt="social link" >
@@ -36,7 +31,6 @@
                     <img class="s-app-nav__icon-menu__img" alt="open menu" src="/menu_FILL0_wght400_GRAD0_opsz24.svg" >
                 {/if}
             </button>
-
         </div>
     </div>
 
