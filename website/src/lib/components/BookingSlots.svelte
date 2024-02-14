@@ -1,8 +1,10 @@
 <script lang="ts">
+    import type {Slot} from "$lib/interfaces/variables";
+
     let currentPage: number = 0;
     const itemsPerPage: number = 5;
 
-    export let slots: string[] = [];
+    export let slots: Slot[] = [];
     export let selectedSlotId: string = '';
     export let labelNoSlots: string = '';
 
@@ -15,6 +17,13 @@
     const previousPage = () => {
         currentPage = (currentPage > 0) ? currentPage - 1 : maxPage;
     }
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
+    };
 </script>
 
 <div class="overflow-y-auto h-full flex flex-col pt-1 pr-2 mt-2 space-y-2 mb-5">
@@ -25,7 +34,7 @@
                  on:click={() => selectedSlotId = slot}
             >
                 <div class="py-3 w-full font-light text-center cursor-pointer">
-                    {slot}
+                    {formatDate(slot.date)}
                 </div>
             </div>
         {/each}
