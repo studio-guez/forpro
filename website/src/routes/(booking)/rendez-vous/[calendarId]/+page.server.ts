@@ -4,7 +4,7 @@ import type {BookingCMSResponse} from "$lib/interfaces/variables";
 import {
     createAppointment,
     getAvailableSlots,
-    getServicesFromProvider
+    getServicesFromCalendarId,
 } from "$lib/utils/booking/api";
 import dayjs from "dayjs";
 
@@ -12,22 +12,27 @@ export const prerender = false;
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
     const cmsBookingUrl = `${variables.CMS_BASE_URL}/booking`
-    const providerId = params.providerId;
+    const calendarId = params.calendarId;
 
     let availabilities = [];
 
     const res = await fetch(cmsBookingUrl);
     const content: BookingCMSResponse = await res.json();
 
-    const services = await getServicesFromProvider(providerId);
+    const servicesKirby = await getServicesFromCalendarId(calendarId);
+    const services = Object.values(servicesKirby);
+
+    console.log(services);
 
     const today = dayjs().format('YYYY-MM-DD');
 
     if (services !== undefined) {
-        availabilities = await getAvailableSlots(today, services[0].id, providerId);
+        availabilities = await getAvailableSlots(today, services[0].id, calendarId);
     }
 
-    return { content, services, providerId, availabilities };
+    console.log(availabilities);
+
+    return { content, services, calendarId, availabilities };
 };
 
 export const actions = {
@@ -72,7 +77,6 @@ const createDates = ({ date, slot, duration }) => {
 
     // Create end date from start plus duration
     const end = start.add(duration, 'minute');
-    console.log(end);
 
     // Format the date to be compatible with easyappointments
     const formattedStart = start.format('YYYY-MM-DD HH:mm:ss');
