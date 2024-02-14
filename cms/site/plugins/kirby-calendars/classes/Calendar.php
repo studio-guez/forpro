@@ -339,11 +339,15 @@ class Calendar
      */
     public static function addEvent(
         string $calendarId,
+        string $subjectId,
         string $serviceId,
         string $date,
         array $infos
     ): \Google\Service\Calendar\Event
     {
+        $kirby = kirby();
+        $subject = $kirby->site()->bookingAppointmentSelect()->toStructure()->toArray()[$subjectId]['label'];
+
         $googleService = static::createGoogleService();
 
         $service = Service::find($serviceId);
@@ -354,17 +358,20 @@ class Calendar
         $dateTimeStart = new DateTimeImmutable($date, new DateTimeZone('Europe/Paris'));
         $dateTimeEnd = $dateTimeStart->modify('+' . $serviceDuration . ' minutes');
 
-        $description = 'Fullname: '. $infos['firstname'] . ' ' . $infos['lastname']
-            . '\n'
-            . 'Phone: ' . $infos['phone']
-            . '\n'
-            . 'Email: ' . $infos['email'] ;
+        $description = $subject
+            . "\n"
+            . $infos['firstname'] . ' ' . $infos['lastname']
+            . "\n"
+            . $infos['phone']
+            . "\n"
+            . $infos['email'];
 
         $event = static::createGoogleEvent($serviceTitle, $description, $dateTimeStart, $dateTimeEnd);
 
         Event::create([
             'name' => $serviceTitle,
             'description' => $description,
+            'subject' => $subject,
             'date' => $date,
             'start_time' => $dateTimeStart->format('H:i'),
             'end_time' => $dateTimeEnd->format('H:i'),

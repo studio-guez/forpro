@@ -5,7 +5,6 @@ import {createAppointment, getAvailableSlots, getServicesFromCalendarId,} from "
 import dayjs from "dayjs";
 
 export const prerender = false;
-
 export const load: PageServerLoad = async ({params, fetch}) => {
     const cmsBookingUrl = `${variables.CMS_BASE_URL}/booking`
     const calendarId = params.calendarId;
@@ -39,6 +38,7 @@ export const actions = {
         const serviceId = data.get('serviceId');
         const date = data.get('date');
         const slot = data.get('slot');
+        const subjectId = data.get('subject');
 
         const infos = {
             firstname,
@@ -50,6 +50,7 @@ export const actions = {
         const appointment = await createAppointment(
             date,
             slot,
+            subjectId,
             serviceId,
             calendarId,
             infos
@@ -58,17 +59,3 @@ export const actions = {
         return {appointment};
     },
 } satisfies Actions;
-
-const createDates = ({date, slot, duration}) => {
-    const start = dayjs(`${date}T${slot}:00`);
-    console.log(start);
-
-    // Create end date from start plus duration
-    const end = start.add(duration, 'minute');
-
-    // Format the date to be compatible with easyappointments
-    const formattedStart = start.format('YYYY-MM-DD HH:mm:ss');
-    const formattedEnd = end.format('YYYY-MM-DD HH:mm:ss');
-
-    return {start: formattedStart, end: formattedEnd};
-};
