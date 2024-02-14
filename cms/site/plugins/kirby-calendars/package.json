@@ -5,6 +5,7 @@
     "build": "npx -y kirbyup src/index.js"
   },
   "dependencies": {
-    "kirbyup": "^3.0.1"
+    "kirbyup": "^3.0.1",
+    "vue-clipboard2": "^0.3.3"
   }
 }
