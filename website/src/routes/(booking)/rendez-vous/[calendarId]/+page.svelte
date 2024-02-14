@@ -15,7 +15,7 @@
     let step = 1;
     form = { appointment: null };
 
-    const providerId = data.providerId;
+    const calendarId = data.calendarId;
 
     let selectedServiceId: number = data.services ? data.services[0].id : null;
     let selectedSlotId: number = null;
@@ -34,7 +34,7 @@
 
     const handleDateSelection = async (event) => {
         selectedDate = event.detail;
-        slots = await getAvailableSlots(selectedDate, selectedServiceId, providerId);
+        slots = await getAvailableSlots(selectedDate, selectedServiceId, calendarId);
         formattedDate = new Date(event.detail).toLocaleDateString('fr-CH');
     }
 
@@ -45,6 +45,13 @@
     const getServiceDuration = (id: number) => {
         return services.find(service => service.id === id).duration;
     }
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
+    };
 </script>
 
 <div class="h-full mx-auto w-full lg:max-w-4xl text-gray-700 flex flex-col justify-between max-h-300">
@@ -93,7 +100,7 @@
                                     {data.content.bookingServicesLabel}
                                 </div>
                                 <div class="flex flex-wrap flex-shrink-0 -mx-2">
-                                    {#each services as service}
+                                    {#each services as service, index}
                                         <div class="flex-grow p-2 mx-2 mt-3 text-xs leading-4 text-center text-black bg-gray-200 rounded border border-solid border-2 cursor-pointer"
                                              class:border-black={selectedServiceId === service.id}
                                              on:click={() => selectedServiceId = service.id}
@@ -145,7 +152,7 @@
                                                 ></path>
                                             </svg>
                                             <span class="ml-2">
-                                            {getServiceName(selectedServiceId)}, le {formattedDate} à {selectedSlotId}
+                                            {getServiceName(selectedServiceId)}, le {formattedDate} à {formatDate(selectedSlotId.date)}
                                         </span>
                                         </div>
                                         <div class="flex items-center px-1 mt-2 text-base font-semibold">
@@ -170,7 +177,7 @@
                                         <form method="POST" class="flex flex-col flex-1 justify-between mt-6 w-full" use:enhance>
                                             <input hidden name="serviceId" value={selectedServiceId}/>
                                             <input hidden name="duration" value="{getServiceDuration(selectedServiceId)}"/>
-                                            <input hidden name="providerId" value={providerId}/>
+                                            <input hidden name="calendarId" value={calendarId}/>
                                             <input hidden name="slot" value={selectedSlotId}/>
                                             <input hidden name="date" value={selectedDate}/>
                                             <div class="overflow-x-hidden overflow-y-scroll px-1 pb-6 w-full h-full">
