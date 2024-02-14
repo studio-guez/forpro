@@ -42,9 +42,9 @@ class Calendar
 
         // Create the new calendar on Google
         $calendar = new Google_Service_Calendar_Calendar();
-        $calendar->setSummary($input['name'] ?? null);
-        $calendar->setDescription($input['description'] ?? null);
-        $calendar->setLocation($input['location'] ?? null);
+        $calendar->setSummary($input['name']);
+        $calendar->setDescription($input['description'] ?? '');
+        $calendar->setLocation($input['location'] ?? '');
 
         $createdCalendar = $service->calendars->insert($calendar);
 
@@ -65,8 +65,8 @@ class Calendar
 
         $input = [
             'id' => $id,
-            'name' => $input['name'],
-            'description' => $input['description'],
+            'name' => $input['name'] ?? '',
+            'description' => $input['description'] ?? '',
             'url' => $publicUrl,
             'ical' => $publicUrlIcal,
             'cid' => $createdCalendar->getId(),
