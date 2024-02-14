@@ -3,6 +3,7 @@
 use Kirby\Data\Json;
 use Kirby\Http\Response;
 use MediumSans\KirbyCalendars\Calendar;
+use MediumSans\KirbyCalendars\Service;
 
 return [
     [
@@ -10,6 +11,17 @@ return [
         'method' => 'GET',
         'action' => function (string $id) {
             return Calendar::update($id, get());
+        }
+    ],
+    [
+        'pattern' => 'kirby-calendars/(:any)/services',
+        'method' => 'GET',
+        'action' => function ($calendarId) {
+            return response::json(
+                Json::encode(
+                    Service::findByCalendarId($calendarId)
+                )
+            );
         }
     ],
     [
@@ -27,12 +39,19 @@ return [
         'pattern' => 'kirby-calendars/add-slot',
         'method' => 'POST',
         'action' => function () {
-            $data = get();
+            $data = json_decode(file_get_contents('php://input'));
 
-            $calendarId = $data['calendarId'];
-            $serviceId = $data['serviceId'];
-            $date = $data['date'];
-            $infos = $data['infos'];
+            $calendarId = $data->calendarId;
+            $serviceId = $data->serviceId;
+            $date = $data->date;
+            $inf = $data->infos;
+
+            $infos = [
+                'firstname' => $inf->firstname,
+                'lastname' => $inf->lastname,
+                'phone' => $inf->phone,
+                'email' => $inf->email,
+            ];
 
             return response::json(
                 Json::encode(
