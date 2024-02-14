@@ -188,7 +188,7 @@
                                             <input hidden name="serviceId" value={selectedServiceId}/>
                                             <input hidden name="duration" value="{getServiceDuration(selectedServiceId)}"/>
                                             <input hidden name="calendarId" value={calendarId}/>
-                                            <input hidden name="slot" value={selectedSlotId}/>
+                                            <input hidden name="slot" value={selectedSlotId.date}/>
                                             <input hidden name="date" value={selectedDate}/>
                                             <div class="overflow-x-hidden overflow-y-scroll px-1 pb-6 w-full h-full">
                                                 <div class="flex flex-wrap -mx-2">
