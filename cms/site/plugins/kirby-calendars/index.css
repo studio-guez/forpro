@@ -12,5 +12,5 @@
 }
 
 .k-table {
-  table-layout: auto;
+  table-layout: fixed;
 }
