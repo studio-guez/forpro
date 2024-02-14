@@ -25,6 +25,7 @@ Kirby::plugin('medium-sans/kirby-calendars', [
                     require __DIR__ . '/views/calendars.php',
                     require __DIR__ . '/views/services.php',
                     require __DIR__ . '/views/schedules.php',
+                    require __DIR__ . '/views/events.php',
                 ],
                 'dialogs' => [
                     // CALENDAR
@@ -46,5 +47,5 @@ Kirby::plugin('medium-sans/kirby-calendars', [
             ];
         },
     ],
-    'api' => require __DIR__ . '/routes/index.php',
+    'routes' => require __DIR__ . '/routes/index.php',
 ]);
