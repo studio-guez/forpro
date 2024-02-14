@@ -13,5 +13,5 @@ export const getServices = (calendarId: string): string => {
 }
 
 export const getAppointmentsUrl = (): string => {
-    return `${variables.CMS_BASE_URL}/kirby-calendars/api/appointment/`;
+    return `${variables.CMS_BASE_URL}/kirby-calendars/add-slot`;
 }
