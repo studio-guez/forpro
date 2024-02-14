@@ -9,7 +9,13 @@ class Service
 {
     const FILENAME = 'services.json';
 
-    public static function findByCalendarId($id): array
+    /**
+     * Finds services by calendar id
+     *
+     * @param string $id The calendar id to search for
+     * @return array An array of services matching the given calendar id
+     */
+    public static function findByCalendarId(string $id): array
     {
         $services = static::list();
         $services = array_filter($services, function ($service) use ($id) {
