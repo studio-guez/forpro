@@ -15,38 +15,38 @@
 
     <table class="k-table">
       <thead>
-        <tr>
-          <th class="k-table-index-column"
-              style="text-align: center;">
-            #
-          </th>
-          <th>Nom</th>
-          <th>Date</th>
-          <th>Début</th>
-          <th>Fin</th>
-          <th>Nom</th>
-          <th>Prénom</th>
-          <th>Email</th>
-          <th>Téléphone</th>
-          <th class="k-table-index-column"></th>
-        </tr>
+      <tr>
+        <th class="k-table-index-column"
+            style="text-align: center;">
+          #
+        </th>
+        <th>Nom</th>
+        <th>Sujet</th>
+        <th>Horaire</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th class="k-table-index-column"></th>
+      </tr>
       </thead>
 
       <tbody>
-        <tr v-for="(event, id, index) in events" :key="id">
-          <td class="k-table-index-column" style="text-align: center;">
-            {{ index }}
-          </td>
-          <td style="width: 10%;">{{ event.name }}</td>
-          <td data-align="center">{{ formatDate(event.date) }}</td>
-          <td data-align="center">{{ event.start_time }}</td>
-          <td data-align="center">{{ event.end_time }}</td>
-          <td>{{ event.lastname }}</td>
-          <td>{{ event.firstname }}</td>
-          <td>{{ event.email }}</td>
-          <td>{{ event.phone }}</td>
-          <td class="k-table-options-column">
-            <k-options-dropdown :options="[
+      <tr v-for="(event, id, index) in events" :key="id">
+        <td class="k-table-index-column" style="text-align: center;">
+          {{ index }}
+        </td>
+        <td :title="event.name" style="width: 10%;">{{ event.name }}</td>
+        <td :title="event.subject" style="width: 10%;">{{ event.subject }}</td>
+        <td :title="formatDate(event.date) + ' ' + event.start_time + '-' + event.end_time"
+            data-align="center">{{ formatDate(event.date) }} {{ event.start_time }}-{{ event.end_time }}
+        </td>
+        <td :title="event.lastname">{{ event.lastname }}</td>
+        <td :title="event.firstname">{{ event.firstname }}</td>
+        <td :title="event.email">{{ event.email }}</td>
+        <td :title="event.phone">{{ event.phone }}</td>
+        <td class="k-table-options-column">
+          <k-options-dropdown :options="[
               {
                 text: 'Modifier',
                 icon: 'edit',
@@ -58,8 +58,8 @@
                 click: () => $dialog(`calendar/${id}/delete`)
               },
             ]"/>
-          </td>
-        </tr>
+        </td>
+      </tr>
       </tbody>
     </table>
   </k-inside>
@@ -75,8 +75,9 @@ export default {
     goto(path) {
       this.$go(path);
     },
-    formatDate(date) {
-      if (date) {
+    formatDate(dateStr) {
+      if (dateStr) {
+        const [date, time] = dateStr.split(' ');
         const [year, month, day] = date.split('-');
         return `${day}.${month}.${year}`;
       }
@@ -88,6 +89,6 @@ export default {
 
 <style>
 .k-table {
-  table-layout: auto;
+  table-layout: fixed;
 }
 </style>
