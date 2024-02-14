@@ -21,10 +21,11 @@
             #
           </th>
           <th>Nom</th>
-          <th>Description</th>
           <th>Date</th>
           <th>Début</th>
           <th>Fin</th>
+          <th>Nom</th>
+          <th>Prénom</th>
           <th>Email</th>
           <th>Téléphone</th>
           <th class="k-table-index-column"></th>
@@ -37,10 +38,11 @@
             {{ index }}
           </td>
           <td style="width: 10%;">{{ event.name }}</td>
-          <td>{{ event.description }}</td>
-          <td data-align="center">{{ event.date }}</td>
+          <td data-align="center">{{ formatDate(event.date) }}</td>
           <td data-align="center">{{ event.start_time }}</td>
           <td data-align="center">{{ event.end_time }}</td>
+          <td>{{ event.lastname }}</td>
+          <td>{{ event.firstname }}</td>
           <td>{{ event.email }}</td>
           <td>{{ event.phone }}</td>
           <td class="k-table-options-column">
@@ -66,19 +68,26 @@
 <script>
 export default {
   props: {
-    calendars: Array,
+    events: Array,
     options: Array
   },
   methods: {
     goto(path) {
       this.$go(path);
-    }
+    },
+    formatDate(date) {
+      if (date) {
+        const [year, month, day] = date.split('-');
+        return `${day}.${month}.${year}`;
+      }
+      return '';
+    },
   }
 };
 </script>
 
 <style>
 .k-table {
-  table-layout: fixed;
+  table-layout: auto;
 }
 </style>
