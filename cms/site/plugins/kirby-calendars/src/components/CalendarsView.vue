@@ -1,7 +1,7 @@
 <template>
   <k-inside>
     <k-header>
-      Calendrier
+      Calendriers
 
       <k-button-group slot="buttons">
         <k-button
