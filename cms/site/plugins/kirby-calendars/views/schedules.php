@@ -15,6 +15,10 @@ return [
                 [
                     'label' => $calendar['name'],
                     'link'  => 'calendars/' . $id
+                ],
+                [
+                    'label' => 'Horaires',
+                    'link'  => 'schedules/' . $id
                 ]
             ],
             'props' => [

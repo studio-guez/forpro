@@ -11,6 +11,16 @@ return [
 
         return [
             'component' => 'k-events-view',
+            'breadcrumb' => [
+                [
+                    'label' => $calendar['name'],
+                    'link'  => '/kirby-calendars/calendars/'
+                ],
+                [
+                    'label' => 'Évènements',
+                    'link'  => 'events/' . $id
+                ]
+            ],
             'props' => [
                 'calendar' => $calendar,
                 'events' => $events
