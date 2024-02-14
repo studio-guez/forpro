@@ -112,6 +112,7 @@ class Event
         $event = [
             'name' => $input['name'],
             'description' => $input['description'] ?? '',
+            'subject' => $input['subject'] ?? '',
             'date' => $input['date'] ?? null,
             'start_time' => $input['start_time'],
             'end_time' => $input['end_time'],
