@@ -1,24 +1,25 @@
 import type {Slot, Service, Appointment} from '$lib/interfaces/variables';
 import {
     getAppointmentsUrl,
-    getAvailabilitiesUrl,
-    getServicesFromProviderUrl
+    getServices,
+    getSlots
 } from "$lib/utils/booking/urls";
 
 import {fetchFromAPI, getHeaders} from "$lib/utils/shared";
 
-export const getAvailableSlots = async (date: string, serviceId: number, providerId: number): Promise<Slot[]> => {
-    const body = {date: date, providerId: providerId, serviceId: serviceId};
+export const getAvailableSlots = async (date: string, serviceId: string, calendarId: string): Promise<Slot[]> => {
+    const body = {date: date, providerId: calendarId, serviceId: serviceId};
 
-    const request = new Request(getAvailabilitiesUrl(providerId, serviceId, date), {
+    const request = new Request(getSlots(calendarId, serviceId, date), {
+        method: 'GET',
         headers: getHeaders(),
     });
 
     return fetchFromAPI<Slot[]>(request, 'Failed to fetch available slots');
 }
 
-export const getServicesFromProvider = async (providerId: string): Promise<Service[]> => {
-    const request = new Request(getServicesFromProviderUrl(providerId), {
+export const getServicesFromCalendarId = async (calendarId: string): Promise<Service[]> => {
+    const request = new Request(getServices(calendarId), {
         headers: getHeaders(),
     });
 
