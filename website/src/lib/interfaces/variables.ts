@@ -5,7 +5,8 @@ export interface Variables {
 
 export interface Slot {
     readonly date: string;
-    readonly time: string;
+    readonly timezone_type: number;
+    readonly timezone: string;
 }
 
 export interface AppointmentDetails {
@@ -23,9 +24,10 @@ export interface BookingCMSResponse {
 }
 
 export interface Service {
-    id: number,
+    id: string,
     name: string,
     duration: string,
+    calendar_id: string
 }
 
 export interface Provider {
