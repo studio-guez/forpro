@@ -76,6 +76,21 @@ fields:
           crop: false
           image:
             when: false
+          fixed:
+            label:
+              en: fixed
+              fr: fixe
+            type: radio
+            columns: 2
+            default: "true"
+            options:
+              true:
+                en: 'yes'
+                fr: 'oui'
+              false:
+                en: 'no'
+                fr: 'non'
+
       video:
           extends: blocks/video
           fields:
