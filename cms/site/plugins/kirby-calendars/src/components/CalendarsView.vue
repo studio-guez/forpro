@@ -43,7 +43,7 @@
               {{ calendar.scheduleState.status }}
             </k-button>
           </td>
-          <td>
+          <td :title="calendar.ical">
             <k-button @click="copyToClipboard(calendar.ical)">
               {{ shortenUrl(calendar.ical) }}
             </k-button>
