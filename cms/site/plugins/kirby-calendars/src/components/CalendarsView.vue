@@ -20,9 +20,9 @@
               style="text-align: center;">#
           </th>
           <th>Nom</th>
-          <th>Description</th>
           <th>Services</th>
           <th>Horaires</th>
+          <th>Lien</th>
           <th class="k-table-index-column"></th>
         </tr>
       </thead>
@@ -33,7 +33,6 @@
             {{ index }}
           </td>
           <td style="width: 10%;">{{ calendar.name }}</td>
-          <td>{{ calendar.description }}</td>
           <td data-align="center">{{ calendar.nbrServices }}</td>
           <td data-align="center">
             <k-button
@@ -42,6 +41,11 @@
                 variant="dimmed"
             >
               {{ calendar.scheduleState.status }}
+            </k-button>
+          </td>
+          <td>
+            <k-button @click="copyToClipboard(calendar.ical)">
+              {{ shortenUrl(calendar.ical) }}
             </k-button>
           </td>
           <td class="k-table-options-column">
@@ -80,6 +84,9 @@
 </template>
 
 <script>
+import VueClipboard from 'vue-clipboard2';
+Vue.use(VueClipboard);
+
 export default {
   props: {
     calendars: Array,
@@ -88,7 +95,19 @@ export default {
   methods: {
     goto(path) {
       this.$go(path);
-    }
+    },
+    shortenUrl(url) {
+      if (url.length > 25) return url.slice(0, 22) + '...';
+      else return url;
+    },
+    async copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        window.panel.notification.success("URL du calendrier copiée dans le presse-papier");
+      } catch (err) {
+        // Show error message
+      }
+    },
   }
 };
 </script>
