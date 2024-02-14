@@ -335,6 +335,7 @@ class Calendar
      * @throws Exception
      * @throws NotFoundException
      * @throws \Google\Service\Exception
+     * @throws \Exception
      */
     public static function addEvent(
         string $calendarId,
@@ -348,6 +349,7 @@ class Calendar
         $service = Service::find($serviceId);
         $serviceDuration = static::convertDurationToMinutes($service['duration']);
         $serviceTitle = $service['name'];
+        $calendar = static::find($calendarId);
 
         $dateTimeStart = new DateTimeImmutable($date, new DateTimeZone('Europe/Paris'));
         $dateTimeEnd = $dateTimeStart->modify('+' . $serviceDuration . ' minutes');
@@ -370,9 +372,13 @@ class Calendar
             'service_id' => $serviceId,
             'calendar_id' => $calendarId,
             'eid' => $event->getId(),
+            'firstname' => $infos['firstname'],
+            'lastname' => $infos['lastname'],
+            'phone' => $infos['phone'],
+            'email' => $infos['email'],
         ]);
 
-        return $googleService->events->insert($calendarId, $event);
+        return $googleService->events->insert($calendar['cid'], $event);
     }
 
     /**
