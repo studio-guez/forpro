@@ -626,8 +626,9 @@
       goto(path) {
         this.$go(path);
       },
-      formatDate(date) {
-        if (date) {
+      formatDate(dateStr) {
+        if (dateStr) {
+          const [date, time] = dateStr.split(" ");
           const [year, month, day] = date.split("-");
           return `${day}.${month}.${year}`;
         }
@@ -639,8 +640,8 @@
     var _vm = this, _c = _vm._self._c;
     return _c("k-inside", [_c("k-header", [_vm._v(" Évènements "), _c("k-button-group", { attrs: { "slot": "buttons" }, slot: "buttons" }, [_c("k-button", { attrs: { "text": "Ajouter", "variant": "filled", "icon": "add" }, on: { "click": function($event) {
       return _vm.$dialog("event/create");
-    } } })], 1)], 1), _c("table", { staticClass: "k-table" }, [_c("thead", [_c("tr", [_c("th", { staticClass: "k-table-index-column", staticStyle: { "text-align": "center" } }, [_vm._v(" # ")]), _c("th", [_vm._v("Nom")]), _c("th", [_vm._v("Date")]), _c("th", [_vm._v("Début")]), _c("th", [_vm._v("Fin")]), _c("th", [_vm._v("Nom")]), _c("th", [_vm._v("Prénom")]), _c("th", [_vm._v("Email")]), _c("th", [_vm._v("Téléphone")]), _c("th", { staticClass: "k-table-index-column" })])]), _c("tbody", _vm._l(_vm.events, function(event, id, index) {
-      return _c("tr", { key: id }, [_c("td", { staticClass: "k-table-index-column", staticStyle: { "text-align": "center" } }, [_vm._v(" " + _vm._s(index) + " ")]), _c("td", { staticStyle: { "width": "10%" } }, [_vm._v(_vm._s(event.name))]), _c("td", { attrs: { "data-align": "center" } }, [_vm._v(_vm._s(_vm.formatDate(event.date)))]), _c("td", { attrs: { "data-align": "center" } }, [_vm._v(_vm._s(event.start_time))]), _c("td", { attrs: { "data-align": "center" } }, [_vm._v(_vm._s(event.end_time))]), _c("td", [_vm._v(_vm._s(event.lastname))]), _c("td", [_vm._v(_vm._s(event.firstname))]), _c("td", [_vm._v(_vm._s(event.email))]), _c("td", [_vm._v(_vm._s(event.phone))]), _c("td", { staticClass: "k-table-options-column" }, [_c("k-options-dropdown", { attrs: { "options": [
+    } } })], 1)], 1), _c("table", { staticClass: "k-table" }, [_c("thead", [_c("tr", [_c("th", { staticClass: "k-table-index-column", staticStyle: { "text-align": "center" } }, [_vm._v(" # ")]), _c("th", [_vm._v("Nom")]), _c("th", [_vm._v("Sujet")]), _c("th", [_vm._v("Horaire")]), _c("th", [_vm._v("Nom")]), _c("th", [_vm._v("Prénom")]), _c("th", [_vm._v("Email")]), _c("th", [_vm._v("Téléphone")]), _c("th", { staticClass: "k-table-index-column" })])]), _c("tbody", _vm._l(_vm.events, function(event, id, index) {
+      return _c("tr", { key: id }, [_c("td", { staticClass: "k-table-index-column", staticStyle: { "text-align": "center" } }, [_vm._v(" " + _vm._s(index) + " ")]), _c("td", { staticStyle: { "width": "10%" }, attrs: { "title": event.name } }, [_vm._v(_vm._s(event.name))]), _c("td", { staticStyle: { "width": "10%" }, attrs: { "title": event.subject } }, [_vm._v(_vm._s(event.subject))]), _c("td", { attrs: { "title": _vm.formatDate(event.date) + " " + event.start_time + "-" + event.end_time, "data-align": "center" } }, [_vm._v(_vm._s(_vm.formatDate(event.date)) + " " + _vm._s(event.start_time) + "-" + _vm._s(event.end_time) + " ")]), _c("td", { attrs: { "title": event.lastname } }, [_vm._v(_vm._s(event.lastname))]), _c("td", { attrs: { "title": event.firstname } }, [_vm._v(_vm._s(event.firstname))]), _c("td", { attrs: { "title": event.email } }, [_vm._v(_vm._s(event.email))]), _c("td", { attrs: { "title": event.phone } }, [_vm._v(_vm._s(event.phone))]), _c("td", { staticClass: "k-table-options-column" }, [_c("k-options-dropdown", { attrs: { "options": [
         {
           text: "Modifier",
           icon: "edit",
