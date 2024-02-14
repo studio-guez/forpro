@@ -65,6 +65,11 @@
                 text: 'Horaires',
                 icon: 'clock',
                 click: () => goto(`/kirby-calendars/calendar/${id}/schedules`)
+              },
+              {
+                text: 'Évènements',
+                icon: 'page',
+                click: () => goto(`/kirby-calendars/calendar/${id}/events`)
               }
             ]"/>
           </td>
