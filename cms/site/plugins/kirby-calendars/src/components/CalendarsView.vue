@@ -13,7 +13,7 @@
       </k-button-group>
     </k-header>
 
-    <table class="k-table">
+    <table class="k-table k-calendar">
       <thead>
         <tr>
           <th class="k-table-index-column"
@@ -94,7 +94,7 @@ export default {
 </script>
 
 <style>
-.k-table {
+.k-table.k-calendar {
   table-layout: fixed;
 }
 </style>
