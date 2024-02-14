@@ -7,6 +7,10 @@
   table-layout: fixed;
 }
 
-.k-table {
+.k-table.k-calendar {
   table-layout: fixed;
+}
+
+.k-table {
+  table-layout: auto;
 }
