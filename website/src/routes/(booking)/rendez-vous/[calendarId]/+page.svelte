@@ -251,30 +251,22 @@
                                                         <div class="relative mt-1 rounded-md"
                                                              style="box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px; list-style: outside;"
                                                         >
-                                                            <input
-                                                                    name="phone"
-                                                                    type="tel"
-                                                                    class="block py-2 px-3 m-0 w-full text-base bg-white rounded-md border border-gray-300 border-solid appearance-none cursor-text sm:text-sm sm:leading-5 focus:border-blue-600 focus:outline-offset-2"
-                                                                    placeholder="+41(0)791232442"
-                                                                    value="">
+                                                            <input name="phone" type="tel" placeholder="+41(0)791232442"
+                                                                   class="block py-2 px-3 m-0 w-full text-base bg-white rounded-md border border-gray-300 border-solid appearance-none cursor-text sm:text-sm sm:leading-5 focus:border-blue-600 focus:outline-offset-2"
+                                                                   value="">
                                                         </div>
                                                     </div>
                                                     <div class="mt-5">
-                                                        <div class="block">
-                                                            <label class="flex text-sm font-semibold leading-5 cursor-default"
-                                                                   for="email">Description</label>
-                                                        </div>
-                                                        <div class="relative mt-1 rounded-md"
-                                                             style="box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px; list-style: outside;"
-                                                        >
-                                                        <textarea
-                                                                name="description"
-                                                                type="textarea"
-                                                                placeholder="remarques..."
-                                                                class="block py-2 px-3 m-0 w-full text-base bg-white rounded-md border border-gray-300 border-solid appearance-none cursor-text sm:text-sm sm:leading-5 focus:border-blue-600 focus:outline-offset-2"
-                                                                rows="4"
-                                                                value=""/>
-                                                        </div>
+                                                          <label for="subject" class="block mb-2 text-sm font-medium text-black">
+                                                            Sujet *
+                                                          </label>
+                                                          <select id="subject"
+                                                                  name="subject"
+                                                                  class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                                                                {#each data.content.bookingAppointmentSelect as select}
+                                                                    <option value={ select.id }>{ select.label }</option>
+                                                                {/each}
+                                                          </select>
                                                     </div>
                                                     <div class="flex bottom-0 left-0 flex-col flex-shrink-0 pb-6 mt-6 w-full text-right sm:mt-0 sm:pt-4">
                                                         <div class="flex justify-between w-full">

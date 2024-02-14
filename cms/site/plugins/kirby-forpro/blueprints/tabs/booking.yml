@@ -64,3 +64,12 @@ fields:
       en: Appointment success label
       fr: Label rendez-vous confirmé
     type: text
+
+  bookingAppointmentSelect:
+    label:
+      en: Menu de sélection / précision de demande
+      fr: Menu de sélection / précision de demande
+    type: structure
+    fields:
+      label:
+        type: text
