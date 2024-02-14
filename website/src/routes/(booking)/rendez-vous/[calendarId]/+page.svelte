@@ -2,7 +2,6 @@
     import SveltyPicker, {config} from "svelty-picker";
     import {fr} from 'svelty-picker/i18n';
 
-    import {getAvailableSlots} from "$lib/utils/booking/api";
     import BookingSlots from "$lib/components/BookingSlots.svelte";
     import type {Slot} from "$lib/interfaces/variables";
 
@@ -27,14 +26,25 @@
     let slots: Slot[] = data.availabilities;
     let loading: boolean = false;
 
-    // PICKER CONFIG
     const today = new Date();
     const endDate = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
     config.i18n = fr;
 
     const handleDateSelection = async (event) => {
         selectedDate = event.detail;
-        slots = await getAvailableSlots(selectedDate, selectedServiceId, calendarId);
+
+        const data = new FormData();
+        data.append('calendarId', calendarId);
+        data.append('selectedServiceId', selectedServiceId);
+        data.append('selectedDate', selectedDate);
+
+        const response = await fetch('/api/booking/get-slots', {
+            method: 'POST',
+            body: data
+        });
+
+        slots = await response.json();
+
         formattedDate = new Date(event.detail).toLocaleDateString('fr-CH');
     }
 
