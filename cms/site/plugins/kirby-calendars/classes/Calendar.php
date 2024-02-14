@@ -263,36 +263,37 @@ class Calendar
      */
     private static function calculateFreeSlots(DateTimeImmutable $openingTime,
                                                DateTimeImmutable $closingTime,
-                                               int               $serviceDuration,
-                                               array             $events): array
+                                               int $serviceDuration,
+                                               array $events): array
     {
         $availableSlots = [];
-        $nextSlot = $openingTime;
-        $timezone = $openingTime->getTimezone();
+        $nextSlotStart = $openingTime;
+        $timezone = new DateTimeZone('Europe/Zurich');
 
-        while ($nextSlot <= $closingTime) {
+        while ($nextSlotStart < $closingTime) {
             $overlap = false;
-            $slotEnd = $nextSlot->modify('+' . $serviceDuration . ' minutes');
+            $slotEnd = $nextSlotStart->modify('+' . $serviceDuration . ' minutes');
 
             foreach ($events as $event) {
-                $eventStart = new DateTimeImmutable($event->start->dateTime, $timezone);
-                $eventEnd = new DateTimeImmutable($event->end->dateTime, $timezone);
+                $eventStart = new DateTimeImmutable($event->getStart()->dateTime, $timezone);
+                $eventEnd = new DateTimeImmutable($event->getEnd()->dateTime, $timezone);
 
-                if ($nextSlot < $eventEnd && $slotEnd > $eventStart) {
+                if ($slotEnd > $eventStart && $nextSlotStart < $eventEnd || $nextSlotStart == $eventStart) {
                     $overlap = true;
                     break;
                 }
             }
 
             if (!$overlap && $slotEnd <= $closingTime) {
-                $availableSlots[] = $nextSlot;
+                $availableSlots[] = $nextSlotStart;
             }
-
-            $nextSlot = $nextSlot->modify('+' . $serviceDuration . ' minutes');
+            
+            $nextSlotStart = $nextSlotStart->modify('+' . $serviceDuration . ' minutes');
         }
 
         return $availableSlots;
     }
+
 
     /**
      * Returns the numeric day ID corresponding to the given day name
@@ -342,7 +343,7 @@ class Calendar
         string $subjectId,
         string $serviceId,
         string $date,
-        array $infos
+        array  $infos
     ): \Google\Service\Calendar\Event
     {
         $kirby = kirby();
@@ -378,7 +379,7 @@ class Calendar
             'duration' => $service['duration'],
             'service_id' => $serviceId,
             'calendar_id' => $calendarId,
-            'eid' => $event->getId(),
+            'eid' => $event->getEtag(),
             'firstname' => $infos['firstname'],
             'lastname' => $infos['lastname'],
             'phone' => $infos['phone'],
