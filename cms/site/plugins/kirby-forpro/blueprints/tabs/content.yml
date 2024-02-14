@@ -74,6 +74,8 @@ fields:
           link: false
           ratio: false
           crop: false
+          image:
+            when: false
       video:
           extends: blocks/video
           fields:
