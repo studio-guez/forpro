@@ -26,19 +26,19 @@ export const getServicesFromCalendarId = async (calendarId: string): Promise<Ser
     return fetchFromAPI<Service[]>(request, 'Failed to fetch services');
 }
 
-export const createAppointment = async (start: string, end: string, serviceId: string, providerId: string, notes: string, firstName: string, lastName: string, phone: string, email: string):
+export const createAppointment = async (date: string,
+                                        slot: string,
+                                        serviceId: string,
+                                        calendarId: string,
+                                        infos: []):
     Promise<Appointment> => {
+
     const body = {
-        start: start,
-        end: end,
-        location: '',
-        notes: notes,
+        date: date,
+        slot: slot,
         serviceId: serviceId,
-        providerId: providerId,
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone,
-        email: email,
+        calendarId: calendarId,
+        infos: infos
     };
 
     console.log(body);
