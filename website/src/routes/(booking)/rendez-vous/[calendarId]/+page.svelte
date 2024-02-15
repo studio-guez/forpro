@@ -23,11 +23,17 @@
     let formattedDate: string = null;
 
     let services = data.services ?? [];
+    let schedules = Object.values(data.schedules) ?? [];
+
+    console.log(schedules);
+
     let slots: Slot[] = data.availabilities;
     let loading: boolean = false;
 
-    const today = new Date();
-    const endDate = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+    let today = dayjs();
+    let startDate = today.add(1, 'day').toDate();
+
+    const endDate = today.add(1, 'month').toDate();
     config.i18n = fr;
 
     const handleDateSelection = async (event) => {
@@ -62,6 +68,14 @@
         const minutes = date.getMinutes().toString().padStart(2, '0');
         return `${hours}:${minutes}`;
     };
+
+    function disableDays(date) {
+        if (schedules.length > 0) {
+            return schedules.filter(schedule => schedule.is_closed && schedule.day_id == date.getDay()).length === 1;
+        } else {
+            return false;
+        }
+    }
 </script>
 
 <div class="h-full mx-auto w-full lg:max-w-4xl text-gray-700 flex flex-col justify-between max-h-300">
@@ -97,8 +111,10 @@
                                     <div class="flex justify-center">
                                         <SveltyPicker
                                                 pickerOnly
+                                                disableDatesFn={disableDays}
                                                 on:change={handleDateSelection}
                                                 endDate={endDate}
+                                                startDate={startDate}
                                         />
                                     </div>
                                 </div>
