@@ -1,7 +1,12 @@
 import type {Actions, PageServerLoad} from './$types';
 import {variables} from "$lib/utils/constants";
 import type {BookingCMSResponse} from "$lib/interfaces/variables";
-import {createAppointment, getAvailableSlots, getServicesFromCalendarId,} from "$lib/utils/booking/api";
+import {
+    createAppointment,
+    getAvailableSlots,
+    getSchedulesFromCalendarId,
+    getServicesFromCalendarId,
+} from "$lib/utils/booking/api";
 import dayjs from "dayjs";
 
 export const prerender = false;
@@ -15,6 +20,8 @@ export const load: PageServerLoad = async ({params, fetch}) => {
     const content: BookingCMSResponse = await res.json();
 
     const servicesKirby = await getServicesFromCalendarId(calendarId);
+    const schedules = await getSchedulesFromCalendarId(calendarId);
+
     const services = Object.values(servicesKirby);
 
     const today = dayjs().format('YYYY-MM-DD');
@@ -23,7 +30,7 @@ export const load: PageServerLoad = async ({params, fetch}) => {
         availabilities = await getAvailableSlots(today, services[0].id, calendarId);
     }
 
-    return {content, services, calendarId, availabilities};
+    return {content, services, calendarId, availabilities, schedules};
 };
 
 export const actions = {
