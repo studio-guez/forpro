@@ -3,6 +3,7 @@
 use Kirby\Data\Json;
 use Kirby\Http\Response;
 use MediumSans\KirbyCalendars\Calendar;
+use MediumSans\KirbyCalendars\Schedule;
 use MediumSans\KirbyCalendars\Service;
 
 return [
@@ -20,6 +21,17 @@ return [
             return response::json(
                 Json::encode(
                     Service::findByCalendarId($calendarId)
+                )
+            );
+        }
+    ],
+    [
+        'pattern' => 'kirby-calendars/(:any)/schedules',
+        'method' => 'GET',
+        'action' => function ($calendarId) {
+            return response::json(
+                Json::encode(
+                    Schedule::findByCalendarId($calendarId)
                 )
             );
         }
