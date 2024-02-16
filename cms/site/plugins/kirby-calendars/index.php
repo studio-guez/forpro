@@ -44,6 +44,12 @@ Kirby::plugin('medium-sans/kirby-calendars', [
                     require __DIR__ . '/dialogs/schedule/delete.php',
                     require __DIR__ . '/dialogs/schedule/edit.php',
                 ],
+                'templates' => [
+                    'emails/event_confirmation.html' => __DIR__ . '/templates/event_confirmation.html.php',
+                    'emails/event_confirmation.text' => __DIR__ . '/templates/event_confirmation.text.php',
+                    'emails/calendar_incharge.html' => __DIR__ . '/templates/calendar_incharge.html.php',
+                    'emails/calendar_incharge.text' => __DIR__ . '/templates/calendar_incharge.text.php',
+                ]
             ];
         },
     ],
