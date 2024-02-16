@@ -1,64 +1,77 @@
-import type {Actions, PageServerLoad} from './$types';
-import {variables} from "$lib/utils/constants";
-import type {BookingCMSResponse} from "$lib/interfaces/variables";
+import type { Actions, PageServerLoad } from './$types';
+import { variables } from "$lib/utils/constants";
+import type { BookingCMSResponse } from "$lib/interfaces/variables";
 import {
     createAppointment,
-    getAvailableSlots,
     getSchedulesFromCalendarId,
     getServicesFromCalendarId,
 } from "$lib/utils/booking/api";
-import dayjs from "dayjs";
+import { fail } from "@sveltejs/kit";
 
+const REQUIRED = 'required';
 export const prerender = false;
-export const load: PageServerLoad = async ({params, fetch}) => {
-    const cmsBookingUrl = `${variables.CMS_BASE_URL}/booking`
+
+export const load: PageServerLoad = async ({ params, fetch }) => {
+    const cmsBookingUrl = `${variables.CMS_BASE_URL}/booking`;
     const calendarId = params.calendarId;
-
-    let availabilities = [];
-
     const res = await fetch(cmsBookingUrl);
     const content: BookingCMSResponse = await res.json();
-
     const servicesKirby = await getServicesFromCalendarId(calendarId);
     const schedules = await getSchedulesFromCalendarId(calendarId);
-
     const services = Object.values(servicesKirby);
-
-    const today = dayjs().format('YYYY-MM-DD');
-
-    return {content, services, calendarId, schedules};
+    return { content, services, calendarId, schedules };
 };
 
+function validateInput(value: unknown, name: string, errors: Record<string, unknown>) {
+    if (!value || typeof value !== 'string') {
+        errors[name] = REQUIRED;
+    }
+}
+
 export const actions = {
-    default: async ({request}) => {
-
+    default: async ({ request }) => {
         const data = await request.formData();
-        const email = data.get('email');
-        const firstname = data.get('firstname');
-        const lastname = data.get('lastname');
-        const phone = data.get('phone');
-        const calendarId = data.get('calendarId');
-        const serviceId = data.get('serviceId');
-        const date = data.get('date');
-        const slot = data.get('slot');
-        const subjectId = data.get('subject');
+        const errors: Record<string, unknown> = {};
 
-        const infos = {
-            firstname,
-            lastname,
-            phone,
-            email,
-        };
+        const formDataEntries = [
+            'email',
+            'firstname',
+            'lastname',
+            'phone',
+            'calendarId',
+            'serviceId',
+            'date',
+            'slot',
+            'subject',
+        ];
+
+        formDataEntries.forEach(name => {
+            const value = data.get(name);
+            validateInput(value, name, errors);
+        });
+
+        if (Object.keys(errors).length > 0) {
+            const returnData = {
+                data: Object.fromEntries(data),
+                errors,
+            }
+            return fail(400, returnData);
+        }
 
         const appointment = await createAppointment(
-            date,
-            slot,
-            subjectId,
-            serviceId,
-            calendarId,
-            infos
+            data.get('date') as string,
+            data.get('slot') as string,
+            data.get('subject') as string,
+            data.get('serviceId') as string,
+            data.get('calendarId') as string,
+            {
+                firstname: data.get('firstname') as string,
+                lastname: data.get('lastname') as string,
+                phone: data.get('phone') as string,
+                email: data.get('email') as string,
+            }
         );
 
-        return {appointment};
+        return { appointment };
     },
 } satisfies Actions;

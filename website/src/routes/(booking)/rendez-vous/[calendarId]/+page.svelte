@@ -221,6 +221,11 @@
                                                                        class="block py-2 px-3 m-0 w-full text-base bg-white rounded-md border border-gray-300 border-solid appearance-none cursor-text sm:text-sm sm:leading-5 focus:border-blue-600 focus:outline-offset-2"
                                                                 />
                                                             </div>
+                                                            {#if form?.errors?.firstname}
+                                                                <p class="mt-2 text-xs text-red-600 dark:text-red-500">
+                                                                    <span class="font-medium">Oops!</span> le prénom est nécessaire.
+                                                                </p>
+                                                            {/if}
                                                         </div>
                                                     </div>
                                                     <div class="px-2 mt-6 w-full sm:mt-0 sm:w-1/2">
@@ -239,6 +244,11 @@
                                                                 />
                                                             </div>
                                                         </div>
+                                                        {#if form?.errors?.lastname}
+                                                            <p class="mt-2 text-xs text-red-600 dark:text-red-500">
+                                                                <span class="font-medium">Oops!</span> le nom est nécessaire.
+                                                            </p>
+                                                        {/if}
                                                     </div>
                                                 </div>
                                                 <div class="mt-5">
@@ -257,6 +267,11 @@
                                                                class="block py-2 px-3 m-0 w-full text-base bg-white rounded-md border border-gray-300 border-solid appearance-none cursor-text sm:text-sm sm:leading-5 focus:border-blue-600 focus:outline-offset-2"
                                                                value="">
                                                     </div>
+                                                    {#if form?.errors?.email}
+                                                        <p class="mt-2 text-xs text-red-600 dark:text-red-500">
+                                                            <span class="font-medium">Oops!</span> l'email est nécessaire.
+                                                        </p>
+                                                    {/if}
                                                     <div class="mt-5">
                                                         <div class="block">
                                                             <label class="flex text-sm font-semibold leading-5 cursor-default"
@@ -269,6 +284,11 @@
                                                                    class="block py-2 px-3 m-0 w-full text-base bg-white rounded-md border border-gray-300 border-solid appearance-none cursor-text sm:text-sm sm:leading-5 focus:border-blue-600 focus:outline-offset-2"
                                                                    value="">
                                                         </div>
+                                                        {#if form?.errors?.phone}
+                                                            <p class="mt-2 text-xs text-red-600 dark:text-red-500">
+                                                                <span class="font-medium">Oops!</span> le numéro de téléphone est nécessaire.
+                                                            </p>
+                                                        {/if}
                                                     </div>
                                                     <div class="mt-5">
                                                           <label for="subject" class="block mb-2 text-sm font-medium text-black">
