@@ -25,8 +25,6 @@
     let services = data.services ?? [];
     let schedules = Object.values(data.schedules) ?? [];
 
-    console.log(schedules);
-
     let slots: Slot[] = data.availabilities;
     let loading: boolean = false;
 
