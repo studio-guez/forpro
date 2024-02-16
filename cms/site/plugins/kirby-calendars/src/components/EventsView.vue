@@ -27,6 +27,7 @@
         <th>Prénom</th>
         <th>Email</th>
         <th>Téléphone</th>
+        <th>Confirmé</th>
         <th class="k-table-index-column"></th>
       </tr>
       </thead>
@@ -45,6 +46,14 @@
         <td :title="event.firstname">{{ event.firstname }}</td>
         <td :title="event.email">{{ event.email }}</td>
         <td :title="event.phone">{{ event.phone }}</td>
+        <td data-align="center">
+          <k-button
+              :icon="getIsConfirmedIcon(event.is_confirmed)"
+              :theme="getIsConfirmedTheme(event.is_confirmed)"
+              variant="dimmed"
+          >
+          </k-button>
+        </td>
         <td class="k-table-options-column">
           <k-options-dropdown :options="[
               {
@@ -83,6 +92,12 @@ export default {
       }
       return '';
     },
+    getIsConfirmedIcon(isConfirmed) {
+      return isConfirmed ? 'check' : 'cancel';
+    },
+    getIsConfirmedTheme(isConfirmed) {
+      return isConfirmed ? 'positive' : 'negative';
+    }
   }
 };
 </script>
