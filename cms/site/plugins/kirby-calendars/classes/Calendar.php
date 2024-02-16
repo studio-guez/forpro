@@ -11,11 +11,9 @@ use Google_Service_Calendar;
 use Google_Service_Calendar_AclRule;
 use Google_Service_Calendar_AclRuleScope;
 use Google_Service_Calendar_Calendar;
-use Google_Service_Calendar_Event;
 use InvalidArgumentException;
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
-use MediumSans\KirbyCalendars\Event;
 
 class Calendar
 {
@@ -94,7 +92,7 @@ class Calendar
      */
     public static function delete(string $id): bool
     {
-        $service = static::createGoogleService();
+        $service = Utils::createGoogleService();
         $calendar = static::find($id);
 
         // delete the calendar on Google
@@ -203,10 +201,10 @@ class Calendar
             return [];
         }
 
-        $service = static::createGoogleService();
+        $service = Utils::createGoogleService();
         $openingTime = new DateTimeImmutable($date . ' ' . $schedule[array_key_first($schedule)]['opening_hour']);
         $closingTime = new DateTimeImmutable($date . ' ' . $schedule[array_key_first($schedule)]['closing_hour']);
-        $serviceDuration = static::convertDurationToMinutes(Service::find($serviceId)['duration']);
+        $serviceDuration = Utils::convertDurationToMinutes(Service::find($serviceId)['duration']);
         $events = static::getEvents($service, $calendar['cid'], $openingTime, $closingTime);
 
         return static::calculateFreeSlots($openingTime, $closingTime, $serviceDuration, $events);
