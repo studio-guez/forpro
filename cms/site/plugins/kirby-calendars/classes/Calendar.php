@@ -15,6 +15,7 @@ use Google_Service_Calendar_Event;
 use InvalidArgumentException;
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
+use MediumSans\KirbyCalendars\Event;
 
 class Calendar
 {
@@ -212,20 +213,6 @@ class Calendar
     }
 
     /**
-     * Creates a new instance of Google_Service_Calendar using Google_Client
-     *
-     * @return Google_Service_Calendar
-     * @throws Exception
-     */
-    private static function createGoogleService(): Google_Service_Calendar
-    {
-        $client = new Google_Client();
-        $client->setAuthConfig(__DIR__ . '/../../../config/forpro-calendars-9f6da95c3aa9.json');
-        $client->addScope(Google_Service_Calendar::CALENDAR);
-        return new Google_Service_Calendar($client);
-    }
-
-    /**
      * Retrieves a list of events from a Google Calendar
      * within a specified time range
      *
@@ -313,105 +300,5 @@ class Calendar
             'Saturday' => 6,
         ];
         return $days[$name];
-    }
-
-    /**
-     * Converts a duration string in the format "HH:MM" to minutes
-     *
-     * @param string $duration The duration string in the format "HH:MM"
-     * @return int The duration in minutes
-     */
-    private static function convertDurationToMinutes(string $duration): int
-    {
-        [$hours, $minutes] = explode(':', $duration);
-        return $hours * 60 + $minutes;
-    }
-
-    /**
-     * @param string $calendarId
-     * @param string $serviceId
-     * @param string $date
-     * @param array $infos
-     * @return \Google\Service\Calendar\Event
-     * @throws Exception
-     * @throws NotFoundException
-     * @throws \Google\Service\Exception
-     * @throws \Exception
-     */
-    public static function addEvent(
-        string $calendarId,
-        string $subjectId,
-        string $serviceId,
-        string $date,
-        array  $infos
-    ): \Google\Service\Calendar\Event
-    {
-        $kirby = kirby();
-        $subject = $kirby->site()->bookingAppointmentSelect()->toStructure()->toArray()[$subjectId]['label'];
-
-        $googleService = static::createGoogleService();
-
-        $service = Service::find($serviceId);
-        $serviceDuration = static::convertDurationToMinutes($service['duration']);
-        $serviceTitle = $service['name'];
-        $calendar = static::find($calendarId);
-
-        $dateTimeStart = new DateTimeImmutable($date, new DateTimeZone('Europe/Paris'));
-        $dateTimeEnd = $dateTimeStart->modify('+' . $serviceDuration . ' minutes');
-
-        $description = $subject
-            . "\n"
-            . $infos['firstname'] . ' ' . $infos['lastname']
-            . "\n"
-            . $infos['phone']
-            . "\n"
-            . $infos['email'];
-
-        $event = static::createGoogleEvent($serviceTitle, $description, $dateTimeStart, $dateTimeEnd);
-
-        Event::create([
-            'name' => $serviceTitle,
-            'description' => $description,
-            'subject' => $subject,
-            'date' => $date,
-            'start_time' => $dateTimeStart->format('H:i'),
-            'end_time' => $dateTimeEnd->format('H:i'),
-            'duration' => $service['duration'],
-            'service_id' => $serviceId,
-            'calendar_id' => $calendarId,
-            'eid' => $event->getEtag(),
-            'firstname' => $infos['firstname'],
-            'lastname' => $infos['lastname'],
-            'phone' => $infos['phone'],
-            'email' => $infos['email'],
-        ]);
-
-        return $googleService->events->insert($calendar['cid'], $event);
-    }
-
-    /**
-     * @param string $title
-     * @param string $description
-     * @param DateTimeImmutable $start
-     * @param DateTimeImmutable $end
-     * @return Google_Service_Calendar_Event
-     */
-    private static function createGoogleEvent(string            $title,
-                                              string            $description,
-                                              DateTimeImmutable $start,
-                                              DateTimeImmutable $end): Google_Service_Calendar_Event
-    {
-        return new Google_Service_Calendar_Event([
-            'summary' => $title,
-            'description' => $description,
-            'start' => [
-                'dateTime' => $start->format(DateTimeInterface::RFC3339),
-                'timeZone' => 'Europe/Paris',
-            ],
-            'end' => [
-                'dateTime' => $end->format(DateTimeInterface::RFC3339),
-                'timeZone' => 'Europe/Paris',
-            ]
-        ]);
     }
 }
