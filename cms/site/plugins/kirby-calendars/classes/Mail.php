@@ -2,7 +2,7 @@
 
 namespace MediumSans\KirbyCalendars;
 
-use Kirby\Exception;
+use Kirby\Exception\Exception;
 use Kirby\Cms\User;
 
 class Mail
@@ -18,7 +18,6 @@ class Mail
      * @param string $startDate The start date of the event.
      * @param string $startTime The start time of the event.
      * @return bool Returns true if the notification is successfully sent, false otherwise.
-     * @throws Exception If there is an error sending the notification.
      */
     public static function sendPleaseConfirmEventNotification(
         string $email,
@@ -53,7 +52,7 @@ class Mail
                 ],
             ])->isSent();
         } catch (Exception $error) {
-            echo $error;
+             return false;
         }
     }
 
@@ -68,7 +67,6 @@ class Mail
      *
      * @return bool  Returns true if the notification email is successfully sent, false otherwise.
      *
-     * @throws Exception  If an error occurs while sending the notification email.
      */
     public static function sendEventIsConfirmedToPersonInCharge(
         array  $calendar,
@@ -102,7 +100,7 @@ class Mail
                 ],
             ])->isSent();
         } catch (Exception $error) {
-            throw new Exception($error);
+            return false;
         }
 
         return $notified;
