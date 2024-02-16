@@ -5,6 +5,7 @@ use Kirby\Http\Response;
 use MediumSans\KirbyCalendars\Calendar;
 use MediumSans\KirbyCalendars\Schedule;
 use MediumSans\KirbyCalendars\Service;
+use MediumSans\KirbyCalendars\Event;
 
 return [
     [
@@ -69,7 +70,7 @@ return [
 
             return response::json(
                 Json::encode(
-                    Calendar::addEvent(
+                    Event::add(
                         $calendarId,
                         $subjectId,
                         $serviceId,
@@ -80,4 +81,11 @@ return [
             );
         }
     ],
+    [
+        'pattern' => 'kirby-calendars/(:any)/confirm',
+        'method' => 'GET',
+        'action' => function ($eventId) {
+            return  response::json(Json::encode(Event::validateEvent($eventId)));
+        }
+    ]
 ];
