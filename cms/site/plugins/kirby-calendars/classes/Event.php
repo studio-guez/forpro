@@ -33,7 +33,7 @@ class Event
      * data and adds it to the json file
      *
      * @param array $input
-     * @return bool
+     * @return string
      */
     public static function create(array $input): string
     {
@@ -238,7 +238,7 @@ class Event
             'is_confirmed' => false,
         ]);
 
-        return Mail::sendConfirmAppointmentNotification(
+        return Mail::sendPleaseConfirmEventNotification(
             $infos['email'],
             $eventId,
             $serviceTitle,
@@ -263,25 +263,24 @@ class Event
         $dateTimeStart = new DateTimeImmutable($event['date'], new DateTimeZone('Europe/Paris'));
         $dateTimeEnd = $dateTimeStart->modify('+' . $service['duration'] . ' minutes');
 
-        $event = static::createGoogleEvent(
+        $gEvent = static::createGoogleEvent(
             $event['name'],
             $event['description'],
             $dateTimeStart,
             $dateTimeEnd
         );
 
-        Mail::sendAppointmentConfirmationToPersonInCharge(
-            $calendar['email'],
-            $service['name'],
-            $event['firstname'],
-            $event['lastname'],
+        Mail::sendEventIsConfirmedToPersonInCharge(
+            $calendar,
+            $event,
+            $service,
             $dateTimeStart->format('d.m.Y'),
             $dateTimeStart->format('H:i')
         );
 
         $googleService = Utils::createGoogleService();
 
-        return $googleService->events->insert($calendar['cid'], $event);
+        return $googleService->events->insert($calendar['cid'], $gEvent);
     }
 
     /**
