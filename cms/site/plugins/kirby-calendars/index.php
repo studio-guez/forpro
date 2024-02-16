@@ -9,7 +9,7 @@ load([
     'MediumSans\KirbyCalendars\Database' => __DIR__ . '/classes/Database.php',
 ]);
 
-Kirby::plugin('medium-sans/kirby-calendars', [
+Kirby::plugin('mediumsans/kirby-calendars', [
     'options' => [
         'notifications' => [
             'from' => 'forpro@mediumsans.studio',
