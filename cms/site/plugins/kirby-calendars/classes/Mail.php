@@ -36,7 +36,7 @@ class Mail
         $from = static::createFrom($f_email, $f_name);
 
         try {
-            $kirby->email([
+            $notified = $kirby->email([
                 'from' => $from,
                 'to' => $email,
                 'subject' => 'Confirmer votre rendez-vous !',
@@ -52,8 +52,10 @@ class Mail
                 ],
             ])->isSent();
         } catch (Exception $error) {
-             return false;
+             $notified = false;
         }
+
+        return $notified;
     }
 
     /**
@@ -100,7 +102,7 @@ class Mail
                 ],
             ])->isSent();
         } catch (Exception $error) {
-            return false;
+            $notified = false;
         }
 
         return $notified;
@@ -114,7 +116,7 @@ class Mail
      *
      * @return User  The newly created User instance.
      */
-    private static function createFrom($email, $name): User
+    private static function createFrom(string $email, string $name): User
     {
         return new User([
             'email' => $email,
