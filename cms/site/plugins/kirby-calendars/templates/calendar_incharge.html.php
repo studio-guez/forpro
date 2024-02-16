@@ -382,7 +382,7 @@
             </div>
             <div class="content">
                 <!-- START CENTERED WHITE CONTAINER -->
-                <span class="preheader">Vous avez un nouveau rendez-vous ! </span>
+                <span class="preheader">Vous avez un nouveau rendez-vous : </span>
                 <table class="main">
 
                     <!-- START MAIN CONTENT AREA -->
