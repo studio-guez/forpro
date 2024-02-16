@@ -53,7 +53,6 @@ class Event
             'phone' => $input['phone'],
             'service_id' => $input['service_id'],
             'calendar_id' => $input['calendar_id'],
-            'eid' => $input['eid'],
             'is_confirmed' => $input['is_confirmed'] ?? false,
         ];
 
@@ -182,12 +181,14 @@ class Event
     }
 
     /**
-     * @param string $calendarId
-     * @param string $subjectId
-     * @param string $serviceId
-     * @param string $date
-     * @param array $infos
-     * @return bool
+     * Add a new event to the calendar and send a confirmation notification email
+     *
+     * @param string $calendarId The ID of the calendar to add the event to
+     * @param string $subjectId The ID of the subject
+     * @param string $serviceId The ID of the service
+     * @param string $date The date of the event
+     * @param array $infos Additional information for the event (firstname, lastname, phone, email)
+     * @return bool True if the event is added successfully and the confirmation email is sent, false otherwise
      * @throws Exception
      * @throws NotFoundException
      * @throws \Exception
@@ -250,8 +251,13 @@ class Event
     }
 
     /**
-     * @throws NotFoundException
+     * Publishes an event with the given eventId to Google Calendar and returns the created Google Event object
+     *
+     * @param string $eventId The ID of the event to be published
+     * @return \Google\Service\Calendar\Event The created Google Event object
      * @throws Exception
+     * @throws NotFoundException
+     * @throws \Google\Service\Exception
      * @throws \Exception
      */
     private static function publish(string $eventId): \Google\Service\Calendar\Event
@@ -269,6 +275,8 @@ class Event
             $dateTimeStart,
             $dateTimeEnd
         );
+
+        Event::update($eventId, ['etag' => $gEvent->getEtag()]);
 
         Mail::sendEventIsConfirmedToPersonInCharge(
             $calendar,
