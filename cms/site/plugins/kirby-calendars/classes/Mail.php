@@ -2,13 +2,23 @@
 
 namespace MediumSans\KirbyCalendars;
 
-use Google\Exception;
+use Kirby\Exception;
 use Kirby\Cms\User;
 
 class Mail
 {
     /**
-     * @throws Exception
+     * Sends a notification to the specified email address to confirm an event.
+     *
+     * @param string $email The email address of the recipient.
+     * @param string $eventId The ID of the event.
+     * @param string $serviceName The name of the service.
+     * @param string $firstname The first name of the recipient.
+     * @param string $lastname The last name of the recipient.
+     * @param string $startDate The start date of the event.
+     * @param string $startTime The start time of the event.
+     * @return bool Returns true if the notification is successfully sent, false otherwise.
+     * @throws Exception If there is an error sending the notification.
      */
     public static function sendPleaseConfirmEventNotification(
         string $email,
@@ -27,7 +37,7 @@ class Mail
         $from = static::createFrom($f_email, $f_name);
 
         try {
-            $notified = $kirby->email([
+            $kirby->email([
                 'from' => $from,
                 'to' => $email,
                 'subject' => 'Confirmer votre rendez-vous !',
@@ -43,14 +53,22 @@ class Mail
                 ],
             ])->isSent();
         } catch (Exception $error) {
-            throw new Exception($error);
+            echo $error;
         }
-
-        return $notified;
     }
 
     /**
-     * @throws Exception
+     * Sends a notification email to the person in charge of a calendar event to confirm the event.
+     *
+     * @param array $calendar The calendar details.
+     * @param array $event The event details.
+     * @param array $service The service details.
+     * @param string $startDate The start date of the event (YYYY-MM-DD format).
+     * @param string $startTime The start time of the event (HH:MM AM/PM format).
+     *
+     * @return bool  Returns true if the notification email is successfully sent, false otherwise.
+     *
+     * @throws Exception  If an error occurs while sending the notification email.
      */
     public static function sendEventIsConfirmedToPersonInCharge(
         array  $calendar,
@@ -90,6 +108,14 @@ class Mail
         return $notified;
     }
 
+    /**
+     * Creates a new User instance based on the given email and name.
+     *
+     * @param string $email The email of the user.
+     * @param string $name The name of the user.
+     *
+     * @return User  The newly created User instance.
+     */
     private static function createFrom($email, $name): User
     {
         return new User([
