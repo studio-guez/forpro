@@ -31,8 +31,8 @@ class Mail
     {
         $kirby = kirby();
 
-        $f_email = $kirby->option('mediumsans.kirbycalendars.notifications.from');
-        $f_name = $kirby->option('mediumsans.kirbycalendars.notifications.event_confirmation.name');
+        $f_email = $kirby->option('mediumsans.kirby-calendars.notifications.from');
+        $f_name = $kirby->option('mediumsans.kirby-calendars.notifications.event_confirmation.name');
         $from = static::createFrom($f_email, $f_name);
 
         try {
@@ -80,8 +80,8 @@ class Mail
     {
         $kirby = kirby();
 
-        $f_email = $kirby->option('mediumsans.kirbycalendars.notifications.from');
-        $f_name = $kirby->option('mediumsans.kirbycalendars.notifications.calendar_incharge.name');
+        $f_email = $kirby->option('mediumsans.kirby-calendars.notifications.from');
+        $f_name = $kirby->option('mediumsans.kirby-calendars.notifications.calendar_incharge.name');
         $from = static::createFrom($f_email, $f_name);
 
         try {
