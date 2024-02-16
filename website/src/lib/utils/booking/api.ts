@@ -1,8 +1,10 @@
 import type {Slot, Service, Appointment} from '$lib/interfaces/variables';
 import {
-    getAppointmentsUrl, getSchedules,
-    getServices,
-    getSlots
+    addEventUrl,
+    getAppointmentsUrl,
+    getSchedulesUrl,
+    getServicesUrl,
+    getSlotsUrl
 } from "$lib/utils/booking/urls";
 
 import {fetchFromAPI, getHeaders} from "$lib/utils/shared";
@@ -10,7 +12,7 @@ import {fetchFromAPI, getHeaders} from "$lib/utils/shared";
 export const getAvailableSlots = async (date: string, serviceId: string, calendarId: string): Promise<Slot[]> => {
     const body = {date: date, providerId: calendarId, serviceId: serviceId};
 
-    const request = new Request(getSlots(calendarId, serviceId, date), {
+    const request = new Request(getSlotsUrl(calendarId, serviceId, date), {
         method: 'GET',
         headers: getHeaders(),
     });
@@ -19,7 +21,7 @@ export const getAvailableSlots = async (date: string, serviceId: string, calenda
 }
 
 export const getSchedulesFromCalendarId = async (calendarId: string): Promise<any> => {
-    const request = new Request(getSchedules(calendarId), {
+    const request = new Request(getSchedulesUrl(calendarId), {
         headers: getHeaders(),
     });
 
@@ -27,11 +29,20 @@ export const getSchedulesFromCalendarId = async (calendarId: string): Promise<an
 }
 
 export const getServicesFromCalendarId = async (calendarId: string): Promise<Service[]> => {
-    const request = new Request(getServices(calendarId), {
+    const request = new Request(getServicesUrl(calendarId), {
         headers: getHeaders(),
     });
 
     return fetchFromAPI<Service[]>(request, 'Failed to fetch services');
+}
+
+export const confirmAppointment = async (eventId: string): Promise<Appointment> => {
+    const request = new Request(getAppointmentsUrl(eventId), {
+        method: 'GET',
+        headers: getHeaders(),
+    });
+
+    return fetchFromAPI<Appointment>(request, 'Failed to confirm appointment');
 }
 
 export const createAppointment = async (date: string,
@@ -51,9 +62,7 @@ export const createAppointment = async (date: string,
         infos: infos
     };
 
-    console.log(body);
-
-    const request = new Request(getAppointmentsUrl(), {
+    const request = new Request(addEventUrl(), {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify(body)
