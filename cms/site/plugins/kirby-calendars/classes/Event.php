@@ -266,8 +266,9 @@ class Event
         $calendar = Calendar::find($event['calendar_id']);
         $service = Service::find($event['service_id']);
 
-        $dateTimeStart = new DateTimeImmutable($event['date'], new DateTimeZone('Europe/Paris'));
-        $dateTimeEnd = $dateTimeStart->modify('+' . $service['duration'] . ' minutes');
+        $serviceDuration = Utils::convertDurationToMinutes($service['duration']);
+        $dateTimeStart = new DateTimeImmutable($event['date']);
+        $dateTimeEnd = $dateTimeStart->modify('+' . $serviceDuration . ' minutes');
 
         $gEvent = static::createGoogleEvent(
             $event['name'],
