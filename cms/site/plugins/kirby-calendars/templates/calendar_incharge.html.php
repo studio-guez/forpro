@@ -142,7 +142,7 @@
         }
 
         a {
-            color: #ed8034;
+            color: #1754FF;
             text-decoration: underline;
         }
 
@@ -401,7 +401,7 @@
                                         <div class="align-center">
                                             <p><?= $firstname ?> <?= $lastname ?></p>
                                             <p>
-                                                <b><?= $email ?>></b>
+                                                <b><?= $email ?></b>
                                                 <br/>
                                                 <b><?= $phone ?></b>
                                             </p>
