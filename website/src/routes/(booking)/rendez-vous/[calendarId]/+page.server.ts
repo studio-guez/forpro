@@ -26,11 +26,7 @@ export const load: PageServerLoad = async ({params, fetch}) => {
 
     const today = dayjs().format('YYYY-MM-DD');
 
-    if (services !== undefined) {
-        availabilities = await getAvailableSlots(today, services[0].id, calendarId);
-    }
-
-    return {content, services, calendarId, availabilities, schedules};
+    return {content, services, calendarId, schedules};
 };
 
 export const actions = {
