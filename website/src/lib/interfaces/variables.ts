@@ -30,62 +30,6 @@ export interface Service {
     calendar_id: string
 }
 
-export interface Provider {
-    id: number,
-    firstName: string,
-    lastName: string,
-    email: string,
-    mobile: string,
-    phone: string,
-    address: string,
-    city: string,
-    zip: string,
-    notes: string,
-    timezone: string,
-    language: string,
-    services: string[],
-    settings: {
-        username: string,
-        password: string,
-        notifications: boolean,
-        calendarView: string,
-        googleSync: boolean,
-        googleCalendar: null,
-        googleToken: null,
-        syncFutureDays: number,
-        syncPastDays: number,
-        workingPlan: {
-            sunday: null,
-            monday: {
-                start: string,
-                end: string,
-                breaks: []
-            },
-            tuesday: {
-                start: string,
-                end: string,
-                breaks: []
-            },
-            wednesday: {
-                start: string,
-                end: string,
-                breaks: []
-            },
-            thursday: {
-                start: string,
-                end: string,
-                breaks: []
-            },
-            friday: {
-                start: string,
-                end: string,
-                breaks: []
-            },
-            saturday: null
-        }
-    }
-}
-
 export interface Customer {
     id: number,
     firstName: string,
