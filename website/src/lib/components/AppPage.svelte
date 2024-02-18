@@ -77,7 +77,9 @@
 
             {:else if content.type === 'animated-list'}
                 <div class="app-flex__basis-20-24">
-                    <BlockAnimatedList/>
+                    <BlockAnimatedList
+                            data="{content}"
+                    />
                 </div>
             {/if}
 
