@@ -37,6 +37,11 @@
     const handleDateSelection = async (event) => {
         selectedDate = event.detail;
 
+        if(selectedDate == null) {
+            selectedSlotId = null;
+            return;
+        }
+
         const data = new FormData();
         data.append('calendarId', calendarId);
         data.append('selectedServiceId', selectedServiceId);
