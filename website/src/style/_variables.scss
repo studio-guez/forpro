@@ -30,5 +30,16 @@
 
   --app-color--green:       rgb(61, 240, 105);
   --app-color--blue:        rgb(23, 84, 255);
-  --app-color-beige:    #E3D4BE
+  --app-color-beige:    #E3D4BE;
+
+
+
+  --fp-color-accueil:                 var(--app-color--red);
+  --fp-color-makerlab:                var(--app-color--blue);
+  --fp-color-learninglab:             var(--app-color--orange);
+  --fp-color-foodlab:                 var(--app-color--yellow);
+  --fp-color-grandlab:                var(--app-color-beige);
+  --fp-color-hotel_entreprises:       var(--app-color--green--pastel);
+  --fp-color-ecole_horlogerie:        var(--app-color--purple);
+  --fp-color-creche:                  var(--app-color--blue--light);
 }
