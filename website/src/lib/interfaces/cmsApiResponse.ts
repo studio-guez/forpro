@@ -44,7 +44,19 @@ export interface IOptions {
 export interface IBody {
     [key: string]: {
         image: IImage[]
-        content: ICta | IQuote | ICapsules | ICards | IProfiles | IList | IDropdown | ICardsFocus | IHtmlContent
+        content: ICta
+                | IQuote
+                | ICapsules
+                | ICards
+                | IProfiles
+                | IList
+                | IDropdown
+                | ICardsFocus
+                | IHtmlContent
+                | IBlockMap
+                | IAnimatedList
+                | IGoogleMaps
+                | IBlockImage
     }
 }
 
@@ -276,7 +288,7 @@ export interface ICardFocusItem {
  */
 export interface IHtmlContent extends IBlock {
     "content": {
-        "text": "<p>bonjour le text</p><p>bonjour me monde</p>"
+        "text": string
     }
     type: 'body'
 }
@@ -285,13 +297,24 @@ export interface IHtmlContent extends IBlock {
 /**
  * Map
  */
-export interface IHtmlContent extends IBlock {
+export interface IBlockMap extends IBlock {
     "content": {
-        "style": "style1" | "style2"
+        "style": "style1" | "style2" | "style3"
     },
     type: 'map'
 }
 
+/**
+ *
+ */
+export type AnimatedListStyle = 'entreprises' | 'entourage' | 'jeunes' | 'explore' | 'leLab'
+
+export interface IAnimatedList extends IBlock {
+    "content": {
+        "style": AnimatedListStyle
+    },
+    type: 'animated-list'
+}
 
 /**
  * google maps
@@ -307,9 +330,11 @@ export interface IGoogleMaps extends IBlock {
 /**
  * google maps
  */
-export interface IGoogleMaps extends IBlock {
+export interface IBlockImage extends IBlock {
     "content": {
         link: string
+        alt: string,
+        fixed: "true" | "false"
     },
     type: 'image'
 }
