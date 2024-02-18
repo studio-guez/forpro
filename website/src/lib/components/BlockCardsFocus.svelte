@@ -46,22 +46,23 @@
             <div class="s-card-focus__card__text-box app-flex app-flex--column app-flex--align_center app-flex--justify_center">
                 <div class="s-card-focus__card__title" >{card.title}</div>
                 <div class="s-card-focus__card__subtitle" >{card.subtitle}</div>
-                {#if (card.link)}
-                    {#if (card.style === 'entreprises')}
-                    <a class="s-card-focus__card__button app-button app-button--rounded"
-                            href="{card.link}">Jeunes 15-25 ans</a>
-                    {/if}
-                    {#if (card.style === 'entourage')}
-                        <a class="s-card-focus__card__button app-button app-button--rounded"
-                           href="{card.link}">Parents et entourage</a>
-                    {/if}
-                    {#if (card.style === 'jeunes')}
-                        <a class="s-card-focus__card__button app-button app-button--rounded"
-                           href="{card.link}">Entreprises</a>
-                    {/if}
-                {/if}
             </div>
-            <img class="s-card_focus__img" alt="juste un masque" src="{getImageUrl(card).img}" />
+            {#if (card.link)}
+                {#if (card.style === 'entreprises')}
+                    <a class="s-card-focus__card__button app-button app-button--rounded"
+                       href="{card.link}">Pour les entreprises</a>
+                {/if}
+                {#if (card.style === 'entourage')}
+                    <a class="s-card-focus__card__button app-button app-button--rounded"
+                       href="{card.link}">Pour les parents et l'entourage</a>
+                {/if}
+                {#if (card.style === 'jeunes')}
+                    <a class="s-card-focus__card__button app-button app-button--rounded"
+                       href="{card.link}">Pour les jeunes</a>
+                {/if}
+            {/if}
+            <img class="s-card_focus__img with-mask-animation" alt="juste un masque" src="{getImageUrl(card).img}" />
+            <div class="s-card_focus__color-filter with-mask-animation"></div>
         </div>
     {/each}
 </div>
@@ -72,15 +73,16 @@
       position: relative;
       overflow: hidden;
       user-select: none;
+      color: white;
 
       &.entreprises {
-        background: var(--app-color--blue);
+        background: var(--app-color--green);
       }
       &.jeunes {
-        background: var(--app-color--orange);
+        background: var(--app-color--pink);
       }
       &.entourage {
-        background: var(--app-color--pink);
+        background: var(--app-color--orange);
       }
     }
 
@@ -99,21 +101,15 @@
     }
 
     .s-card-focus__card__title {
-      color: var(--app-color--green);
       font-size: 4rem;
       line-height: 4rem;
       text-align: center;
       width: 100%;
       max-width: 12em;
       font-weight: 600;
-
-      .jeunes & {
-        color: var(--app-color--pink);
-      }
     }
 
     .s-card-focus__card__subtitle {
-      color: white;
       font-weight: 500;
       font-size: 2rem;
       line-height: 2rem;
@@ -124,22 +120,27 @@
     }
 
     .s-card-focus__card__button {
-      margin-top: 1rem;
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translate(-50%, 0);
+      z-index: 1;
     }
 
     .s-card_focus__img {
       position: relative;
       display: block;
-      mask-repeat: no-repeat;
-      mask-origin: border-box;
-      mask-position: -210%, 500%;
-      animation-fill-mode: forwards !important;
       height: 90vh;
       min-height: 50vw;
       width: 100%;
       object-fit: cover;
-      mask-size: auto 90%, auto 110%;
-      mask-image: url('/svg/Pilule-45-gauche.svg'), url('/svg/Pilule-0.svg');
+    }
+
+    .with-mask-animation {
+      mask-repeat: no-repeat;
+      mask-origin: border-box;
+      mask-position: -210%, 500%;
+      animation-fill-mode: forwards !important;
 
       .jeunes & {
         mask-image: url('/svg/Ovale-0.svg'), url('/svg/Ovale-45.svg');
@@ -151,12 +152,40 @@
         object-position: 10% 80%;
       }
 
+      .entourage & {
+        mask-size: auto 90%, auto 110%;
+        mask-image: url('/svg/Pilule-45-gauche.svg'), url('/svg/Pilule-0.svg');
+      }
+
       .is-visible & {
         animation: mask-animation 2.5s cubic-bezier(0.5,0,0,1);
       }
 
       .is-visible.entreprises & {
         animation: mask-animation-2 2.5s cubic-bezier(0.5,0,0,1);
+      }
+    }
+
+    .s-card_focus__color-filter {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: background-color 2.5s cubic-bezier(0.5,0,0,1);
+
+      .entreprises & {
+
+        background: rgb(23, 84, 255, .35);
+      }
+
+      .jeunes &{
+        background: rgb(0, 145, 133, .35);
+      }
+
+      .entourage &{
+        background: rgb(23, 84, 255, .35);
       }
     }
 
