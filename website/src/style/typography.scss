@@ -1,17 +1,39 @@
-h1 {
+h1,
+.fp-heading-h1 {
   font-size: 5rem;
   line-height: 5rem;
+  text-wrap: balance;
 }
 
-h2 {
+h2,
+.fp-heading-h2 {
   font-size: 4rem;
   line-height: 4rem;
+  text-wrap: balance;
 }
 
-h3 {
+h3,
+.fp-heading-h3 {
   font-weight: 600;
   font-size: 3rem;
   line-height: 3rem;
+  text-wrap: balance;
+}
+
+h4,
+.fp-heading-h4 {
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 2rem;
+  text-wrap: balance;
+}
+
+h5,
+.fp-heading-h5 {
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  text-wrap: balance;
 }
 
 
@@ -57,8 +79,8 @@ h3 {
   }
 
   p {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 1.25em;
+    margin-bottom: 1.25rem;
   }
 
   &.app-typo_text-content--typo-large {
