@@ -6,8 +6,6 @@ export const load: PageServerLoad = async ({params, fetch}) => {
     const eventId = params.eventId;
     const resp = await confirmAppointment(eventId);
 
-    console.log(resp);
-
     switch (resp.state) {
         case 'confirmed':
             redirect(302, '/confirm/valid');
