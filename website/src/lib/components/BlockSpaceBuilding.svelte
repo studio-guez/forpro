@@ -12,7 +12,7 @@
   >
     <g>
       <g>
-        <rect  class:is-over="{currentOverSection === 'creche'}"      on:mouseover="{() => currentOverSection = 'creche'}"              class="s-block-space-build--nav__svg-building-link Creche" x="975" y="0" width="166" height="69" style="cursor: default; fill: var(--fp-color-creche);"/>
+        <rect  class:is-over="{currentOverSection === 'creche'}"      on:mouseover="{() => currentOverSection = 'creche'}"              class="s-block-space-build--nav__svg-building-link Creche" x="975" y="0" width="166" height="69" style="fill: var(--fp-color-creche);"/>
         <rect  class:is-over="{currentOverSection === 'horlogerie'}"  on:mouseover="{() => currentOverSection = 'horlogerie'}"          class="s-block-space-build--nav__svg-building-link EcoleHorlogerie" x="225" y="390" width="750" height="88" style="fill: var(--fp-color-ecole_horlogerie);"/>
         <rect  class:is-over="{currentOverSection === 'horlogerie'}"  on:mouseover="{() => currentOverSection = 'horlogerie'}"          class="s-block-space-build--nav__svg-building-link EcoleHorlogerie" y="132" width="1200" height="128" style="fill: var(--fp-color-ecole_horlogerie);"/>
         <rect  class:is-over="{currentOverSection === 'FactoryLab'}"  on:mouseover="{() => currentOverSection = 'FactoryLab'}"          class="s-block-space-build--nav__svg-building-link HotelEntreprise" y="61" width="1200" height="71" style="fill: var(--fp-color-hotel_entreprises);"/>
