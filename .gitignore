@@ -48,5 +48,8 @@ cms/content
 # NODE
 cms/site/plugins/!/node_modules/*
 
+# DATA PLUGINS
+cms/site/plugins/!/data/!*.json
+
 node_modules
 vendor
