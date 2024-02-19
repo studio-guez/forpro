@@ -43,6 +43,11 @@ import {siteInfo} from "../../store";
             </div>
         </div>
     </div>
+    <div class="app-flex app-flex--justify_end app-width-100 app-flex--gap_regular app-width-gutter">
+        <a href="/mentions-legales" >Crédit du site</a>
+        <div>|</div>
+        <a href="/politique-de-confidentialite">Politique de confidentialité</a>
+    </div>
     <div class="app-flex__basis-1-1">
         <img class="s-footer__img"
                 alt="logo fix dans le footer, simplment pour le visuel"
