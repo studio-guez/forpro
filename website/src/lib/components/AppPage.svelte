@@ -82,7 +82,7 @@
                     />
                 </div>
             {:else if content.type === 'image'}
-                <div class="app-flex__basis-20-24">
+                <div class="app-flex__basis-24-24 app-flex app-flex--justify_center">
                     <BlockImage
                             image="{image}"
                             content="{content}"
