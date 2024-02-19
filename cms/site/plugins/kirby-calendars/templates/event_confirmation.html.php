@@ -415,8 +415,9 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <p>Dans le cas où il y aurait une erreur, pas de panique ! Il vous suffit simplement de repasser par le formulaire
-                                            du site.</p>
+                                        <p>
+                                            Une erreur dans la prise de rendez-vous&nbsp;? Il vous suffit simplement de <a href="https://forpro-website.sdrvl.ch/rendez-vous">reprendre rendez-vous ici.</a>
+                                        </p>
                                     </td>
                                 </tr>
                             </table>
