@@ -4,6 +4,7 @@ h1,
 .fp-heading-h1 {
   font-size: 5rem;
   line-height: 5rem;
+  font-weight: 600;
   text-wrap: balance;
 
   @media (max-width: scss-params.$fp-breakpoint-sm) {
@@ -16,6 +17,7 @@ h2,
 .fp-heading-h2 {
   font-size: 4rem;
   line-height: 4rem;
+  font-weight: 600;
   text-wrap: balance;
 
   @media (max-width: scss-params.$fp-breakpoint-sm) {
