@@ -58,6 +58,7 @@
         border-radius: 0;
         font-weight: 400;
         padding: 0;
+        font-size: min(max(1rem, 2vw), 1.2rem);
 
         .s-block-cta__text-animated {
           top: 0;

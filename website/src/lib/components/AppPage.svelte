@@ -57,16 +57,16 @@
                 </div>
 
             {:else if content.type === 'body'}
-                <div class="app-flex__basis-20-24">
+                <div class="app-flex__basis-20-24 app-flex app-flex--justify_center">
                     <BlockHTMLContent content="{content}" />
                 </div>
 
             {:else if (content.type === 'map' && content.content.style === "style1")}
-                <div class="app-flex__basis-20-24">
+                <div class="app-flex__basis-20-24 app-flex app-flex--justify_center">
                     <BlockSpaceBuilding content="{content}" />
                 </div>
             {:else if (content.type === 'map')}
-                <div class="app-flex__basis-20-24">
+                <div class="app-flex__basis-20-24 app-flex app-flex--justify_center">
                     <BlockSpaceBuildingWithDetails content="{content}" />
                 </div>
 

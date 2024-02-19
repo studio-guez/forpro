@@ -33,6 +33,14 @@ body {
   overflow: hidden;
 }
 
+.app-page-simple_content {
+  text-align: center;
+
+  > * {
+    margin-top: 1rem;
+  }
+}
+
 a {
   color: inherit;
 }

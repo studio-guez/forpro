@@ -7,33 +7,45 @@
 <div class="s-block-capsule {content.content.style} app-flex app-flex--justify_center app-flex--wrap"
 >
     {#each content.content.capsules as capsule}
-        <div class="app-flex__basis-1-2">
-                <div class="s-block-capsule__item app-flex app-flex--column app-flex--align_center app-flex--gap_half">
-                <div class="s-block-capsule__item__content">
-                    <h3 class="s-block-capsule__item__content__title"
-                    >{capsule.title}</h3>
-                    <div class="s-block-capsule__item__content__text app-remove-margin-child"
-                    >{@html capsule.text}</div>
-                </div>
-
-                {#if capsule.style === 'style1'}
-                    <img class="s-block-capsule__item__img" src="/svg/Forme1-03.svg" alt="graphique pour illustrer un item"/>
-                {:else if capsule.style === 'style2' }
-                    <img class="s-block-capsule__item__img" src="/svg/Forme1-11.svg" alt="graphique pour illustrer un item"/>
-                {:else if capsule.style === 'style3' }
-                    <img class="s-block-capsule__item__img" src="/svg/Forme1-12.svg" alt="graphique pour illustrer un item"/>
-                {:else if capsule.style === 'style4' }
-                    <img class="s-block-capsule__item__img" src="/svg/Forme1-14.svg" alt="graphique pour illustrer un item"/>
-                {/if}
+        <div class="s-block-capsule__item app-flex app-flex--column app-flex--align_center app-flex--gap_half">
+            <div class="s-block-capsule__item__content">
+                <h3 class="s-block-capsule__item__content__title"
+                >{capsule.title}</h3>
+                <div class="s-block-capsule__item__content__text app-remove-margin-child"
+                >{@html capsule.text}</div>
             </div>
+
+            {#if capsule.style === 'style1'}
+                <img class="s-block-capsule__item__img" src="/svg/Forme1-03.svg"
+                     alt="graphique pour illustrer un item"/>
+            {:else if capsule.style === 'style2' }
+                <img class="s-block-capsule__item__img" src="/svg/Forme1-11.svg"
+                     alt="graphique pour illustrer un item"/>
+            {:else if capsule.style === 'style3' }
+                <img class="s-block-capsule__item__img" src="/svg/Forme1-12.svg"
+                     alt="graphique pour illustrer un item"/>
+            {:else if capsule.style === 'style4' }
+                <img class="s-block-capsule__item__img" src="/svg/Forme1-14.svg"
+                     alt="graphique pour illustrer un item"/>
+            {/if}
         </div>
     {/each}
 </div>
 
 <style lang="scss">
+  $block-capsule-breakpoint-md: 800px;
+
+    .s-block-capsule {
+      container-type: inline-size;
+      container-name: block-capsule;
+    }
     .s-block-capsule__item {
       position: relative;
-      width: 100%;
+      flex-basis: calc(100% / 2);
+
+      @container block-capsule (width < #{$block-capsule-breakpoint-md}) {
+        flex-basis: 80%;
+      }
     }
     .s-block-capsule__item__content {
       position: absolute;
@@ -55,6 +67,10 @@
       font-size: 4vw;
       text-align: center;
       font-weight: 600;
+
+      @container block-capsule (width < #{$block-capsule-breakpoint-md}) {
+        font-size: max(6vw, 1.25rem);
+      }
     }
     .s-block-capsule__item__content__text {
       padding-top: 1rem;

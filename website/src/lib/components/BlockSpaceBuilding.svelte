@@ -69,6 +69,7 @@
 <style lang="scss">
   .s-block-space-build--nav {
     position: relative;
+    max-width: 40rem;
   }
 
   .s-block-space-build--nav__title {

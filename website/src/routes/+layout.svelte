@@ -57,6 +57,13 @@
     }
   }
 
+  .s-layout__main {
+    min-height: calc(100vh - 10rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   .s-layout__nav-box {
     position: fixed;
     top: 0;

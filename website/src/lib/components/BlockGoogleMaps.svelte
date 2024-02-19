@@ -4,7 +4,7 @@
 >
     <img
             alt="google maps"
-            src="#"
+            src="/FP_plan_2--web.png"
     />
 </a>
 

@@ -310,11 +310,11 @@
         container-type: inline-size;
         display: flex;
         justify-content: center;
+        max-width: 1500px;
 
         @container (width > 1800px) {
             display: block;
         }
-
     }
 
     .v-space-building__title {
