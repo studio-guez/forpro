@@ -16,8 +16,8 @@
 
     const calendarId = data.calendarId;
 
-    let selectedServiceId: number = data.services ? data.services[0].id : null;
-    let selectedSlotId: number = null;
+    let selectedServiceId: number = data.services ? data.services[0]?.id : null;
+    let selectedSlotId: number | null = null;
     let selectedDate: string = dayjs().format('YYYY-MM-DD');
 
     let formattedDate: string = null;
