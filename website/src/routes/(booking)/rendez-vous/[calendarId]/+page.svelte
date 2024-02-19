@@ -224,7 +224,7 @@
                                                             >
                                                                 <input name="firstname"
                                                                        type="text"
-                                                                       placeholder="John"
+                                                                       placeholder="Prénom"
                                                                        class="block py-2 px-3 m-0 w-full text-base bg-white rounded-md border border-gray-300 border-solid appearance-none cursor-text sm:text-sm sm:leading-5 focus:border-blue-600 focus:outline-offset-2"
                                                                 />
                                                             </div>
@@ -245,7 +245,7 @@
                                                             >
                                                                 <input name="lastname"
                                                                        type="text"
-                                                                       placeholder="Doe"
+                                                                       placeholder="Nom"
                                                                        class="block py-2 px-3 m-0 w-full text-base bg-white rounded-md border border-gray-300 border-solid appearance-none cursor-text sm:text-sm sm:leading-5 focus:border-blue-600 focus:outline-offset-2"
                                                                        value=""
                                                                 />
