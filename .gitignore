@@ -53,3 +53,4 @@ cms/site/plugins/!/data/!*.json
 
 node_modules
 vendor
+/cms/site/plugins/kirby-calendars/data/
