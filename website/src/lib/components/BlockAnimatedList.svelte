@@ -4,7 +4,7 @@ import {browser} from "$app/environment";
 import type {AnimatedListStyle, IAnimatedList} from "$lib/interfaces/cmsApiResponse.js";
 
 
-export let data: IAnimatedList
+export let content: IAnimatedList
 
 const lottiePath: {[key: AnimatedListStyle]: {desktop: string, mobil: string}} = {
     'entreprises' :     {desktop: '/lottie/desktop-model-entreprise_lottie.json',   mobil: '/lottie/mobile-model-entreprise_lottie.json'},
@@ -22,7 +22,7 @@ const lottiePath: {[key: AnimatedListStyle]: {desktop: string, mobil: string}} =
         <div class="s-animated-list__desktop"
         >
             <LottiePlayer
-                    src="{lottiePath[data.content.style].desktop}"
+                    src="{lottiePath[content.content.style].desktop}"
                     autoplay="{true}"
                     background="transparent"
                     speed="1"
@@ -38,7 +38,7 @@ const lottiePath: {[key: AnimatedListStyle]: {desktop: string, mobil: string}} =
         </div>
         <div class="s-animated-list__mobile">
             <LottiePlayer
-                    src="{lottiePath[data.content.style].mobil}"
+                    src="{lottiePath[content.content.style].mobil}"
                     autoplay="{true}"
                     background="transparent"
                     speed="1"
