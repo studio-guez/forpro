@@ -48,6 +48,7 @@ class Mail
                     'serviceName' => $serviceName,
                     'startDate' => $startDate,
                     'startTime' => $startTime,
+                    //todo: erreur lors du passage en prod
                     'validationURL' => 'https://forpro-website.sdrvl.ch/confirm/' . $eventId,
                 ],
             ])->isSent();
