@@ -78,7 +78,14 @@
             {:else if content.type === 'animated-list'}
                 <div class="app-flex__basis-20-24">
                     <BlockAnimatedList
-                            data="{content}"
+                            content="{content}"
+                    />
+                </div>
+            {:else if content.type === 'image'}
+                <div class="app-flex__basis-20-24">
+                    <BlockImage
+                            image="{image}"
+                            content="{content}"
                     />
                 </div>
             {/if}
@@ -111,6 +118,7 @@
     import BlockSpaceBuilding from "$lib/components/BlockSpaceBuilding.svelte";
     import BlockGoogleMaps from "$lib/components/BlockGoogleMaps.svelte";
     import BlockSpaceBuildingWithDetails from "$lib/components/BlockSpaceBuildingWithDetails.svelte";
+    import BlockImage from "$lib/components/BlockImage.svelte";
 
     export let data: IPage;
 </script>

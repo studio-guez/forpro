@@ -4,11 +4,11 @@ import {siteInfo} from "../../store";
 
 <footer class="s-footer app-flex"
 >
-    <div class="app-grid--column-2 app-width-gutter app-grid--gap_regular s-footer__text">
+    <div class="app-grid--column-2 app-grid--xs--column-1 app-width-gutter app-grid--gap_regular s-footer__text">
         <div class="app-typo_text-content">
             {@html $siteInfo.footer}
         </div>
-        <div class="app-grid--column-2">
+        <div class="app-grid--column-2 app-grid--sm--column-1">
             <div>
                 {#each $siteInfo.nav as item}
                     {#if item.showmenu}
@@ -25,17 +25,20 @@ import {siteInfo} from "../../store";
                 <div
                         class="s-app-footer__list__item"
                 ><a
-                        href="#"
+                        href="https://www.linkedin.com/company/fondation-forpro/ "
+                        target="_blank"
                 >Linkedin</a></div>
                 <div
                         class="s-app-footer__list__item"
                 ><a
-                        href="#"
+                        href="https://www.facebook.com/forpro.ge"
+                        target="_blank"
                 >Facebook</a></div>
                 <div
                         class="s-app-footer__list__item"
                 ><a
-                        href="#"
+                        href="https://www.instagram.com/forpro_ge/"
+                        target="_blank"
                 >Instagram</a></div>
             </div>
         </div>
