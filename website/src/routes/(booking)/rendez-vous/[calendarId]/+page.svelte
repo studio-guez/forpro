@@ -7,12 +7,23 @@
 
     import { enhance } from "$app/forms";
     import dayjs from "dayjs";
+    import {writable} from "svelte/store";
 
     export let data;
     export let form;
 
-    let step = 1;
+    let step = writable(1);
     form = { appointment: null };
+
+    step.subscribe(() => {
+        scrollToTopOfPage()
+    })
+
+    function scrollToTopOfPage() {
+        document.querySelectorAll('.s-layout').forEach(value => {
+            value.scrollTo({top: 0, behavior: 'smooth'})
+        })
+    }
 
     const calendarId = data.calendarId;
 
@@ -89,7 +100,7 @@
             <div class="flex flex-col justify-between mx-auto w-full h-full text-gray-700 bg-white lg:max-w-4xl md:rounded">
                 <div class="flex overflow-hidden relative flex-col flex-grow h-full rounded-b md:rounded">
                     <div class="flex flex-wrap h-full">
-                        {#if step === 1}
+                        {#if $step === 1}
                             <!-- left side -->
                             <div class="bg-[var(--app-color-beige)] overflow-y-auto overflow-x-hidden py-2 px-4 w-full h-full text-center rounded-b md:w-1/2 md:rounded md:py-8">
                                 <div class="flex flex-col justify-evenly min-h-full">
@@ -155,12 +166,12 @@
                                         class:bg-gray-400={selectedSlotId === null}
                                         class:cursor-not-allowed={selectedSlotId === null}
                                         disabled={selectedSlotId === null}
-                                        on:click={() => step = 2}
+                                        on:click={() => step.set(2)}
                                 >
                                     {data.content.bookingSlotConfirmationLabel}
                                 </button>
                             </div>
-                        {:else if step === 2}
+                        {:else if $step === 2}
                             <div class="overflow-auto px-6 pb-8 my-auto mx-auto h-full leading-6 text-gray-700">
                                 {#if !form?.appointment}
                                     <div class="flex flex-col mx-auto max-w-lg h-full text-gray-700">
@@ -205,7 +216,7 @@
                                                 <span class="ml-2">{getServiceDuration(selectedServiceId)} min.</span>
                                             </div>
                                         </div>
-                                        <form method="POST" class="flex flex-col flex-1 justify-between mt-6 w-full" use:enhance>
+                                        <form method="POST" class="flex flex-col flex-1 justify-between mt-6 w-full" use:enhance on:submit={() => scrollToTopOfPage()}>
                                             <input hidden name="serviceId" value={selectedServiceId}/>
                                             <input hidden name="duration" value="{getServiceDuration(selectedServiceId)}"/>
                                             <input hidden name="calendarId" value={calendarId}/>
@@ -314,7 +325,7 @@
                                                             <button
                                                                     class="flex items-center py-2 px-6 m-0 text-sm leading-5 text-center normal-case bg-white bg-none rounded border border-gray-500 border-solid cursor-pointer"
                                                                     type="button"
-                                                                    on:click={() => {step = 1}}
+                                                                    on:click={() => {step.set(1)}}
                                                             >
                                                                 <svg
                                                                         stroke="currentColor"
@@ -347,6 +358,7 @@
                                         </form>
                                     </div>
                                 {:else}
+
                                     <div class="mt-12 h-full w-full my-auto mx-auto">
                                         <div class="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900 p-2 flex items-center justify-center mx-auto mb-3.5">
                                             <svg aria-hidden="true" class="w-8 h-8 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
