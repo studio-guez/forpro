@@ -8,6 +8,7 @@
     import { enhance } from "$app/forms";
     import dayjs from "dayjs";
     import {writable} from "svelte/store";
+    import {browser} from "$app/environment";
 
     export let data;
     export let form;
@@ -20,6 +21,7 @@
     })
 
     function scrollToTopOfPage() {
+        if( !browser ) return
         document.querySelectorAll('.s-layout').forEach(value => {
             value.scrollTo({top: 0, behavior: 'smooth'})
         })
