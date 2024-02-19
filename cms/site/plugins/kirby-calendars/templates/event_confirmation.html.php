@@ -391,7 +391,7 @@
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p></p>
+                                        <p>Votre rendez-vous avec ForPro est prévu</p>
 
                                         <div class="align-center">
                                             <p><?= $serviceName ?></p>
