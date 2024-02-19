@@ -6,6 +6,10 @@
   padding-right: var(--app-flex--gap_half);
 }
 
+.app-width-100 {
+  width: 100%;
+}
+
 .app-flex {
   display: flex;
   flex-wrap: wrap;
@@ -44,6 +48,7 @@
   &.app-flex--justify_space-around  {justify-content: space-around}
   &.app-flex--justify_space-between {justify-content: space-between}
   &.app-flex--justify_space-evenly  {justify-content: space-evenly}
+  &.app-flex--justify_end  {justify-content: flex-end}
 
   > [class*=app-flex__basis-] { box-sizing: border-box}
   > .app-flex__basis-auto  { flex-basis: auto;}
