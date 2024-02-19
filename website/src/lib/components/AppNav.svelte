@@ -53,6 +53,8 @@
 </nav>
 
 <style lang="scss" >
+  @use '../../style/_scss-params';
+
     .s-app-nav {
       height: var(--app-nav_height);
       padding: var(--app-flex--gap_half);
@@ -100,7 +102,11 @@
       background: white;
       border: solid var(--app-line-with) black;
       padding: var(--app-nav_height) .15rem 2rem 2rem;
-      border-radius: 2rem;
+      border-radius: 1.3rem;
+
+      @media (max-width: scss-params.$fp-breakpoint-sm) {
+        width: calc(100% - var(--position) - var(--position) );
+      }
     }
 
     .s-app-nav__list {
@@ -111,9 +117,18 @@
       line-height: 1.25em;
       font-size: 2rem;
       font-weight: 600;
+
+
+      @media (max-width: scss-params.$fp-breakpoint-xs) {
+        font-size: 1.5rem;
+      }
     }
 
     .s-app-nav__list__item {
+      @media (max-width: scss-params.$fp-breakpoint-sm) {
+        margin-bottom: .25em;
+      }
+
       &.is-subpage {
         font-size: .66em;
         line-height: 1em;
