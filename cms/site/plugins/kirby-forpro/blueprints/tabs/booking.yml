@@ -61,8 +61,8 @@ fields:
 
   bookingAppointmentSuccessLabel:
     label:
-      en: Appointment success label
-      fr: Label rendez-vous confirmé
+      en: Appointment request label sent
+      fr: Label demande de rendez-vous envoyé
     type: text
 
   bookingAppointmentSelect:
