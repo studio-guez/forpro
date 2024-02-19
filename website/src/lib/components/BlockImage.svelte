@@ -6,12 +6,40 @@
 </script>
 
 
-<div>
-    <img
-            class:is-fixed={content.content.fixed}
-            src="{image[0]?.resize.large}"
-            alt="illustration"
-    />
+<div class="s-block-image"
+     class:is-fixed={content.content.fixed === 'true'}
+     style="background-image: url({image[0]?.resize.large});"
+>
+    {#if (content.content.fixed === 'false')}
+        <img
+                class="s-block-image__img"
+                src="{image[0]?.resize.large}"
+                alt="illustration"
+        />
+    {/if}
 </div>
 
 
+<style lang="scss">
+  .s-block-image {
+    max-width: 1000px;
+
+    &.is-fixed {
+      max-width: none;
+      height: calc(100vh - var(--app-nav_height));
+      width: 100%;
+      background-attachment: fixed;
+    }
+  }
+
+  .s-block-image__img {
+    display: block;
+
+    .is-fixed & {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+
+    }
+  }
+</style>
