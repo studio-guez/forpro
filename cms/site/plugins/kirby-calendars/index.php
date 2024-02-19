@@ -17,7 +17,7 @@ Kirby::plugin('mediumsans/kirby-calendars', [
                 'name' => 'Forpro - RDV confirmé',
             ],
             'event_confirmation' => [
-                'name' => 'Forpro - Confirmation de rendez-vous',
+                'name' => 'Confirmez votre rendez-vous avec ForPro',
             ],
         ],
     ],
