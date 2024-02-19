@@ -328,7 +328,7 @@ export interface IGoogleMaps extends IBlock {
 
 
 /**
- * google maps
+ * image
  */
 export interface IBlockImage extends IBlock {
     "content": {

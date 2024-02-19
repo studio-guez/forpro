@@ -8,7 +8,7 @@
     </div>
 
     <div class="s-app-nav__buttons app-flex__basis-auto">
-        <div class="app-flex app-flex--gap_regular app-flex--align_center">
+        <div class="s-app-nav__buttons__container app-flex app-flex--gap_regular app-flex--align_center">
             <a class="app-button app-button--rounded"
                style="
                     --app-button--color: var(--app-color--green);
@@ -17,9 +17,9 @@
                href="/rendez-vous"
             >Prendre RDV</a>
             <div class="s-app-nav__social-icon">
-                <img src="/social-1.svg" alt="social link" >
-                <img src="/social-2.svg" alt="social link" >
-                <img src="/social-3.svg" alt="social link" >
+                <a target="_blank" href="https://www.linkedin.com/company/fondation-forpro/ "   ><img src="/social-1.svg" alt="social link" ></a>
+                <a target="_blank" href="https://www.facebook.com/forpro.ge"                    ><img src="/social-2.svg" alt="social link" ></a>
+                <a target="_blank" href="https://www.instagram.com/forpro_ge/"                  ><img src="/social-3.svg" alt="social link" ></a>
 <!--                <img src="/social-4.svg" alt="social link" >-->
 <!--                <img src="/social-5.svg" alt="social link" >-->
             </div>
@@ -69,8 +69,13 @@
       padding: .25rem 1rem;
       gap: .5rem;
       border-radius: 1rem;
+      border: solid 2px var(--app-color--blue);
 
-      > * {
+      a {
+        display: block;
+      }
+
+      img {
         display: block;
         height: 1.5rem;
       }
@@ -80,6 +85,7 @@
       background: white;
       padding: .5rem 1rem;
       border-radius: 2rem;
+      z-index: 100;
     }
 
     .s-app-nav__logo {
@@ -90,6 +96,17 @@
     .s-app-nav__buttons {
       position: relative;
       z-index: 100;
+
+      @media (max-width: scss-params.$fp-breakpoint-sm) {
+        width: 100%;
+      }
+    }
+
+    .s-app-nav__buttons__container {
+      @media (max-width: scss-params.$fp-breakpoint-sm) {
+        margin-top: var(--app-flex--gap_half);
+        justify-content: flex-end;
+      }
     }
 
     .s-app-nav__list-container {
@@ -153,5 +170,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
+
+      @media (max-width: scss-params.$fp-breakpoint-sm) {
+        position: fixed;
+        top: var(--app-flex--gap_half);
+        right: var(--app-flex--gap_half);
+      }
     }
 </style>
