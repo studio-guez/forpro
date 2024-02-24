@@ -3,6 +3,7 @@ import { variables } from "$lib/utils/constants";
 import type { BookingCMSResponse } from "$lib/interfaces/variables";
 import {
     createAppointment,
+    getCalendarOptions,
     getSchedulesFromCalendarId,
     getServicesFromCalendarId,
 } from "$lib/utils/booking/api";
@@ -14,12 +15,17 @@ export const prerender = false;
 export const load: PageServerLoad = async ({ params, fetch }) => {
     const cmsBookingUrl = `${variables.CMS_BASE_URL}/booking`;
     const calendarId = params.calendarId;
+
     const res = await fetch(cmsBookingUrl);
     const content: BookingCMSResponse = await res.json();
+
+    const options = await getCalendarOptions(calendarId);
     const servicesKirby = await getServicesFromCalendarId(calendarId);
     const schedules = await getSchedulesFromCalendarId(calendarId);
+
     const services = Object.values(servicesKirby);
-    return { content, services, calendarId, schedules };
+
+    return { content, services, calendarId, schedules, options };
 };
 
 function validateInput(value: unknown, name: string, errors: Record<string, unknown>) {
