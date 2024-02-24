@@ -6,7 +6,6 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use Google\Exception;
-use Google_Client;
 use Google_Service_Calendar;
 use Google_Service_Calendar_AclRule;
 use Google_Service_Calendar_AclRuleScope;
@@ -18,6 +17,7 @@ use Kirby\Exception\NotFoundException;
 class Calendar extends BaseClass
 {
     const FILENAME = 'calendars.json';
+    const MINUTES_MODIFICATION = '+%d minutes';
 
     /**
      * Creates a new calendar with the given $input
@@ -151,6 +151,7 @@ class Calendar extends BaseClass
         $dayOfWeek = date('l', strtotime($date));
         $dayId = static::getDayIdFromName($dayOfWeek);
         $schedule = Schedule::getByCalendarIdAndDayId($calendarId, $dayId);
+        $leaves = Leave::getByCalendarIdAndDate($calendarId, $date);
 
         if ($schedule[array_key_first($schedule)]['is_closed']) {
             return [];
@@ -161,8 +162,14 @@ class Calendar extends BaseClass
         $closingTime = new DateTimeImmutable($date . ' ' . $schedule[array_key_first($schedule)]['closing_hour']);
         $serviceDuration = Utils::convertDurationToMinutes(Service::find($serviceId)['duration']);
         $events = static::getEvents($service, $calendar['cid'], $openingTime, $closingTime);
+        $maxEventsPerDay = static::getMaxEventsPerDay($calendarId);
 
-        return static::calculateFreeSlots($openingTime, $closingTime, $serviceDuration, $events);
+        return static::calculateFreeSlots($openingTime,
+            $closingTime,
+            $serviceDuration,
+            $leaves,
+            $events,
+            $maxEventsPerDay);
     }
 
     /**
@@ -191,49 +198,95 @@ class Calendar extends BaseClass
     }
 
     /**
-     * Calculates the available free slots between the opening and closing times,
-     * taking into account the service duration and existing events.
+     * Determines if the given time slot overlaps with any items in the array
      *
-     * @param DateTimeImmutable $openingTime The opening time of the calendar
-     * @param DateTimeImmutable $closingTime The closing time of the calendar
+     * @param array $items An array of items to check for overlap
+     * @param DateTimeImmutable $nextSlotStart The start time of the next time slot
+     * @param DateTimeImmutable $slotEnd The end time of the current time slot
+     * @param DateTimeZone $timezone The timezone to use for date/time comparisons
+     * @return bool True if the time slot overlaps with any items, false otherwise
+     * @throws \Exception
+     */
+    private static function overlapsWith(array $items,
+                                         DateTimeImmutable $nextSlotStart,
+                                         DateTimeImmutable $slotEnd,
+                                         DateTimeZone $timezone): bool
+    {
+        foreach ($items as $item) {
+            $itemStart = new DateTimeImmutable($item->getStart()->dateTime, $timezone);
+            $itemEnd = new DateTimeImmutable($item->getEnd()->dateTime, $timezone);
+            if ($slotEnd > $itemStart && $nextSlotStart < $itemEnd || $nextSlotStart === $itemStart) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether the number of events exceeds the maximum events per day
+     *
+     * @param array $events The array of events
+     * @param int $maxEventsPerDay The maximum number of events per day
+     * @return bool Returns true if the number of events exceeds the maximum, false otherwise
+     */
+    private static function exceedsMaxEventsPerDay(array $events, int $maxEventsPerDay): bool
+    {
+        return count($events) > $maxEventsPerDay;
+    }
+
+    /**
+     * Calculates the start of the next time slot based on the current time slot start and the service duration
+     *
+     * @param DateTimeImmutable $nextSlotStart The start time of the current time slot
      * @param int $serviceDuration The duration of the service in minutes
-     * @param array $events An array of existing events
-     * @return array An array of available free slots
+     * @return DateTimeImmutable The start time of the next time slot
+     */
+    private static function calculateNextSlotStart(DateTimeImmutable $nextSlotStart,
+                                                   int               $serviceDuration): DateTimeImmutable
+    {
+        return $nextSlotStart->modify(sprintf(self::MINUTES_MODIFICATION, $serviceDuration));
+    }
+
+    /**
+     * Calculates the available time slots for appointments based on the given parameters
+     *
+     * @param DateTimeImmutable $openingTime The start time of the available time range
+     * @param DateTimeImmutable $closingTime The end time of the available time range
+     * @param int $serviceDuration The duration of each appointment in minutes
+     * @param array $leaves An array of leave time ranges in which appointments are not allowed
+     * @param array $events An array of existing appointments
+     * @param int $maxEventsPerDay The maximum number of appointments allowed per day
+     * @return array An array of DateTimeImmutable objects representing the available time slots
      * @throws \Exception
      */
     private static function calculateFreeSlots(DateTimeImmutable $openingTime,
                                                DateTimeImmutable $closingTime,
-                                               int $serviceDuration,
-                                               array $events): array
+                                               int               $serviceDuration,
+                                               array             $leaves,
+                                               array             $events,
+                                               int               $maxEventsPerDay): array
     {
         $availableSlots = [];
         $nextSlotStart = $openingTime;
         $timezone = new DateTimeZone('Europe/Zurich');
 
+        if(self::exceedsMaxEventsPerDay($events, $maxEventsPerDay)) {
+            return [];
+        }
+
         while ($nextSlotStart < $closingTime) {
-            $overlap = false;
-            $slotEnd = $nextSlotStart->modify('+' . $serviceDuration . ' minutes');
+            $slotEnd = self::calculateNextSlotStart($nextSlotStart, $serviceDuration);
 
-            foreach ($events as $event) {
-                $eventStart = new DateTimeImmutable($event->getStart()->dateTime, $timezone);
-                $eventEnd = new DateTimeImmutable($event->getEnd()->dateTime, $timezone);
-
-                if ($slotEnd > $eventStart && $nextSlotStart < $eventEnd || $nextSlotStart == $eventStart) {
-                    $overlap = true;
-                    break;
-                }
-            }
-
-            if (!$overlap && $slotEnd <= $closingTime) {
+            if (!self::overlapsWith($events, $nextSlotStart, $slotEnd, $timezone) &&
+                !self::overlapsWith($leaves, $nextSlotStart, $slotEnd, $timezone) &&
+                $slotEnd <= $closingTime) {
                 $availableSlots[] = $nextSlotStart;
             }
 
-            $nextSlotStart = $nextSlotStart->modify('+' . $serviceDuration . ' minutes');
+            $nextSlotStart = self::calculateNextSlotStart($nextSlotStart, $serviceDuration);
         }
-
         return $availableSlots;
     }
-
 
     /**
      * Returns the numeric day ID corresponding to the given day name
@@ -253,5 +306,40 @@ class Calendar extends BaseClass
             'Saturday' => 6,
         ];
         return $days[$name];
+    }
+
+    /**
+     * Returns the maximum number of events per day for a given calendar.
+     *
+     * @param string $calendarId The ID of the calendar.
+     * @return int The maximum number of events per day for the calendar.
+     * @throws NotFoundException If the calendar with the given ID is not found.
+     */
+    private static function getMaxEventsPerDay(string $calendarId): int
+    {
+        $calendar = static::find($calendarId);
+        return $calendar['max_events_per_day'];
+    }
+
+    /**
+     * Retrieves the minimum number of days before a rendezvous from the calendar
+     *
+     * @param string $calendarId The ID of the calendar
+     * @return int The minimum number of days before a rendezvous from the calendar
+     * @throws NotFoundException
+     */
+    public static function getMinDaysBeforeRdvs(string $calendarId): int
+    {
+        $calendar = static::find($calendarId);
+        return $calendar['min_days_before_rdvs'];
+    }
+
+    public static function getOptions(string $calendarId): array
+    {
+        $calendar = static::find($calendarId);
+        return [
+            'min_days_before_rdvs' => $calendar['min_days_before_rdvs'],
+            'max_events_per_day' => $calendar['max_events_per_day'],
+        ];
     }
 }
