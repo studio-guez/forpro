@@ -27,6 +27,17 @@ return [
         }
     ],
     [
+        'pattern' => 'kirby-calendars/(:any)/options',
+        'method' => 'GET',
+        'action' => function ($calendarId) {
+            return response::json(
+                Json::encode(
+                    Calendar::getOptions($calendarId)
+                )
+            );
+        }
+    ],
+    [
         'pattern' => 'kirby-calendars/(:any)/schedules',
         'method' => 'GET',
         'action' => function ($calendarId) {
