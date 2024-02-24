@@ -15,7 +15,7 @@ use InvalidArgumentException;
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
 
-class Calendar
+class Calendar extends BaseClass
 {
     const FILENAME = 'calendars.json';
 
@@ -34,10 +34,7 @@ class Calendar
             throw new InvalidArgumentException('The name must not be empty');
         }
 
-        $client = new Google_Client();
-        $client->setAuthConfig(__DIR__ . '/../../../config/forpro-calendars-9f6da95c3aa9.json');
-        $client->addScope(Google_Service_Calendar::CALENDAR);
-        $service = new Google_Service_Calendar($client);
+        $service = Utils::createGoogleService();
 
         // Create the new calendar on Google
         $calendar = new Google_Service_Calendar_Calendar();
@@ -106,48 +103,6 @@ class Calendar
 
         // write the updated list to the file
         return Data::write(static::file(), $calendars);
-    }
-
-    /**
-     * Returns the absolute path to the calendar.json
-     * This is the place to modify if you don't want to
-     * store the calendar in your plugin folder
-     * – which you probably really don't want to do.
-     *
-     * @return string
-     */
-    public static function file(): string
-    {
-        return __DIR__ . '/../data/' . static::FILENAME;
-    }
-
-    /**
-     * Finds a calendar by id and throws an exception
-     * if the calendar cannot be found
-     *
-     * @param string $id
-     * @return array
-     * @throws NotFoundException
-     */
-    public static function find(string $id): array
-    {
-        $calendar = static::list()[$id] ?? null;
-
-        if (empty($calendar) === true) {
-            throw new NotFoundException('The calendar could not be found');
-        }
-
-        return $calendar;
-    }
-
-    /**
-     * Lists all calendar from the calendar.json
-     *
-     * @return array
-     */
-    public static function list(): array
-    {
-        return Data::read(static::file());
     }
 
     /**
