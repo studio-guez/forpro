@@ -4,6 +4,10 @@ export const getSlotsUrl = (calendarId: string, servicedId: string, date: string
     return `${variables.CMS_BASE_URL}/kirby-calendars/get-slots/${calendarId}/${servicedId}/${date}`;
 }
 
+export const getCalendarOptionsUrl = (calendarId: string): string => {
+    return `${variables.CMS_BASE_URL}/kirby-calendars/${calendarId}/options/`;
+}
+
 export const getServicesUrl = (calendarId: string): string => {
     return `${variables.CMS_BASE_URL}/kirby-calendars/${calendarId}/services/`;
 }
