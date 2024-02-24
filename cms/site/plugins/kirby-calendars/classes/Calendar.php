@@ -36,7 +36,6 @@ class Calendar extends BaseClass
 
         $service = Utils::createGoogleService();
 
-        // Create the new calendar on Google
         $calendar = new Google_Service_Calendar_Calendar();
         $calendar->setSummary($input['name']);
         $calendar->setDescription($input['description'] ?? '');
@@ -50,7 +49,7 @@ class Calendar extends BaseClass
         $scope->setType("default");
         $scope->setValue("");
         $aclRule->setScope($scope);
-        $aclRule->setRole("reader");  // "reader" to make it publicly readable
+        $aclRule->setRole("reader");
 
         $service->acl->insert($createdCalendar->getId(), $aclRule);
 
@@ -69,10 +68,7 @@ class Calendar extends BaseClass
             'etag' => $createdCalendar->getEtag(),
         ];
 
-        // load all calendars
         $calendars = static::list();
-
-        // set/overwrite the calendar data
         $calendars[$id] = $input;
 
         return Data::write(static::file(), $calendars);
@@ -92,16 +88,12 @@ class Calendar extends BaseClass
         $service = Utils::createGoogleService();
         $calendar = static::find($id);
 
-        // delete the calendar on Google
         $service->calendars->delete($calendar['cid']);
 
-        // get all calendars
         $calendars = static::list();
 
-        // remove the calendar from the list
         unset($calendars[$id]);
 
-        // write the updated list to the file
         return Data::write(static::file(), $calendars);
     }
 
