@@ -7,10 +7,12 @@ return [
     ],
     'start_datetime' => [
         'label' => 'Début',
-        'type' => 'time'
+        'type' => 'date',
+        'time' => true
     ],
     'end_datetime' => [
         'label' => 'Fin',
-        'type' => 'time'
+        'type' => 'date',
+        'time' => true
     ],
 ];
