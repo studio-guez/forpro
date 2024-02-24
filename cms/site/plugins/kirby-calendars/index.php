@@ -12,6 +12,7 @@ load([
 ]);
 
 Kirby::plugin('mediumsans/kirby-calendars', [
+    'translations' => require __DIR__ . '/i18n/i18n.php',
     'options' => [
         'notifications' => [
             'from' => 'forpro@mediumsans.studio',

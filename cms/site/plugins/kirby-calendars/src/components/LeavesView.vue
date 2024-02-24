@@ -1,7 +1,7 @@
 <template>
   <k-inside>
     <k-header>
-      Congés
+      {{ $t('kirbycalendars.leaves') }}
 
       <k-button-group slot="buttons">
         <k-button
