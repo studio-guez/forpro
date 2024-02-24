@@ -32,7 +32,11 @@
           <td class="k-table-index-column" style="text-align: center;">
             {{ index }}
           </td>
-          <td style="width: 10%;">{{ calendar.name }}</td>
+          <td style="width: 10%;">
+            <a :href="'kirby-calendars/calendars/' + id" >
+              {{ calendar.name }}
+            </a>
+          </td>
           <td data-align="center">{{ calendar.nbrServices }}</td>
           <td data-align="center">
             <k-button
@@ -74,6 +78,11 @@
                 text: 'Évènements',
                 icon: 'page',
                 click: () => goto(`/kirby-calendars/calendar/${id}/events`)
+              },
+              {
+                text: 'Congés',
+                icon: 'sun',
+                click: () => goto(`/kirby-calendars/calendar/${id}/leaves`)
               }
             ]"/>
           </td>
