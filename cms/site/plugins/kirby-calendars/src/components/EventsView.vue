@@ -1,7 +1,7 @@
 <template>
   <k-inside>
     <k-header>
-      Évènements
+      {{ $t('kirbycalendars.events') }}
 
       <k-button-group slot="buttons">
         <k-button
