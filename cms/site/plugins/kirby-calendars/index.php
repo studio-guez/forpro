@@ -7,6 +7,8 @@ load([
     'MediumSans\KirbyCalendars\Schedule' => __DIR__ . '/classes/Schedule.php',
     'MediumSans\KirbyCalendars\Service' => __DIR__ . '/classes/Service.php',
     'MediumSans\KirbyCalendars\Database' => __DIR__ . '/classes/Database.php',
+    'MediumSans\KirbyCalendars\Event' => __DIR__ . '/classes/Event.php',
+    'MediumSans\KirbyCalendars\Leave' => __DIR__ . '/classes/Leave.php',
 ]);
 
 Kirby::plugin('mediumsans/kirby-calendars', [
@@ -34,6 +36,7 @@ Kirby::plugin('mediumsans/kirby-calendars', [
                     require __DIR__ . '/views/services.php',
                     require __DIR__ . '/views/schedules.php',
                     require __DIR__ . '/views/events.php',
+                    require __DIR__ . '/views/leaves.php',
                 ],
                 'dialogs' => [
                     // CALENDAR
@@ -51,6 +54,11 @@ Kirby::plugin('mediumsans/kirby-calendars', [
                     require __DIR__ . '/dialogs/schedule/create.php',
                     require __DIR__ . '/dialogs/schedule/delete.php',
                     require __DIR__ . '/dialogs/schedule/edit.php',
+                    // LEAVE
+                    require __DIR__ . '/dialogs/leave/fields.php',
+                    require __DIR__ . '/dialogs/leave/create.php',
+                    require __DIR__ . '/dialogs/leave/delete.php',
+                    require __DIR__ . '/dialogs/leave/edit.php',
                 ],
             ];
         },
