@@ -85,7 +85,7 @@ return [
         'pattern' => 'kirby-calendars/(:any)/confirm',
         'method' => 'GET',
         'action' => function ($eventId) {
-            return  response::json(Json::encode(Event::validateEvent($eventId)));
+            return  response::json(Json::encode(Event::validate($eventId)));
         }
     ]
 ];
