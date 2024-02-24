@@ -34,6 +34,7 @@ Kirby::plugin('mediumsans/kirby-calendars', [
                 'view' => 'k-calendars-view',
                 'views' => [
                     require __DIR__ . '/views/calendars.php',
+                    require __DIR__ . '/views/calendar.php',
                     require __DIR__ . '/views/services.php',
                     require __DIR__ . '/views/schedules.php',
                     require __DIR__ . '/views/events.php',
