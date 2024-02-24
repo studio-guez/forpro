@@ -8,7 +8,7 @@ return [
         return [
             'component' => 'k-remove-dialog',
             'props' => [
-                'text' => 'Êtes-vous sûr de vouloir supprimer ce calendrier ?',
+                'text' => 'Êtes-vous sûr de vouloir supprimer cet évènement ?',
             ]
         ];
     },
