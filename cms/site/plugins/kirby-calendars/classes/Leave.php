@@ -13,14 +13,15 @@ class Leave extends BaseClass
      * data and adds it to the json file
      *
      * @param array $input
-     * @return string
+     * @return bool
      */
-    public static function create(array $input): string
+    public static function create(array $input): bool
     {
         $id = uuid();
 
         $event = [
             'name' => $input['name'] ?? '',
+            'calendar_id' => $input['calendar_id'],
             'start_datetime' => $input['start_datetime'],
             'end_datetime' => $input['end_datetime'],
         ];
@@ -28,13 +29,11 @@ class Leave extends BaseClass
         $leaves = static::list();
         $leaves[$id] = $event;
 
-        Data::write(static::file(), $leaves);
-
-        return $id;
+        return Data::write(static::file(), $leaves);
     }
 
     /**
-     * Updates an leave by id with the given input
+     * Updates a leave by id with the given input
      * It throws an exception in case of validation issues
      *
      * @param string $id
@@ -50,5 +49,22 @@ class Leave extends BaseClass
         $leaves[$id] = $leaveToUpdate;
 
         return Data::write(static::file(), $leaves);
+    }
+
+    /**
+     * Get leaves by calendar ID and date.
+     *
+     * @param string $calendarId The ID of the calendar.
+     * @param string $date The date in the format "Y-m-d".
+     * @return array The array of leaves matching the calendar ID and date.
+     */
+    public static function getByCalendarIdAndDate(string $calendarId, string $date): array
+    {
+        $leaves = static::list();
+        $leaves = array_filter($leaves, function ($leave) use ($calendarId, $date) {
+            return $leave['calendar_id'] === $calendarId && $leave['date'] === $date;
+        });
+
+        return array_values($leaves);
     }
 }
