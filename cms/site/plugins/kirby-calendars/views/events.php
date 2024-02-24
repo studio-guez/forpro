@@ -14,7 +14,7 @@ return [
             'breadcrumb' => [
                 [
                     'label' => $calendar['name'],
-                    'link'  => '/kirby-calendars/calendars/'
+                    'link'  => '/kirby-calendars/calendars/' . $id
                 ],
                 [
                     'label' => 'Évènements',
