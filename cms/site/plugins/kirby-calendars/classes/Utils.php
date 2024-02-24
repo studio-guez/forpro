@@ -1,6 +1,6 @@
 <?php
 
-Namespace MediumSans\KirbyCalendars;
+namespace MediumSans\KirbyCalendars;
 
 use Google\Exception;
 use Google_Client;
