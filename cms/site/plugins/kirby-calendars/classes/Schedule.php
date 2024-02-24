@@ -5,24 +5,9 @@ namespace MediumSans\KirbyCalendars;
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
 
-class Schedule
+class Schedule extends BaseClass
 {
     const FILENAME = 'schedules.json';
-
-    /**
-     * Finds schedules by calendar id and returns an array of matching schedules
-     *
-     * @param string $id The calendar id to search for
-     * @return array An array of matching schedules
-     */
-    public static function findByCalendarId(string $id): array
-    {
-        $schedules = static::list();
-        $schedules = array_filter($schedules, function ($schedule) use ($id) {
-            return $schedule['calendar_id'] === $id;
-        });
-        return $schedules;
-    }
 
     /**
      * Creates a new schedule with the given $input
@@ -45,10 +30,7 @@ class Schedule
             'calendar_id' => $input['calendar_id'] ?? null,
         ];
 
-        // load all calendars
         $calendars = static::list();
-
-        // set/overwrite the calendar data
         $calendars[$id] = $input;
 
         return Data::write(static::file(), $calendars);
@@ -62,56 +44,11 @@ class Schedule
      */
     public static function delete(string $id): bool
     {
-        // get all schedules
         $schedules = static::list();
 
-        // remove the schedule from the list
         unset($schedules[$id]);
 
-        // write the update list to the file
         return Data::write(static::file(), $schedules);
-    }
-
-    /**
-     * Returns the absolute path to the schedules.json
-     * This is the place to modify if you don't want to
-     * store the schedules in your plugin folder
-     * – which you probably really don't want to do.
-     *
-     * @return string
-     */
-    public static function file(): string
-    {
-        return __DIR__ . '/../data/' . static::FILENAME;
-    }
-
-    /**
-     * Finds a schedule by id and throws an exception
-     * if the schedule cannot be found
-     *
-     * @param string $id
-     * @return array
-     * @throws NotFoundException
-     */
-    public static function find(string $id): array
-    {
-        $schedule = static::list()[$id] ?? null;
-
-        if (empty($schedule) === true) {
-            throw new NotFoundException('The schedule could not be found');
-        }
-
-        return $schedule;
-    }
-
-    /**
-     * Lists all schedules from the schedules.json
-     *
-     * @return array
-     */
-    public static function list(): array
-    {
-        return Data::read(static::file());
     }
 
     /**

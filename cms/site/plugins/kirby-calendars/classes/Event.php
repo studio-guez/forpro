@@ -10,23 +10,9 @@ use Google_Service_Calendar_Event;
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
 
-class Event
+class Event extends BaseClass
 {
     const FILENAME = 'events.json';
-
-    /**
-     * Finds events by calendar id and returns an array of events
-     *
-     * @param string $id The id of the calendar
-     * @return array The array of events that belong to the specified calendar id
-     */
-    public static function findByCalendarId(string $id): array
-    {
-        $events = static::list();
-        return array_filter($events, function ($event) use ($id) {
-            return $event['calendar_id'] === $id;
-        });
-    }
 
     /**
      * Creates a new event with the given $input
@@ -65,66 +51,6 @@ class Event
     }
 
     /**
-     * Deletes an event by event id
-     *
-     * @param string $id
-     * @return bool
-     */
-    public static function delete(string $id): bool
-    {
-        // get all events
-        $events = static::list();
-
-        // remove the event from the list
-        unset($events[$id]);
-
-        // write the update list to the file
-        return Data::write(static::file(), $events);
-    }
-
-    /**
-     * Returns the absolute path to the events.json
-     * This is the place to modify if you don't want to
-     * store the events in your plugin folder
-     * – which you probably really don't want to do.
-     *
-     * @return string
-     */
-    public static function file(): string
-    {
-        return __DIR__ . '/../data/' . static::FILENAME;
-    }
-
-    /**
-     * Finds an event by id and throws an exception
-     * if the event cannot be found
-     *
-     * @param string $id
-     * @return array
-     * @throws NotFoundException
-     */
-    public static function find(string $id): array
-    {
-        $event = static::list()[$id] ?? null;
-
-        if (empty($event) === true) {
-            throw new NotFoundException('The event could not be found');
-        }
-
-        return $event;
-    }
-
-    /**
-     * Lists all events from the events.json
-     *
-     * @return array
-     */
-    public static function list(): array
-    {
-        return Data::read(static::file());
-    }
-
-    /**
      * Updates an event by id with the given input
      * It throws an exception in case of validation issues
      *
@@ -150,7 +76,7 @@ class Event
      * @return array Returns true if the event is valid and successfully updated, 'already_confirmed'
      * if the event is already confirmed, or 'invalid' if the event is not found
      */
-    public static function validateEvent(string $id): array
+    public static function validate(string $id): array
     {
         try {
             $event = static::find($id);
@@ -254,13 +180,13 @@ class Event
      * Publishes an event with the given eventId to Google Calendar and returns the created Google Event object
      *
      * @param string $eventId The ID of the event to be published
-     * @return \Google\Service\Calendar\Event The created Google Event object
+     * @return void The created Google Event object
      * @throws Exception
      * @throws NotFoundException
      * @throws \Google\Service\Exception
      * @throws \Exception
      */
-    private static function publish(string $eventId): \Google\Service\Calendar\Event
+    private static function publish(string $eventId): void
     {
         $event = static::find($eventId);
         $calendar = Calendar::find($event['calendar_id']);
@@ -289,7 +215,7 @@ class Event
 
         $googleService = Utils::createGoogleService();
 
-        return $googleService->events->insert($calendar['cid'], $gEvent);
+        $googleService->events->insert($calendar['cid'], $gEvent);
     }
 
     /**
