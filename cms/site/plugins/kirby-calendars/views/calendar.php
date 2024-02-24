@@ -1,29 +1,27 @@
 <?php
 
 use MediumSans\KirbyCalendars\Calendar;
+use MediumSans\KirbyCalendars\Schedule;
 use MediumSans\KirbyCalendars\Service;
 
 return [
-    'pattern' => 'kirby-calendars/calendar/(:any)/services',
-    'action'  => function ($id) {
+    'pattern' => 'kirby-calendars/calendars/(:any)',
+    'action'  => function (string $id) {
         $calendar = Calendar::find($id);
-        $services = Service::findByCalendarId($id);
+
+        $calendar['nbrServices'] = count(Service::findByCalendarId($id));
+        $calendar['scheduleState'] = Schedule::getScheduleStatusForCalendar($id);
 
         return [
-            'component'  => 'k-services-view',
+            'component' => 'k-calendar-view',
             'breadcrumb' => [
                 [
                     'label' => $calendar['name'],
                     'link'  => '/kirby-calendars/calendars/' . $id
-                ],
-                [
-                    'label' => 'Services',
-                    'link'  => 'services/' . $id
                 ]
             ],
             'props' => [
                 'calendar' => $calendar,
-                'services' => $services,
             ]
         ];
     }
