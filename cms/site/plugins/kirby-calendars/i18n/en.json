@@ -6,5 +6,7 @@
   "kirbycalendars.calendar": "Calendar",
   "kirbycalendars.calendars": "Calendars",
   "kirbycalendars.service": "Service",
-  "kirbycalendars.services": "Services"
+  "kirbycalendars.services": "Services",
+  "kirbycalendars.leaves": "Leaves",
+  "kirbycalendars.leave": "Leave"
 }
