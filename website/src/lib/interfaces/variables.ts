@@ -56,3 +56,8 @@ export interface Appointment {
     serviceId: number,
     googleCalendarId: null|number
 }
+
+export interface Options {
+    minDaysBeforeRdvs: number,
+    maxEventsPerDay: number,
+}
