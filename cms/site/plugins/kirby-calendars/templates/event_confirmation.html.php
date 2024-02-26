@@ -349,7 +349,6 @@
         <td>&nbsp;</td>
         <td class="container">
             <div class="align-center" style="margin: 40px;">
-                <?xml version="1.0" encoding="UTF-8"?>
                 <svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 297.36379 55.34905" style="fill: black;">
                     <defs>
                         <style>
