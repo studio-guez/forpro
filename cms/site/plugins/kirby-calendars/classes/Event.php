@@ -2,6 +2,8 @@
 
 namespace MediumSans\KirbyCalendars;
 
+use DateInterval;
+use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
@@ -246,19 +248,24 @@ class Event extends BaseClass
     /**
      * @throws Exception
      * @throws \Google\Service\Exception
+     * @throws NotFoundException
+     * @throws \Exception
      */
-    public static function share(string $eventId, array $input): \Google\Service\Calendar\Event
-    {
-        $attendeeEmail = $input['email'];
-        $service = Utils::createGoogleService();
+    public static function share(string $eventId, array $input): bool {
+        $eventData = static::find($eventId);
 
-        $event = $service->events->get('primary', $eventId);
+        $vEvent = new Eluceo\iCal\Component\Event();
+        $vEvent
+            ->setDtStart(new DateTime($eventData['date']))
+            ->setDtEnd((new DateTime($eventData['date']))->add(new DateInterval('PT' . $eventData['duration'])))
+            ->setSummary($eventData['name'])
+            ->setDescription($eventData['description']);
 
-        $attendee = new Google_Service_Calendar_EventAttendee();
-        $attendee->setEmail($attendeeEmail);
-        $attendees[] = $attendee;
-        $event->setAttendees($attendees);
+        $vCalendar = new Eluceo\iCal\Component\Calendar("www.forpro.ch");
+        $vCalendar->addComponent($vEvent);
 
-        return $service->events->update('primary', $event->getId(), $event);
+        $icsContent = $vCalendar->render();
+
+        Mail::sendEventICS($input['email'], $icsContent);
     }
 }
