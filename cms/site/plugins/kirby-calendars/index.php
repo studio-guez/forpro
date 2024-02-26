@@ -72,8 +72,10 @@ Kirby::plugin('mediumsans/kirby-calendars', [
     'templates' => [
         'emails/event_confirmation.html' => __DIR__ . '/templates/event_confirmation.html.php',
         'emails/event_confirmation.text' => __DIR__ . '/templates/event_confirmation.text.php',
-        'emails/calendar_incharge.html' => __DIR__ . '/templates/calendar_incharge.html.php',
-        'emails/calendar_incharge.text' => __DIR__ . '/templates/calendar_incharge.text.php',
+        'emails/calendar_incharge.html'  => __DIR__ . '/templates/calendar_incharge.html.php',
+        'emails/calendar_incharge.text'  => __DIR__ . '/templates/calendar_incharge.text.php',
+        'event_share.html.php'           => __DIR__ . '/templates/event_share.html.php',
+        'event_share.text.php'           => __DIR__ . '/templates/event_share.text.php',
     ],
     'routes' => require __DIR__ . '/routes/index.php',
 ]);
