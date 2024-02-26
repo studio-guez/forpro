@@ -18,7 +18,7 @@
     img {
         background: var(--app-color--blue);
         display: block;
-        width: 100%;
+        width: max(50rem, 100%);
         aspect-ratio: 2/1;
     }
 </style>
