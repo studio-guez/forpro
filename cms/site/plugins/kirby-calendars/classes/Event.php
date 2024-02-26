@@ -7,6 +7,9 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use Eluceo\iCal\Domain\ValueObject\Date;
+use Eluceo\iCal\Domain\ValueObject\SingleDay;
+use Eluceo\iCal\Presentation\Factory\CalendarFactory;
 use Google\Exception;
 use Google_Service_Calendar_Event;
 use Google_Service_Calendar_EventAttendee;
@@ -251,21 +254,24 @@ class Event extends BaseClass
      * @throws NotFoundException
      * @throws \Exception
      */
-    public static function share(string $eventId, array $input): bool {
-        $eventData = static::find($eventId);
+    public static function share(string $eventId, array $input): bool
+    {
+        $event = static::find($eventId);
 
-        $vEvent = new Eluceo\iCal\Component\Event();
-        $vEvent
-            ->setDtStart(new DateTime($eventData['date']))
-            ->setDtEnd((new DateTime($eventData['date']))->add(new DateInterval('PT' . $eventData['duration'])))
-            ->setSummary($eventData['name'])
-            ->setDescription($eventData['description']);
+        $vEvent = (new \Eluceo\iCal\Domain\Entity\Event())
+            ->setSummary($event['name'])
+            ->setDescription($event['description'])
+            ->setOccurrence(
+                new SingleDay(
+                    new Date(
+                        new DateTimeImmutable($event['date'])
+                    )
+                )
+            );
 
-        $vCalendar = new Eluceo\iCal\Component\Calendar("www.forpro.ch");
-        $vCalendar->addComponent($vEvent);
+        $calendar = new \Eluceo\iCal\Domain\Entity\Calendar([$vEvent]);
+        $iCalendarComponent = (new CalendarFactory())->createCalendar($calendar);
 
-        $icsContent = $vCalendar->render();
-
-        Mail::sendEventICS($input['email'], $icsContent);
+        return Mail::sendEventICS($input['email'], (string)$iCalendarComponent);
     }
 }
