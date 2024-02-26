@@ -10,6 +10,6 @@
 
 <style lang="scss">
     .s-block-html {
-        max-width: 50rem;
+        width: max(50rem, 100%);
     }
 </style>
