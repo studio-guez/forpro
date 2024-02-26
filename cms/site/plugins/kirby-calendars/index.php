@@ -56,6 +56,10 @@ Kirby::plugin('mediumsans/kirby-calendars', [
                     require __DIR__ . '/dialogs/schedule/create.php',
                     require __DIR__ . '/dialogs/schedule/delete.php',
                     require __DIR__ . '/dialogs/schedule/edit.php',
+                    // EVENT
+                    require __DIR__ . '/dialogs/event/fields.php',
+                    require __DIR__ . '/dialogs/event/delete.php',
+                    require __DIR__ . '/dialogs/event/share.php',
                     // LEAVE
                     require __DIR__ . '/dialogs/leave/fields.php',
                     require __DIR__ . '/dialogs/leave/create.php',
