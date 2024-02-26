@@ -326,12 +326,26 @@ class Calendar extends BaseClass
         return $calendar['min_days_before_rdvs'];
     }
 
+    /**
+     * Retrieves the options for a given calendar.
+     *
+     * @param string $calendarId The ID of the calendar.
+     * @return array An associative array containing the options for the calendar. The array
+     *               structure is as follows:
+     *               [
+     *                  'minDaysBeforeRdvs' => The minimum number of days before an appointment,
+     *                                        as set in the calendar. (integer)
+     *                  'maxEventsPerDay' => The maximum number of events allowed per day,
+     *                                      as set in the calendar. (integer)
+     *               ]
+     * @throws NotFoundException
+     */
     public static function getOptions(string $calendarId): array
     {
         $calendar = static::find($calendarId);
         return [
-            'min_days_before_rdvs' => $calendar['min_days_before_rdvs'],
-            'max_events_per_day' => $calendar['max_events_per_day'],
+            'minDaysBeforeRdvs' => $calendar['min_days_before_rdvs'],
+            'maxEventsPerDay' => $calendar['max_events_per_day'],
         ];
     }
 }
