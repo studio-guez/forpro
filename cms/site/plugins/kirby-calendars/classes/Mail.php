@@ -126,6 +126,11 @@ class Mail
         $f_name = $kirby->option('mediumsans.kirby-calendars.notifications.calendar_incharge.name');
         $from = static::createFrom($f_email, $f_name);
 
+        $tempFile = tempnam(sys_get_temp_dir(), 'ics_');
+        $tempFileIcs = $tempFile . '.ics';
+        rename($tempFile, $tempFileIcs);
+        file_put_contents($tempFileIcs, $icsContent);
+
         try {
             $notified = $kirby->email([
                 'from' => $from,
@@ -133,11 +138,7 @@ class Mail
                 'subject' => 'Un rendez-vous a été partagé/attribué',
                 'template' => 'event_share',
                 'attachments' => [
-                    [
-                        'memory' => $icsContent,
-                        'name' => 'rdv.ics',
-                        'type' => 'text/calendar'
-                    ]
+                    $tempFileIcs
                 ],
             ])->isSent();
         } catch (Exception $error) {
