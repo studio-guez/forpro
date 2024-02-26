@@ -2,15 +2,6 @@
   <k-inside>
     <k-header>
       {{ $t('kirbycalendars.events') }}
-
-      <k-button-group slot="buttons">
-        <k-button
-            text="Ajouter"
-            variant="filled"
-            icon="add"
-            @click="$dialog('event/create')"
-        />
-      </k-button-group>
     </k-header>
 
     <table class="k-table">
@@ -20,7 +11,7 @@
             style="text-align: center;">
           #
         </th>
-        <th>Nom</th>
+        <th>Titre</th>
         <th>Sujet</th>
         <th>Horaire</th>
         <th>Nom</th>
@@ -57,14 +48,14 @@
         <td class="k-table-options-column">
           <k-options-dropdown :options="[
               {
-                text: 'Modifier',
-                icon: 'edit',
-                click: () => $dialog(`calendar/${id}/edit`)
+                text: 'Partager',
+                icon: 'share',
+                click: () => $dialog(`event/${id}/share`)
               },
               {
                 text: 'Supprimer',
                 icon: 'trash',
-                click: () => $dialog(`calendar/${id}/delete`)
+                click: () => $dialog(`event/${id}/delete`)
               },
             ]"/>
         </td>
