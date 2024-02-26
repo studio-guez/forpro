@@ -7,6 +7,7 @@ use DateTimeInterface;
 use DateTimeZone;
 use Google\Exception;
 use Google_Service_Calendar_Event;
+use Google_Service_Calendar_EventAttendee;
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
 
@@ -203,7 +204,9 @@ class Event extends BaseClass
             $dateTimeEnd
         );
 
-        Event::update($eventId, ['etag' => $gEvent->getEtag()]);
+        $googleService = Utils::createGoogleService();
+        $addedEvent = $googleService->events->insert($calendar['cid'], $gEvent);
+        Event::update($eventId, ['etag' => $addedEvent->getEtag(), 'eid' => $addedEvent->getId()]);
 
         Mail::sendEventIsConfirmedToPersonInCharge(
             $calendar,
@@ -212,10 +215,6 @@ class Event extends BaseClass
             $dateTimeStart->format('d.m.Y'),
             $dateTimeStart->format('H:i')
         );
-
-        $googleService = Utils::createGoogleService();
-
-        $googleService->events->insert($calendar['cid'], $gEvent);
     }
 
     /**
@@ -242,5 +241,24 @@ class Event extends BaseClass
                 'timeZone' => 'Europe/Paris',
             ]
         ]);
+    }
+
+    /**
+     * @throws Exception
+     * @throws \Google\Service\Exception
+     */
+    public static function share(string $eventId, array $input): \Google\Service\Calendar\Event
+    {
+        $attendeeEmail = $input['email'];
+        $service = Utils::createGoogleService();
+
+        $event = $service->events->get('primary', $eventId);
+
+        $attendee = new Google_Service_Calendar_EventAttendee();
+        $attendee->setEmail($attendeeEmail);
+        $attendees[] = $attendee;
+        $event->setAttendees($attendees);
+
+        return $service->events->update('primary', $event->getId(), $event);
     }
 }
