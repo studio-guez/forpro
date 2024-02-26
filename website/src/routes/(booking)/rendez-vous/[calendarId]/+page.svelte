@@ -43,8 +43,9 @@
     let slots: Slot[] = data.availabilities;
     let loading: boolean = false;
 
+    let minDaysBeforeAppointment = data.options.minDaysBeforeRdvs ?? 1;
     let today = dayjs();
-    let startDate = today.add(1, 'day').toDate();
+    let startDate = today.add(minDaysBeforeAppointment, 'day').toDate();
 
     const endDate = today.add(1, 'month').toDate();
     config.i18n = fr;
