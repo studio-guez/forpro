@@ -13,7 +13,8 @@
   "require": {
     "getkirby/composer-installer": "^1.2",
     "php": ">=8.0.0",
-    "google/apiclient": "^2.12"
+    "google/apiclient": "^2.12",
+    "eluceo/ical": "^2.13"
   },
   "autoload": {
     "psr-4": {
