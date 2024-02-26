@@ -20,6 +20,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     const content: BookingCMSResponse = await res.json();
 
     const options = await getCalendarOptions(calendarId);
+
     const servicesKirby = await getServicesFromCalendarId(calendarId);
     const schedules = await getSchedulesFromCalendarId(calendarId);
 
