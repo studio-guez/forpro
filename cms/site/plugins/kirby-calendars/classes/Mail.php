@@ -110,6 +110,44 @@ class Mail
     }
 
     /**
+     * Sends a notification email with an event invitation (ICS file) to a specified email address.
+     *
+     * @param string $email The recipient's email address.
+     * @param string $icsContent The content of the ICS file.
+     *
+     * @return bool  Returns true if the notification email is successfully sent, false otherwise.
+     *
+     */
+    public static function sendEventICS(string $email, string $icsContent): bool
+    {
+        $kirby = kirby();
+
+        $f_email = $kirby->option('mediumsans.kirby-calendars.notifications.from');
+        $f_name = $kirby->option('mediumsans.kirby-calendars.notifications.calendar_incharge.name');
+        $from = static::createFrom($f_email, $f_name);
+
+        try {
+            $notified = $kirby->email([
+                'from' => $from,
+                'to' => $email,
+                'subject' => 'Un rendez-vous a été partagé/attribué',
+                'template' => 'event_share',
+                'attachments' => [
+                    [
+                        'memory' => $icsContent,
+                        'name' => 'rdv.ics',
+                        'type' => 'text/calendar'
+                    ]
+                ],
+            ])->isSent();
+        } catch (Exception $error) {
+            $notified = false;
+        }
+
+        return $notified;
+    }
+
+    /**
      * Creates a new User instance based on the given email and name.
      *
      * @param string $email The email of the user.
