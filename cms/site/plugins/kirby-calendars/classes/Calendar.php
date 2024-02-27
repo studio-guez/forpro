@@ -155,13 +155,16 @@ class Calendar extends BaseClass
         $serviceDuration = Utils::convertDurationToMinutes(Service::find($serviceId)['duration']);
         $events = static::getEvents($service, $calendar['cid'], $openingTime, $closingTime);
         $maxEventsPerDay = static::getMaxEventsPerDay($calendarId);
+        $maxEventsPerSlot = static::getMaxEventsPerSlot($calendarId);
 
-        return static::calculateFreeSlots($openingTime,
+        return static::calculateFreeSlots(
+            $openingTime,
             $closingTime,
             $serviceDuration,
             $leaves,
             $events,
-            $maxEventsPerDay);
+            $maxEventsPerDay,
+            $maxEventsPerSlot);
     }
 
     /**
@@ -226,6 +229,11 @@ class Calendar extends BaseClass
         return count($events) > $maxEventsPerDay;
     }
 
+    private static function exceedsMaxEventsPerSlot(array $events, int $maxEventsPerSlot): bool
+    {
+        return count($events) > $maxEventsPerSlot;
+    }
+
     /**
      * Calculates the start of the next time slot based on the current time slot start and the service duration
      *
@@ -256,7 +264,8 @@ class Calendar extends BaseClass
                                                int               $serviceDuration,
                                                array             $leaves,
                                                array             $events,
-                                               int               $maxEventsPerDay): array
+                                               int               $maxEventsPerDay,
+                                               int               $maxEventsPerSlot): array
     {
         $availableSlots = [];
         $nextSlotStart = $openingTime;
@@ -268,10 +277,15 @@ class Calendar extends BaseClass
 
         while ($nextSlotStart < $closingTime) {
             $slotEnd = self::calculateNextSlotStart($nextSlotStart, $serviceDuration);
+            $eventsInSlot = array_filter($events, function($event) use ($nextSlotStart, $slotEnd, $timezone) {
+                $eventStart = new DateTimeImmutable($event->getStart()->dateTime, $timezone);
+                $eventEnd = new DateTimeImmutable($event->getEnd()->dateTime, $timezone);
+                return $slotEnd > $eventStart && $nextSlotStart < $eventEnd || $nextSlotStart === $eventStart;
+            });
 
-            if (!self::overlapsWith($events, $nextSlotStart, $slotEnd, $timezone) &&
-                !self::overlapsWith($leaves, $nextSlotStart, $slotEnd, $timezone) &&
-                $slotEnd <= $closingTime) {
+            if (!self::exceedsMaxEventsPerSlot($eventsInSlot, $maxEventsPerSlot)
+                && !self::overlapsWith($leaves, $nextSlotStart, $slotEnd, $timezone)
+                && $slotEnd <= $closingTime) {
                 $availableSlots[] = $nextSlotStart;
             }
 
@@ -313,17 +327,10 @@ class Calendar extends BaseClass
         return $calendar['max_events_per_day'];
     }
 
-    /**
-     * Retrieves the minimum number of days before a rendezvous from the calendar
-     *
-     * @param string $calendarId The ID of the calendar
-     * @return int The minimum number of days before a rendezvous from the calendar
-     * @throws NotFoundException
-     */
-    public static function getMinDaysBeforeRdvs(string $calendarId): int
+    private static function getMaxEventsPerSlot(string $calendarId): int
     {
         $calendar = static::find($calendarId);
-        return $calendar['min_days_before_rdvs'];
+        return $calendar['max_events_per_slot'];
     }
 
     /**
