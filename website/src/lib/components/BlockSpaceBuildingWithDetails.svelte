@@ -4,13 +4,13 @@
     // todo: add this content in Kirby Admin
     let sectionsDetails = [
         {slug: 'creche',      title: {value: 'Crèche'}},
-        {slug: 'horlogerie',  title: {value: "École d'horlogerie"}},
+        {slug: 'horlogerie',  title: {value: "L’École d’Horlogerie de Genève"}},
         {slug: 'FactoryLab',  title: {value: 'FactoryLab'}},
         {slug: 'foodlab',     title: {value: 'FoodLab'}},
         {slug: 'makerlab',    title: {value: 'MakerLab'}},
         {slug: 'learninglab', title: {value: 'LearningLab'}},
         {slug: 'grandlab',    title: {value: 'GrandLab'}},
-        {slug: 'popup',       title: {value: 'Popup'}},
+        {slug: 'popup',       title: {value: 'PoPup'}},
     ];
 
     function getSectionNameBySlug(slug) {
@@ -233,6 +233,10 @@
 
         {#if (content.content.style === 'style2')}
             <div class="v-space-building__sections">
+
+<!--                todo ici-->
+
+
                 {#if (currentOverSection === 'popup')}
                     <div
                             class="v-space-building__sections__description fp-remove-margin-child v-space-building__section-description--Accueil"
@@ -269,7 +273,7 @@
                     <div
                             class="v-space-building__sections__description fp-remove-margin-child v-space-building__section-description--Ecole_Horlogerie"
                     >
-                        <h3> L’École d’horlogerie de Genève</h3>
+                        <h3>L’École d’Horlogerie de Genève</h3>
                         <p>#horlogerie #micromecanique #cfpt</p>
                         <p>OUVERT</p>
                     </div>
@@ -293,7 +297,7 @@
                     <div
                             class="v-space-building__sections__description fp-remove-margin-child v-space-building__section-description--Foodlab"
                     >
-                        <h3>Foodlab</h3>
+                        <h3>FoodLab</h3>
                         <p>#restaurants #juniorteam #apprentissage</p>
                         <p>ouverture: été 2024</p>
                         <p>#foodcourt OUVERT</p>

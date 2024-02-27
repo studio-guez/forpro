@@ -1,7 +1,7 @@
 <div class="s-newsletter"
      id="s-newsletter"
 >
-    <div class="s-newsletter__title">Restez informé·e&nbsp;!</div>
+    <div class="s-newsletter__title">Je m’inscris à la newsletter de ForPro&nbsp;!</div>
 
     <form class="app-flex app-flex--align_center app-flex--nowrap app-flex--gap_regular"
           method="post"
@@ -33,7 +33,7 @@
                     }}
             >
                 <input type="submit"
-                       value="valider"
+                       value="Valider"
                        style="
                                 --app-button--color: var(--app-color--green);
                                 --app-button--background-color: var(--app-color--blue);

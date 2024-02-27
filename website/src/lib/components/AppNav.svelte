@@ -20,8 +20,8 @@
                 <a target="_blank" href="https://www.linkedin.com/company/fondation-forpro/ "   ><img src="/social-1.svg" alt="social link" ></a>
                 <a target="_blank" href="https://www.facebook.com/forpro.ge"                    ><img src="/social-2.svg" alt="social link" ></a>
                 <a target="_blank" href="https://www.instagram.com/forpro_ge/"                  ><img src="/social-3.svg" alt="social link" ></a>
-<!--                <img src="/social-4.svg" alt="social link" >-->
-<!--                <img src="/social-5.svg" alt="social link" >-->
+                <a target="_blank" href=https://t.snapchat.com/sIs5mQiQ                         ><img src="/social-4.svg" alt="social link" ></a>
+                <a target="_blank" href="https://www.tiktok.com/@_forpro"                       ><img src="/social-5.svg" alt="social link" ></a>
             </div>
             <button class="s-app-nav__icon-menu"
                     on:click={() => menuIsOpen.set(!$menuIsOpen)}>
