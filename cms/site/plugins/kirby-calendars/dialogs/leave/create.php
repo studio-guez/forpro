@@ -3,7 +3,7 @@
 use MediumSans\KirbyCalendars\Leave;
 
 return [
-    'pattern' => 'leave/create',
+    'pattern' => 'leave/(:any)/create',
     'load'    => function () {
         return [
             'component' => 'k-form-dialog',
@@ -14,7 +14,9 @@ return [
             ],
         ];
     },
-    'submit' => function () {
-        return Leave::create(get());
+    'submit' => function ($calendarId) {
+        $input = get();
+        $input['calendar_id'] = $calendarId;
+        return Leave::create($input);
     }
 ];
