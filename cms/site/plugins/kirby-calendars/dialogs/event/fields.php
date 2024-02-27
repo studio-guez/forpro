@@ -10,8 +10,4 @@ return [
         'type' => 'textarea',
         'buttons' => false
     ],
-    'location' => [
-        'label' => 'Localisation',
-        'type' => 'text'
-    ],
 ];
