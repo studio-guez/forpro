@@ -20,4 +20,9 @@ return [
         'type' => 'number',
         'help' => '0 pour illimité'
     ],
+    'max_events_per_slot' => [
+        'label' => 'Nombre maximum de rendez-vous par plage horaire',
+        'type' => 'number',
+        'help' => '0 pour illimité'
+    ],
 ];
