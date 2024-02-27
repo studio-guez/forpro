@@ -4,7 +4,7 @@
     export let content: ICapsules;
 </script>
 
-<div class="s-block-capsule {content.content.style} app-flex app-flex--justify_center app-flex--wrap"
+<div class="s-block-capsule"
 >
     {#each content.content.capsules as capsule}
         <div class="s-block-capsule__item app-flex app-flex--column app-flex--align_center app-flex--gap_half">
@@ -35,13 +35,36 @@
 <style lang="scss">
   $block-capsule-breakpoint-md: 800px;
 
+
     .s-block-capsule {
+
+
+      --max-width: 50rem;
+      --title-max-font-size: 2.5rem;
+      --title-max-content-size: 1.5rem;
+      --title-gap: 4rem;
+
+
+
       container-type: inline-size;
       container-name: block-capsule;
+      width: 100%;
+      max-width: var(--max-width);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--title-gap);
+
+      @container block-capsule (width < #{$block-capsule-breakpoint-md}) {
+        grid-template-columns: repeat(1, 1fr);
+      }
     }
     .s-block-capsule__item {
       position: relative;
-      flex-basis: calc(100% / 2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-basis: calc( (100% / 2) - ( var(--title-gap) / 2 ) );
 
       @container block-capsule (width < #{$block-capsule-breakpoint-md}) {
         flex-basis: 80%;
@@ -56,15 +79,16 @@
       width: 100%;
       display: flex;
       align-items: center;
+      justify-content: center;
       flex-direction: column;
     }
 
     .s-block-capsule__item__content__title {
       margin: 0;
-      padding: .4rem 1rem .6rem;
+      padding: .5em;
       color: var(--app-color--pink);
       line-height: 1em;
-      font-size: 4vw;
+      font-size: min(4vw, var(--title-max-font-size));
       text-align: center;
       font-weight: 600;
 
@@ -73,11 +97,9 @@
       }
     }
     .s-block-capsule__item__content__text {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
       color: var(--app-color--blue);
       line-height: 1em;
-      font-size: 2.5vw;
+      font-size: min(2.5vw, var(--title-max-content-size));
       width: 100%;
       text-align: center;
       font-weight: 500;

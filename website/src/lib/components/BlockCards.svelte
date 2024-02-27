@@ -4,7 +4,7 @@
     export let content: ICards;
 </script>
 
-<div class="s-cards"
+<div class="s-cards {content.content.style}"
 >
     <div class="s-cards__container">
         {#each content.content.cards as card}
@@ -21,17 +21,17 @@
                 <div
                         class="s-cards__container__card__content"
                 >
-                    <h3 class="s-cards__container__card__content__tilte">{card.title}</h3>
-                    <div class="s-cards__container__card__content__content app-typo_text-content">{@html card.text}</div>
-                </div>
-
-                {#if (card.link)}
-                    <div style="width: 100%">
-                        <a class="s-cards__container__card__button app-button app-button--rounded"
+                    <div>
+                        <h3 class="s-cards__container__card__content__tilte">{card.title}</h3>
+                        <div class="s-cards__container__card__content__content app-typo_text-content">{@html card.text}</div>
+                    </div>
+                    {#if (card.link)}
+                        <a class="s-cards__container__card__content__button app-button app-button--rounded"
                            href="{card.link}"
                         >En savoir plus</a>
-                    </div>
-                {/if}
+                    {/if}
+                </div>
+
             </div>
         {/each}
     </div>
@@ -41,6 +41,14 @@
 <style lang="scss">
     .s-cards {
       container-type: inline-size;
+
+      &.style2 {
+        .s-cards__container__card:nth-child(1) {
+          :global(li::before) {
+            color: var(--app-color--green);
+          }
+        }
+      }
     }
 
     .s-cards__container {
@@ -48,7 +56,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem 1rem;
 
-      @container (width < 1400px) {
+      @container (width < 1100px) {
         grid-template-columns: repeat(2, 1fr);
       }
 
@@ -95,8 +103,12 @@
       height: 100%;
       flex-shrink: 1;
       z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
 
-      .s-cards__container__card:nth-child(2n) & {
+      .s-cards:not(.style2) .s-cards__container__card:nth-child(2n) & {
         background: var(--app-color--pink);
       }
 
@@ -104,14 +116,23 @@
         border-top-color: var(--app-color--grey--light);
         margin-top: -1.5rem;
       }
+
+      .s-cards.style2 & {
+        border: solid var(--app-line-with) var(--app-color--pink);
+        background: var(--app-color--grey--light);
+      }
+
+      .s-cards.style2 .s-cards__container__card:nth-child(1) & {
+        background: var(--app-color--blue);
+        border-color: var(--app-color--green);
+      }
     }
 
-    .s-cards__container__card__button {
-      margin-top: 1rem;
-      width: 100%;
+
+    .s-cards__container__card__content__button {
+      margin: 2rem 0;
       text-align: center;
       box-sizing: border-box;
-      flex-shrink: 0;
     }
 
     .s-cards__container__card__content__tilte {
@@ -119,11 +140,16 @@
       font-size: 1.75rem;
       line-height: 1em;
       margin-top: 0;
+      margin-bottom: 2rem;
       text-align: center;
       font-weight: 600;
 
-      .s-cards__container__card:nth-child(2n) & {
+      .s-cards:not(.style2) .s-cards__container__card:nth-child(2n) & {
         color: white;
+      }
+
+      .s-cards.style2 .s-cards__container__card:nth-child(1) & {
+        color: var(--app-color--green);
       }
     }
 
