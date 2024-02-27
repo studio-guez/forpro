@@ -8,7 +8,7 @@
             text="Ajouter"
             variant="filled"
             icon="add"
-            @click="$dialog('leave/create')"
+            @click="$dialog(`leave/${calendar.id}/create`)"
         />
       </k-button-group>
     </k-header>
@@ -33,8 +33,8 @@
           {{ index }}
         </td>
         <td :title="leave.name" style="width: 10%;">{{ leave.name }}</td>
-        <td :title="leave.start_datetime" style="width: 10%;">{{ leave.start_datetime }}</td>
-        <td :title="leave.end_datetime">{{ leave.end_datetime }}</td>
+        <td :title="leave.start_datetime" style="width: 10%;">{{ formatDate(leave.start_datetime) }}</td>
+        <td :title="leave.end_datetime">{{ formatDate(leave.end_datetime) }}</td>
         <td class="k-table-options-column">
           <k-options-dropdown :options="[
               {
@@ -59,6 +59,7 @@
 export default {
   props: {
     leaves: Array,
+    calendar: Array,
     options: Array
   },
   methods: {
@@ -69,7 +70,7 @@ export default {
       if (dateStr) {
         const [date, time] = dateStr.split(' ');
         const [year, month, day] = date.split('-');
-        return `${day}.${month}.${year}`;
+        return `${day}.${month}.${year} ${time}`;
       }
       return '';
     },
