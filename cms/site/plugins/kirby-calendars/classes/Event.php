@@ -262,10 +262,9 @@ class Event extends BaseClass
             ->setSummary($event['name'])
             ->setDescription($event['description'])
             ->setOccurrence(
-                new SingleDay(
-                    new Date(
-                        new DateTimeImmutable($event['date'])
-                    )
+                new \Eluceo\iCal\Domain\ValueObject\TimeSpan(
+                    new \Eluceo\iCal\Domain\ValueObject\DateTime(new DateTimeImmutable($event['start_time']), false),
+                    new \Eluceo\iCal\Domain\ValueObject\DateTime(new DateTimeImmutable($event['end_time']), false)
                 )
             );
 
