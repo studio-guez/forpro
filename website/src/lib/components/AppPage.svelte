@@ -27,8 +27,8 @@
                 </div>
 
             {:else if content.type === 'capsules'}
-                <div class="app-flex__basis-20-24">
-                    <BlockCapsules content="{content}" />
+                <div class="app-flex__basis-20-24 app-flex app-flex--justify_center">
+                        <BlockCapsules content="{content}" />
                 </div>
 
             {:else if content.type === 'cards'}

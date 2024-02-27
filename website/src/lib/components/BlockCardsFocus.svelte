@@ -46,21 +46,21 @@
             <div class="s-card-focus__card__text-box app-flex app-flex--column app-flex--align_center app-flex--justify_center">
                 <div class="s-card-focus__card__title" >{card.title}</div>
                 <div class="s-card-focus__card__subtitle" >{card.subtitle}</div>
+                {#if (card.link)}
+                    {#if (card.style === 'entreprises')}
+                        <a class="s-card-focus__card__button app-button app-button--rounded"
+                           href="{card.link}">Pour les entreprises</a>
+                    {/if}
+                    {#if (card.style === 'entourage')}
+                        <a class="s-card-focus__card__button app-button app-button--rounded"
+                           href="{card.link}">Pour les parents et l'entourage</a>
+                    {/if}
+                    {#if (card.style === 'jeunes')}
+                        <a class="s-card-focus__card__button app-button app-button--rounded"
+                           href="{card.link}">Pour les jeunes</a>
+                    {/if}
+                {/if}
             </div>
-            {#if (card.link)}
-                {#if (card.style === 'entreprises')}
-                    <a class="s-card-focus__card__button app-button app-button--rounded"
-                       href="{card.link}">Pour les entreprises</a>
-                {/if}
-                {#if (card.style === 'entourage')}
-                    <a class="s-card-focus__card__button app-button app-button--rounded"
-                       href="{card.link}">Pour les parents et l'entourage</a>
-                {/if}
-                {#if (card.style === 'jeunes')}
-                    <a class="s-card-focus__card__button app-button app-button--rounded"
-                       href="{card.link}">Pour les jeunes</a>
-                {/if}
-            {/if}
             <img class="s-card_focus__img with-mask-animation" alt="juste un masque" src="{getImageUrl(card).img}" />
             <div class="s-card_focus__color-filter with-mask-animation"></div>
         </div>
@@ -120,11 +120,7 @@
     }
 
     .s-card-focus__card__button {
-      position: absolute;
-      bottom: 1rem;
-      left: 50%;
-      transform: translate(-50%, 0);
-      z-index: 1;
+      margin-top: 1rem;
     }
 
     .s-card_focus__img {
