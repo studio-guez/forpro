@@ -3,12 +3,13 @@
 @include_once __DIR__ . '/vendor/autoload.php';
 
 load([
-    'MediumSans\KirbyCalendars\Calendar' => __DIR__ . '/classes/Calendar.php',
-    'MediumSans\KirbyCalendars\Schedule' => __DIR__ . '/classes/Schedule.php',
-    'MediumSans\KirbyCalendars\Service' => __DIR__ . '/classes/Service.php',
-    'MediumSans\KirbyCalendars\Database' => __DIR__ . '/classes/Database.php',
-    'MediumSans\KirbyCalendars\Event' => __DIR__ . '/classes/Event.php',
-    'MediumSans\KirbyCalendars\Leave' => __DIR__ . '/classes/Leave.php',
+    'MediumSans\KirbyCalendars\Calendar'    => __DIR__ . '/classes/Calendar.php',
+    'MediumSans\KirbyCalendars\Schedule'    => __DIR__ . '/classes/Schedule.php',
+    'MediumSans\KirbyCalendars\Service'     => __DIR__ . '/classes/Service.php',
+    'MediumSans\KirbyCalendars\Database'    => __DIR__ . '/classes/Database.php',
+    'MediumSans\KirbyCalendars\Event'       => __DIR__ . '/classes/Event.php',
+    'MediumSans\KirbyCalendars\Leave'       => __DIR__ . '/classes/Leave.php',
+    'MediumSans\KirbyCalendars\Invitation'  => __DIR__ . '/classes/Invitation.php',
 ]);
 
 Kirby::plugin('mediumsans/kirby-calendars', [
