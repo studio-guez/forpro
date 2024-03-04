@@ -42,6 +42,7 @@
       --max-width: 50rem;
       --title-max-font-size: 2.5rem;
       --title-max-content-size: 1.5rem;
+      --title-min-content-size: 1rem;
       --title-gap: 4rem;
 
 
@@ -99,7 +100,7 @@
     .s-block-capsule__item__content__text {
       color: var(--app-color--blue);
       line-height: 1em;
-      font-size: min(2.5vw, var(--title-max-content-size));
+      font-size: clamp(var(--title-min-content-size), 2.5vw, var(--title-max-content-size));
       width: 100%;
       text-align: center;
       font-weight: 500;
