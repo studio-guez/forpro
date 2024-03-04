@@ -61,6 +61,11 @@
       box-sizing: border-box;
       flex-direction: row;
       justify-content: space-between;
+
+      @media (max-width: scss-params.$fp-breakpoint-md) {
+        flex-wrap: nowrap;
+        align-items: flex-start;
+      }
     }
 
     .s-app-nav__social-icon {
@@ -104,8 +109,8 @@
 
     .s-app-nav__buttons__container {
       @media (max-width: scss-params.$fp-breakpoint-sm) {
-        margin-top: var(--app-flex--gap_half);
         justify-content: flex-end;
+        gap: .25rem;
       }
     }
 
@@ -123,6 +128,7 @@
 
       @media (max-width: scss-params.$fp-breakpoint-sm) {
         width: calc(100% - var(--position) - var(--position) );
+        padding: var(--app-nav_height) 1rem 1rem;
       }
     }
 
@@ -173,7 +179,7 @@
 
       @media (max-width: scss-params.$fp-breakpoint-sm) {
         position: fixed;
-        top: var(--app-flex--gap_half);
+        bottom: var(--app-flex--gap_half);
         right: var(--app-flex--gap_half);
       }
     }

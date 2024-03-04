@@ -29,6 +29,8 @@
       height: calc(100vh - var(--app-nav_height));
       width: 100%;
       background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
     }
   }
 

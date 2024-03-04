@@ -4,7 +4,7 @@
     export let content: IProfiles;
 </script>
 
-<div class="s-profiles {content.content.style} app-grid--column-3">
+<div class="s-profiles {content.content.style} app-grid--column-3 app-grid--sm--column-1">
     {#each content.content.profiles as profile}
         <div class="s-profiles__profile"
              class:with-img="{profile.imageData?.length > 0}"
