@@ -1,6 +1,8 @@
 <script lang="ts">
     import type {ICardFocusItem, ICardsFocus} from "$lib/interfaces/cmsApiResponse";
     import {onMount} from "svelte";
+    import {browser} from "$app/environment";
+    import {LottiePlayer} from "@lottiefiles/svelte-lottie-player";
 
     export let content: ICardsFocus;
     let cardsFocusElement: HTMLElement
@@ -61,8 +63,57 @@
                     {/if}
                 {/if}
             </div>
-            <img class="s-card_focus__img with-mask-animation" alt="juste un masque" src="{getImageUrl(card).img}" />
-            <div class="s-card_focus__color-filter with-mask-animation"></div>
+            {#if browser}
+                {#if (card.style === 'entreprises')}
+                <LottiePlayer
+                        src="lottie/desktop-entreprises.json"
+                        autoplay="{true}"
+                        background="transparent"
+                        speed="1"
+                        style="width: 100%; height: 100%"
+                        direction="1"
+                        mode="normal"
+                        width="100%"
+                        height="100%"
+                        controls="{false}"
+                        controlsLayout="[]"
+                        renderer="svg"
+                />
+                {/if}
+                {#if (card.style === 'entourage')}
+                <LottiePlayer
+                        src="lottie/desktop-entourage.json"
+                        autoplay="{true}"
+                        background="transparent"
+                        speed="1"
+                        style="width: 100%; height: 100%"
+                        direction="1"
+                        mode="normal"
+                        width="100%"
+                        height="100%"
+                        controls="{false}"
+                        controlsLayout="[]"
+                        renderer="svg"
+                />
+                {/if}
+                {#if (card.style === 'jeunes')}
+                <LottiePlayer
+                        src="lottie/desktop-jeunes.json"
+                        autoplay="{true}"
+                        background="transparent"
+                        speed="1"
+                        style="width: 100%; height: 100%"
+                        direction="1"
+                        mode="normal"
+                        width="100%"
+                        height="100%"
+                        controls="{false}"
+                        controlsLayout="[]"
+                        renderer="svg"
+                />
+                {/if}
+            {/if}
+
         </div>
     {/each}
 </div>
@@ -74,6 +125,7 @@
       overflow: hidden;
       user-select: none;
       color: white;
+      height: 80vh;
 
       &.entreprises {
         background: var(--app-color--green);

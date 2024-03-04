@@ -251,7 +251,7 @@
                     >
                         <h3>MakerLab</h3>
                         <p>#fabriquer #experimenter #innover #doityourself</p>
-                        <p>ouverture: 2025</p>
+                        <p>ouverture: printemps 2025</p>
                     </div>
                 {:else if currentOverSection === 'learninglab'}
                     <div
@@ -267,15 +267,15 @@
                     >
                         <h3>GrandLab</h3>
                         <p>#culture #art #evenements</p>
-                        <p>ouverture: 2025</p>
+                        <p>ouverture: printemps 2025</p>
                     </div>
                 {:else if currentOverSection === 'horlogerie'}
                     <div
                             class="v-space-building__sections__description fp-remove-margin-child v-space-building__section-description--Ecole_Horlogerie"
                     >
                         <h3>L’École d’Horlogerie de Genève</h3>
-                        <p>#horlogerie #micromecanique #cfpt</p>
-                        <p>OUVERT</p>
+                        <p>#horlogerie #micromecanique #cfpt #dip</p>
+                        <p>ouvert</p>
                     </div>
                 {:else if currentOverSection === 'FactoryLab'}
                     <div
@@ -291,7 +291,7 @@
                     >
                         <h3>Crèche</h3>
                         <p>#petiteenfance #popepoppa </p>
-                        <p>ouverture: 2025</p>
+                        <p>ouverture: décembre 2024</p>
                     </div>
                 {:else if (currentOverSection === 'foodlab')}
                     <div
@@ -300,7 +300,6 @@
                         <h3>FoodLab</h3>
                         <p>#restaurants #juniorteam #apprentissage</p>
                         <p>ouverture: été 2024</p>
-                        <p>#foodcourt OUVERT</p>
                     </div>
                 {/if}
             </div>
