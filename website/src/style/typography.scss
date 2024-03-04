@@ -152,5 +152,10 @@ h5,
   &.app-typo_text-content--typo-large {
     line-height: 1.5rem;
     font-size: 1.25rem;
+
+    @media (max-width: scss-params.$fp-breakpoint-xs) {
+      line-height: 1.15rem;
+      font-size: 1rem;
+    }
   }
 }

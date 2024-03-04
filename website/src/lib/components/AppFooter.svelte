@@ -60,12 +60,13 @@ import {siteInfo} from "../../store";
 </footer>
 
 <style lang="scss">
+  @use "../../style/_scss-params";
+
     .s-footer {
       width: 100%;
       box-sizing: border-box;
       background: var(--app-color-beige);
       overflow: hidden;
-      margin-top: 5rem;
     }
 
     .s-footer__text {
@@ -83,6 +84,10 @@ import {siteInfo} from "../../store";
     .s-app-footer__list__item {
       &.is-subpage {
         padding-left: 1em;
+
+        @media (max-width: scss-params.$fp-breakpoint-xs) {
+          padding-left: 0;
+        }
       }
     }
 </style>
