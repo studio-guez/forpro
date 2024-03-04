@@ -2,17 +2,12 @@
 
 namespace MediumSans\KirbyCalendars;
 
-use DateInterval;
-use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
-use Eluceo\iCal\Domain\ValueObject\Date;
-use Eluceo\iCal\Domain\ValueObject\SingleDay;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
 use Google\Exception;
 use Google_Service_Calendar_Event;
-use Google_Service_Calendar_EventAttendee;
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
 
@@ -73,6 +68,24 @@ class Event extends BaseClass
         $events[$id] = $eventToUpdate;
 
         return Data::write(static::file(), $events);
+    }
+
+    /**
+     * Retrieves a list of items from the Data class.
+     *
+     * @return array An array containing the list of items.
+     */
+    public static function list(): array
+    {
+        $events = Data::read(static::file());
+
+        foreach ($events as $id => $event) {
+            $invitations = Invitation::findByEventId($id);
+            $event['invitations'] = $invitations;
+            $events[$id] = $event;
+        }
+
+        return $events;
     }
 
     /**
@@ -273,6 +286,9 @@ class Event extends BaseClass
 
         $calendar = new \Eluceo\iCal\Domain\Entity\Calendar([$vEvent]);
         $iCalendarComponent = (new CalendarFactory())->createCalendar($calendar);
+
+        $input['event_id'] = $eventId;
+        Invitation::create($input);
 
         return Mail::sendEventICS($input['email'], (string)$iCalendarComponent);
     }
