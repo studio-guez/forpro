@@ -65,52 +65,108 @@
             </div>
             {#if browser}
                 {#if (card.style === 'entreprises')}
-                <LottiePlayer
-                        src="lottie/desktop-entreprises.json"
-                        autoplay="{true}"
-                        background="transparent"
-                        speed="1"
-                        style="width: 100%; height: 100%"
-                        direction="1"
-                        mode="normal"
-                        width="100%"
-                        height="100%"
-                        controls="{false}"
-                        controlsLayout="[]"
-                        renderer="svg"
-                />
+                    <div class="s-card-focus__card__animation s-card-focus__card__animation--desktop">
+                        <LottiePlayer
+                                src="lottie/desktop-entreprise.json"
+                                autoplay="{true}"
+                                background="transparent"
+                                speed="1"
+                                style="width: 100%; height: 100%"
+                                direction="1"
+                                mode="normal"
+                                width="100%"
+                                height="100%"
+                                controls="{false}"
+                                controlsLayout="[]"
+                                renderer="svg"
+                        />
+                    </div>
+                    <div class="s-card-focus__card__animation s-card-focus__card__animation--mobile">
+                        <LottiePlayer
+                                src="lottie/mobile-entreprise.json"
+                                autoplay="{true}"
+                                background="transparent"
+                                speed="1"
+                                style="width: 100%; height: 100%"
+                                direction="1"
+                                mode="normal"
+                                width="100%"
+                                height="100%"
+                                controls="{false}"
+                                controlsLayout="[]"
+                                renderer="svg"
+                        />
+                    </div>
                 {/if}
                 {#if (card.style === 'entourage')}
-                <LottiePlayer
-                        src="lottie/desktop-entourage.json"
-                        autoplay="{true}"
-                        background="transparent"
-                        speed="1"
-                        style="width: 100%; height: 100%"
-                        direction="1"
-                        mode="normal"
-                        width="100%"
-                        height="100%"
-                        controls="{false}"
-                        controlsLayout="[]"
-                        renderer="svg"
-                />
+                    <div class="s-card-focus__card__animation s-card-focus__card__animation--desktop">
+                        <LottiePlayer
+                                src="lottie/desktop-entourage.json"
+                                autoplay="{true}"
+                                background="transparent"
+                                speed="1"
+                                style="width: 100%; height: 100%"
+                                direction="1"
+                                mode="normal"
+                                width="100%"
+                                height="100%"
+                                controls="{false}"
+                                controlsLayout="[]"
+                                renderer="svg"
+                        />
+                    </div>
+                    <div class="s-card-focus__card__animation s-card-focus__card__animation--mobile">
+                        <LottiePlayer
+                                src="lottie/mobile-entourage.json"
+                                autoplay="{true}"
+                                background="transparent"
+                                speed="1"
+                                style="width: 100%; height: 100%"
+                                direction="1"
+                                mode="normal"
+                                width="100%"
+                                height="100%"
+                                controls="{false}"
+                                controlsLayout="[]"
+                                renderer="svg"
+                        />
+                    </div>
                 {/if}
                 {#if (card.style === 'jeunes')}
-                <LottiePlayer
-                        src="lottie/desktop-jeunes.json"
-                        autoplay="{true}"
-                        background="transparent"
-                        speed="1"
-                        style="width: 100%; height: 100%"
-                        direction="1"
-                        mode="normal"
-                        width="100%"
-                        height="100%"
-                        controls="{false}"
-                        controlsLayout="[]"
-                        renderer="svg"
-                />
+                    <div class="s-card-focus__card__animation s-card-focus__card__animation--desktop"
+                    >
+                        <LottiePlayer
+                                src="lottie/desktop-jeunes.json"
+                                autoplay="{true}"
+                                background="transparent"
+                                speed="1"
+                                style="width: 100%; height: 100%"
+                                direction="1"
+                                mode="normal"
+                                width="100%"
+                                height="100%"
+                                controls="{false}"
+                                controlsLayout="[]"
+                                renderer="svg"
+                        />
+                    </div>
+                    <div class="s-card-focus__card__animation s-card-focus__card__animation--mobile"
+                    >
+                        <LottiePlayer
+                                src="lottie/mobile-jeunes.json"
+                                autoplay="{true}"
+                                background="transparent"
+                                speed="1"
+                                style="width: 100%; height: 100%"
+                                direction="1"
+                                mode="normal"
+                                width="100%"
+                                height="100%"
+                                controls="{false}"
+                                controlsLayout="[]"
+                                renderer="svg"
+                        />
+                    </div>
                 {/if}
             {/if}
 
@@ -119,13 +175,14 @@
 </div>
 
 <style lang="scss" >
+  @use "../../style/_scss-params";
+
     .s-card-focus__card {
       background: var(--app-color--blue);
       position: relative;
       overflow: hidden;
       user-select: none;
       color: white;
-      height: 80vh;
 
       &.entreprises {
         background: var(--app-color--green);
@@ -153,8 +210,8 @@
     }
 
     .s-card-focus__card__title {
-      font-size: 4rem;
-      line-height: 4rem;
+      font-size: clamp(1rem, 7vw, 4rem);
+      line-height: 1em;
       text-align: center;
       width: 100%;
       max-width: 12em;
@@ -184,36 +241,6 @@
       object-fit: cover;
     }
 
-    .with-mask-animation {
-      mask-repeat: no-repeat;
-      mask-origin: border-box;
-      mask-position: -210%, 500%;
-      animation-fill-mode: forwards !important;
-
-      .jeunes & {
-        mask-image: url('/svg/Ovale-0.svg'), url('/svg/Ovale-45.svg');
-      }
-
-      .entreprises & {
-        mask-image: url('/svg/Feuille-1.svg'), url('/svg/Feuille-2.svg');
-        mask-size: auto 110%, auto 115%;
-        object-position: 10% 80%;
-      }
-
-      .entourage & {
-        mask-size: auto 90%, auto 110%;
-        mask-image: url('/svg/Pilule-45-gauche.svg'), url('/svg/Pilule-0.svg');
-      }
-
-      .is-visible & {
-        animation: mask-animation 2.5s cubic-bezier(0.5,0,0,1);
-      }
-
-      .is-visible.entreprises & {
-        animation: mask-animation-2 2.5s cubic-bezier(0.5,0,0,1);
-      }
-    }
-
     .s-card_focus__color-filter {
       content: "";
       position: absolute;
@@ -222,41 +249,21 @@
       width: 100%;
       height: 100%;
       transition: background-color 2.5s cubic-bezier(0.5,0,0,1);
+    }
 
-      .entreprises & {
+    .s-card-focus__card__animation--desktop {
+      display: block;
 
-        background: rgb(23, 84, 255, .35);
+      @media (max-width: scss-params.$fp-breakpoint-xs) {
+        display: none;
       }
+    }
+    .s-card-focus__card__animation--mobile {
+      display: none;
 
-      .jeunes &{
-        background: rgb(0, 145, 133, .35);
-      }
-
-      .entourage &{
-        background: rgb(23, 84, 255, .35);
+      @media (max-width: scss-params.$fp-breakpoint-xs) {
+        display: block;
       }
     }
 
-    @keyframes mask-animation {
-      0% {
-        mask-position: -170%, 150%;
-        transform: scale(.85);
-      }
-      100% {
-        mask-position: 30%, 90%;
-        transform: scale(1);
-      }
-    }
-
-
-    @keyframes mask-animation-2 {
-      0% {
-        mask-position: 0% -400%, 90% -500%;
-        transform: scale(.85);
-      }
-      100% {
-        mask-position: 10%, 90%;
-        transform: scale(1);
-      }
-    }
 </style>

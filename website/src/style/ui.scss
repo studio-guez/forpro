@@ -21,31 +21,18 @@ a.app-button {
   cursor: pointer;
   user-select: none;
 
-  &:after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 300%;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: var(--app-button--color);
-    border-radius: 100% 100% 0 0;
-    transition: transform .25s ease-in;
-    transform: translate(0, 0);
-    z-index: -1;
-  }
 
   &.app-button--without-over-effect {}
 
   &:hover:not(.app-button--without-over-effect) {
     color: var(--app-button--background-color);
+    background: var(--app-button--color);
     transform: scale(1.05);
     transition: transform .25s;
 
-    &:after {
-      transform: translate(0, -100%);
-    }
+    //&:after {
+    //  transform: translate(0, -100%);
+    //}
   }
 
 
