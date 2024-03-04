@@ -39,6 +39,8 @@
 
 
 <style lang="scss">
+  @use "../../style/_scss-params";
+
     .s-cards {
       container-type: inline-size;
 
@@ -70,6 +72,10 @@
       flex-direction: column;
       align-items: center;
       flex-wrap: nowrap;
+
+      @media (max-width: scss-params.$fp-breakpoint-xs) {
+        overflow: hidden;
+      }
     }
 
     .s-cards__container__card__img {
@@ -140,9 +146,13 @@
       font-size: 1.75rem;
       line-height: 1em;
       margin-top: 0;
-      margin-bottom: 2rem;
+      margin-bottom: 1em;
       text-align: center;
       font-weight: 600;
+
+      @media (max-width: scss-params.$fp-breakpoint-xs) {
+        font-size: 1.15rem;
+      }
 
       .s-cards:not(.style2) .s-cards__container__card:nth-child(2n) & {
         color: white;
