@@ -249,22 +249,25 @@ class Event extends BaseClass
     }
 
     /**
-     * @throws Exception
-     * @throws \Google\Service\Exception
      * @throws NotFoundException
      * @throws \Exception
      */
     public static function share(string $eventId, array $input): bool
     {
         $event = static::find($eventId);
+        $service = Service::find($event['service_id']);
+
+        $serviceDuration = Utils::convertDurationToMinutes($service['duration']);
+        $dateTimeStart = new DateTimeImmutable($event['date']);
+        $dateTimeEnd = $dateTimeStart->modify('+' . $serviceDuration . ' minutes');
 
         $vEvent = (new \Eluceo\iCal\Domain\Entity\Event())
             ->setSummary($event['name'])
             ->setDescription($event['description'])
             ->setOccurrence(
                 new \Eluceo\iCal\Domain\ValueObject\TimeSpan(
-                    new \Eluceo\iCal\Domain\ValueObject\DateTime(new DateTimeImmutable($event['start_time']), false),
-                    new \Eluceo\iCal\Domain\ValueObject\DateTime(new DateTimeImmutable($event['end_time']), false)
+                    new \Eluceo\iCal\Domain\ValueObject\DateTime($dateTimeStart, false),
+                    new \Eluceo\iCal\Domain\ValueObject\DateTime($dateTimeEnd, false)
                 )
             );
 
