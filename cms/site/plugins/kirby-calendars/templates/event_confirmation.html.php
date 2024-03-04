@@ -181,7 +181,6 @@
             margin: 0;
             padding: 12px 25px;
             text-decoration: none;
-            text-transform: capitalize;
         }
 
         .btn-primary table td {
@@ -390,12 +389,12 @@
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Votre rendez-vous avec ForPro est prévu</p>
+                                        <p>Votre rendez-vous avec un membre de l'équipe de Forpro est prévu :</p>
 
                                         <div class="align-center">
                                             <p><?= $serviceName ?></p>
                                             <p>
-                                                <b>Date et Heure : <?= $startDate ?> à <?= $startTime ?></b>
+                                                <b>Date et heure: <?= $startDate ?> à <?= $startTime ?></b>
                                             </p>
                                         </div>
 
@@ -414,9 +413,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <p>
-                                            Une erreur dans la prise de rendez-vous&nbsp;? Il vous suffit simplement de <a href="https://forpro-website.sdrvl.ch/rendez-vous" target="_blank">reprendre rendez-vous ici.</a>
-                                        </p>
+                                        <p>Une erreur dans la prise de rendez-vous? Il vous suffit simplement de <a href="https://forpro-website.sdrvl.ch/rendez-vous" target="_blank">reprendre rendez-vous ici.</a></p>
                                     </td>
                                 </tr>
                             </table>
@@ -431,7 +428,7 @@
                     <table border="0" cellpadding="0" cellspacing="0">
                         <tr>
                             <td class="content-block">
-                                <a href="https://for-pro.ch">Votre équipe Forpro !</a>
+                                <a href="https://forpro-website.sdrvl.ch">Retour vers for-pro.ch</a>
                             </td>
                         </tr>
                     </table>
