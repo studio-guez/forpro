@@ -19,6 +19,7 @@
         <th>Email</th>
         <th>Téléphone</th>
         <th>Confirmé</th>
+        <th>Invitations / Assignés</th>
         <th class="k-table-index-column"></th>
       </tr>
       </thead>
@@ -44,6 +45,11 @@
               variant="dimmed"
           >
           </k-button>
+        </td>
+        <td>
+          <ul v-for="invitation in event.invitations" :key="invitation.id">
+            <li>{{ invitation.email }}</li>
+          </ul>
         </td>
         <td class="k-table-options-column">
           <k-options-dropdown :options="[
