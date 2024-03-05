@@ -1,24 +1,11 @@
 <script lang="ts">
-    import type {ICardFocusItem, ICardsFocus} from "$lib/interfaces/cmsApiResponse";
+    import type {ICardsFocus} from "$lib/interfaces/cmsApiResponse";
     import {onMount} from "svelte";
     import {browser} from "$app/environment";
     import {LottiePlayer} from "@lottiefiles/svelte-lottie-player";
 
     export let content: ICardsFocus;
     let cardsFocusElement: HTMLElement
-
-    const mapImage: { entreprises: string; jeunes: string; entourage: string } = {
-        'entreprises': '/Forpro©photo-RaphaelleMueller-Entreprises-1.jpeg',
-        'entourage': '/Forpro©photo-RaphaelleMueller-Entourage-1.jpg',
-        'jeunes': '/Forpro©photo-RaphaelleMueller-Jeunes-1.jpg',
-    }
-
-    function getImageUrl(card: ICardFocusItem) {
-        return {
-            img:    mapImage[card.style],
-        }
-
-    }
 
     onMount(() => {
         const observer = new IntersectionObserver(entries => {
