@@ -27,7 +27,7 @@ import {siteInfo} from "../../store";
                 ><a
                         href="https://www.linkedin.com/company/fondation-forpro/ "
                         target="_blank"
-                >Linkedin</a></div>
+                >LinkedIn</a></div>
                 <div
                         class="s-app-footer__list__item"
                 ><a
@@ -40,6 +40,18 @@ import {siteInfo} from "../../store";
                         href="https://www.instagram.com/forpro_ge/"
                         target="_blank"
                 >Instagram</a></div>
+                <div
+                        class="s-app-footer__list__item"
+                ><a
+                        href="https://t.snapchat.com/sIs5mQiQ"
+                        target="_blank"
+                >Snapchat</a></div>
+                <div
+                        class="s-app-footer__list__item"
+                ><a
+                        href="https://www.tiktok.com/@_forpro/"
+                        target="_blank"
+                >TikTok</a></div>
 
                 <div class="s-app-footer__list__item"
                      style="margin-top: 1rem"
