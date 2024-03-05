@@ -117,9 +117,13 @@ h5,
 
   ul, ol {
     counter-reset: list-number 0;
+    @media (max-width: scss-params.$fp-breakpoint-xs) {
+      font-size: .9rem;
+      line-height: 1.15em;
+    }
 
     li {
-      padding-left: 1.5em;
+      padding-left: 1em;
       position: relative;
 
       &:before {
@@ -146,7 +150,12 @@ h5,
 
   p {
     margin-top: 1.25em;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.25em;
+
+    @media (max-width: scss-params.$fp-breakpoint-xs) {
+      font-size: .9rem;
+      line-height: 1.15em;
+    }
   }
 
   &.app-typo_text-content--typo-large {
