@@ -157,7 +157,7 @@
       &:not(.is-subpage) {
         margin-top: .35em;
           @media (max-width: scss-params.$fp-breakpoint-sm) {
-            margin-top: 1em;
+            //margin-top: 1em;
           }
       }
 
