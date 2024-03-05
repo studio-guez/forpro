@@ -143,13 +143,19 @@
 
 
       @media (max-width: scss-params.$fp-breakpoint-xs) {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
       }
     }
 
     .s-app-nav__list__item {
       @media (max-width: scss-params.$fp-breakpoint-sm) {
         margin-bottom: .25em;
+      }
+
+      &:not(.is-subpage) {
+          @media (max-width: scss-params.$fp-breakpoint-sm) {
+            margin-top: 1em;
+          }
       }
 
       &.is-subpage {
