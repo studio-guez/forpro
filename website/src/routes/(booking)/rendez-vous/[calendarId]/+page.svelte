@@ -318,7 +318,7 @@
                                                           </label>
                                                           <select id="subject"
                                                                   name="subject"
-                                                                  class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                                                                  class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 whitespace-break-spaces">
                                                                 {#each data.content.bookingAppointmentSelect as select}
                                                                     <option value={ select.id }>{ select.label }</option>
                                                                 {/each}
