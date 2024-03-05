@@ -148,11 +148,14 @@
     }
 
     .s-app-nav__list__item {
+      line-height: 1em;
+
       @media (max-width: scss-params.$fp-breakpoint-sm) {
         margin-bottom: .25em;
       }
 
       &:not(.is-subpage) {
+        margin-top: .35em;
           @media (max-width: scss-params.$fp-breakpoint-sm) {
             margin-top: 1em;
           }
