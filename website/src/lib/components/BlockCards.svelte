@@ -71,6 +71,10 @@
 
       .s-cards.style2 &:nth-child(1) {
         grid-column: 1/3;
+
+        @media (max-width: scss-params.$fp-breakpoint-xs) {
+          grid-column: unset;
+        }
       }
 
       @media (max-width: scss-params.$fp-breakpoint-xs) {
