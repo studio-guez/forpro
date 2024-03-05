@@ -47,7 +47,7 @@
       &.style2 {
         .s-cards__container__card:nth-child(1) {
           :global(li::before) {
-            color: var(--app-color--green);
+            color: var(--app-color--blue);
           }
         }
       }
@@ -55,12 +55,8 @@
 
     .s-cards__container {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 2rem 1rem;
-
-      @container (width < 1100px) {
-        grid-template-columns: repeat(2, 1fr);
-      }
 
       @container (width < 900px) {
         grid-template-columns: repeat(1, 1fr);
@@ -73,6 +69,10 @@
       align-items: center;
       flex-wrap: nowrap;
 
+      .s-cards.style2 &:nth-child(1) {
+        grid-column: 1/3;
+      }
+
       @media (max-width: scss-params.$fp-breakpoint-xs) {
         overflow: hidden;
       }
@@ -84,6 +84,13 @@
       box-sizing: border-box;
       flex-shrink: 0;
       position: relative;
+
+      .s-cards.style2 .s-cards__container__card:nth-child(1) & {
+        padding-top: 50%;
+        @media (max-width: scss-params.$fp-breakpoint-xs) {
+          padding-top: 100%;
+        }
+      }
     }
 
     .s-cards__container__card__img__item {
@@ -98,6 +105,10 @@
       border-radius: 2rem;
       box-sizing: border-box;
       border: solid var(--app-line-with) var(--app-color--pink);
+
+      .s-cards.style2 .s-cards__container__card:nth-child(1) & {
+        border-color: var(--app-color--blue);
+      }
     }
 
     .s-cards__container__card__content {
@@ -130,8 +141,7 @@
       }
 
       .s-cards.style2 .s-cards__container__card:nth-child(1) & {
-        background: var(--app-color--blue);
-        border-color: var(--app-color--green);
+        border-color: var(--app-color--blue);
       }
     }
 
@@ -160,11 +170,13 @@
       }
 
       .s-cards.style2 .s-cards__container__card:nth-child(1) & {
-        color: var(--app-color--green);
+        color: var(--app-color--blue);
       }
     }
 
     .s-cards__container__card__content__content {
+      margin: auto;
       margin-top: 1rem;
+      max-width: 30em;
     }
 </style>
