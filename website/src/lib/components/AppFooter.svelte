@@ -44,8 +44,8 @@ import {siteInfo} from "../../store";
                 <div class="s-app-footer__list__item"
                      style="margin-top: 1rem"
                 >
-                    <a href="/mentions-legales" >Crédit du site</a>
-                    <a href="/politique-de-confidentialite">Politique de confidentialité</a>
+                    <a href="/mentions-legales" >Crédit du site</a> |
+                    <a href="/politique-de-confidentialite">Politique de    confidentialité</a>
                 </div>
             </div>
         </div>
