@@ -83,7 +83,7 @@
 
       &.style2 {
         font-weight: 600;
-
+        white-space: normal;
         position: relative;
         z-index: 0;
       }
