@@ -21,6 +21,8 @@
 
 
 <style lang="scss">
+  @use "../../style/_scss-params";
+
   .s-block-image {
     max-width: 1000px;
 
@@ -31,6 +33,10 @@
       background-attachment: fixed;
       background-size: cover;
       background-position: center;
+
+      @media (max-width: scss-params.$fp-breakpoint-xs) {
+        background-attachment: scroll;
+      }
     }
   }
 
