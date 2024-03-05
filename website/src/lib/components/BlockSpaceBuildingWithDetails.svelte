@@ -304,10 +304,125 @@
                 {/if}
             </div>
         {/if}
+        <div class="v-space-building__cards__container__card"
+        >
+            <div
+                    class="v-space-building__cards__container__card__content"
+                    style="--v-space-building__cards__container__card--color: var(--fp-color-accueil);"
+
+            >
+                <div style="width: 100%">
+                    <h3 class="v-space-building__cards__container__card__content__tilte">Le PopUp</h3>
+                    <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
+                        <p><strong>POUR L'ACCUEIL, L'ESPACE CAFÉ ET L'EXPO DU MOMENT</strong></p>
+                        <p>Le PopUp sera un espace&nbsp;d’accueil&nbsp;convivial, il sera ouvert à toute personne souhaitant s’informer,&nbsp;organiser une rencontre professionnelle,&nbsp;boire un café ou tout simplement&nbsp;prendre du temps pour soi.&nbsp;<br><br>Des expositions et évènements ponctuels permettront de faire vivre le lieu toute l’année.<br><br>Ouverture: été 2024</p>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                    class="v-space-building__cards__container__card__content"
+                    style="--v-space-building__cards__container__card--color: var(--fp-color-learninglab);"
+            >
+                <div style="width: 100%">
+                    <h3 class="v-space-building__cards__container__card__content__tilte">Le LearningLab</h3>
+                    <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
+                        <p><strong>POUR CONSTRUIRE SON CHEMIN INDIVIDUELLEMENT</strong></p>
+                        <p>Au service des&nbsp;apprent·i·e·s&nbsp;avant, pendant et après l’apprentissage, le&nbsp;<strong>LearningLab</strong>&nbsp;sera un espace&nbsp;qui met l’humain au centre et&nbsp;où apprentissages et travail se mélangent à d’autres aspects de la vie en collectif. <br><br>Le&nbsp;LearningLab&nbsp;se veut un lieu de vie centré sur le développement des individus,&nbsp;sur&nbsp;l’échange et la transmission des savoirs, ainsi que le développement des&nbsp;compétences professionnelles et&nbsp;l’employabilité. <br><br>Lieu carrefour, le LearningLab permettra de positionner l’apprentissage dans une vision globale et intégrée de l’acquisition&nbsp;des connaissances et compétences et&nbsp;de la diffusion de&nbsp;ces dernières.</p>
+                        <p>Ouverture: été 2024</p>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                    class="v-space-building__cards__container__card__content"
+                    style="--v-space-building__cards__container__card--color: var(--fp-color-hotel_entreprises);"
+            >
+                <div style="width: 100%">
+                    <h3 class="v-space-building__cards__container__card__content__tilte">Le FactoryLab</h3>
+                    <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
+                        <p><strong>POUR SE LANCER, ÉCHANGER ET GRANDIR</strong></p>
+                        <p>Un lieu&nbsp;pour accueillir des entreprises du secteur secondaire ainsi que de jeunes entrepreneur·e·s. <br><br>Les entreprises profiteront de prestations variées pour soutenir la formation professionnelle au plus près du marché de l'emploi: devenir entreprise formatrice, obtenir du soutien administratif, du soutien aux formateur·trice·s, développer leur réseau…et pourront devenir des lieux d’expérimentation en situation réelle pour les jeunes en orientation. <br><br>Les&nbsp;diplômé·e·s&nbsp;à l’âme entrepreneuriale pourront s’installer dans le&nbsp;<strong>FactoryLab</strong>&nbsp;et seront&nbsp;soutenu·e·s&nbsp;dans leur projet de création d’entreprise.</p>
+                        <p>Ouverture: été 2024</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div
+                    class="v-space-building__cards__container__card__content"
+                    style="--v-space-building__cards__container__card--color: var(--fp-color-foodlab);"
+            >
+                <div style="width: 100%">
+                    <h3 class="v-space-building__cards__container__card__content__tilte">Le FoodLab</h3>
+                    <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
+                        <p><strong>POUR SE NOURRIR, SE QUESTIONNER ET DÉCOUVRIR</strong></p>
+                        <p>Le&nbsp;<strong>FoodLab</strong>&nbsp;se déclinera en trois propositions de restauration, dont un&nbsp;FoodCourt&nbsp;pour&nbsp;les&nbsp;apprenti·e·s, un bistrot ainsi qu'un café pour l’Espace Tourbillon. </p>
+                        <p>Le&nbsp;FoodLab&nbsp;formera des&nbsp;apprenti·e·s&nbsp;aux métiers de la restauration et invitera gourmand·e·s&nbsp;et&nbsp;professionnel·le·s·&nbsp;à déguster et imaginer la cuisine de demain.&nbsp;</p>
+                        <p>Ouverture: été 2024</p>
+                    </div>
+                </div>
+            </div>
+            <div
+                    class="v-space-building__cards__container__card__content"
+                    style="--v-space-building__cards__container__card--color: var(--fp-color-grandlab);"
+            >
+                <div style="width: 100%">
+                    <h3 class="v-space-building__cards__container__card__content__tilte">Le GrandLab</h3>
+                    <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
+                        <p><strong>POUR IMAGINER EN GRAND</strong></p>
+                        <p>Le&nbsp;<strong>GrandLab</strong>&nbsp;est un espace de 300 m2 modulable et polyvalent qui permettra de développer des projets culturels et artistiques avec et pour les jeunes, tout particulièrement les apprenti·e·s.&nbsp;</p>
+                        <p>Grâce à une programmation culturelle variée et des activités artistiques diversifiées, le GrandLab assurera l’animation du&nbsp;bâtiment&nbsp;et mettra la culture à la portée&nbsp;de&nbsp;chaque individu.</p>
+                        <p>Ouverture: printemps 2025</p>
+                    </div>
+                </div>
+            </div>
+            <div
+                    class="v-space-building__cards__container__card__content"
+                    style="--v-space-building__cards__container__card--color: var(--fp-color-makerlab);"
+            >
+                <div style="width: 100%">
+                    <h3 class="v-space-building__cards__container__card__content__tilte">Le MakerLab</h3>
+                    <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
+                        <p><strong>POUR EXPÉRIMENTER, CRÉER, ÉCHOUER ET CONSTRUIRE</strong></p>
+                        <p>Le<strong> MakerLab</strong>&nbsp;sera l’espace de fabrication où la créativité et le «faire» seront au cœur des activités et où il sera possible d’expérimenter, de rater et de recommencer autour du terme&nbsp;<em>Do-It-Yourself</em>.&nbsp;</p>
+                        <p>L’ambition est de favoriser le processus d'apprentissage et de compréhension à travers le «faire», encourageant ainsi le test et développant l'esprit d'expérimentation et la curiosité.</p>
+                        <p>Ouverture: printemps 2025</p>
+                    </div>
+                </div>
+            </div>
+            <div
+                    class="v-space-building__cards__container__card__content"
+                    style="--v-space-building__cards__container__card--color: var(--fp-color-ecole_horlogerie);"
+            >
+                <div style="width: 100%">
+                    <h3 class="v-space-building__cards__container__card__content__tilte">L’École d’Horlogerie de Genève</h3>
+                    <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
+                        <p><strong>L’École d’Horlogerie</strong>&nbsp;a pris ses quartiers chez&nbsp;ForPro&nbsp;en août 2023 où les&nbsp;apprenti·e·s&nbsp;disposent d’infrastructures à la hauteur de leurs ambitions: nouveaux métiers&nbsp;et formations variées.&nbsp;</p>
+                        <p>Elle&nbsp;bénéficie&nbsp;de&nbsp;sa proximité avec le secteur horloger pour&nbsp;rester en phase avec les évolutions constantes et pour&nbsp;créer du lien avec les entreprises.</p>
+                    </div>
+                </div>
+            </div>
+            <div
+                    class="v-space-building__cards__container__card__content"
+                    style="--v-space-building__cards__container__card--color: var(--fp-color-creche);"
+            >
+                <div style="width: 100%">
+                    <h3 class="v-space-building__cards__container__card__content__tilte">La crèche</h3>
+                    <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
+                        <p>Ce nouvel espace de vie enfantine accueillera 32 enfants et permettra de former aux métiers de la petite enfance.</p>
+                        <p>Ouverture: décembre 2024</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </section>
 
 <style lang="scss" >
+  @use "../../style/_scss-params";
+
     .is-Accueil-color               {color: var(--fp-color-accueil);}
     .is-MakerLab-color              {color: var(--fp-color-makerlab);}
     .is-LearningLab-color           {color: var(--fp-color-learninglab);}
@@ -472,5 +587,52 @@
             width: 22rem;
         }
     }
+
+  .v-space-building__cards__container__card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  .v-space-building__cards__container__card__content {
+    border: solid var(--app-line-with) var(--v-space-building__cards__container__card--color);
+    background: transparent;
+    padding: 1rem;
+    border-radius: 2rem;
+    box-sizing: border-box;
+    height: 100%;
+    flex-shrink: 1;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+
+    .v-space-building__cards__container__card__img + & {
+      border-top-color: var(--app-color--grey--light);
+      margin-top: -1.5rem;
+    }
+  }
+
+
+  .v-space-building__cards__container__card__content__tilte {
+    color: var(--v-space-building__cards__container__card--color);
+    font-size: 1.75rem;
+    line-height: 1em;
+    margin-top: 0;
+    margin-bottom: 1em;
+    text-align: center;
+    font-weight: 600;
+
+    @media (max-width: scss-params.$fp-breakpoint-xs) {
+      font-size: 1.15rem;
+    }
+  }
 
 </style>
