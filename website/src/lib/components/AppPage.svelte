@@ -10,7 +10,6 @@
     {/if}
 
     <div class="s-page__content app-flex app-flex--justify_center"
-         style="row-gap: 8rem"
     >
         {#each Object.keys(data.body) as section}
             {@const content = data.body[section].content}
@@ -124,6 +123,8 @@
 </script>
 
 <style lang="scss">
+  @use "../../style/_scss-params";
+
   .s-page {
     min-height: calc( 100vh - var(--app-nav_height) );
   }
@@ -146,6 +147,14 @@
       padding-top: 0;
       padding-bottom: 1rem;
       margin-bottom: -2rem;
+    }
+  }
+
+  .s-page__content {
+    row-gap: 8rem;
+
+    @media (max-width: scss-params.$fp-breakpoint-xs) {
+      row-gap: 4rem;
     }
   }
 

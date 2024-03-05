@@ -43,7 +43,7 @@
   height: max(80vh, 40vw);
 
   @media (max-width: scss-params.$fp-breakpoint-xs) {
-    height: auto;
+    //height: auto;
   }
 }
 

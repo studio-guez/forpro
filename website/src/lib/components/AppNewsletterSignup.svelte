@@ -67,7 +67,7 @@
     .s-newsletter__title {
         font-weight: 600;
         line-height: 1em;
-        font-size: 3vw;
+        font-size: max(1rem, 3vw);
         text-align: center;
         margin-bottom: .5em;
     }

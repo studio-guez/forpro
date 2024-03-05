@@ -21,7 +21,7 @@
                 <div
                         class="s-cards__container__card__content"
                 >
-                    <div>
+                    <div style="width: 100%">
                         <h3 class="s-cards__container__card__content__tilte">{card.title}</h3>
                         <div class="s-cards__container__card__content__content app-typo_text-content">{@html card.text}</div>
                     </div>
@@ -113,6 +113,7 @@
       align-items: center;
       justify-content: space-between;
       flex-direction: column;
+      width: 100%;
 
       .s-cards:not(.style2) .s-cards__container__card:nth-child(2n) & {
         background: var(--app-color--pink);
