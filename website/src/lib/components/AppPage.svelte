@@ -56,7 +56,7 @@
                 </div>
 
             {:else if content.type === 'body'}
-                <div class="app-flex__basis-20-24 app-flex app-flex--justify_center">
+                <div class="app-page-block-container app-page-block-container--body app-flex__basis-20-24 app-flex app-flex--justify_center">
                     <BlockHTMLContent content="{content}" />
                 </div>
 
@@ -160,6 +160,12 @@
 
     @media (max-width: scss-params.$fp-breakpoint-xs) {
       row-gap: 4rem;
+    }
+  }
+
+  .app-page-block-container--body {
+    &:last-child {
+      margin-bottom: 4rem;
     }
   }
 
