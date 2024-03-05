@@ -325,9 +325,9 @@
                                                           </select>
                                                     </div>
                                                     <div class="flex bottom-0 left-0 flex-col flex-shrink-0 pb-6 mt-6 w-full text-right sm:mt-0 sm:pt-4">
-                                                        <div class="flex justify-between w-full">
+                                                        <div class="flex justify-between w-full flex-wrap sm:flex-nowrap">
                                                             <button
-                                                                    class="flex items-center py-2 px-6 m-0 text-sm leading-5 text-center normal-case bg-white bg-none rounded border border-gray-500 border-solid cursor-pointer"
+                                                                    class="flex items-center py-2 px-6 m-0 text-sm leading-5 text-center normal-case bg-white bg-none rounded border border-gray-500 border-solid cursor-pointer w-full sm:w-auto mb-2 sm:mb-0"
                                                                     type="button"
                                                                     on:click={() => {step.set(1)}}
                                                             >
@@ -352,7 +352,7 @@
                                                                 </svg>
                                                                 <span class="ml-2">Revenir en arrière</span>
                                                             </button>
-                                                            <button class="py-2 px-6 my-0 mr-0 ml-2 text-sm leading-5 text-center text-white normal-case bg-black bg-none rounded border-0 border-gray-500 border-solid cursor-pointer">
+                                                            <button class="py-2 px-6 my-0 mr-0 sm:ml-2 text-sm leading-5 text-center text-white normal-case bg-black bg-none rounded border-0 border-gray-500 border-solid cursor-pointer w-full sm:w-auto">
                                                                 {data.content.bookingAppointmentConfirmationLabel}
                                                             </button>
                                                         </div>
