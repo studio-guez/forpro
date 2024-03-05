@@ -5,7 +5,7 @@
     import AppFooter from "$lib/components/AppFooter.svelte";
     import type {ISiteInfo} from "$lib/interfaces/cmsApiResponse";
     import { page } from '$app/stores';
-    import {beforeNavigate} from "$app/navigation";
+    import {afterNavigate, beforeNavigate, onNavigate} from "$app/navigation";
 
     export let data: ISiteInfo;
 
@@ -13,8 +13,12 @@
 
     beforeNavigate(() => {
       menuIsOpen.set(false)
+
       document.querySelectorAll('.s-layout').forEach(value => {
-        value.scrollTo({top: 0, behavior: 'smooth'})
+        value.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        })
       })
     })
 
