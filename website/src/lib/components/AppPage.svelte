@@ -148,6 +148,11 @@
       padding-bottom: 1rem;
       margin-bottom: -2rem;
     }
+
+    @media (max-width: scss-params.$fp-breakpoint-xs) {
+      padding-top: 1rem;
+      padding-bottom: 3rem;
+    }
   }
 
   .s-page__content {
