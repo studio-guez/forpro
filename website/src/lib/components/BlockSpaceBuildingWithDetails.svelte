@@ -266,7 +266,7 @@
                             class="v-space-building__sections__description fp-remove-margin-child v-space-building__section-description--GrandLab"
                     >
                         <h3>GrandLab</h3>
-                        <p>#culture #art #evenements</p>
+                        <p>#culture #art #evenements #simulation #designespace</p>
                         <p>ouverture: printemps 2025</p>
                     </div>
                 {:else if currentOverSection === 'horlogerie'}
@@ -282,7 +282,7 @@
                             class="v-space-building__sections__description fp-remove-margin-child v-space-building__section-description--Hotel_Entreprises"
                     >
                         <h3>FactoryLab</h3>
-                        <p>#entrepreunariat #incubation #entreprises</p>
+                        <p>#entrepreneuriat #incubation #entreprises</p>
                         <p>ouverture: été 2024</p>
                     </div>
                 {:else if currentOverSection === 'creche'}
@@ -370,9 +370,9 @@
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte">Le GrandLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
-                        <p><strong>POUR IMAGINER EN GRAND</strong></p>
-                        <p>Le&nbsp;<strong>GrandLab</strong>&nbsp;est un espace de 300 m2 modulable et polyvalent qui permettra de développer des projets culturels et artistiques avec et pour les jeunes, tout particulièrement les apprenti·e·s.&nbsp;</p>
-                        <p>Grâce à une programmation culturelle variée et des activités artistiques diversifiées, le GrandLab assurera l’animation du&nbsp;bâtiment&nbsp;et mettra la culture à la portée&nbsp;de&nbsp;chaque individu.</p>
+                        <p><strong>UN LIEU POUR IMAGINER EN GRAND</strong></p>
+                        <p>Le <strong>GrandLab</strong> est un espace polyvalent de 300 m2 qui met l’art et la culture à la portée de chaque individu, en particulier des jeunes. Complémentaire aux autres Labs de ForPro, le lieu encouragera les projets culturels transverses et ouvrira des perspectives sur les métiers de la scène et du design d’espace, en valorisant leur utilité économique et sociale.</p>
+                        <p>Dans ce lieu polyvalent, il sera possible de prototyper et simuler des espaces à échelle réelle, participer à des ateliers d’expression orale et accueillir des événements divers. Découvrir, rêver, oser, exceller, expérimenter et se retrouver: tels seront les principes inspirants qui guideront chaque projet développé au GrandLab.</p>
                         <p>Ouverture: printemps 2025</p>
                     </div>
                 </div>
