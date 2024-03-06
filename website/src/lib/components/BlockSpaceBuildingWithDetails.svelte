@@ -315,7 +315,7 @@
                     <h3 class="v-space-building__cards__container__card__content__tilte">Le PopUp</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR L'ACCUEIL, L'ESPACE CAFÉ ET L'EXPO DU MOMENT</strong></p>
-                        <p>Le PopUp sera un espace&nbsp;d’accueil&nbsp;convivial, il sera ouvert à toute personne souhaitant s’informer,&nbsp;organiser une rencontre professionnelle,&nbsp;boire un café ou tout simplement&nbsp;prendre du temps pour soi.&nbsp;<br><br>Des expositions et évènements ponctuels permettront de faire vivre le lieu toute l’année.<br><br>Ouverture: été 2024</p>
+                        <p>Le PopUp sera un espace d’accueil convivial, il sera ouvert à toute personne souhaitant s’informer, organiser une rencontre professionnelle, boire un café ou tout simplement prendre du temps pour soi. <br><br>Des expositions et évènements ponctuels permettront de faire vivre le lieu toute l’année.<br><br>Ouverture: été 2024</p>
                     </div>
                 </div>
             </div>
@@ -328,7 +328,7 @@
                     <h3 class="v-space-building__cards__container__card__content__tilte">Le LearningLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR CONSTRUIRE SON CHEMIN INDIVIDUELLEMENT</strong></p>
-                        <p>Au service des&nbsp;apprent·i·e·s&nbsp;avant, pendant et après l’apprentissage, le&nbsp;<strong>LearningLab</strong>&nbsp;sera un espace&nbsp;qui met l’humain au centre et&nbsp;où apprentissages et travail se mélangent à d’autres aspects de la vie en collectif. <br><br>Le&nbsp;LearningLab&nbsp;se veut un lieu de vie centré sur le développement des individus,&nbsp;sur&nbsp;l’échange et la transmission des savoirs, ainsi que le développement des&nbsp;compétences professionnelles et&nbsp;l’employabilité. <br><br>Lieu carrefour, le LearningLab permettra de positionner l’apprentissage dans une vision globale et intégrée de l’acquisition&nbsp;des connaissances et compétences et&nbsp;de la diffusion de&nbsp;ces dernières.</p>
+                        <p>Au service des apprent·i·e·s avant, pendant et après l’apprentissage, le <strong>LearningLab</strong> sera un espace qui met l’humain au centre et où apprentissages et travail se mélangent à d’autres aspects de la vie en collectif. <br><br>Le LearningLab se veut un lieu de vie centré sur le développement des individus, sur l’échange et la transmission des savoirs, ainsi que le développement des compétences professionnelles et l’employabilité. <br><br>Lieu carrefour, le LearningLab permettra de positionner l’apprentissage dans une vision globale et intégrée de l’acquisition des connaissances et compétences et de la diffusion de ces dernières.</p>
                         <p>Ouverture: été 2024</p>
                     </div>
                 </div>
@@ -342,7 +342,7 @@
                     <h3 class="v-space-building__cards__container__card__content__tilte">Le FactoryLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR SE LANCER, ÉCHANGER ET GRANDIR</strong></p>
-                        <p>Un lieu&nbsp;pour accueillir des entreprises du secteur secondaire ainsi que de jeunes entrepreneur·e·s. <br><br>Les entreprises profiteront de prestations variées pour soutenir la formation professionnelle au plus près du marché de l'emploi: devenir entreprise formatrice, obtenir du soutien administratif, du soutien aux formateur·trice·s, développer leur réseau…et pourront devenir des lieux d’expérimentation en situation réelle pour les jeunes en orientation. <br><br>Les&nbsp;diplômé·e·s&nbsp;à l’âme entrepreneuriale pourront s’installer dans le&nbsp;<strong>FactoryLab</strong>&nbsp;et seront&nbsp;soutenu·e·s&nbsp;dans leur projet de création d’entreprise.</p>
+                        <p>Un lieu pour accueillir des entreprises du secteur secondaire ainsi que de jeunes entrepreneur·e·s. <br><br>Les entreprises profiteront de prestations variées pour soutenir la formation professionnelle au plus près du marché de l'emploi: devenir entreprise formatrice, obtenir du soutien administratif, du soutien aux formateur·trice·s, développer leur réseau…et pourront devenir des lieux d’expérimentation en situation réelle pour les jeunes en orientation. <br><br>Les diplômé·e·s à l’âme entrepreneuriale pourront s’installer dans le <strong>FactoryLab</strong> et seront soutenu·e·s dans leur projet de création d’entreprise.</p>
                         <p>Ouverture: été 2024</p>
                     </div>
                 </div>
@@ -357,8 +357,8 @@
                     <h3 class="v-space-building__cards__container__card__content__tilte">Le FoodLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR SE NOURRIR, SE QUESTIONNER ET DÉCOUVRIR</strong></p>
-                        <p>Le&nbsp;<strong>FoodLab</strong>&nbsp;se déclinera en trois propositions de restauration, dont un&nbsp;FoodCourt&nbsp;pour&nbsp;les&nbsp;apprenti·e·s, un bistrot ainsi qu'un café pour l’Espace Tourbillon. </p>
-                        <p>Le&nbsp;FoodLab&nbsp;formera des&nbsp;apprenti·e·s&nbsp;aux métiers de la restauration et invitera gourmand·e·s&nbsp;et&nbsp;professionnel·le·s·&nbsp;à déguster et imaginer la cuisine de demain.&nbsp;</p>
+                        <p>Le <strong>FoodLab</strong> se déclinera en trois propositions de restauration, dont un FoodCourt pour les apprenti·e·s, un bistrot ainsi qu'un café pour l’Espace Tourbillon. </p>
+                        <p>Le FoodLab formera des apprenti·e·s aux métiers de la restauration et invitera gourmand·e·s et professionnel·le·s· à déguster et imaginer la cuisine de demain. </p>
                         <p>Ouverture: été 2024</p>
                     </div>
                 </div>
@@ -385,7 +385,7 @@
                     <h3 class="v-space-building__cards__container__card__content__tilte">Le MakerLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR EXPÉRIMENTER, CRÉER, ÉCHOUER ET CONSTRUIRE</strong></p>
-                        <p>Le <strong>MakerLab</strong>&nbsp;sera l’espace de fabrication où la créativité et le «faire» seront au cœur des activités et où il sera possible d’expérimenter, de rater et de recommencer autour du terme&nbsp;<em>Do-It-Yourself</em>.&nbsp;</p>
+                        <p>Le <strong>MakerLab</strong> sera l’espace de fabrication où la créativité et le «faire» seront au cœur des activités et où il sera possible d’expérimenter, de rater et de recommencer autour du terme <em>Do-It-Yourself</em>. </p>
                         <p>L’ambition est de favoriser le processus d'apprentissage et de compréhension à travers le «faire», encourageant ainsi le test et développant l'esprit d'expérimentation et la curiosité.</p>
                         <p>Ouverture: printemps 2025</p>
                     </div>
@@ -398,8 +398,8 @@
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte">L’École d’Horlogerie de Genève</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
-                        <p><strong>L’École d’Horlogerie</strong>&nbsp;a pris ses quartiers chez&nbsp;ForPro&nbsp;en août 2023 où les&nbsp;apprenti·e·s&nbsp;disposent d’infrastructures à la hauteur de leurs ambitions: nouveaux métiers&nbsp;et formations variées.&nbsp;</p>
-                        <p>Elle&nbsp;bénéficie&nbsp;de&nbsp;sa proximité avec le secteur horloger pour&nbsp;rester en phase avec les évolutions constantes et pour&nbsp;créer du lien avec les entreprises.</p>
+                        <p><strong>L’École d’Horlogerie</strong> a pris ses quartiers chez ForPro en août 2023 où les apprenti·e·s disposent d’infrastructures à la hauteur de leurs ambitions: nouveaux métiers et formations variées. </p>
+                        <p>Elle bénéficie de sa proximité avec le secteur horloger pour rester en phase avec les évolutions constantes et pour créer du lien avec les entreprises.</p>
                     </div>
                 </div>
             </div>
