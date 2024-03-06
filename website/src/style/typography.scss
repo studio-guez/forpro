@@ -41,12 +41,12 @@ h3,
 
   @media (max-width: scss-params.$fp-breakpoint-sm) {
     font-size: 2rem;
-    line-height: 2rem;
+    line-height: 1em;
   }
 
   @media (max-width: scss-params.$fp-breakpoint-xs) {
-    font-size: 1.75rem;
-    line-height: 1.75rem;
+    font-size: 1.35rem;
+    line-height: 1em;
   }
 
 }
