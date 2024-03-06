@@ -389,7 +389,7 @@
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Votre rendez-vous avec un membre de l'équipe de Forpro est prévu :</p>
+                                        <p>Votre rendez-vous avec un membre de l'équipe de Forpro est prévu:</p>
 
                                         <div class="align-center">
                                             <p><?= $serviceName ?></p>
