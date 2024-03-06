@@ -34,6 +34,7 @@ const lottiePath: {[key: AnimatedListStyle]: {desktop: string, mobil: string}} =
                     controls="{false}"
                     controlsLayout="[]"
                     renderer="svg"
+                    loop="{true}"
             />
         </div>
         <div class="s-animated-list__mobile">
@@ -50,6 +51,7 @@ const lottiePath: {[key: AnimatedListStyle]: {desktop: string, mobil: string}} =
                     controls="{false}"
                     controlsLayout="[]"
                     renderer="svg"
+                    loop="{true}"
             />
         </div>
     {/if}
