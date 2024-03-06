@@ -303,7 +303,7 @@
                     </div>
                 {/if}
             </div>
-        {/if}
+        {:else if (content.content.style === 'style3')}
         <div class="v-space-building__cards__container__card"
         >
             <div
@@ -417,6 +417,7 @@
             </div>
 
         </div>
+        {/if}
     </div>
 </section>
 
@@ -461,6 +462,8 @@
       left: 50%;
       transform: translate(-50%, -100%);
         padding-bottom: .5em;
+      width: calc(100% / 24 * 22);
+      text-align: center;
     }
 
     .v-space-building__plan {
@@ -613,6 +616,7 @@
     justify-content: space-between;
     flex-direction: column;
     width: 100%;
+    overflow: hidden;
 
     .v-space-building__cards__container__card__img + & {
       border-top-color: var(--app-color--grey--light);
