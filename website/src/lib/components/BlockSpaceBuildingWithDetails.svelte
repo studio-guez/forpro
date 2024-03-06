@@ -385,7 +385,7 @@
                     <h3 class="v-space-building__cards__container__card__content__tilte">Le MakerLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR EXPÉRIMENTER, CRÉER, ÉCHOUER ET CONSTRUIRE</strong></p>
-                        <p>Le<strong> MakerLab</strong>&nbsp;sera l’espace de fabrication où la créativité et le «faire» seront au cœur des activités et où il sera possible d’expérimenter, de rater et de recommencer autour du terme&nbsp;<em>Do-It-Yourself</em>.&nbsp;</p>
+                        <p>Le <strong>MakerLab</strong>&nbsp;sera l’espace de fabrication où la créativité et le «faire» seront au cœur des activités et où il sera possible d’expérimenter, de rater et de recommencer autour du terme&nbsp;<em>Do-It-Yourself</em>.&nbsp;</p>
                         <p>L’ambition est de favoriser le processus d'apprentissage et de compréhension à travers le «faire», encourageant ainsi le test et développant l'esprit d'expérimentation et la curiosité.</p>
                         <p>Ouverture: printemps 2025</p>
                     </div>
