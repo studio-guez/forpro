@@ -45,7 +45,7 @@ h3,
   }
 
   @media (max-width: scss-params.$fp-breakpoint-xs) {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     line-height: 1em;
   }
 
@@ -55,17 +55,12 @@ h4,
 .fp-heading-h4 {
   font-weight: 600;
   font-size: 2rem;
-  line-height: 2rem;
+  line-height: 1em;
   text-wrap: balance;
 
-  @media (max-width: scss-params.$fp-breakpoint-sm) {
-    font-size: 1.75rem;
-    line-height: 1.75rem;
-  }
-
   @media (max-width: scss-params.$fp-breakpoint-xs) {
-    font-size: 1.5rem;
-    line-height: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1em;
   }
 }
 
@@ -73,12 +68,12 @@ h5,
 .fp-heading-h5 {
   font-weight: 600;
   font-size: 1.5rem;
-  line-height: 1.5rem;
+  line-height: 1em;
   text-wrap: balance;
 
   @media (max-width: scss-params.$fp-breakpoint-xs) {
-    font-size: 1.25rem;
-    line-height: 1.25rem;
+    font-size: 1rem;
+    line-height: 1em;
   }
 }
 
