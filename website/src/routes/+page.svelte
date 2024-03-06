@@ -69,6 +69,7 @@
 
 .s-page-home__header__logo__desktop {
   display: block;
+  width: 100%;
 
   @media (max-width: scss-params.$fp-breakpoint-xs) {
     display: none;
