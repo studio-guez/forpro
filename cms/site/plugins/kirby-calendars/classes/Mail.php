@@ -39,7 +39,7 @@ class Mail
             $notified = $kirby->email([
                 'from' => $from,
                 'to' => $email,
-                'subject' => 'Confirmer votre rendez-vous !',
+                'subject' => 'Confirmer votre rendez-vous!',
                 'template' => 'event_confirmation',
                 'data' => [
                     'firstname' => $firstname,
@@ -89,7 +89,7 @@ class Mail
             $notified = $kirby->email([
                 'from' => $from,
                 'to' => $calendar['email'],
-                'subject' => 'Nouveau RDV !',
+                'subject' => 'Nouveau RDV!',
                 'template' => 'calendar_incharge',
                 'data' => [
                     'firstname' => $event['firstname'],
