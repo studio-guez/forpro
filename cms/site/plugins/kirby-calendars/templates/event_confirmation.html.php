@@ -380,7 +380,7 @@
             </div>
             <div class="content">
                 <!-- START CENTERED WHITE CONTAINER -->
-                <span class="preheader">Confirmez votre rendez-vous en cliquant sur le bouton ci-dessous !</span>
+                <span class="preheader">Confirmez votre rendez-vous en cliquant sur le bouton ci-dessous!</span>
                 <table class="main">
 
                     <!-- START MAIN CONTENT AREA -->
@@ -405,7 +405,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td><a href="<?= $validationURL ?>" target="_blank">Je confirme !</a></td>
+                                                            <td><a href="<?= $validationURL ?>" target="_blank">Je confirme!</a></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
