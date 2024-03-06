@@ -351,7 +351,7 @@
 
             <div
                     class="v-space-building__cards__container__card__content"
-                    style="--v-space-building__cards__container__card--color: var(--fp-color-foodlab);"
+                    style="--v-space-building__cards__container__card--color: hsl(55,100%,45%);"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte">Le FoodLab</h3>
