@@ -38,6 +38,8 @@
 
 
 <style lang="scss">
+  @use "../../style/_scss-params";
+
     .s-block-cta__button {
       background: var(--s-cat-background-color);
       color: var(--s-cat-color);
@@ -51,6 +53,10 @@
       left: 0;
       z-index: 5;
       border: none;
+
+      @media (max-width: scss-params.$fp-breakpoint-xs) {
+        font-size: .75rem;
+      }
 
       &.style1 {
         width: 100%;
