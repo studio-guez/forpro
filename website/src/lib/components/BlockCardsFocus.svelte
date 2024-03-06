@@ -228,18 +228,10 @@
       object-fit: cover;
     }
 
-    .s-card_focus__color-filter {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      transition: background-color 2.5s cubic-bezier(0.5,0,0,1);
-    }
-
     .s-card-focus__card__animation--desktop {
       display: block;
+      width: 100%;
+      min-height: 55vw;
 
       @media (max-width: scss-params.$fp-breakpoint-xs) {
         display: none;
@@ -247,6 +239,8 @@
     }
     .s-card-focus__card__animation--mobile {
       display: none;
+      width: 100%;
+      min-height: 100vw;
 
       @media (max-width: scss-params.$fp-breakpoint-xs) {
         display: block;
