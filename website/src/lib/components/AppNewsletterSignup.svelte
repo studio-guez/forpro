@@ -1,7 +1,7 @@
 <div class="s-newsletter"
      id="s-newsletter"
 >
-    <div class="s-newsletter__title">Je m’inscris à la newsletter de ForPro!</div>
+    <div class="s-newsletter__title">Je m’inscris à la newsletter de ForPro</div>
 
     <form class="app-flex app-flex--align_center app-flex--nowrap app-flex--gap_regular"
           method="post"
