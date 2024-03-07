@@ -45,6 +45,9 @@
       container-type: inline-size;
 
       &.style2 {
+        width: min(50rem, 100%);
+        margin: auto;
+
         .s-cards__container__card:nth-child(1) {
           :global(li::before) {
             color: var(--app-color--blue);
