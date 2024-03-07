@@ -12,7 +12,7 @@
                 {#if (card.imageData?.length > 0)}
                     <div class="s-cards__container__card__img">
                         <img class="s-cards__container__card__img__item"
-                             src="{card.imageData[0].resize.large}"
+                             src="{card.imageData[0].resize.xxl}"
                              alt="illustration pour la carte"
                         />
                     </div>
