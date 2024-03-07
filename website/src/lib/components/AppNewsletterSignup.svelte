@@ -62,6 +62,7 @@
         border-radius: max(1rem, 2vw);
         margin-top: 5rem;
         position: relative;
+        margin-bottom: 3rem;
     }
 
     .s-newsletter__title {
