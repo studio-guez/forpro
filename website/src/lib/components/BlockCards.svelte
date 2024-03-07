@@ -61,7 +61,7 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 2rem 1rem;
 
-      @container (width < 900px) {
+      @media (max-width: scss-params.$fp-breakpoint-sm) {
         grid-template-columns: repeat(1, 1fr);
       }
     }
@@ -72,15 +72,19 @@
       align-items: center;
       flex-wrap: nowrap;
 
-      .s-cards.style2 &:nth-child(1) {
-        grid-column: 1/3;
+      .s-cards.style2 & {
+        grid-column: span 1;
 
-        @media (max-width: scss-params.$fp-breakpoint-xs) {
-          grid-column: unset;
+        &:nth-child(1) {
+          grid-column: span 2;
+
+          @media (max-width: scss-params.$fp-breakpoint-sm) {
+            grid-column: span 1;
+          }
         }
       }
 
-      @media (max-width: scss-params.$fp-breakpoint-xs) {
+      @media (max-width: scss-params.$fp-breakpoint-sm) {
         overflow: hidden;
       }
     }
