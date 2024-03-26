@@ -413,7 +413,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <p>Une erreur dans la prise de rendez-vous? Il vous suffit simplement de <a href="https://forpro-website.sdrvl.ch/rendez-vous" target="_blank">reprendre rendez-vous ici.</a></p>
+                                        <p>Une erreur dans la prise de rendez-vous? Il vous suffit simplement de <a href="https://for-pro.ch/rendez-vous" target="_blank">reprendre rendez-vous ici.</a></p>
                                     </td>
                                 </tr>
                             </table>
@@ -428,7 +428,7 @@
                     <table border="0" cellpadding="0" cellspacing="0">
                         <tr>
                             <td class="content-block">
-                                <a href="https://forpro-website.sdrvl.ch">Retour vers for-pro.ch</a>
+                                <a href="https://for-pro.ch">Retour vers for-pro.ch</a>
                             </td>
                         </tr>
                     </table>

@@ -49,7 +49,7 @@ class Mail
                     'startDate' => $startDate,
                     'startTime' => $startTime,
                     //todo: erreur lors du passage en prod
-                    'validationURL' => 'https://forpro-website.sdrvl.ch/confirm/' . $eventId,
+                    'validationURL' => 'https://for-pro.ch/confirm/' . $eventId,
                 ],
             ])->isSent();
         } catch (Exception $error) {
