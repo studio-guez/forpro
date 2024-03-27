@@ -10,11 +10,15 @@
     >
         <span class="s-newsletter__symbole"
         >@</span>
-        <input class="s-newsletter__input"
-               type="email"
-               name="email"
+        <input type="email"
+               class="s-newsletter__input"
+               name="inf[1]"
+               data-inf-meta="1"
+               data-inf-error="Merci de renseigner une adresse email"
+               required="required"
+               placeholder="Email"
                bind:value="{emailValue}"
-        />
+        >
         <input type="hidden"
                name="key"
                value="eyJpdiI6IkxcL3F5NGVpMnZOSzNERm1XV0Jmek92Q3dHOVdvSERCaW5qcUFNVm5KOXRvPSIsInZhbHVlIjoiOFBTZG9GSUZhcEQzZFBvQ09tYUIyTzk5YTJ5MWc5blFkVjBXeDVTWmVFRT0iLCJtYWMiOiIzZTU3NDBkZGFkMTVkMjc1YzYxNWFmZTRhMmQxOGMwMjc4YjM4YWUyZGFhNTFlNjZlYjQ5ZTdjYmU0YjJjMDc1In0="
