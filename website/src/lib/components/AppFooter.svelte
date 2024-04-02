@@ -57,7 +57,7 @@ import {siteInfo} from "../../store";
                      style="margin-top: 1rem"
                 >
                     <a href="/credits" >Crédits du site</a> |
-                    <a href="/politique-de-confidentialite">Politique de    confidentialité</a>
+                    <a href="/politique-de-confidentialite">Politique de confidentialité</a>
                 </div>
             </div>
         </div>
