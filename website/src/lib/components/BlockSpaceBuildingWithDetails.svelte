@@ -342,7 +342,7 @@
                     <h3 class="v-space-building__cards__container__card__content__tilte">Le FactoryLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR SE LANCER, ÉCHANGER ET GRANDIR</strong></p>
-                        <p>Un lieu pour accueillir des entreprises du secteur secondaire ainsi que de jeunes entrepreneur·e·s. <br><br>Les entreprises profiteront de prestations variées pour soutenir la formation professionnelle au plus près du marché de l'emploi: devenir entreprise formatrice, obtenir du soutien administratif, du soutien aux formateur·trice·s, développer leur réseau…et pourront devenir des lieux d’expérimentation en situation réelle pour les jeunes en orientation. <br><br>Les diplômé·e·s à l’âme entrepreneuriale pourront s’installer dans le <strong>FactoryLab</strong> et seront soutenu·e·s dans leur projet de création d’entreprise.</p>
+                        <p>Un lieu pour accueillir des entreprises du secteur secondaire ainsi que de jeunes entrepreneur·e·s. <br><br>Les entreprises profiteront de prestations variées pour soutenir la formation professionnelle au plus près du marché de l'emploi: devenir entreprise formatrice, obtenir du soutien administratif, du soutien aux formateur·trice·s, développer leur réseau… et pourront devenir des lieux d’expérimentation en situation réelle pour les jeunes en orientation. <br><br>Les diplômé·e·s à l’âme entrepreneuriale pourront s’installer dans le <strong>FactoryLab</strong> et seront soutenu·e·s dans leur projet de création d’entreprise.</p>
                         <p>Ouverture: été 2024</p>
                     </div>
                 </div>
