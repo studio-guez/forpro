@@ -6,7 +6,7 @@ use Kirby\Data\Data;
 
 class Leave extends BaseClass
 {
-    const FILENAME = 'leaves.json';
+    const FILENAME = "leaves.json";
 
     /**
      * Creates a new leave with the given $input
@@ -20,10 +20,10 @@ class Leave extends BaseClass
         $id = uuid();
 
         $event = [
-            'name' => $input['name'] ?? '',
-            'calendar_id' => $input['calendar_id'],
-            'start_datetime' => $input['start_datetime'],
-            'end_datetime' => $input['end_datetime'],
+            "name" => $input["name"] ?? "",
+            "calendar_id" => $input["calendar_id"],
+            "start_datetime" => $input["start_datetime"],
+            "end_datetime" => $input["end_datetime"],
         ];
 
         $leaves = static::list();
@@ -58,11 +58,15 @@ class Leave extends BaseClass
      * @param string $date The date in the format "Y-m-d".
      * @return array The array of leaves matching the calendar ID and date.
      */
-    public static function getByCalendarIdAndDate(string $calendarId, string $date): array
+    public static function getByCalendarIdAndDate(string $calendarId, string $startDate): array
     {
         $leaves = static::list();
-        $leaves = array_filter($leaves, function ($leave) use ($calendarId, $date) {
-            return $leave['calendar_id'] === $calendarId && $leave['date'] === $date;
+        $leaves = array_filter($leaves, function ($leave) use ($calendarId, $startDate) {
+            return $leave["calendar_id"] === $calendarId &&
+                (strtotime($startDate) <= strtotime($leave["end_datetime"]) &&
+                strtotime($startDate) >= strtotime($leave["start_datetime"])) ||
+                (strtotime($startDate) == strtotime($leave["end_datetime"]) ||
+                strtotime($startDate) == strtotime($leave["start_datetime"]));
         });
 
         return array_values($leaves);
