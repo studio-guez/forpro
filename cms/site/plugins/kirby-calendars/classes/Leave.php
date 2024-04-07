@@ -62,11 +62,14 @@ class Leave extends BaseClass
     {
         $leaves = static::list();
         $leaves = array_filter($leaves, function ($leave) use ($calendarId, $startDate) {
-            return $leave["calendar_id"] === $calendarId &&
-                (strtotime($startDate) <= strtotime($leave["end_datetime"]) &&
-                strtotime($startDate) >= strtotime($leave["start_datetime"])) ||
-                (strtotime($startDate) == strtotime($leave["end_datetime"]) ||
-                strtotime($startDate) == strtotime($leave["start_datetime"]));
+                $startTimestamp = strtotime($startDate);
+                $leaveStartTimestamp = strtotime($leave["start_datetime"]);
+                $leaveEndTimestamp = strtotime($leave["end_datetime"]);
+
+            return $leave["calendar_id"] === $calendarId && (
+                    ($startTimestamp <= $leaveEndTimestamp && $startTimestamp >= $leaveStartTimestamp) ||
+                    (date("Y-m-d", $startTimestamp) == date("Y-m-d", $leaveEndTimestamp) || date("Y-m-d", $startTimestamp) == date("Y-m-d", $leaveStartTimestamp))
+                );
         });
 
         return array_values($leaves);
