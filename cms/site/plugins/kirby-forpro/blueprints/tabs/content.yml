@@ -37,6 +37,15 @@ fields:
         default: '#000000'
         width: 1/2
 
+  gradientColor:
+    label:
+      en: Gradient color
+      fr: Couleur de dégradé
+    type: color
+    default: 'rgb(23, 84, 255)'
+    width: 1/2
+
+
   showMenu:
     type: toggle
     label:
