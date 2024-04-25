@@ -40,6 +40,7 @@ function getValueNotEmpty($pageAttribute, $siteAttribute) {
 $json['options'] = [
     'showMenu' => $showMenu,
     'showNewsletter' => $showNewsletter,
+    'gradientColor' => $page->gradientColor()->value(),
     'hero' => Utils::getHeroFromPage($page),
 ];
 
