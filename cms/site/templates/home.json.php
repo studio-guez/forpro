@@ -40,6 +40,7 @@ $json['website'] = [
 
 $json['options'] = [
     'showMenu' => $showMenu,
+    'gradientColor' => $hero->gradientColor()->value(),
     'showNewsletter' => $showNewsletter,
     'hero' => $hero ? [
         'text' => $hero->text()->value(),
