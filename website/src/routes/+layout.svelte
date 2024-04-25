@@ -1,15 +1,22 @@
 <script lang="ts">
     import "../style/_main.scss"
-    import {menuIsOpen, siteInfo} from "../store";
+    import {menuIsOpen, modaleIsOpen, siteInfo} from "../store";
     import AppNav from "$lib/components/AppNav.svelte";
     import AppFooter from "$lib/components/AppFooter.svelte";
     import type {ISiteInfo} from "$lib/interfaces/cmsApiResponse";
     import { page } from '$app/stores';
-    import {afterNavigate, beforeNavigate, onNavigate} from "$app/navigation";
+    import {beforeNavigate} from "$app/navigation";
+    import AppModal from "$lib/components/AppModal.svelte";
+    import {onMount} from "svelte";
 
     export let data: ISiteInfo;
 
     siteInfo.set(data)
+
+    onMount(() => {
+      if(  Number($page.url.searchParams.get('m')) === 1 ) modaleIsOpen.set(true)
+
+    })
 
     beforeNavigate(() => {
       menuIsOpen.set(false)
@@ -27,6 +34,12 @@
 <div class="s-layout"
      class:menu-is-open="{$menuIsOpen}"
 >
+  {#if ($modaleIsOpen)}
+    <div class="s-layout__modal-box">
+      <AppModal/>
+    </div>
+  {/if}
+
   <div class="s-layout__nav-box">
     <AppNav/>
   </div>
@@ -66,6 +79,20 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  .s-layout__modal-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, .5);
+    backdrop-filter: blur(10px);
+    z-index: 100000;
   }
 
   .s-layout__nav-box {
