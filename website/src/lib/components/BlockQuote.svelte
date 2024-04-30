@@ -195,6 +195,7 @@
     max-width: 12em;
     line-height: 1em;
     font-size: 7.2vw;
+    padding-bottom: 1em;
   }
 
   blockquote {
