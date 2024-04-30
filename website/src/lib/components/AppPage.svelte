@@ -164,7 +164,6 @@
   }
 
   .app-page-block-container--body {
-    overflow: hidden;
     &:last-child {
       margin-bottom: 4rem;
     }
