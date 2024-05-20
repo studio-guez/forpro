@@ -112,6 +112,11 @@
         justify-content: flex-end;
         gap: .25rem;
       }
+
+      @media (max-width: scss-params.$fp-breakpoint-xs) {
+        align-items: flex-end;
+        flex-direction: column;
+      }
     }
 
     .s-app-nav__list-container {
