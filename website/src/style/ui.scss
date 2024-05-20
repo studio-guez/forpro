@@ -54,6 +54,11 @@ a.app-button {
 
   li {
     position: relative;
+    max-width: 25rem;
+
+    & + li {
+      margin-top: 1rem;
+    }
 
     &:before {
       content: "";
