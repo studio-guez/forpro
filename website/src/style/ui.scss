@@ -46,3 +46,25 @@ a.app-button {
     border-radius: 10em;
   }
 }
+
+.app-list-fp-style {
+  display: block;
+  box-sizing: border-box;
+  padding-left: 2rem;
+
+  li {
+    position: relative;
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: -2rem;
+      top: .25rem;
+      display: block;
+      width: 1.5rem;
+      height: 1.5rem;
+      background: blue;
+      border-radius: 2rem;
+    }
+  }
+}
