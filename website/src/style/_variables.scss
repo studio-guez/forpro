@@ -7,7 +7,7 @@
   // nav
   --app-nav_height: 3.25rem;
 
-  @media (max-width: scss-params.$fp-breakpoint-sm) {
+  @media (max-width: scss-params.$fp-breakpoint-xs) {
     --app-nav_height: 5.8rem;
   }
 
