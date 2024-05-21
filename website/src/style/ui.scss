@@ -68,8 +68,10 @@ a.app-button {
       display: block;
       width: 1.5rem;
       height: 1.5rem;
-      background: blue;
+      background: var(--app-color--blue);
       border-radius: 2rem;
+      border: solid 5px;
+      border-color: var(--app-color--green);
     }
   }
 }
