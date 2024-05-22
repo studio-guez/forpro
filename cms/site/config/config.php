@@ -5,7 +5,7 @@ header('Access-Control-Allow-Origin: *');
 return [
     'debug' => true,
     'url_frontend' => 'https://for-pro.ch/',
-//    'url' => 'https://forpro-admin.sdrvl.ch/',
+//    'url' => 'https://api.for-pro.ch/',
     'routes' => [
         [
             'pattern' => '/',
