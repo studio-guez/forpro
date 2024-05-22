@@ -103,6 +103,7 @@
       height: 100vh;
       position: sticky;
       top: calc( -1 * var(--app-nav_height));
+      flex-shrink: 0;
     }
 
     &:before {
