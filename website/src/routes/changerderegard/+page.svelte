@@ -21,13 +21,14 @@
   </div>
   <div class="s-page-changer-de-regard__footer">
     <div>
-      <button class="app-button app-button--rounded"
-              style="
+      <a class="app-button app-button--rounded"
+         href="/"
+         style="
                 --app-button--color: black;
                 --app-button--background-color: var(--app-color--pink);
                 --app-button--border-color: var(--app-color--pink);
               "
-      >En savoir +</button>
+      >En savoir +</a>
     </div>
   </div>
 </div>
