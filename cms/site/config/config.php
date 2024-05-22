@@ -17,12 +17,12 @@ return [
     'email' => [
         'transport' => [
             'type' => 'smtp',
-            'host' => 'mail.mediumsans.studio',
+            'host' => 'mail.infomaniak.com',
             'port' => 465,
             'security' => true,
             'auth' => true,
-            'username' => 'forpro@mediumsans.studio',
-            'password' => 'FtTYCN{8sFN?',
+            'username' => 'ne-pas-repondre@for-pro.ch',
+            'password' => 'b.PCS#/.b163rf',
         ]
     ]
 ];
