@@ -1,10 +1,10 @@
 <script lang="ts">
     import "../style/_main.scss"
-    import {menuIsOpen, modaleIsOpen, siteInfo} from "../store";
+    import {menuIsOpen, modaleIsOpen, showFooter, showNav, siteInfo} from "../store";
     import AppNav from "$lib/components/AppNav.svelte";
     import AppFooter from "$lib/components/AppFooter.svelte";
     import type {ISiteInfo} from "$lib/interfaces/cmsApiResponse";
-    import { page } from '$app/stores';
+    import {page} from '$app/stores';
     import {beforeNavigate} from "$app/navigation";
     import AppModal from "$lib/components/AppModal.svelte";
     import {onMount} from "svelte";
@@ -15,10 +15,10 @@
 
     onMount(() => {
       if(  Number($page.url.searchParams.get('m')) === 1 ) modaleIsOpen.set(true)
-
+      setNavAndFooterVisibility(window.location.pathname)
     })
 
-    beforeNavigate(() => {
+    beforeNavigate((navigation) => {
       menuIsOpen.set(false)
 
       document.querySelectorAll('.s-layout').forEach(value => {
@@ -27,12 +27,27 @@
           behavior: 'smooth',
         })
       })
+
+        setNavAndFooterVisibility(navigation.to?.route.id || '')
+
     })
+
+    function setNavAndFooterVisibility(rootId: string) {
+        if( rootId === '/changerderegard' ) {
+            showNav.set(false)
+            showFooter.set(false)
+        } else {
+            showNav.set(true)
+            showFooter.set(true)
+        }
+    }
+
 
 </script>
 
 <div class="s-layout"
      class:menu-is-open="{$menuIsOpen}"
+     class:has-no-nav="{!$showNav}"
 >
   {#if ($modaleIsOpen)}
     <div class="s-layout__modal-box">
@@ -40,9 +55,11 @@
     </div>
   {/if}
 
+  {#if $showNav}
   <div class="s-layout__nav-box">
     <AppNav/>
   </div>
+  {/if}
 
   {#key $page.params.slug}
   <div class="s-layout__main"
@@ -51,10 +68,12 @@
   </div>
   {/key}
 
+  {#if $showFooter}
   <div class="s-layout__footer-box"
   >
     <AppFooter/>
   </div>
+  {/if}
 </div>
 
 <style lang="scss">
@@ -71,6 +90,10 @@
 
     &.menu-is-open {
       overflow: hidden;
+    }
+
+    &.has-no-nav {
+      padding-top: 0;
     }
   }
 
