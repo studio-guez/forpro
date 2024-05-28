@@ -150,11 +150,6 @@
       padding-top: 2rem;
       padding-bottom: 2rem;
     }
-
-    img {
-      display: block;
-      height: 2rem;
-    }
   }
 
   .s-page-changer-de-regard__footer {
