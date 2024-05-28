@@ -44,6 +44,10 @@
     />
 </div>
 
+<head>
+    <title>{data.seo.metaTemplate}</title>
+    <meta name="description" content="{data.seo.metaDescription}">
+</head>
 
 <script lang="ts">
     import {type IPage} from "$lib/interfaces/cmsApiResponse";
