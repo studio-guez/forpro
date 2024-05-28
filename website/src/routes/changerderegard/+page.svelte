@@ -1,3 +1,11 @@
+<script>
+</script>
+
+<head>
+  <title>Changer de regard</title>
+  <meta name="description" content="Changer de regard sur l'apprentissage">
+</head>
+
 <div class="s-page-changer-de-regard"
 >
   <div class="s-page-changer-de-regard__container">
