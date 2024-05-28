@@ -47,6 +47,10 @@
                         >{item.title.replace(/^->/, '')}</a></li>
                     {/if}
                 {/each}
+                <li class="s-app-nav__list__item"
+                ><a
+                        href="/changerderegard"
+                >Changer de regard sur l'apprentissage</a></li>
             </ul>
         </div>
     {/if}
