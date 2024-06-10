@@ -40,6 +40,8 @@
 </div>
 
 <style lang="scss">
+  @use "../../style/_scss-params";
+
   .s-profiles {
     grid-row-gap: 4rem;
   }
@@ -96,4 +98,44 @@
         }
       }
     }
+
+  .s-profiles.style2 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-row-gap: 1rem;
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: scss-params.$fp-breakpoint-xs) {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+
+    .s-profiles__profile__title {
+      font-size: .85rem;
+      line-height: 1em;
+    }
+
+    .s-profiles__profile__subtitle {
+      font-size: .85rem;
+      line-height: 1em;
+    }
+
+    .s-profiles__profile__description {
+      font-size: .75rem;
+      line-height: 1em;
+    }
+
+    .s-profiles__profile__img {
+      width: 33%;
+    }
+
+    .s-profiles__profile__links {
+      svg {
+        height: 1.25rem;
+        width: auto;
+      }
+    }
+  }
 </style>
