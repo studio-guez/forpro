@@ -14,10 +14,29 @@ const lottiePath: {[key: AnimatedListStyle]: {desktop: string, mobil: string}} =
     'leLab' :           {desktop: '/lottie/desktop-model-lab_lottie.json',          mobil: '/lottie/mobile-model-lab_lottie.json'},
 }
 
+function scrollToBottom(e: Event) {
+    if( ! (e.target instanceof HTMLElement) ) return
+
+    const scrollContainer = document.querySelector('.s-layout')
+    if( ! (scrollContainer instanceof HTMLElement) ) return
+
+    scrollContainer.scrollTo({
+        top: scrollContainer.scrollTop + e.target.getBoundingClientRect().bottom,
+        behavior: 'smooth',
+    })
+}
+
 
 </script>
 
-<div class="s-animated-list">
+<div class="s-animated-list"
+>
+    <div on:click={scrollToBottom}
+         on:keyup={scrollToBottom}
+         role="button"
+         tabindex="0"
+         class="s-animated-list__desktop__click-event"
+    />
     {#if browser}
         <div class="s-animated-list__desktop"
         >
@@ -63,6 +82,17 @@ const lottiePath: {[key: AnimatedListStyle]: {desktop: string, mobil: string}} =
   .s-animated-list {
     min-height: 80vh;
     container-type: inline-size;
+    position: relative;
+    user-select: none;
+
+    .s-animated-list__desktop__click-event {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
   }
     .s-animated-list__desktop {
         :global(.lottie-player svg) {
