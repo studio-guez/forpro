@@ -1,0 +1,4 @@
+title: Admin
+permissions:
+  mediumsans.kirby-calendars:
+    access: true

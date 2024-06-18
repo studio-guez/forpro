@@ -1,0 +1,11 @@
+title: Calendar
+permissions:
+  access:
+    account:    false
+    panel:      true
+    site:       false
+    languages:  false
+    system:     false
+    users:      false
+  mediumsans.kirby-calendars:
+      access: true
