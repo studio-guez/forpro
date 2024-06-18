@@ -79,4 +79,17 @@ Kirby::plugin('mediumsans/kirby-calendars', [
         'emails/event_share.text'        => __DIR__ . '/templates/event_share.text.php',
     ],
     'routes' => require __DIR__ . '/routes/index.php',
+    'hooks' => [
+        'route:before' => function ($route, $path, $method) {
+            $user = kirby()->user();
+            if( !$user) return;
+
+            $currentNavigationIsThisPlugin = str_contains($path, 'panel/kirby-calendars');
+            if(!$currentNavigationIsThisPlugin) return;
+
+            $userRoleCanAccessToThisPlugin = kirby()->user()->role()->permissions()->for('mediumsans.kirby-calendars', 'access');
+
+            if (!$userRoleCanAccessToThisPlugin) go('');
+        }
+    ],
 ]);
