@@ -86,6 +86,7 @@
         <k-button
           variant="filled"
           size="lg"
+          @click="exportCSVData"
         >CSV export</k-button>
       </k-button-group>
     </div>
@@ -93,6 +94,10 @@
 </template>
 
 <script>
+import {jsonToCsv} from "../jsonToCSV";
+import {formatDate} from "../formatDate";
+import {downloadCsv} from "../downloadCSV";
+
 export default {
   props: {
     events: Array,
@@ -115,7 +120,29 @@ export default {
     },
     getIsConfirmedTheme(isConfirmed) {
       return isConfirmed ? 'positive' : 'negative';
-    }
+    },
+    exportCSVData() {
+      const data = Object.values(this.events).map(value => {
+        return {
+          calendar_id: value.calendar_id,
+          date: formatDate(value.date),
+          start_time: value.start_time,
+          end_time: value.end_time,
+          subject: value.subject,
+          description: value.description,
+          duration: value.duration,
+          eid: value.eid,
+          email: value.email,
+          firstname: value.firstname,
+          lastname: value.lastname,
+          type: value.name,
+          phone: value.phone,
+          service_id: value.service_id,
+        }
+      })
+
+      downloadCsv( jsonToCsv(data), `ForPro-calendar_service-data_export-${formatDate(new Date(), true)}` )
+    },
   }
 };
 </script>
