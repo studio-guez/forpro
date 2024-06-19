@@ -8,4 +8,5 @@ export const siteInfo: Writable<ISiteInfo | null> = writable(null)
 export const modaleIsOpen = writable(false)
 
 export const showNav = writable(false)
+export const showCookieConsent = writable(true)
 export const showFooter = writable(false)

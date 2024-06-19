@@ -1,6 +1,6 @@
 <script lang="ts">
     import "../style/_main.scss"
-    import {menuIsOpen, modaleIsOpen, showFooter, showNav, siteInfo} from "../store";
+    import {menuIsOpen, modaleIsOpen, showCookieConsent, showFooter, showNav, siteInfo} from "../store";
     import AppNav from "$lib/components/AppNav.svelte";
     import AppFooter from "$lib/components/AppFooter.svelte";
     import type {ISiteInfo} from "$lib/interfaces/cmsApiResponse";
@@ -8,6 +8,7 @@
     import {afterNavigate, beforeNavigate} from "$app/navigation";
     import AppModal from "$lib/components/AppModal.svelte";
     import {onMount} from "svelte";
+    import AppCookieConsent from "$lib/components/AppCookieConsent.svelte";
 
     export let data: ISiteInfo;
 
@@ -77,6 +78,13 @@
   </div>
   {/key}
 
+  {#if $showCookieConsent}
+    <div class="s-layout__cookie-consent-box"
+    >
+      <AppCookieConsent/>
+    </div>
+  {/if}
+
   {#if $showFooter}
   <div class="s-layout__footer-box"
   >
@@ -134,6 +142,12 @@
     width: 100%;
     box-sizing: border-box;
     z-index: 1000;
+  }
+
+  .s-layout__cookie-consent-box {
+    position: fixed;
+    bottom: 2rem;
+    z-index: 100;
   }
 
   .s-layout__footer-box {
