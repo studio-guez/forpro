@@ -31,6 +31,7 @@ class Event extends BaseClass
             'description' => $input['description'] ?? '',
             'subject' => $input['subject'] ?? '',
             'date' => $input['date'] ?? null,
+            'date_request' => $input['date_request'],
             'start_time' => $input['start_time'],
             'end_time' => $input['end_time'],
             'duration' => $input['duration'],
@@ -167,11 +168,14 @@ class Event extends BaseClass
         $startTime = $dateTimeStart->format('H:i');
         $endTime = $dateTimeEnd->format('H:i');
 
+        $dateRequest = new DateTimeImmutable('now', new DateTimeZone('Europe/Paris'));
+
         $eventId = Event::create([
             'name' => $serviceTitle,
             'description' => $description,
             'subject' => $subject,
             'date' => $date,
+            'date_request' => $dateRequest,
             'start_time' => $startTime,
             'end_time' => $endTime,
             'duration' => $service['duration'],
