@@ -16,6 +16,7 @@
         <th>Horaire</th>
         <th>Nom</th>
         <th>Prénom</th>
+        <th>Date de la demande</th>
         <th>Email</th>
         <th>Téléphone</th>
         <th>Confirmé</th>
@@ -36,6 +37,18 @@
         </td>
         <td :title="event.lastname">{{ event.lastname }}</td>
         <td :title="event.firstname">{{ event.firstname }}</td>
+        <template v-if="event.date_request?.date">
+          <td :title="formatDate(event.date_request?.date)"
+              data-align="center"
+            >{{ formatDate(event.date_request?.date) }}
+          </td>
+        </template>
+        <template v-else>
+          <td style="color: lightgrey">
+            before request save option
+          </td>
+        </template>
+
         <td :title="event.email">{{ event.email }}</td>
         <td :title="event.phone">{{ event.phone }}</td>
         <td data-align="center">
@@ -68,6 +81,14 @@
       </tr>
       </tbody>
     </table>
+    <div class="k-events-view__exports">
+      <k-button-group>
+        <k-button
+          variant="filled"
+          size="lg"
+        >CSV export</k-button>
+      </k-button-group>
+    </div>
   </k-inside>
 </template>
 
@@ -102,5 +123,13 @@ export default {
 <style>
 .k-table {
   table-layout: fixed;
+}
+
+.k-events-view__exports {
+  padding-top: 1em;
+}
+
+.k-events-view__exports > .k-button-group {
+  justify-content: flex-end;
 }
 </style>
