@@ -132,4 +132,8 @@ export default {
 .k-events-view__exports > .k-button-group {
   justify-content: flex-end;
 }
+
+.k-table thead th {
+  top: 0;
+}
 </style>
