@@ -24,13 +24,13 @@
 </nav>
 
 <!-- Hero -->
-<section class="px-6 py-6 block w-full h-[900px] relative pt-5">
+<section class="px-6 py-6 block w-full h-lvh relative pt-5">
 	<div class="h-full flex justify-center items-start">
 		<!-- Grid -->
 		<div class="hidden lg:grid grid-cols-12 grid-rows-2 h-full w-full">
 			<!-- Image CTA -->
 			<div
-				class="z-10 rounded-3xl relative col-span-7 w-full"
+				class="z-10 rounded-2xl relative col-span-7 w-full"
 				style="background-image: url('/hero_1_1.png'); background-position: center; background-size: cover"
 			>
 				<button
@@ -58,7 +58,7 @@
 
 			<!-- Image CTA -->
 			<div
-				class="hidden lg:block -mt-8 rounded-3xl relative col-span-7 w-full"
+				class="hidden lg:block -mt-8 rounded-2xl relative col-span-7 w-full"
 				style="background-image: url('/hero_1_4.png'); background-position: center; background-size: cover"
 			>
 				<button
@@ -123,7 +123,7 @@
 
 			<!-- Image -->
 			<div
-				class="z-20 col-span-1 rounded-3xl"
+				class="z-20 col-span-1 rounded-2xl"
 				style="background-image: url('/hero_2_1.png'); background-position: center; background-size: cover"
 			></div>
 		</div>
@@ -141,7 +141,7 @@
 		<div class="mx-5 lg:-mt-20 lg:mx-20 grid grid-cols-1 lg:grid-cols-2 lg:col-span-full">
 			<!-- Image -->
 			<div
-				class="z-20 col-span-1 rounded-3xl"
+				class="z-20 col-span-1 rounded-2xl"
 				style="background-image: url('/hero_3_1.png'); background-position: center; background-size: cover"
 			></div>
 
@@ -229,7 +229,7 @@
 
 			<!-- Image -->
 			<div
-				class="z-20 col-span-1 rounded-3xl"
+				class="z-20 col-span-1 rounded-2xl"
 				style="background-image: url('/hero_5_1.png'); background-position: center; background-size: cover"
 			></div>
 		</div>
@@ -447,7 +447,10 @@
 		<div
 			class="mt-10 self-end p-10 lg:ml-16 h-fit relative lg:py-10 lg:align-bottom lg:col-span-2 lg:row-span-2 bg-background rounded-3xl"
 		>
-			<img class="hidden absolute -left-14 -top-12 w-36 lg:block" src="/badge_footer.svg" />
+			<img
+				class="hidden absolute -left-14 -top-12 -rotate-12 w-36 lg:block"
+				src="/badge_footer.svg"
+			/>
 			<p class="my-5 text-primary text-xs">
 				Le FoodLab est un des 6 labs dédiés à la formation professionnelle au sein du cam- pus
 				ForPro. La fondation ForPro a pour but.... Le Food- Lab est un des 6 labs dédiés à la
