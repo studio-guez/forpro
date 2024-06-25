@@ -17,10 +17,14 @@ export interface AppointmentDetails {
 export interface BookingCMSResponse {
     readonly headline: string;
     readonly description: string;
-    readonly servicesLabel: string;
-    readonly slotsLabel: string;
-    readonly bookingConfirmButtonLabel: string;
+    readonly bookingServicesLabel: string;
+    readonly bookingSlotsLabel: string;
     readonly bookingNoSlotsLabel: string;
+    readonly bookingCalendarLabel: string
+    readonly bookingSlotConfirmationLabel: string
+    readonly bookingAppointmentConfirmationLabel: string
+    readonly bookingAppointmentSuccessLabel: string
+    readonly bookingAppointmentSelect:  unknown[]
 }
 
 export interface Service {
