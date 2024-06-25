@@ -17,6 +17,12 @@ fields:
       fr: Titre
     type: text
 
+  bookingBandeauInfo:
+    label:
+      en: Info in bandeau
+      fr: Info dans le bandeau
+    type: text
+
   bookingDescription:
     label:
       en: Description
