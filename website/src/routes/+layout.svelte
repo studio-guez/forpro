@@ -146,7 +146,8 @@
 
   .s-layout__cookie-consent-box {
     position: fixed;
-    bottom: 2rem;
+    bottom: 2.5rem;
+    right: .5rem;
     z-index: 100;
   }
 
