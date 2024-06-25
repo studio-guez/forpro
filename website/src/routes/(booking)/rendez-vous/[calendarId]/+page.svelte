@@ -9,6 +9,7 @@
     import dayjs from "dayjs";
     import {writable} from "svelte/store";
     import {browser} from "$app/environment";
+    import BlockCta from "$lib/components/BlockCta.svelte";
 
     export let data;
     export let form;
@@ -104,6 +105,26 @@
             <div class="flex flex-col justify-between mx-auto w-full h-full text-gray-700 bg-white lg:max-w-4xl md:rounded">
                 <div class="flex overflow-hidden relative flex-col flex-grow h-full rounded-b md:rounded">
                     <div class="flex flex-wrap h-full">
+
+                        {#if data.content.bandeauInfo.length}
+                        <div>
+                            <BlockCta
+                                    image="{[]}"
+                                    content="{{
+                                        type: 'cta',
+                                        content: {
+                                            image: [],
+                                            text: data.content.bandeauInfo,
+                                            link: null,
+                                            backgroundcolor: 'blue',
+                                            textcolor: 'white',
+                                            styles: 'style1'
+                                        }
+                                    }}"
+                            />
+                        </div>
+                        {/if}
+
                         {#if $step === 1}
                             <!-- left side -->
                             <div class="bg-[var(--app-color-beige)] overflow-y-auto overflow-x-hidden py-2 px-4 w-full h-full text-center rounded-b md:w-1/2 md:rounded md:py-8">
