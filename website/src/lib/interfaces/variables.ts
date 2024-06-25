@@ -25,6 +25,7 @@ export interface BookingCMSResponse {
     readonly bookingAppointmentConfirmationLabel: string
     readonly bookingAppointmentSuccessLabel: string
     readonly bookingAppointmentSelect:  unknown[]
+    readonly bandeauInfo: string
 }
 
 export interface Service {
