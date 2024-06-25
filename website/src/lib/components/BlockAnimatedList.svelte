@@ -32,7 +32,7 @@ function scrollToBottom(e: Event) {
 <div class="s-animated-list"
 >
     <div on:click={scrollToBottom}
-         on:keyup={scrollToBottom}
+         on:keyup={(e) => e.keyCode === 32 || e.keyCode === 13 && scrollToBottom(e) }
          role="button"
          tabindex="0"
          class="s-animated-list__desktop__click-event"
