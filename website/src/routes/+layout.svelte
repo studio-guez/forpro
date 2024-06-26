@@ -1,3 +1,23 @@
+<svelte:head>
+  <!-- Matomo -->
+  <script>
+      var _paq = window._paq = window._paq || [];
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+          var u="//matomo.for-pro.ch/";
+          _paq.push(['setTrackerUrl', u+'matomo.php']);
+          _paq.push(['setSiteId', '1']);
+          var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+          g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+      })();
+  </script>
+  <noscript><p><img referrerpolicy="no-referrer-when-downgrade" src="//matomo.for-pro.ch/matomo.php?idsite=1&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+  <!-- End Matomo Code -->
+</svelte:head>
+
+
 <script lang="ts">
     import "../style/_main.scss"
     import {menuIsOpen, modaleIsOpen, showCookieConsent, showFooter, showNav, siteInfo} from "../store";
@@ -11,6 +31,7 @@
     import AppCookieConsent from "$lib/components/AppCookieConsent.svelte";
 
     export let data: ISiteInfo;
+    declare var _paq: unknown
 
     siteInfo.set(data)
 
@@ -33,13 +54,20 @@
 
     })
 
-    afterNavigate(() => {
+    afterNavigate((navigation) => {
         document.querySelectorAll('.s-layout').forEach(value => {
             value.scrollTo({
                 top: 0,
                 behavior: 'smooth',
             })
         })
+
+        if (_paq) {
+            _paq.push(['setCustomUrl', '/' + window.location.href])
+            _paq.push(['setDocumentTitle', window.location.pathname])
+            _paq.push(['setReferrerUrl', navigation.from])
+            _paq.push(['trackPageView'])
+        }
     })
 
     function setNavAndFooterVisibility(rootId: string) {
