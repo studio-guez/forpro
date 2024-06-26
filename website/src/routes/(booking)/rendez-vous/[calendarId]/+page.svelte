@@ -106,7 +106,7 @@
                 <div class="flex overflow-hidden relative flex-col flex-grow h-full rounded-b md:rounded">
                     <div class="flex flex-wrap h-full">
 
-                        {#if data.content.bandeauInfo.length}
+                        {#if data.content.bandeauInfo?.length}
                         <div>
                             <BlockCta
                                     image="{[]}"
