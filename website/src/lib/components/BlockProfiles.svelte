@@ -53,6 +53,8 @@
 
   .s-profiles {
     grid-row-gap: 4rem;
+    width: min(70rem, 100%);
+    margin: auto;
   }
 
   .s-profiles__title {

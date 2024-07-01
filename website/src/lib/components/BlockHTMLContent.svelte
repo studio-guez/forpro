@@ -11,6 +11,6 @@
 <style lang="scss">
     .s-block-html {
         margin: auto;
-        width: min(50rem, 100%);
+        width: min(70rem, 100%);
     }
 </style>
