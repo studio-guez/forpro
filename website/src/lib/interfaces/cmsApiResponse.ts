@@ -207,6 +207,7 @@ export interface ICard {
  */
 export interface IProfiles extends IBlock {
     content: {
+        title: string
         style: 'style1' | 'style2';
         profiles: IProfile[];
     },

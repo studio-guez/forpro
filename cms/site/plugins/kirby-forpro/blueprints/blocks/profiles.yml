@@ -4,6 +4,10 @@ title:
 
 fields:
 
+  title:
+    label: titre
+    type: text
+
   style:
     label: Style
     type: select
