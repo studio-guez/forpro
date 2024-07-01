@@ -6,9 +6,11 @@
 
 <div class="s-profiles {content.content.style}">
 
+    {#if content.content.title}
     <div class="s-profiles__title">
         <h3>{content.content.title}</h3>
     </div>
+    {/if}
 
     <div class="app-grid--column-3 app-grid--sm--column-1">
         {#each content.content.profiles as profile}
