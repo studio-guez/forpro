@@ -18,7 +18,7 @@
     img {
         background: var(--app-color--blue);
         display: block;
-        width: min(50rem, 100%);
+        width: min(70rem, 100%);
         margin: auto;
         aspect-ratio: 2/1;
     }
