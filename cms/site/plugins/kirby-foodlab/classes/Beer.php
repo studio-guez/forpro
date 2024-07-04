@@ -23,9 +23,9 @@ class Beer extends BaseClass {
         $hotdrink = [
             "id"            => $id,
             "name"          => $input["name"] ?? "",
-            "description"   => $input["description"],
-            "volume"        => $input["volume"],
-            "price"         => $input["price"],
+            "description"   => $input["description"] ?? "",
+            "volume"        => $input["volume"] ?? "",
+            "price"         => $input["price"] ?? "",
         ];
 
         $hotdrinks = self::list();
