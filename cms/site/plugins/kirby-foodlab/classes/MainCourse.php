@@ -37,21 +37,23 @@ class MainCourse extends BaseClass {
      * Updates a menu by id with the given input
      * It throws an exception in case of validation issues
      *
+     * @param string $id
      * @param array $menu
      * @return boolean
      */
-    public static function update(string $id, array $input): bool
+    public static function update(string $id, array $menu): bool
     {
-        $schedule = static::find($id);
+        $items = static::list();
 
-        foreach ($input as $key => $value) {
-            $schedule[$key] = $value;
+        foreach($items as &$item) {
+            if ($item['id'] === $id) {
+                $item = $menu;
+                break;
+            }
         }
 
-        $schedules = static::list();
+        unset($item);
 
-        $schedules[$id] = $schedule;
-
-        return Data::write(static::file(), $schedules);
+        return Data::write(static::file(), $items);
     }
 }

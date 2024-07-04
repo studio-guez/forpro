@@ -40,11 +40,23 @@ class WhiteWine extends BaseClass {
      * Updates a menu by id with the given input
      * It throws an exception in case of validation issues
      *
+     * @param string $id
      * @param array $menu
      * @return boolean
      */
-    public static function update(array $menu): bool
+    public static function update(string $id, array $menu): bool
     {
-        return Data::write(static::file(), $menu);
+        $items = static::list();
+
+        foreach($items as &$item) {
+            if ($item['id'] === $id) {
+                $item = $menu;
+                break;
+            }
+        }
+
+        unset($item);
+
+        return Data::write(static::file(), $items);
     }
 }
