@@ -54,12 +54,13 @@ class BaseClass
     public static function find(string $id): array
     {
         $items = static::list();
-        $item = array_search($id, $items);
 
-        if (empty($item) === true) {
-            throw new NotFoundException('The item could not be found');
+        foreach($items as $item) {
+            if (is_array($item) && in_array($id, $item)) {
+                return $item;
+            }
         }
 
-        return $item;
+        throw new NotFoundException('The item could not be found');
     }
 }
