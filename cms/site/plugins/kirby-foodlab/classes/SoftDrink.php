@@ -23,9 +23,9 @@ class SoftDrink extends BaseClass {
         $softdrink = [
             "id"            => $id,
             "name"          => $input["name"] ?? "",
-            "description"   => $input["description"],
-            "volume"        => $input["volume"],
-            "price"         => $input["price"],
+            "description"   => $input["description"] ?? "",
+            "volume"        => $input["volume"] ?? "",
+            "price"         => $input["price"] ?? "",
         ];
 
         $softdrinks = self::list();
