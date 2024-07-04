@@ -1,0 +1,30 @@
+{
+  "name": "mediumsans/kirby-foodlab",
+  "description": "Manage restaurant and generate PDF for the menu",
+  "license": "proprietary",
+  "type": "kirby-plugin",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Samuel Cardoso",
+      "email": "samuel@mediumsans.studio"
+    }
+  ],
+  "require": {
+    "getkirby/composer-installer": "^1.2",
+    "php": ">=8.0.0",
+    "mpdf/mpdf": "v8.2.4",
+    "nuzkito/chrome-html-to-pdf": "^2.0",
+    "spatie/browsershot": "^3.61"
+  },
+  "autoload": {
+    "psr-4": {
+      "MediumSans\\Menu\\": "classes/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "getkirby/composer-installer": true
+    }
+  }
+}
