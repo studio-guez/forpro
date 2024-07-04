@@ -35,7 +35,7 @@ return [
                     ]);
 
                     $html = $menu_page->render($data);
-                    $pdfContent = Browsershot::html($html)->showBackground()->pdf();
+                    $pdfContent = Browsershot::html($html)->format('A4')->showBackground()->pdf();
 
                     return new Response($pdfContent, 'application/pdf', 200, [
                         'Content-Disposition' => 'attachment; filename="menu.pdf"'
