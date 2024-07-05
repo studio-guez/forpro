@@ -4,9 +4,9 @@ namespace MediumSans;
 
 use Kirby\Data\Data;
 
-class Restaurant extends BaseClass {
-
-    const FILENAME = 'restaurant.json';
+class Restaurant extends BaseClass
+{
+    const FILENAME = "restaurant.json";
 
     /**
      * Creates a new menu with the given $input
@@ -19,19 +19,78 @@ class Restaurant extends BaseClass {
     {
         $id = uuid();
 
-        $menu = [
-            "id"            => $id,
-            "starters"      => $input["starters"] ?? "",
-            "mainCourses"   => $input["mainCourses"],
-            "desserts"      => $input["desserts"],
-            "wines"         => $input["wines"],
-            "softDrinks"    => $input["softDrinks"],
-            "beers"         => $input["beers"],
-            "cocktails"     => $input["cocktails"],
-            "hotDrinks"     => $input["hotDrinks"],
+        $restaurant = self::list()[0];
+
+        $restaurant = [
+            "id" => $id,
+            //
+            "btnHero1" => $input["btnHero1"] ?? ($restaurant["btnHero1"] ?? ""),
+            "btnHero2" => $input["btnHero2"] ?? ($restaurant["btnHero2"] ?? ""),
+            "picHero1" => $input["picHero1"] ?? ($restaurant["picHero1"] ?? ""),
+            "picHero2" => $input["picHero2"] ?? ($restaurant["picHero2"] ?? ""),
+            "picHero3" => $input["picHero3"] ?? ($restaurant["picHero3"] ?? ""),
+            "textHero1" =>
+                $input["textHero1"] ?? ($restaurant["textHero1"] ?? ""),
+            //
+            "titleFood" =>
+                $input["titleFood"] ?? ($restaurant["titleFood"] ?? ""),
+            "textFood" => $input["textFood"] ?? ($restaurant["textFood"] ?? ""),
+            "fileFood1" =>
+                $input["fileFood1"] ?? ($restaurant["fileFood1"] ?? ""),
+            "btnFood" => $input["btnFood"] ?? ($restaurant["btnFood"] ?? ""),
+            //
+            "titleLab" => $input["titleLab"] ?? ($restaurant["titleLab"] ?? ""),
+            "fileLab1" => $input["fileLab1"] ?? ($restaurant["fileLab1"] ?? ""),
+            "textLab" => $input["textLab"] ?? ($restaurant["textLab"] ?? ""),
+            "btnLab" => $input["btnLab"] ?? ($restaurant["btnLab"] ?? ""),
+            //
+            "picture1" => $input["picture1"] ?? ($restaurant["picture1"] ?? ""),
+            //
+            "formation" =>
+                $input["formation"] ?? ($restaurant["formation"] ?? ""),
+            "titleFormation" =>
+                $input["titleFormation"] ??
+                ($restaurant["titleFormation"] ?? ""),
+            "textFormation" =>
+                $input["textFormation"] ?? ($restaurant["textFormation"] ?? ""),
+            "fileFormation" =>
+                $input["fileFormation"] ?? ($restaurant["fileFormation"] ?? ""),
+            "btnFormation" =>
+                $input["btnFormation"] ?? ($restaurant["btnFormation"] ?? ""),
+            //
+            "titleUnivers" =>
+                $input["titleUnivers"] ?? ($restaurant["titleUnivers"] ?? ""),
+            "subtitleUnivers" =>
+                $input["subtitleUnivers"] ??
+                ($restaurant["subtitleUnivers"] ?? ""),
+            "blogUniversTitle1" =>
+                $input["blogUniversTitle1"] ??
+                ($restaurant["blogUniversTitle1"] ?? ""),
+            "blogUniversFil1" =>
+                $input["blogUniversFil1"] ??
+                ($restaurant["blogUniversFil1"] ?? ""),
+            "blogUniversText1" =>
+                $input["blogUniversText1"] ??
+                ($restaurant["blogUniversText1"] ?? ""),
+            "blogUniversTitle2" =>
+                $input["blogUniversTitle2"] ??
+                ($restaurant["blogUniversTitle2"] ?? ""),
+            "blogUniversFile2" =>
+                $input["blogUniversFile2"] ??
+                ($restaurant["blogUniversFile2"] ?? ""),
+            "blogUniversText2" =>
+                $input["blogUniversText2"] ??
+                ($restaurant["blogUniversText2"] ?? ""),
+            //
+            "titleValues" =>
+                $input["titleValues"] ?? ($restaurant["titleValues"] ?? ""),
+            "textValues" =>
+                $input["textValues"] ?? ($restaurant["textValues"] ?? ""),
+            "lstValues" =>
+                $input["lstValues"] ?? ($restaurant["lstValues"] ?? []),
         ];
 
-        return self::update($menu);
+        return Data::write(static::file(), $restaurant);
     }
 
     /**
@@ -46,8 +105,8 @@ class Restaurant extends BaseClass {
     {
         $items = static::list();
 
-        foreach($items as &$item) {
-            if ($item['id'] === $id) {
+        foreach ($items as &$item) {
+            if ($item["id"] === $id) {
                 $item = $menu;
                 break;
             }
