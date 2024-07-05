@@ -33,6 +33,8 @@ tabs:
             templates:
               - forpro
 
+  restaurant: tabs/restaurant
+
   booking: tabs/booking
 
   seo: seo/site
