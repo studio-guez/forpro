@@ -1,7 +1,5 @@
 tabs:
-
   content:
-
     label:
       en: Content
       fr: Contenu
@@ -9,7 +7,6 @@ tabs:
     icon: text
 
     columns:
-
       - width: 1/2
 
         fields:
@@ -23,7 +20,6 @@ tabs:
       - width: 1/2
 
         sections:
-
           global:
             create: false
             label: "Global"
@@ -37,6 +33,8 @@ tabs:
             templates:
               - forpro
 
+  restaurant: tabs/restaurant
+
   booking: tabs/booking
 
-  seo: tabs/seo-site
+  seo: seo/site
