@@ -20,13 +20,40 @@
     },
     data() {
       return {
-        menu: {
-          textTitle1: this.textTitle1,
-          textSubtitle1: this.textSubtitle1,
-          textContent1: this.textContent1,
-          textTitle2: this.textTitle2,
-          textSubtitle2: this.textSubtitle2,
-          textContent2: this.textContent2
+        restaurant: {
+          picHero1: this.restaurant.picHero1,
+          picHero2: this.restaurant.picHero2,
+          picHero3: this.restaurant.picHero3,
+          textHero1: this.restaurant.textHero1,
+          titleFood: this.restaurant.titleFood,
+          textFood: this.restaurant.textFood,
+          fileFood1: this.restaurant.fileFood1,
+          btnFood: this.restaurant.btnFood,
+          titleLab: this.restaurant.titleLab,
+          fileLab1: this.restaurant.fileLab1,
+          textLab: this.restaurant.textLab,
+          btnLab: this.restaurant.btnLab,
+          picture1: this.restaurant.picture1,
+          titleFormation: this.restaurant.titleFormation,
+          textFormation: this.restaurant.textFormation,
+          fileFormation: this.restaurant.fileFormation,
+          btnFormation: this.restaurant.btnFormation,
+          titleUnivers: this.restaurant.titleUnivers,
+          subtitleUnivers: this.restaurant.subtitleUnivers,
+          blogUniversTitle1: this.restaurant.blogUniversTitle1,
+          blogUniversFil1: this.restaurant.blogUniversFil1,
+          blogUniversText1: this.restaurant.blogUniversText1,
+          blogUniversTitle2: this.restaurant.blogUniversTitle2,
+          blogUniversFile2: this.restaurant.blogUniversFile2,
+          blogUniversText2: this.restaurant.blogUniversText2,
+          titleValues: this.restaurant.titleValues,
+          textValues: this.restaurant.textValues,
+          lstValues: this.restaurant.lstValues,
+          textFooter1: this.restaurant.textFooter1,
+          textFooter2: this.restaurant.textFooter2,
+          textFooter3: this.restaurant.textFooter3,
+          btnFooter1: this.restaurant.btnFooter1,
+          btnFooter2: this.restaurant.btnFooter2
         }
       };
     },
@@ -242,10 +269,42 @@
             type: "files"
           }
         }
+      },
+      line7: {
+        type: "line"
+      },
+      footerHeadline: {
+        type: "headline",
+        label: "Footer"
+      },
+      textFooter1: {
+        label: "Text 1",
+        type: "textarea",
+        width: "1/2"
+      },
+      textFooter2: {
+        label: "Text 2",
+        type: "textarea",
+        width: "1/2"
+      },
+      textFooter3: {
+        label: "Text 3",
+        type: "textarea",
+        width: "1/2"
+      },
+      btnFooter1: {
+        label: "Action 1",
+        type: "text",
+        width: "1/2"
+      },
+      btnFooter2: {
+        label: "Action 2",
+        type: "text",
+        width: "1/2"
       }
-    } }, on: { "input": _vm.input, "submit": _vm.submit }, model: { value: _vm.menu, callback: function($$v) {
-      _vm.menu = $$v;
-    }, expression: "menu" } })], 1);
+    } }, on: { "input": _vm.input, "submit": _vm.submit }, model: { value: _vm.restaurant, callback: function($$v) {
+      _vm.restaurant = $$v;
+    }, expression: "restaurant" } })], 1);
   };
   var _sfc_staticRenderFns$1 = [];
   _sfc_render$1._withStripped = true;
