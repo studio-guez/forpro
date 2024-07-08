@@ -1,9 +1,23 @@
 <script lang="ts">
+	import Menu from '$lib/components/Menu.svelte';
+
+	import { menuIsOpen } from '../store';
+
 	export let data;
+
+	menuIsOpen.subscribe((value) => {
+		console.log(value);
+	});
+
+	const handleMenuClick = () => {
+		$menuIsOpen = !$menuIsOpen;
+	};
 </script>
 
+<Menu />
+
 <!-- Navbar -->
-<nav class="px-6 py-6">
+<nav class="px-6 pb-6 pt-3">
 	<div class="grid grid-cols-2">
 		<!-- Title -->
 		<div class="text-secondary font-regular uppercase">
@@ -12,15 +26,31 @@
 		<!-- Button -->
 		<div class="flex justify-end">
 			<button
-				class="w-10 h-10 rounded-full bg-secondary navbar-burger flex items-center text-primary p-3"
+				on:click={handleMenuClick}
+				class="z-50 w-10 h-10 rounded-full bg-secondary navbar-burger flex items-center text-primary p-3"
 			>
 				<svg
-					class="block h-4 w-4 fill-current"
+					class:hidden={$menuIsOpen}
+					class="block fill-current"
 					viewBox="0 0 20 20"
 					xmlns="http://www.w3.org/2000/svg"
 				>
 					<title>Mobile menu</title>
 					<path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+				</svg>
+				<svg
+					class:hidden={!$menuIsOpen}
+					xmlns="http://www.w3.org/2000/svg"
+					class="block fill-current"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="3"
+						d="M6 18L18 6M6 6l12 12"
+					/>
 				</svg>
 			</button>
 		</div>
