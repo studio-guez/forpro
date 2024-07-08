@@ -77,6 +77,12 @@
             font-display: swap;
         }
 
+        @page
+        {
+            size: A4 portrait;
+            margin: 0;
+        }
+
         body {
             background-color: #D2C8B4;
         }
@@ -290,15 +296,15 @@
         </g>
     </svg>
 
-    <h2 class="title"><?= $menu['textTitle1'] ?></h2>
-    <h4 class="subtitle"><?= $menu['textSubtitle1'] ?></h4>
+    <h2 class="title"><?= $menu["textTitle1"] ?></h2>
+    <h4 class="subtitle"><?= $menu["textSubtitle1"] ?></h4>
     <p>
-        <?= $menu['textContent1'] ?>
+        <?= $menu["textContent1"] ?>
     </p>
-    <h2 class="title"><?= $menu['textTitle2'] ?></h2>
-    <h4 class="subtitle"><?= $menu['textSubtitle2'] ?></h4>
+    <h2 class="title"><?= $menu["textTitle2"] ?></h2>
+    <h4 class="subtitle"><?= $menu["textSubtitle2"] ?></h4>
     <p>
-        <?= $menu['textContent2'] ?>
+        <?= $menu["textContent2"] ?>
     </p>
 
     <div class="footer">
@@ -475,14 +481,22 @@
                 <th style="width:10%; text-align:left;text-decoration: underline;">10 cl</th>
                 <th style="width:10%; text-align:left;text-decoration: underline;">75 cl</th>
             </tr>
-            <?php foreach($bubbleWines[0] as $wine): ?>
+            <?php foreach ($bubbleWines[0] as $wine): ?>
                 <tr>
                     <td>
-                        <span style="font-weight:800;"><?= $wine['name'] ?></span>, <?= $wine['domain'] ?>, <?= $wine['mill'] ?><br/>
-                        <?= $wine['description'] ?>
+                        <span style="font-weight:800;"><?= $wine[
+                            "name"
+                        ] ?></span>, <?= $wine["domain"] ?>, <?= $wine[
+    "mill"
+] ?><br/>
+                        <?= $wine["description"] ?>
                     </td>
-                    <td style="vertical-align: top;font-weight:800;"><?= $wine['price10cl'] ?></td>
-                    <td style="vertical-align: top;font-weight:800;"><?= $wine['price75cl'] ?></td>
+                    <td style="vertical-align: top;font-weight:800;"><?= $wine[
+                        "price10cl"
+                    ] ?></td>
+                    <td style="vertical-align: top;font-weight:800;"><?= $wine[
+                        "price75cl"
+                    ] ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
@@ -494,14 +508,22 @@
                 <th style="width:10%; text-align:left;text-decoration: underline;">10 cl</th>
                 <th style="width:10%; text-align:left;text-decoration: underline;">75 cl</th>
             </tr>
-            <?php foreach($whiteWines[0] as $wine): ?>
+            <?php foreach ($whiteWines[0] as $wine): ?>
                 <tr>
                     <td>
-                        <span style="font-weight:800;"><?= $wine['name'] ?></span>, <?= $wine['domain'] ?>, <?= $wine['mill'] ?><br/>
-                        <?= $wine['description'] ?>
+                        <span style="font-weight:800;"><?= $wine[
+                            "name"
+                        ] ?></span>, <?= $wine["domain"] ?>, <?= $wine[
+    "mill"
+] ?><br/>
+                        <?= $wine["description"] ?>
                     </td>
-                    <td style="vertical-align: top;font-weight:800;"><?= $wine['price10cl'] ?></td>
-                    <td style="vertical-align: top;font-weight:800;"><?= $wine['price75cl'] ?></td>
+                    <td style="vertical-align: top;font-weight:800;"><?= $wine[
+                        "price10cl"
+                    ] ?></td>
+                    <td style="vertical-align: top;font-weight:800;"><?= $wine[
+                        "price75cl"
+                    ] ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
@@ -513,14 +535,22 @@
                 <th style="width:10%; text-align:left;text-decoration: underline;">10 cl</th>
                 <th style="width:10%; text-align:left;text-decoration: underline;">75 cl</th>
             </tr>
-            <?php foreach($redWines[0] as $wine): ?>
+            <?php foreach ($redWines[0] as $wine): ?>
                 <tr>
                     <td>
-                        <span style="font-weight:800;"><?= $wine['name'] ?></span>, <?= $wine['domain'] ?>, <?= $wine['mill'] ?><br/>
-                        <?= $wine['description'] ?>
+                        <span style="font-weight:800;"><?= $wine[
+                            "name"
+                        ] ?></span>, <?= $wine["domain"] ?>, <?= $wine[
+    "mill"
+] ?><br/>
+                        <?= $wine["description"] ?>
                     </td>
-                    <td style="vertical-align: top;font-weight:800;"><?= $wine['price10cl'] ?></td>
-                    <td style="vertical-align: top;font-weight:800;"><?= $wine['price75cl'] ?></td>
+                    <td style="vertical-align: top;font-weight:800;"><?= $wine[
+                        "price10cl"
+                    ] ?></td>
+                    <td style="vertical-align: top;font-weight:800;"><?= $wine[
+                        "price75cl"
+                    ] ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
@@ -581,13 +611,19 @@
                 <th style="width:10%; text-align:left;text-decoration: underline;"></th>
                 <th style="width:10%; text-align:left;text-decoration: underline;"></th>
             </tr>
-            <?php foreach($softDrinks[0] as $wine): ?>
+            <?php foreach ($softDrinks[0] as $wine): ?>
             <tr>
                 <td>
-                    <span style="font-weight:800;"><?= $wine['name'] ?></span><?php echo (!empty(trim($wine['description']))) ? ', ' . trim($wine['description']) : ''; ?>
+                    <span style="font-weight:800;"><?= $wine[
+                        "name"
+                    ] ?></span><?php echo !empty(trim($wine["description"]))
+    ? ", " . trim($wine["description"])
+    : ""; ?>
                 </td>
-                <td style="vertical-align: top;"><?= $wine['volume'] ?></td>
-                <td style="vertical-align: top;font-weight:800;"><?= $wine['price'] ?></td>
+                <td style="vertical-align: top;"><?= $wine["volume"] ?></td>
+                <td style="vertical-align: top;font-weight:800;"><?= $wine[
+                    "price"
+                ] ?></td>
             </tr>
             <?php endforeach; ?>
         </table>
@@ -599,13 +635,19 @@
                 <th style="width:10%; text-align:left;text-decoration: underline;"></th>
                 <th style="width:10%; text-align:left;text-decoration: underline;"></th>
             </tr>
-            <?php foreach($beers[0] as $wine): ?>
+            <?php foreach ($beers[0] as $wine): ?>
             <tr>
                 <td>
-                    <span style="font-weight:800;"><?= $wine['name'] ?></span><?php echo (!empty(trim($wine['description']))) ? ', ' . trim($wine['description']) : ''; ?>
+                    <span style="font-weight:800;"><?= $wine[
+                        "name"
+                    ] ?></span><?php echo !empty(trim($wine["description"]))
+    ? ", " . trim($wine["description"])
+    : ""; ?>
                 </td>
-                <td style="vertical-align: top;"><?= $wine['volume'] ?></td>
-                <td style="vertical-align: top;font-weight:800;"><?= $wine['price'] ?></td>
+                <td style="vertical-align: top;"><?= $wine["volume"] ?></td>
+                <td style="vertical-align: top;font-weight:800;"><?= $wine[
+                    "price"
+                ] ?></td>
             </tr>
             <?php endforeach; ?>
         </table>
@@ -617,13 +659,19 @@
                 <th style="width:10%; text-align:left;text-decoration: underline;"></th>
                 <th style="width:10%; text-align:left;text-decoration: underline;"></th>
             </tr>
-            <?php foreach($cocktails[0] as $wine): ?>
+            <?php foreach ($cocktails[0] as $wine): ?>
             <tr>
                 <td>
-                    <span style="font-weight:800;"><?= $wine['name'] ?></span><?php echo (!empty(trim($wine['description']))) ? ', ' . trim($wine['description']) : ''; ?>
+                    <span style="font-weight:800;"><?= $wine[
+                        "name"
+                    ] ?></span><?php echo !empty(trim($wine["description"]))
+    ? ", " . trim($wine["description"])
+    : ""; ?>
                 </td>
-                <td style="vertical-align: top;"><?= $wine['volume'] ?></td>
-                <td style="vertical-align: top;font-weight:800;"><?= $wine['price'] ?></td>
+                <td style="vertical-align: top;"><?= $wine["volume"] ?></td>
+                <td style="vertical-align: top;font-weight:800;"><?= $wine[
+                    "price"
+                ] ?></td>
             </tr>
             <?php endforeach; ?>
         </table>
@@ -635,13 +683,19 @@
                 <th style="width:10%; text-align:left;text-decoration: underline;"></th>
                 <th style="width:10%; text-align:left;text-decoration: underline;"></th>
             </tr>
-            <?php foreach($hotDrinks[0] as $wine): ?>
+            <?php foreach ($hotDrinks[0] as $wine): ?>
             <tr>
                 <td>
-                    <span style="font-weight:800;"><?= $wine['name'] ?></span><?php echo (!empty(trim($wine['description']))) ? ', ' . trim($wine['description']) : ''; ?>
+                    <span style="font-weight:800;"><?= $wine[
+                        "name"
+                    ] ?></span><?php echo !empty(trim($wine["description"]))
+    ? ", " . trim($wine["description"])
+    : ""; ?>
                 </td>
-                <td style="vertical-align: top;"><?= $wine['volume'] ?></td>
-                <td style="vertical-align: top;font-weight:800;"><?= $wine['price'] ?></td>
+                <td style="vertical-align: top;"><?= $wine["volume"] ?></td>
+                <td style="vertical-align: top;font-weight:800;"><?= $wine[
+                    "price"
+                ] ?></td>
             </tr>
             <?php endforeach; ?>
         </table>
