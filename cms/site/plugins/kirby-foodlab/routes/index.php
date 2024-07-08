@@ -4,12 +4,10 @@ use Kirby\Cms\Page;
 use Kirby\Cms\Response;
 use MediumSans\Menu;
 use MediumSans\Restaurant;
-use Mpdf\Mpdf;
-use Nuzkito\ChromePdf\ChromePdf;
 use Spatie\Browsershot\Browsershot;
 
 return [
-    "routes" => function () {
+    "routes" => function ($kirby) {
         return [
             /* Menu */
             [
@@ -61,62 +59,83 @@ return [
                 "action" => function () {
                     $json = [];
 
-                    $json["body"] = [
-                        "btnHero1" => $site->btnHero1()->value(),
-                        "btnHero2" => $site->btnHero2()->value(),
-                        "picHero1" => $site->picHero1()->toFile()->url(),
-                        "picHero2" => $site->picHero2()->toFile()->url(),
-                        "picHero3" => $site->picHero3()->toFile()->url(),
-                        "textHero1" => $site->textHero1()->value(),
-                        "titleFood" => $site->titleFood()->value(),
-                        "textFood" => $site->textFood()->value(),
-                        "fileFood1" => $site->fileFood1()->toFile()->url(),
-                        "btnFood" => $site->btnFood()->value(),
-                        "titleLab" => $site->titleLab()->value(),
-                        "textLab" => $site->textLab()->value(),
-                        "fileLab1" => $site->fileLab1()->toFile()->url(),
-                        "btnLab" => $site->btnLab()->value(),
-                        "picture1" => $site->picture1()->toFile()->url(),
-                        "titleFormation" => $site->titleFormation()->value(),
-                        "textFormation" => $site->textFormation()->value(),
-                        "fileFormation" => $site
-                            ->fileFormation()
-                            ->toFile()
-                            ->url(),
-                        "btnFormation" => $site->btnFormation()->value(),
-                        "titleUnivers" => $site->titleUnivers()->value(),
-                        "subtitleUnivers" => $site->subtitleUnivers()->value(),
-                        "blogUniversTitle1" => $site
-                            ->blogUniversTitle1()
-                            ->value(),
-                        "blogUniversFil1" => $site->blogUniversFil1()->value(),
-                        "blogUniversText1" => $site
-                            ->blogUniversText1()
-                            ->value(),
-                        "blogUniversTitle2" => $site
-                            ->blogUniversTitle2()
-                            ->value(),
-                        "blogUniversFile2" => $site
-                            ->blogUniversFile2()
-                            ->value(),
-                        "blogUniversText2" => $site
-                            ->blogUniversText2()
-                            ->value(),
-                        "titleValues" => $site->titleValues()->value(),
-                        "textValues" => $site->textValues()->value(),
-                        "lstValues" => $site
-                            ->lstValues()
-                            ->toStructure()
-                            ->toArray(),
-                        "footerHeadline" => $site->footerHeadline()->value(),
-                        "textFooter1" => $site->textFooter1()->value(),
-                        "textFooter2" => $site->textFooter2()->value(),
-                        "textFooter3" => $site->textFooter3()->value(),
-                        "btnFooter1" => $site->btnFooter1()->value(),
-                        "btnFooter2" => $site->btnFooter2()->value(),
+                    $json["hero"] = [
+                        "btnHero1" => $this->site()->btnHero1()->value,
+                        "btnHero2" => $this->site()->btnHero2()->value(),
+                        "picHero1" => $this->site()->picHero1()->toFile() ? $this->site()->picHero1()->toFile()->url() : '',
+                        "picHero2" => $this->site()->picHero2()->toFile() ? $this->site()->picHero2()->toFile()->url() : '',
+                        "picHero3" => $this->site()->picHero3()->toFile() ? $this->site()->picHero3()->toFile()->url() : '',
+                        "textHero1" => $this->site()->textHero1()->value(),
                     ];
 
-                    return json_encode($json);
+                    $json["food"] = [
+
+                        "titleFood" => $this->site()->titleFood()->value(),
+                        "textFood" => $this->site()->textFood()->value(),
+                        "fileFood1" => $this->site()->fileFood1()->toFile() ? $this->site()->fileFood1()->toFile()->url() : '',
+                        "btnFood" => $this->site()->btnFood()->value()
+                    ];
+
+                    $json["lab"] = [
+                        "titleLab" => $this->site()->titleLab()->value(),
+                        "textLab" => $this->site()->textLab()->value(),
+                        "fileLab1" => $this->site()->fileLab1()->toFile() ? $this->site()->fileLab1()->url() : '',
+                        "btnLab" => $this->site()->btnLab()->value()
+                    ];
+
+                    $json["highlight"] = [
+                        "picture1" => $this->site()->picture1()->toFile() ? $this->site()->picture1()->toFile()->url() : '',
+                    ];
+
+                    $json["formation"] = [
+                        "titleFormation" => $this->site()->titleFormation()->value(),
+                        "textFormation" => $this->site()->textFormation()->value(),
+                        "fileFormation" => $this->site()
+                            ->fileFormation()
+                            ->toFile() ? $this->site()->fileFormation()->toFile()->url() : '',
+                        "btnFormation" => $this->site()->btnFormation()->value()
+                    ];
+
+                    $json["univers"] = [
+                        "titleUnivers" => $this->site()->titleUnivers()->value(),
+                        "subtitleUnivers" => $this->site()->subtitleUnivers()->value(),
+                        "blogUniversTitle1" => $this->site()
+                            ->blogUniversTitle1()
+                            ->value(),
+                        "blogUniversFil1" => $this->site()->blogUniversFil1()->value(),
+                        "blogUniversText1" => $this->site()
+                            ->blogUniversText1()
+                            ->value(),
+                        "blogUniversTitle2" => $this->site()
+                            ->blogUniversTitle2()
+                            ->value(),
+                        "blogUniversFile2" => $this->site()
+                            ->blogUniversFile2()
+                            ->value(),
+                        "blogUniversText2" => $this->site()
+                            ->blogUniversText2()
+                            ->value()
+                    ];
+
+                    $json["values"] = [
+                        "titleValues" => $this->site()->titleValues()->value(),
+                        "textValues" => $this->site()->textValues()->value(),
+                        "lstValues" => $this->site()
+                            ->lstValues()
+                            ->toStructure()
+                            ->toArray()
+                    ];
+
+                    $json["footer"] = [
+                        "footerHeadline" => $this->site()->footerHeadline()->value(),
+                        "textFooter1" => $this->site()->textFooter1()->value(),
+                        "textFooter2" => $this->site()->textFooter2()->value(),
+                        "textFooter3" => $this->site()->textFooter3()->value(),
+                        "btnFooter1" => $this->site()->btnFooter1()->value(),
+                        "btnFooter2" => $this->site()->btnFooter2()->value()
+                    ];
+
+                    return \Kirby\Http\Response::json(json_encode($json));
                 },
             ],
         ];
