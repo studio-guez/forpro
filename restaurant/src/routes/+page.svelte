@@ -49,17 +49,15 @@
 			</div>
 
 			<!-- Logo Rounded -->
-			<div class="hidden lg:flex col-span-5 justify-center items-center">
+			<div class="hidden lg:flex col-span-5 -mt-28 justify-center items-center">
 				<img class="w-40" src={data.page.hero.pictureURL2} alt="imaginé par forpro" />
 			</div>
 
 			<!-- Text -->
 			<div
-				class="hidden lg:flex text-2xl col-span-5 text-center text-primary justify-center items-center uppercase"
+				class="hidden lg:flex text-2xl -mt-8 col-span-5 text-center text-primary justify-center items-center uppercase"
 			>
-				<p>
-					{@html data.page.hero.text}
-				</p>
+				{@html data.page.hero.text}
 			</div>
 
 			<!-- Image CTA -->
