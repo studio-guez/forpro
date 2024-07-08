@@ -79,7 +79,7 @@ return [
                     $json["lab"] = [
                         "titleLab" => $this->site()->titleLab()->value(),
                         "textLab" => $this->site()->textLab()->kt()->value(),
-                        "fileLab1" => $this->site()->fileLab1()->toFile() ? $this->site()->fileLab1()->url() : '',
+                        "fileLab1" => $this->site()->fileLab1()->toFile() ? $this->site()->fileLab1()->toFile()->url() : '',
                         "btnLab" => $this->site()->btnLab()->value()
                     ];
 
