@@ -8,20 +8,45 @@
 	class:block={$menuIsOpen}
 >
 	<ul class="mt-10 flex flex-col space-y-4">
-		<li class="text-2xl font-bold hover:text-secondary">
-			<a href="#lefood">Le Food</a>
+		<li class="text-3xl font-bold hover:text-secondary">
+			<a
+				on:click={() => {
+					$menuIsOpen = false;
+				}}
+				href="#lefood">Le Food</a
+			>
 		</li>
-		<li class="text-2xl font-bold hover:text-secondary">
-			<a href="#lelab">Le Lab</a>
+		<li class="text-3xl font-bold hover:text-secondary">
+			<a
+				on:click={() => {
+					$menuIsOpen = false;
+				}}
+				href="#lelab">Le Lab</a
+			>
 		</li>
-		<li class="text-2xl font-bold hover:text-secondary">
-			<a href="#">Équipe & Formation</a>
+		<li class="text-3xl font-bold hover:text-secondary">
+			<a
+				on:click={() => {
+					$menuIsOpen = false;
+				}}
+				href="#equipe-formation">Équipe & Formation</a
+			>
 		</li>
-		<li class="text-2xl font-bold hover:text-secondary">
-			<a href="#">FoodCourt & Popup Café</a>
+		<li class="text-3xl font-bold hover:text-secondary">
+			<a
+				on:click={() => {
+					$menuIsOpen = false;
+				}}
+				href="#foodcourt-popup-cafe">FoodCourt & Popup Café</a
+			>
 		</li>
-		<li class="text-2xl font-bold hover:text-secondary">
-			<a href="#">Engagements</a>
+		<li class="text-3xl font-bold hover:text-secondary">
+			<a
+				on:click={() => {
+					$menuIsOpen = false;
+				}}
+				href="#engagements">Engagements</a
+			>
 		</li>
 	</ul>
 </nav>
