@@ -59,6 +59,10 @@ return [
                 "action" => function () {
                     $json = [];
 
+                    $json["menu"] = [
+                        "baseline" => $this->site()->headline()->toHtml()->value(),
+                    ];
+
                     $json["hero"] = [
                         "btn1" => $this->site()->btnHero1()->value,
                         "btn2" => $this->site()->btnHero2()->value(),
