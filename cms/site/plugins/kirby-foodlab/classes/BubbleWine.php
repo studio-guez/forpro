@@ -5,9 +5,9 @@ namespace MediumSans\Menu;
 use Kirby\Data\Data;
 use MediumSans\BaseClass;
 
-class BubbleWine extends BaseClass {
-
-    const FILENAME = 'bubblewine.json';
+class BubbleWine extends BaseClass
+{
+    const FILENAME = "bubblewine.json";
 
     /**
      * Creates a new menu with the given $input
@@ -21,13 +21,13 @@ class BubbleWine extends BaseClass {
         $id = uuid();
 
         $bubbleWine = [
-            "id"            => $id,
-            "name"          => $input["name"] ?? "",
-            "description"   => $input["description"],
-            "domain"        => $input["domain"],
-            "mill"          => $input["mill"],
-            "price10cl"     => $input["price10cl"],
-            "price75cl"     => $input["price75cl"],
+            "id" => $id,
+            "name" => $input["name"] ?? "",
+            "description" => $input["description"] ?? "",
+            "domain" => $input["domain"] ?? "",
+            "mill" => $input["mill"] ?? "",
+            "price10cl" => $input["price10cl"] ?? "",
+            "price75cl" => $input["price75cl"] ?? "",
         ];
 
         $bubbleWines = self::list();
@@ -48,8 +48,8 @@ class BubbleWine extends BaseClass {
     {
         $items = static::list();
 
-        foreach($items as &$item) {
-            if ($item['id'] === $id) {
+        foreach ($items as &$item) {
+            if ($item["id"] === $id) {
                 $item = $menu;
                 break;
             }
