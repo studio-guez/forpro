@@ -155,12 +155,12 @@
 
 	<!-- Background -->
 	<img
-		class="absolute z-10 -right-20 -bottom-28 lg:-right-52 lg:-bottom-40 lg:w-3/5"
+		class="absolute z-10 -right-20 -bottom-32 lg:-right-52 lg:-bottom-52 lg:w-3/5"
 		src="/bg_3_1.svg"
 	/>
 </section>
 
-<section class="z-10 mt-10 relative bg-background w-full">
+<section class="z-10 mt-10 relative w-full">
 	<div
 		class="min-h-96 rounded-3xl"
 		style:background-image="url({data.page.highlight.pictureURL})"
