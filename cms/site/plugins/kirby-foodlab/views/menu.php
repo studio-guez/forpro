@@ -32,12 +32,12 @@ return [
                 'bubbleWines' => $bubbleWines,
                 'cocktails' => $cocktails,
                 'hotDrinks' => $hotDrinks,
-                'textTitle1' => $menu['textTitle1'],
-                'textSubtitle1' => $menu['textSubtitle1'],
-                'textContent1' => $menu['textContent1'],
-                'textTitle2' => $menu['textTitle2'],
-                'textSubtitle2' => $menu['textSubtitle2'],
-                'textContent2' => $menu['textContent2'],
+                'textTitle1' => $menu['textTitle1'] ?? "",
+                'textSubtitle1' => $menu['textSubtitle1'] ?? "",
+                'textContent1' => $menu['textContent1'] ?? "",
+                'textTitle2' => $menu['textTitle2'] ?? "",
+                'textSubtitle2' => $menu['textSubtitle2'] ?? "",
+                'textContent2' => $menu['textContent2'] ?? "",
             ]
         ];
     }
