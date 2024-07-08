@@ -38,13 +38,19 @@ return [
                         ->format("A4")
                         ->showBackground()
                         ->margins(0.0, 0.0, 0.0, 0.0)
-                        ->setOption('addStyleTag', json_encode(['content' => 'body { margin: 0; padding: 0; }']))
+                        ->setOption(
+                            "addStyleTag",
+                            json_encode([
+                                "content" => "body { margin: 0; padding: 0; }",
+                            ])
+                        )
                         ->fullPage()
                         ->pdf();
 
                     $pdfHtml = Browsershot::html($html)
                         ->format("A4")
-                        ->showBackground()->bodyHtml();
+                        ->showBackground()
+                        ->bodyHtml();
 
                     return new Response($pdfContent, "application/pdf", 200, [
                         "Content-Disposition" =>
