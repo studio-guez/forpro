@@ -97,18 +97,19 @@
 
 		<div class="-mt-8 mx-5 lg:mx-20 grid grid-cols-1 lg:grid-cols-2 col-span-full">
 			<!-- Text -->
-			<div class="z-20 pt-10 col-span-1 text-primary font-regular">
+			<div class="flex flex-col z-20 pt-10 col-span-1 text-primary font-regular">
 				<div class="prose-sm leading-4 mt-10 lg:pr-10">
 					{@html data.page.food.text}
 				</div>
-
-				<a
-					href={data.page.food.btn.link}
-					type="button"
-					class="mt-10 rounded-full bg-white px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-				>
-					{data.page.food.btn.text}
-				</a>
+				<div class="align-bottom h-full">
+					<a
+						href={data.page.food.btn.link}
+						type="button"
+						class="block mt-10 rounded-full w-max bg-white px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					>
+						{data.page.food.btn.text}
+					</a>
+				</div>
 			</div>
 
 			<!-- Image -->
@@ -148,7 +149,7 @@
 					<a
 						href={data.page.lab.btn.link}
 						type="button"
-						class="relative lg:ml-10 mt-10 rounded-full bg-white px-5 lg:px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+						class="block lg:ml-10 mt-10 w-max rounded-full bg-white px-5 lg:px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 					>
 						{data.page.lab.btn.text}
 					</a>
