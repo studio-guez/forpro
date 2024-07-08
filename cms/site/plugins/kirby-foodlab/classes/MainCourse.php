@@ -5,9 +5,9 @@ namespace MediumSans\Menu;
 use Kirby\Data\Data;
 use MediumSans\BaseClass;
 
-class MainCourse extends BaseClass {
-
-    const FILENAME = 'maincourse.json';
+class MainCourse extends BaseClass
+{
+    const FILENAME = "maincourse.json";
 
     /**
      * Creates a new menu with the given $input
@@ -21,10 +21,10 @@ class MainCourse extends BaseClass {
         $id = uuid();
 
         $maincourse = [
-            "id"            => $id,
-            "name"          => $input["name"] ?? "",
-            "description"   => $input["description"],
-            "price"         => $input["price"],
+            "id" => $id,
+            "name" => $input["name"] ?? "",
+            "description" => $input["description"] ?? "",
+            "price" => $input["price"] ?? "",
         ];
 
         $maincourses = self::list();
@@ -45,8 +45,8 @@ class MainCourse extends BaseClass {
     {
         $items = static::list();
 
-        foreach($items as &$item) {
-            if ($item['id'] === $id) {
+        foreach ($items as &$item) {
+            if ($item["id"] === $id) {
                 $item = $menu;
                 break;
             }
