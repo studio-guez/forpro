@@ -6,6 +6,14 @@ icon: food
 pages: false
 
 fields:
+
+  headline:
+    type: text
+    label: Baseline
+
+  line0:
+    type: line
+
   hero1:
     type: headline
     label: Héro 1
