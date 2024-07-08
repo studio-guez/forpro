@@ -71,12 +71,12 @@ return [
 
                     $json["hero"] = [
                         "btn1" => [
-                            "text" => $btnHero1->link()->toUrl(),
-                            "url" => $btnHero1->linkText()->value(),
+                            "link" => $btnHero1->link()->toUrl(),
+                            "text" => $btnHero1->linkText()->value(),
                         ],
                         "btn2" => [
-                            "text" => $btnHero2->link()->toUrl(),
-                            "url" => $btnHero2->linkText()->value(),
+                            "link" => $btnHero2->link()->toUrl(),
+                            "text" => $btnHero2->linkText()->value(),
                         ],
                         "pictureURL1" => $this->site()->picHero1()->toFile()
                             ? $this->site()->picHero1()->toFile()->url()
@@ -99,8 +99,8 @@ return [
                             ? $this->site()->fileFood1()->toFile()->url()
                             : "",
                         "btn" => [
-                            "text" => $btnFood->link()->toUrl(),
-                            "url" => $btnFood->linkText()->value(),
+                            "link" => $btnFood->link()->toUrl(),
+                            "text" => $btnFood->linkText()->value(),
                         ],
                     ];
 
@@ -113,8 +113,8 @@ return [
                             ? $this->site()->fileLab1()->toFile()->url()
                             : "",
                         "btn" => [
-                            "text" => $btnLab->link()->toUrl(),
-                            "url" => $btnLab->linkText()->value(),
+                            "link" => $btnLab->link()->toUrl(),
+                            "text" => $btnLab->linkText()->value(),
                         ],
                     ];
 
@@ -133,8 +133,8 @@ return [
                             ? $this->site()->fileFormation()->toFile()->url()
                             : "",
                         "btn" => [
-                            "text" => $btnFormation->link()->toUrl(),
-                            "url" => $btnFormation->linkText()->value(),
+                            "link" => $btnFormation->link()->toUrl(),
+                            "text" => $btnFormation->linkText()->value(),
                         ],
                     ];
 
