@@ -106,16 +106,16 @@ return [
                         "blogTitle1" => $this->site()
                             ->blogUniversTitle1()
                             ->value(),
-                        "blogPictureUrl1" => $this->site()->blogUniversFil1()->value(),
+                        "blogPictureUrl1" => $this->site()->blogUniversFil1()->toFile() ?
+                            $this->site()->blogUniversFil1()->toFile()->url() : '',
                         "blogText1" => $this->site()
                             ->blogUniversText1()
                             ->kt()->value(),
                         "blogTitle2" => $this->site()
                             ->blogUniversTitle2()
                             ->value(),
-                        "blogPictureUrl2" => $this->site()
-                            ->blogUniversFile2()
-                            ->value(),
+                        "blogPictureUrl2" => $this->site()->blogUniversFile2()->toFile() ?
+                            $this->site()->blogUniversFile2()->toFile()->url() : '',
                         "blogText2" => $this->site()
                             ->blogUniversText2()
                             ->kt()->value()
