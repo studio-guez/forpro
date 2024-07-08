@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MessDetectorOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCSFixerOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCodeSnifferOptionsConfiguration">
+    <option name="highlightLevel" value="WARNING" />
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/mpdf/psr-log-aware-trait" />
+      <path value="$PROJECT_DIR$/vendor/mpdf/mpdf" />
+      <path value="$PROJECT_DIR$/vendor/mpdf/psr-http-message-shim" />
+      <path value="$PROJECT_DIR$/vendor/league/color-extractor" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-escaper" />
+      <path value="$PROJECT_DIR$/vendor/michelf/php-smartypants" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/claviska/simpleimage" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/getkirby/composer-installer" />
+      <path value="$PROJECT_DIR$/vendor/setasign/fpdi" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/phpmailer/phpmailer" />
+      <path value="$PROJECT_DIR$/vendor/filp/whoops" />
+      <path value="$PROJECT_DIR$/vendor/christian-riesen/base32" />
+      <path value="$PROJECT_DIR$/kirby/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/kirby/vendor/filp/whoops" />
+      <path value="$PROJECT_DIR$/kirby/vendor/league/color-extractor" />
+      <path value="$PROJECT_DIR$/kirby/vendor/laminas/laminas-escaper" />
+      <path value="$PROJECT_DIR$/kirby/vendor/michelf/php-smartypants" />
+      <path value="$PROJECT_DIR$/kirby/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/kirby/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/kirby/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/kirby/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/kirby/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/kirby/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/kirby/vendor/claviska/simpleimage" />
+      <path value="$PROJECT_DIR$/kirby/vendor/composer" />
+      <path value="$PROJECT_DIR$/kirby/vendor/phpmailer/phpmailer" />
+      <path value="$PROJECT_DIR$/kirby/vendor/christian-riesen/base32" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/eluceo/ical" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/getkirby/composer-installer" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/paragonie/constant_time_encoding" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/google/apiclient-services" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/google/auth" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/google/apiclient" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/composer" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-calendars/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/league/flysystem-local" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/league/glide" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/getkirby/composer-installer" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/intervention/image" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/mpdf/mpdf" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/spatie/image-optimizer" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/mpdf/psr-log-aware-trait" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/spatie/browsershot" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/mpdf/psr-http-message-shim" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/spatie/temporary-directory" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/spatie/image" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/setasign/fpdi" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/nuzkito/chrome-html-to-pdf" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/composer" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-foodlab/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-seo/vendor/spatie/schema-org" />
+      <path value="$PROJECT_DIR$/site/plugins/kirby-seo/vendor/composer" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
+  <component name="PhpStanOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PsalmOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+</project>
