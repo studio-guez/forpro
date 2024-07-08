@@ -158,10 +158,15 @@
                 margin-top: 0;
             }
 
+            .columns .left .content {
+                font-size: 10pt;
+            }
+
             .columns .origin {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 margin-top: 3px;
+                font-size: 10pt;
             }
 
             #overlay {
