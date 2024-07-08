@@ -23,8 +23,8 @@ class Starter extends BaseClass {
         $starter = [
             "id"            => $id,
             "name"          => $input["name"] ?? "",
-            "description"   => $input["description"],
-            "price"         => $input["price"],
+            "description"   => $input["description"] ?? "",
+            "price"         => $input["price"] ?? "",
         ];
 
         $starters = self::list();

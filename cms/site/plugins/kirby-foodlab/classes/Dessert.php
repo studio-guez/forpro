@@ -23,8 +23,8 @@ class Dessert extends BaseClass {
         $dessert = [
             "id"            => $id,
             "name"          => $input["name"] ?? "",
-            "description"   => $input["description"],
-            "price"         => $input["price"],
+            "description"   => $input["description"] ?? "",
+            "price"         => $input["price"] ?? "",
         ];
 
         $desserts = self::list();
