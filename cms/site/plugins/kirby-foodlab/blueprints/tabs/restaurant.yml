@@ -152,8 +152,8 @@ fields:
     width: 1/2
 
   blogUniversFil1:
-    label: Title
-    type: text
+    label: Illustration
+    type: files
     width: 1/2
 
   blogUniversText1:
@@ -167,8 +167,8 @@ fields:
     width: 1/2
 
   blogUniversFile2:
-    label: Title
-    type: text
+    label: Illustration
+    type: files
     width: 1/2
 
   blogUniversText2:
