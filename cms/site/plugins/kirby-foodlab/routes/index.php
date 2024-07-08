@@ -65,20 +65,20 @@ return [
                         "picHero1" => $this->site()->picHero1()->toFile() ? $this->site()->picHero1()->toFile()->url() : '',
                         "picHero2" => $this->site()->picHero2()->toFile() ? $this->site()->picHero2()->toFile()->url() : '',
                         "picHero3" => $this->site()->picHero3()->toFile() ? $this->site()->picHero3()->toFile()->url() : '',
-                        "textHero1" => $this->site()->textHero1()->value(),
+                        "textHero1" => $this->site()->textHero1()->kt()->value(),
                     ];
 
                     $json["food"] = [
 
                         "titleFood" => $this->site()->titleFood()->value(),
-                        "textFood" => $this->site()->textFood()->value(),
+                        "textFood" => $this->site()->textFood()->kt()->value(),
                         "fileFood1" => $this->site()->fileFood1()->toFile() ? $this->site()->fileFood1()->toFile()->url() : '',
                         "btnFood" => $this->site()->btnFood()->value()
                     ];
 
                     $json["lab"] = [
                         "titleLab" => $this->site()->titleLab()->value(),
-                        "textLab" => $this->site()->textLab()->value(),
+                        "textLab" => $this->site()->textLab()->kt()->value(),
                         "fileLab1" => $this->site()->fileLab1()->toFile() ? $this->site()->fileLab1()->url() : '',
                         "btnLab" => $this->site()->btnLab()->value()
                     ];
@@ -89,7 +89,7 @@ return [
 
                     $json["formation"] = [
                         "titleFormation" => $this->site()->titleFormation()->value(),
-                        "textFormation" => $this->site()->textFormation()->value(),
+                        "textFormation" => $this->site()->textFormation()->kt()->value(),
                         "fileFormation" => $this->site()
                             ->fileFormation()
                             ->toFile() ? $this->site()->fileFormation()->toFile()->url() : '',
@@ -105,7 +105,7 @@ return [
                         "blogUniversFil1" => $this->site()->blogUniversFil1()->value(),
                         "blogUniversText1" => $this->site()
                             ->blogUniversText1()
-                            ->value(),
+                            ->kt()->value(),
                         "blogUniversTitle2" => $this->site()
                             ->blogUniversTitle2()
                             ->value(),
@@ -114,7 +114,7 @@ return [
                             ->value(),
                         "blogUniversText2" => $this->site()
                             ->blogUniversText2()
-                            ->value()
+                            ->kt()->value()
                     ];
 
                     $json["values"] = [
@@ -128,9 +128,9 @@ return [
 
                     $json["footer"] = [
                         "footerHeadline" => $this->site()->footerHeadline()->value(),
-                        "textFooter1" => $this->site()->textFooter1()->value(),
-                        "textFooter2" => $this->site()->textFooter2()->value(),
-                        "textFooter3" => $this->site()->textFooter3()->value(),
+                        "textFooter1" => $this->site()->textFooter1()->kt()->value(),
+                        "textFooter2" => $this->site()->textFooter2()->kt()->value(),
+                        "textFooter3" => $this->site()->textFooter3()->kt()->value(),
                         "btnFooter1" => $this->site()->btnFooter1()->value(),
                         "btnFooter2" => $this->site()->btnFooter2()->value()
                     ];
