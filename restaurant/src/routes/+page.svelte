@@ -39,12 +39,13 @@
 				style:background-position="center"
 				style:background-size="cover"
 			>
-				<button
+				<a
+					href={data.page.hero.btn1.link}
 					type="button"
 					class="absolute bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 				>
-					{data.page.hero.btn1}
-				</button>
+					{data.page.hero.btn1.text}
+				</a>
 			</div>
 
 			<!-- Logo Rounded -->
@@ -68,12 +69,13 @@
 				style:background-position="center"
 				style:background-size="cover"
 			>
-				<button
+				<a
+					href={data.page.hero.btn2.link}
 					type="button"
 					class="absolute -top-3 right-10 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 				>
-					{data.page.hero.btn2}
-				</button>
+					{data.page.hero.btn2.text}
+				</a>
 			</div>
 		</div>
 
@@ -100,12 +102,13 @@
 					{@html data.page.food.text}
 				</div>
 
-				<button
+				<a
+					href={data.page.food.btn.link}
 					type="button"
 					class="mt-10 rounded-full bg-white px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 				>
-					{data.page.food.btn}
-				</button>
+					{data.page.food.btn.text}
+				</a>
 			</div>
 
 			<!-- Image -->
@@ -142,12 +145,13 @@
 					{@html data.page.lab.text}
 				</div>
 				<div class="align-bottom h-full">
-					<button
+					<a
+						href={data.page.lab.btn.link}
 						type="button"
 						class="relative lg:ml-10 mt-10 rounded-full bg-white px-5 lg:px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 					>
-						{data.page.lab.btn}
-					</button>
+						{data.page.lab.btn.text}
+					</a>
 				</div>
 			</div>
 		</div>
@@ -186,12 +190,13 @@
 					<span>{@html data.page.formation.text}</span>
 				</div>
 
-				<button
+				<a
+					href={data.page.formation.btn.link}
 					type="button"
 					class="mt-10 rounded-full bg-secondary px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 				>
-					<span>{data.page.formation.btn}</span>
-				</button>
+					<span>{data.page.formation.btn.text}</span>
+				</a>
 			</div>
 
 			<!-- Image -->
@@ -334,37 +339,31 @@
 		</div>
 
 		<div class="col-span-1 w-full">
-			<p class="text-center lg:text-left text-primary w-full font-bold">
-				Lundi au vendredi<br />
-				12h — 14h<br />
-				19 — 21h<br />
-				Fermé le week-end <br /> <br /> +41 xx xxx xx xx <br /> bienvenue@foodlab-forpro.ch
-				<br />
-			</p>
+			<div class="prose-sm leading-4 text-center lg:text-left text-primary w-full font-bold">
+				{@html data.page.footer.text1}
+			</div>
 			<div class="justify-center lg:justify-normal mt-10 grid space-y-5">
-				<button
+				<a
+					href={data.page.footer.btn1.link}
 					type="button"
-					class="rounded-full w-36 bg-primary px-6 py-1 text-sm font-semibold text-secondary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					class="rounded-full text-center w-36 bg-primary px-6 py-1 text-sm font-semibold text-secondary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 				>
-					Menu
-				</button>
-				<button
+					{data.page.footer.btn1.text}
+				</a>
+				<a
+					href={data.page.footer.btn2.link}
 					type="button"
-					class="rounded-full w-36 bg-primary px-6 py-1 text-sm font-semibold text-secondary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					class="rounded-full text-center w-36 bg-primary px-6 py-1 text-sm font-semibold text-secondary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 				>
-					Je réserve
-				</button>
+					{data.page.footer.btn2.text}
+				</a>
 			</div>
 		</div>
 
 		<div class="mt-10 text-center lg:text-left col-span-1 lg:col-span-2 lg:row-start-2">
-			<p class="text-primary font-bold">
-				FoodLab c/o ForPro (6e étage) <br /><br /> Route de la Galaise 15b, 1228 Plan-les-Ouates
-				<br /><br />En transports publics: <br />Tram 15, arrêt: Plan-les-Ouates <br />ZIPLO Bus 48
-				& 82 arrêt: Plan-les-Ouates<br />ZIPLO - Bus 80 & 272 arrêt: Plan-les-Ouates, Galaise
-				<br /><br />
-				En voiture: <br />Parking public de l’Espace Tourbillon (payant)
-			</p>
+			<div class="prose-sm leading-4 text-primary font-bold">
+				{@html data.page.footer.text2}
+			</div>
 		</div>
 
 		<div
@@ -374,15 +373,9 @@
 				class="hidden absolute -left-14 -top-12 -rotate-12 w-36 lg:block"
 				src="/badge_footer.svg"
 			/>
-			<p class="my-5 text-primary text-xs">
-				Le FoodLab est un des 6 labs dédiés à la formation professionnelle au sein du cam- pus
-				ForPro. La fondation ForPro a pour but.... Le Food- Lab est un des 6 labs dédiés à la
-				formation professionnelle au sein du campus ForPro. La fondation ForPro a pour but.... Le
-				Food- Lab est un des 6 labs dédiés à la formation professionnelle au sein du campus ForPro.
-				La fondation ForPro a pour but.... Le Food- Lab est un des 6 labs dédiés à la formation
-				professionnelle au sein du campus ForPro. La fondation ForPro a pour but.... Le Food- Lab
-				est un des 6 labs dédiés à la formation profession
-			</p>
+			<div class="prose-sm my-5 text-primary text-xs">
+				{@html data.page.footer.text3}
+			</div>
 			<img src="/footer_logo_2.svg" class="w-44" />
 		</div>
 	</div>
