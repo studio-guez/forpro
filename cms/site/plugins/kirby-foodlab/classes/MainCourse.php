@@ -23,8 +23,8 @@ class MainCourse extends BaseClass {
         $maincourse = [
             "id"            => $id,
             "name"          => $input["name"] ?? "",
-            "description"   => $input["description"],
-            "price"         => $input["price"],
+            "description"   => $input["description"] ?? "",
+            "price"         => $input["price"] ?? "",
         ];
 
         $maincourses = self::list();

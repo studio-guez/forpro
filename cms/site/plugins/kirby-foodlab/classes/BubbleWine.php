@@ -23,11 +23,11 @@ class BubbleWine extends BaseClass {
         $bubbleWine = [
             "id"            => $id,
             "name"          => $input["name"] ?? "",
-            "description"   => $input["description"],
-            "domain"        => $input["domain"],
-            "mill"          => $input["mill"],
-            "price10cl"     => $input["price10cl"],
-            "price75cl"     => $input["price75cl"],
+            "description"   => $input["description"] ?? "",
+            "domain"        => $input["domain"] ?? "",
+            "mill"          => $input["mill"] ?? "",
+            "price10cl"     => $input["price10cl"] ?? "",
+            "price75cl"     => $input["price75cl"] ?? "",
         ];
 
         $bubbleWines = self::list();
