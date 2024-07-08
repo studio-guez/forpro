@@ -112,7 +112,7 @@
 	</div>
 </section>
 
-<section class="relative mt-20 w-full">
+<section id="lefood" class="relative mt-20 w-full">
 	<!-- Background -->
 	<img class="absolute z-10 -left-10 -top-10 lg:-left-10 lg:-top-10 lg:w-3/5" src="/bg_2_1.svg" />
 
@@ -151,7 +151,7 @@
 	</div>
 </section>
 
-<section class="relative mt-32 pb-20 bg-background w-full min-h-72">
+<section id="lelab" class="relative mt-32 pb-20 bg-background w-full min-h-72">
 	<!-- Container -->
 	<div class="grid grid-cols-1 lg:grid-cols-12 h-full w-full">
 		<!-- Title -->
@@ -202,7 +202,7 @@
 	></div>
 </section>
 
-<section class="pb-20 rounded-3xl bg-primary relative w-full">
+<section id="equipe-formation" class="pb-20 rounded-3xl bg-primary relative w-full">
 	<!-- Container -->
 	<div class="lg:grid lg:grid-cols-12 h-full w-full">
 		<!-- Title -->
@@ -239,7 +239,7 @@
 	</div>
 </section>
 
-<section class="px-5 lg:px-0 relative mt-20 pb-20 bg-background w-full">
+<section id="foodcourt-popup-cafe" class="px-5 lg:px-0 relative mt-20 pb-20 bg-background w-full">
 	<!-- Container -->
 	<div class="z-20 lg:grid lg:grid-cols-12 h-full w-full relative">
 		<!-- Title -->
@@ -327,7 +327,7 @@
 	/>
 </section>
 
-<section class="pb-20 rounded-3xl bg-primary relative w-full">
+<section id="engagements" class="pb-20 rounded-3xl bg-primary relative w-full">
 	<!-- Container -->
 	<div class="lg:px-36 grid h-full w-full">
 		<!-- Title -->
