@@ -6,26 +6,34 @@ icon: food
 pages: false
 
 fields:
-
   headline:
     type: text
     label: Baseline
-
-  line0:
-    type: line
 
   hero1:
     type: headline
     label: Héro 1
 
   btnHero1:
-    label: Action 1
-    type: text
+    type: object
+    fields:
+      link:
+        label: url
+        type: link
+      linkText:
+        label: Texte
+        type: text
     width: 1/2
 
   btnHero2:
-    label: Action 2
-    type: text
+    type: object
+    fields:
+      link:
+        label: url
+        type: link
+      linkText:
+        label: Texte
+        type: text
     width: 1/2
 
   picHero1:
@@ -71,8 +79,14 @@ fields:
     width: 1/2
 
   btnFood:
-    label: Action 1
-    type: text
+    type: object
+    fields:
+      link:
+        label: url
+        type: link
+      linkText:
+        label: Texte
+        type: text
     width: 1/2
 
   line2:
@@ -98,8 +112,14 @@ fields:
     width: 1/2
 
   btnLab:
-    label: Action 1
-    type: text
+    type: object
+    fields:
+      link:
+        label: url
+        type: link
+      linkText:
+        label: Texte
+        type: text
     width: 1/2
 
   line3:
@@ -133,8 +153,14 @@ fields:
     width: 1/2
 
   btnFormation:
-    label: Action 1
-    type: text
+    type: object
+    fields:
+      link:
+        label: url
+        type: link
+      linkText:
+        label: Texte
+        type: text
     width: 1/2
 
   line5:
@@ -235,11 +261,23 @@ fields:
     width: 1/2
 
   btnFooter1:
-    label: Action 1
-    type: text
+    type: object
+    fields:
+      link:
+        label: url
+        type: link
+      linkText:
+        label: Texte
+        type: text
     width: 1/2
 
   btnFooter2:
-    label: Action 2
-    type: text
+    type: object
+    fields:
+      link:
+        label: url
+        type: link
+      linkText:
+        label: Texte
+        type: text
     width: 1/2
