@@ -28,6 +28,11 @@ class BaseClass
         return Metadata::get(static::name(), 'name');
     }
 
+    public static function hide(): bool
+    {
+        return Metadata::get(static::name(), 'hidden') == 1;
+    }
+
     /**
      * Deletes an event by event id
      *
