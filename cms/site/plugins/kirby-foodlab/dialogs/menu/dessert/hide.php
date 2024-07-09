@@ -4,12 +4,12 @@ use MediumSans\Menu\Metadata;
 use MediumSans\Menu\Dessert;
 
 return [
-    'pattern' => 'menu/hotdrink/hide',
+    'pattern' => 'menu/dessert/hide',
     'load' => function () {
         return [
             'component' => 'k-text-dialog',
             'props' => [
-                'text' => 'Rendre cette section invisible ?',
+                'text' => 'Rendre cette section invisible/visible ?',
             ]
         ];
     },

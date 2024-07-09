@@ -9,7 +9,7 @@ return [
         return [
             'component' => 'k-text-dialog',
             'props' => [
-                'text' => 'Rendre cette section invisible ?',
+                'text' => 'Rendre cette section invisible/visible ?',
             ]
         ];
     },
