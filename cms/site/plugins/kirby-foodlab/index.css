@@ -1,4 +1,6 @@
 
-.k-table.k-calendar {
-    table-layout: fixed;
+[data-theme^="green"],
+[data-theme^="positive"] {
+    color: black;
+    background-color: hsl(80, 60%, calc(80% + -2.5%)) !important;
 }
