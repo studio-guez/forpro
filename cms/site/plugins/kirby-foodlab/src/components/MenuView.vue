@@ -65,18 +65,28 @@
         <k-bar>
             <div>
                 <k-text>
-                    <h4>Entrées</h4>
+                    <h4>{{startersTitle}}</h4>
                 </k-text>
             </div>
-            <div></div>
             <div>
+              <k-button-group layout="collapsed">
+                <k-button variant="filled"
+                          :tooltip="startersShowHide ? 'Afficher' : 'Cacher' "
+                          :icon="startersShowHide ? 'hidden' : 'preview'"
+                          @click="$dialog('/menu/starter/hide')"
+                />
+                <k-button variant="filled"
+                          icon="edit"
+                          @click="$dialog('/menu/starter/title')"
+                />
                 <k-button
                     variant="filled"
                     icon="plus"
                     @click="$dialog('/menu/starter/create')"
                 >
-                    Ajouter
+                  Ajouter
                 </k-button>
+              </k-button-group>
             </div>
         </k-bar>
 
@@ -135,18 +145,29 @@
         <k-bar>
             <div>
                 <k-text>
-                    <h4>Plats principaux</h4>
+                  <h4>{{mainCoursesTitle}}</h4>
                 </k-text>
             </div>
             <div></div>
             <div>
+              <k-button-group layout="collapsed">
+                <k-button variant="filled"
+                          :tooltip="mainCoursesShowHide ? 'Afficher' : 'Cacher' "
+                          :icon="mainCoursesShowHide ? 'hidden' : 'preview'"
+                          @click="$dialog('/menu/maincourse/hide')"
+                />
+                <k-button variant="filled"
+                          icon="edit"
+                          @click="$dialog('/menu/maincourse/title')"
+                />
                 <k-button
                     variant="filled"
                     icon="plus"
                     @click="$dialog('/menu/maincourse/create')"
                 >
-                    Ajouter
+                  Ajouter
                 </k-button>
+              </k-button-group>
             </div>
         </k-bar>
 
@@ -207,18 +228,29 @@
         <k-bar>
             <div>
                 <k-text>
-                    <h4>Desserts</h4>
+                  <h4>{{dessertsTitle}}</h4>
                 </k-text>
             </div>
             <div></div>
             <div>
+              <k-button-group layout="collapsed">
+                <k-button variant="filled"
+                          :tooltip="dessertsShowHide ? 'Afficher' : 'Cacher' "
+                          :icon="dessertsShowHide ? 'hidden' : 'preview'"
+                          @click="$dialog('/menu/dessert/hide')"
+                />
+                <k-button variant="filled"
+                          icon="edit"
+                          @click="$dialog('/menu/dessert/title')"
+                />
                 <k-button
                     variant="filled"
                     icon="plus"
                     @click="$dialog('/menu/dessert/create')"
                 >
-                    Ajouter
+                  Ajouter
                 </k-button>
+              </k-button-group>
             </div>
         </k-bar>
 
@@ -277,18 +309,29 @@
         <k-bar>
             <div>
                 <k-text>
-                    <h4>Vins Pétillants</h4>
+                  <h4>{{bubbleWinesTitle}}</h4>
                 </k-text>
             </div>
             <div></div>
             <div>
+              <k-button-group layout="collapsed">
+                <k-button variant="filled"
+                          :tooltip="bubbleWinesShowHide ? 'Afficher' : 'Cacher' "
+                          :icon="bubbleWinesShowHide ? 'hidden' : 'preview'"
+                          @click="$dialog('/menu/bubblewine/hide')"
+                />
+                <k-button variant="filled"
+                          icon="edit"
+                          @click="$dialog('/menu/bubblewine/title')"
+                />
                 <k-button
                     variant="filled"
                     icon="plus"
                     @click="$dialog('/menu/bubblewine/create')"
                 >
-                    Ajouter
+                  Ajouter
                 </k-button>
+              </k-button-group>
             </div>
         </k-bar>
 
@@ -357,18 +400,29 @@
         <k-bar>
             <div>
                 <k-text>
-                    <h4>Vins Blancs</h4>
+                  <h4>{{whiteWinesTitle}}</h4>
                 </k-text>
             </div>
             <div></div>
             <div>
+              <k-button-group layout="collapsed">
+                <k-button variant="filled"
+                          :tooltip="whiteWinesShowHide ? 'Afficher' : 'Cacher' "
+                          :icon="whiteWinesShowHide ? 'hidden' : 'preview'"
+                          @click="$dialog('/menu/whitewine/hide')"
+                />
+                <k-button variant="filled"
+                          icon="edit"
+                          @click="$dialog('/menu/whitewine/title')"
+                />
                 <k-button
                     variant="filled"
                     icon="plus"
                     @click="$dialog('/menu/whitewine/create')"
                 >
-                    Ajouter
+                  Ajouter
                 </k-button>
+              </k-button-group>
             </div>
         </k-bar>
 
@@ -437,18 +491,29 @@
         <k-bar>
             <div>
                 <k-text>
-                    <h4>Vins Rouges</h4>
+                  <h4>{{redWinesTitle}}</h4>
                 </k-text>
             </div>
             <div></div>
             <div>
+              <k-button-group layout="collapsed">
+                <k-button variant="filled"
+                          :tooltip="redWinesShowHide ? 'Afficher' : 'Cacher' "
+                          :icon="redWinesShowHide ? 'hidden' : 'preview'"
+                          @click="$dialog('/menu/redwine/hide')"
+                />
+                <k-button variant="filled"
+                          icon="edit"
+                          @click="$dialog('/menu/redwine/title')"
+                />
                 <k-button
                     variant="filled"
                     icon="plus"
                     @click="$dialog('/menu/redwine/create')"
                 >
-                    Ajouter
+                  Ajouter
                 </k-button>
+              </k-button-group>
             </div>
         </k-bar>
 
@@ -515,18 +580,29 @@
         <k-bar>
             <div>
                 <k-text>
-                    <h4>Boissons froides</h4>
+                  <h4>{{softDrinksTitle}}</h4>
                 </k-text>
             </div>
             <div></div>
             <div>
+              <k-button-group layout="collapsed">
+                <k-button variant="filled"
+                          :tooltip="softDrinksShowHide ? 'Afficher' : 'Cacher' "
+                          :icon="softDrinksShowHide ? 'hidden' : 'preview'"
+                          @click="$dialog('/menu/softdrink/hide')"
+                />
+                <k-button variant="filled"
+                          icon="edit"
+                          @click="$dialog('/menu/softdrink/title')"
+                />
                 <k-button
                     variant="filled"
                     icon="plus"
                     @click="$dialog('/menu/softdrink/create')"
                 >
-                    Ajouter
+                  Ajouter
                 </k-button>
+              </k-button-group>
             </div>
         </k-bar>
 
@@ -589,18 +665,29 @@
         <k-bar>
             <div>
                 <k-text>
-                    <h4>Bières</h4>
+                  <h4>{{beersTitle}}</h4>
                 </k-text>
             </div>
             <div></div>
             <div>
+              <k-button-group layout="collapsed">
+                <k-button variant="filled"
+                          :tooltip="beersShowHide ? 'Afficher' : 'Cacher' "
+                          :icon="beersShowHide ? 'hidden' : 'preview'"
+                          @click="$dialog('/menu/beer/hide')"
+                />
+                <k-button variant="filled"
+                          icon="edit"
+                          @click="$dialog('/menu/beer/title')"
+                />
                 <k-button
                     variant="filled"
                     icon="plus"
                     @click="$dialog('/menu/beer/create')"
                 >
-                    Ajouter
+                  Ajouter
                 </k-button>
+              </k-button-group>
             </div>
         </k-bar>
 
@@ -659,18 +746,29 @@
         <k-bar>
             <div>
                 <k-text>
-                    <h4>Apéritives et digestives</h4>
+                  <h4>{{cocktailsTitle}}</h4>
                 </k-text>
             </div>
             <div></div>
             <div>
+              <k-button-group layout="collapsed">
+                <k-button variant="filled"
+                          :tooltip="cocktailsShowHide ? 'Afficher' : 'Cacher' "
+                          :icon="cocktailsShowHide ? 'hidden' : 'preview'"
+                          @click="$dialog('/menu/cocktail/hide')"
+                />
+                <k-button variant="filled"
+                          icon="edit"
+                          @click="$dialog('/menu/cocktail/title')"
+                />
                 <k-button
                     variant="filled"
                     icon="plus"
                     @click="$dialog('/menu/cocktail/create')"
                 >
-                    Ajouter
+                  Ajouter
                 </k-button>
+              </k-button-group>
             </div>
         </k-bar>
 
@@ -733,18 +831,29 @@
         <k-bar>
             <div>
                 <k-text>
-                    <h4>Boissons Chaudes</h4>
+                  <h4>{{hotDrinksTitle}}</h4>
                 </k-text>
             </div>
             <div></div>
             <div>
+              <k-button-group layout="collapsed">
+                <k-button variant="filled"
+                          :tooltip="hotDrinksShowHide ? 'Afficher' : 'Cacher' "
+                          :icon="hotDrinksShowHide ? 'hidden' : 'preview'"
+                          @click="$dialog('/menu/hotdrink/hide')"
+                />
+                <k-button variant="filled"
+                          icon="edit"
+                          @click="$dialog('/menu/hotdrink/title')"
+                />
                 <k-button
                     variant="filled"
                     icon="plus"
                     @click="$dialog('/menu/hotdrink/create')"
                 >
-                    Ajouter
+                  Ajouter
                 </k-button>
+              </k-button-group>
             </div>
         </k-bar>
 
@@ -810,15 +919,35 @@
 export default {
     props: {
         mainCourses: Array,
+        mainCoursesShowHide: Boolean,
+        mainCoursesTitle: String,
         starters: Array,
+        startersShowHide: Boolean,
+        startersTitle: String,
         desserts: Array,
+        dessertsShowHide: Boolean,
+        dessertsTitle: String,
         bubbleWines: Array,
+        bubbleWinesShowHide: Boolean,
+        bubbleWinesTitle: String,
         whiteWines: Array,
+        whiteWinesShowHide: Boolean,
+        whiteWinesTitle: String,
         redWines: Array,
+        redWinesShowHide: Boolean,
+        redWinesTitle: String,
         softDrinks: Array,
+        softDrinksShowHide: Boolean,
+        softDrinksTitle: String,
         beers: Array,
+        beersShowHide: Boolean,
+        beersTitle: String,
         cocktails: Array,
+        cocktailsShowHide: Boolean,
+        cocktailsTitle: String,
         hotDrinks: Array,
+        hotDrinksShowHide: Boolean,
+        hotDrinksTitle: String,
         textTitle1: String,
         textSubtitle1: String,
         textContent1: String,
