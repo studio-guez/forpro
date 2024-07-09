@@ -4,12 +4,12 @@ use MediumSans\Menu\Metadata;
 use MediumSans\Menu\WhiteWine;
 
 return [
-    'pattern' => 'menu/WhiteWine/hide',
+    'pattern' => 'menu/whitewine/hide',
     'load' => function () {
         return [
             'component' => 'k-text-dialog',
             'props' => [
-                'text' => 'Rendre cette section invisible ?',
+                'text' => 'Rendre cette section invisible/visible ?',
             ]
         ];
     },
