@@ -14,9 +14,9 @@ use MediumSans\Menu\SoftDrink;
 use MediumSans\Menu\Starter;
 use MediumSans\Menu\WhiteWine;
 
-class Menu extends BaseClass {
-
-    const FILENAME = 'menu.json';
+class Menu extends BaseClass
+{
+    const FILENAME = "menu.json";
 
     public static function get(): array
     {
@@ -33,22 +33,21 @@ class Menu extends BaseClass {
         $menu = self::list();
 
         $data = [
-            'starters' => $starters,
-            'mainCourses' => $mainCourses,
-            'desserts' => $desserts,
-            'redWines' => $redWines,
-            'whiteWines' => $whiteWines,
-            'bubbleWines' => $bubbleWines,
-            'softDrinks' => $softDrinks,
-            'beers' => $beers,
-            'cocktails' => $cocktails,
-            'hotDrinks' => $hotDrinks,
-            'menu' => $menu,
+            "starters" => $starters,
+            "mainCourses" => $mainCourses,
+            "desserts" => $desserts,
+            "redWines" => $redWines,
+            "whiteWines" => $whiteWines,
+            "bubbleWines" => $bubbleWines,
+            "softDrinks" => $softDrinks,
+            "beers" => $beers,
+            "cocktails" => $cocktails,
+            "hotDrinks" => $hotDrinks,
+            "menu" => $menu,
         ];
 
         return $data;
     }
-
 
     /**
      * Creates a new menu with the given $input
@@ -64,13 +63,17 @@ class Menu extends BaseClass {
         $menu = self::list();
 
         $menu = [
-            "id"              => $id,
-            "textTitle1"      => $input["textTitle1"]     ?? $menu["textTitle1"] ?? "",
-            "textSubtitle1"   => $input["textSubtitle1"]  ?? $menu["textSubtitle1"] ?? "",
-            "textContent1"    => $input["textContent1"]   ?? $menu["textContent1"] ?? "",
-            "textTitle2"      => $input["textTitle2"]     ?? $menu["textTitle2"] ?? "",
-            "textSubtitle2"   => $input["textSubtitle2"]  ?? $menu["textSubtitle2"] ?? "",
-            "textContent2"    => $input["textContent2"]   ?? $menu["textContent2"] ?? "",
+            "id" => $id,
+            "textTitle1" => $input["textTitle1"] ?? ($menu["textTitle1"] ?? ""),
+            "textSubtitle1" =>
+                $input["textSubtitle1"] ?? ($menu["textSubtitle1"] ?? ""),
+            "textContent1" =>
+                $input["textContent1"] ?? ($menu["textContent1"] ?? ""),
+            "textTitle2" => $input["textTitle2"] ?? ($menu["textTitle2"] ?? ""),
+            "textSubtitle2" =>
+                $input["textSubtitle2"] ?? ($menu["textSubtitle2"] ?? ""),
+            "textContent2" =>
+                $input["textContent2"] ?? ($menu["textContent2"] ?? ""),
         ];
 
         return Data::write(static::file(), $menu);
@@ -86,5 +89,22 @@ class Menu extends BaseClass {
     public static function update(array $menu): bool
     {
         return Data::write(static::file(), $menu);
+    }
+
+    public static function reorderData(string $category, array $data): bool
+    {
+        return match ($category) {
+            "starters" => Starter::reorder($data),
+            "mainCourses" => MainCourse::reorder($data),
+            "desserts" => Dessert::reorder($data),
+            "redWines" => RedWine::reorder($data),
+            "whiteWines" => WhiteWine::reorder($data),
+            "bubbleWines" => BubbleWine::reorder($data),
+            "softDrinks" => SoftDrink::reorder($data),
+            "beers" => Beer::reorder($data),
+            "cocktails" => Cocktail::reorder($data),
+            "hotDrinks" => HotDrink::reorder($data),
+            default => false,
+        };
     }
 }
