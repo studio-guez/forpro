@@ -301,6 +301,7 @@
                     <th>Millésime</th>
                     <th>Description</th>
                     <th>10cl</th>
+                    <th>50cl</th>
                     <th>75cl</th>
                     <th class="k-table-options-column"></th>
                 </tr>
@@ -325,6 +326,7 @@
                     <td>{{ item.mill }}</td>
                     <td>{{ item.description }}</td>
                     <td>{{ item.price10cl }}</td>
+                    <td>{{ item.price50cl }}</td>
                     <td>{{ item.price75cl }}</td>
                     <td class="k-table-options-column">
                         <k-options-dropdown
@@ -379,6 +381,7 @@
                     <th>Millésime</th>
                     <th>Description</th>
                     <th>10cl</th>
+                    <th>50cl</th>
                     <th>75cl</th>
                     <th class="k-table-options-column"></th>
                 </tr>
@@ -403,6 +406,7 @@
                     <td>{{ item.mill }}</td>
                     <td>{{ item.description }}</td>
                     <td>{{ item.price10cl }}</td>
+                    <td>{{ item.price50cl }}</td>
                     <td>{{ item.price75cl }}</td>
                     <td class="k-table-options-column">
                         <k-options-dropdown
@@ -457,6 +461,7 @@
                     <th>Millésime</th>
                     <th>Description</th>
                     <th>10cl</th>
+                    <th>50cl</th>
                     <th>75cl</th>
                     <th class="k-table-options-column"></th>
                 </tr>
@@ -481,6 +486,7 @@
                     <td>{{ item.mill }}</td>
                     <td>{{ item.description }}</td>
                     <td>{{ item.price10cl }}</td>
+                    <td>{{ item.price50cl }}</td>
                     <td>{{ item.price75cl }}</td>
                     <td class="k-table-options-column">
                         <k-options-dropdown
