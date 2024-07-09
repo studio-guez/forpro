@@ -394,7 +394,7 @@
         <div class="page">
             <div class="section">
                 <h2>Carte des mets</h2>
-                <h4>ENTRÉES</h4>
+                <h4><?= $startersTitle ?></h4>
                 <?php foreach ($starters[0] as $starter): ?>
                 <div class="item">
                     <span class="name"><?= $starter["name"] ?></Salade></span>
@@ -406,12 +406,12 @@
                 <?php endforeach; ?>
             </div>
             <div class="section">
-                <h4>PLATS</h4>
+                <h4><?= $mainCoursesTitle ?></h4>
                 <?php foreach ($mainCourses[0] as $mainCourse): ?>
                 <div class="item">
                     <span class="name"><?= $mainCourse[
                         "name"
-                    ] ?></Salade></span>
+                    ] ?></span>
                     <span class="price"><?= $mainCourse["price"] ?></span>
                     <p class="description">
                         <?= $mainCourse["description"] ?>
@@ -420,7 +420,7 @@
                 <?php endforeach; ?>
             </div>
             <div class="section">
-                <h4>DESSERTS</h4>
+                <h4><?= $dessertsTitle ?></h4>
                 <?php foreach ($desserts[0] as $dessert): ?>
                 <div class="item">
                     <span class="name"><?= $dessert["name"] ?></Salade></span>
@@ -563,7 +563,10 @@
                     "
                 >
                     <tr>
-                        <th style="width: 80%; text-align: left; font-weight: 500;">BULLES</th>
+                        <th style="width: 80%; text-align: left; font-weight: 500;">
+                            <?= $bubbleWinesTitle ?>
+                        </h4>
+                        </th>
                         <th
                             style="
                                 width: 10px;
@@ -625,7 +628,9 @@
                     "
                 >
                     <tr>
-                        <th style="width: 80%; text-align: left; font-weight: 500;">BLANC</th>
+                        <th style="width: 80%; text-align: left; font-weight: 500;">
+                            <?= $whiteWinesTitle ?>
+                        </th>
                         <th
                             style="
                                 width: 10px;
@@ -687,7 +692,9 @@
                     "
                 >
                     <tr>
-                        <th style="width: 80%; text-align: left;font-weight: 500;">ROUGE</th>
+                        <th style="width: 80%; text-align: left;font-weight: 500;">
+                            <?= $redWinesTitle ?>
+                        </th>
                         <th
                             style="
                                 width: 10px;
@@ -863,7 +870,7 @@
                 >
                     <tr>
                         <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">
-                            BOISSONS FROIDES
+                            <?= $softDrinksTitle ?>
                         </th>
                         <th
                             style="
@@ -910,7 +917,9 @@
                     "
                 >
                     <tr>
-                        <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">BIÈRES</th>
+                        <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">
+                            <?= $beersTitle ?>
+                        </th>
                         <th
                             style="
                                 width: 10%;
@@ -957,7 +966,7 @@
                 >
                     <tr>
                         <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">
-                            APÉRITIVES ET DIGESTIVES
+                            <?= $cocktailsTitle ?>
                         </th>
                         <th
                             style="
@@ -1005,7 +1014,7 @@
                 >
                     <tr>
                         <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">
-                            BOISSONS CHAUDES
+                            <?= $hotDrinksTitle ?>
                         </th>
                         <th
                             style="
