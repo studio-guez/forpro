@@ -22,47 +22,87 @@ class Menu extends BaseClass
     {
         $starters[] = Starter::list();
         $startersTitle = Starter::title();
+        $startersHidden = Starter::hide();
+
         $mainCourses[] = MainCourse::list();
         $mainCoursesTitle = MainCourse::title();
+        $mainCoursesHidden = MainCourse::hide();
+
         $desserts[] = Dessert::list();
         $dessertsTitle = Dessert::title();
+        $dessertsHidden = Dessert::hide();
+
         $redWines[] = RedWine::list();
         $redWinesTitle = RedWine::title();
+        $redWinesHidden = RedWine::hide();
+
         $whiteWines[] = WhiteWine::list();
         $whiteWinesTitle = WhiteWine::title();
+        $whiteWinesHidden = WhiteWine::hide();
+
         $bubbleWines[] = BubbleWine::list();
         $bubbleWinesTitle = BubbleWine::title();
+        $bubbleWinesHidden = BubbleWine::hide();
+
         $softDrinks[] = SoftDrink::list();
         $softDrinksTitle = SoftDrink::title();
+        $softDrinksHidden = SoftDrink::hide();
+
         $beers[] = Beer::list();
         $beersTitle = Beer::title();
+        $beersHidden = Beer::hide();
+
         $cocktails[] = Cocktail::list();
         $cocktailsTitle = Cocktail::title();
+        $cocktailsHidden = Cocktail::hide();
+
         $hotDrinks[] = HotDrink::list();
         $hotDrinksTitle = HotDrink::title();
+        $hotDrinksHidden = HotDrink::hide();
+
         $menu = self::list();
 
         $data = [
             "starters" => $starters,
             "startersTitle" => $startersTitle,
+            "startersHidden" => $startersHidden,
+
             "mainCourses" => $mainCourses,
             "mainCoursesTitle" => $mainCoursesTitle,
+            "mainCoursesHidden" => $mainCoursesHidden,
+
             "desserts" => $desserts,
             "dessertsTitle" => $dessertsTitle,
+            "dessertsHidden" => $dessertsHidden,
+
             "redWines" => $redWines,
             "redWinesTitle" => $redWinesTitle,
+            "redWinesHidden" => $redWinesHidden,
+
             "whiteWines" => $whiteWines,
             "whiteWinesTitle" => $whiteWinesTitle,
+            "whiteWinesHidden" => $whiteWinesHidden,
+
             "bubbleWines" => $bubbleWines,
             "bubbleWinesTitle" => $bubbleWinesTitle,
+            "bubbleWinesHidden" => $bubbleWinesHidden,
+
             "softDrinks" => $softDrinks,
             "softDrinksTitle" => $softDrinksTitle,
+            "softDrinksHidden" => $softDrinksHidden,
+
             "beers" => $beers,
             "beersTitle" => $beersTitle,
+            "beersHidden" => $beersHidden,
+
             "cocktails" => $cocktails,
             "cocktailsTitle" => $cocktailsTitle,
+            "cocktailsHidden" => $cocktailsHidden,
+
             "hotDrinks" => $hotDrinks,
             "hotDrinksTitle" => $hotDrinksTitle,
+            "hotDrinksHidden" => $hotDrinksHidden,
+
             "menu" => $menu,
         ];
 
