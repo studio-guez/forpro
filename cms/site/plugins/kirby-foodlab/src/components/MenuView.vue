@@ -1,9 +1,15 @@
 <template>
     <k-inside>
+      
         <k-header>
             Menu
             <k-button-group slot="buttons">
-                <k-button icon="check" variant="filled" ^ @click="submit">
+                <k-button
+                    :icon="isSubmitting ? 'loader' : 'check'"
+                    :theme="hasBeenSubmitted ? 'green' : null"
+                    variant="filled"
+                    @click="submit"
+                >
                     Enregistrer
                 </k-button>
                 <k-button
@@ -75,35 +81,55 @@
         </k-bar>
 
         <table style="margin-top: 20px; margin-bottom: 25px" class="k-table">
-            <tr>
-                <th>Plat</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th class="k-table-index-column"></th>
-            </tr>
-            <tr v-for="(item, id) in starters" :key="id">
-                <td>{{ item.name }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.price }}</td>
-                <td class="k-table-options-column">
-                    <k-options-dropdown
-                        :options="[
-                            {
-                                text: 'Modifier',
-                                icon: 'edit',
-                                click: () =>
-                                    $dialog(`menu/starter/${item.id}/edit`),
-                            },
-                            {
-                                text: 'Supprimer',
-                                icon: 'trash',
-                                click: () =>
-                                    $dialog(`menu/starter/${item.id}/delete`),
-                            },
-                        ]"
-                    />
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th class="k-table-index-column"></th>
+                    <th>Plat</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th class="k-table-options-column"></th>
+                </tr>
+            </thead>
+            <k-draggable
+                :list="starters"
+                :handle="true"
+                @change="updateOrder('starters')"
+                :options="{
+                    fallbackClass: 'k-table-row-fallback',
+                    ghostClass: 'k-table-row-ghost',
+                }"
+                element="tbody"
+            >
+                <tr v-for="(item, index) in starters" :key="item.id">
+                    <td class="k-table-index-column" data-sortable="true">
+                        <span class="k-table-index">{{ index + 1 }}</span>
+                        <k-sort-handle />
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.price }}</td>
+                    <td class="k-table-options-column">
+                        <k-options-dropdown
+                            :options="[
+                                {
+                                    text: 'Modifier',
+                                    icon: 'edit',
+                                    click: () =>
+                                        $dialog(`menu/starter/${item.id}/edit`),
+                                },
+                                {
+                                    text: 'Supprimer',
+                                    icon: 'trash',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/starter/${item.id}/delete`,
+                                        ),
+                                },
+                            ]"
+                        />
+                    </td>
+                </tr>
+            </k-draggable>
         </table>
 
         <k-bar>
@@ -125,37 +151,57 @@
         </k-bar>
 
         <table style="margin-top: 20px; margin-bottom: 25px" class="k-table">
-            <tr>
-                <th>Plat</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th class="k-table-index-column"></th>
-            </tr>
-            <tr v-for="(item, id) in mainCourses" :key="id">
-                <td>{{ item.name }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.price }}</td>
-                <td class="k-table-options-column">
-                    <k-options-dropdown
-                        :options="[
-                            {
-                                text: 'Modifier',
-                                icon: 'edit',
-                                click: () =>
-                                    $dialog(`menu/maincourse/${item.id}/edit`),
-                            },
-                            {
-                                text: 'Supprimer',
-                                icon: 'trash',
-                                click: () =>
-                                    $dialog(
-                                        `menu/maincourse/${item.id}/delete`,
-                                    ),
-                            },
-                        ]"
-                    />
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th class="k-table-index-column"></th>
+                    <th>Plat</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th class="k-table-options-column"></th>
+                </tr>
+            </thead>
+            <k-draggable
+                :list="mainCourses"
+                :handle="true"
+                @change="updateOrder('mainCourses')"
+                :options="{
+                    fallbackClass: 'k-table-row-fallback',
+                    ghostClass: 'k-table-row-ghost',
+                }"
+                element="tbody"
+            >
+                <tr v-for="(item, index) in mainCourses" :key="item.id">
+                    <td class="k-table-index-column" data-sortable="true">
+                        <span class="k-table-index">{{ index + 1 }}</span>
+                        <k-sort-handle />
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.price }}</td>
+                    <td class="k-table-options-column">
+                        <k-options-dropdown
+                            :options="[
+                                {
+                                    text: 'Modifier',
+                                    icon: 'edit',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/maincourse/${item.id}/edit`,
+                                        ),
+                                },
+                                {
+                                    text: 'Supprimer',
+                                    icon: 'trash',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/maincourse/${item.id}/delete`,
+                                        ),
+                                },
+                            ]"
+                        />
+                    </td>
+                </tr>
+            </k-draggable>
         </table>
 
         <k-bar>
@@ -177,35 +223,55 @@
         </k-bar>
 
         <table style="margin-top: 20px; margin-bottom: 25px" class="k-table">
-            <tr>
-                <th>Plat</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th class="k-table-index-column"></th>
-            </tr>
-            <tr v-for="(item, id) in desserts" :key="id">
-                <td>{{ item.name }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.price }}</td>
-                <td class="k-table-options-column">
-                    <k-options-dropdown
-                        :options="[
-                            {
-                                text: 'Modifier',
-                                icon: 'edit',
-                                click: () =>
-                                    $dialog(`menu/dessert/${item.id}/edit`),
-                            },
-                            {
-                                text: 'Supprimer',
-                                icon: 'trash',
-                                click: () =>
-                                    $dialog(`menu/dessert/${item.id}/delete`),
-                            },
-                        ]"
-                    />
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th class="k-table-index-column"></th>
+                    <th>Plat</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th class="k-table-options-column"></th>
+                </tr>
+            </thead>
+            <k-draggable
+                :list="desserts"
+                :handle="true"
+                @change="updateOrder('desserts')"
+                :options="{
+                    fallbackClass: 'k-table-row-fallback',
+                    ghostClass: 'k-table-row-ghost',
+                }"
+                element="tbody"
+            >
+                <tr v-for="(item, index) in desserts" :key="item.id">
+                    <td class="k-table-index-column" data-sortable="true">
+                        <span class="k-table-index">{{ index + 1 }}</span>
+                        <k-sort-handle />
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.price }}</td>
+                    <td class="k-table-options-column">
+                        <k-options-dropdown
+                            :options="[
+                                {
+                                    text: 'Modifier',
+                                    icon: 'edit',
+                                    click: () =>
+                                        $dialog(`menu/dessert/${item.id}/edit`),
+                                },
+                                {
+                                    text: 'Supprimer',
+                                    icon: 'trash',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/dessert/${item.id}/delete`,
+                                        ),
+                                },
+                            ]"
+                        />
+                    </td>
+                </tr>
+            </k-draggable>
         </table>
 
         <k-bar>
@@ -227,43 +293,63 @@
         </k-bar>
 
         <table style="margin-top: 20px; margin-bottom: 25px" class="k-table">
-            <tr>
-                <th>Nom</th>
-                <th>Domaine</th>
-                <th>Millésime</th>
-                <th>Description</th>
-                <th>10cl</th>
-                <th>75cl</th>
-                <th class="k-table-index-column"></th>
-            </tr>
-            <tr v-for="(item, id) in bubbleWines" :key="id">
-                <td>{{ item.name }}</td>
-                <td>{{ item.domain }}</td>
-                <td>{{ item.mill }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.price10cl }}</td>
-                <td>{{ item.price75cl }}</td>
-                <td class="k-table-options-column">
-                    <k-options-dropdown
-                        :options="[
-                            {
-                                text: 'Modifier',
-                                icon: 'edit',
-                                click: () =>
-                                    $dialog(`menu/bubblewine/${item.id}/edit`),
-                            },
-                            {
-                                text: 'Supprimer',
-                                icon: 'trash',
-                                click: () =>
-                                    $dialog(
-                                        `menu/bubblewine/${item.id}/delete`,
-                                    ),
-                            },
-                        ]"
-                    />
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th class="k-table-index-column"></th>
+                    <th>Nom</th>
+                    <th>Domaine</th>
+                    <th>Millésime</th>
+                    <th>Description</th>
+                    <th>10cl</th>
+                    <th>75cl</th>
+                    <th class="k-table-options-column"></th>
+                </tr>
+            </thead>
+            <k-draggable
+                :list="bubbleWines"
+                :handle="true"
+                @change="updateOrder('bubbleWines')"
+                :options="{
+                    fallbackClass: 'k-table-row-fallback',
+                    ghostClass: 'k-table-row-ghost',
+                }"
+                element="tbody"
+            >
+                <tr v-for="(item, index) in bubbleWines" :key="item.id">
+                    <td class="k-table-index-column" data-sortable="true">
+                        <span class="k-table-index">{{ index + 1 }}</span>
+                        <k-sort-handle />
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.domain }}</td>
+                    <td>{{ item.mill }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.price10cl }}</td>
+                    <td>{{ item.price75cl }}</td>
+                    <td class="k-table-options-column">
+                        <k-options-dropdown
+                            :options="[
+                                {
+                                    text: 'Modifier',
+                                    icon: 'edit',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/bubblewine/${item.id}/edit`,
+                                        ),
+                                },
+                                {
+                                    text: 'Supprimer',
+                                    icon: 'trash',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/bubblewine/${item.id}/delete`,
+                                        ),
+                                },
+                            ]"
+                        />
+                    </td>
+                </tr>
+            </k-draggable>
         </table>
 
         <k-bar>
@@ -285,41 +371,63 @@
         </k-bar>
 
         <table style="margin-top: 20px; margin-bottom: 25px" class="k-table">
-            <tr>
-                <th>Nom</th>
-                <th>Domaine</th>
-                <th>Millésime</th>
-                <th>Description</th>
-                <th>10cl</th>
-                <th>75cl</th>
-                <th class="k-table-index-column"></th>
-            </tr>
-            <tr v-for="(item, id) in whiteWines" :key="id">
-                <td>{{ item.name }}</td>
-                <td>{{ item.domain }}</td>
-                <td>{{ item.mill }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.price10cl }}</td>
-                <td>{{ item.price75cl }}</td>
-                <td class="k-table-options-column">
-                    <k-options-dropdown
-                        :options="[
-                            {
-                                text: 'Modifier',
-                                icon: 'edit',
-                                click: () =>
-                                    $dialog(`menu/whitewine/${item.id}/edit`),
-                            },
-                            {
-                                text: 'Supprimer',
-                                icon: 'trash',
-                                click: () =>
-                                    $dialog(`menu/whitewine/${item.id}/delete`),
-                            },
-                        ]"
-                    />
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th class="k-table-index-column"></th>
+                    <th>Nom</th>
+                    <th>Domaine</th>
+                    <th>Millésime</th>
+                    <th>Description</th>
+                    <th>10cl</th>
+                    <th>75cl</th>
+                    <th class="k-table-options-column"></th>
+                </tr>
+            </thead>
+            <k-draggable
+                :list="whiteWines"
+                :handle="true"
+                @change="updateOrder('whiteWines')"
+                :options="{
+                    fallbackClass: 'k-table-row-fallback',
+                    ghostClass: 'k-table-row-ghost',
+                }"
+                element="tbody"
+            >
+                <tr v-for="(item, index) in whiteWines" :key="item.id">
+                    <td class="k-table-index-column" data-sortable="true">
+                        <span class="k-table-index">{{ index + 1 }}</span>
+                        <k-sort-handle />
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.domain }}</td>
+                    <td>{{ item.mill }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.price10cl }}</td>
+                    <td>{{ item.price75cl }}</td>
+                    <td class="k-table-options-column">
+                        <k-options-dropdown
+                            :options="[
+                                {
+                                    text: 'Modifier',
+                                    icon: 'edit',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/whitewine/${item.id}/edit`,
+                                        ),
+                                },
+                                {
+                                    text: 'Supprimer',
+                                    icon: 'trash',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/whitewine/${item.id}/delete`,
+                                        ),
+                                },
+                            ]"
+                        />
+                    </td>
+                </tr>
+            </k-draggable>
         </table>
 
         <k-bar>
@@ -341,41 +449,61 @@
         </k-bar>
 
         <table style="margin-top: 20px; margin-bottom: 25px" class="k-table">
-            <tr>
-                <th>Nom</th>
-                <th>Domaine</th>
-                <th>Millésime</th>
-                <th>Description</th>
-                <th>10cl</th>
-                <th>75cl</th>
-                <th class="k-table-index-column"></th>
-            </tr>
-            <tr v-for="(item, id) in redWines" :key="id">
-                <td>{{ item.name }}</td>
-                <td>{{ item.domain }}</td>
-                <td>{{ item.mill }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.price10cl }}</td>
-                <td>{{ item.price75cl }}</td>
-                <td class="k-table-options-column">
-                    <k-options-dropdown
-                        :options="[
-                            {
-                                text: 'Modifier',
-                                icon: 'edit',
-                                click: () =>
-                                    $dialog(`menu/redwine/${item.id}/edit`),
-                            },
-                            {
-                                text: 'Supprimer',
-                                icon: 'trash',
-                                click: () =>
-                                    $dialog(`menu/redwine/${item.id}/delete`),
-                            },
-                        ]"
-                    />
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th class="k-table-index-column"></th>
+                    <th>Nom</th>
+                    <th>Domaine</th>
+                    <th>Millésime</th>
+                    <th>Description</th>
+                    <th>10cl</th>
+                    <th>75cl</th>
+                    <th class="k-table-options-column"></th>
+                </tr>
+            </thead>
+            <k-draggable
+                :list="redWines"
+                :handle="true"
+                @change="updateOrder('redWines')"
+                :options="{
+                    fallbackClass: 'k-table-row-fallback',
+                    ghostClass: 'k-table-row-ghost',
+                }"
+                element="tbody"
+            >
+                <tr v-for="(item, index) in redWines" :key="item.id">
+                    <td class="k-table-index-column" data-sortable="true">
+                        <span class="k-table-index">{{ index + 1 }}</span>
+                        <k-sort-handle />
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.domain }}</td>
+                    <td>{{ item.mill }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.price10cl }}</td>
+                    <td>{{ item.price75cl }}</td>
+                    <td class="k-table-options-column">
+                        <k-options-dropdown
+                            :options="[
+                                {
+                                    text: 'Modifier',
+                                    icon: 'edit',
+                                    click: () =>
+                                        $dialog(`menu/redwine/${item.id}/edit`),
+                                },
+                                {
+                                    text: 'Supprimer',
+                                    icon: 'trash',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/redwine/${item.id}/delete`,
+                                        ),
+                                },
+                            ]"
+                        />
+                    </td>
+                </tr>
+            </k-draggable>
         </table>
 
         <k-bar>
@@ -397,37 +525,59 @@
         </k-bar>
 
         <table style="margin-top: 20px; margin-bottom: 25px" class="k-table">
-            <tr>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Volume</th>
-                <th>Prix</th>
-                <th class="k-table-index-column"></th>
-            </tr>
-            <tr v-for="(item, id) in softDrinks" :key="id">
-                <td>{{ item.name }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.volume }}</td>
-                <td>{{ item.price }}</td>
-                <td class="k-table-options-column">
-                    <k-options-dropdown
-                        :options="[
-                            {
-                                text: 'Modifier',
-                                icon: 'edit',
-                                click: () =>
-                                    $dialog(`menu/softdrink/${item.id}/edit`),
-                            },
-                            {
-                                text: 'Supprimer',
-                                icon: 'trash',
-                                click: () =>
-                                    $dialog(`menu/softdrink/${item.id}/delete`),
-                            },
-                        ]"
-                    />
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th class="k-table-index-column"></th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Volume</th>
+                    <th>Prix</th>
+                    <th class="k-table-options-column"></th>
+                </tr>
+            </thead>
+            <k-draggable
+                :list="softDrinks"
+                :handle="true"
+                @change="updateOrder('softDrinks')"
+                :options="{
+                    fallbackClass: 'k-table-row-fallback',
+                    ghostClass: 'k-table-row-ghost',
+                }"
+                element="tbody"
+            >
+                <tr v-for="(item, index) in softDrinks" :key="item.id">
+                    <td class="k-table-index-column" data-sortable="true">
+                        <span class="k-table-index">{{ index + 1 }}</span>
+                        <k-sort-handle />
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.volume }}</td>
+                    <td>{{ item.price }}</td>
+                    <td class="k-table-options-column">
+                        <k-options-dropdown
+                            :options="[
+                                {
+                                    text: 'Modifier',
+                                    icon: 'edit',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/softdrink/${item.id}/edit`,
+                                        ),
+                                },
+                                {
+                                    text: 'Supprimer',
+                                    icon: 'trash',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/softdrink/${item.id}/delete`,
+                                        ),
+                                },
+                            ]"
+                        />
+                    </td>
+                </tr>
+            </k-draggable>
         </table>
 
         <k-bar>
@@ -449,37 +599,55 @@
         </k-bar>
 
         <table style="margin-top: 20px; margin-bottom: 25px" class="k-table">
-            <tr>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Volume</th>
-                <th>Prix</th>
-                <th class="k-table-index-column"></th>
-            </tr>
-            <tr v-for="(item, id) in beers" :key="id">
-                <td>{{ item.name }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.volume }}</td>
-                <td>{{ item.price }}</td>
-                <td class="k-table-options-column">
-                    <k-options-dropdown
-                        :options="[
-                            {
-                                text: 'Modifier',
-                                icon: 'edit',
-                                click: () =>
-                                    $dialog(`menu/beer/${item.id}/edit`),
-                            },
-                            {
-                                text: 'Supprimer',
-                                icon: 'trash',
-                                click: () =>
-                                    $dialog(`menu/beer/${item.id}/delete`),
-                            },
-                        ]"
-                    />
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th class="k-table-index-column"></th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Volume</th>
+                    <th>Prix</th>
+                    <th class="k-table-options-column"></th>
+                </tr>
+            </thead>
+            <k-draggable
+                :list="beers"
+                :handle="true"
+                @change="updateOrder('beers')"
+                :options="{
+                    fallbackClass: 'k-table-row-fallback',
+                    ghostClass: 'k-table-row-ghost',
+                }"
+                element="tbody"
+            >
+                <tr v-for="(item, index) in beers" :key="item.id">
+                    <td class="k-table-index-column" data-sortable="true">
+                        <span class="k-table-index">{{ index + 1 }}</span>
+                        <k-sort-handle />
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.volume }}</td>
+                    <td>{{ item.price }}</td>
+                    <td class="k-table-options-column">
+                        <k-options-dropdown
+                            :options="[
+                                {
+                                    text: 'Modifier',
+                                    icon: 'edit',
+                                    click: () =>
+                                        $dialog(`menu/beer/${item.id}/edit`),
+                                },
+                                {
+                                    text: 'Supprimer',
+                                    icon: 'trash',
+                                    click: () =>
+                                        $dialog(`menu/beer/${item.id}/delete`),
+                                },
+                            ]"
+                        />
+                    </td>
+                </tr>
+            </k-draggable>
         </table>
 
         <k-bar>
@@ -501,37 +669,59 @@
         </k-bar>
 
         <table style="margin-top: 20px; margin-bottom: 25px" class="k-table">
-            <tr>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Volume</th>
-                <th>Prix</th>
-                <th class="k-table-index-column"></th>
-            </tr>
-            <tr v-for="(item, id) in cocktails" :key="id">
-                <td>{{ item.name }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.volume }}</td>
-                <td>{{ item.price }}</td>
-                <td class="k-table-options-column">
-                    <k-options-dropdown
-                        :options="[
-                            {
-                                text: 'Modifier',
-                                icon: 'edit',
-                                click: () =>
-                                    $dialog(`menu/cocktail/${item.id}/edit`),
-                            },
-                            {
-                                text: 'Supprimer',
-                                icon: 'trash',
-                                click: () =>
-                                    $dialog(`menu/cocktail/${item.id}/delete`),
-                            },
-                        ]"
-                    />
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th class="k-table-index-column"></th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Volume</th>
+                    <th>Prix</th>
+                    <th class="k-table-options-column"></th>
+                </tr>
+            </thead>
+            <k-draggable
+                :list="cocktails"
+                :handle="true"
+                @change="updateOrder('cocktails')"
+                :options="{
+                    fallbackClass: 'k-table-row-fallback',
+                    ghostClass: 'k-table-row-ghost',
+                }"
+                element="tbody"
+            >
+                <tr v-for="(item, index) in cocktails" :key="item.id">
+                    <td class="k-table-index-column" data-sortable="true">
+                        <span class="k-table-index">{{ index + 1 }}</span>
+                        <k-sort-handle />
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.volume }}</td>
+                    <td>{{ item.price }}</td>
+                    <td class="k-table-options-column">
+                        <k-options-dropdown
+                            :options="[
+                                {
+                                    text: 'Modifier',
+                                    icon: 'edit',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/cocktail/${item.id}/edit`,
+                                        ),
+                                },
+                                {
+                                    text: 'Supprimer',
+                                    icon: 'trash',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/cocktail/${item.id}/delete`,
+                                        ),
+                                },
+                            ]"
+                        />
+                    </td>
+                </tr>
+            </k-draggable>
         </table>
 
         <k-bar>
@@ -553,37 +743,59 @@
         </k-bar>
 
         <table style="margin-top: 20px; margin-bottom: 25px" class="k-table">
-            <tr>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Volume</th>
-                <th>Prix</th>
-                <th class="k-table-index-column"></th>
-            </tr>
-            <tr v-for="(item, id) in hotDrinks" :key="id">
-                <td>{{ item.name }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.volume }}</td>
-                <td>{{ item.price }}</td>
-                <td class="k-table-options-column">
-                    <k-options-dropdown
-                        :options="[
-                            {
-                                text: 'Modifier',
-                                icon: 'edit',
-                                click: () =>
-                                    $dialog(`menu/hotdrink/${item.id}/edit`),
-                            },
-                            {
-                                text: 'Supprimer',
-                                icon: 'trash',
-                                click: () =>
-                                    $dialog(`menu/hotdrink/${item.id}/delete`),
-                            },
-                        ]"
-                    />
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th class="k-table-index-column"></th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Volume</th>
+                    <th>Prix</th>
+                    <th class="k-table-options-column"></th>
+                </tr>
+            </thead>
+            <k-draggable
+                :list="hotDrinks"
+                :handle="true"
+                @change="updateOrder('hotDrinks')"
+                :options="{
+                    fallbackClass: 'k-table-row-fallback',
+                    ghostClass: 'k-table-row-ghost',
+                }"
+                element="tbody"
+            >
+                <tr v-for="(item, index) in hotDrinks" :key="item.id">
+                    <td class="k-table-index-column" data-sortable="true">
+                        <span class="k-table-index">{{ index + 1 }}</span>
+                        <k-sort-handle />
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.volume }}</td>
+                    <td>{{ item.price }}</td>
+                    <td class="k-table-options-column">
+                        <k-options-dropdown
+                            :options="[
+                                {
+                                    text: 'Modifier',
+                                    icon: 'edit',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/hotdrink/${item.id}/edit`,
+                                        ),
+                                },
+                                {
+                                    text: 'Supprimer',
+                                    icon: 'trash',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/hotdrink/${item.id}/delete`,
+                                        ),
+                                },
+                            ]"
+                        />
+                    </td>
+                </tr>
+            </k-draggable>
         </table>
     </k-inside>
 </template>
@@ -619,6 +831,8 @@ export default {
                 textContent2: this.textContent2,
             },
             isGeneratingPDF: false,
+            isSubmitting: false,
+            hasBeenSubmitted: false,
         };
     },
     methods: {
@@ -630,7 +844,20 @@ export default {
             else return url;
         },
         submit() {
+
+            this.isSubmitting = true;
             this.$api.post("/restaurant/menu/create", this.menu);
+
+            setTimeout(() => {
+
+                this.isSubmitting = false;
+                this.hasBeenSubmitted = true;
+
+                setTimeout(() => {
+                    this.hasBeenSubmitted = false;
+                }, 5000);
+
+            }, 1500);
         },
         generate() {
             if (this.isGeneratingPDF) return;
@@ -657,12 +884,21 @@ export default {
                 this.isGeneratingPDF = false;
             }, 2500);
         },
+        updateOrder(listName) {
+            this.$api.post(
+                `/restaurant/menu/${listName}/reorder`,
+                this[listName],
+            );
+          this.isSubmitting = true;
+          setTimeout(() => {
+            this.isSubmitting = false;
+            this.hasBeenSubmitted = true;
+
+            setTimeout(() => {
+              this.hasBeenSubmitted = false;
+            }, 5000);
+          }, 1500);
+        },
     },
 };
 </script>
-
-<style>
-.k-table.k-calendar {
-    table-layout: fixed;
-}
-</style>
