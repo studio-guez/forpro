@@ -36,7 +36,6 @@ return [
                     $html = $menu_page->render($data);
                     $pdfContent = Browsershot::html($html)
                         ->format("A4")
-                        ->showBackground()
                         ->margins(0.0, 0.0, 0.0, 0.0)
                         ->setOption(
                             "addStyleTag",
@@ -49,7 +48,6 @@ return [
 
                     $pdfHtml = Browsershot::html($html)
                         ->format("A4")
-                        ->showBackground()
                         ->bodyHtml();
 
                     return new Response($pdfContent, "application/pdf", 200, [
