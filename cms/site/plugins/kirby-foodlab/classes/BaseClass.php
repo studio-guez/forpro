@@ -27,11 +27,30 @@ class BaseClass
     {
         $items = static::list();
 
-        $key = array_search($id, $items);
+        foreach ($items as $key => $item) {
+            if ($item['id'] === $id) {
+                unset($items[$key]);
+                break;
+            }
+        }
 
-        unset($items[$key]);
+        $items = array_values($items);
 
         return Data::write(static::file(), $items);
+    }
+
+    private static function remove_item_recursive($id, $array)
+    {
+        foreach ($array as $key => & $value) {
+            if (is_array($value)) {
+                $value = self::remove_item_recursive($id, $value);
+            }
+            if ($value === $id) {
+                unset($array[$key]);
+            }
+        }
+
+        return $array;
     }
 
     /**
@@ -62,5 +81,10 @@ class BaseClass
         }
 
         throw new NotFoundException('The item could not be found');
+    }
+
+    public static function reorder(array $data): bool
+    {
+        return Data::write(static::file(), $data);
     }
 }
