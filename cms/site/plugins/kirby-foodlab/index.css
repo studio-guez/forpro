@@ -1,6 +1,1 @@
-
-[data-theme^="green"],
-[data-theme^="positive"] {
-    color: black;
-    background-color: hsl(80, 60%, calc(80% + -2.5%)) !important;
-}
+.k-restaurant-button[data-theme^=green],.k-restaurant-button[data-theme^=positive]{color:#000;background-color:#d1e8a3!important}
