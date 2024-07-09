@@ -4,6 +4,7 @@
             Menu
             <k-button-group slot="buttons">
                 <k-button
+                    class="k-restaurant-button"
                     :icon="isSubmitting ? 'loader' : 'check'"
                     :theme="hasBeenSubmitted ? 'green' : null"
                     variant="filled"
@@ -900,8 +901,8 @@ export default {
 </script>
 
 <style>
-[data-theme^="green"],
-[data-theme^="positive"] {
+.k-restaurant-button[data-theme^="green"],
+.k-restaurant-button[data-theme^="positive"] {
     color: black;
     background-color: hsl(80, 60%, calc(80% + -2.5%)) !important;
 }
