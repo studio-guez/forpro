@@ -1,6 +1,5 @@
 <template>
     <k-inside>
-      
         <k-header>
             Menu
             <k-button-group slot="buttons">
@@ -844,19 +843,16 @@ export default {
             else return url;
         },
         submit() {
-
             this.isSubmitting = true;
             this.$api.post("/restaurant/menu/create", this.menu);
 
             setTimeout(() => {
-
                 this.isSubmitting = false;
                 this.hasBeenSubmitted = true;
 
                 setTimeout(() => {
                     this.hasBeenSubmitted = false;
                 }, 5000);
-
             }, 1500);
         },
         generate() {
@@ -889,16 +885,24 @@ export default {
                 `/restaurant/menu/${listName}/reorder`,
                 this[listName],
             );
-          this.isSubmitting = true;
-          setTimeout(() => {
-            this.isSubmitting = false;
-            this.hasBeenSubmitted = true;
-
+            this.isSubmitting = true;
             setTimeout(() => {
-              this.hasBeenSubmitted = false;
-            }, 5000);
-          }, 1500);
+                this.isSubmitting = false;
+                this.hasBeenSubmitted = true;
+
+                setTimeout(() => {
+                    this.hasBeenSubmitted = false;
+                }, 5000);
+            }, 1500);
         },
     },
 };
 </script>
+
+<style>
+[data-theme^="green"],
+[data-theme^="positive"] {
+    color: black;
+    background-color: hsl(80, 60%, calc(80% + -2.5%)) !important;
+}
+</style>
