@@ -21,28 +21,48 @@ class Menu extends BaseClass
     public static function get(): array
     {
         $starters[] = Starter::list();
+        $startersTitle = Starter::title();
         $mainCourses[] = MainCourse::list();
+        $mainCoursesTitle = MainCourse::title();
         $desserts[] = Dessert::list();
+        $dessertsTitle = Dessert::title();
         $redWines[] = RedWine::list();
+        $redWinesTitle = RedWine::title();
         $whiteWines[] = WhiteWine::list();
+        $whiteWinesTitle = WhiteWine::title();
         $bubbleWines[] = BubbleWine::list();
+        $bubbleWinesTitle = BubbleWine::title();
         $softDrinks[] = SoftDrink::list();
+        $softDrinksTitle = SoftDrink::title();
         $beers[] = Beer::list();
+        $beersTitle = Beer::title();
         $cocktails[] = Cocktail::list();
+        $cocktailsTitle = Cocktail::title();
         $hotDrinks[] = HotDrink::list();
+        $hotDrinksTitle = HotDrink::title();
         $menu = self::list();
 
         $data = [
             "starters" => $starters,
+            "startersTitle" => $startersTitle,
             "mainCourses" => $mainCourses,
+            "mainCoursesTitle" => $mainCoursesTitle,
             "desserts" => $desserts,
+            "dessertsTitle" => $dessertsTitle,
             "redWines" => $redWines,
+            "redWinesTitle" => $redWinesTitle,
             "whiteWines" => $whiteWines,
+            "whiteWinesTitle" => $whiteWinesTitle,
             "bubbleWines" => $bubbleWines,
+            "bubbleWinesTitle" => $bubbleWinesTitle,
             "softDrinks" => $softDrinks,
+            "softDrinksTitle" => $softDrinksTitle,
             "beers" => $beers,
+            "beersTitle" => $beersTitle,
             "cocktails" => $cocktails,
+            "cocktailsTitle" => $cocktailsTitle,
             "hotDrinks" => $hotDrinks,
+            "hotDrinksTitle" => $hotDrinksTitle,
             "menu" => $menu,
         ];
 
@@ -83,10 +103,11 @@ class Menu extends BaseClass
      * Updates a menu by id with the given input
      * It throws an exception in case of validation issues
      *
+     * @param string $id
      * @param array $menu
      * @return boolean
      */
-    public static function update(array $menu): bool
+    public static function update(string $id, array $menu): bool
     {
         return Data::write(static::file(), $menu);
     }
