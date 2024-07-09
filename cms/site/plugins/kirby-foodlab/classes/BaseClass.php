@@ -4,6 +4,7 @@ namespace MediumSans;
 
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
+use MediumSans\Menu\Metadata;
 
 class BaseClass
 {
@@ -17,6 +18,16 @@ class BaseClass
         return __DIR__ . '/../data/' . static::FILENAME;
     }
 
+    public static function name(): string
+    {
+        return preg_replace('/\.json$/', '', static::FILENAME);
+    }
+
+    public static function title(): string
+    {
+        return Metadata::get(static::name(), 'name');
+    }
+
     /**
      * Deletes an event by event id
      *
@@ -27,30 +38,11 @@ class BaseClass
     {
         $items = static::list();
 
-        foreach ($items as $key => $item) {
-            if ($item['id'] === $id) {
-                unset($items[$key]);
-                break;
-            }
-        }
+        $key = array_search($id, $items);
 
-        $items = array_values($items);
+        unset($items[$key]);
 
         return Data::write(static::file(), $items);
-    }
-
-    private static function remove_item_recursive($id, $array)
-    {
-        foreach ($array as $key => & $value) {
-            if (is_array($value)) {
-                $value = self::remove_item_recursive($id, $value);
-            }
-            if ($value === $id) {
-                unset($array[$key]);
-            }
-        }
-
-        return $array;
     }
 
     /**
@@ -83,8 +75,27 @@ class BaseClass
         throw new NotFoundException('The item could not be found');
     }
 
-    public static function reorder(array $data): bool
+    /**
+     * Updates a menu by id with the given input
+     * It throws an exception in case of validation issues
+     *
+     * @param string $id
+     * @param array $menu
+     * @return boolean
+     */
+    public static function update(string $id, array $menu): bool
     {
-        return Data::write(static::file(), $data);
+        $items = static::list();
+
+        foreach($items as &$item) {
+            if ($item['id'] === $id) {
+                $item = $menu;
+                break;
+            }
+        }
+
+        unset($item);
+
+        return Data::write(static::file(), $items);
     }
 }
