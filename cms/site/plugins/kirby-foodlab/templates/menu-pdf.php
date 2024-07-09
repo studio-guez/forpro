@@ -392,45 +392,55 @@
         </div>
 
         <div class="page">
-            <div class="section">
-                <h2>Carte des mets</h2>
-                <h4><?= $startersTitle ?></h4>
-                <?php foreach ($starters[0] as $starter): ?>
-                <div class="item">
-                    <span class="name"><?= $starter["name"] ?></Salade></span>
-                    <span class="price"><?= $starter["price"] ?></span>
-                    <p class="description">
-                        <?= $starter["description"] ?>
-                    </p>
+            <h2>Carte des mets</h2>
+
+            <?php if(!$startersHidden): ?>
+                <div class="section">
+                    <h4><?= $startersTitle ?></h4>
+                    <?php foreach ($starters[0] as $starter): ?>
+                    <div class="item">
+                        <span class="name"><?= $starter["name"] ?></Salade></span>
+                        <span class="price"><?= $starter["price"] ?></span>
+                        <p class="description">
+                            <?= $starter["description"] ?>
+                        </p>
+                    </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="section">
-                <h4><?= $mainCoursesTitle ?></h4>
-                <?php foreach ($mainCourses[0] as $mainCourse): ?>
-                <div class="item">
-                    <span class="name"><?= $mainCourse[
-                        "name"
-                    ] ?></span>
-                    <span class="price"><?= $mainCourse["price"] ?></span>
-                    <p class="description">
-                        <?= $mainCourse["description"] ?>
-                    </p>
+            <?php endif; ?>
+
+            <?php if(!$mainCoursesHidden): ?>
+                <div class="section">
+                    <h4><?= $mainCoursesTitle ?></h4>
+                    <?php foreach ($mainCourses[0] as $mainCourse): ?>
+                    <div class="item">
+                        <span class="name"><?= $mainCourse[
+                            "name"
+                        ] ?></span>
+                        <span class="price"><?= $mainCourse["price"] ?></span>
+                        <p class="description">
+                            <?= $mainCourse["description"] ?>
+                        </p>
+                    </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="section">
-                <h4><?= $dessertsTitle ?></h4>
-                <?php foreach ($desserts[0] as $dessert): ?>
-                <div class="item">
-                    <span class="name"><?= $dessert["name"] ?></Salade></span>
-                    <span class="price"><?= $dessert["price"] ?></span>
-                    <p class="description">
-                        <?= $dessert["description"] ?>
-                    </p>
+            <?php endif; ?>
+
+            <?php if(!$dessertsHidden): ?>
+                <div class="section">
+                    <h4><?= $dessertsTitle ?></h4>
+                    <?php foreach ($desserts[0] as $dessert): ?>
+                    <div class="item">
+                        <span class="name"><?= $dessert["name"] ?></Salade></span>
+                        <span class="price"><?= $dessert["price"] ?></span>
+                        <p class="description">
+                            <?= $dessert["description"] ?>
+                        </p>
+                    </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
-            </div>
+            <?php endif; ?>
+
             <div class="footer">
                 <svg
                     id="illustration-2"
@@ -553,7 +563,8 @@
 
         <div class="page">
             <h2>Vins – Au fil du Rhône</h2>
-            <div class="section">
+            <?php if(!$bubbleWinesHidden): ?>
+                <div class="section">
                 <table
                     style="
                         width: 100%;
@@ -618,7 +629,10 @@
                     <?php endforeach; ?>
                 </table>
             </div>
-            <div class="section">
+            <?php endif; ?>
+
+            <?php if(!$whiteWinesHidden): ?>
+                <div class="section">
                 <table
                     style="
                         width: 100%;
@@ -682,6 +696,9 @@
                     <?php endforeach; ?>
                 </table>
             </div>
+            <?php endif; ?>
+
+            <?php if(!$redWinesHidden): ?>
             <div class="section">
                 <table
                     style="
@@ -746,6 +763,8 @@
                     <?php endforeach; ?>
                 </table>
             </div>
+            <?php endif; ?>
+
             <div class="footer">
                 <svg
                     id="illustration-3"
@@ -858,7 +877,9 @@
 
         <div class="page">
             <h2>Boissons</h2>
-            <div class="section">
+
+            <?php if(!$softDrinksHidden): ?>
+                <div class="section">
                 <table
                     style="
                         width: 100%;
@@ -906,7 +927,10 @@
                     <?php endforeach; ?>
                 </table>
             </div>
-            <div class="section" style="margin-top: 20px">
+            <?php endif; ?>
+
+            <?php if(!$beersHidden): ?>
+                <div class="section" style="margin-top: 20px">
                 <table
                     style="
                         width: 100%;
@@ -954,7 +978,10 @@
                     <?php endforeach; ?>
                 </table>
             </div>
-            <div class="section" style="margin-top: 20px">
+            <?php endif; ?>
+
+            <?php if(!$cocktailsHidden): ?>
+                <div class="section" style="margin-top: 20px">
                 <table
                     style="
                         width: 100%;
@@ -1002,7 +1029,10 @@
                     <?php endforeach; ?>
                 </table>
             </div>
-            <div class="section" style="margin-top: 20px">
+            <?php endif; ?>
+
+            <?php if(!$hotDrinksHidden): ?>
+                <div class="section" style="margin-top: 20px">
                 <table
                     style="
                         width: 100%;
@@ -1050,6 +1080,8 @@
                     <?php endforeach; ?>
                 </table>
             </div>
+            <?php endif; ?>
+
             <div class="footer">
                 <svg
                     id="illustration-4"
