@@ -210,6 +210,13 @@ return [
                     return \Kirby\Http\Response::json(json_encode($json));
                 },
             ],
+            [
+                "pattern" => "restaurant/menu/(:any)/reorder",
+                "method" => "POST",
+                "action" => function ($category) {
+                    return Menu::reorderData($category, get());
+                },
+            ],
         ];
     },
 ];
