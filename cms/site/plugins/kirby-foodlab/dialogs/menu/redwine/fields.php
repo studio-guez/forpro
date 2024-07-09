@@ -21,6 +21,10 @@ return [
         'label' => '10cl',
         'type' => 'text'
     ],
+    'price50cl' => [
+        'label' => '50cl',
+        'type' => 'text'
+    ],
     'price75cl' => [
         'label' => '75cl',
         'type' => 'text'
