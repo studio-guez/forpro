@@ -30,7 +30,7 @@
             :fields="formFields"
         />
 
-        <!-- Food menu section -->
+        <!-- Page 1 -->
         <k-grid style="margin-bottom: 40px; margin-top: 40px">
             <div class="k-column" style="--width: 1/3">
                 <hr class="k-line-field" type="line" />
@@ -77,7 +77,7 @@
             />
         </template>
 
-        <!-- Wine section -->
+        <!-- Page 2 -->
         <k-grid style="margin-bottom: 40px; margin-top: 40px">
             <div class="k-column" style="--width: 1/3">
                 <hr class="k-line-field" type="line" />
@@ -124,7 +124,7 @@
             />
         </template>
 
-        <!-- Other drinks section -->
+        <!-- Page 3 -->
         <k-grid style="margin-bottom: 40px; margin-top: 40px">
             <div class="k-column" style="--width: 1/3">
                 <hr class="k-line-field" type="line" />
@@ -170,6 +170,95 @@
                 @open-dialog="$dialog"
             />
         </template>
+
+        <!-- Page 4 -->
+        <k-grid style="margin-bottom: 40px; margin-top: 40px">
+            <div class="k-column" style="--width: 1">
+                <hr class="k-line-field" type="line" />
+            </div>
+        </k-grid>
+
+        <k-text style="margin-bottom: 20px">
+            <h2>Divers</h2>
+        </k-text>
+
+        <k-form
+            v-model="menu"
+            @input="input"
+            @submit="submit"
+            :fields="diversFields"
+        />
+
+        <k-grid style="margin-top: 40px">
+            <div class="k-column" style="--width: 1/3; justify-self: start">
+                <k-input
+                    :value="OriginsTitle"
+                    type="text"
+                    :icon="originTitleIcon"
+                    @input="updateOriginTitle($event)"
+                />
+            </div>
+            <div class="k-column" style="--width: 2/3; justify-self: end">
+                <k-button-group layout="collapsed">
+                    <k-button
+                        variant="filled"
+                        icon="plus"
+                        @click="$dialog('/menu/origin/create')"
+                    >
+                        Ajouter
+                    </k-button>
+                </k-button-group>
+            </div>
+        </k-grid>
+        <table class="k-table" style="margin-top: 20px; margin-bottom: 25px">
+            <thead>
+                <tr>
+                    <th class="k-table-index-column"></th>
+                    <th>Nom</th>
+                    <th>Provenance</th>
+                    <th class="k-table-options-column"></th>
+                </tr>
+            </thead>
+            <k-draggable
+                :list="origins"
+                :handle="true"
+                @change="updateOrder('origins')"
+                :options="{
+                    fallbackClass: 'k-table-row-fallback',
+                    ghostClass: 'k-table-row-ghost',
+                }"
+                element="tbody"
+            >
+                <tr v-for="(item, index) in origins" :key="item.id">
+                    <td class="k-table-index-column" data-sortable="true">
+                        <span class="k-table-index">{{ index + 1 }}</span>
+                        <k-sort-handle />
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.origin }}</td>
+                    <td class="k-table-options-column">
+                        <k-options-dropdown
+                            :options="[
+                                {
+                                    text: 'Modifier',
+                                    icon: 'edit',
+                                    click: () =>
+                                        $dialog(`menu/origin/${item.id}/edit`),
+                                },
+                                {
+                                    text: 'Supprimer',
+                                    icon: 'trash',
+                                    click: () =>
+                                        $dialog(
+                                            `menu/origin/${item.id}/delete`,
+                                        ),
+                                },
+                            ]"
+                        />
+                    </td>
+                </tr>
+            </k-draggable>
+        </table>
     </k-inside>
 </template>
 
@@ -206,12 +295,17 @@ export default {
         hotDrinks: Array,
         hotDrinksShowHide: Boolean,
         hotDrinksTitle: String,
+        origins: Array,
+        originsTitle: String,
         textTitle1: String,
         textSubtitle1: String,
         textContent1: String,
         textTitle2: String,
         textSubtitle2: String,
         textContent2: String,
+        textURL: String,
+        textTVA: String,
+        textAllergy: String,
         pageTitle1: String,
         pageTitle2: String,
         pageTitle3: String,
@@ -228,6 +322,9 @@ export default {
                 textTitle2: this.textTitle2,
                 textSubtitle2: this.textSubtitle2,
                 textContent2: this.textContent2,
+                textURL: this.textURL,
+                textTVA: this.textTVA,
+                textAllergy: this.textAllergy,
             },
             isGeneratingPDF: false,
             isSubmitting: false,
@@ -262,6 +359,26 @@ export default {
                 textContent2: {
                     label: "Contenu 2",
                     type: "textarea",
+                },
+            },
+            diversFields: {
+                textURL: {
+                    label: "URL",
+                    type: "text",
+                    help: "Apparaît dans le footer de la première page",
+                    width: "1",
+                },
+                textTVA: {
+                    label: "TVA",
+                    type: "textarea",
+                    help: "Apparaît dans le footer de la deuxième, troisième et quatrième page",
+                    width: "1/2",
+                },
+                textAllergy: {
+                    label: "Alergies",
+                    type: "textarea",
+                    help: "Apparaît dans le footer de la deuxième page",
+                    width: "1/2",
                 },
             },
             page2Order: this.page2Order,
@@ -430,10 +547,6 @@ export default {
                     setTimeout(() => {
                         this.hasBeenEdited = false;
                     }, 2000);
-                    this.$store.dispatch(
-                        "notification/success",
-                        "Page title updated successfully",
-                    );
                 })
                 .catch((error) => {
                     console.error("Error updating page title:", error);
@@ -444,12 +557,78 @@ export default {
                     );
                 });
         },
+        updateUrl(value) {
+            this.isEditing = true;
+            this.$api
+                .post("/restaurant/menu/metadata/url", { value })
+                .then(() => {
+                    this.urlText = value;
+                    this.isEditing = false;
+                    this.hasBeenEdited = true;
+                    setTimeout(() => {
+                        this.hasBeenEdited = false;
+                    }, 2000);
+                })
+                .catch((error) => {
+                    console.error("Error updating page title:", error);
+                    this.isEditing = false;
+                    this.$store.dispatch(
+                        "notification/error",
+                        "Failed to update URL",
+                    );
+                });
+        },
+        updateTVA(value) {
+            this.isEditing = true;
+            this.$api
+                .post("/restaurant/menu/metadata/tva", { value })
+                .then(() => {
+                    this.tvaText = value;
+                    this.isEditing = false;
+                    this.hasBeenEdited = true;
+                    setTimeout(() => {
+                        this.hasBeenEdited = false;
+                    }, 2000);
+                    this.$store.dispatch(
+                        "notification/success",
+                        "URL has been updated successfully",
+                    );
+                })
+                .catch((error) => {
+                    console.error("Error updating page title:", error);
+                    this.isEditing = false;
+                    this.$store.dispatch(
+                        "notification/error",
+                        "Failed to update URL",
+                    );
+                });
+        },
         updateSectionTitle(category, value) {
             this.$api
                 .post("/restaurant/menu/metadata/name", { category, value })
                 .then(() => {
                     const propName = `${this.getSectionProp(category)}Title`;
                     this.$set(this, propName, value);
+                    this.$store.dispatch(
+                        "notification/success",
+                        "Section title updated successfully",
+                    );
+                })
+                .catch((error) => {
+                    console.error("Error updating section title:", error);
+                    this.$store.dispatch(
+                        "notification/error",
+                        "Failed to update section title",
+                    );
+                });
+        },
+        updateOriginTitle(value) {
+            this.$api
+                .post("/restaurant/menu/metadata/name", {
+                    category: "origin",
+                    value,
+                })
+                .then(() => {
                     this.$store.dispatch(
                         "notification/success",
                         "Section title updated successfully",
@@ -481,6 +660,7 @@ export default {
                 beer: "k-beer-table",
                 cocktail: "k-cocktail-table",
                 hotdrink: "k-hot-drink-table",
+                origin: "k-origin-table",
             };
             return componentMap[category];
         },
@@ -496,6 +676,7 @@ export default {
                 beer: "beers",
                 cocktail: "cocktails",
                 hotdrink: "hotDrinks",
+                origin: "origins",
             };
             return propMap[category];
         },
@@ -543,6 +724,15 @@ export default {
             }
         },
         pageTitleIcon4() {
+            if (this.hasBeenEdited) {
+                return "check";
+            } else if (this.isEditing) {
+                return "loader";
+            } else {
+                return "edit";
+            }
+        },
+        originTitleIcon() {
             if (this.hasBeenEdited) {
                 return "check";
             } else if (this.isEditing) {
