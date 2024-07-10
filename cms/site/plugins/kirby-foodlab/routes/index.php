@@ -3,6 +3,7 @@
 use Kirby\Cms\Page;
 use Kirby\Cms\Response;
 use MediumSans\Menu;
+use MediumSans\Menu\Metadata;
 use MediumSans\Restaurant;
 use Spatie\Browsershot\Browsershot;
 
@@ -213,6 +214,88 @@ return [
                 "method" => "POST",
                 "action" => function ($category) {
                     return Menu::reorderData($category, get());
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/(:any)/up",
+                "method" => "POST",
+                "action" => function ($category) {
+                    return Metadata::updown($category, "up");
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/(:any)/down",
+                "method" => "POST",
+                "action" => function ($category) {
+                    return Metadata::updown($category, "down");
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/page-title-1",
+                "method" => "POST",
+                "action" => function () {
+                    return Metadata::addOrUpdate(
+                        "page",
+                        "title1",
+                        get("value")
+                    );
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/page-title-2",
+                "method" => "POST",
+                "action" => function () {
+                    return Metadata::addOrUpdate(
+                        "page",
+                        "title2",
+                        get("value")
+                    );
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/page-title-3",
+                "method" => "POST",
+                "action" => function () {
+                    return Metadata::addOrUpdate(
+                        "page",
+                        "title3",
+                        get("value")
+                    );
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/page-title-4",
+                "method" => "POST",
+                "action" => function () {
+                    return Metadata::addOrUpdate(
+                        "page",
+                        "title4",
+                        get("value")
+                    );
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/metadata/name",
+                "method" => "POST",
+                "action" => function () {
+                    return Metadata::addOrUpdate(
+                        get("category"),
+                        "name",
+                        get("value") ?? ""
+                    );
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/metadata/(:any)/order",
+                "method" => "POST",
+                "action" => function ($page) {
+                    $order = get("order");
+
+                    if (is_array($order)) {
+                        return Metadata::addOrUpdate("page", $page, $order);
+                    }
+
+                    return false;
                 },
             ],
         ];
