@@ -106,25 +106,10 @@ class BaseClass
 
     public static function reorder($newOrder)
     {
-        $category = static::name();
-
-        // Retrieve the current menu data
-        $data = static::list();
-
-        // Create a new array with the updated order
-        $reorderedItems = [];
-        foreach ($newOrder as $id) {
-            $item = array_filter($data[$category], function ($i) use ($id) {
-                return $i["id"] == $id;
-            });
-            if (!empty($item)) {
-                $reorderedItems[] = reset($item);
-            }
+        if(!is_array($newOrder) || empty($newOrder) || $newOrder === 'undefined') {
+            return true;
         }
 
-        // Update the menu data with the new order
-        $data[$category] = $reorderedItems;
-
-        return Data::write(static::file(), $data);
+        return Data::write(static::file(), $newOrder);
     }
 }
