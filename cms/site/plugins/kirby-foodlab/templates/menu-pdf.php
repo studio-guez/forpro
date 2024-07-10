@@ -140,9 +140,6 @@
                 right: 0;
             }
 
-            .page .footer .illustration {
-            }
-
             .columns {
                 position: absolute;
                 width: 630px;
@@ -180,6 +177,7 @@
             }
 
             #illustration-1 {
+                display: none;
                 position: absolute;
                 bottom: -15px;
                 left: -220px;
@@ -189,6 +187,7 @@
             }
 
             #illustration-2 {
+                display: none;
                 position: absolute;
                 bottom: -202px;
                 left: 200px;
@@ -199,6 +198,7 @@
             }
 
             #illustration-3 {
+                display: none;
                 position: absolute;
                 width: 90mm;
                 bottom: -460px;
@@ -208,6 +208,7 @@
             }
 
             #illustration-4 {
+                display: none;
                 position: absolute;
                 width: 70mm;
                 bottom: -420px;
@@ -333,6 +334,7 @@
                         fill-rule: evenodd;
                         clip-rule: evenodd;
                         stroke-miterlimit: 10;
+                        display: none;
                     "
                 >
                     <g transform="matrix(4.16667,0,0,4.16667,225.685,422.914)">
@@ -478,6 +480,7 @@
                         fill-rule: evenodd;
                         clip-rule: evenodd;
                         stroke-miterlimit: 10;
+                        display: none;
                     "
                 >
                     <g transform="matrix(4.16667,0,0,4.16667,225.685,422.914)">
@@ -810,6 +813,7 @@
                         fill-rule: evenodd;
                         clip-rule: evenodd;
                         stroke-miterlimit: 10;
+                        display: none;
                     "
                 >
                     <g transform="matrix(4.16667,0,0,4.16667,225.685,422.914)">
@@ -1127,6 +1131,7 @@
                         fill-rule: evenodd;
                         clip-rule: evenodd;
                         stroke-miterlimit: 10;
+                        display: none;
                     "
                 >
                     <g transform="matrix(4.16667,0,0,4.16667,225.685,422.914)">
