@@ -109,6 +109,10 @@ class Menu extends BaseClass
             "pageTitle2" => Metadata::get("page", "title2"),
             "pageTitle3" => Metadata::get("page", "title3"),
             "pageTitle4" => Metadata::get("page", "title4"),
+
+            "page2Order" => Metadata::get("page", "2") ?? "[]",
+            "page3Order" => Metadata::get("page", "3") ?? "[]",
+            "page4Order" => Metadata::get("page", "4") ?? "[]",
         ];
 
         return $data;
