@@ -13,6 +13,7 @@ use MediumSans\Menu\RedWine;
 use MediumSans\Menu\SoftDrink;
 use MediumSans\Menu\Starter;
 use MediumSans\Menu\WhiteWine;
+use MediumSans\Menu\Metadata;
 
 class Menu extends BaseClass
 {
@@ -104,6 +105,10 @@ class Menu extends BaseClass
             "hotDrinksHidden" => $hotDrinksHidden,
 
             "menu" => $menu,
+
+            "pageTitle2" => Metadata::get("page", "title2"),
+            "pageTitle3" => Metadata::get("page", "title3"),
+            "pageTitle4" => Metadata::get("page", "title4"),
         ];
 
         return $data;

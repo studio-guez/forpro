@@ -15,22 +15,22 @@ class BaseClass
      */
     public static function file(): string
     {
-        return __DIR__ . '/../data/' . static::FILENAME;
+        return __DIR__ . "/../data/" . static::FILENAME;
     }
 
     public static function name(): string
     {
-        return preg_replace('/\.json$/', '', static::FILENAME);
+        return preg_replace('/\.json$/', "", static::FILENAME);
     }
 
     public static function title(): string
     {
-        return Metadata::get(static::name(), 'name');
+        return Metadata::get(static::name(), "name");
     }
 
     public static function hide(): bool
     {
-        return Metadata::get(static::name(), 'hidden') == 1;
+        return Metadata::get(static::name(), "hidden") === true;
     }
 
     /**
@@ -71,13 +71,13 @@ class BaseClass
     {
         $items = static::list();
 
-        foreach($items as $item) {
+        foreach ($items as $item) {
             if (is_array($item) && in_array($id, $item)) {
                 return $item;
             }
         }
 
-        throw new NotFoundException('The item could not be found');
+        throw new NotFoundException("The item could not be found");
     }
 
     /**
@@ -92,8 +92,8 @@ class BaseClass
     {
         $items = static::list();
 
-        foreach($items as &$item) {
-            if ($item['id'] === $id) {
+        foreach ($items as &$item) {
+            if ($item["id"] === $id) {
                 $item = $menu;
                 break;
             }
