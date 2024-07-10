@@ -99,6 +99,11 @@ Kirby::plugin("mediumsans/foodlab", [
                     require __DIR__ . "/dialogs/menu/whitewine/edit.php",
                     require __DIR__ . "/dialogs/menu/whitewine/hide.php",
                     require __DIR__ . "/dialogs/menu/whitewine/title.php",
+                    // Origins
+                    require __DIR__ . "/dialogs/menu/origin/fields.php",
+                    require __DIR__ . "/dialogs/menu/origin/create.php",
+                    require __DIR__ . "/dialogs/menu/origin/delete.php",
+                    require __DIR__ . "/dialogs/menu/origin/edit.php",
                 ],
             ];
         },
