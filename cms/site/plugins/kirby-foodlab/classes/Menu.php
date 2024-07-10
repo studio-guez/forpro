@@ -14,6 +14,7 @@ use MediumSans\Menu\SoftDrink;
 use MediumSans\Menu\Starter;
 use MediumSans\Menu\WhiteWine;
 use MediumSans\Menu\Metadata;
+use MediumSans\Menu\Origin;
 
 class Menu extends BaseClass
 {
@@ -61,7 +62,14 @@ class Menu extends BaseClass
         $hotDrinksTitle = HotDrink::title();
         $hotDrinksHidden = HotDrink::hide();
 
+        $origins[] = Origin::list();
+        $originsTitle = Origin::title();
+
         $menu = self::list();
+
+        $textTVA = $menu["textTVA"];
+        $textAllergy = $menu["textAllergy"];
+        $textURL = $menu["textURL"];
 
         $data = [
             "starters" => $starters,
@@ -104,7 +112,14 @@ class Menu extends BaseClass
             "hotDrinksTitle" => $hotDrinksTitle,
             "hotDrinksHidden" => $hotDrinksHidden,
 
+            "origins" => $origins,
+            "originsTitle" => $originsTitle,
+
             "menu" => $menu,
+
+            "textTVA" => $textTVA,
+            "textAllergy" => $textAllergy,
+            "textURL" => $textURL,
 
             "pageTitle2" => Metadata::get("page", "title2"),
             "pageTitle3" => Metadata::get("page", "title3"),
@@ -143,6 +158,10 @@ class Menu extends BaseClass
                 $input["textSubtitle2"] ?? ($menu["textSubtitle2"] ?? ""),
             "textContent2" =>
                 $input["textContent2"] ?? ($menu["textContent2"] ?? ""),
+            "textURL" => $input["textURL"] ?? ($menu["textURL"] ?? ""),
+            "textTVA" => $input["textTVA"] ?? ($menu["textTVA"] ?? ""),
+            "textAllergy" =>
+                $input["textAllergy"] ?? ($menu["textAllergy"] ?? ""),
         ];
 
         return Data::write(static::file(), $menu);
