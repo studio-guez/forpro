@@ -16,6 +16,9 @@ return [
         $bubbleWines = Menu\BubbleWine::list();
         $cocktails = Menu\Cocktail::list();
         $hotDrinks = Menu\HotDrink::list();
+
+        $origins = Menu\Origin::list();
+
         $page2Order = Metadata::get("page", "2") ?? "[]";
         $page3Order = Metadata::get("page", "3") ?? "[]";
         $page4Order = Metadata::get("page", "4") ?? "[]";
@@ -55,12 +58,17 @@ return [
                 "hotDrinks" => $hotDrinks,
                 "hotDrinksShowHide" => Menu\HotDrink::hide(),
                 "hotDrinksTitle" => Menu\HotDrink::title(),
+                "origins" => $origins,
+                "originsTitle" => Menu\Origin::title(),
                 "textTitle1" => $menu["textTitle1"] ?? "",
                 "textSubtitle1" => $menu["textSubtitle1"] ?? "",
                 "textContent1" => $menu["textContent1"] ?? "",
                 "textTitle2" => $menu["textTitle2"] ?? "",
                 "textSubtitle2" => $menu["textSubtitle2"] ?? "",
                 "textContent2" => $menu["textContent2"] ?? "",
+                "textURL" => $menu["textURL"] ?? "",
+                "textTVA" => $menu["textTVA"] ?? "",
+                "textAllergy" => $menu["textAllergy"] ?? "",
                 "pageTitle1" => Metadata::get("page", "title1"),
                 "pageTitle2" => Metadata::get("page", "title2"),
                 "pageTitle3" => Metadata::get("page", "title3"),
