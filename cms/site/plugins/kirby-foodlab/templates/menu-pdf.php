@@ -302,7 +302,7 @@
             <div class="footer">
 
                 <span style="position: absolute; right:80px; bottom: 50px;font-size: 15pt; font-weight: 500;">
-                    foodlab.for-pro.ch
+                    <?= $textURL ?>
                 </span >
 
                 <svg
@@ -542,30 +542,24 @@
                 <div class="left">
                     <div class="content" style="width: 250px">
                         <div>
-                            En cas d’allergies alimentaires, nous vous
-                            remercions d’en informer le personnel de service.
+                            <?= $textAllergy ?>
                         </div>
                         <div style="margin-top: 10px">
-                            Tous nos prix sont exprimés en francs suisses, TVA
-                            incluse.
+                            <?= $textTVA ?>
                         </div>
                     </div>
                 </div>
                 <div class="right">
                     <div class="content" style="padding-left: 100px">
-                        <h4>Provenance des produits</h4>
-                        <div class="origin">
-                            <span class="left">Boeuf</span>
-                            <span class="right">Suisse</span>
-                        </div>
-                        <div class="origin">
-                            <span class="left">Veau</span>
-                            <span class="right">Suisse</span>
-                        </div>
-                        <div class="origin">
-                            <span class="left">Cabillaud</span>
-                            <span class="right">Ecosse</span>
-                        </div>
+                        <h4><?= $originsTitle ?></h4>
+                        <?php foreach ($origins[0] as $origin): ?>
+                            <div class="origin">
+                            <span class="left"><?= $origin["name"] ?></span>
+                                <span class="right"><?= $origin[
+                                    "origin"
+                                ] ?></span>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -881,8 +875,7 @@
                                 font-weight: 500;
                             "
                         >
-                            Tous nos prix sont exprimés en francs suisses, TVA
-                            incluse.
+                            <?= $textTVA ?>
                         </div>
                     </div>
                 </div>
@@ -1199,8 +1192,7 @@
                                 font-weight: 500;
                             "
                         >
-                            Tous nos prix sont exprimés en francs suisses, TVA
-                            incluse.
+                            <?= $textTVA ?>
                         </div>
                     </div>
                 </div>
