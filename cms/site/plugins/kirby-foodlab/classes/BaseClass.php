@@ -42,11 +42,11 @@ class BaseClass
     public static function delete(string $id): bool
     {
         $items = static::list();
-
-        $key = array_search($id, $items);
-
-        unset($items[$key]);
-
+        foreach ($items as $key => $item) {
+            if ($item["id"] === $id) {
+                unset($items[$key]);
+            }
+        }
         return Data::write(static::file(), $items);
     }
 
