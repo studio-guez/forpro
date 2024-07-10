@@ -436,14 +436,12 @@ export default {
             }, 2500);
         },
         updateTableOrder(category) {
-            const listName = this.getSectionProp(category);
-            const updatedList = this[listName];
+            const updatedList = this[category];
 
             this.$api
                 .post(`/restaurant/menu/${category}/reorder`, updatedList)
                 .then(() => {
-                    // Update the local data
-                    this.$set(this, listName, updatedList);
+                    // The list is already updated in the component's data, so we don't need to set it again
                     this.$store.dispatch(
                         "notification/success",
                         "Order updated successfully",
