@@ -30,7 +30,7 @@
             :fields="formFields"
         />
 
-        <!-- Page 1 -->
+        <!-- Page 2 -->
         <k-grid style="margin-bottom: 40px; margin-top: 40px">
             <div class="k-column" style="--width: 1/3">
                 <hr class="k-line-field" type="line" />
@@ -77,7 +77,7 @@
             />
         </template>
 
-        <!-- Page 2 -->
+        <!-- Page 3 -->
         <k-grid style="margin-bottom: 40px; margin-top: 40px">
             <div class="k-column" style="--width: 1/3">
                 <hr class="k-line-field" type="line" />
@@ -124,7 +124,7 @@
             />
         </template>
 
-        <!-- Page 3 -->
+        <!-- Page 4 -->
         <k-grid style="margin-bottom: 40px; margin-top: 40px">
             <div class="k-column" style="--width: 1/3">
                 <hr class="k-line-field" type="line" />
@@ -171,7 +171,7 @@
             />
         </template>
 
-        <!-- Page 4 -->
+        <!-- Divers -->
         <k-grid style="margin-bottom: 40px; margin-top: 40px">
             <div class="k-column" style="--width: 1">
                 <hr class="k-line-field" type="line" />
@@ -192,7 +192,7 @@
         <k-grid style="margin-top: 40px">
             <div class="k-column" style="--width: 1/3; justify-self: start">
                 <k-input
-                    :value="OriginsTitle"
+                    :value="originsTitle"
                     type="text"
                     :icon="originTitleIcon"
                     @input="updateOriginTitle($event)"
@@ -222,7 +222,7 @@
             <k-draggable
                 :list="origins"
                 :handle="true"
-                @change="updateOrder('origins')"
+                @change="updateTableOrder('origins')"
                 :options="{
                     fallbackClass: 'k-table-row-fallback',
                     ghostClass: 'k-table-row-ghost',
@@ -306,9 +306,9 @@ export default {
         textURL: String,
         textTVA: String,
         textAllergy: String,
-        pageTitle1: String,
         pageTitle2: String,
         pageTitle3: String,
+        pageTitle4: String,
         page2Order: Array,
         page3Order: Array,
         page4Order: Array,
@@ -437,9 +437,13 @@ export default {
         },
         updateTableOrder(category) {
             const listName = this.getSectionProp(category);
+            const updatedList = this[listName];
+
             this.$api
-                .post(`/restaurant/menu/${category}/reorder`, this[listName])
+                .post(`/restaurant/menu/${category}/reorder`, updatedList)
                 .then(() => {
+                    // Update the local data
+                    this.$set(this, listName, updatedList);
                     this.$store.dispatch(
                         "notification/success",
                         "Order updated successfully",
