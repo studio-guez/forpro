@@ -69,7 +69,6 @@ return [
                 "textURL" => $menu["textURL"] ?? "",
                 "textTVA" => $menu["textTVA"] ?? "",
                 "textAllergy" => $menu["textAllergy"] ?? "",
-                "pageTitle1" => Metadata::get("page", "title1"),
                 "pageTitle2" => Metadata::get("page", "title2"),
                 "pageTitle3" => Metadata::get("page", "title3"),
                 "pageTitle4" => Metadata::get("page", "title4"),
