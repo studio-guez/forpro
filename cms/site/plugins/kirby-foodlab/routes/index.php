@@ -286,6 +286,28 @@ return [
                 },
             ],
             [
+                "pattern" => "restaurant/menu/metadata/tva",
+                "method" => "POST",
+                "action" => function () {
+                    return Metadata::addOrUpdate(
+                        "page",
+                        "tva",
+                        get("value") ?? ""
+                    );
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/metadata/url",
+                "method" => "POST",
+                "action" => function () {
+                    return Metadata::addOrUpdate(
+                        "page",
+                        "url",
+                        get("value") ?? ""
+                    );
+                },
+            ],
+            [
                 "pattern" => "restaurant/menu/metadata/(:any)/order",
                 "method" => "POST",
                 "action" => function ($page) {
