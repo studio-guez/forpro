@@ -171,6 +171,7 @@
 
             #overlay {
                 position: absolute;
+                display: none;
                 right: 60px;
                 top: 40px;
                 height: 24mm;
@@ -392,54 +393,60 @@
         </div>
 
         <div class="page">
-            <h2>Carte des mets</h2>
+            <h2><?= $pageTitle2 ?></h2>
 
-            <?php if(!$startersHidden): ?>
-                <div class="section">
-                    <h4><?= $startersTitle ?></h4>
-                    <?php foreach ($starters[0] as $starter): ?>
-                    <div class="item">
-                        <span class="name"><?= $starter["name"] ?></Salade></span>
-                        <span class="price"><?= $starter["price"] ?></span>
-                        <p class="description">
-                            <?= $starter["description"] ?>
-                        </p>
+            <?php foreach ($page2Order as $category): ?>
+                <?php if ($category === "starter" && !$startersHidden): ?>
+                    <div class="section">
+                        <h4><?= $startersTitle ?></h4>
+                        <?php foreach ($starters[0] as $starter): ?>
+                        <div class="item">
+                            <span class="name"><?= $starter[
+                                "name"
+                            ] ?></Salade></span>
+                            <span class="price"><?= $starter["price"] ?></span>
+                            <p class="description">
+                                <?= $starter["description"] ?>
+                            </p>
+                        </div>
+                        <?php endforeach; ?>
                     </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
 
-            <?php if(!$mainCoursesHidden): ?>
-                <div class="section">
-                    <h4><?= $mainCoursesTitle ?></h4>
-                    <?php foreach ($mainCourses[0] as $mainCourse): ?>
-                    <div class="item">
-                        <span class="name"><?= $mainCourse[
-                            "name"
-                        ] ?></span>
-                        <span class="price"><?= $mainCourse["price"] ?></span>
-                        <p class="description">
-                            <?= $mainCourse["description"] ?>
-                        </p>
+                <?php if ($category === "maincourse" && !$mainCoursesHidden): ?>
+                    <div class="section">
+                        <h4><?= $mainCoursesTitle ?></h4>
+                        <?php foreach ($mainCourses[0] as $mainCourse): ?>
+                        <div class="item">
+                            <span class="name"><?= $mainCourse["name"] ?></span>
+                            <span class="price"><?= $mainCourse[
+                                "price"
+                            ] ?></span>
+                            <p class="description">
+                                <?= $mainCourse["description"] ?>
+                            </p>
+                        </div>
+                        <?php endforeach; ?>
                     </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
 
-            <?php if(!$dessertsHidden): ?>
-                <div class="section">
-                    <h4><?= $dessertsTitle ?></h4>
-                    <?php foreach ($desserts[0] as $dessert): ?>
-                    <div class="item">
-                        <span class="name"><?= $dessert["name"] ?></Salade></span>
-                        <span class="price"><?= $dessert["price"] ?></span>
-                        <p class="description">
-                            <?= $dessert["description"] ?>
-                        </p>
+                <?php if ($category === "dessert" && !$dessertsHidden): ?>
+                    <div class="section">
+                        <h4><?= $dessertsTitle ?></h4>
+                        <?php foreach ($desserts[0] as $dessert): ?>
+                        <div class="item">
+                            <span class="name"><?= $dessert[
+                                "name"
+                            ] ?></Salade></span>
+                            <span class="price"><?= $dessert["price"] ?></span>
+                            <p class="description">
+                                <?= $dessert["description"] ?>
+                            </p>
+                        </div>
+                        <?php endforeach; ?>
                     </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
 
             <div class="footer">
                 <svg
@@ -562,208 +569,211 @@
         </div>
 
         <div class="page">
-            <h2>Vins – Au fil du Rhône</h2>
-            <?php if(!$bubbleWinesHidden): ?>
-                <div class="section">
-                <table
-                    style="
-                        width: 100%;
-                        font-size: 9pt;
-                        font-weight: 500;
-                        border-spacing: 0 1em;
-                    "
-                >
-                    <tr>
-                        <th style="width: 80%; text-align: left; font-weight: 500;">
-                            <?= $bubbleWinesTitle ?>
-                        </h4>
-                        </th>
-                        <th
-                            style="
-                                width: 10px;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        >
-                            10 cl
-                        </th>
-                        <th
-                                style="
-                                width: 10px;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        >
-                            50 cl
-                        </th>
-                        <th
-                            style="
-                                width: 10px;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        >
-                            75 cl
-                        </th>
-                    </tr>
-                    <?php foreach ($bubbleWines[0] as $wine): ?>
-                    <tr>
-                        <td>
-                            <span style="font-weight: 800"
-                                ><?= $wine["name"] ?></span
-                            >, <?= $wine["domain"] ?>, <?= $wine[
-    "mill"
-] ?><br />
-                            <?= $wine["description"] ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price10cl"] ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price50cl"] ?? "" ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price75cl"] ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </table>
-            </div>
-            <?php endif; ?>
+            <h2><?= $pageTitle3 ?></h2>
 
-            <?php if(!$whiteWinesHidden): ?>
-                <div class="section">
-                <table
-                    style="
-                        width: 100%;
-                        font-size: 9pt;
-                        font-weight: 500;
-                        border-spacing: 0 1em;
-                    "
-                >
-                    <tr>
-                        <th style="width: 80%; text-align: left; font-weight: 500;">
-                            <?= $whiteWinesTitle ?>
-                        </th>
-                        <th
-                            style="
-                                width: 10px;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        >
-                            10 cl
-                        </th>
-                        <th
+            <?php foreach ($page3Order as $category): ?>
+                <?php if ($category === "bubblewine" && !$bubbleWinesHidden): ?>
+                    <div class="section">
+                    <table
+                        style="
+                            width: 100%;
+                            font-size: 9pt;
+                            font-weight: 500;
+                            border-spacing: 0 1em;
+                        "
+                    >
+                        <tr>
+                            <th style="width: 80%; text-align: left; font-weight: 500;">
+                                <?= $bubbleWinesTitle ?>
+                            </h4>
+                            </th>
+                            <th
                                 style="
-                                width: 10px;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        >
-                            50 cl
-                        </th>
-                        <th
-                            style="
-                                width: 10px;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        >
-                            75 cl
-                        </th>
-                    </tr>
-                    <?php foreach ($whiteWines[0] as $wine): ?>
-                    <tr>
-                        <td>
-                            <span style="font-weight: 800"
-                                ><?= $wine["name"] ?></span
-                            >, <?= $wine["domain"] ?>, <?= $wine[
-    "mill"
-] ?><br />
-                            <?= $wine["description"] ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price10cl"] ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price50cl"] ?? "" ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price75cl"] ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </table>
-            </div>
-            <?php endif; ?>
+                                    width: 10px;
+                                    text-align: right;
+                                    text-decoration: underline;
+                                "
+                            >
+                                10 cl
+                            </th>
+                            <th
+                                    style="
+                                    width: 10px;
+                                    text-align: right;
+                                    text-decoration: underline;
+                                "
+                            >
+                                50 cl
+                            </th>
+                            <th
+                                style="
+                                    width: 10px;
+                                    text-align: right;
+                                    text-decoration: underline;
+                                "
+                            >
+                                75 cl
+                            </th>
+                        </tr>
+                        <?php foreach ($bubbleWines[0] as $wine): ?>
+                        <tr>
+                            <td>
+                                <span style="font-weight: 800">
+                                    <?= $wine["name"] ?>
+                                </span>,
+                                <?= $wine["domain"] ?>,
+                                <?= $wine["mill"] ?><br />
+                                <?= $wine["description"] ?>
+                            </td>
+                            <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                <?= $wine["price10cl"] ?>
+                            </td>
+                            <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                <?= $wine["price50cl"] ?? "" ?>
+                            </td>
+                            <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                <?= $wine["price75cl"] ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <?php endif; ?>
 
-            <?php if(!$redWinesHidden): ?>
-            <div class="section">
-                <table
-                    style="
-                        width: 100%;
-                        font-size: 9pt;
-                        font-weight: 500;
-                        border-spacing: 0 1em;
-                    "
-                >
-                    <tr>
-                        <th style="width: 80%; text-align: left;font-weight: 500;">
-                            <?= $redWinesTitle ?>
-                        </th>
-                        <th
+                <?php if ($category === "whitewine" && !$whiteWinesHidden): ?>
+                    <div class="section">
+                        <table
                             style="
-                                width: 10px;
-                                text-align: right;
-                                text-decoration: underline;
+                                width: 100%;
+                                font-size: 9pt;
+                                font-weight: 500;
+                                border-spacing: 0 1em;
                             "
                         >
-                            10 cl
-                        </th>
-                        <th
-                                style="
-                                width: 10px;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        >
-                            50 cl
-                        </th>
-                        <th
+                            <tr>
+                                <th style="width: 80%; text-align: left; font-weight: 500;">
+                                    <?= $whiteWinesTitle ?>
+                                </th>
+                                <th
+                                    style="
+                                        width: 10px;
+                                        text-align: right;
+                                        text-decoration: underline;
+                                    "
+                                >
+                                    10 cl
+                                </th>
+                                <th
+                                        style="
+                                        width: 10px;
+                                        text-align: right;
+                                        text-decoration: underline;
+                                    "
+                                >
+                                    50 cl
+                                </th>
+                                <th
+                                    style="
+                                        width: 10px;
+                                        text-align: right;
+                                        text-decoration: underline;
+                                    "
+                                >
+                                    75 cl
+                                </th>
+                            </tr>
+                            <?php foreach ($whiteWines[0] as $wine): ?>
+                            <tr>
+                                <td>
+                                    <span style="font-weight: 800">
+                                        <?= $wine["name"] ?>
+                                    </span>,
+                                    <?= $wine["domain"] ?>,
+                                    <?= $wine["mill"] ?><br />
+                                    <?= $wine["description"] ?>
+                                </td>
+                                <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                    <?= $wine["price10cl"] ?>
+                                </td>
+                                <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                    <?= $wine["price50cl"] ?? "" ?>
+                                </td>
+                                <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                    <?= $wine["price75cl"] ?>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ($category === "redwine" && !$redWinesHidden): ?>
+                    <div class="section">
+                        <table
                             style="
-                                width: 10px;
-                                text-align: right;
-                                text-decoration: underline;
+                                width: 100%;
+                                font-size: 9pt;
+                                font-weight: 500;
+                                border-spacing: 0 1em;
                             "
                         >
-                            75 cl
-                        </th>
-                    </tr>
-                    <?php foreach ($redWines[0] as $wine): ?>
-                    <tr>
-                        <td>
-                            <span style="font-weight: 800"
-                                ><?= $wine["name"] ?></span
-                            >, <?= $wine["domain"] ?>, <?= $wine[
-    "mill"
-] ?><br />
-                            <?= $wine["description"] ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price10cl"] ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price50cl"] ?? "" ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price75cl"] ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </table>
-            </div>
-            <?php endif; ?>
+                            <tr>
+                                <th style="width: 80%; text-align: left;font-weight: 500;">
+                                    <?= $redWinesTitle ?>
+                                </th>
+                                <th
+                                    style="
+                                        width: 10px;
+                                        text-align: right;
+                                        text-decoration: underline;
+                                    "
+                                >
+                                    10 cl
+                                </th>
+                                <th
+                                        style="
+                                        width: 10px;
+                                        text-align: right;
+                                        text-decoration: underline;
+                                    "
+                                >
+                                    50 cl
+                                </th>
+                                <th
+                                    style="
+                                        width: 10px;
+                                        text-align: right;
+                                        text-decoration: underline;
+                                    "
+                                >
+                                    75 cl
+                                </th>
+                            </tr>
+                            <?php foreach ($redWines[0] as $wine): ?>
+                            <tr>
+                                <td>
+                                    <span style="font-weight: 800">
+                                        <?= $wine["name"] ?>
+                                    </span>,
+                                    <?= $wine["domain"] ?>,
+                                    <?= $wine["mill"] ?><br />
+                                    <?= $wine["description"] ?>
+                                </td>
+                                <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                    <?= $wine["price10cl"] ?>
+                                </td>
+                                <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                    <?= $wine["price50cl"] ?? "" ?>
+                                </td>
+                                <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                    <?= $wine["price75cl"] ?>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
 
             <div class="footer">
                 <svg
@@ -876,211 +886,214 @@
         </div>
 
         <div class="page">
-            <h2>Boissons</h2>
+            <h2><?= $pageTitle4 ?></h2>
 
-            <?php if(!$softDrinksHidden): ?>
-                <div class="section">
-                <table
-                    style="
-                        width: 100%;
-                        font-size: 9pt;
-                        font-weight: 500;
-                        border-spacing: 0 1em;
-                        line-height: 3px;
-                    "
-                >
-                    <tr>
-                        <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">
-                            <?= $softDrinksTitle ?>
-                        </th>
-                        <th
-                            style="
-                                width: 10%;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        ></th>
-                        <th
-                            style="
-                                width: 10%;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        ></th>
-                    </tr>
-                    <?php foreach ($softDrinks[0] as $wine): ?>
-                    <tr>
-                        <td>
-                            <span style="font-weight: 800;"
-                                ><?= $wine["name"] ?></span
-                            ><?php echo !empty(trim($wine["description"]))
-                                ? ", " . trim($wine["description"])
-                                : ""; ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 300">
-                            <?= $wine["volume"] ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price"] ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </table>
-            </div>
-            <?php endif; ?>
+            <?php foreach ($page4Order as $category): ?>
+                <?php if ($category === "softdrink" && !$softDrinksHidden): ?>
+                    <div class="section">
+                    <table
+                        style="
+                            width: 100%;
+                            font-size: 9pt;
+                            font-weight: 500;
+                            border-spacing: 0 1em;
+                            line-height: 3px;
+                        "
+                    >
+                        <tr>
+                            <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">
+                                <?= $softDrinksTitle ?>
+                            </th>
+                            <th
+                                style="
+                                    width: 10%;
+                                    text-align: right;
+                                    text-decoration: underline;
+                                "
+                            ></th>
+                            <th
+                                style="
+                                    width: 10%;
+                                    text-align: right;
+                                    text-decoration: underline;
+                                "
+                            ></th>
+                        </tr>
+                        <?php foreach ($softDrinks[0] as $wine): ?>
+                        <tr>
+                            <td>
+                                <span style="font-weight: 800;"
+                                    ><?= $wine["name"] ?></span
+                                ><?php echo !empty(trim($wine["description"]))
+                                    ? ", " . trim($wine["description"])
+                                    : ""; ?>
+                            </td>
+                            <td style="text-align: right;vertical-align: top; font-weight: 300">
+                                <?= $wine["volume"] ?>
+                            </td>
+                            <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                <?= $wine["price"] ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <?php endif; ?>
 
-            <?php if(!$beersHidden): ?>
-                <div class="section" style="margin-top: 20px">
-                <table
-                    style="
-                        width: 100%;
-                        font-size: 9pt;
-                        font-weight: 500;
-                        border-spacing: 0 1em;
-                        line-height: 3px;
-                    "
-                >
-                    <tr>
-                        <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">
-                            <?= $beersTitle ?>
-                        </th>
-                        <th
-                            style="
-                                width: 10%;
-                                text-align: left;
-                                text-decoration: underline;
-                            "
-                        ></th>
-                        <th
-                            style="
-                                width: 10%;
-                                text-align: left;
-                                text-decoration: underline;
-                            "
-                        ></th>
-                    </tr>
-                    <?php foreach ($beers[0] as $wine): ?>
-                    <tr>
-                        <td>
-                            <span style="font-weight: 800"
-                                ><?= $wine["name"] ?></span
-                            ><?php echo !empty(trim($wine["description"]))
-                                ? ", " . trim($wine["description"])
-                                : ""; ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 300">
-                            <?= $wine["volume"] ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price"] ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </table>
-            </div>
-            <?php endif; ?>
+                <?php if ($category === "beer" && !$beersHidden): ?>
+                    <div class="section" style="margin-top: 20px">
+                    <table
+                        style="
+                            width: 100%;
+                            font-size: 9pt;
+                            font-weight: 500;
+                            border-spacing: 0 1em;
+                            line-height: 3px;
+                        "
+                    >
+                        <tr>
+                            <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">
+                                <?= $beersTitle ?>
+                            </th>
+                            <th
+                                style="
+                                    width: 10%;
+                                    text-align: left;
+                                    text-decoration: underline;
+                                "
+                            ></th>
+                            <th
+                                style="
+                                    width: 10%;
+                                    text-align: left;
+                                    text-decoration: underline;
+                                "
+                            ></th>
+                        </tr>
+                        <?php foreach ($beers[0] as $wine): ?>
+                        <tr>
+                            <td>
+                                <span style="font-weight: 800"
+                                    ><?= $wine["name"] ?></span
+                                ><?php echo !empty(trim($wine["description"]))
+                                    ? ", " . trim($wine["description"])
+                                    : ""; ?>
+                            </td>
+                            <td style="text-align: right;vertical-align: top; font-weight: 300">
+                                <?= $wine["volume"] ?>
+                            </td>
+                            <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                <?= $wine["price"] ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <?php endif; ?>
 
-            <?php if(!$cocktailsHidden): ?>
-                <div class="section" style="margin-top: 20px">
-                <table
-                    style="
-                        width: 100%;
-                        font-size: 9pt;
-                        font-weight: 500;
-                        border-spacing: 0 1em;
-                        line-height: 3px;
-                    "
-                >
-                    <tr>
-                        <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">
-                            <?= $cocktailsTitle ?>
-                        </th>
-                        <th
-                            style="
-                                width: 10%;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        ></th>
-                        <th
-                            style="
-                                width: 10%;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        ></th>
-                    </tr>
-                    <?php foreach ($cocktails[0] as $wine): ?>
-                    <tr>
-                        <td>
-                            <span style="font-weight: 800"
-                                ><?= $wine["name"] ?></span
-                            ><?php echo !empty(trim($wine["description"]))
-                                ? ", " . trim($wine["description"])
-                                : ""; ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 300">
-                            <?= $wine["volume"] ?>
-                        </td>
-                        <td style="text-align: right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price"] ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </table>
-            </div>
-            <?php endif; ?>
+                <?php if ($category === "cocktail" && !$cocktailsHidden): ?>
+                    <div class="section" style="margin-top: 20px">
+                    <table
+                        style="
+                            width: 100%;
+                            font-size: 9pt;
+                            font-weight: 500;
+                            border-spacing: 0 1em;
+                            line-height: 3px;
+                        "
+                    >
+                        <tr>
+                            <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">
+                                <?= $cocktailsTitle ?>
+                            </th>
+                            <th
+                                style="
+                                    width: 10%;
+                                    text-align: right;
+                                    text-decoration: underline;
+                                "
+                            ></th>
+                            <th
+                                style="
+                                    width: 10%;
+                                    text-align: right;
+                                    text-decoration: underline;
+                                "
+                            ></th>
+                        </tr>
+                        <?php foreach ($cocktails[0] as $wine): ?>
+                        <tr>
+                            <td>
+                                <span style="font-weight: 800"
+                                    ><?= $wine["name"] ?></span
+                                ><?php echo !empty(trim($wine["description"]))
+                                    ? ", " . trim($wine["description"])
+                                    : ""; ?>
+                            </td>
+                            <td style="text-align: right;vertical-align: top; font-weight: 300">
+                                <?= $wine["volume"] ?>
+                            </td>
+                            <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                <?= $wine["price"] ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <?php endif; ?>
 
-            <?php if(!$hotDrinksHidden): ?>
-                <div class="section" style="margin-top: 20px">
-                <table
-                    style="
-                        width: 100%;
-                        font-size: 9pt;
-                        font-weight: 500;
-                        border-spacing: 0 1em;
-                        line-height: 3px;
-                    "
-                >
-                    <tr>
-                        <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">
-                            <?= $hotDrinksTitle ?>
-                        </th>
-                        <th
-                            style="
-                                width: 10%;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        ></th>
-                        <th
-                            style="
-                                width: 10%;
-                                text-align: right;
-                                text-decoration: underline;
-                            "
-                        ></th>
-                    </tr>
-                    <?php foreach ($hotDrinks[0] as $wine): ?>
-                    <tr>
-                        <td>
-                            <span style="font-weight: 800"
-                                ><?= $wine["name"] ?></span
-                            ><?php echo !empty(trim($wine["description"]))
-                                ? ", " . trim($wine["description"])
-                                : ""; ?>
-                        </td>
-                        <td style="text-align:right;vertical-align: top; font-weight: 300">
-                            <?= $wine["volume"] ?>
-                        </td>
-                        <td style="text-align:right;vertical-align: top; font-weight: 500">
-                            <?= $wine["price"] ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </table>
-            </div>
-            <?php endif; ?>
+                <?php if ($category === "hotdrink" && !$hotDrinksHidden): ?>
+                    <div class="section" style="margin-top: 20px">
+                    <table
+                        style="
+                            width: 100%;
+                            font-size: 9pt;
+                            font-weight: 500;
+                            border-spacing: 0 1em;
+                            line-height: 3px;
+                        "
+                    >
+                        <tr>
+                            <th style="display:block; margin-bottom: 10px; width: 80%; text-align: left; font-weight: 500;">
+                                <?= $hotDrinksTitle ?>
+                            </th>
+                            <th
+                                style="
+                                    width: 10%;
+                                    text-align: right;
+                                    text-decoration: underline;
+                                "
+                            ></th>
+                            <th
+                                style="
+                                    width: 10%;
+                                    text-align: right;
+                                    text-decoration: underline;
+                                "
+                            ></th>
+                        </tr>
+                        <?php foreach ($hotDrinks[0] as $wine): ?>
+                        <tr>
+                            <td>
+                                <span style="font-weight: 800"
+                                    ><?= $wine["name"] ?></span
+                                ><?php echo !empty(trim($wine["description"]))
+                                    ? ", " . trim($wine["description"])
+                                    : ""; ?>
+                            </td>
+                            <td style="text-align:right;vertical-align: top; font-weight: 300">
+                                <?= $wine["volume"] ?>
+                            </td>
+                            <td style="text-align:right;vertical-align: top; font-weight: 500">
+                                <?= $wine["price"] ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <?php endif; ?>
+
+            <?php endforeach; ?>
 
             <div class="footer">
                 <svg
