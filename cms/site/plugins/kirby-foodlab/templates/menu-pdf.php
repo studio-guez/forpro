@@ -416,9 +416,13 @@
         <div class="page">
             <h2><?= $pageTitle2 ?></h2>
 
-            <?php foreach ($page2Order as $category): ?>
+            <?php
+                $isFirstIteration = true;
+                foreach ($page2Order as $category):
+            ?>
+
                 <?php if ($category === "starter" && !$startersHidden): ?>
-                    <div class="section">
+                    <div class="section" style="margin-top: <?= $isFirstIteration ? '0px' : '56px' ?>">
                         <h4><?= $startersTitle ?></h4>
                         <?php foreach ($starters[0] as $starter): ?>
                         <div class="item">
@@ -432,10 +436,11 @@
                         </div>
                         <?php endforeach; ?>
                     </div>
+                    <?php $isFirstIteration = false; ?>
                 <?php endif; ?>
 
                 <?php if ($category === "maincourse" && !$mainCoursesHidden): ?>
-                    <div class="section">
+                    <div class="section" style="margin-top: <?= $isFirstIteration ? '0px' : '56px' ?>">
                         <h4><?= $mainCoursesTitle ?></h4>
                         <?php foreach ($mainCourses[0] as $mainCourse): ?>
                         <div class="item">
@@ -449,10 +454,11 @@
                         </div>
                         <?php endforeach; ?>
                     </div>
+                    <?php $isFirstIteration = false; ?>
                 <?php endif; ?>
 
                 <?php if ($category === "dessert" && !$dessertsHidden): ?>
-                    <div class="section">
+                    <div class="section" style="margin-top: <?= $isFirstIteration ? '0px' : '56px' ?>">
                         <h4><?= $dessertsTitle ?></h4>
                         <?php foreach ($desserts[0] as $dessert): ?>
                         <div class="item">
@@ -467,6 +473,7 @@
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
+                <?php $isFirstIteration = false; ?>
             <?php endforeach; ?>
 
             <div class="footer">
