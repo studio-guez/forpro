@@ -559,7 +559,7 @@
             </div>
             <div class="columns">
                 <div class="left">
-                    <div class="content" style="width: 260px">
+                    <div class="content" style="width: 240px">
                         <div class="text-allergy">
                             <?= $textAllergy ?>
                         </div>
