@@ -23,6 +23,9 @@ fields:
       linkText:
         label: Texte
         type: text
+      target:
+        label: Ouvrir dans une nouvelle fenêtre
+        type: toggle
     width: 1/2
 
   btnHero2:
@@ -34,6 +37,9 @@ fields:
       linkText:
         label: Texte
         type: text
+      target:
+        label: Ouvrir dans une nouvelle fenêtre
+        type: toggle
     width: 1/2
 
   picHero1:
@@ -87,6 +93,9 @@ fields:
       linkText:
         label: Texte
         type: text
+      target:
+        label: Ouvrir dans une nouvelle fenêtre
+        type: toggle
     width: 1/2
 
   line2:
@@ -120,6 +129,9 @@ fields:
       linkText:
         label: Texte
         type: text
+      target:
+        label: Ouvrir dans une nouvelle fenêtre
+        type: toggle
     width: 1/2
 
   line3:
@@ -161,6 +173,9 @@ fields:
       linkText:
         label: Texte
         type: text
+      target:
+        label: Ouvrir dans une nouvelle fenêtre
+        type: toggle
     width: 1/2
 
   line5:
@@ -269,6 +284,9 @@ fields:
       linkText:
         label: Texte
         type: text
+      target:
+        label: Ouvrir dans une nouvelle fenêtre
+        type: toggle
     width: 1/2
 
   btnFooter2:
@@ -280,4 +298,7 @@ fields:
       linkText:
         label: Texte
         type: text
+      target:
+        label: Ouvrir dans une nouvelle fenêtre
+        type: toggle
     width: 1/2
