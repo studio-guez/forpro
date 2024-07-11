@@ -17,17 +17,17 @@
 <Menu />
 
 <!-- Navbar -->
-<nav class="px-6 pb-6 pt-3">
+<nav class="px-3 pb-6 pt-3 lg:px-6">
 	<div class="grid grid-cols-2">
 		<!-- Title -->
-		<div class="text-secondary font-regular uppercase">
+		<div class="font-regular uppercase text-secondary">
 			{@html data.page.menu.baseline}
 		</div>
 		<!-- Button -->
 		<div class="flex justify-end">
 			<button
 				on:click={handleMenuClick}
-				class="z-50 w-10 h-10 rounded-full bg-secondary navbar-burger flex items-center text-primary p-3"
+				class="navbar-burger z-50 flex h-10 w-10 items-center rounded-full bg-secondary p-3 text-primary"
 			>
 				<svg
 					class:hidden={$menuIsOpen}
@@ -58,13 +58,13 @@
 </nav>
 
 <!-- Hero -->
-<section class="px-6 py-6 block w-full relative pt-5">
-	<div class="h-full flex justify-center items-start">
+<section class="relative block h-[50vh] w-full px-3 py-6 pt-5 lg:h-auto lg:px-6">
+	<div class="flex h-full items-start justify-center">
 		<!-- Grid -->
-		<div class="hidden lg:grid grid-cols-12 grid-rows-2 h-full w-full">
+		<div class="hidden h-full w-full grid-cols-12 grid-rows-2 lg:grid">
 			<!-- Image CTA -->
 			<div
-				class="z-10 rounded-2xl relative col-span-7 w-full aspect-video"
+				class="relative z-10 col-span-7 aspect-video w-full rounded-2xl"
 				style:background-image="url({data.page.hero.pictureURL1})"
 				style:background-position="center"
 				style:background-size="cover"
@@ -73,26 +73,27 @@
 					href={data.page.hero.btn1.link}
 					type="button"
 					class="absolute bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					target={data.page.hero.btn1.target ? '_blank' : '_self'}
 				>
 					{data.page.hero.btn1.text}
 				</a>
 			</div>
 
 			<!-- Logo Rounded -->
-			<div class="hidden lg:flex col-span-5 -mt-28 justify-center items-center">
+			<div class="col-span-5 -mt-28 hidden items-center justify-center lg:flex">
 				<img class="w-40" src={data.page.hero.pictureURL2} alt="imaginé par forpro" />
 			</div>
 
 			<!-- Text -->
 			<div
-				class="hidden lg:flex text-2xl -mt-8 col-span-5 text-center text-primary justify-center items-center uppercase"
+				class="col-span-5 -mt-8 hidden items-center justify-center text-center text-2xl uppercase text-primary lg:flex"
 			>
 				{@html data.page.hero.text}
 			</div>
 
 			<!-- Image CTA -->
 			<div
-				class="hidden lg:block -mt-16 rounded-2xl relative col-span-7 w-full aspect-video"
+				class="relative col-span-7 -mt-20 hidden aspect-video w-full rounded-2xl lg:block"
 				style:background-image="url({data.page.hero.pictureURL3})"
 				style:background-position="center"
 				style:background-size="cover"
@@ -101,6 +102,7 @@
 					href={data.page.hero.btn2.link}
 					type="button"
 					class="absolute -top-3 right-10 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					target={data.page.hero.btn2.target ? '_blank' : '_self'}
 				>
 					{data.page.hero.btn2.text}
 				</a>
@@ -108,32 +110,37 @@
 		</div>
 
 		<!-- Badge overlay !-->
-		<img class="absolute z-40 h-[90%] -mt-6" src="/hero_overlay.svg" alt="overlay forpro" />
+		<img class="absolute z-40 -mt-6 h-[90%]" src="/hero_overlay.svg" alt="overlay forpro" />
 	</div>
 </section>
 
-<section id="lefood" class="relative mt-20 w-full">
+<section id="lefood" class="relative mt-16 w-full lg:mt-20">
 	<!-- Background -->
-	<img class="absolute z-10 -left-10 -top-10 lg:-left-10 lg:-top-10 lg:w-3/5" src="/bg_2_1.svg" />
+	<img class="absolute -left-10 -top-10 z-10 lg:-left-10 lg:-top-10 lg:w-3/5" src="/bg_2_1.svg" />
 
 	<!-- Container -->
-	<div class="grid grid-cols-1 lg:grid-cols-12 h-full w-full">
+	<div class="grid h-full w-full grid-cols-1 px-3 lg:grid-cols-12 lg:px-0">
 		<!-- Title -->
-		<div class="z-30 flex lg:col-span-12 text-6xl text-white uppercase justify-center items-center">
+		<div
+			class="z-30 flex items-center justify-center text-5xl uppercase text-white lg:col-span-12 lg:text-6xl"
+		>
 			<span>{data.page.food.title}</span>
 		</div>
 
-		<div class="-mt-8 mx-5 lg:mx-20 grid grid-cols-1 lg:grid-cols-2 col-span-full">
+		<div
+			class="divide-y-10 col-span-full mx-3 -mt-8 grid grid-cols-1 space-y-10 lg:mx-20 lg:grid-cols-2 lg:space-y-0"
+		>
 			<!-- Text -->
-			<div class="flex flex-col z-20 pt-10 col-span-1 text-primary font-regular">
-				<div class="prose-sm leading-4 mt-10 lg:pr-10">
+			<div class="font-regular z-20 col-span-1 flex flex-col pt-5 text-primary lg:pt-10">
+				<div class="prose-sm mt-10 leading-4 lg:pr-10">
 					{@html data.page.food.text}
 				</div>
-				<div class="align-bottom h-full">
+				<div class="h-full self-center align-bottom lg:self-start">
 					<a
 						href={data.page.food.btn.link}
 						type="button"
-						class="block mt-10 rounded-full w-max bg-white px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+						class="mt-10 block w-max rounded-full bg-white px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+						target={data.page.food.btn.target ? '_blank' : '_self'}
 					>
 						{data.page.food.btn.text}
 					</a>
@@ -142,7 +149,7 @@
 
 			<!-- Image -->
 			<div
-				class="z-20 col-span-1 rounded-2xl aspect-square"
+				class="z-20 col-span-1 aspect-square rounded-2xl"
 				style:background-image="url({data.page.hero.pictureURL1})"
 				style:background-position="center"
 				style:background-size="cover"
@@ -151,33 +158,36 @@
 	</div>
 </section>
 
-<section id="lelab" class="relative mt-32 pb-20 bg-background w-full min-h-72">
+<section id="lelab" class="relative mt-32 min-h-72 w-full bg-background pb-20">
 	<!-- Container -->
-	<div class="grid grid-cols-1 lg:grid-cols-12 h-full w-full">
+	<div class="grid h-full w-full grid-cols-1 space-y-10 lg:grid-cols-12 lg:space-y-0">
 		<!-- Title -->
-		<div class="z-30 flex lg:col-span-12 text-6xl text-white uppercase justify-center items-center">
+		<div
+			class="z-30 flex items-center justify-center text-5xl uppercase text-white lg:relative lg:top-4 lg:col-span-12 lg:text-6xl"
+		>
 			<span>{data.page.lab.title}</span>
 		</div>
 
-		<div class="mx-5 lg:-mt-10 lg:mx-20 grid grid-cols-1 lg:grid-cols-2 lg:col-span-full">
+		<div class="mx-5 grid grid-cols-1 lg:col-span-full lg:mx-20 lg:-mt-10 lg:grid-cols-2">
 			<!-- Image -->
 			<div
-				class="z-20 col-span-1 rounded-2xl aspect-square"
+				class="z-20 col-span-1 aspect-square rounded-2xl"
 				style:background-image="url({data.page.lab.pictureURL})"
 				style:background-position="center"
 				style:background-size="cover"
 			></div>
 
 			<!-- Text -->
-			<div class="flex flex-col relative z-20 pt-10 col-span-1 text-primary font-regular">
-				<div class="prose-sm leading-4 mt-10 lg:pl-10">
+			<div class="font-regular relative z-20 col-span-1 flex flex-col text-primary lg:pt-10">
+				<div class="prose-sm mt-10 leading-4 lg:pl-10">
 					{@html data.page.lab.text}
 				</div>
-				<div class="align-bottom h-full">
+				<div class="h-full align-bottom">
 					<a
 						href={data.page.lab.btn.link}
 						type="button"
-						class="block lg:ml-10 mt-10 w-max rounded-full bg-white px-5 lg:px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+						class="mt-10 block w-max rounded-full bg-white px-5 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 lg:ml-10 lg:px-14"
+						target={data.page.lab.btn.target ? '_blank' : '_self'}
 					>
 						{data.page.lab.btn.text}
 					</a>
@@ -188,12 +198,12 @@
 
 	<!-- Background -->
 	<img
-		class="absolute z-10 -right-20 -bottom-32 lg:-right-52 lg:-bottom-52 lg:w-3/5"
+		class="absolute -right-20 bottom-20 z-10 lg:-bottom-52 lg:-right-52 lg:w-3/5"
 		src="/bg_3_1.svg"
 	/>
 </section>
 
-<section class="z-10 mt-10 relative w-full">
+<section class="relative z-10 mt-10 w-full">
 	<div
 		class="min-h-96 rounded-3xl"
 		style:background-image="url({data.page.highlight.pictureURL})"
@@ -202,20 +212,20 @@
 	></div>
 </section>
 
-<section id="equipe-formation" class="pb-20 rounded-3xl bg-primary relative w-full">
+<section id="equipe-formation" class="relative w-full rounded-3xl bg-primary pb-20">
 	<!-- Container -->
-	<div class="lg:grid lg:grid-cols-12 h-full w-full">
+	<div class="h-full w-full lg:grid lg:grid-cols-12">
 		<!-- Title -->
 		<div
-			class="z-30 lg:mt-20 pt-10 lg:pt-0 flex lg:col-span-12 text-3xl lg:text-6xl text-white text-center uppercase justify-center items-center"
+			class="z-30 flex items-center justify-center pt-10 text-center text-3xl uppercase text-white lg:col-span-12 lg:mt-20 lg:pt-0 lg:text-6xl"
 		>
 			<span>{@html data.page.formation.title}</span>
 		</div>
 
-		<div class="lg:-mt-8 mx-5 lg:mx-20 grid grid-cols-1 lg:grid-cols-2 lg:col-span-full">
+		<div class="mx-5 grid grid-cols-1 lg:col-span-full lg:mx-20 lg:-mt-8 lg:grid-cols-2">
 			<!-- Text -->
-			<div class="z-20 pt-12 text-center lg:text-left col-span-1 text-secondary font-regular">
-				<div class="prose-sm leading-4 mt-2 lg:pr-10">
+			<div class="font-regular z-20 col-span-1 pt-12 text-center text-secondary lg:text-left">
+				<div class="prose-sm mt-2 leading-4 lg:pr-10">
 					<span>{@html data.page.formation.text}</span>
 				</div>
 
@@ -223,6 +233,7 @@
 					href={data.page.formation.btn.link}
 					type="button"
 					class="mt-10 rounded-full bg-secondary px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					target={data.page.formation.btn.target ? '_blank' : '_self'}
 				>
 					<span>{data.page.formation.btn.text}</span>
 				</a>
@@ -239,74 +250,74 @@
 	</div>
 </section>
 
-<section id="foodcourt-popup-cafe" class="px-5 lg:px-0 relative mt-20 pb-20 bg-background w-full">
+<section id="foodcourt-popup-cafe" class="relative mt-20 w-full bg-background px-3 pb-20 lg:px-0">
 	<!-- Container -->
-	<div class="z-20 lg:grid lg:grid-cols-12 h-full w-full relative">
+	<div class="relative z-20 h-full w-full lg:grid lg:grid-cols-12">
 		<!-- Title -->
 		<div
-			class="z-30 flex mx-auto col-span-12 text-3xl lg:text-6xl text-primary text-center uppercase justify-center items-center"
+			class="z-30 col-span-12 mx-auto flex items-center justify-center text-center text-3xl text-primary lg:text-6xl"
 		>
 			<span>{data.page.univers.title}</span>
 		</div>
 
 		<!-- Description -->
 		<div
-			class="mt-10 z-30 flex mx-auto col-span-12 text-primary text-xs text-center uppercase justify-center items-center"
+			class="z-30 col-span-12 mx-auto mt-10 flex items-center justify-center text-center text-xs text-primary"
 		>
 			<p>{data.page.univers.subtitle}</p>
 		</div>
 
 		<div
-			class="mt-10 z-30 flex mx-auto col-span-12 text-primary text-center justify-center items-center"
+			class="z-30 col-span-12 mx-auto mt-10 flex items-center justify-center text-center text-primary"
 		>
 			<span class="text-xl font-bold">{data.page.univers.blogTitle1}</span>
 		</div>
 
 		<!-- Image -->
 		<div
-			class="z-30 relative mt-5 rounded-3xl col-span-1 justify-center items-center lg:col-start-2 lg:col-span-10 min-h-0"
+			class="relative z-30 col-span-1 mt-5 min-h-0 items-center justify-center rounded-3xl lg:col-span-10 lg:col-start-2"
 		>
 			<img
-				class="w-full h-auto rounded-3xl lg:w-full lg:h-full object-contain object-center"
+				class="h-auto w-full rounded-3xl object-contain object-center lg:h-full lg:w-full"
 				src={data.page.univers.blogPictureUrl1}
 			/>
 			<img
-				class="hidden lg:block absolute w-40 left-0 top-0 -mt-14 -ml-10"
+				class="absolute left-0 top-0 -ml-10 -mt-14 hidden w-40 lg:block"
 				src="/hero_1_2.svg"
 				alt="imaginé par forpro"
 			/>
 		</div>
 
 		<div
-			class="mt-10 mx-auto grid grid-cols-1 col-span-1 lg:grid-cols-2 lg:col-start-2 lg:col-span-10 gap-5 text-primary"
+			class="col-span-1 mx-auto mt-10 grid grid-cols-1 gap-5 text-primary lg:col-span-10 lg:col-start-2 lg:grid-cols-2"
 		>
 			{@html data.page.univers.blogText1}
 		</div>
 	</div>
 
 	<!-- Background -->
-	<img class="absolute z-10 -right-32 top-20 lg:-right-64 lg:top-0 w-[50em]" src="/bg_5_1.svg" />
+	<img class="absolute -right-32 top-20 z-10 w-[50em] lg:-right-64 lg:top-0" src="/bg_5_1.svg" />
 </section>
 
-<section class="px-5 lg:px-0 relative mt-20 pb-20 bg-background">
+<section class="relative mt-20 bg-background px-5 pb-20 lg:px-0">
 	<!-- Container -->
-	<div class="relative lg:grid lg:grid-cols-12 z-20">
+	<div class="relative z-20 lg:grid lg:grid-cols-12">
 		<div
-			class="mt-10 z-30 flex mx-auto col-span-12 text-primary text-center justify-center items-center"
+			class="z-30 col-span-12 mx-auto mt-10 flex items-center justify-center text-center text-primary"
 		>
 			<span class="text-xl font-bold">{data.page.univers.blogTitle1}</span>
 		</div>
 
 		<!-- Image -->
 		<div
-			class="z-30 relative mt-5 rounded-3xl col-span-1 justify-center items-center lg:col-start-2 lg:col-span-10 min-h-0"
+			class="relative z-30 col-span-1 mt-5 min-h-0 items-center justify-center rounded-3xl lg:col-span-10 lg:col-start-2"
 		>
 			<img
-				class="w-full h-auto rounded-3xl lg:w-full lg:h-full object-contain object-center"
+				class="h-auto w-full rounded-3xl object-contain object-center lg:h-full lg:w-full"
 				src={data.page.univers.blogPictureUrl2}
 			/>
 			<img
-				class="hidden lg:block absolute w-40 top-0 -right-10 rotate-45 -mt-14 -ml-10"
+				class="absolute -right-10 top-0 -ml-10 -mt-14 hidden w-40 rotate-45 lg:block"
 				src="/hero_1_2.svg"
 				alt="imaginé par forpro"
 			/>
@@ -314,7 +325,7 @@
 
 		<!-- Description -->
 		<div
-			class="mt-10 mx-auto grid grid-cols-1 col-span-1 lg:grid-cols-2 lg:col-start-2 lg:col-span-10 gap-5 text-primary"
+			class="col-span-1 mx-auto mt-10 grid grid-cols-1 gap-5 text-primary lg:col-span-10 lg:col-start-2 lg:grid-cols-2"
 		>
 			{@html data.page.univers.blogText2}
 		</div>
@@ -322,35 +333,35 @@
 
 	<!-- Background -->
 	<img
-		class="absolute z-10 left-[-6rem] top-[-0rem] lg:left-[-23rem] lg:top-[-5rem] lg:w-[175em]"
+		class="absolute left-[-6rem] top-[-0rem] z-10 lg:left-[-23rem] lg:top-[-5rem] lg:w-[175em]"
 		src="/bg_5_2.svg"
 	/>
 </section>
 
-<section id="engagements" class="pb-20 rounded-3xl bg-primary relative w-full">
+<section id="engagements" class="relative w-full rounded-3xl bg-primary pb-20">
 	<!-- Container -->
-	<div class="lg:px-36 grid h-full w-full">
+	<div class="grid h-full w-full lg:px-36">
 		<!-- Title -->
 		<div
-			class="z-30 mt-20 text-3xl lg:text-6xl text-white text-center uppercase justify-center items-center"
+			class="z-30 mt-20 items-center justify-center text-center text-3xl uppercase text-white lg:text-6xl"
 		>
 			<span>{data.page.values.title}</span>
 		</div>
 
 		<div class="-mt-8">
 			<!-- Text -->
-			<div class="z-20 pt-12 text-white text-center font-regular">
+			<div class="font-regular z-20 pt-12 text-center text-white">
 				<div class="mt-2 px-5 lg:pr-10">
 					{@html data.page.values.text}
 				</div>
 			</div>
 		</div>
 
-		<div class="mt-10 grid grid-cols-1 lg:grid-cols-4 justify-around lg:col-span-full">
+		<div class="mt-10 grid grid-cols-1 justify-around lg:col-span-full lg:grid-cols-4">
 			{#each data.page.values.list as value}
-				<div class="flex justify-center items-center">
-					<div class="inline-grid justify-center w-full h-full text-center">
-						<img src="/circle.svg" class="w-32" />
+				<div class="flex items-center justify-center">
+					<div class="inline-grid h-full w-full justify-center text-center">
+						<img src={value.icon} class="w-32" />
 						<span class="uppercase text-white">{@html value.title}</span>
 					</div>
 				</div>
@@ -359,50 +370,52 @@
 	</div>
 </section>
 
-<section class="pt-10 pb-20 lg:px-20 rounded-3xl bg-secondary relative w-full">
+<section class="relative w-full rounded-3xl bg-secondary pb-20 pt-10 lg:px-20">
 	<div
-		class="grid grid-cols-1 lg:grid-cols-4 lg:grid-rows-[1fr_auto] lg:grid-flow-row lg:auto-rows-min lg:gap-4"
+		class="grid grid-cols-1 lg:grid-flow-row lg:auto-rows-min lg:grid-cols-4 lg:grid-rows-[1fr_auto] lg:gap-4"
 	>
-		<div class="flex justify-center items-center lg:justify-start lg:items-start col-span-1">
+		<div class="col-span-1 flex items-center justify-center lg:items-start lg:justify-start">
 			<img class="h-[25em]" src="/footer_logo.svg" alt="overlay forpro" />
 		</div>
 
 		<div class="col-span-1 w-full">
-			<div class="prose-sm leading-4 text-center lg:text-left text-primary w-full font-bold">
+			<div class="prose-sm w-full text-center font-bold leading-4 text-primary lg:text-left">
 				{@html data.page.footer.text1}
 			</div>
-			<div class="justify-center lg:justify-normal mt-10 grid space-y-5">
+			<div class="mt-10 grid justify-center space-y-5 lg:justify-normal">
 				<a
 					href={data.page.footer.btn1.link}
 					type="button"
-					class="rounded-full text-center w-36 bg-primary px-6 py-1 text-sm font-semibold text-secondary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					class="w-36 rounded-full bg-primary px-6 py-1 text-center text-sm font-semibold text-secondary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					target={data.page.footer.btn1.target ? '_blank' : '_self'}
 				>
 					{data.page.footer.btn1.text}
 				</a>
 				<a
 					href={data.page.footer.btn2.link}
 					type="button"
-					class="rounded-full text-center w-36 bg-primary px-6 py-1 text-sm font-semibold text-secondary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					class="w-36 rounded-full bg-primary px-6 py-1 text-center text-sm font-semibold text-secondary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					target={data.page.footer.btn2.target ? '_blank' : '_self'}
 				>
 					{data.page.footer.btn2.text}
 				</a>
 			</div>
 		</div>
 
-		<div class="mt-10 text-center lg:text-left col-span-1 lg:col-span-2 lg:row-start-2">
-			<div class="prose-sm leading-4 text-primary font-bold">
+		<div class="col-span-1 mt-10 text-center lg:col-span-2 lg:row-start-2 lg:text-left">
+			<div class="prose-sm font-bold leading-4 text-primary">
 				{@html data.page.footer.text2}
 			</div>
 		</div>
 
 		<div
-			class="mt-10 self-end p-10 lg:ml-16 h-fit relative lg:py-10 lg:align-bottom lg:col-span-2 lg:row-span-2 bg-background rounded-3xl"
+			class="relative mt-10 h-fit self-end rounded-3xl bg-background p-10 lg:col-span-2 lg:row-span-2 lg:ml-16 lg:py-10 lg:align-bottom"
 		>
 			<img
-				class="hidden absolute -left-14 -top-12 -rotate-12 w-36 lg:block"
+				class="absolute -left-14 -top-12 hidden w-36 -rotate-12 lg:block"
 				src="/badge_footer.svg"
 			/>
-			<div class="prose-sm my-5 text-primary text-xs">
+			<div class="prose-sm my-5 text-xs text-primary">
 				{@html data.page.footer.text3}
 			</div>
 			<img src="/footer_logo_2.svg" class="w-44" />
