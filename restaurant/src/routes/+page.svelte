@@ -58,13 +58,13 @@
 </nav>
 
 <!-- Hero -->
-<section class="relative block h-[70vh] w-full px-3 py-6 pt-5 lg:h-auto lg:px-6">
+<section class="relative block h-[60vh] w-full px-3 py-6 pt-5 lg:h-auto lg:px-6">
 	<div class="flex h-full items-start justify-center">
 		<!-- Grid -->
-		<div class="hidden h-full w-full grid-cols-12 grid-rows-2 lg:grid">
+		<div class="h-full w-full grid-cols-12 grid-rows-2 lg:grid">
 			<!-- Image CTA -->
 			<div
-				class="relative z-10 col-span-7 aspect-video w-full rounded-2xl"
+				class="relative z-10 col-span-7 hidden aspect-video w-full rounded-2xl lg:block"
 				style:background-image="url({data.page.hero.pictureURL1})"
 				style:background-position="center"
 				style:background-size="cover"
@@ -81,7 +81,9 @@
 
 			<!-- Logo Rounded -->
 			<div class="col-span-5 -mt-28 hidden items-center justify-center lg:flex">
-				<img class="w-40" src={data.page.hero.pictureURL2} alt="imaginé par forpro" />
+				<a href="https://for-pro.ch" target="_blank">
+					<img class="w-40" src={data.page.hero.pictureURL2} alt="imaginé par forpro" />
+				</a>
 			</div>
 
 			<!-- Text -->
@@ -110,11 +112,37 @@
 		</div>
 
 		<!-- Badge overlay !-->
-		<img class="absolute z-40 -mt-6 h-[90%]" src="/hero_overlay.svg" alt="overlay forpro" />
+		<img class="absolute z-40 -mt-6 h-[80%] lg:h-[90%]" src="/hero_overlay.svg" alt="overlay forpro" />
+
+		<a href="https://for-pro.ch" target="_blank">
+			<img
+				class="absolute -top-10 right-5 w-20 rotate-45 lg:hidden"
+				src={data.page.hero.pictureURL2}
+				alt="imaginé par forpro"
+			/>
+		</a>
+
+		<img src={data.page.hero.pictureURL3} class="absolute -bottom-10 w-[90vw] rounded-2xl lg:hidden" />
+		<a
+				href={data.page.hero.btn1.link}
+				type="button"
+				class="lg:hidden absolute -bottom-0 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+				target={data.page.hero.btn1.target ? '_blank' : '_self'}
+		>
+			{data.page.hero.btn1.text}
+		</a>
+		<a
+				href={data.page.hero.btn2.link}
+				type="button"
+				class="lg:hidden absolute bottom-10 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+				target={data.page.hero.btn2.target ? '_blank' : '_self'}
+		>
+			{data.page.hero.btn2.text}
+		</a>
 	</div>
 </section>
 
-<section id="lefood" class="relative mt-16 w-full lg:mt-20">
+<section id="lefood" class="relative w-full mt-24 lg:mt-20">
 	<!-- Background -->
 	<img class="absolute -left-10 -top-10 z-10 lg:-left-10 lg:-top-10 lg:w-3/5" src="/bg_2_1.svg" />
 
@@ -158,9 +186,9 @@
 	</div>
 </section>
 
-<section id="lelab" class="relative mt-32 min-h-72 w-full bg-background pb-20">
+<section id="lelab" class="relative mt-16 min-h-72 w-full bg-background pb-10 lg:mt-32 lg:pb-20">
 	<!-- Container -->
-	<div class="grid h-full w-full grid-cols-1 space-y-10 lg:grid-cols-12 lg:space-y-0">
+	<div class="grid h-full w-full grid-cols-1 space-y-5 lg:grid-cols-12 lg:space-y-0">
 		<!-- Title -->
 		<div
 			class="z-30 flex items-center justify-center text-5xl uppercase text-white lg:relative lg:top-4 lg:col-span-12 lg:text-6xl"
@@ -212,7 +240,7 @@
 	></div>
 </section>
 
-<section id="equipe-formation" class="relative w-full rounded-3xl bg-primary pb-20">
+<section id="equipe-formation" class="relative w-full rounded-3xl bg-primary pb-10 lg:pb-20">
 	<!-- Container -->
 	<div class="h-full w-full lg:grid lg:grid-cols-12">
 		<!-- Title -->
@@ -241,7 +269,7 @@
 
 			<!-- Image -->
 			<div
-				class="z-20 col-span-1 rounded-2xl"
+				class="z-50 col-span-1 mt-10 h-56 rounded-2xl lg:z-20 lg:mt-0 lg:h-auto"
 				style:background-image="url({data.page.formation.pictureURL})"
 				style:background-position="center"
 				style:background-size="cover"
@@ -250,7 +278,10 @@
 	</div>
 </section>
 
-<section id="foodcourt-popup-cafe" class="relative mt-20 w-full bg-background px-3 pb-20 lg:px-0">
+<section
+	id="foodcourt-popup-cafe"
+	class="relative mt-20 w-full bg-background px-3 pb-5 lg:px-0 lg:pb-20"
+>
 	<!-- Container -->
 	<div class="relative z-20 h-full w-full lg:grid lg:grid-cols-12">
 		<!-- Title -->
@@ -262,7 +293,7 @@
 
 		<!-- Description -->
 		<div
-			class="z-30 col-span-12 mx-auto mt-10 flex w-1/2 items-center justify-center text-center text-xs text-primary"
+			class="z-30 col-span-12 mx-auto mt-10 flex items-center justify-center text-center text-xs text-primary lg:w-1/2"
 		>
 			<p>{data.page.univers.subtitle}</p>
 		</div>
@@ -278,18 +309,20 @@
 			class="relative z-30 col-span-1 mx-auto mt-5 grid min-h-0 grid-cols-12 items-center justify-center rounded-3xl lg:col-span-12"
 		>
 			<img
-				class=" col-span-8 col-start-3 mx-auto h-auto rounded-3xl object-contain object-center lg:h-full lg:w-full"
+				class=" col-span-12 mx-auto h-auto rounded-2xl object-contain object-center lg:col-span-8 lg:col-start-3 lg:h-full lg:w-full lg:rounded-3xl"
 				src={data.page.univers.blogPictureUrl1}
 			/>
-			<img
-				class="absolute left-48 top-0 -ml-10 -mt-14 hidden w-40 lg:block"
-				src="/hero_1_2.svg"
-				alt="imaginé par forpro"
-			/>
+			<a href="https://for-pro.ch" target="_blank">
+				<img
+					class="absolute left-48 top-0 -ml-10 -mt-14 hidden w-40 lg:block"
+					src="/hero_1_2.svg"
+					alt="imaginé par forpro"
+				/>
+			</a>
 		</div>
 
 		<div
-			class="col-span-1 mx-auto mt-10 grid grid-cols-1 gap-5 text-primary lg:col-span-8 lg:col-start-3 lg:grid-cols-2"
+			class="col-span-1 mx-auto mt-5 grid grid-cols-1 gap-5 text-primary lg:col-span-8 lg:col-start-3 lg:mt-10 lg:grid-cols-2"
 		>
 			{@html data.page.univers.blogText1}
 		</div>
@@ -313,19 +346,21 @@
 			class="relative z-30 col-span-1 mx-auto mt-5 grid min-h-0 grid-cols-12 items-center justify-center rounded-3xl lg:col-span-12"
 		>
 			<img
-				class=" col-span-8 col-start-3 mx-auto h-auto rounded-3xl object-contain object-center lg:h-full lg:w-full"
+				class=" col-span-12 mx-auto h-auto rounded-2xl object-contain object-center lg:col-span-8 lg:col-start-3 lg:h-full lg:w-full lg:rounded-3xl"
 				src={data.page.univers.blogPictureUrl2}
 			/>
-			<img
-				class="absolute right-36 top-0 -ml-10 -mt-14 hidden w-40 rotate-45 lg:block"
-				src="/hero_1_2.svg"
-				alt="imaginé par forpro"
-			/>
+			<a href="https://for-pro.ch" target="_blank">
+				<img
+					class="absolute right-36 top-0 -ml-10 -mt-14 hidden w-40 rotate-45 lg:block"
+					src="/hero_1_2.svg"
+					alt="imaginé par forpro"
+				/>
+			</a>
 		</div>
 
 		<!-- Description -->
 		<div
-			class="col-span-1 mx-auto mt-10 grid grid-cols-1 gap-5 text-primary lg:col-span-10 lg:col-start-3 lg:grid-cols-2"
+			class="col-span-1 mx-auto mt-5 grid grid-cols-1 gap-5 text-primary lg:col-span-10 lg:col-start-3 lg:mt-10 lg:grid-cols-2"
 		>
 			{@html data.page.univers.blogText2}
 		</div>
@@ -361,7 +396,7 @@
 			{#each data.page.values.list as value}
 				<div class="flex items-center justify-center">
 					<div class="inline-grid h-full w-full justify-center text-center">
-						<img src={value.icon} class="w-32" />
+						<img src={value.icon} class="w-32 justify-self-center" />
 						<span class="uppercase text-white">{@html value.title}</span>
 					</div>
 				</div>
