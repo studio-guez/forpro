@@ -11,11 +11,11 @@
       }
 
       .cls-3 {
-        fill: #3df069;
+        fill: rgb(255, 83, 0);
       }
 
       .cls-4 {
-        fill: #1754ff;
+        fill: rgb(55, 0, 125);
       }
     </style>
     <clipPath id="clippath">
