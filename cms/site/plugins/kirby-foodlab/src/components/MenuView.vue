@@ -12,14 +12,28 @@
                 >
                     Enregistrer
                 </k-button>
-                <k-button
-                    :icon="isGeneratingPDF ? 'loader' : 'wand'"
-                    :disabled="isGeneratingPDF"
-                    variant="filled"
-                    @click="generate"
-                >
-                    Générer PDF
-                </k-button>
+                <k-button-group layout="collapsed">
+                    <k-button
+                        :icon="isGeneratingPDF ? 'loader' : 'wand'"
+                        :disabled="isGeneratingPDF"
+                        variant="filled"
+                        @click="$refs.dropdown.toggle()"
+                    >
+                        Générer PDF
+                    </k-button>
+                    <k-dropdown-content ref="dropdown" align-x="end">
+                        <k-dropdown-item
+                            icon="file-image"
+                            @click="generatePDF(true)"
+                            >Avec image et fond</k-dropdown-item
+                        >
+                        <k-dropdown-item
+                            icon="file-document"
+                            @click="generatePDF(false)"
+                            >Sans image et fond</k-dropdown-item
+                        >
+                    </k-dropdown-content>
+                </k-button-group>
             </k-button-group>
         </k-header>
 
@@ -410,7 +424,7 @@ export default {
                 }, 5000);
             }, 1500);
         },
-        generate() {
+        generatePDF(withAssets = false) {
             if (this.isGeneratingPDF) return;
 
             this.isGeneratingPDF = true;
@@ -429,8 +443,12 @@ export default {
                     );
                 }, 1000);
             };
+            let url = withAssets
+                ? this.$api.endpoint + "/restaurant/menu/generate/with-assets"
+                : this.$api.endpoint +
+                  "/restaurant/menu/generate/without-assets";
 
-            iframe.src = this.$api.endpoint + "/restaurant/menu/generate";
+            iframe.src = url;
             setTimeout(() => {
                 this.isGeneratingPDF = false;
             }, 2500);

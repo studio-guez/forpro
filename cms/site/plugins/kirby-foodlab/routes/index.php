@@ -19,13 +19,15 @@ return [
                 },
             ],
             [
-                "pattern" => "restaurant/menu/generate",
+                "pattern" => "restaurant/menu/generate/with-assets",
                 "method" => "GET",
                 "auth" => false,
                 "action" => function () {
+                    $renderWithAssets = true;
+
                     kirby()->impersonate("kirby");
 
-                    $data = Menu::get();
+                    $data = Menu::get($renderWithAssets);
 
                     $menu_page = Page::factory([
                         "slug" => "menu",
@@ -44,6 +46,49 @@ return [
                                 "content" => "body { margin: 0; padding: 0; }",
                             ])
                         )
+                        ->showBackground()
+                        ->fullPage()
+                        ->pdf();
+
+                    $pdfHtml = Browsershot::html($html)
+                        ->format("A4")
+                        ->bodyHtml();
+
+                    return new Response($pdfContent, "application/pdf", 200, [
+                        "Content-Disposition" =>
+                            'attachment; filename="menu.pdf"',
+                    ]);
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/generate/without-assets",
+                "method" => "GET",
+                "auth" => false,
+                "action" => function () {
+                    $renderWithAssets = false;
+
+                    kirby()->impersonate("kirby");
+
+                    $data = Menu::get($renderWithAssets);
+
+                    $menu_page = Page::factory([
+                        "slug" => "menu",
+                        "template" => "menu-pdf",
+                        "model" => "menu-pdf",
+                        "content" => $data,
+                    ]);
+
+                    $html = $menu_page->render($data);
+                    $pdfContent = Browsershot::html($html)
+                        ->format("A4")
+                        ->margins(0.0, 0.0, 0.0, 0.0)
+                        ->setOption(
+                            "addStyleTag",
+                            json_encode([
+                                "content" => "body { margin: 0; padding: 0; }",
+                            ])
+                        )
+                        ->hideBackground()
                         ->fullPage()
                         ->pdf();
 
@@ -85,10 +130,12 @@ return [
                         "btn1" => [
                             "link" => $btnHero1->link()->toUrl(),
                             "text" => $btnHero1->linkText()->value(),
+                            "target" => $btnHero1->target()->toBool(),
                         ],
                         "btn2" => [
                             "link" => $btnHero2->link()->toUrl(),
                             "text" => $btnHero2->linkText()->value(),
+                            "target" => $btnHero2->target()->toBool(),
                         ],
                         "pictureURL1" => $this->site()->picHero1()->toFile()
                             ? $this->site()->picHero1()->toFile()->url()
@@ -113,6 +160,7 @@ return [
                         "btn" => [
                             "link" => $btnFood->link()->toUrl(),
                             "text" => $btnFood->linkText()->value(),
+                            "target" => $btnFood->target()->toBool(),
                         ],
                     ];
 
@@ -127,6 +175,7 @@ return [
                         "btn" => [
                             "link" => $btnLab->link()->toUrl(),
                             "text" => $btnLab->linkText()->value(),
+                            "target" => $btnLab->target()->toBool(),
                         ],
                     ];
 
@@ -147,6 +196,7 @@ return [
                         "btn" => [
                             "link" => $btnFormation->link()->toUrl(),
                             "text" => $btnFormation->linkText()->value(),
+                            "target" => $btnFormation->target()->toBool(),
                         ],
                     ];
 
@@ -199,10 +249,12 @@ return [
                         "btn1" => [
                             "link" => $btnFooter1->link()->toUrl(),
                             "text" => $btnFooter1->linkText()->value(),
+                            "target" => $btnFooter1->target()->toBool(),
                         ],
                         "btn2" => [
                             "link" => $btnFooter2->link()->toUrl(),
                             "text" => $btnFooter2->linkText()->value(),
+                            "target" => $btnFooter2->target()->toBool(),
                         ],
                     ];
 

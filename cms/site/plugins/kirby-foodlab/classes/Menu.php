@@ -20,7 +20,7 @@ class Menu extends BaseClass
 {
     const FILENAME = "menu.json";
 
-    public static function get(): array
+    public static function get(bool $renderWithAssets): array
     {
         $starters[] = Starter::list();
         $startersTitle = Starter::title();
@@ -66,6 +66,7 @@ class Menu extends BaseClass
         $originsTitle = Origin::title();
 
         $menu = self::list();
+        $menu['renderWithAssets'] = $renderWithAssets;
 
         $textTVA = $menu["textTVA"];
         $textAllergy = $menu["textAllergy"];
