@@ -302,3 +302,8 @@ fields:
         label: Ouvrir dans une nouvelle fenêtre
         type: toggle
     width: 1/2
+
+  menuPDF:
+    type: files
+    label: Menu PDF
+    help: Remplit automatiquement lors de la génération du menu avec image et fond dans "Menu"
