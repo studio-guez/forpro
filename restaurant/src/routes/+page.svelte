@@ -58,7 +58,7 @@
 </nav>
 
 <!-- Hero -->
-<section class="relative block h-[50vh] w-full px-3 py-6 pt-5 lg:h-auto lg:px-6">
+<section class="relative block h-[70vh] w-full px-3 py-6 pt-5 lg:h-auto lg:px-6">
 	<div class="flex h-full items-start justify-center">
 		<!-- Grid -->
 		<div class="hidden h-full w-full grid-cols-12 grid-rows-2 lg:grid">
