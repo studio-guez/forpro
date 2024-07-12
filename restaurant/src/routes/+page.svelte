@@ -150,7 +150,7 @@
 			<!-- Image -->
 			<div
 				class="z-20 col-span-1 aspect-square rounded-2xl"
-				style:background-image="url({data.page.hero.pictureURL1})"
+				style:background-image="url({data.page.food.pictureURL})"
 				style:background-position="center"
 				style:background-size="cover"
 			></div>
@@ -262,7 +262,7 @@
 
 		<!-- Description -->
 		<div
-			class="z-30 col-span-12 mx-auto mt-10 flex items-center justify-center text-center text-xs text-primary"
+			class="z-30 col-span-12 mx-auto mt-10 flex w-1/2 items-center justify-center text-center text-xs text-primary"
 		>
 			<p>{data.page.univers.subtitle}</p>
 		</div>
@@ -275,21 +275,21 @@
 
 		<!-- Image -->
 		<div
-			class="relative z-30 col-span-1 mt-5 min-h-0 items-center justify-center rounded-3xl lg:col-span-10 lg:col-start-2"
+			class="relative z-30 col-span-1 mx-auto mt-5 grid min-h-0 grid-cols-12 items-center justify-center rounded-3xl lg:col-span-12"
 		>
 			<img
-				class="h-auto w-full rounded-3xl object-contain object-center lg:h-full lg:w-full"
+				class=" col-span-8 col-start-3 mx-auto h-auto rounded-3xl object-contain object-center lg:h-full lg:w-full"
 				src={data.page.univers.blogPictureUrl1}
 			/>
 			<img
-				class="absolute left-0 top-0 -ml-10 -mt-14 hidden w-40 lg:block"
+				class="absolute left-48 top-0 -ml-10 -mt-14 hidden w-40 lg:block"
 				src="/hero_1_2.svg"
 				alt="imaginé par forpro"
 			/>
 		</div>
 
 		<div
-			class="col-span-1 mx-auto mt-10 grid grid-cols-1 gap-5 text-primary lg:col-span-10 lg:col-start-2 lg:grid-cols-2"
+			class="col-span-1 mx-auto mt-10 grid grid-cols-1 gap-5 text-primary lg:col-span-8 lg:col-start-3 lg:grid-cols-2"
 		>
 			{@html data.page.univers.blogText1}
 		</div>
@@ -299,25 +299,25 @@
 	<img class="absolute -right-32 top-20 z-10 w-[50em] lg:-right-64 lg:top-0" src="/bg_5_1.svg" />
 </section>
 
-<section class="relative mt-20 bg-background px-5 pb-20 lg:px-0">
+<section class="relative mt-10 bg-background px-5 pb-20 lg:px-0">
 	<!-- Container -->
 	<div class="relative z-20 lg:grid lg:grid-cols-12">
 		<div
 			class="z-30 col-span-12 mx-auto mt-10 flex items-center justify-center text-center text-primary"
 		>
-			<span class="text-xl font-bold">{data.page.univers.blogTitle1}</span>
+			<span class="text-xl font-bold">{data.page.univers.blogTitle2}</span>
 		</div>
 
 		<!-- Image -->
 		<div
-			class="relative z-30 col-span-1 mt-5 min-h-0 items-center justify-center rounded-3xl lg:col-span-10 lg:col-start-2"
+			class="relative z-30 col-span-1 mx-auto mt-5 grid min-h-0 grid-cols-12 items-center justify-center rounded-3xl lg:col-span-12"
 		>
 			<img
-				class="h-auto w-full rounded-3xl object-contain object-center lg:h-full lg:w-full"
+				class=" col-span-8 col-start-3 mx-auto h-auto rounded-3xl object-contain object-center lg:h-full lg:w-full"
 				src={data.page.univers.blogPictureUrl2}
 			/>
 			<img
-				class="absolute -right-10 top-0 -ml-10 -mt-14 hidden w-40 rotate-45 lg:block"
+				class="absolute right-36 top-0 -ml-10 -mt-14 hidden w-40 rotate-45 lg:block"
 				src="/hero_1_2.svg"
 				alt="imaginé par forpro"
 			/>
@@ -325,7 +325,7 @@
 
 		<!-- Description -->
 		<div
-			class="col-span-1 mx-auto mt-10 grid grid-cols-1 gap-5 text-primary lg:col-span-10 lg:col-start-2 lg:grid-cols-2"
+			class="col-span-1 mx-auto mt-10 grid grid-cols-1 gap-5 text-primary lg:col-span-10 lg:col-start-3 lg:grid-cols-2"
 		>
 			{@html data.page.univers.blogText2}
 		</div>
@@ -333,7 +333,7 @@
 
 	<!-- Background -->
 	<img
-		class="absolute left-[-6rem] top-[-0rem] z-10 lg:left-[-23rem] lg:top-[-5rem] lg:w-[175em]"
+		class="z-1 absolute left-[-6rem] top-[-0rem] lg:left-[-23rem] lg:top-[-5rem] lg:w-[175em]"
 		src="/bg_5_2.svg"
 	/>
 </section>
@@ -409,7 +409,7 @@
 		</div>
 
 		<div
-			class="relative mt-10 h-fit self-end rounded-3xl bg-background p-10 lg:col-span-2 lg:row-span-2 lg:ml-16 lg:py-10 lg:align-bottom"
+			class="relative mt-10 h-fit self-end rounded-3xl bg-background p-6 lg:col-span-2 lg:row-span-2 lg:ml-16 lg:py-16 lg:align-bottom"
 		>
 			<img
 				class="absolute -left-14 -top-12 hidden w-36 -rotate-12 lg:block"
