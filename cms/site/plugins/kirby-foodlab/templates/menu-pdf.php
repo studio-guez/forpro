@@ -594,7 +594,7 @@
                 </div>
                 <div class="right">
                     <div class="content" style="padding-left: 100px">
-                        <h4 style="font-weight: 800;font-size: 8pt;"><?= $originsTitle ?></h4>
+                        <h4 style="color: black; font-weight: 800;font-size: 8pt;"><?= $originsTitle ?></h4>
                         <?php foreach ($origins[0] as $origin): ?>
                             <div class="origin" style="font-size: 8pt;">
                             <span class="left"><?= $origin["name"] ?></span>
