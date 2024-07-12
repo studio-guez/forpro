@@ -50,6 +50,35 @@ return [
                         ->fullPage()
                         ->pdf();
 
+                    $timestamp = date('Y-m-d_H-i-s');
+                    $filename = "menu_{$timestamp}.pdf";
+
+                    $source = $this->site()->mediaRoot() . '/' . $filename;
+                    $result = F::write($source, $pdfContent);
+
+                    if ($result) {
+                        try {
+                            $file = $this->site()->createFile([
+                                'filename' => $filename,
+                                'source'   => $source,
+                            ]);
+
+                            if ($file) {
+                                $this->site()->update([
+                                    'menuPDF' => $file->id()
+                                ]);
+                                echo "PDF updated successfully: $filename";
+                            } else {
+                                echo "Failed to create file in Kirby.";
+                            }
+                        } catch (Exception $e) {
+                            echo "Error updating PDF: " . $e->getMessage();
+                            F::remove($source);
+                        }
+                    } else {
+                        echo "Failed to write PDF file to disk.";
+                    }
+
                     $pdfHtml = Browsershot::html($html)
                         ->format("A4")
                         ->bodyHtml();
@@ -232,11 +261,17 @@ return [
                     $json["values"] = [
                         "title" => $this->site()->titleValues()->value(),
                         "text" => $this->site()->textValues()->value(),
-                        "list" => $this->site()
-                            ->lstValues()
-                            ->toStructure()
-                            ->toArray(),
                     ];
+
+                    $values = $this->site()->lstValues()->toStructure();
+                    foreach ($values as $value) {
+                        $json["values"]["list"][] = [
+                            "title" => $value->title()->value(),
+                            "icon" => $value->icon()->toFile()
+                                ? $value->icon()->toFile()->url()
+                                : "",
+                        ];
+                    }
 
                     $btnFooter1 = $this->site()->btnFooter1()->toObject();
                     $btnFooter2 = $this->site()->btnFooter2()->toObject();
