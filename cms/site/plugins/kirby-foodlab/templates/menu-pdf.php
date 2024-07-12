@@ -32,10 +32,6 @@
                 font-display: swap;
             }
 
-            body {
-                background-color: #D2C8B4;
-            }
-
             h1, h2, h3, h4 {
                 color: #333;
             }
@@ -97,16 +93,20 @@
             .page {
                 width: 210mm;
                 height: 297mm;
-                margin: 0 auto;
+                margin: 0;
                 box-sizing: border-box;
-                page-break-after: initial;
                 position: relative;
                 overflow: hidden;
-                background-color: white;
                 font-family: Jungka, serif;
-                padding-left: 20mm;
-                padding-right: 20mm;
-                padding-top: 10mm;
+                padding: 10mm 20mm 0;
+            }
+
+            body {
+                background-color: <?php echo $menu["renderWithAssets"]
+                    ? "#D2C8B4"
+                    : "white"; ?>;
+                margin: 0;
+                padding: 0;
             }
 
             .text-tva {
@@ -122,6 +122,7 @@
                 bottom: 0;
                 padding-left: 20mm;
                 padding-right: 20mm;
+                padding-bottom: 0;
                 left: 0;
                 right: 0;
                 z-index: 10;
@@ -330,6 +331,9 @@
                     height="100%"
                     viewBox="0 0 1718 742"
                     style="
+                        display: <?php echo $menu["renderWithAssets"]
+                            ? "block"
+                            : "none"; ?>;
                         fill-rule: evenodd;
                         clip-rule: evenodd;
                         stroke-linejoin: round;
@@ -350,10 +354,12 @@
                     height="100%"
                     viewBox="0 0 258 553"
                     style="
+                        display: <?php echo $menu["renderWithAssets"]
+                            ? "block"
+                            : "none"; ?>;
                         fill-rule: evenodd;
                         clip-rule: evenodd;
                         stroke-miterlimit: 10;
-                        display: none;
                     "
                 >
                     <g transform="matrix(4.16667,0,0,4.16667,225.685,422.914)">
@@ -417,12 +423,13 @@
             <h2><?= $pageTitle2 ?></h2>
 
             <?php
-                $isFirstIteration = true;
-                foreach ($page2Order as $category):
-            ?>
+            $isFirstIteration = true;
+            foreach ($page2Order as $category): ?>
 
                 <?php if ($category === "starter" && !$startersHidden): ?>
-                    <div class="section" style="margin-top: <?= $isFirstIteration ? '0px' : '56px' ?>">
+                    <div class="section" style="margin-top: <?= $isFirstIteration
+                        ? "0px"
+                        : "56px" ?>">
                         <h4><?= $startersTitle ?></h4>
                         <?php foreach ($starters[0] as $starter): ?>
                         <div class="item">
@@ -440,7 +447,9 @@
                 <?php endif; ?>
 
                 <?php if ($category === "maincourse" && !$mainCoursesHidden): ?>
-                    <div class="section" style="margin-top: <?= $isFirstIteration ? '0px' : '56px' ?>">
+                    <div class="section" style="margin-top: <?= $isFirstIteration
+                        ? "0px"
+                        : "56px" ?>">
                         <h4><?= $mainCoursesTitle ?></h4>
                         <?php foreach ($mainCourses[0] as $mainCourse): ?>
                         <div class="item">
@@ -458,7 +467,9 @@
                 <?php endif; ?>
 
                 <?php if ($category === "dessert" && !$dessertsHidden): ?>
-                    <div class="section" style="margin-top: <?= $isFirstIteration ? '0px' : '56px' ?>">
+                    <div class="section" style="margin-top: <?= $isFirstIteration
+                        ? "0px"
+                        : "56px" ?>">
                         <h4><?= $dessertsTitle ?></h4>
                         <?php foreach ($desserts[0] as $dessert): ?>
                         <div class="item">
@@ -474,7 +485,8 @@
                     </div>
                 <?php endif; ?>
                 <?php $isFirstIteration = false; ?>
-            <?php endforeach; ?>
+            <?php endforeach;
+            ?>
 
             <div class="footer">
                 <svg
@@ -483,6 +495,9 @@
                     height="100%"
                     viewBox="0 0 1129 786"
                     style="
+                        display: <?php echo $menu["renderWithAssets"]
+                            ? "block"
+                            : "none"; ?>;
                         fill-rule: evenodd;
                         clip-rule: evenodd;
                         stroke-linejoin: round;
@@ -503,10 +518,12 @@
                     height="100%"
                     viewBox="0 0 258 553"
                     style="
+                        display: <?php echo $menu["renderWithAssets"]
+                            ? "block"
+                            : "none"; ?>;
                         fill-rule: evenodd;
                         clip-rule: evenodd;
                         stroke-miterlimit: 10;
-                        display: none;
                     "
                 >
                     <g transform="matrix(4.16667,0,0,4.16667,225.685,422.914)">
@@ -824,6 +841,9 @@
                     xml:space="preserve"
                     xmlns:serif="http://www.serif.com/"
                     style="
+                        display: <?php echo $menu["renderWithAssets"]
+                            ? "block"
+                            : "none"; ?>;
                         fill-rule: evenodd;
                         clip-rule: evenodd;
                         stroke-linejoin: round;
@@ -844,10 +864,12 @@
                     height="100%"
                     viewBox="0 0 258 553"
                     style="
+                        display: <?php echo $menu["renderWithAssets"]
+                            ? "block"
+                            : "none"; ?>;
                         fill-rule: evenodd;
                         clip-rule: evenodd;
                         stroke-miterlimit: 10;
-                        display: none;
                     "
                 >
                     <g transform="matrix(4.16667,0,0,4.16667,225.685,422.914)">
@@ -1140,6 +1162,9 @@
                     height="100%"
                     viewBox="0 0 709 764"
                     style="
+                        display: <?php echo $menu["renderWithAssets"]
+                            ? "block"
+                            : "none"; ?>;
                         fill-rule: evenodd;
                         clip-rule: evenodd;
                         stroke-linejoin: round;
@@ -1162,10 +1187,12 @@
                     height="100%"
                     viewBox="0 0 258 553"
                     style="
+                        display: <?php echo $menu["renderWithAssets"]
+                            ? "block"
+                            : "none"; ?>;
                         fill-rule: evenodd;
                         clip-rule: evenodd;
                         stroke-miterlimit: 10;
-                        display: none;
                     "
                 >
                     <g transform="matrix(4.16667,0,0,4.16667,225.685,422.914)">
