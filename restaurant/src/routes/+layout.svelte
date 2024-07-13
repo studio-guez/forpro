@@ -2,7 +2,7 @@
 	import '../style/_main.scss';
 </script>
 
-<main class="mx-auto grid justify-center">
+<main class="mx-auto grid justify-center overflow-hidden lg:overflow-auto">
 	<div class="max-w-[1920px]">
 		<slot />
 	</div>

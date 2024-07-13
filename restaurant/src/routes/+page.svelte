@@ -112,37 +112,56 @@
 		</div>
 
 		<!-- Badge overlay !-->
-		<img class="absolute z-40 -mt-6 h-[80%] lg:h-[90%]" src="/hero_overlay.svg" alt="overlay forpro" />
+		<img
+			class="absolute z-40 -mt-6 hidden h-[80%] lg:block lg:h-[90%]"
+			src="/hero_overlay.svg"
+			alt="overlay forpro"
+		/>
 
 		<a href="https://for-pro.ch" target="_blank">
 			<img
-				class="absolute -top-10 right-5 w-20 rotate-45 lg:hidden"
+				class="absolute -top-10 right-1 z-10 w-20 rotate-45 lg:hidden"
 				src={data.page.hero.pictureURL2}
 				alt="imaginé par forpro"
 			/>
 		</a>
 
-		<img src={data.page.hero.pictureURL3} class="absolute -bottom-10 w-[90vw] rounded-2xl lg:hidden" />
-		<a
-				href={data.page.hero.btn1.link}
-				type="button"
-				class="lg:hidden absolute -bottom-0 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-				target={data.page.hero.btn1.target ? '_blank' : '_self'}
+		<div
+			class="absolute -bottom-10 grid h-[70lvh] w-[90vw] grid-rows-[80%_20%] justify-center rounded-2xl py-5 lg:hidden"
+			style:background-image="url({data.page.hero.pictureURL3})"
+			style:background-position="center"
+			style:background-size="cover"
 		>
-			{data.page.hero.btn1.text}
-		</a>
-		<a
-				href={data.page.hero.btn2.link}
-				type="button"
-				class="lg:hidden absolute bottom-10 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-				target={data.page.hero.btn2.target ? '_blank' : '_self'}
-		>
-			{data.page.hero.btn2.text}
-		</a>
+			<div class="flex items-center justify-center">
+				<img
+					class="relative z-40 -mt-6 h-[90%] lg:hidden"
+					src="/hero_overlay.svg"
+					alt="overlay forpro"
+				/>
+			</div>
+			<div class="grid h-full w-full space-y-2">
+				<a
+					href={data.page.hero.btn1.link}
+					type="button"
+					class="h-min rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 lg:hidden"
+					target={data.page.hero.btn1.target ? '_blank' : '_self'}
+				>
+					{data.page.hero.btn1.text}
+				</a>
+				<a
+					href={data.page.hero.btn2.link}
+					type="button"
+					class="h-min w-min justify-self-center rounded-full bg-secondary px-6 py-1 text-center text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 lg:hidden"
+					target={data.page.hero.btn2.target ? '_blank' : '_self'}
+				>
+					{data.page.hero.btn2.text}
+				</a>
+			</div>
+		</div>
 	</div>
 </section>
 
-<section id="lefood" class="relative w-full mt-24 lg:mt-20">
+<section id="lefood" class="relative mt-24 w-full lg:mt-20">
 	<!-- Background -->
 	<img class="absolute -left-10 -top-10 z-10 lg:-left-10 lg:-top-10 lg:w-3/5" src="/bg_2_1.svg" />
 
@@ -260,7 +279,7 @@
 				<a
 					href={data.page.formation.btn.link}
 					type="button"
-					class="mt-10 rounded-full bg-secondary px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					class="mt-10 rounded-full bg-secondary px-4 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 lg:px-14"
 					target={data.page.formation.btn.target ? '_blank' : '_self'}
 				>
 					<span>{data.page.formation.btn.text}</span>
@@ -293,7 +312,7 @@
 
 		<!-- Description -->
 		<div
-			class="z-30 col-span-12 mx-auto mt-10 flex items-center justify-center text-center text-xs text-primary lg:w-1/2"
+			class="z-30 col-span-12 mx-auto mt-10 flex items-center justify-center text-center text-[0.875rem] text-primary lg:w-1/2 lg:text-xs"
 		>
 			<p>{data.page.univers.subtitle}</p>
 		</div>
@@ -405,7 +424,7 @@
 	</div>
 </section>
 
-<section class="relative w-full rounded-3xl bg-secondary pb-20 pt-10 lg:px-20">
+<section class="relative w-full rounded-3xl bg-secondary px-5 pb-20 pt-10 lg:px-20">
 	<div
 		class="grid grid-cols-1 lg:grid-flow-row lg:auto-rows-min lg:grid-cols-4 lg:grid-rows-[1fr_auto] lg:gap-4"
 	>
@@ -453,7 +472,7 @@
 			<div class="prose-sm my-5 text-xs text-primary">
 				{@html data.page.footer.text3}
 			</div>
-			<img src="/footer_logo_2.svg" class="w-44" />
+			<img src="/footer_logo_2.svg" class="w-full lg:w-44" />
 		</div>
 	</div>
 </section>
