@@ -39,33 +39,36 @@ return [
                     $html = $menu_page->render($data);
                     $pdfContent = Browsershot::html($html)
                         ->format("A4")
-                        ->margins(0.0, 0.0, 0.0, 0.0)
+                        ->margins(0, 0, 0, 0)
                         ->setOption(
                             "addStyleTag",
                             json_encode([
                                 "content" => "body { margin: 0; padding: 0; }",
                             ])
                         )
+                        ->scale(1.5)
                         ->showBackground()
+                        ->hideFooter()
+                        ->noSandbox()
                         ->fullPage()
                         ->pdf();
 
-                    $timestamp = date('Y-m-d_H-i-s');
+                    $timestamp = date("Y-m-d_H-i-s");
                     $filename = "menu_{$timestamp}.pdf";
 
-                    $source = $this->site()->mediaRoot() . '/' . $filename;
+                    $source = $this->site()->mediaRoot() . "/" . $filename;
                     $result = F::write($source, $pdfContent);
 
                     if ($result) {
                         try {
                             $file = $this->site()->createFile([
-                                'filename' => $filename,
-                                'source'   => $source,
+                                "filename" => $filename,
+                                "source" => $source,
                             ]);
 
                             if ($file) {
                                 $this->site()->update([
-                                    'menuPDF' => $file->id()
+                                    "menuPDF" => $file->id(),
                                 ]);
                                 echo "PDF updated successfully: $filename";
                             } else {
@@ -110,13 +113,15 @@ return [
                     $html = $menu_page->render($data);
                     $pdfContent = Browsershot::html($html)
                         ->format("A4")
-                        ->margins(0.0, 0.0, 0.0, 0.0)
+                        ->margins(0, 0, 0, 0)
                         ->setOption(
                             "addStyleTag",
                             json_encode([
                                 "content" => "body { margin: 0; padding: 0; }",
                             ])
                         )
+                        ->noSandbox()
+                        ->hideFooter()
                         ->hideBackground()
                         ->fullPage()
                         ->pdf();

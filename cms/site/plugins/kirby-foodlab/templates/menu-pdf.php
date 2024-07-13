@@ -91,22 +91,30 @@
             }
 
             .page {
+                position: relative;
+                top: 0;
+                left: 0;
                 width: 210mm;
                 height: 297mm;
                 margin: 0;
                 box-sizing: border-box;
-                position: relative;
-                overflow: hidden;
+                page-break-after: always;
                 font-family: Jungka, serif;
                 padding: 10mm 20mm 0;
             }
 
-            body {
+            html {
                 background-color: <?php echo $menu["renderWithAssets"]
                     ? "#D2C8B4"
                     : "white"; ?>;
+            }
+
+            body {
                 margin: 0;
                 padding: 0;
+                background-color: <?php echo $menu["renderWithAssets"]
+                    ? "#D2C8B4"
+                    : "white"; ?>;
             }
 
             .text-tva {
@@ -117,12 +125,20 @@
                 font-size: 8pt;
             }
 
+            @page {
+              size: A4;
+              margin: 0;
+            background-color: <?php echo $menu["renderWithAssets"]
+                ? "#D2C8B4"
+                : "white"; ?>;
+            }
+
             .page .footer {
                 position: absolute;
                 bottom: 0;
                 padding-left: 20mm;
                 padding-right: 20mm;
-                padding-bottom: 0;
+                padding-bottom: 10mm;
                 left: 0;
                 right: 0;
                 z-index: 10;
@@ -231,7 +247,7 @@
                 display: none;
                 position: absolute;
                 width: 70mm;
-                bottom: -420px;
+                bottom: -440px;
                 right: 0px;
                 left: 240px;
                 z-index: -10;
