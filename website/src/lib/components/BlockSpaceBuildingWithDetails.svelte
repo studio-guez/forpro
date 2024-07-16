@@ -357,7 +357,7 @@
                     <h3 class="v-space-building__cards__container__card__content__tilte">Le FoodLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR SE NOURRIR, SE QUESTIONNER ET DÉCOUVRIR</strong></p>
-                        <p>Le <strong>FoodLab</strong> souhaite former des apprenti·e·s aux métiers de la restauration et inviter gourmand·e·s et professionnel·le·s· à déguster une cuisine authentique, responsable, saine et séduisante.</p>
+                        <p>Le <strong>FoodLab</strong> forme des apprenti·e·s aux métiers de la restauration et invite gourmand·e·s et professionnel·le·s· à déguster une cuisine authentique, responsable, saine et séduisante.</p>
                         <p>Pour concevoir la cuisine de demain, des terrains d’expérimentation variés ont été imaginés:</p>
                         <ul>
                             <li>Un restaurant, le “FoodLab”, au 6e étage;</li>
