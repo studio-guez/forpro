@@ -358,13 +358,21 @@
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR SE NOURRIR, SE QUESTIONNER ET DÉCOUVRIR</strong></p>
                         <p>Le <strong>FoodLab</strong> souhaite former des apprenti·e·s aux métiers de la restauration et inviter gourmand·e·s et professionnel·le·s· à déguster une cuisine authentique, responsable, saine et séduisante.</p>
-                        <p>Pour concevoir la cuisine de demain, des terrains d’expérimentation variés ont été imaginés.</p>
+                        <p>Pour concevoir la cuisine de demain, des terrains d’expérimentation variés ont été imaginés:</p>
                         <ul>
-                            <li>un restaurant, le “FoodLab”, 6e étage;</li>
-                            <li>un espace de stands culinaires, le “FoodCourt“, 6e étage;</li>
-                            <li>et un espace café, le “PopUp Café”, au rez-de-chaussée.</li>
+                            <li>Un restaurant, le “FoodLab”, au 6e étage;</li>
+                            <li>Un espace de stands culinaires, le “FoodCourt“, au 6e étage;</li>
+                            <li>Et un espace café, le “PopUp Café”, au rez-de-chaussée.</li>
                         </ul>
-                        <p>Ces espaces offrent de nombreuses opportunités de développement pour les jeunes: apprentissages en cuisine, service et boulangerie-pâtisserie, et mise en place progressive d’une “Junior Team" pour travailler de manière autonome et encadrée par des formateur·trice·s expérimenté·e·s.</p>
+                        <p>Ces espaces offrent de nombreuses opportunités de développement pour les jeunes:</p>
+                        <ul>
+                            <li>
+                                Apprentissages en cuisine, service et boulangerie-pâtisserie;
+                            </li>
+                            <li>
+                                Mise en place progressive d’une “Junior Team" pour amener les jeunes à travailler de manière autonome, encadrés par des formateur·trice·s expérimenté·e·s.
+                            </li>
+                        </ul>
                         <p><a target="_blank" href="https://foodlab.for-pro.ch/">Découvrez le FoodLab!</a></p>
                     </div>
                 </div>
