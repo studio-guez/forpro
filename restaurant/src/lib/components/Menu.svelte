@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { menuIsOpen } from '../../store';
+
+	export let items;
+	console.log(items);
 </script>
 
 <nav
@@ -8,45 +11,15 @@
 	class:lg:block={$menuIsOpen}
 >
 	<ul class="flex flex-col space-y-4 self-center text-center lg:mt-10 lg:text-left">
-		<li class="text-3xl font-bold hover:text-secondary">
-			<a
-				on:click={() => {
-					$menuIsOpen = false;
-				}}
-				href="#lefood">Le Food</a
-			>
-		</li>
-		<li class="text-3xl font-bold hover:text-secondary">
-			<a
-				on:click={() => {
-					$menuIsOpen = false;
-				}}
-				href="#lelab">Le Lab</a
-			>
-		</li>
-		<li class="text-3xl font-bold hover:text-secondary">
-			<a
-				on:click={() => {
-					$menuIsOpen = false;
-				}}
-				href="#equipe-formation">Équipe & Formation</a
-			>
-		</li>
-		<li class="text-3xl font-bold hover:text-secondary">
-			<a
-				on:click={() => {
-					$menuIsOpen = false;
-				}}
-				href="#foodcourt-popup-cafe">FoodCourt & Popup Café</a
-			>
-		</li>
-		<li class="text-3xl font-bold hover:text-secondary">
-			<a
-				on:click={() => {
-					$menuIsOpen = false;
-				}}
-				href="#engagements">Engagements</a
-			>
-		</li>
+		{#each items as item}
+			<li class="text-3xl font-bold hover:text-secondary">
+				<a
+					on:click={() => {
+						$menuIsOpen = false;
+					}}
+					href={item.link}>{item.text}</a
+				>
+			</li>
+		{/each}
 	</ul>
 </nav>
