@@ -53,6 +53,51 @@ return [
                         ->fullPage()
                         ->pdf();
 
+                    $pdfHtml = Browsershot::html($html)
+                        ->format("A4")
+                        ->bodyHtml();
+
+                    return new Response($pdfContent, "application/pdf", 200, [
+                        "Content-Disposition" =>
+                            'attachment; filename="menu.pdf"',
+                    ]);
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/generate/with-assets/publish",
+                "method" => "GET",
+                "auth" => false,
+                "action" => function () {
+                    $renderWithAssets = true;
+
+                    kirby()->impersonate("kirby");
+
+                    $data = Menu::get($renderWithAssets);
+
+                    $menu_page = Page::factory([
+                        "slug" => "menu",
+                        "template" => "menu-pdf",
+                        "model" => "menu-pdf",
+                        "content" => $data,
+                    ]);
+
+                    $html = $menu_page->render($data);
+                    $pdfContent = Browsershot::html($html)
+                        ->format("A4")
+                        ->margins(0, 0, 0, 0)
+                        ->setOption(
+                            "addStyleTag",
+                            json_encode([
+                                "content" => "body { margin: 0; padding: 0; }",
+                            ])
+                        )
+                        ->scale(1.5)
+                        ->showBackground()
+                        ->hideFooter()
+                        ->noSandbox()
+                        ->fullPage()
+                        ->pdf();
+
                     $timestamp = date("Y-m-d_H-i-s");
                     $filename = "menu_{$timestamp}.pdf";
 
@@ -66,9 +111,35 @@ return [
                                 "source" => $source,
                             ]);
 
+                            $btnHero2 = $this->site()->btnHero2()->toObject();
+                            $btnLab = $this->site()->btnLab()->toObject();
+                            $btnFooter1 = $this->site()
+                                ->btnFooter1()
+                                ->toObject();
+
                             if ($file) {
                                 $this->site()->update([
-                                    "menuPDF" => $file->id(),
+                                    "btnHero2" => [
+                                        "link" => $file->uuid(),
+                                        "linkText" => $btnHero2
+                                            ->linkText()
+                                            ->value(),
+                                        "target" => true,
+                                    ],
+                                    "btnLab" => [
+                                        "link" => $file->uuid(),
+                                        "linkText" => $btnLab
+                                            ->linkText()
+                                            ->value(),
+                                        "target" => true,
+                                    ],
+                                    "btnFooter1" => [
+                                        "link" => $file->uuid(),
+                                        "linkText" => $btnFooter1
+                                            ->linkText()
+                                            ->value(),
+                                        "target" => true,
+                                    ],
                                 ]);
                                 echo "PDF updated successfully: $filename";
                             } else {
@@ -156,6 +227,14 @@ return [
                             ->toHtml()
                             ->value(),
                     ];
+
+                    $menuElements = $this->site()->menu()->toStructure();
+                    foreach ($menuElements as $element) {
+                        $json["menu"]["content"][] = [
+                            "text" => $element->text()->value(),
+                            "link" => $element->link()->toUrl(),
+                        ];
+                    }
 
                     $btnHero1 = $this->site()->btnHero1()->toObject();
                     $btnHero2 = $this->site()->btnHero2()->toObject();
