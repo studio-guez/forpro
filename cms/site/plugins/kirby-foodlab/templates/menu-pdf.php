@@ -128,6 +128,7 @@
             @page {
               size: A4;
               margin: 0;
+              padding: 0;
             background-color: <?php echo $menu["renderWithAssets"]
                 ? "#D2C8B4"
                 : "white"; ?>;
@@ -135,10 +136,10 @@
 
             .page .footer {
                 position: absolute;
-                bottom: 0;
+                bottom: 0mm;
                 padding-left: 20mm;
                 padding-right: 20mm;
-                padding-bottom: 10mm;
+                padding-bottom: 17mm;
                 left: 0;
                 right: 0;
                 z-index: 10;
@@ -179,7 +180,7 @@
             .columns {
                 position: absolute;
                 width: 630px;
-                bottom: 5mm;
+                bottom: 12mm;
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 justify-content: left;
@@ -200,6 +201,11 @@
                 grid-template-columns: 1fr 1fr;
                 margin-top: 3px;
                 font-size: 10pt;
+            }
+
+            .section {
+                position: relative;
+                z-index: 999999999;
             }
 
             #overlay {
@@ -240,15 +246,15 @@
                 bottom: -460px;
                 right: 0px;
                 left: 190px;
-                z-index: -10;
+                z-index: -50;
             }
 
             #illustration-4 {
                 display: none;
                 position: absolute;
                 width: 70mm;
-                bottom: -440px;
-                right: 0px;
+                bottom: -450px;
+                right: 0;
                 left: 240px;
                 z-index: -10;
             }
@@ -677,12 +683,13 @@
                         <?php foreach ($bubbleWines[0] as $wine): ?>
                         <tr>
                             <td style="font-weight: 300;">
-                                <span style="font-weight: 800">
-                                    <?= $wine["name"] ?>
-                                </span>,
-                                <?= $wine["domain"] ?>,
-                                <?= $wine["mill"] ?><br />
-                                <?= $wine["description"] ?>
+                                <span style="font-weight: 800"><?= trim(
+                                    $wine["name"]
+                                ) ?></span>,
+                                <?= trim($wine["domain"]) ?>,
+                                <?= trim($wine["mill"]) ?>
+                                <br />
+                                <?= trim($wine["description"]) ?>
                             </td>
                             <td style="text-align: left;vertical-align: top; font-weight: 500">
                                 <?= $wine["price10cl"] ?>
@@ -749,12 +756,13 @@
                             <?php foreach ($whiteWines[0] as $wine): ?>
                             <tr>
                                 <td style="font-weight: 300;">
-                                    <span style="font-weight: 800">
-                                        <?= $wine["name"] ?>
-                                    </span>,
-                                    <?= $wine["domain"] ?>,
-                                    <?= $wine["mill"] ?><br />
-                                    <?= $wine["description"] ?>
+                                    <span style="font-weight: 800"><?= trim(
+                                        $wine["name"]
+                                    ) ?></span>,
+                                    <?= trim($wine["domain"]) ?>,
+                                    <?= trim($wine["mill"]) ?>
+                                    <br />
+                                    <?= trim($wine["description"]) ?>
                                 </td>
                                 <td style="text-align: left;vertical-align: top; font-weight: 500">
                                     <?= $wine["price10cl"] ?>
@@ -822,12 +830,13 @@
                             <?php foreach ($redWines[0] as $wine): ?>
                             <tr>
                                 <td style="font-weight: 300;">
-                                    <span style="font-weight: 800">
-                                        <?= $wine["name"] ?>
-                                    </span>,
-                                    <?= $wine["domain"] ?>,
-                                    <?= $wine["mill"] ?><br />
-                                    <?= $wine["description"] ?>
+                                    <span style="font-weight: 800"><?= trim(
+                                        $wine["name"]
+                                    ) ?></span>,
+                                    <?= trim($wine["domain"]) ?>,
+                                    <?= trim($wine["mill"]) ?>
+                                    <br />
+                                    <?= trim($wine["description"]) ?>
                                 </td>
                                 <td style="text-align: left;vertical-align: top; font-weight: 500">
                                     <?= $wine["price10cl"] ?>
@@ -864,6 +873,7 @@
                         clip-rule: evenodd;
                         stroke-linejoin: round;
                         stroke-miterlimit: 2;
+                        z-index: -10;
                     "
                 >
                     <g transform="matrix(4.16667,0,0,4.16667,33.9946,148.004)">
