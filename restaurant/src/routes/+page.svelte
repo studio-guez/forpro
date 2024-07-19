@@ -14,7 +14,7 @@
 	};
 </script>
 
-<Menu />
+<Menu items={data.menu.content} />
 
 <!-- Navbar -->
 <nav class="px-3 pb-6 pt-3 lg:px-6">
@@ -175,13 +175,21 @@
 		</div>
 
 		<div
-			class="divide-y-10 col-span-full mx-3 -mt-8 grid grid-cols-1 space-y-10 lg:mx-20 lg:grid-cols-2 lg:space-y-0"
+			class="col-span-full mx-5 grid grid-cols-1 space-y-5 lg:mx-20 lg:-mt-8 lg:grid-cols-2 lg:space-y-0"
 		>
+			<div
+				class="z-20 col-span-1 mt-5 aspect-square rounded-2xl lg:hidden"
+				style:background-image="url({data.page.food.pictureURL})"
+				style:background-position="center"
+				style:background-size="cover"
+			></div>
+
 			<!-- Text -->
-			<div class="font-regular z-20 col-span-1 flex flex-col pt-5 text-primary lg:pt-10">
-				<div class="prose-sm mt-10 leading-4 lg:pr-10">
+			<div class="font-regular z-20 col-span-1 flex flex-col pt-0 text-primary lg:pt-10">
+				<div class="prose-sm mt-3 leading-4 lg:mt-10 lg:pr-10">
 					{@html data.page.food.text}
 				</div>
+
 				<div class="h-full self-center align-bottom lg:self-start">
 					<a
 						href={data.page.food.btn.link}
@@ -196,7 +204,7 @@
 
 			<!-- Image -->
 			<div
-				class="z-20 col-span-1 aspect-square rounded-2xl"
+				class="z-20 col-span-1 hidden aspect-square rounded-2xl lg:block"
 				style:background-image="url({data.page.food.pictureURL})"
 				style:background-position="center"
 				style:background-size="cover"
@@ -288,7 +296,7 @@
 
 			<!-- Image -->
 			<div
-				class="z-50 col-span-1 mt-10 h-56 rounded-2xl lg:z-20 lg:mt-0 lg:h-auto"
+				class="z-50 col-span-1 mt-10 h-56 rounded-2xl brightness-90 lg:z-20 lg:mt-0 lg:h-auto"
 				style:background-image="url({data.page.formation.pictureURL})"
 				style:background-position="center"
 				style:background-size="cover"
@@ -415,7 +423,7 @@
 			{#each data.page.values.list as value}
 				<div class="flex items-center justify-center">
 					<div class="inline-grid h-full w-full justify-center text-center">
-						<img src={value.icon} class="w-32 justify-self-center" />
+						<img src={value.icon} class="max-h-10 w-32 justify-self-center pb-3" />
 						<span class="uppercase text-white">{@html value.title}</span>
 					</div>
 				</div>
