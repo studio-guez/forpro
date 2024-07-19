@@ -6,6 +6,29 @@ icon: food
 pages: false
 
 fields:
+  menuHeadline:
+    type: headline
+    label: Menu
+
+  menu:
+    type: structure
+    label: Liens
+    fields:
+      text:
+        label: Texte
+        type: text
+      link:
+        label: Lien
+        type: link
+        help: |
+          les lien d'ancrages disponible sur le site sont
+          - \#hero
+          - \#lefood
+          - \#lelab
+          - \#equipe-formation
+          - \#foodcourt-popup-cafe
+          - \#engagements
+
   headline:
     type: text
     label: Baseline
