@@ -14,12 +14,12 @@
                 </k-button>
                 <k-button-group layout="collapsed">
                     <k-button
-                        :icon="isGeneratingPDF ? 'loader' : 'wand'"
+                        :icon="isGeneratingPDF ? 'loader' : 'preview'"
                         :disabled="isGeneratingPDF"
                         variant="filled"
                         @click="$refs.dropdown.toggle()"
                     >
-                        Générer PDF
+                        Aperçu
                     </k-button>
                     <k-dropdown-content ref="dropdown" align-x="end">
                         <k-dropdown-item
@@ -33,6 +33,14 @@
                             >Sans image et fond</k-dropdown-item
                         >
                     </k-dropdown-content>
+                    <k-button
+                        :icon="isGeneratingPDF ? 'loader' : 'wand'"
+                        :disabled="isGeneratingPDF"
+                        variant="filled"
+                        @click="generatePDF(true, true)"
+                    >
+                        Publier
+                    </k-button>
                 </k-button-group>
             </k-button-group>
         </k-header>
@@ -424,7 +432,7 @@ export default {
                 }, 5000);
             }, 1500);
         },
-        generatePDF(withAssets = false) {
+        generatePDF(withAssets = false, publish = false) {
             if (this.isGeneratingPDF) return;
 
             this.isGeneratingPDF = true;
@@ -443,10 +451,12 @@ export default {
                     );
                 }, 1000);
             };
-            let url = withAssets
-                ? this.$api.endpoint + "/restaurant/menu/generate/with-assets"
-                : this.$api.endpoint +
-                  "/restaurant/menu/generate/without-assets";
+
+            let url =
+                this.$api.endpoint +
+                "/restaurant/menu/generate/" +
+                (withAssets ? "with-assets" : "without-assets") +
+                (publish ? "/publish" : "");
 
             iframe.src = url;
             setTimeout(() => {
