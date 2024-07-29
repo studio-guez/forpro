@@ -3,19 +3,21 @@
 @include_once __DIR__ . "/vendor/autoload.php";
 
 load([
-    "MediumSans\BaseClass" => __DIR__ . "/classes/BaseClass.php",
-    "MediumSans\Menu" => __DIR__ . "/classes/Menu.php",
-    "MediumSans\Restaurant" => __DIR__ . "/classes/Restaurant.php",
-    "MediumSans\Menu\MainCourse" => __DIR__ . "/classes/MainCourse.php",
-    "MediumSans\Menu\Starter" => __DIR__ . "/classes/Starter.php",
-    "MediumSans\Menu\Dessert" => __DIR__ . "/classes/Dessert.php",
-    "MediumSans\Menu\RedWine" => __DIR__ . "/classes/RedWine.php",
-    "MediumSans\Menu\WhiteWine" => __DIR__ . "/classes/WhiteWine.php",
-    "MediumSans\Menu\BubbleWine" => __DIR__ . "/classes/BubbleWine.php",
-    "MediumSans\Menu\SoftDrink" => __DIR__ . "/classes/SoftDrink.php",
-    "MediumSans\Menu\Beer" => __DIR__ . "/classes/Beer.php",
-    "MediumSans\Menu\Cocktail" => __DIR__ . "/classes/Cocktail.php",
-    "MediumSans\Menu\HotDrink" => __DIR__ . "/classes/HotDrink.php",
+    "MediumSans\BaseClass"                  => __DIR__ . "/classes/BaseClass.php",
+    "MediumSans\Menu"                       => __DIR__ . "/classes/Menu.php",
+    "MediumSans\Menu\MainCourse"            => __DIR__ . "/classes/MainCourse.php",
+    "MediumSans\Menu\Starter"               => __DIR__ . "/classes/Starter.php",
+    "MediumSans\Menu\Dessert"               => __DIR__ . "/classes/Dessert.php",
+    "MediumSans\Menu\RedWine"               => __DIR__ . "/classes/RedWine.php",
+    "MediumSans\Menu\WhiteWine"             => __DIR__ . "/classes/WhiteWine.php",
+    "MediumSans\Menu\BubbleWine"            => __DIR__ . "/classes/BubbleWine.php",
+    "MediumSans\Menu\SoftDrink"             => __DIR__ . "/classes/SoftDrink.php",
+    "MediumSans\Menu\Beer"                  => __DIR__ . "/classes/Beer.php",
+    "MediumSans\Menu\Cocktail"              => __DIR__ . "/classes/Cocktail.php",
+    "MediumSans\Menu\HotDrink"              => __DIR__ . "/classes/HotDrink.php",
+    "MediumSans\MenuSpecial"                => __DIR__ . "/classes/MenuSpecial.php",
+    "MediumSans\MenuSpecial\DishSpecial"    => __DIR__ . "/classes/DishSpecial.php",
+    "MediumSans\MenuSpecial\WineSpecial"    => __DIR__ . "/classes/WineSpecial.php",
 ]);
 
 Kirby::plugin("mediumsans/foodlab", [
@@ -107,9 +109,32 @@ Kirby::plugin("mediumsans/foodlab", [
                 ],
             ];
         },
+        "menu-special" => function ($kirby) {
+            return [
+                "label" => "Menu Spécial",
+                "menu" => true,
+                "icon" => "badge",
+                "link" => "foodlab/restaurant/menu/special",
+                "view" => "k-menu-special-view",
+                "views" => [require __DIR__ . "/views/menu-special.php"],
+                "dialogs" => [
+                    // Dish
+                    require __DIR__ . "/dialogs/menu-special/dish/fields.php",
+                    require __DIR__ . "/dialogs/menu-special/dish/add.php",
+                    require __DIR__ . "/dialogs/menu-special/dish/delete.php",
+                    require __DIR__ . "/dialogs/menu-special/dish/edit.php",
+                    // Wine
+                    require __DIR__ . "/dialogs/menu-special/wine/fields.php",
+                    require __DIR__ . "/dialogs/menu-special/wine/add.php",
+                    require __DIR__ . "/dialogs/menu-special/wine/delete.php",
+                    require __DIR__ . "/dialogs/menu-special/wine/edit.php",
+                ]
+            ];
+        }
     ],
     "templates" => [
         "menu-pdf" => __DIR__ . "/templates/menu-pdf.php",
+        "menu-special-pdf" => __DIR__ . "/templates/menu-special-pdf.php",
     ],
     "blueprints" => [
         "tabs/restaurant" => __DIR__ . "/blueprints/tabs/restaurant.yml",
