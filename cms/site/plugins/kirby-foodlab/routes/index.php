@@ -511,6 +511,94 @@ return [
                     );
                 },
             ],
+            [
+                "pattern" => "restaurant/menu/special/generate/with-assets",
+                "method" => "GET",
+                "auth" => false,
+                "action" => function () {
+                    $renderWithAssets = true;
+
+                    kirby()->impersonate("kirby");
+
+                    $data = MenuSpecial::get($renderWithAssets);
+
+                    $menu_page = Page::factory([
+                        "slug" => "menu-special",
+                        "template" => "menu-special-pdf",
+                        "model" => "menu-special-pdf",
+                        "content" => $data,
+                    ]);
+
+                    $html = $menu_page->render($data);
+                    $pdfContent = Browsershot::html($html)
+                        ->format("A4")
+                        ->margins(0, 0, 0, 0)
+                        ->setOption(
+                            "addStyleTag",
+                            json_encode([
+                                "content" => "body { margin: 0; padding: 0; }",
+                            ])
+                        )
+                        ->noSandbox()
+                        ->showBackground()
+                        ->hideFooter()
+                        ->fullPage()
+                        ->pdf();
+
+                    $pdfHtml = Browsershot::html($html)
+                        ->format("A4")
+                        ->bodyHtml();
+
+                    return new Response($pdfContent, "application/pdf", 200, [
+                        "Content-Disposition" =>
+                            'attachment; filename="menu.pdf"',
+                    ]);
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/special/generate/without-assets",
+                "method" => "GET",
+                "auth" => false,
+                "action" => function () {
+                    $renderWithAssets = false;
+
+                    kirby()->impersonate("kirby");
+
+                    $data = MenuSpecial::get($renderWithAssets);
+
+                    $menu_page = Page::factory([
+                        "slug" => "menu-special",
+                        "template" => "menu-special-pdf",
+                        "model" => "menu-special-pdf",
+                        "content" => $data,
+                    ]);
+
+                    $html = $menu_page->render($data);
+                    $pdfContent = Browsershot::html($html)
+                        ->format("A4")
+                        ->margins(0, 0, 0, 0)
+                        ->setOption(
+                            "addStyleTag",
+                            json_encode([
+                                "content" => "body { margin: 0; padding: 0; }",
+                            ])
+                        )
+                        ->noSandbox()
+                        ->hideFooter()
+                        ->hideBackground()
+                        ->fullPage()
+                        ->pdf();
+
+                    $pdfHtml = Browsershot::html($html)
+                        ->format("A4")
+                        ->bodyHtml();
+
+                    return new Response($pdfContent, "application/pdf", 200, [
+                        "Content-Disposition" =>
+                            'attachment; filename="menu.pdf"',
+                    ]);
+                },
+            ],
         ];
     },
 ];
