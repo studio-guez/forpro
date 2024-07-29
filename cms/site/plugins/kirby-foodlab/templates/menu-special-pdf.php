@@ -184,10 +184,7 @@
         }
 
         #partner {
-            left: 214mm;
             position: absolute;
-            height: 20mm;
-            top: 40mm;
         }
     </style>
 </head>
@@ -269,7 +266,15 @@
     </div>
     <div class="half-page">
         <?php if($menu['partnerLogo']): ?>
-            <img id="partner" src="<?= $menu['partnerLogo'] ?>" alt="Logo client/partenaire" class="logo">
+            <div id="partner" style="width: <?= trim($menu['partnerLogoWidth']) != '' ? $menu['partnerLogoWidth'] . 'mm' : 'unset' ?>;
+                    height: <?= trim($menu['partnerLogoHeight']) != '' ? $menu['partnerLogoHeight'] . 'mm' : 'unset' ?>;
+                    top: <?= trim($menu['partnerLogoTop']) != '' ? $menu['partnerLogoTop'] . 'mm' : 'unset' ?>;
+                    right: <?= trim($menu['partnerLogoRight']) != '' ? $menu['partnerLogoRight'] . 'mm' : 'unset' ?>;
+                    bottom: <?= trim($menu['partnerLogoBottom']) != '' ? $menu['partnerLogoBottom'] . 'mm' : 'unset' ?>;
+                    left: <?= trim($menu['partnerLogoLeft']) != '' ? $menu['partnerLogoLeft'] . 'mm' : 'unset' ?>;"
+            >
+                <?= trim($menu['partnerLogo']) ?>
+            </div>
         <?php endif; ?>
     </div>
 </div>
