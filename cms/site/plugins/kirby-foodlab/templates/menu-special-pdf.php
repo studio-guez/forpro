@@ -49,6 +49,7 @@
         @page {
             size: A4 landscape;
             margin: 0;
+            background-color: #D2C8B4;
         }
 
         body {
@@ -56,6 +57,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            background-color: #D2C8B4;
         }
 
         .page {
@@ -63,15 +65,13 @@
             overflow: hidden;
             width: 297mm;
             height: 210mm;
-            page-break-after: always;
             display: flex;
-            border: 1px dashed #000;
+            background-color: #D2C8B4;
         }
 
         .half-page {
             width: 148.5mm;
             height: 210mm;
-            border-right: 1px dashed #000;
         }
 
         .half-page.menu {
@@ -113,6 +113,7 @@
 
         .menu-item {
             margin-bottom: 3mm;
+            margin-top: 7.5mm;
         }
 
         .menu-item.group {
@@ -132,6 +133,8 @@
         .dish-option {
             margin-top: 2mm;
             margin-bottom: 2mm;
+            font-size: 10pt;
+            font-weight: 300;
         }
 
         .wine-info {
@@ -196,7 +199,9 @@
              height="100%"
              viewBox="0 0 919 684"
              xmlns="http://www.w3.org/2000/svg"
-             style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+             style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;display: <?php echo $menu["renderWithAssets"]
+                 ? "block"
+                 : "none"; ?>">
             <g transform="matrix(-1.88528,0.66761,0.66761,1.88528,361.906,604.917)">
                 <path d="M8.69,-49.833C21.665,-49.833 32.119,-39.192 32.212,-24.164C32.305,-9.32 21.85,1.415 8.69,1.415C-4.567,1.415 -14.927,-9.321 -14.928,-24.163C-14.927,-39.192 -4.378,-49.833 8.69,-49.833"
                       style="fill:rgb(55,0,125);fill-rule:nonzero;"/>
@@ -236,7 +241,9 @@
         </svg>
         <div class="header">
             <svg id="badge" xmlns="http://www.w3.org/2000/svg"
-                 style="fill-rule:evenodd;clip-rule:evenodd;stroke-miterlimit:10;"
+                 style="fill-rule:evenodd;clip-rule:evenodd;stroke-miterlimit:10;display: <?php echo $menu["renderWithAssets"]
+                     ? "block"
+                     : "none"; ?>"
                  viewBox="-40.55 -40.56 5222.57 11728.92">
                 <path d="M4712.38,2587.07l-0,6473.64c-0,1191.82 -958.844,2157.99 -2141.64,2157.99c-1182.8,-0 -2141.64,-966.169 -2141.64,-2157.99l0,-6473.64c0,-1191.81 958.838,-2157.97 2141.64,-2157.97c1182.8,0 2141.64,966.163 2141.64,2157.97Z"
                       style="fill:transparent;fill-opacity:0.6;fill-rule:nonzero;stroke:#ff5300;stroke-width:130px; stroke-opacity:1;"/>
@@ -256,80 +263,88 @@
                       style="fill:#ff5300;fill-rule:nonzero;"/>
             </svg>
             <div class="contact-info">
-                <?= $menu['contactInfo'] ?>
+                <?= $menu['textInfo'] ?>
             </div>
         </div>
     </div>
     <div class="half-page">
-        <img id="partner" src="<?= $menu['logoPartner'] ?>" alt="Logo client/partenaire" class="logo">
+        <?php if($menu['partnerLogo']): ?>
+            <img id="partner" src="<?= $menu['partnerLogo'] ?>" alt="Logo client/partenaire" class="logo">
+        <?php endif; ?>
     </div>
 </div>
 <?php foreach($menu['pages'] as $page): ?>
-<div class="page">
-    <div class="half-page">
-        <div class="wine-info">
-            <?php foreach ($page['wines'] as $wine) ?>
-            <div class="wine-item">
-                <div class="dish-name"><?= $wine['name'] ?></div>
-                <div class="dish-description"><?= $wine['domain'] ?>, <?= $wine['mill'] ?></div>
-                <div class="dish-description"><?= $wine['description'] ?></div>
+    <div class="page">
+        <div class="half-page">
+            <div class="wine-info">
+                <?php foreach ($page['wines'] as $wine): ?>
+                <div class="menu-item">
+                    <div class="dish-name"><?= $wine['name'] ?></div>
+                    <div class="dish-description"><?= $wine['domain'] ?>, <?= $wine['mill'] ?></div>
+                    <div class="dish-description"><?= $wine['description'] ?></div>
+                </div>
+                <?php endforeach; ?>
             </div>
-            <?php endforeach; ?>
+            <svg
+                    id="bottle"
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 782 1292"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style="display: <?php echo $menu["renderWithAssets"]
+                        ? "block"
+                        : "none"; ?>"
+            >
+                <g transform="matrix(4.16667,0,0,4.16667,33.9946,148.004)">
+                    <path
+                            d="M0,240.296C6.437,242.021 118.59,272.072 125.125,273.823C132.567,275.817 136.381,273.164 138.361,265.772C140.342,258.379 175.201,128.283 177.955,118.007C184.174,94.797 168.081,79.047 157.279,63.132C143.132,42.285 141.58,23.088 148.474,-2.64L155.105,-27.357L124.636,-35.521L118.012,-10.803C111.118,14.925 100.176,30.775 77.499,41.754C60.188,50.137 38.376,55.73 32.156,78.941C29.403,89.216 -5.456,219.313 -7.437,226.705C-9.418,234.098 -7.442,238.302 0,240.296"
+                            style="fill: rgb(255, 83, 0); fill-rule: nonzero"
+                    />
+                </g>
+            </svg>
+        </div>
+        <div class="half-page menu">
+            <div class="menu-title"><?= $page['menuTitle'] ?></div>
+            <div class="menu-date"><?= $page['menuDescription'] ?></div>
+            <div class="menu-items">
+                <?php foreach ($page['dishes'] as $dish): ?>
+                    <?php if ($dish['option']): ?>
+                        <div class="menu-item group">
+                            <div class="dish-name"><?= $dish['name1'] ?></div>
+                            <div class="dish-description"><?= $dish['description1'] ?></div>
+                            <div class="dish-option">ou</div>
+                            <div class="dish-name"><?= $dish['name2'] ?></div>
+                            <div class="dish-description"><?= $dish['description2'] ?></div>
+                        </div>
+                    <?php else: ?>
+                        <div class="menu-item">
+                            <div class="dish-name"><?= $dish['name1'] ?></div>
+                            <div class="dish-description"><?= $dish['description1'] ?></div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+            <div class="bowl-info">
+                Notre équipe de service se tient à votre<br/> disposition en cas d'allergies alimentaires.
+            </div>
         </div>
         <svg
-                id="bottle"
+                id="bowl"
                 width="100%"
                 height="100%"
-                viewBox="0 0 782 1292"
-                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1129 786"
+                style="display: <?php echo $menu["renderWithAssets"]
+                    ? "block"
+                    : "none"; ?>"
         >
-            <g transform="matrix(4.16667,0,0,4.16667,33.9946,148.004)">
+            <g transform="matrix(4.16667,0,0,4.16667,1128.05,587.713)">
                 <path
-                        d="M0,240.296C6.437,242.021 118.59,272.072 125.125,273.823C132.567,275.817 136.381,273.164 138.361,265.772C140.342,258.379 175.201,128.283 177.955,118.007C184.174,94.797 168.081,79.047 157.279,63.132C143.132,42.285 141.58,23.088 148.474,-2.64L155.105,-27.357L124.636,-35.521L118.012,-10.803C111.118,14.925 100.176,30.775 77.499,41.754C60.188,50.137 38.376,55.73 32.156,78.941C29.403,89.216 -5.456,219.313 -7.437,226.705C-9.418,234.098 -7.442,238.302 0,240.296"
+                        d="M0,-93.676L-268.678,-141.051C-278.689,-84.279 -251.34,-29.128 -203.612,1.7L-208.754,30.862L-115.107,47.375L-109.965,18.213C-54.573,5.567 -10.011,-36.904 0,-93.676"
                         style="fill: rgb(255, 83, 0); fill-rule: nonzero"
                 />
             </g>
         </svg>
     </div>
-    <div class="half-page menu">
-        <div class="menu-title"><?= $page['menuTitle'] ?></div>
-        <div class="menu-date"><?= $page['menuDescription'] ?></div>
-        <div class="menu-items">
-            <?php foreach ($page['dishes'] as $dish): ?>
-                <?php if ($dish['option']): ?>
-                    <div class="menu-item group">
-                        <div class="dish-name"><?= $dish['name1'] ?></div>
-                        <div class="dish-description"><?= $dish['description1'] ?></div>
-                        <div class="dish-option">ou</div>
-                        <div class="dish-name"><?= $dish['name2'] ?></div>
-                        <div class="dish-description"><?= $dish['description2'] ?></div>
-                    </div>
-                <?php else: ?>
-                    <div class="menu-item">
-                        <div class="dish-name"><?= $dish['name1'] ?></div>
-                        <div class="dish-description"><?= $dish['description1'] ?></div>
-                    </div>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </div>
-        <div class="bowl-info">
-            Notre équipe de service se tient à votre<br/> disposition en cas d'allergies alimentaires.
-        </div>
-    </div>
-    <svg
-            id="bowl"
-            width="100%"
-            height="100%"
-            viewBox="0 0 1129 786"
-    >
-        <g transform="matrix(4.16667,0,0,4.16667,1128.05,587.713)">
-            <path
-                    d="M0,-93.676L-268.678,-141.051C-278.689,-84.279 -251.34,-29.128 -203.612,1.7L-208.754,30.862L-115.107,47.375L-109.965,18.213C-54.573,5.567 -10.011,-36.904 0,-93.676"
-                    style="fill: rgb(255, 83, 0); fill-rule: nonzero"
-            />
-        </g>
-    </svg>
-</div>
-<?php endforeach; ?>
+<?php endforeach ?>
 </body>
 </html>
