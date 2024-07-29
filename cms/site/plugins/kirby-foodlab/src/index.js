@@ -1,4 +1,5 @@
 import MenuView from "./components/MenuView.vue";
+import MenuSpecialView from "./components/MenuSpecialView.vue";
 import SectionHeader from "./components/SectionHeader.vue";
 import BeerTable from "./components/BeerTable.vue";
 import CocktailTable from "./components/CocktailTable.vue";
@@ -14,6 +15,7 @@ import SoftDrinkTable from "./components/SoftDrinkTable.vue";
 panel.plugin("mediumsans/foodlab", {
   components: {
     "k-menu-view": MenuView,
+    "k-menu-special-view": MenuSpecialView,
     "k-section-header": SectionHeader,
     "k-beer-table": BeerTable,
     "k-dessert-table": DessertTable,
