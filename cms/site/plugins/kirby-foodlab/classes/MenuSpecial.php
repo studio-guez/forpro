@@ -8,6 +8,16 @@ class MenuSpecial extends BaseClass
 {
     const FILENAME = "menu-special.json";
 
+    public static function get(bool $renderWithAssets): array
+    {
+        $menu = self::list();
+        $menu['renderWithAssets'] = $renderWithAssets;
+
+        return [
+            "menu" => $menu,
+        ];
+    }
+
     /**
      * Creates a new menu with the given $input
      * data and adds it to the json file
