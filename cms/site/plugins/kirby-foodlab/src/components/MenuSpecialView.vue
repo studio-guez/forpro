@@ -318,8 +318,35 @@ export default {
             console.error("Error submitting menu:", error);
           });
     },
-    generatePDF(withAssets = false, publish = false) {
-      // This method remains the same
+    generatePDF(withAssets = false) {
+      if (this.isGeneratingPDF) return;
+
+      this.isGeneratingPDF = true;
+
+      const iframe = document.createElement("iframe");
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+
+      iframe.onload = () => {
+        setTimeout(() => {
+          document.body.removeChild(iframe);
+          this.isGeneratingPDF = false;
+          this.$store.dispatch(
+              "notification/success",
+              "Le PDF a été généré avec succès",
+          );
+        }, 1000);
+      };
+
+      let url =
+          this.$api.endpoint +
+          "/restaurant/menu/special/generate/" +
+          (withAssets ? "with-assets" : "without-assets");
+
+      iframe.src = url;
+      setTimeout(() => {
+        this.isGeneratingPDF = false;
+      }, 2500);
     },
     updateOrder(category, pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
