@@ -3,8 +3,9 @@
 use Kirby\Cms\Page;
 use Kirby\Cms\Response;
 use MediumSans\Menu;
+use MediumSans\MenuSpecial;
 use MediumSans\Menu\Metadata;
-use MediumSans\Restaurant;
+use MediumSans\MenuSpecial\DishSpecial;
 use Spatie\Browsershot\Browsershot;
 
 return [
@@ -489,6 +490,25 @@ return [
                     }
 
                     return false;
+                },
+            ],
+            /* Menu Special */
+            [
+                "pattern" => "restaurant/menu/special/create",
+                "method" => "POST",
+                "action" => function () {
+                    return MenuSpecial::create(get());
+                },
+            ],
+            [
+                "pattern" => "restaurant/menu/special/metadata/(:any)",
+                "method" => "POST",
+                "action" => function (string $pageId) {
+                    return DishSpecial::setTitleOrSubtitle(
+                        $pageId,
+                        get("title") ?? "",
+                        get("subtitle") ?? ""
+                    );
                 },
             ],
         ];
