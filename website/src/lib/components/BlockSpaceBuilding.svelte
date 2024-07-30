@@ -58,7 +58,7 @@
     {slug: 'popup',       title: {value: 'Popup'}},
   ];
 
-  function getSectionNameBySlug(slug) {
+  function getSectionNameBySlug(slug: string) {
     const section = sectionsDetails.find((section) => section.slug === slug);
     return section ? section.title.value : "";
   }
