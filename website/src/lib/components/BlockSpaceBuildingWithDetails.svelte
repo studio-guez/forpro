@@ -186,25 +186,30 @@
                       style="fill: #222221;"/>
             </g>
             <g id="Cache-Accueil"
+               on:click={() => location.hash = 'PopUp'}
                on:mouseover="{()=> currentOverSection = 'popup'}">
                 <rect y="394" width="227" height="84" style="fill: #ffffff00;"/>
             </g>
             <g id="Cache-MakerLab"
+               on:click={() => location.hash = 'MakerLab'}
                on:mouseover="{()=>currentOverSection = 'makerlab'}"
             >
                 <rect x="861" y="255" width="339" height="139" style="fill: #ffffff00;"/>
             </g>
             <g id="Cache-LearningLab"
+               on:click={() => location.hash = 'LearningLab'}
                on:mouseover="{()=>currentOverSection = 'learninglab'}"
             >
                 <rect x="215" y="255" width="646" height="139" style="fill: #ffffff00;"/>
             </g>
             <g id="Cache-GrandLab"
+               on:click={() => location.hash = 'GrandLab'}
                on:mouseover="{()=>currentOverSection = 'grandlab'}"
             >
                 <rect y="255" width="215" height="139" style="fill: #ffffff00;"/>
             </g>
             <g id="Cache-Ecole_Horlogerie"
+               on:click={() => location.hash = 'Ecole'}
                on:mouseover="{()=>currentOverSection = 'horlogerie'}"
             >
                 <g>
@@ -213,6 +218,7 @@
                 </g>
             </g>
             <g id="Cache-FactoryLab"
+               on:click={() => location.hash = 'FactoryLab'}
                on:mouseover="{()=>currentOverSection = 'FactoryLab'}"
             >
                 <g>
@@ -221,11 +227,14 @@
                 </g>
             </g>
             <g id="Cache-Creche"
+               on:click={() => location.hash = 'Creche'}
                on:mouseover="{()=>currentOverSection = 'creche'}"
             >
                 <rect x="863" width="268" height="61" style="fill: #ffffff00;"/>
             </g>
-            <g id="Cache-Foodlab" on:mouseover="{()=>currentOverSection = 'foodlab'}"
+            <g id="Cache-Foodlab"
+               on:click={() => location.hash = 'FoodLab'}
+               on:mouseover="{()=>currentOverSection = 'foodlab'}"
             >
                 <rect x="70" width="793" height="61" style="fill: #ffffff00;"/>
             </g>
@@ -312,7 +321,7 @@
 
             >
                 <div style="width: 100%">
-                    <h3 class="v-space-building__cards__container__card__content__tilte">Le PopUp</h3>
+                    <h3 class="v-space-building__cards__container__card__content__tilte" id="PopUp">Le PopUp</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR L'ACCUEIL, L'ESPACE CAFÉ ET L'EXPO DU MOMENT</strong></p>
                         <p>Le PopUp sera un espace d’accueil convivial, il sera ouvert à toute personne souhaitant s’informer, organiser une rencontre professionnelle, boire un café ou tout simplement prendre du temps pour soi. <br><br>Des expositions et évènements ponctuels permettront de faire vivre le lieu toute l’année.<br><br>Ouverture: été 2024</p>
@@ -325,7 +334,7 @@
                     style="--v-space-building__cards__container__card--color: var(--fp-color-learninglab);"
             >
                 <div style="width: 100%">
-                    <h3 class="v-space-building__cards__container__card__content__tilte">Le LearningLab</h3>
+                    <h3 class="v-space-building__cards__container__card__content__tilte" id="LearningLab">Le LearningLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR SE CONSTRUIRE UN CHEMIN SUR-MESURE</strong></p>
                         <p>Au service des apprenti·e·s avant, pendant et après l’apprentissage, le <strong>LearningLab</strong> sera un espace qui met l’humain au centre et où apprentissages et travail se mélangent à d’autres aspects de la vie en collectif. <br><br>Le LearningLab se veut un lieu de vie centré sur le développement des individus, sur l’échange et la transmission des savoirs, ainsi que le développement des compétences professionnelles et l’employabilité. <br><br>Lieu carrefour, le LearningLab permettra de positionner l’apprentissage dans une vision globale et intégrée de l’acquisition des connaissances et compétences et de la diffusion de ces dernières.</p>
@@ -339,7 +348,7 @@
                     style="--v-space-building__cards__container__card--color: var(--fp-color-hotel_entreprises);"
             >
                 <div style="width: 100%">
-                    <h3 class="v-space-building__cards__container__card__content__tilte">Le FactoryLab</h3>
+                    <h3 class="v-space-building__cards__container__card__content__tilte" id="FactoryLab">Le FactoryLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR SE LANCER, ÉCHANGER ET GRANDIR</strong></p>
                         <p>Un lieu pour accueillir des entreprises du secteur secondaire ainsi que de jeunes entrepreneur·e·s. <br><br>Les entreprises profiteront de prestations variées pour soutenir la formation professionnelle au plus près du marché de l'emploi: devenir entreprise formatrice, obtenir du soutien administratif, du soutien aux formateur·trice·s, développer leur réseau… et pourront devenir des lieux d’expérimentation en situation réelle pour les jeunes en orientation. <br><br>Les diplômé·e·s à l’âme entrepreneuriale pourront s’installer dans le <strong>FactoryLab</strong> et seront soutenu·e·s dans leur projet de création d’entreprise.</p>
@@ -354,7 +363,7 @@
                     style="--v-space-building__cards__container__card--color: hsl(55,100%,45%);"
             >
                 <div style="width: 100%">
-                    <h3 class="v-space-building__cards__container__card__content__tilte">Le FoodLab</h3>
+                    <h3 class="v-space-building__cards__container__card__content__tilte" id="FoodLab">Le FoodLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR SE NOURRIR, SE QUESTIONNER ET DÉCOUVRIR</strong></p>
                         <p>Le <strong>FoodLab</strong> forme des apprenti·e·s aux métiers de la restauration et invite gourmand·e·s et professionnel·le·s· à déguster une cuisine authentique, responsable, saine et séduisante.</p>
@@ -382,7 +391,7 @@
                     style="--v-space-building__cards__container__card--color: var(--fp-color-grandlab);"
             >
                 <div style="width: 100%">
-                    <h3 class="v-space-building__cards__container__card__content__tilte">Le GrandLab</h3>
+                    <h3 class="v-space-building__cards__container__card__content__tilte" id="GrandLab">Le GrandLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>UN LIEU POUR IMAGINER EN GRAND</strong></p>
                         <p>Le <strong>GrandLab</strong> est un espace polyvalent de 300 m2 qui met l’art et la culture à la portée de chaque individu, en particulier des jeunes. Complémentaire aux autres Labs de ForPro, le lieu encouragera les projets culturels transverses et ouvrira des perspectives sur les métiers de la scène et du design d’espace, en valorisant leur utilité économique et sociale.</p>
@@ -396,7 +405,7 @@
                     style="--v-space-building__cards__container__card--color: var(--fp-color-makerlab);"
             >
                 <div style="width: 100%">
-                    <h3 class="v-space-building__cards__container__card__content__tilte">Le MakerLab</h3>
+                    <h3 class="v-space-building__cards__container__card__content__tilte" id="MakerLab">Le MakerLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR EXPÉRIMENTER, CRÉER, ÉCHOUER ET CONSTRUIRE</strong></p>
                         <p>Le <strong>MakerLab</strong> sera l’espace de fabrication où la créativité et le «faire» seront au cœur des activités et où il sera possible d’expérimenter, de rater et de recommencer autour du terme <em>Do-It-Yourself</em>. </p>
@@ -410,7 +419,7 @@
                     style="--v-space-building__cards__container__card--color: var(--fp-color-ecole_horlogerie);"
             >
                 <div style="width: 100%">
-                    <h3 class="v-space-building__cards__container__card__content__tilte">L’École d’Horlogerie de Genève</h3>
+                    <h3 class="v-space-building__cards__container__card__content__tilte" id="Ecole">L’École d’Horlogerie de Genève</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>L’École d’Horlogerie</strong> a pris ses quartiers chez ForPro en août 2023 où les apprenti·e·s disposent d’infrastructures à la hauteur de leurs ambitions: nouveaux métiers et formations variées. </p>
                         <p>Elle bénéficie de sa proximité avec le secteur horloger pour rester en phase avec les évolutions constantes et pour créer du lien avec les entreprises.</p>
@@ -422,7 +431,7 @@
                     style="--v-space-building__cards__container__card--color: var(--fp-color-creche);"
             >
                 <div style="width: 100%">
-                    <h3 class="v-space-building__cards__container__card__content__tilte">La crèche</h3>
+                    <h3 class="v-space-building__cards__container__card__content__tilte" id="Creche">La crèche</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p>Ce nouvel espace de vie enfantine accueillera 32 enfants et permettra de former aux métiers de la petite enfance.</p>
                         <p>Ouverture: décembre 2024</p>
