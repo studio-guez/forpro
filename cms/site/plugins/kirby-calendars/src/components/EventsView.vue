@@ -125,6 +125,8 @@ export default {
       const data = Object.values(this.events).map(value => {
         return {
           calendar_id: value.calendar_id,
+          date_request: formatDate(value.date_request),
+          invitations: value.invitations,
           date: formatDate(value.date),
           start_time: value.start_time,
           end_time: value.end_time,
