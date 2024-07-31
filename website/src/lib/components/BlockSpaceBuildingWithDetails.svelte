@@ -369,9 +369,9 @@
                         <p>Le <strong>FoodLab</strong> forme des apprenti·e·s aux métiers de la restauration et invite gourmand·e·s et professionnel·le·s· à déguster une cuisine authentique, responsable, saine et séduisante.</p>
                         <p>Pour concevoir la cuisine de demain, des terrains d’expérimentation variés ont été imaginés:</p>
                         <ul>
-                            <li>Un restaurant, le “FoodLab”, au 6e étage;</li>
-                            <li>Un espace de stands culinaires, le “FoodCourt“, au 6e étage;</li>
-                            <li>Et un espace café, le “PopUp Café”, au rez-de-chaussée.</li>
+                            <li>Un restaurant, le «FoodLab», au 6e étage;</li>
+                            <li>Un espace de stands culinaires, le «FoodCourt», au 6e étage;</li>
+                            <li>Et un espace café, le «PopUp Café», au rez-de-chaussée.</li>
                         </ul>
                         <p>Ces espaces offrent de nombreuses opportunités de développement pour les jeunes:</p>
                         <ul>
@@ -379,10 +379,10 @@
                                 Apprentissages en cuisine, service et boulangerie-pâtisserie;
                             </li>
                             <li>
-                                Mise en place progressive d’une “Junior Team" pour amener les jeunes à travailler de manière autonome, encadrés par des formateur·trice·s expérimenté·e·s.
+                                Mise en place progressive d’une «Junior Team» pour amener les jeunes à travailler de manière autonome, encadrés par des formateur·trice·s expérimenté·e·s.
                             </li>
                         </ul>
-                        <p><a target="_blank" href="https://foodlab.for-pro.ch/">Découvrez le FoodLab!</a></p>
+                        <p><a target="_blank" href="https://foodlab.for-pro.ch/"><strong>Découvrez le FoodLab!</strong></a></p>
                     </div>
                 </div>
             </div>
