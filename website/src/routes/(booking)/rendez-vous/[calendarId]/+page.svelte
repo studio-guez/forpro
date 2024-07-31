@@ -115,7 +115,7 @@
                                         content: {
                                             image: [],
                                             text: data.content.bandeauInfo,
-                                            link: null,
+                                            link: data.content.bookingBandeauUrl || '',
                                             backgroundcolor: 'blue',
                                             textcolor: 'white',
                                             styles: 'style1'
