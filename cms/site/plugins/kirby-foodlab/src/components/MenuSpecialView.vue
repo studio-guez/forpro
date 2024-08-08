@@ -165,7 +165,7 @@
       <k-grid style="margin-top: 40px">
         <div class="k-column" style="--width: 1/3; justify-self: start">
           <k-text>
-            <h3>Plats</h3>
+            <h3>Menu</h3>
           </k-text>
         </div>
         <div class="k-column" style="--width: 2/3; justify-self: end">
@@ -178,26 +178,6 @@
               Ajouter un plat ou choix
             </k-button>
           </k-button-group>
-        </div>
-      </k-grid>
-      <k-grid>
-        <div class="k-column" style="--width: 1/2; margin-top: 10px;">
-          <k-input
-              v-model="page.menuTitle"
-              type="text"
-              placeholder="Titre de la section"
-              :icon="menuTitleIcon"
-              @input="updateMenuTitle($event, page.id)"
-          />
-        </div>
-        <div class="k-column" style="--width: 1/2; margin-top: 10px; margin-left: 10px;">
-          <k-input
-              v-model="page.menuDescription"
-              type="text"
-              placeholder="Description de la section"
-              :icon="menuTitleIcon"
-              @input="updateMenuDescription($event, page.id)"
-          />
         </div>
       </k-grid>
       <table class="k-table" style="margin-top: 20px; margin-bottom: 25px">
@@ -346,6 +326,12 @@ export default {
           width: "1/4",
           placeholder: "en mm",
           help: "Laissez vide pour la taille originale",
+        },
+        textPartner: {
+          label: "Texte Paternaire",
+          type: "text",
+          width: "1",
+          help: "S'affiche en dessous du logo partenaire"
         },
       }
     };
