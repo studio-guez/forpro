@@ -34,6 +34,7 @@ Kirby::plugin('mediumsans/forpro', [
                     'headline'              => $kirby->site()->bookingHeadline()->value(),
                     'description'           => $kirby->site()->bookingDescription()->value(),
                     'bandeauInfo'           => $kirby->site()->bookingBandeauInfo()->value(),
+                    'bookingBandeauUrl'           => $kirby->site()->bookingBandeauUrl()->value(),
                     'bookingServicesLabel'  => $kirby->site()->bookingServicesLabel()->value(),
                     'bookingSlotsLabel'     => $kirby->site()->bookingSlotsLabel()->value(),
                     'bookingCalendarLabel'  => $kirby->site()->bookingCalendarLabel()->value(),
