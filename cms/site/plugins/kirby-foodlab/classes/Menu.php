@@ -184,6 +184,7 @@ class Menu extends BaseClass
     public static function reorderData(string $category, array $data): bool
     {
         return match ($category) {
+            "origins" => Origin::reorder($data),
             "starters" => Starter::reorder($data),
             "mainCourses" => MainCourse::reorder($data),
             "desserts" => Dessert::reorder($data),
