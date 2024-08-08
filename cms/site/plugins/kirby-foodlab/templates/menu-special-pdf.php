@@ -97,11 +97,12 @@
             bottom: 10mm;
             left: 59mm;
             font-size: 8pt;
+            font-weight: 800;
         }
 
         .menu-title {
             font-size: 21pt;
-            font-weight: 500;
+            font-weight: 800;
             margin-top: 15mm;
         }
 
@@ -139,7 +140,7 @@
 
         .wine-info {
             text-align: center;
-            margin-top: 40mm;
+            margin-top: 7.5mm;
             font-size: 9pt;
         }
 
@@ -185,6 +186,12 @@
 
         #partner {
             position: absolute;
+        }
+
+        #partner-text {
+            position: absolute;
+            top: 50%;
+            right: 53mm;
         }
     </style>
 </head>
@@ -276,11 +283,15 @@
                 <?= trim($menu['partnerLogo']) ?>
             </div>
         <?php endif; ?>
+        <div id="partner-text">
+            <?= trim($menu['textPartner']) ?>
+        </div>
     </div>
 </div>
 <?php foreach($menu['pages'] as $page): ?>
     <div class="page">
-        <div class="half-page">
+        <div class="half-page menu">
+            <div class="menu-title">Vins</div>
             <div class="wine-info">
                 <?php foreach ($page['wines'] as $wine): ?>
                 <div class="menu-item">
@@ -309,8 +320,7 @@
             </svg>
         </div>
         <div class="half-page menu">
-            <div class="menu-title"><?= $page['menuTitle'] ?></div>
-            <div class="menu-date"><?= $page['menuDescription'] ?></div>
+            <div class="menu-title">Menu</div>
             <div class="menu-items">
                 <?php foreach ($page['dishes'] as $dish): ?>
                     <?php if ($dish['option']): ?>
