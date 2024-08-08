@@ -23,6 +23,12 @@ fields:
       fr: Info dans le bandeau
     type: text
 
+  bookingBandeauUrl:
+    label:
+      en: Url in bandeau
+      fr: Url dans le bandeau
+    type: url
+
   bookingDescription:
     label:
       en: Description
