@@ -63,7 +63,7 @@
         .page {
             position: relative;
             overflow: hidden;
-            width: 297mm;
+            width: 297mm;age
             height: 210mm;
             display: flex;
             background-color: #D2C8B4;
@@ -266,19 +266,23 @@
                 <path d="M1462.96,1356.04l-0,1275.73l280.519,0l-0,-507.437l566.393,-0l0,-280.519l-566.393,0l-0,-207.256l605.7,-0l-0,-280.519l-886.219,0Z"
                       style="fill:#ff5300;fill-rule:nonzero;"/>
             </svg>
-            <div class="contact-info">
-                <?= $menu['textInfo'] ?>
-            </div>
+            <?php if ($menu["renderWithAssets"]): ?>
+                <div class="contact-info">
+                    <?= $menu['textInfo'] ?>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
     <div class="half-page">
         <?php if($menu['partnerLogo']): ?>
-            <div id="partner" style="width: <?= trim($menu['partnerLogoWidth']) != '' ? $menu['partnerLogoWidth'] . 'mm' : 'unset' ?>;
-                    height: <?= trim($menu['partnerLogoHeight']) != '' ? $menu['partnerLogoHeight'] . 'mm' : 'unset' ?>;
-                    top: <?= trim($menu['partnerLogoTop']) != '' ? $menu['partnerLogoTop'] . 'mm' : 'unset' ?>;
-                    right: <?= trim($menu['partnerLogoRight']) != '' ? $menu['partnerLogoRight'] . 'mm' : 'unset' ?>;
-                    bottom: <?= trim($menu['partnerLogoBottom']) != '' ? $menu['partnerLogoBottom'] . 'mm' : 'unset' ?>;
-                    left: <?= trim($menu['partnerLogoLeft']) != '' ? $menu['partnerLogoLeft'] . 'mm' : 'unset' ?>;"
+            <div id="partner" style="
+                    <?= trim($menu['partnerLogoWidth']) != '' ? 'width:' . $menu['partnerLogoWidth'] . 'px !important;' : '' ?>
+                    <?= trim($menu['partnerLogoHeight']) != '' ? 'height:' . $menu['partnerLogoHeight'] . 'px !important;' : '' ?>
+                    <?= trim($menu['partnerLogoTop']) != '' ? 'top:' . $menu['partnerLogoTop'] . 'px;' : '' ?>
+                    <?= trim($menu['partnerLogoRight']) != '' ? 'right:' .  $menu['partnerLogoRight'] . 'px;' : '' ?>
+                    <?= trim($menu['partnerLogoBottom']) != '' ? 'bottom:' . $menu['partnerLogoBottom'] . 'px;' : '' ?>
+                    <?= trim($menu['partnerLogoLeft']) != '' ? 'left:' . $menu['partnerLogoLeft'] . 'px;' : '' ?>
+                    "
             >
                 <?= trim($menu['partnerLogo']) ?>
             </div>
