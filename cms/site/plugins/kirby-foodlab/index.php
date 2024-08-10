@@ -135,6 +135,7 @@ Kirby::plugin("mediumsans/foodlab", [
     "templates" => [
         "menu-pdf" => __DIR__ . "/templates/menu-pdf.php",
         "menu-special-pdf" => __DIR__ . "/templates/menu-special-pdf.php",
+        "menu-special-preview-pdf" => __DIR__ . "/templates/menu-special-preview-pdf.php",
     ],
     "blueprints" => [
         "tabs/restaurant" => __DIR__ . "/blueprints/tabs/restaurant.yml",

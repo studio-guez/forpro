@@ -42,6 +42,13 @@
         :fields="formFields"
     />
 
+    <k-label style="margin-top: 40px;">
+      <span>Aperçu</span>
+    </k-label>
+    <div style="margin-top: 40px; margin-bottom: 40px; display: flex; width: 100%;">
+      <iframe title="Preview" ref="htmlPreview" :srcdoc="html" style="margin: 0 auto; width: 1124px; height: 797px; border: 1px solid #ccc;"></iframe>
+    </div>
+
     <k-header style="margin-top: 20px;">
       Contenu
       <k-button-group slot="buttons">
@@ -276,6 +283,7 @@ export default {
           label: "Informations Contact",
           type: "textarea",
           width: "1",
+          help: "S'affiche seulement lors de la génération avec les images"
         },
         partnerLogo: {
           label: "Logo partenaire",
@@ -285,56 +293,56 @@ export default {
           size: "medium",
           help: "Insérer le contenu du SVG ici",
         },
-        partnerLogoWidth: {
-          label: "Largeur",
-          type: "text",
-          width: "1/2",
-          placeholder: "en mm",
-          help: "Laissez vide pour la taille originale",
-        },
-        partnerLogoHeight: {
-          label: "Hauteur",
-          type: "text",
-          width: "1/2",
-          placeholder: "en mm",
-          help: "Laissez vide pour la taille originale",
-        },
-        partnerLogoTop: {
-          label: "Position Haut",
-          type: "text",
-          width: "1/4",
-          placeholder: "en mm",
-          help: "Laissez vide pour la taille originale",
-        },
-        partnerLogoBottom: {
-          label: "Position Bas",
-          type: "text",
-          width: "1/4",
-          placeholder: "en mm",
-          help: "Laissez vide pour la taille originale",
-        },
-        partnerLogoLeft: {
-          label: "Position Gauche",
-          type: "text",
-          width: "1/4",
-          placeholder: "en mm",
-          help: "Laissez vide pour la taille originale",
-        },
-        partnerLogoRight: {
-          label: "Position Droite",
-          type: "text",
-          width: "1/4",
-          placeholder: "en mm",
-          help: "Laissez vide pour la taille originale",
-        },
         textPartner: {
-          label: "Texte Paternaire",
+          label: "Texte Partenaire",
           type: "text",
           width: "1",
           help: "S'affiche en dessous du logo partenaire"
         },
-      }
+        partnerLogoWidth: {
+          label: "Grandeur",
+          type: "range",
+          width: "1",
+          tooltip: {
+            after: "px"
+          },
+          min: 100,
+          max: 500,
+        },
+        partnerLogoTop: {
+          label: "Position Haut",
+          type: "range",
+          width: "1/2",
+          tooltip: {
+            after: "px"
+          },
+          min: 0,
+          max: 500,
+          help: "0 positionne le logo en haut de la page",
+        },
+        partnerLogoRight: {
+          label: "Position Droite",
+          type: "range",
+          width: "1/2",
+          tooltip: {
+            after: "px"
+          },
+          min: 0,
+          max: 500,
+          help: "0 positionne le logo à droite de la page",
+        },
+      },
+      html: '',
     };
+  },
+  mounted() {
+    this.getHtml();
+  },
+  watch: {
+    menu: {
+      deep: true,
+      handler: 'submit'
+    }
   },
   methods: {
     submit() {
@@ -347,11 +355,45 @@ export default {
             setTimeout(() => {
               this.hasBeenSubmitted = false;
             }, 5000);
+            this.getHtml();
           })
           .catch(error => {
             this.isSubmitting = false;
             this.$store.dispatch("notification/error", "Erreur lors de l'enregistrement du menu");
             console.error("Error submitting menu:", error);
+          });
+    },
+    getHtml() {
+      this.$api.get("/restaurant/menu/special/html")
+          .then(response => {
+            console.log(response);
+            // Wrap the HTML content in a style tag to constrain it
+            this.html = `
+            <html>
+              <head>
+                <style>
+                  body {
+                    margin: 0;
+                    padding: 0;
+                    overflow: hidden;
+                  }
+                  .content {
+                    width: 100%;
+                    height: 100%;
+                  }
+                </style>
+              </head>
+              <body>
+                <div class="content">
+                  ${response}
+                </div>
+              </body>
+            </html>
+          `;
+          })
+          .catch(error => {
+            this.$store.dispatch("notification/error", "Erreur lors de la récupération du HTML");
+            console.error("Error getting HTML:", error);
           });
     },
     generatePDF(withAssets = false) {
