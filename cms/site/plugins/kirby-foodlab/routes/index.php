@@ -556,6 +556,29 @@ return [
                 },
             ],
             [
+                "pattern" => "restaurant/menu/special/html",
+                "method" => "GET",
+                "auth" => false,
+                "action" => function () {
+                    $renderWithAssets = true;
+
+                    kirby()->impersonate("kirby");
+
+                    $data = MenuSpecial::get($renderWithAssets);
+
+                    $menu_page = Page::factory([
+                        "slug" => "menu-special",
+                        "template" => "menu-special-preview-pdf",
+                        "model" => "menu-special-pdf",
+                        "content" => $data,
+                    ]);
+
+                    $html = $menu_page->render($data);
+
+                    return \Kirby\Http\Response::json(json_encode($html));
+                },
+            ],
+            [
                 "pattern" => "restaurant/menu/special/generate/without-assets",
                 "method" => "GET",
                 "auth" => false,
