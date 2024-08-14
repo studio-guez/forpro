@@ -193,6 +193,24 @@
             top: 50%;
             right: 53mm;
         }
+    
+        #partner-header {
+            line-height: 1.5;
+            position: relative;
+            text-align: center;
+            top: 50mm;
+            width: 100%;
+        }
+
+        #partner-header .title {
+            font-size: 30pt;
+            font-weight: 800;
+        }
+
+        #partner-header .subtitle {
+            font-size: 28pt;
+            font-weight: 300;
+        }
     </style>
 </head>
 <body>
@@ -287,6 +305,15 @@
                 <?= trim($menu['partnerLogo']) ?>
             </div>
         <?php endif; ?>
+        <div id="partner-header">
+            <span class="title">
+                <?= $menu['titlePartner'] != "" ? $menu['titlePartner'] : "" ?>
+            </span>
+            <br/>
+            <span class="subtitle">
+                <?= $menu['subtitlePartner'] != "" ? $menu['subtitlePartner'] : "" ?>
+            </span>
+        </div>
         <div id="partner-text">
             <?= trim($menu['textPartner']) ?>
         </div>
