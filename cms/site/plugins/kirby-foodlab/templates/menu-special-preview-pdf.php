@@ -63,7 +63,7 @@
         .page {
             position: relative;
             overflow: hidden;
-            width: 297mm;age
+            width: 297mm;
             height: 210mm;
             display: flex;
             background-color: #D2C8B4;
@@ -76,6 +76,7 @@
 
         .half-page.right {
             border-left: 0.5px solid #000;
+            position: relative;
         }
 
         .half-page.menu {
@@ -194,13 +195,14 @@
 
         #partner-text {
             position: absolute;
-            top: 50%;
-            right: 53mm;
+            text-align: center;
+            top: 105mm;
+            width: 100%;
             font-size: 15pt;
         }
 
         #partner-header {
-            line-height: 1.5;
+            line-height: 1.3;
             position: relative;
             text-align: center;
             top: 50mm;
