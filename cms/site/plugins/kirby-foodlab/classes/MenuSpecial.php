@@ -34,6 +34,8 @@ class MenuSpecial extends BaseClass
             "pages"         => $input["pages"] ?? [],
             "textInfo"      => $input["textInfo"] ?? "",
             "textPartner"   => $input["textPartner"] ?? "",
+            "titlePartner"  => $input["titlePartner"] ?? "",
+            "subtitlePartner" => $input["subtitlePartner"] ?? "",
             "partnerLogo"   => $input["partnerLogo"] ?? "",
             "partnerLogoWidth" => $input["partnerLogoWidth"] ?? "",
             "partnerLogoHeight" => $input["partnerLogoHeight"] ?? "",
