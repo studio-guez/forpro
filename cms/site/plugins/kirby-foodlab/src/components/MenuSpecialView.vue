@@ -293,11 +293,22 @@ export default {
           size: "medium",
           help: "Insérer le contenu du SVG ici",
         },
+        titlePartner: {
+          label: "Titre",
+          type: "text",
+          width: "1/2",
+          size: "small",
+        },
+        subtitlePartner: {
+          label: "Sous-Titre",
+          type: "text",
+          width: "1/2",
+          size: "small",
+        },
         textPartner: {
-          label: "Texte Partenaire",
+          label: "Text",
           type: "text",
           width: "1",
-          help: "S'affiche en dessous du logo partenaire"
         },
         partnerLogoWidth: {
           label: "Grandeur",
