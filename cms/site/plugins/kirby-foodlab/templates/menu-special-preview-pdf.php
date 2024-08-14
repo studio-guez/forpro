@@ -196,6 +196,7 @@
             position: absolute;
             top: 50%;
             right: 53mm;
+            font-size: 15pt;
         }
 
         #partner-header {
@@ -212,7 +213,7 @@
         }
 
         #partner-header .subtitle {
-            font-size: 28pt;
+            font-size: 30pt;
             font-weight: 300;
         }
     </style>

@@ -193,7 +193,7 @@
             top: 50%;
             right: 53mm;
         }
-    
+
         #partner-header {
             line-height: 1.5;
             position: relative;
@@ -208,7 +208,7 @@
         }
 
         #partner-header .subtitle {
-            font-size: 28pt;
+            font-size: 30pt;
             font-weight: 300;
         }
     </style>
