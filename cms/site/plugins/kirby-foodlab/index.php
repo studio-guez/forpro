@@ -20,6 +20,8 @@ load([
     "MediumSans\MenuSpecial\WineSpecial"    => __DIR__ . "/classes/WineSpecial.php",
 ]);
 
+$pluginPermissionNameForBlueprint = 'mediumsans.kirby-foodlab';
+
 Kirby::plugin("mediumsans/foodlab", [
     "areas" => [
         "menu" => function ($kirby) {
@@ -29,7 +31,10 @@ Kirby::plugin("mediumsans/foodlab", [
                 "icon" => "file-document",
                 "link" => "foodlab/restaurant/menu",
                 "view" => "k-menu-view",
-                "views" => [require __DIR__ . "/views/menu.php"],
+                "views" => [
+                    require __DIR__ . "/views/menu.php",
+                    require __DIR__ . '/views/deniedAccess.php',
+                ],
                 "dialogs" => [
                     // Beer
                     require __DIR__ . "/dialogs/menu/beer/fields.php",
@@ -141,4 +146,10 @@ Kirby::plugin("mediumsans/foodlab", [
         "tabs/restaurant" => __DIR__ . "/blueprints/tabs/restaurant.yml",
     ],
     "api" => require __DIR__ . "/routes/index.php",
+
+    'hooks' => [
+        'panel.route:after' => function ($route, $path, $method) use ($pluginPermissionNameForBlueprint) {
+            \MediumSans\Menu\Utils::checkRoleAccess($route, $path, $method, $pluginPermissionNameForBlueprint);
+        }
+    ],
 ]);
