@@ -1,4 +1,4 @@
-title: Calendar
+title: FoodLab
 permissions:
   access:
     account:    false
@@ -8,6 +8,6 @@ permissions:
     system:     false
     users:      false
   mediumsans.kirby-calendars:
-    access: true
-  mediumsans.kirby-foodlab:
     access: false
+  mediumsans.kirby-foodlab:
+    access: true
