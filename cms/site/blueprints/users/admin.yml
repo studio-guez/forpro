@@ -2,3 +2,5 @@ title: Admin
 permissions:
   mediumsans.kirby-calendars:
     access: true
+  mediumsans.kirby-foodlab:
+    access: true
