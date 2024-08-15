@@ -4,11 +4,13 @@ import CalendarsView from "./components/CalendarsView.vue";
 import CalendarView from "./components/CalendarView.vue";
 import EventsView from "./components/EventsView.vue";
 import LeavesView from "./components/LeavesView.vue";
+import DeniedAcces from "./components/DeniedAcces.vue";
 
 panel.plugin("mediumsans/kirby-calendars", {
   components: {
     'k-calendars-view': CalendarsView,
     'k-calendar-view': CalendarView,
+    'k-denied-access': DeniedAcces,
     'k-schedules-view': SchedulesView,
     'k-services-view': ServicesView,
     'k-events-view': EventsView,

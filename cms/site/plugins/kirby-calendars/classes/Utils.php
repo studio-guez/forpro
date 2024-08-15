@@ -33,4 +33,24 @@ class Utils
         $client->addScope(Google_Service_Calendar::CALENDAR);
         return new Google_Service_Calendar($client);
     }
+
+    public static function checkRoleAccess($route, $path, $method, $pluginPermissionNameForBlueprint): void
+    {
+        $deniedAccessRedirectionPath = 'kirby-calendars/denied-access';
+        if($path == $deniedAccessRedirectionPath) return;
+
+        //  limit to this plugin
+        if($path == null) return;
+        if( ! str_starts_with($path, 'kirby-calendars') ) return;
+
+        if( !kirby()->user()) return;
+
+        $currentUserRolePermissions = kirby()->user()->role()->permissions()->toArray();
+        if( ! array_key_exists($pluginPermissionNameForBlueprint, $currentUserRolePermissions ) ) return;
+
+        $userRoleCanAccessToThisPlugin = kirby()->user()->role()->permissions()->for($pluginPermissionNameForBlueprint, 'access');
+
+        if( ! $userRoleCanAccessToThisPlugin ) go("panel/$deniedAccessRedirectionPath");
+    }
+
 }

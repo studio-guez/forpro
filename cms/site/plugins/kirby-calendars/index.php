@@ -12,6 +12,8 @@ load([
     'MediumSans\KirbyCalendars\Invitation'  => __DIR__ . '/classes/Invitation.php',
 ]);
 
+$pluginPermissionNameForBlueprint = 'mediumsans.kirby-calendars';
+
 Kirby::plugin('mediumsans/kirby-calendars', [
     'translations' => require __DIR__ . '/i18n/i18n.php',
     'options' => [
@@ -36,6 +38,7 @@ Kirby::plugin('mediumsans/kirby-calendars', [
                 'views' => [
                     require __DIR__ . '/views/calendars.php',
                     require __DIR__ . '/views/calendar.php',
+                    require __DIR__ . '/views/deniedAccess.php',
                     require __DIR__ . '/views/services.php',
                     require __DIR__ . '/views/schedules.php',
                     require __DIR__ . '/views/events.php',
@@ -80,16 +83,8 @@ Kirby::plugin('mediumsans/kirby-calendars', [
     ],
     'routes' => require __DIR__ . '/routes/index.php',
     'hooks' => [
-        'route:before' => function ($route, $path, $method) {
-            $user = kirby()->user();
-            if( !$user) return;
-
-            $currentNavigationIsThisPlugin = str_contains($path, 'panel/kirby-calendars');
-            if(!$currentNavigationIsThisPlugin) return;
-
-            $userRoleCanAccessToThisPlugin = kirby()->user()->role()->permissions()->for('mediumsans.kirby-calendars', 'access');
-
-            if (!$userRoleCanAccessToThisPlugin) go('');
+        'panel.route:after' => function ($route, $path, $method) use ($pluginPermissionNameForBlueprint) {
+            MediumSans\KirbyCalendars\Utils::checkRoleAccess($route, $path, $method, $pluginPermissionNameForBlueprint);
         }
     ],
 ]);
