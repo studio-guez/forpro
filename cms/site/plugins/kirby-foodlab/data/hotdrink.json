@@ -1,1 +1,23 @@
-[]
+[
+    {
+      "id": "5b6369d0-de6e-4313-bbef-861665b0247e",
+      "name": "Café, expresso",
+      "description": "",
+      "volume": "",
+      "price": "3.-"
+    },
+    {
+      "id": "86d1a616-cdc1-423f-a72b-8a2e9e62b87b",
+      "name": "Double expresso",
+      "description": "",
+      "volume": "",
+      "price": "4,50"
+    },
+    {
+      "id": "a56e13fa-b60b-40f6-86c4-126fabdb04a1",
+      "name": "Cappuccino",
+      "description": "",
+      "volume": "",
+      "price": "4,50"
+    }
+  ]
