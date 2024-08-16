@@ -28,6 +28,13 @@ tabs:
               - site-info
               - home
 
+          events:
+            create: false
+            label: "Événements"
+            type: pages
+            templates:
+              - forpro-events
+
           pages:
             type: pages
             image:
