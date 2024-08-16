@@ -1,0 +1,148 @@
+title: Événements
+
+options:
+  changeStatus: true
+  changeTemplate: false
+  changeSlug: false
+
+columns:
+  - width: 1/1
+
+    fields:
+
+      cover:
+        label: Image de couverture
+        type: files
+        max: 1
+        file:
+          type: image
+        layout: cards
+
+      title:
+        label: Titre
+        type: text
+
+      target:
+        width: 1/3
+        label: Publique Cible
+        type: text
+
+      category:
+        width: 1/3
+        label: Categories
+        type: multiselect
+        min: 1
+        options:
+          - Débat
+          - Conférence
+          - Rencontre
+          - Expo-vente
+          - Vitrine métier
+          - Jeudredi
+          - Afterwork
+          - Visite guidée
+          - Actu ForPro
+          - Desk de Solène
+          - Forum parents
+          - Actus ForPro
+          - Rencontre de la formation
+          - Cité des métiers
+          - Exposition
+          - Vernissage
+          - Concert
+          - Défilé de mode
+          - Cinéma
+          - Danse
+          - Performance
+          - Soirée festive
+      place:
+        width: 1/3
+        label: Lieu
+        type: select
+        options:
+          - interne
+          - externe
+
+      googleMapAddress:
+        label: Addresse Google Maps
+        type: url
+        validate:
+          match: "/\/maps.app.goo/"
+        when:
+          place: externe
+
+
+      description:
+        label: Description
+        type: textarea
+        width: 2/3
+
+
+      gapStart:
+        type: gap
+        width: 1/4
+      dateStart:
+        required: true
+        width: 1/3
+        label: Date de début
+        type: date
+      hourStart:
+        label: Heure de début
+        width: 1/3
+        required: false
+        type: time
+        display: HH:mm
+      gapEnd:
+        type: gap
+        width: 1/4
+      dateEnd:
+        required: false
+        width: 1/3
+        label: Date de fin
+        type: date
+      hourEnd:
+        label: Heure de fin
+        width: 1/3
+        required: false
+        type: time
+        display: HH:mm
+
+      body:
+        type: blocks
+        label:
+          en: Content
+          fr: Contenu
+        fieldsets:
+          - body
+          - logos-list
+          - listOfPDF
+          - list
+          - google-maps
+          image:
+            extends: blocks/image
+            fields:
+              location: false
+              caption: false
+              link: false
+              ratio: false
+              crop: false
+              image:
+                when: false
+              fixed:
+                label:
+                  en: fixed
+                  fr: fixe
+                type: radio
+                columns: 2
+                default: "true"
+                options:
+                  true:
+                    en: 'yes'
+                    fr: 'oui'
+                  false:
+                    en: 'no'
+                    fr: 'non'
+          video:
+            extends: blocks/video
+            fields:
+              caption: false
