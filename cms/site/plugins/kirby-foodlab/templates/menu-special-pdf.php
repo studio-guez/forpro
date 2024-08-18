@@ -204,7 +204,7 @@
             line-height: 1.3;
             position: relative;
             text-align: center;
-            top: 50mm;
+            top: 25mm;
             width: 100%;
         }
 
