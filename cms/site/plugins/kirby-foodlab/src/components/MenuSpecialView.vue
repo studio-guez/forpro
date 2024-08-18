@@ -262,6 +262,8 @@ export default {
         ],
         textInfo: "",
         partnerLogo: "",
+        titlePartner: "",
+        subtitlePartner: "",
         partnerLogoWidth: "",
         partnerLogoHeight: "",
         partnerLogoTop: "",
