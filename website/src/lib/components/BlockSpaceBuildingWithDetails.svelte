@@ -323,8 +323,10 @@
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="PopUp">Le PopUp</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
-                        <p><strong>POUR L'ACCUEIL, L'ESPACE CAFÉ ET L'EXPO DU MOMENT</strong></p>
-                        <p>Le PopUp sera un espace d’accueil convivial, il sera ouvert à toute personne souhaitant s’informer, organiser une rencontre professionnelle, boire un café ou tout simplement prendre du temps pour soi. <br><br>Des expositions et évènements ponctuels permettront de faire vivre le lieu toute l’année.<br><br>Ouverture: été 2024</p>
+                        <p><strong>L'ACCUEIL, L'ESPACE CAFÉ ET L'EXPO DU MOMENT</strong></p>
+                        <p>Retrouvez à l'entrée du ForPro l’espace d’accueil et&nbsp;d’information ainsi que le <strong>PopUp</strong> Café où savourer viennoiseries et sandwichs faits maison. Profitez&nbsp;également des expositions et événements du&nbsp;moment.</p>
+                        <p><strong>Ouvert des 7h30</strong></p>
+                        <p>Expo en cours: <a href="https://for-pro.ch/batir-un-projet" ><strong>ForPro, bâtir un projet</strong></a></p>
                     </div>
                 </div>
             </div>
