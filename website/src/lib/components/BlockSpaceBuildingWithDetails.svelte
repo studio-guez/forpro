@@ -10,7 +10,7 @@
         {slug: 'makerlab',    title: {value: 'MakerLab'}},
         {slug: 'learninglab', title: {value: 'LearningLab'}},
         {slug: 'grandlab',    title: {value: 'GrandLab'}},
-        {slug: 'popup',       title: {value: 'PoPup'}},
+        {slug: 'popup',       title: {value: 'PopUp'}},
     ];
 
     function getSectionNameBySlug(slug: string) {
