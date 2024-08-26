@@ -339,8 +339,10 @@
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="LearningLab">Le LearningLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR SE CONSTRUIRE UN CHEMIN SUR-MESURE</strong></p>
-                        <p>Au service des apprenti·e·s avant, pendant et après l’apprentissage, le <strong>LearningLab</strong> sera un espace qui met l’humain au centre et où apprentissages et travail se mélangent à d’autres aspects de la vie en collectif. <br><br>Le LearningLab se veut un lieu de vie centré sur le développement des individus, sur l’échange et la transmission des savoirs, ainsi que le développement des compétences professionnelles et l’employabilité. <br><br>Lieu carrefour, le LearningLab permettra de positionner l’apprentissage dans une vision globale et intégrée de l’acquisition des connaissances et compétences et de la diffusion de ces dernières.</p>
-                        <p>Ouverture: été 2024</p>
+                        <p>Le LearningLab est un espace dédié aux apprenti·e·s avant, pendant et après leur apprentissage. Cet espace met l’humain au centre et intègre les apprentissages et le travail à d’autres aspects de la vie en collectif.</p>
+                        <p>C'est est un lieu de vie centré sur le développement des individus, l’échange et la transmission des savoirs, ainsi que sur le développement des compétences professionnelles et de l’employabilité.</p>
+                        <p>En tant que carrefour de connaissances, le LearningLab offre une vision globale et intégrée de l'acquisition et de la diffusion des savoirs et compétences.</p>
+                        <p><a href="https://for-pro.ch/jeunes" target="_blank">En savoir plus</a></p>
                     </div>
                 </div>
             </div>
@@ -353,8 +355,11 @@
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="FactoryLab">Le FactoryLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR SE LANCER, ÉCHANGER ET GRANDIR</strong></p>
-                        <p>Un lieu pour accueillir des entreprises du secteur secondaire ainsi que de jeunes entrepreneur·e·s. <br><br>Les entreprises profiteront de prestations variées pour soutenir la formation professionnelle au plus près du marché de l'emploi: devenir entreprise formatrice, obtenir du soutien administratif, du soutien aux formateur·trice·s, développer leur réseau… et pourront devenir des lieux d’expérimentation en situation réelle pour les jeunes en orientation. <br><br>Les diplômé·e·s à l’âme entrepreneuriale pourront s’installer dans le <strong>FactoryLab</strong> et seront soutenu·e·s dans leur projet de création d’entreprise.</p>
-                        <p>Ouverture: été 2024</p>
+                        <p>Un lieu pour accueillir des entreprises du secteur secondaire ainsi que de jeunes entrepreneur·e·s.</p>
+                        <p>Au FactoryLab, les entreprises peuvent bénéficier de prestations variées pour soutenir la formation professionnelle au plus près du marché de l'emploi: devenir entreprise formatrice, obtenir du soutien administratif, du soutien aux formateur·trice·s, développer leur réseau… et devenir des lieux d’expérimentation en situation réelle pour les jeunes en orientation!</p>
+                        <p><a href="https://for-pro.ch/entreprises" target="_blank">En savoir plus</a></p>
+                        <p>Les diplômé·e·s à l’âme entrepreneuriale peuvent s’installer dans le FactoryLab et être entouré·e·s dans leur projet de jeunes entreprises.</p>
+                        <p><a href="https://for-pro.ch/jeunes" target="_blank">En savoir plus</a></p>
                     </div>
                 </div>
             </div>
