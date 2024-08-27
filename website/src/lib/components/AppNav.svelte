@@ -169,10 +169,11 @@
 
       &.is-subpage {
         font-size: .66em;
-        line-height: 1em;
+        line-height: 1.25em;
+
 
         + .s-app-nav__list__item:not(.is-subpage) {
-            margin-top: .25em;
+            margin-top: .5em;
         }
       }
 
