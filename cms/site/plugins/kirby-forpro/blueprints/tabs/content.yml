@@ -68,6 +68,7 @@ fields:
     fieldsets:
       - cta
       - animated-list
+      - logos-list
       - quote
       - capsules
       - cards
