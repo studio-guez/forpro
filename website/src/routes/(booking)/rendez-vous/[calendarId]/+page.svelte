@@ -118,8 +118,8 @@
                                             image: [],
                                             text: data.content.bandeauInfo,
                                             link: data.content.bookingBandeauUrl || '',
-                                            backgroundcolor: 'blue',
-                                            textcolor: 'white',
+                                            backgroundcolor: 'var(--app-color--green)',
+                                            textcolor: 'var(--app-color--blue)',
                                             styles: 'style1'
                                         }
                                     }}"
