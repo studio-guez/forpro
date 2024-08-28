@@ -15,8 +15,6 @@
         const speed = 150;
         const duration = textWrapperWidth / speed;
 
-        console.log( 'duration', duration )
-
         textAnimatedWrapper.style.animationDuration = `${duration}s`
 
     })
