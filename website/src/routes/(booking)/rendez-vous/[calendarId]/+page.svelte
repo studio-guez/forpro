@@ -112,6 +112,8 @@
                                     image="{[]}"
                                     content="{{
                                         type: 'cta',
+                                        id: '',
+                                        isHidden: false,
                                         content: {
                                             image: [],
                                             text: data.content.bandeauInfo,
