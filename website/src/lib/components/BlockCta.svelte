@@ -1,8 +1,25 @@
 <script lang="ts">
     import type {ICta, IImage} from "$lib/interfaces/cmsApiResponse";
+    import {onMount, tick} from "svelte";
 
     export let content: ICta;
     export let image: IImage[];
+
+    let textAnimatedWrapper: HTMLDivElement
+
+    onMount(async ()=> {
+        await tick()
+
+        const textWrapperWidth = textAnimatedWrapper.getBoundingClientRect().width
+
+        const speed = 150;
+        const duration = textWrapperWidth / speed;
+
+        console.log( 'duration', duration )
+
+        textAnimatedWrapper.style.animationDuration = `${duration}s`
+
+    })
 
 </script>
 
@@ -24,7 +41,7 @@
                  alt="icon illustratif pour le bouton"/>
         {/if}
         {#if (content.content.styles === 'style1')}
-            <div class="s-block-cta__text-animated">
+            <div class="s-block-cta__text-animated" bind:this={textAnimatedWrapper}>
                 <div class="s-block-cta__text-animated__text">{content.content.text}</div>
                 <div class="s-block-cta__text-animated__duplication">{content.content.text}</div>
             </div>
