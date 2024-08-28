@@ -2,22 +2,24 @@
 
 ## Infos
 
-├── CMS -> API
+```md
+├── CMS / API
 │   !! KIRBY CMS - 4.0
 │   !! PHP >=8.1
 │   ├── plugins
 │   │   ├── kirby-calendars
-│   │   │   ├── data -> critical
+│   │   │   └──  data -> critical
 │   │   ├── kirby-foodlab
-│   │   │   ├── data -> critical
-│   │   │   !! CHROMIUM HEADLESS -> dependency
-│   │   │   !! PUPPETEER -> dependency
+│   │   │   ├──  data -> critical
+│   │   │   !!  CHROMIUM HEADLESS -> dependency
+│   │   │   !!  PUPPETEER -> dependency
 │   │   ├── kirby-forpro
-│   │   ├── kirby-king-dedede
+│   │   └── kirby-king-dedede
 ├── RESTAURANT -> FRONT
-│   ├── Sveltekit 2.0
+│   !!  Sveltekit 2.0
 ├── WEBSITE -> FRONT
-│   ├── Sveltekit 2.0
+│   !!  Sveltekit 2.0
+```
 
 ### CMS
 - Kirby CMS 4.0
