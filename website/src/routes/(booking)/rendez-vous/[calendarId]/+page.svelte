@@ -145,7 +145,7 @@
 
                                     <div class="mt-2 mb-10 text-base font-light leading-5 break-words">
                                         <p class="m-0" style="list-style: outside;">
-                                            {data.content.description}
+                                            {@html data.content.description}
                                         </p>
                                     </div>
 
