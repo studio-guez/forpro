@@ -144,9 +144,9 @@
                                     </div>
 
                                     <div class="mt-2 mb-10 text-base font-light leading-5 break-words">
-                                        <p class="m-0" style="list-style: outside;">
+                                        <div class="m-0 app-html-render" style="list-style: outside;">
                                             {@html data.content.description}
-                                        </p>
+                                        </div>
                                     </div>
 
                                     <p class="flex w-full text-center justify-center mb-10 font-semibold">{data.content.bookingCalendarLabel}</p>
@@ -477,5 +477,9 @@
         --sdt-table-data-bg-hover: #eee; /** table selection data hover background color */
         --sdt-table-today-indicator: #ccc; /** date picker current day marker color */
 
+    }
+
+    .app-html-render :global(a) {
+        color: var(--app-color--blue);
     }
 </style>
