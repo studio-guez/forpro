@@ -43,10 +43,10 @@
 
     .s-cards {
       container-type: inline-size;
+      width: min(70rem, 100%);
+      margin: auto;
 
       &.style2 {
-        width: min(70rem, 100%);
-        margin: auto;
 
         .s-cards__container__card:nth-child(1) {
           :global(li::before) {
@@ -57,13 +57,10 @@
     }
 
     .s-cards__container {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display: flex;
+      flex-wrap: wrap;
       gap: 2rem 1rem;
-
-      @media (max-width: scss-params.$fp-breakpoint-sm) {
-        grid-template-columns: repeat(1, 1fr);
-      }
+      justify-content: center;
     }
 
     .s-cards__container__card {
@@ -71,21 +68,12 @@
       flex-direction: column;
       align-items: center;
       flex-wrap: nowrap;
-
-      .s-cards.style2 & {
-        grid-column: span 1;
-
-        &:nth-child(1) {
-          grid-column: span 2;
-
-          @media (max-width: scss-params.$fp-breakpoint-sm) {
-            grid-column: span 1;
-          }
-        }
-      }
+      width: calc( (100% / 2) - 1rem / 2) ;
+      box-sizing: border-box;
 
       @media (max-width: scss-params.$fp-breakpoint-sm) {
         overflow: hidden;
+        width: 100%;
       }
     }
 
@@ -96,7 +84,7 @@
       flex-shrink: 0;
       position: relative;
 
-      .s-cards.style2 .s-cards__container__card:nth-child(1) & {
+      .s-cards.style2 .s-cards__container__card & {
         padding-top: 50%;
         @media (max-width: scss-params.$fp-breakpoint-xs) {
           padding-top: 100%;
@@ -142,7 +130,6 @@
       }
 
       .s-cards__container__card__img + & {
-        border-top-color: var(--app-color--grey--light);
         margin-top: -1.5rem;
       }
 
