@@ -57,6 +57,7 @@ export interface IBody {
             | IAnimatedList
             | IGoogleMaps
             | IBlockImage
+            | IBlockListLogo
     }
 }
 
@@ -77,6 +78,7 @@ export interface IBlock {
         | 'animated-list'
         | 'google-maps'
         | 'image'
+        | 'logos-list'
 }
 
 export interface ISeo {
@@ -338,4 +340,21 @@ export interface IBlockImage extends IBlock {
         fixed: "true" | "false"
     },
     type: 'image'
+}
+
+
+/**
+ * list logo
+ */
+
+export interface IBlockListLogo extends IBlock {
+    "image": IImage[],
+    "content": {
+        "content": {
+            "image": string[]
+        },
+        "id": "2e3f72cf-be8e-4882-9c19-2b69c5213b34",
+        "isHidden": false,
+        "type": "logos-list"
+    }
 }
