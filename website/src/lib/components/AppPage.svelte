@@ -60,6 +60,13 @@
                     <BlockHTMLContent content="{content}" />
                 </div>
 
+            {:else if content.type === 'logos-list'}
+                <div class="app-page-block-container app-flex__basis-20-24 app-flex app-flex--justify_center">
+                    <AppBlockLogos
+                            data="{data.body[section]}"
+                    />
+                </div>
+
             {:else if (content.type === 'map' && content.content.style === "style1")}
                 <div class="app-flex__basis-20-24 app-flex app-flex--justify_center">
                     <BlockSpaceBuilding />
@@ -118,6 +125,7 @@
     import BlockGoogleMaps from "$lib/components/BlockGoogleMaps.svelte";
     import BlockSpaceBuildingWithDetails from "$lib/components/BlockSpaceBuildingWithDetails.svelte";
     import BlockImage from "$lib/components/BlockImage.svelte";
+    import AppBlockLogos from "$lib/components/AppBlockLogos.svelte";
 
     export let data: IPage;
 </script>
