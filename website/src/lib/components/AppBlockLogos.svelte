@@ -31,7 +31,7 @@
 </script>
 
 <div class="s-block-logos">
-  <div class="flex flex-wrap justify-center gap-5">
+  <div class="flex flex-wrap justify-start s-block-logos__wrapper">
     {#each data.image as image}
       <img class="object-contain filter grayscale hover:grayscale-0 transition ease-in-out duration-300"
            src="{image.resize.xxl}"
@@ -42,8 +42,17 @@
 </div>
 
 <style lang="scss">
+  .s-block-logos {
+    width: min(70rem, 100%);
+  }
+
   img {
     display: block;
-    height: 4rem;
+    height: 5rem;
+    max-width: 75vw;
+  }
+
+  .s-block-logos__wrapper {
+    gap: 3rem 5rem;
   }
 </style>
