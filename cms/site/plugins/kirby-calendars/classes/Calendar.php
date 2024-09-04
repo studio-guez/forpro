@@ -208,8 +208,18 @@ class Calendar extends BaseClass
                                          DateTimeZone $timezone): bool
     {
         foreach ($items as $item) {
-            $itemStart = new DateTimeImmutable($item->getStart()->dateTime, $timezone);
-            $itemEnd = new DateTimeImmutable($item->getEnd()->dateTime, $timezone);
+
+            $itemStart = null;
+            $itemEnd = null;
+
+            if(is_array($item)) {
+                $itemStart = new DateTimeImmutable($item['start_datetime'], $timezone);
+                $itemEnd = new DateTimeImmutable($item['end_datetime'], $timezone);
+            } else {
+                $itemStart = new DateTimeImmutable($item->getStart()->dateTime, $timezone);
+                $itemEnd = new DateTimeImmutable($item->getEnd()->dateTime, $timezone);
+            }
+
             if ($slotEnd > $itemStart && $nextSlotStart < $itemEnd || $nextSlotStart === $itemStart) {
                 return true;
             }
