@@ -41,7 +41,7 @@
     let services = data.services ?? [];
     let schedules = Object.values(data.schedules) ?? [];
 
-    let slots: Slot[] = data.availabilities;
+    let slots: Slot[] | {status: 'error'} = data.availabilities;   //todo: ?
     let loading: boolean = false;
 
     let minDaysBeforeAppointment = data.options.minDaysBeforeRdvs ?? 1;
