@@ -37,6 +37,12 @@
     let selectedSlotId: number | null = null;
     let selectedDate: string = dayjs().format('YYYY-MM-DD');
 
+    let selectedDateStringFormated: string
+    $: selectedDateStringFormated = new Date(selectedDate).toLocaleDateString('fr-FR', {
+        timeZone: 'Europe/Paris',
+        dateStyle: 'full',
+    })
+
     let formattedDate: string | null = null;
 
     let services = data.services ?? [];
@@ -158,6 +164,7 @@
                             <!-- right side -->
                             <div class="flex overflow-x-hidden justify-center flex-col border-t border-r border-b border-solid border-gray-200 p-6 w-full text-gray-600 md:w-1/2 md:p-8">
                                 <div class="font-semibold">
+                                    <h5 style="color: var(--app-color--blue); text-align: center">{selectedDateStringFormated}</h5>
                                     {data.content.bookingServicesLabel}
                                 </div>
                                 <div class="flex flex-wrap flex-shrink-0 -mx-2">
