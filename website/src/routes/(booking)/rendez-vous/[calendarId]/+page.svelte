@@ -10,6 +10,7 @@
     import {writable} from "svelte/store";
     import {browser} from "$app/environment";
     import BlockCta from "$lib/components/BlockCta.svelte";
+    import {getSlotsByDate, type Scedules} from "./utils";
 
     export let data;
     export let form;
@@ -39,17 +40,12 @@
     let formattedDate: string | null = null;
 
     let services = data.services ?? [];
-    let schedules = Object.values(data.schedules) ?? [];
+    let schedules: Scedules[] = Object.values(data.schedules) ?? [];
 
     let slots: Slot[] | {status: 'error'} = data.availabilities;   //todo: ?
     let loading: boolean = false;
 
-    let minDaysBeforeAppointment = data.options.minDaysBeforeRdvs ?? 1;
-    let today = dayjs();
-    let startDateDayJs = today.add(minDaysBeforeAppointment, 'day');
-    let startDate = startDateDayJs.toDate();
 
-    const endDate = startDateDayJs.add(1, 'month').toDate();
     config.i18n = fr;
 
     const handleDateSelection = async (event) => {
@@ -60,17 +56,7 @@
             return;
         }
 
-        const data = new FormData();
-        data.append('calendarId', calendarId);
-        data.append('selectedServiceId', selectedServiceId);
-        data.append('selectedDate', selectedDate);
-
-        const response = await fetch('/api/booking/get-slots', {
-            method: 'POST',
-            body: data
-        });
-
-        slots = await response.json();
+        slots = await getSlotsByDate(selectedDate, calendarId, selectedServiceId.toString());
 
         formattedDate = new Date(event.detail).toLocaleDateString('fr-CH');
     }
@@ -83,16 +69,22 @@
         return services.find(service => service.id === id).duration;
     }
 
-    const formatDate = (dateString) => {
+    const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         const hours = date.getHours().toString().padStart(2, '0');
         const minutes = date.getMinutes().toString().padStart(2, '0');
         return `${hours}:${minutes}`;
     };
 
-    function disableDays(date) {
+    function disableDays(date: Date) {
         if (schedules.length > 0) {
-            return schedules.filter(schedule => schedule.is_closed && schedule.day_id == date.getDay()).length === 1;
+            const slotOfDay = data.eachSlotByDayBetweenTwoDates.filter(value => {
+                return `${value.date.getFullYear()}${value.date.getMonth()}${value.date.getDate()}` === `${date.getFullYear()}${date.getMonth()}${date.getDate()}`
+            })
+
+            if( Array.isArray(slotOfDay[0]?.value) && slotOfDay[0]?.value.length === 0 ) return true
+
+            return schedules.filter(schedule => schedule.is_closed && parseInt(schedule.day_id) === date.getDay()).length === 1;
         } else {
             return false;
         }
@@ -156,8 +148,8 @@
                                                 pickerOnly
                                                 disableDatesFn={disableDays}
                                                 on:change={handleDateSelection}
-                                                endDate={endDate}
-                                                startDate={startDate}
+                                                endDate={data.endDate}
+                                                startDate={data.startDate}
                                         />
                                     </div>
                                 </div>

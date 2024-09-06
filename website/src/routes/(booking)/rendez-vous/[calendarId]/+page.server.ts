@@ -1,6 +1,6 @@
 import type { Actions, PageServerLoad } from './$types';
 import { variables } from "$lib/utils/constants";
-import type { BookingCMSResponse } from "$lib/interfaces/variables";
+import type {BookingCMSResponse, Slot} from "$lib/interfaces/variables";
 import {
     createAppointment,
     getCalendarOptions,
@@ -8,6 +8,8 @@ import {
     getServicesFromCalendarId,
 } from "$lib/utils/booking/api";
 import { fail } from "@sveltejs/kit";
+import {getEachSlotByDayBetweenTwoDates} from "./utils";
+import dayjs from "dayjs";
 
 const REQUIRED = 'required';
 export const prerender = false;
@@ -26,7 +28,17 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 
     const services = Object.values(servicesKirby);
 
-    return { content, services, calendarId, schedules, options };
+    //todo: eachSlotByDayBetweenTwoDates need to move to client render?
+    const minDaysBeforeAppointment = options.minDaysBeforeRdvs ?? 1;
+    const today = dayjs();
+    const startDateDayJs = today.add(minDaysBeforeAppointment, 'day');
+    const startDate = startDateDayJs.toDate();
+
+    const endDate = startDateDayJs.add(1, 'month').toDate();
+
+    const eachSlotByDayBetweenTwoDates = await getEachSlotByDayBetweenTwoDates(startDate, endDate, calendarId, services[0]?.id, fetch)
+
+    return { content, services, calendarId, schedules, options, startDate, endDate, eachSlotByDayBetweenTwoDates };
 };
 
 function validateInput(value: unknown, name: string, errors: Record<string, unknown>) {
