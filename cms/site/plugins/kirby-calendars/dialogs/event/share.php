@@ -2,6 +2,7 @@
 
 use MediumSans\KirbyCalendars\Event;
 
+//todo: view quand on assigne l'evenements
 return [
     'pattern' => 'event/(:any)/share',
     'load' => function () {

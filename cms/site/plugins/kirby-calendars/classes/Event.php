@@ -271,6 +271,7 @@ class Event extends BaseClass
      */
     public static function share(string $eventId, array $input): bool
     {
+        //todo: ici on envoie à la personne assigné
         $event = static::find($eventId);
         $service = Service::find($event['service_id']);
 
@@ -291,9 +292,38 @@ class Event extends BaseClass
         $calendar = new \Eluceo\iCal\Domain\Entity\Calendar([$vEvent]);
         $iCalendarComponent = (new CalendarFactory())->createCalendar($calendar);
 
+        try {
+            $invitations = Invitation::findByEventId($eventId);
+
+            if(count($invitations) > 0) {
+                foreach ($invitations as $invitation) {
+
+                    // Tableau des jours et des mois en français
+                    $jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+                    $mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+
+                    // Récupérer le jour et le mois
+                    $jourSemaine = $jours[$dateTimeStart->format('w')];
+                    $moisAnnee = $mois[$dateTimeStart->format('n') - 1];
+
+                    $formatedDate = $jourSemaine . ' ' . $dateTimeStart->format('j') . ' ' . $moisAnnee . ' ' . $dateTimeStart->format('Y') . ' à ' . $dateTimeStart->format('G') . 'h' . $dateTimeStart->format('i');
+
+                    Mail::sendRemovedAssignation(
+                        $invitation['email'],
+                        $formatedDate
+                    );
+                }
+            }
+        } catch (Exception $error) {
+
+        }
+
+
         $input['event_id'] = $eventId;
         Invitation::create($input);
 
+
+        // on envoie ici
         return Mail::sendEventICS($input['email'], (string)$iCalendarComponent);
     }
 }
