@@ -78,6 +78,8 @@ Kirby::plugin('mediumsans/kirby-calendars', [
         'emails/event_confirmation.text' => __DIR__ . '/templates/event_confirmation.text.php',
         'emails/calendar_incharge.html'  => __DIR__ . '/templates/calendar_incharge.html.php',
         'emails/calendar_incharge.text'  => __DIR__ . '/templates/calendar_incharge.text.php',
+        'emails/event_rm_assignation.html'        => __DIR__ . '/templates/event_rm_assignation.html.php',
+        'emails/event_rm_assignation.text'        => __DIR__ . '/templates/event_rm_assignation.txt.php',
         'emails/event_share.html'        => __DIR__ . '/templates/event_share.html.php',
         'emails/event_share.text'        => __DIR__ . '/templates/event_share.text.php',
     ],

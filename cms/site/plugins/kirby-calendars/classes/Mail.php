@@ -85,26 +85,28 @@ class Mail
         $f_name = $kirby->option('mediumsans.kirby-calendars.notifications.calendar_incharge.name');
         $from = static::createFrom($f_email, $f_name);
 
-        try {
-            $notified = $kirby->email([
-                'from' => $from,
-                'to' => $calendar['email'],
-                'subject' => 'Nouveau RDV!',
-                'template' => 'calendar_incharge',
-                'data' => [
-                    'firstname' => $event['firstname'],
-                    'description' => $event['description'],
-                    'lastname' => $event['lastname'],
-                    'email' => $event['email'],
-                    'phone' => $event['phone'],
-                    'serviceName' => $service['name'],
-                    'startDate' => $startDate,
-                    'startTime' => $startTime,
-                ],
-            ])->isSent();
-        } catch (Exception $error) {
-            $notified = false;
-        }
+        //todo: restore, pour les testes
+//        try {
+//            $notified = $kirby->email([
+//                'from' => $from,
+//                'to' => $calendar['email'],
+//                'subject' => 'Nouveau RDV!',
+//                'template' => 'calendar_incharge',
+//                'data' => [
+//                    'firstname' => $event['firstname'],
+//                    'description' => $event['description'],
+//                    'lastname' => $event['lastname'],
+//                    'email' => $event['email'],
+//                    'phone' => $event['phone'],
+//                    'serviceName' => $service['name'],
+//                    'startDate' => $startDate,
+//                    'startTime' => $startTime,
+//                ],
+//            ])->isSent();
+//        } catch (Exception $error) {
+//            $notified = false;
+//        }
+        //[end]todo: restore
 
         return $notified;
     }
@@ -139,6 +141,45 @@ class Mail
                 'template' => 'event_share',
                 'attachments' => [
                     $tempFileIcs
+                ],
+            ])->isSent();
+        } catch (Exception $error) {
+            $notified = false;
+        }
+
+        return $notified;
+    }
+
+
+    /**
+     * Sent a notification if a person is no longer assigned to an event
+     *
+     * @param string $email The recipient's email address.
+     * @param string $startDate The start date of the event.
+     * * @param string $startTime The start time of the event.
+     *
+     * @return bool  Returns true if the notification email is successfully sent, false otherwise.
+     *
+     */
+    public static function sendRemovedAssignation(
+        string $email,
+        string $startTime,
+    ): bool
+    {
+        $kirby = kirby();
+
+        $f_email = $kirby->option('mediumsans.kirby-calendars.notifications.from');
+        $f_name = $kirby->option('mediumsans.kirby-calendars.notifications.calendar_incharge.name');
+        $from = static::createFrom($f_email, $f_name);
+
+        try {
+            $notified = $kirby->email([
+                'from' => $from,
+                'to' => $email,
+                'subject' => 'Un rendez-vous a été supprimé',
+                'template' => 'event_rm_assignation',
+                'data' => [
+                    'startTime' => $startTime,
                 ],
             ])->isSent();
         } catch (Exception $error) {
