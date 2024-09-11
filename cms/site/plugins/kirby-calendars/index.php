@@ -25,6 +25,9 @@ Kirby::plugin('mediumsans/kirby-calendars', [
             'event_confirmation' => [
                 'name' => 'Confirmez votre rendez-vous avec ForPro',
             ],
+            'event_remind' => [
+                'name' => 'Rappel de votre rendez-vous avec ForPro',
+            ],
         ],
     ],
     'areas' => [
@@ -64,6 +67,8 @@ Kirby::plugin('mediumsans/kirby-calendars', [
                     require __DIR__ . '/dialogs/event/fields.php',
                     require __DIR__ . '/dialogs/event/delete.php',
                     require __DIR__ . '/dialogs/event/share.php',
+                    require __DIR__ . '/dialogs/event/edit.php',
+                    require __DIR__ . '/dialogs/event/remind.php',
                     // LEAVE
                     require __DIR__ . '/dialogs/leave/fields.php',
                     require __DIR__ . '/dialogs/leave/create.php',
@@ -78,6 +83,8 @@ Kirby::plugin('mediumsans/kirby-calendars', [
         'emails/event_confirmation.text' => __DIR__ . '/templates/event_confirmation.text.php',
         'emails/calendar_incharge.html'  => __DIR__ . '/templates/calendar_incharge.html.php',
         'emails/calendar_incharge.text'  => __DIR__ . '/templates/calendar_incharge.text.php',
+        'emails/event_remind.html'        => __DIR__ . '/templates/event_remind.html.php',
+        'emails/event_remind.text'        => __DIR__ . '/templates/event_remind.txt.php',
         'emails/event_rm_assignation.html'        => __DIR__ . '/templates/event_rm_assignation.html.php',
         'emails/event_rm_assignation.text'        => __DIR__ . '/templates/event_rm_assignation.txt.php',
         'emails/event_share.html'        => __DIR__ . '/templates/event_share.html.php',

@@ -60,6 +60,55 @@ class Mail
     }
 
     /**
+     * Sends a remind notification to the specified email address.
+     *
+     * @param string $email The email address of the recipient.
+     * @param string $serviceName The name of the service.
+     * @param string $firstname The first name of the recipient.
+     * @param string $lastname The last name of the recipient.
+     * @param string $startDate The start date of the event.
+     * @param string $startTime The start time of the event.
+     * @return bool Returns true if the notification is successfully sent, false otherwise.
+     */
+    public static function sendRemindEventNotification(
+        string $email,
+        string $serviceName,
+        string $firstname,
+        string $lastname,
+        string $startDate,
+        string $startTime
+    ): bool
+    {
+        $kirby = kirby();
+
+        $f_email = $kirby->option('mediumsans.kirby-calendars.notifications.from');
+        $f_name = $kirby->option('mediumsans.kirby-calendars.notifications.event_remind.name');
+        $from = static::createFrom($f_email, $f_name);
+
+
+        try {
+            $notified = $kirby->email([
+                'from' => $from,
+                'to' => $email,
+                'subject' => 'Rappel pour votre rendez-vous!',
+                'template' => 'event_remind',
+                'data' => [
+                    'firstname' => $firstname,
+                    'lastname' => $lastname,
+                    'serviceName' => $serviceName,
+                    'startDate' => $startDate,
+                    'startTime' => $startTime,
+                ],
+            ])->isSent();
+
+        } catch (Exception $error) {
+            $notified = false;
+        }
+
+        return $notified;
+    }
+
+    /**
      * Sends a notification email to the person in charge of a calendar event to confirm the event.
      *
      * @param array $calendar The calendar details.
@@ -106,9 +155,11 @@ class Mail
 //        } catch (Exception $error) {
 //            $notified = false;
 //        }
+//
+//        return $notified;
         //[end]todo: restore
 
-        return $notified;
+        return true;  //todo: remove
     }
 
     /**

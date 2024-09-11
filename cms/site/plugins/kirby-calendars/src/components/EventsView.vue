@@ -72,6 +72,16 @@
                 click: () => $dialog(`event/${id}/share`)
               },
               {
+                text: 'Envoyer un rappel',
+                icon: 'email',
+                click: () => $dialog(`event/${id}/remind`),
+              },
+              // {
+              //   text: 'Éditer la date du rendez-vous',
+              //   icon: 'edit',
+              //   click: () => $dialog(`event/${id}/edit`)
+              // },
+              {
                 text: 'Supprimer',
                 icon: 'trash',
                 click: () => $dialog(`event/${id}/delete`)
