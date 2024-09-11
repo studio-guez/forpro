@@ -72,6 +72,40 @@ class Event extends BaseClass
     }
 
     /**
+     * Send remind event
+     *
+     * @param string $eventId
+     * @param array $input
+     * @return boolean
+     */
+    public static function sendReminding(string $eventId, array $input): bool
+    {
+        $event = static::find($eventId);
+        $service = Service::find($event['service_id']);
+
+        $serviceTitle = $service['name'];
+        $dateTimeStart = new DateTimeImmutable($event['date'], new DateTimeZone('Europe/Paris'));
+        $startTime = $dateTimeStart->format('H:i');
+
+        try {
+            Mail::sendRemindEventNotification(
+                $event['email'],
+                $serviceTitle,
+                $event['firstname'],
+                $event['lastname'],
+                $dateTimeStart->format('d.m.Y'),
+                $startTime
+            );
+        } catch (Exception $error) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+    /**
      * Retrieves a list of items from the Data class.
      *
      * @return array An array containing the list of items.
@@ -323,7 +357,7 @@ class Event extends BaseClass
         Invitation::create($input);
 
 
-        // on envoie ici
+        //todo: on envoie ici
         return Mail::sendEventICS($input['email'], (string)$iCalendarComponent);
     }
 }
