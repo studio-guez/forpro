@@ -2,6 +2,10 @@ title:
   en: Animated List
   fr: Liste Animé
 icon: star
+
+preview: fields
+wysiwyg: true
+
 fields:
   info:
     type: info

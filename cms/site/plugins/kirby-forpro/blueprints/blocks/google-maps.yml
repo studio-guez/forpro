@@ -4,6 +4,9 @@ title:
 
 icon: map
 
+preview: fields
+wysiwyg: true
+
 fields:
 
   link:

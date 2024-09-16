@@ -2,6 +2,10 @@ title:
   en: Appointments
   fr: Rendez-vous
 icon: peoples
+
+preview: fields
+wysiwyg: true
+
 fields:
   info:
     label:
