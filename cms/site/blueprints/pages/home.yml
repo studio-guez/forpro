@@ -4,6 +4,12 @@ title:
 
 preset: pages
 
+options:
+  changeStatus: false
+  changeTemplate: false
+  changeSlug: false
+
+
 fields:
   ressources:
     type: blocks
