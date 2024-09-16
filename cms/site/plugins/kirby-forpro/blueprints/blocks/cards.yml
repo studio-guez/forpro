@@ -46,6 +46,12 @@ fields:
           en: Image
         type: files
         max: 1
+        query: model.images
+        multiple: false
+        image:
+          back: black
+        uploads:
+          template: blocks/image
       link:
         label:
           fr: Lien
