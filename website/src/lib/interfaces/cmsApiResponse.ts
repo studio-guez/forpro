@@ -79,6 +79,7 @@ export interface IBlock {
         | 'google-maps'
         | 'image'
         | 'logos-list'
+        | 'video'
 }
 
 export interface ISeo {
@@ -168,6 +169,34 @@ export interface ICapsules extends IBlock {
         capsules: ICapsule[]
     }
     type: 'capsules'
+}
+
+export interface ICapsule {
+    title: string
+    text: string
+    image: string[]
+    style: 'style1' | 'style2' | 'style3' | 'style4'
+}
+
+
+/**
+ * VIDEO
+ */
+export interface IBlockVideo extends IBlock {
+    "content": {
+        "location": "web",
+        "url": string,
+        "video": [],
+        "poster": [],
+        "autoplay": "false",
+        "muted": "true",
+        "loop": "false",
+        "controls": "true",
+        "preload": "auto"
+    }
+    "type": "video"
+    "id": string,
+    "isHidden": boolean,
 }
 
 export interface ICapsule {
