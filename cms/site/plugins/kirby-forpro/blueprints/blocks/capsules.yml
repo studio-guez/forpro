@@ -2,6 +2,10 @@ title:
   en: Graphics Capsules
   fr: Capsules Graphiques
 icon: brush
+
+preview: fields
+wysiwyg: true
+
 fields:
 
   capsules:

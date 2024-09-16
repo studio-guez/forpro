@@ -4,6 +4,9 @@ title:
 
 icon: merge
 
+preview: fields
+wysiwyg: true
+
 fields:
 
   image:

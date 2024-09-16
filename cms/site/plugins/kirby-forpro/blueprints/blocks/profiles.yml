@@ -2,6 +2,9 @@ title:
   en: Profiles
   fr: Profiles
 
+preview: fields
+wysiwyg: true
+
 fields:
 
   title:

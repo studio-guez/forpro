@@ -2,6 +2,11 @@ title:
   en: Cards
   fr: Cartes
 icon: copy
+
+preview: fields
+wysiwyg: true
+
+
 fields:
 
   style:
