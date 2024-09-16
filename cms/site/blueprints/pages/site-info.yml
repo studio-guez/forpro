@@ -4,6 +4,11 @@ title:
 
 pages: false
 
+options:
+  changeStatus: false
+  changeTemplate: false
+  changeSlug: false
+
 fields:
 
   footer:
