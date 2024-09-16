@@ -4,6 +4,9 @@ title:
 
 icon: image
 
+preview: fields
+wysiwyg: true
+
 fields:
   image:
     label:

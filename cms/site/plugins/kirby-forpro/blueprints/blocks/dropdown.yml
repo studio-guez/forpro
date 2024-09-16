@@ -4,6 +4,9 @@ title:
 
 icon: list-bullet
 
+preview: fields
+wysiwyg: true
+
 fields:
 
   dropdown:

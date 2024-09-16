@@ -4,6 +4,9 @@ title:
 
 icon: dots
 
+preview: fields
+wysiwyg: true
+
 fields:
 
   cards:
