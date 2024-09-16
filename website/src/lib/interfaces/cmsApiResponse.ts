@@ -192,12 +192,19 @@ export interface ICards extends IBlock {
     type: 'cards'
 }
 
+export type ApiCardThemeColor =
+    "#1754ff"
+    | "#3df069"
+    | "#b9e6ff"
+    | "#bea5e6"
+
 export interface ICard {
     title: "",
     image: IImage[],
     link: "",
     text: ""
     imageData: IImage[] | undefined
+    "color"?: ApiCardThemeColor
 }
 
 
