@@ -116,6 +116,7 @@
       border: solid var(--app-line-with) var(--app-color--pink);
 
       .s-cards.style2 & {
+          background: transparent;
         border: none;
           border-radius: 0;
       }
