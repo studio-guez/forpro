@@ -25,6 +25,16 @@ fields:
       en: Cards list
     type: structure
     fields:
+      color:
+        type: color
+        label: theme de couleur
+        mode: options
+        default: "#1754FFFF"
+        options:
+          - "#1754FFFF"
+          - "#3DF069FF"
+          - "#B9E6FFFF"
+          - "#BEA5E6FF"
       title:
         label:
           fr: Titre
