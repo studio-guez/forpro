@@ -30,6 +30,8 @@ tabs:
 
           pages:
             type: pages
+            image:
+              cover: true
             limit: 100
             templates:
               - forpro
