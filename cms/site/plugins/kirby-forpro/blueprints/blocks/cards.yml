@@ -29,12 +29,12 @@ fields:
         type: color
         label: theme de couleur
         mode: options
-        default: "#1754FFFF"
+        default: "#1754FF"
         options:
-          - "#1754FFFF"
-          - "#3DF069FF"
-          - "#B9E6FFFF"
-          - "#BEA5E6FF"
+          - "#1754FF"
+          - "#3DF069"
+          - "#B9E6FF"
+          - "#BEA5E6"
       title:
         label:
           fr: Titre

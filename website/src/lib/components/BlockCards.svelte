@@ -1,14 +1,27 @@
 <script lang="ts">
-    import type {ICards} from "$lib/interfaces/cmsApiResponse";
+    import type {ApiCardThemeColor, ICards} from "$lib/interfaces/cmsApiResponse";
 
     export let content: ICards;
+
+    function themeColorMap(themeColorValue: ApiCardThemeColor | undefined): string {
+        if (themeColorValue === undefined) return ''
+
+        const mapColoRValue: {[key in ApiCardThemeColor]: string} = {
+            '#1754ff' : 'blue',
+            '#3df069' : 'green',
+            '#b9e6ff' : 'blue-sky',
+            '#bea5e6' : 'purple-sky',
+        }
+        return mapColoRValue[themeColorValue]
+    }
+
 </script>
 
 <div class="s-cards {content.content.style}"
 >
     <div class="s-cards__container">
         {#each content.content.cards as card}
-            <div class="s-cards__container__card">
+            <div class="s-cards__container__card {themeColorMap(card.color)}">
                 {#if (card.imageData?.length > 0)}
                     <div class="s-cards__container__card__img">
                         <img class="s-cards__container__card__img__item"
@@ -85,10 +98,7 @@
       position: relative;
 
       .s-cards.style2 .s-cards__container__card & {
-        padding-top: 50%;
-        @media (max-width: scss-params.$fp-breakpoint-xs) {
-          padding-top: 100%;
-        }
+        padding-top: 100%;
       }
     }
 
@@ -105,8 +115,9 @@
       box-sizing: border-box;
       border: solid var(--app-line-with) var(--app-color--pink);
 
-      .s-cards.style2 .s-cards__container__card:nth-child(1) & {
-        border-color: var(--app-color--blue);
+      .s-cards.style2 & {
+        border: none;
+          border-radius: 0;
       }
     }
 
@@ -133,13 +144,13 @@
         margin-top: -1.5rem;
       }
 
-      .s-cards.style2 & {
-        border: solid var(--app-line-with) var(--app-color--pink);
-        background: var(--app-color--grey--light);
-      }
+        .s-cards.style2 .s-cards__container__card__img + & {
+            margin-top: -6rem;
+        }
 
-      .s-cards.style2 .s-cards__container__card:nth-child(1) & {
-        border-color: var(--app-color--blue);
+      .s-cards.style2 & {
+        border: none;
+        background: transparent;
       }
     }
 
@@ -177,4 +188,81 @@
       margin-top: 1rem;
       max-width: 30em;
     }
+
+
+  .s-cards.style2 .s-cards__container__card {
+
+
+      border: solid 2px;
+      border-radius: 2rem;
+      overflow: hidden;
+
+      .s-cards__container__card__content__tilte {
+          font-size: clamp(1.5rem, 3.5vw, 3rem);
+      }
+
+      &.blue {
+          border-color: var(--app-color--blue);
+
+          :global(li::before) {
+              color: var(--app-color--green);
+          }
+
+          .s-cards__container__card__content__button {
+              background: var(--app-color--blue);
+              color: var(--app-color--green);
+              border-color: var(--app-color--blue);
+          }
+      }
+
+
+      &.green {
+          border-color: var(--app-color--green);
+
+          :global(li::before) {
+              color: var(--app-color--blue);
+          }
+
+          .s-cards__container__card__content__tilte { color: var(--app-color--green) }
+
+          .s-cards__container__card__content__button {
+              background: var(--app-color--green);
+              color: var(--app-color--blue);
+              border-color: var(--app-color--green);
+          }
+      }
+
+      &.blue-sky {
+          border-color: var(--app-color--blue--light);
+
+          :global(li::before) {
+              color: var(--app-color--purple);
+          }
+
+          .s-cards__container__card__content__tilte { color: var(--app-color--green--pastel) }
+
+          .s-cards__container__card__content__button {
+              background: var(--app-color--blue--light);
+              color: var(--app-color--purple);
+              border-color: var(--app-color--blue--light);
+          }
+      }
+
+      &.purple-sky {
+          border-color: var(--app-color--purple);
+
+          :global(li::before) {
+              color: var(--app-color--blue--light);
+          }
+
+          .s-cards__container__card__content__tilte { color: var(--app-color--purple) }
+
+          .s-cards__container__card__content__button {
+              background: var(--app-color--purple);
+              color: var(--app-color--blue--light);
+              border-color: var(--app-color--purple);
+          }
+      }
+
+  }
 </style>
