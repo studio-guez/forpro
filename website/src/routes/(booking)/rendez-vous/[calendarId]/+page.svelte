@@ -132,7 +132,9 @@
 
                                     <div>
                                         <div class="mt-4 sm:mt-2">
-                                            <div class="inline-block overflow-hidden w-20 h-20 bg-gray-100 bg-cover rounded-full">
+                                            <div class="inline-block overflow-hidden w-20 h-20 bg-gray-100 bg-cover rounded-full"
+                                                 style="background: var(--app-color--green)"
+                                            >
                                                 <img src="/favicon.svg" alt="icon" />
                                             </div>
                                         </div>
