@@ -147,6 +147,10 @@
 
         .s-cards.style2 .s-cards__container__card__img + & {
             margin-top: -6rem;
+
+            @media (max-width: 750px) {
+                margin-top: -3rem;
+            }
         }
 
       .s-cards.style2 & {
