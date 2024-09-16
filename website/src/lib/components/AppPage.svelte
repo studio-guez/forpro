@@ -45,6 +45,25 @@
                     <BlockList content="{content}" />
                 </div>
 
+            {:else if content.type === 'video'}
+                <div class="app-flex__basis-20-24">
+                    <iframe title="youtube embed"
+                            width="720"
+                            height="405"
+                            style="
+                                width: 100%;
+                                display: block;
+                                height: auto;
+                                aspect-ratio: 720/405;
+                                margin: auto;
+                                max-width: 50rem;
+                            "
+                            src="{`https://www.youtube.com/embed/${content.content.url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|.*\/))([a-zA-Z0-9_-]{11})/)[1]}?modestbranding=1&playsinline=1&color=white`}"
+                            frameborder="0"
+                            allowfullscreen
+                    />
+                </div>
+
             {:else if content.type === 'dropdown'}
                 <div class="app-flex__basis-20-24">
                     <BlockDropdown content="{content}" />
