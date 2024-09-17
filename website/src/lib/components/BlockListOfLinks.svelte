@@ -29,7 +29,7 @@
 
 <style lang="scss">
   .block-list-of-links {
-    width: 100%;
+    width: min(70rem, 100%);
     display: flex;
     flex-direction: column;
     gap: 5rem;
