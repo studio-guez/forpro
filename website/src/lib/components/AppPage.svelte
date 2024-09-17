@@ -117,6 +117,12 @@
                 <div class="app-flex__basis-22-24 app-flex app-flex--justify_center">
                     <BlockTimeline/>
                 </div>
+            {:else if content.type === 'listOfPDF' }
+                <div class="app-flex__basis-22-24 app-flex app-flex--justify_center">
+                    <BlockListOfLinks
+                            blockListOfLinksData="{content}"
+                    />
+                </div>
             {/if}
 
         {/each}
@@ -150,6 +156,7 @@
     import BlockImage from "$lib/components/BlockImage.svelte";
     import AppBlockLogos from "$lib/components/AppBlockLogos.svelte";
     import BlockTimeline from "$lib/components/BlockTimeline.svelte";
+    import BlockListOfLinks from "$lib/components/BlockListOfLinks.svelte";
 
     export let data: IPage;
 </script>
