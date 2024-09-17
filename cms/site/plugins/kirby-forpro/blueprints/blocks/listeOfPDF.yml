@@ -1,0 +1,31 @@
+title:
+  en: List of link
+  fr: liste de liens
+
+preview: fields
+wysiwyg: true
+icon: file
+
+fields:
+
+  title:
+    label: titre
+    type: text
+
+  profiles:
+    label: Liens
+    type: structure
+    columns:
+      title:
+        width: 1/1
+    fields:
+      title:
+        label:
+          fr: Titre
+          en: Title
+        type: text
+      lien:
+        label:
+          fr: Lien
+          en: Link
+        type: url
