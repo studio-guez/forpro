@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
+  import {copyTextToClipboard} from "$lib/utils/copyTextToClipboard";
 
   let timelineElement: HTMLElement | null = null
 
@@ -30,85 +31,99 @@
       }
     })
   }
+
+
+  const url           = "https://for-pro.ch/recrutement/"
+  const extButton_1   = 'Partagez cette page!'
+  const extButton_2   = 'Lien copié avec succès. Collez où vous le souhaitez!'
+
+  let textButtonShareLink = extButton_1
+
+  function onClickCopyButton() {
+      if(textButtonShareLink !== extButton_2) {
+          copyTextToClipboard(url)
+          textButtonShareLink = extButton_2
+          window.setTimeout(() => { textButtonShareLink = extButton_1 }, 2_000)
+      }
+  }
 </script>
 
 <section class="v-time-line" bind:this={timelineElement}>
-  <div class="v-time-line__item">
-    <h6 class="v-time-line__item__date">01.12.2023</h6>
-    <h3 class="v-time-line__item__title">Ouverture des candidatures</h3>
-    <p class="v-time-line__item__desc">Ouverture des postes – site internet et LinkedIn</p>
+  <div class="v-time-line__wrap">
+    <div class="v-time-line__item">
+      <h6 class="v-time-line__item__date">Mercredi 18 septembre 2024</h6>
+      <h3 class="v-time-line__item__title">Ouverture des candidatures</h3>
+    </div>
+
+    <div class="v-time-line__item">
+      <h6 class="v-time-line__item__date">Dimanche 06 octobre 2024</h6>
+      <h3 class="v-time-line__item__title">Délais de postulation</h3>
+      <p class="v-time-line__item__desc">
+        <a class="app-button app-button--rounded" target="_blank" href="/documents/Comment_déposer_ma_candidature.pdf">
+          Comment déposer ma&nbsp;candidature
+        </a>
+      </p>
+    </div>
+
+    <div class="v-time-line__item">
+      <h6 class="v-time-line__item__date">Vendredi 11 octobre 2024</h6>
+      <h3 class="v-time-line__item__title">Sélection tour sur&nbsp;dossier</h3>
+      <p class="v-time-line__item__desc">Mail d’annonce aux candidat e's sélectionné e's pour l'atelier</p>
+    </div>
+
+    <div class="v-time-line__item">
+      <h6 class="v-time-line__item__date">Mardi 15 octobre 2024 de recrutement</h6>
+      <h3 class="v-time-line__item__title">Atelier collectif</h3>
+      <p class="v-time-line__item__desc">
+        Horaires : 17h à 20h
+      </p>
+      <p class="v-time-line__item__desc fp-text-small">
+        Afin de vous plonger dans la logique de fonctionnement ForPro et de mettre en avant vos compétences personnelles et
+        sociales, nous mettons en place une série d'ateliers collaboratifs. Dans ces ateliers, vous serez associé
+        avec notre public – des jeunes de 16 à 20 ans – pour réaliser une tâche demandant de se coordonner et de se mettre
+        d'accord. <br />Un temps de retour sur votre expérience de groupe est prévu en deuxième partie.
+      </p>
+    </div>
+
+    <div class="v-time-line__item v-time-line__item--gant">
+      <h6 class="v-time-line__item__date">Du jeudi 16 octobre au vendredi 25 octobre 2024</h6>
+      <h3 class="v-time-line__item__title">Entretiens individuels</h3>
+      <p class="v-time-line__item__desc">Entretiens individuels</p>
+    </div>
+
+    <div class="v-time-line__item v-time-line__item--gant">
+      <h6 class="v-time-line__item__date">À partir du vendredi 25 octobre 2024.</h6>
+      <h3 class="v-time-line__item__title">Décisions finales</h3>
+      <p class="v-time-line__item__desc">Appels téléphoniques pour informer les candidat·e·s</p>
+    </div>
+
+    <div class="v-time-line__item v-time-line__item--gant">
+      <h6 class="v-time-line__item__date">Lundi 03 février 2025</h6>
+      <h3 class="v-time-line__item__title">Entrée en fonction</h3>
+    </div>
   </div>
 
-  <div class="v-time-line__item">
-    <h6 class="v-time-line__item__date">01.12.2023 au 10.1.2024</h6>
-    <h3 class="v-time-line__item__title">Délais de postulation</h3>
-    <p class="v-time-line__item__desc">
-      <a class="app-button app-button--rounded" target="_blank" href="/documents/Comment_déposer_ma_candidature.pdf">
-        Comment déposer ma&nbsp;candidature
-      </a>
-    </p>
+  <div class="v-time-line__button">
+    <div class="app-button app-button--rounded"
+            on:click={onClickCopyButton}>{textButtonShareLink}
+    </div>
   </div>
 
-  <div class="v-time-line__item">
-    <h6 class="v-time-line__item__date">19.1.2024</h6>
-    <h3 class="v-time-line__item__title">Sélection 1<sup>er</sup> tour sur&nbsp;dossier</h3>
-    <p class="v-time-line__item__desc">Mail d’annonce aux candidat·es sélectionné·es au 1er tour</p>
-  </div>
-
-  <div class="v-time-line__item">
-    <h6 class="v-time-line__item__date">Samedi 10.2.2024</h6>
-    <h3 class="v-time-line__item__title">1<sup>er</sup> tour, Atelier collectif</h3>
-    <p class="v-time-line__item__desc">
-      Atelier collectif de recrutement<br />
-      Horaires : 8h30 à 13h
-    </p>
-    <p class="v-time-line__item__desc fp-text-small">
-      Afin de vous plonger dans la logique de fonctionnement ForPro et de mettre en avant vos compétences personnelles et
-      sociales, nous mettons en place une demi-journée d'ateliers collaboratifs. Dans ces ateliers, vous serez associé
-      avec notre public – des jeunes de 16 à 20 ans – pour réaliser une tâche demandant de se coordonner et de se mettre
-      d'accord. <br />Un temps de retour sur votre expérience de groupe est prévu en deuxième partie de matinée.
-    </p>
-  </div>
-
-  <div class="v-time-line__item v-time-line__item--gant">
-    <h6 class="v-time-line__item__date">13.2.2024 au 16.2.2024</h6>
-    <h3 class="v-time-line__item__title">2<sup>ème</sup> tour FoodLab</h3>
-    <p class="v-time-line__item__desc">Entretiens individuels</p>
-  </div>
-
-  <div class="v-time-line__item v-time-line__item--gant">
-    <h6 class="v-time-line__item__date">26.2.2024</h6>
-    <h3 class="v-time-line__item__title">Décisions FoodLab</h3>
-    <p class="v-time-line__item__desc">Appels téléphoniques pour informer les candidat·es</p>
-  </div>
-
-  <div class="v-time-line__item v-time-line__item--pen">
-    <h6 class="v-time-line__item__date">4.3.2024 au 8.3.2024</h6>
-    <h3 class="v-time-line__item__title">2<sup>ème</sup> tour LearningLab</h3>
-    <p class="v-time-line__item__desc">Entretiens individuels</p>
-  </div>
-
-  <div class="v-time-line__item v-time-line__item--pen">
-    <h6 class="v-time-line__item__date">15.3.2024</h6>
-    <h3 class="v-time-line__item__title">Décisions LearningLab</h3>
-    <p class="v-time-line__item__desc">Appels téléphoniques pour informer les candidat·es</p>
-  </div>
-
-  <div class="v-time-line__item v-time-line__item--gant">
-    <h6 class="v-time-line__item__date">1.6.2024 ou à convenir</h6>
-    <h3 class="v-time-line__item__title">Entrée en fonction FoodLab</h3>
-  </div>
-
-  <div class="v-time-line__item v-time-line__item--pen">
-    <h6 class="v-time-line__item__date">1.7.2024 ou à convenir</h6>
-    <h3 class="v-time-line__item__title">Entrée en fonction LearningLab</h3>
-  </div>
 </section>
 
 <style lang="scss">
   @use "../../style/_scss-params";
 
   .v-time-line {
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+    padding-bottom: 5rem;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .v-time-line__wrap {
     position: relative;
     display: block;
     width: min(70rem, 100%);
@@ -263,6 +278,12 @@
         }
       }
     }
+  }
+
+  .v-time-line__button {
+    display: flex;
+    justify-content: center;
+    align-content: center;
   }
 
   h3 {
