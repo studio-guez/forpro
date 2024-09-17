@@ -20,6 +20,7 @@ Kirby::plugin('mediumsans/forpro', [
         'blocks/google-maps'      => __DIR__ . '/blueprints/blocks/google-maps.yml',
         'blocks/animated-list'    => __DIR__ . '/blueprints/blocks/animated-list.yml',
         'blocks/logos-list'    => __DIR__ . '/blueprints/blocks/logos-list.yml',
+        'blocks/timeline'    => __DIR__ . '/blueprints/blocks/timeline.yml',
     ],
     'templates' => [
         'forpro'                => __DIR__ . '/templates/forpro.php',

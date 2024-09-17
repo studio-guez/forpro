@@ -76,6 +76,7 @@ fields:
       - map
       - appointment
       - code
+      - timeline
       image:
         extends: blocks/image
         fields:
