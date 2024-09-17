@@ -394,3 +394,15 @@ export interface IBlockListLogo extends IBlock {
         "type": "logos-list"
     }
 }
+
+/**
+ * timeline en speed
+ * */
+
+
+export interface IBlockTimeline extends IBlock {
+    "content": {
+        type: 'timeline'
+    }
+}
+
