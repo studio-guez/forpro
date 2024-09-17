@@ -10,7 +10,7 @@ fields:
   info:
     label: info
     type: info
-    text:
-      | Affiche la timeline,
+    text: |
+      Affiche la timeline,
       le contenu n'est pas éditable encore,
       un peu le faire si besoin
