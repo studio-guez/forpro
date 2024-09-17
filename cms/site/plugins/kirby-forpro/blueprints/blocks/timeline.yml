@@ -1,0 +1,16 @@
+title: timeline
+
+icon: chart
+
+wysiwyg: false
+preview: fields
+
+fields:
+
+  info:
+    label: info
+    type: info
+    text:
+      | Affiche la timeline,
+      le contenu n'est pas éditable encore,
+      un peu le faire si besoin
