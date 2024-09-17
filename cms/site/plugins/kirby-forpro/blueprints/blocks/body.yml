@@ -3,7 +3,7 @@ title:
   fr: Corps de texte
 icon: text
 wysiwyg: true
-preview: text
+preview: fields
 fields:
   text:
     type: writer
