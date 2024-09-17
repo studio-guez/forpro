@@ -57,9 +57,12 @@
 
     <div class="v-time-line__item">
       <h6 class="v-time-line__item__date">Dimanche 06 octobre 2024</h6>
-      <h3 class="v-time-line__item__title">Délais de postulation</h3>
+      <h3 class="v-time-line__item__title">Délai de postulation</h3>
       <p class="v-time-line__item__desc">
-        <a class="app-button app-button--rounded" target="_blank" href="/documents/Comment_déposer_ma_candidature.pdf">
+        <a class="app-button app-button--rounded" target="_blank"
+           href="https://api.for-pro.ch/processusrecrutement_explications20240912.pdf"
+           style="--app-button--color: var(--app-color--green);"
+        >
           Comment déposer ma&nbsp;candidature
         </a>
       </p>
@@ -67,34 +70,34 @@
 
     <div class="v-time-line__item">
       <h6 class="v-time-line__item__date">Vendredi 11 octobre 2024</h6>
-      <h3 class="v-time-line__item__title">Sélection tour sur&nbsp;dossier</h3>
-      <p class="v-time-line__item__desc">Mail d’annonce aux candidat e's sélectionné e's pour l'atelier</p>
+      <h3 class="v-time-line__item__title">Sélection sur&nbsp;dossier</h3>
+      <p class="v-time-line__item__desc">Mail d’annonce aux candidat·e·s sélectionné·e·s pour l'atelier.</p>
     </div>
 
     <div class="v-time-line__item">
-      <h6 class="v-time-line__item__date">Mardi 15 octobre 2024 de recrutement</h6>
-      <h3 class="v-time-line__item__title">Atelier collectif</h3>
+      <h6 class="v-time-line__item__date">Mardi 15 octobre 2024</h6>
+      <h3 class="v-time-line__item__title">Atelier collectif de recrutement</h3>
       <p class="v-time-line__item__desc">
-        Horaires : 17h à 20h
+        <strong>Horaire: 17h à 20h</strong>
       </p>
       <p class="v-time-line__item__desc fp-text-small">
         Afin de vous plonger dans la logique de fonctionnement ForPro et de mettre en avant vos compétences personnelles et
-        sociales, nous mettons en place une série d'ateliers collaboratifs. Dans ces ateliers, vous serez associé
-        avec notre public – des jeunes de 16 à 20 ans – pour réaliser une tâche demandant de se coordonner et de se mettre
-        d'accord. <br />Un temps de retour sur votre expérience de groupe est prévu en deuxième partie.
+        sociales, nous mettons en place une série d'ateliers collaboratifs. Dans ces ateliers, vous serez associé·e
+        avec notre public – des jeunes de 16 à 20 ans – pour réaliser une tâche demandant de se coordonner et de se mettre&nbsp;d'accord.
+        <br />
+        <br />Un temps de retour sur votre expérience de groupe est prévu en deuxième partie.
       </p>
     </div>
 
     <div class="v-time-line__item v-time-line__item--gant">
-      <h6 class="v-time-line__item__date">Du jeudi 16 octobre au vendredi 25 octobre 2024</h6>
+      <h6 class="v-time-line__item__date">Du jeudi 17 octobre au vendredi 25 octobre 2024</h6>
       <h3 class="v-time-line__item__title">Entretiens individuels</h3>
-      <p class="v-time-line__item__desc">Entretiens individuels</p>
     </div>
 
     <div class="v-time-line__item v-time-line__item--gant">
-      <h6 class="v-time-line__item__date">À partir du vendredi 25 octobre 2024.</h6>
+      <h6 class="v-time-line__item__date">Au plus tard le lundi 28 octobre</h6>
       <h3 class="v-time-line__item__title">Décisions finales</h3>
-      <p class="v-time-line__item__desc">Appels téléphoniques pour informer les candidat·e·s</p>
+      <p class="v-time-line__item__desc">Appels téléphoniques pour informer les candidat·e·s.</p>
     </div>
 
     <div class="v-time-line__item v-time-line__item--gant">
@@ -105,6 +108,7 @@
 
   <div class="v-time-line__button">
     <div class="app-button app-button--rounded"
+         style="--app-button--color: var(--app-color--green);"
             on:click={onClickCopyButton}>{textButtonShareLink}
     </div>
   </div>
