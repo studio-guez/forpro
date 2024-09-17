@@ -406,3 +406,25 @@ export interface IBlockTimeline extends IBlock {
     }
 }
 
+/**
+ * block link list
+ */
+
+export interface IBlockLinkList extends IBlock {
+    "image": [],
+    "content": IBlockLinkListContent
+}
+
+export interface IBlockLinkListContent {
+    "content": {
+        "title": string,
+        "listoflinks": {
+            "color": string,
+            "title": string,
+            "lien": string
+        }[]
+    },
+    "id": string,
+    "isHidden": boolean,
+    "type": "listOfPDF"
+}
