@@ -77,7 +77,7 @@ fields:
       - appointment
       - code
       - timeline
-      - listeOfPDF
+      - listOfPDF
       image:
         extends: blocks/image
         fields:
