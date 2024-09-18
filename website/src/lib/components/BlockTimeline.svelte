@@ -69,7 +69,7 @@
     </div>
 
     <div class="v-time-line__item">
-      <h6 class="v-time-line__item__date">Vendredi 11 octobre 2024</h6>
+      <h6 class="v-time-line__item__date">Jeudi 10 octobre 2024</h6>
       <h3 class="v-time-line__item__title">Sélection sur&nbsp;dossier</h3>
       <p class="v-time-line__item__desc">Mail d’annonce aux candidat·e·s sélectionné·e·s pour l'atelier.</p>
     </div>
@@ -95,7 +95,7 @@
     </div>
 
     <div class="v-time-line__item v-time-line__item--gant">
-      <h6 class="v-time-line__item__date">Au plus tard le lundi 28 octobre</h6>
+      <h6 class="v-time-line__item__date">Au plus tard le lundi 28 octobre 2024</h6>
       <h3 class="v-time-line__item__title">Décisions finales</h3>
       <p class="v-time-line__item__desc">Appels téléphoniques pour informer les candidat·e·s.</p>
     </div>
