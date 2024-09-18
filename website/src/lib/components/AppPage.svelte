@@ -118,7 +118,7 @@
                     <BlockTimeline/>
                 </div>
             {:else if content.type === 'listOfPDF' }
-                <div class="app-flex__basis-22-24 app-flex app-flex--justify_center">
+                <div class="app-flex__basis-20-24 app-flex app-flex--justify_center">
                     <BlockListOfLinks
                             blockListOfLinksData="{content}"
                     />

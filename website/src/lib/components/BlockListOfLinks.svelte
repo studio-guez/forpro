@@ -32,7 +32,7 @@
     width: min(70rem, 100%);
     display: flex;
     flex-direction: column;
-    gap: 5rem;
+    gap: 2rem;
   }
 
   .block-list-of-links__box {
