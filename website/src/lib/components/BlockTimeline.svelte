@@ -60,7 +60,7 @@
       <h3 class="v-time-line__item__title">Délai de postulation</h3>
       <p class="v-time-line__item__desc">
         <a class="app-button app-button--rounded" target="_blank"
-           href="https://api.for-pro.ch/processusrecrutement_explications20240912.pdf"
+           href="https://api.for-pro.ch/comment-postuler.pdf"
            style="--app-button--color: var(--app-color--green);"
         >
           Comment déposer ma&nbsp;candidature
