@@ -134,32 +134,28 @@ class Mail
         $f_name = $kirby->option('mediumsans.kirby-calendars.notifications.calendar_incharge.name');
         $from = static::createFrom($f_email, $f_name);
 
-        //todo: restore, pour les testes
-//        try {
-//            $notified = $kirby->email([
-//                'from' => $from,
-//                'to' => $calendar['email'],
-//                'subject' => 'Nouveau RDV!',
-//                'template' => 'calendar_incharge',
-//                'data' => [
-//                    'firstname' => $event['firstname'],
-//                    'description' => $event['description'],
-//                    'lastname' => $event['lastname'],
-//                    'email' => $event['email'],
-//                    'phone' => $event['phone'],
-//                    'serviceName' => $service['name'],
-//                    'startDate' => $startDate,
-//                    'startTime' => $startTime,
-//                ],
-//            ])->isSent();
-//        } catch (Exception $error) {
-//            $notified = false;
-//        }
-//
-//        return $notified;
-        //[end]todo: restore
+        try {
+            $notified = $kirby->email([
+                'from' => $from,
+                'to' => $calendar['email'],
+                'subject' => 'Nouveau RDV!',
+                'template' => 'calendar_incharge',
+                'data' => [
+                    'firstname' => $event['firstname'],
+                    'description' => $event['description'],
+                    'lastname' => $event['lastname'],
+                    'email' => $event['email'],
+                    'phone' => $event['phone'],
+                    'serviceName' => $service['name'],
+                    'startDate' => $startDate,
+                    'startTime' => $startTime,
+                ],
+            ])->isSent();
+        } catch (Exception $error) {
+            $notified = false;
+        }
 
-        return true;  //todo: remove
+        return $notified;
     }
 
     /**
