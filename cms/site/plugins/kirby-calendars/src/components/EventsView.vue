@@ -152,8 +152,7 @@ export default {
           service_id: value.service_id,
         }
       })
-
-      downloadCsv( jsonToCsv(data), `ForPro-calendar_service-data_export-${formatDate(new Date(), true)}` )
+      downloadCsv( jsonToCsv(data), `ForPro-calendar_service-data_export-${formatDate(new Date().toISOString(), true)}` )
     },
   }
 };
