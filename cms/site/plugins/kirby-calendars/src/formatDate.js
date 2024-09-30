@@ -1,4 +1,12 @@
+/**
+ * @param stringDate {string | {date: string}}
+ * @param removeHour {boolean | undefined}
+ * @returns {string | 'NULL'}
+ */
 export function formatDate(stringDate, removeHour = false) {
+
+    if (stringDate === undefined) return 'undefined'
+
     const dateOptions = removeHour ?
         {
             weekday: 'long',
@@ -15,7 +23,11 @@ export function formatDate(stringDate, removeHour = false) {
             minute: '2-digit',
         }
 
-    const date = new Date(stringDate)
+    const date = (stringDate.hasOwnProperty('date')) ? new Date(stringDate.date) : new Date(stringDate)
 
-    return new Intl.DateTimeFormat('fr-FR', dateOptions).format(date)
+    try {
+        return new Intl.DateTimeFormat('fr-FR', dateOptions).format(date)
+    } catch {
+        return JSON.stringify(stringDate)
+    }
 }
