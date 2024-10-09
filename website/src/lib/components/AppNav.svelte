@@ -9,13 +9,6 @@
 
     <div class="s-app-nav__buttons app-flex__basis-auto">
         <div class="s-app-nav__buttons__container app-flex app-flex--gap_regular app-flex--align_center">
-            <a class="app-button app-button--rounded"
-               style="
-                    --app-button--color: var(--app-color--green);
-                    --app-button--background-color: var(--app-color--blue);
-                "
-               href="/rendez-vous"
-            >Prendre RDV</a>
             <div class="s-app-nav__social-icon">
                 <a target="_blank" href="https://www.linkedin.com/company/fondation-forpro/ "   ><img src="/social-1.svg" alt="social link" ></a>
                 <a target="_blank" href="https://www.facebook.com/forpro.ge"                    ><img src="/social-2.svg" alt="social link" ></a>
