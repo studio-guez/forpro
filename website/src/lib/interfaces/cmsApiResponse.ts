@@ -226,6 +226,7 @@ export type ApiCardThemeColor =
     | "#3df069"
     | "#b9e6ff"
     | "#bea5e6"
+    | "#ff00fc"
 
 export interface ICard {
     title: "",
