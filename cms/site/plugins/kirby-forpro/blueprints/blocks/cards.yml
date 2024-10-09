@@ -35,6 +35,7 @@ fields:
           - "#3DF069"
           - "#B9E6FF"
           - "#BEA5E6"
+          - "#FF00FC"
       title:
         label:
           fr: Titre
