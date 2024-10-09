@@ -11,6 +11,7 @@
             '#3df069' : 'green',
             '#b9e6ff' : 'blue-sky',
             '#bea5e6' : 'purple-sky',
+            '#ff00fc' : 'pink',
         }
         return mapColoRValue[themeColorValue]
     }
@@ -270,6 +271,22 @@
               background: var(--app-color--purple);
               color: var(--app-color--blue--light);
               border-color: var(--app-color--purple);
+          }
+      }
+
+      &.pink {
+          border-color: var(--app-color--pink);
+
+          :global(li::before) {
+              color: var(--app-color--blue);
+          }
+
+          .s-cards__container__card__content__tilte { color: var(--app-color--blue) }
+
+          .s-cards__container__card__content__button {
+              background: var(--app-color--blue--light);
+              color: var(--app-color--pink);
+              border-color: var(--app-color--blue--light);
           }
       }
 
