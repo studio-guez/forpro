@@ -203,7 +203,11 @@
       overflow: hidden;
 
       .s-cards__container__card__content__tilte {
-          font-size: clamp(1.5rem, 3.5vw, 3rem);
+          font-size: clamp(1.5rem, 3vw, 2.5rem);
+      }
+
+      .s-cards__container__card__content__content {
+          font-size: 1rem;
       }
 
       &.blue {
