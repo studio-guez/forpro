@@ -51,20 +51,6 @@ fields:
         type: toggle
     width: 1/2
 
-  btnHero2:
-    type: object
-    fields:
-      link:
-        label: url
-        type: link
-      linkText:
-        label: Texte
-        type: text
-      target:
-        label: Ouvrir dans une nouvelle fenêtre
-        type: toggle
-    width: 1/2
-
   picHero1:
     label: Image 1
     type: files
