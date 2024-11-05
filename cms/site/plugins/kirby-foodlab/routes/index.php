@@ -112,7 +112,6 @@ return [
                                 "source" => $source,
                             ]);
 
-                            $btnHero2 = $this->site()->btnHero2()->toObject();
                             $btnLab = $this->site()->btnLab()->toObject();
                             $btnFooter1 = $this->site()
                                 ->btnFooter1()
@@ -120,13 +119,6 @@ return [
 
                             if ($file) {
                                 $this->site()->update([
-                                    "btnHero2" => [
-                                        "link" => $file->uuid(),
-                                        "linkText" => $btnHero2
-                                            ->linkText()
-                                            ->value(),
-                                        "target" => true,
-                                    ],
                                     "btnLab" => [
                                         "link" => $file->uuid(),
                                         "linkText" => $btnLab
@@ -238,18 +230,12 @@ return [
                     }
 
                     $btnHero1 = $this->site()->btnHero1()->toObject();
-                    $btnHero2 = $this->site()->btnHero2()->toObject();
 
                     $json["hero"] = [
                         "btn1" => [
                             "link" => $btnHero1->link()->toUrl(),
                             "text" => $btnHero1->linkText()->value(),
                             "target" => $btnHero1->target()->toBool(),
-                        ],
-                        "btn2" => [
-                            "link" => $btnHero2->link()->toUrl(),
-                            "text" => $btnHero2->linkText()->value(),
-                            "target" => $btnHero2->target()->toBool(),
                         ],
                         "pictureURL1" => $this->site()->picHero1()->toFile()
                             ? $this->site()->picHero1()->toFile()->url()
