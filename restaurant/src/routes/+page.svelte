@@ -1,7 +1,8 @@
 <script lang="ts">
 	import Menu from '$lib/components/Menu.svelte';
 
-	import {linkTreeIsOpen, menuIsOpen} from '../store';
+	import {linkTreeIsOpen, menuIsOpen, resaButtonIsHidden} from '../store';
+	import {onMount, tick} from "svelte";
 
 	export let data;
 
@@ -12,6 +13,21 @@
 	const handleMenuClick = () => {
 		$menuIsOpen = !$menuIsOpen;
 	};
+
+	onMount(() => {
+		tick().then(() => {
+			const resaButton = document.querySelector('.s-button-resa')
+
+			const observateur = new IntersectionObserver(entries => {
+				entries.forEach(value => {
+					$resaButtonIsHidden = !value.isIntersecting
+				})
+			})
+
+			if(resaButton) observateur.observe(resaButton)
+
+		})
+	})
 </script>
 
 {#if $menuIsOpen}
@@ -128,11 +144,10 @@
 				style:background-position="center"
 				style:background-size="cover"
 			>
-				<a
-					href={data.page.hero.btn1.link}
-					type="button"
-					class="absolute bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-					target={data.page.hero.btn1.target ? '_blank' : '_self'}
+				<a href={data.page.hero.btn1.link}
+					 type="button"
+					 class="absolute bottom-5 left-5 rounded-full text-secondary bg-primary px-6 py-1 text-sm font-semibold shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					 target={data.page.hero.btn1.target ? '_blank' : '_self'}
 				>
 					{data.page.hero.btn1.text}
 				</a>
@@ -154,7 +169,7 @@
 
 			<!-- Image CTA -->
 			<div
-				class="relative col-span-7 -mt-20 hidden aspect-video w-full rounded-2xl lg:block"
+				class="s-button-resa relative col-span-7 -mt-20 hidden aspect-video w-full rounded-2xl lg:block"
 				style:background-image="url({data.page.hero.pictureURL3})"
 				style:background-position="center"
 				style:background-size="cover"
@@ -163,6 +178,7 @@
 								on:click={() => linkTreeIsOpen.set(true)}
 					type="button"
 					class="absolute -top-3 right-10 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					class:is-hidden={$resaButtonIsHidden}
 				>
 					Cartes & Plats du jour
 				</button>
@@ -211,6 +227,7 @@
 								on:click={() => linkTreeIsOpen.set(true)}
 								type="button"
 								class="block -top-3 right-10 text-center rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+								class:is-hidden={$resaButtonIsHidden}
 				>
 					Cartes & Plats du jour
 				</button>
@@ -559,5 +576,17 @@
 		align-items: center;
 		flex-direction: column;
 		gap: 2rem;
+	}
+
+	.is-hidden {
+		position: fixed;
+		bottom: 1rem;
+		top: auto;
+		left: 50%;
+		right: auto;
+		transform: translate(-50%, 0);
+		z-index: 50;
+		height: auto;
+		box-shadow: 0 10px 10px 0 rgba(0, 0, 0, .25);
 	}
 </style>
