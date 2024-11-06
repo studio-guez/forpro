@@ -14,7 +14,16 @@
 	};
 </script>
 
-<Menu items={data.menu.content} />
+{#if $menuIsOpen}
+<div class="fixed top-0 right-0 w-full h-full z-50"
+>
+	<Menu items={data.menu.content} />
+	<div class="fixed top-0 right-0 w-full h-full"
+			 style="background: rgba(0,0,0,.5);"
+			 on:click={()=> $menuIsOpen = false}
+	></div>
+</div>
+{/if}
 
 <!-- Navbar -->
 <nav class="px-3 pb-6 pt-3 lg:px-6">
@@ -27,7 +36,7 @@
 		<div class="flex justify-end">
 			<button
 				on:click={handleMenuClick}
-				class="navbar-burger z-50 flex h-10 w-10 items-center rounded-full bg-secondary p-3 text-primary"
+				class="navbar-burger z-50 flex h-10 w-10 items-center rounded-full bg-secondary p-3 text-primary fixed top-4 right-4"
 			>
 				<svg
 					class:hidden={$menuIsOpen}
@@ -345,7 +354,7 @@
 
 			<!-- Image -->
 			<div
-				class="z-50 col-span-1 mt-10 h-56 rounded-2xl brightness-90 lg:z-20 lg:mt-0 lg:h-auto"
+				class="z-40 col-span-1 mt-10 h-56 rounded-2xl brightness-90 lg:z-20 lg:mt-0 lg:h-auto"
 				style:background-image="url({data.page.formation.pictureURL})"
 				style:background-position="center"
 				style:background-size="cover"
