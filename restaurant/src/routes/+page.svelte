@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Menu from '$lib/components/Menu.svelte';
 
-	import { menuIsOpen } from '../store';
+	import {linkTreeIsOpen, menuIsOpen} from '../store';
 
 	export let data;
 
@@ -57,6 +57,56 @@
 	</div>
 </nav>
 
+{#if $linkTreeIsOpen }
+	<div class="s-link-tree">
+		<div style="
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+		"
+				 on:click={() => linkTreeIsOpen.set(false)}
+		></div>
+		<a
+						href="https://api.for-pro.ch/media/site/d9ab2d9844-1729500293/menu_2024-10-21_10-44-53.pdf"
+						type="button"
+						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+						target="_blank"
+		>
+			carte du FoodLab
+		</a>
+
+		<a
+						href="https://menus.for-pro.ch"
+						type="button"
+						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+						target="_blank"
+		>
+			plat du jour FoodLab
+		</a>
+
+		<a
+						href="https://menus.for-pro.ch/foodcourt"
+						type="button"
+						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+						target="_blank"
+		>
+			plats du jour FoodCourt
+		</a>
+
+		<a
+						href="https://api.for-pro.ch/media/site/7a047d9699-1730810358/menu_popup.pdf"
+						type="button"
+						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+						target="_blank"
+		>
+			carte du PopUp
+		</a>
+	</div>
+{/if}
+
 <!-- Hero -->
 <section class="relative block h-[60vh] w-full px-3 py-6 pt-5 lg:h-auto lg:px-6">
 	<div class="flex h-full items-start justify-center">
@@ -100,14 +150,13 @@
 				style:background-position="center"
 				style:background-size="cover"
 			>
-				<a
-					href={data.page.hero.btn2.link}
+				<button
+								on:click={() => linkTreeIsOpen.set(true)}
 					type="button"
 					class="absolute -top-3 right-10 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-					target={data.page.hero.btn2.target ? '_blank' : '_self'}
 				>
-					{data.page.hero.btn2.text}
-				</a>
+					Cartes & Plats du jour
+				</button>
 			</div>
 		</div>
 
@@ -139,23 +188,23 @@
 					alt="overlay forpro"
 				/>
 			</div>
-			<div class="grid h-full w-full space-y-2">
+			<div class="flex space-y-2 flex-col justify-end">
 				<a
 					href={data.page.hero.btn1.link}
 					type="button"
-					class="h-min rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 lg:hidden"
+					class="h-min text-center rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 lg:hidden"
 					target={data.page.hero.btn1.target ? '_blank' : '_self'}
 				>
 					{data.page.hero.btn1.text}
 				</a>
-				<a
-					href={data.page.hero.btn2.link}
-					type="button"
-					class="h-min w-min justify-self-center rounded-full bg-secondary px-6 py-1 text-center text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 lg:hidden"
-					target={data.page.hero.btn2.target ? '_blank' : '_self'}
+
+				<button
+								on:click={() => linkTreeIsOpen.set(true)}
+								type="button"
+								class="block -top-3 right-10 text-center rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 				>
-					{data.page.hero.btn2.text}
-				</a>
+					Cartes & Plats du jour
+				</button>
 			</div>
 		</div>
 	</div>
@@ -484,3 +533,22 @@
 		</div>
 	</div>
 </section>
+
+
+<style>
+	.s-link-tree {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		box-sizing: border-box;
+		display: flex;
+		background: rgba(0, 0, 0, .85);
+		z-index: 100;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		gap: 2rem;
+	}
+</style>
