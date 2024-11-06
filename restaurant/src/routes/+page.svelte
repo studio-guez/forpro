@@ -31,7 +31,7 @@
 			>
 				<svg
 					class:hidden={$menuIsOpen}
-					class="block fill-current"
+					class="block fill-current size-4"
 					viewBox="0 0 20 20"
 					xmlns="http://www.w3.org/2000/svg"
 				>
@@ -41,7 +41,7 @@
 				<svg
 					class:hidden={!$menuIsOpen}
 					xmlns="http://www.w3.org/2000/svg"
-					class="block fill-current"
+					class="block fill-current size-4"
 					stroke="currentColor"
 					viewBox="0 0 24 24"
 				>
@@ -75,7 +75,7 @@
 						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 						target="_blank"
 		>
-			carte du FoodLab
+			Carte du FoodLab
 		</a>
 
 		<a
@@ -84,7 +84,7 @@
 						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 						target="_blank"
 		>
-			plat du jour FoodLab
+			Plat du jour FoodLab
 		</a>
 
 		<a
@@ -93,7 +93,7 @@
 						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 						target="_blank"
 		>
-			plats du jour FoodCourt
+			Plats du jour FoodCourt
 		</a>
 
 		<a
@@ -102,7 +102,7 @@
 						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 						target="_blank"
 		>
-			carte du PopUp
+			Carte du PopUp
 		</a>
 	</div>
 {/if}
