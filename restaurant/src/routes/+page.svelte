@@ -292,7 +292,7 @@
 	</div>
 </section>
 
-<section id="lelab" class="relative mt-16 min-h-72 w-full bg-background pb-10 lg:mt-32 lg:pb-20">
+<section id="lelab" class="relative mt-16 min-h-72 w-full bg-background pb-10 lg:mt-32 lg:pb-20 overflow-hidden">
 	<!-- Container -->
 	<div class="grid h-full w-full grid-cols-1 space-y-5 lg:grid-cols-12 lg:space-y-0">
 		<!-- Title -->
@@ -388,7 +388,7 @@
 
 <section
 	id="foodcourt-popup-cafe"
-	class="relative mt-20 w-full bg-background px-3 pb-5 lg:px-0 lg:pb-20"
+	class="relative mt-20 w-full bg-background px-3 pb-5 lg:px-0 lg:pb-20 overflow-hidden"
 >
 	<!-- Container -->
 	<div class="relative z-20 h-full w-full lg:grid lg:grid-cols-12">
