@@ -144,6 +144,7 @@
 				style:background-position="center"
 				style:background-size="cover"
 			>
+				{#if data.page.footer.btn1.text}
 				<a href={data.page.hero.btn1.link}
 					 type="button"
 					 class="absolute bottom-5 left-5 rounded-full text-secondary bg-primary px-6 py-1 text-sm font-semibold shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -151,6 +152,7 @@
 				>
 					{data.page.hero.btn1.text}
 				</a>
+				{/if}
 			</div>
 
 			<!-- Logo Rounded -->
@@ -214,6 +216,7 @@
 				/>
 			</div>
 			<div class="flex space-y-2 flex-col justify-end">
+				{#if data.page.footer.btn1.text}
 				<a
 					href={data.page.hero.btn1.link}
 					type="button"
@@ -222,6 +225,7 @@
 				>
 					{data.page.hero.btn1.text}
 				</a>
+					{/if}
 
 				<button
 								on:click={() => linkTreeIsOpen.set(true)}
@@ -313,6 +317,7 @@
 					{@html data.page.lab.text}
 				</div>
 				<div class="h-full align-bottom">
+					{#if data.page.lab.btn.text}
 					<a
 						href={data.page.lab.btn.link}
 						type="button"
@@ -321,6 +326,7 @@
 					>
 						{data.page.lab.btn.text}
 					</a>
+					{/if}
 				</div>
 			</div>
 		</div>
@@ -520,6 +526,7 @@
 				{@html data.page.footer.text1}
 			</div>
 			<div class="mt-10 grid justify-center space-y-5 lg:justify-normal">
+				{#if data.page.footer.btn1.text}
 				<a
 					href={data.page.footer.btn1.link}
 					type="button"
@@ -528,6 +535,9 @@
 				>
 					{data.page.footer.btn1.text}
 				</a>
+				{/if}
+
+				{#if data.page.footer.btn2.text}
 				<a
 					href={data.page.footer.btn2.link}
 					type="button"
@@ -536,6 +546,7 @@
 				>
 					{data.page.footer.btn2.text}
 				</a>
+				{/if}
 			</div>
 		</div>
 
