@@ -144,7 +144,7 @@
 				style:background-position="center"
 				style:background-size="cover"
 			>
-				{#if data.page.footer.btn1.text}
+				{#if data.page.hero.btn1.text}
 				<a href={data.page.hero.btn1.link}
 					 type="button"
 					 class="absolute bottom-5 left-5 rounded-full text-secondary bg-primary px-6 py-1 text-sm font-semibold shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
