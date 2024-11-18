@@ -500,11 +500,11 @@
 			</div>
 		</div>
 
-		<div class="mt-10 grid grid-cols-1 justify-around lg:col-span-full lg:grid-cols-4">
+		<div class="mt-10 grid grid-cols-1 justify-around lg:col-span-full lg:grid-cols-4 gap-12">
 			{#each data.page.values.list as value}
-				<div class="flex items-center justify-center">
+				<div class="flex items-center justify-center mt-5 lg:mt-0">
 					<div class="inline-grid h-full w-full justify-center text-center">
-						<img src={value.icon} class="max-h-10 w-32 justify-self-center pb-3" />
+						<img src={value.icon} class="w-32 justify-self-center pb-3" />
 						<span class="uppercase text-white">{@html value.title}</span>
 					</div>
 				</div>
