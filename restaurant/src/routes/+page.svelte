@@ -216,7 +216,7 @@
 				/>
 			</div>
 			<div class="flex space-y-2 flex-col justify-end">
-				{#if data.page.footer.btn1.text}
+				{#if data.page.hero.btn1.text}
 				<a
 					href={data.page.hero.btn1.link}
 					type="button"
