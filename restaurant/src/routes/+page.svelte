@@ -599,5 +599,6 @@
 		z-index: 50;
 		height: auto;
 		box-shadow: 0 10px 10px 0 rgba(0, 0, 0, .25);
+		width: calc(100% - 4rem);
 	}
 </style>
