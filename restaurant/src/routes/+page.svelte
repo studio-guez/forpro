@@ -215,7 +215,7 @@
 					alt="overlay forpro"
 				/>
 			</div>
-			<div class="flex space-y-2 flex-col justify-end">
+			<div class="flex lg:space-y-2 flex-col lg:justify-end justify-start">
 				{#if data.page.hero.btn1.text}
 				<a
 					href={data.page.hero.btn1.link}
