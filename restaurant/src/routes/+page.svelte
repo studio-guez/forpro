@@ -95,12 +95,12 @@
 				 on:click={() => linkTreeIsOpen.set(false)}
 		></div>
 		<a
-						href="https://api.for-pro.ch/media/site/d9ab2d9844-1729500293/menu_2024-10-21_10-44-53.pdf"
+						href={data.page.lab.btn?.link}
 						type="button"
 						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-						target="_blank"
+						target={data.page.lab.btn?.target ? '_blank' : '_self'}
 		>
-			Carte du FoodLab
+			{data.page.lab.btn?.text}
 		</a>
 
 		<a
