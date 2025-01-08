@@ -325,7 +325,7 @@
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>L'ACCUEIL, L'ESPACE CAFÉ ET L'EXPO DU MOMENT</strong></p>
                         <p>Retrouvez à l'entrée du ForPro l’espace d’accueil et&nbsp;d’information ainsi que le <strong>PopUp</strong> Café où savourer viennoiseries et sandwichs faits maison. Profitez&nbsp;également des expositions et événements du&nbsp;moment.</p>
-                        <p>Ouvert dès 7h30</p>
+                        <p>Ouvert dès 7h</p>
                         <p>Expo en cours: <a href="https://for-pro.ch/batir-un-projet" ><strong>ForPro, bâtir un projet</strong></a></p>
                     </div>
                 </div>
@@ -340,7 +340,7 @@
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p><strong>POUR SE CONSTRUIRE UN CHEMIN SUR-MESURE</strong></p>
                         <p>Le LearningLab est un espace dédié aux apprenti·e·s avant, pendant et après leur apprentissage. Cet espace met l’humain au centre et intègre les apprentissages et le travail à d’autres aspects de la vie en collectif.</p>
-                        <p>C'est est un lieu de vie centré sur le développement des individus, l’échange et la transmission des savoirs, ainsi que sur le développement des compétences professionnelles et de l’employabilité.</p>
+                        <p>C'est un lieu de vie centré sur le développement des individus, l’échange et la transmission des savoirs, ainsi que sur le développement des compétences professionnelles et de l’employabilité.</p>
                         <p>En tant que carrefour de connaissances, le LearningLab offre une vision globale et intégrée de l'acquisition et de la diffusion des savoirs et compétences.</p>
                         <p style="text-align: center"><a href="https://for-pro.ch/jeunes" target="_blank"><strong>En savoir plus</strong></a></p>
                     </div>
