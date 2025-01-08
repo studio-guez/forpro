@@ -58,6 +58,9 @@ export interface IBody {
             | IGoogleMaps
             | IBlockImage
             | IBlockListLogo
+            | IBlockVideo
+            | IBlockTimeline
+            | IBlockLinkListContent
     }
 }
 
@@ -80,6 +83,8 @@ export interface IBlock {
         | 'image'
         | 'logos-list'
         | 'video'
+        | 'timeline'
+        | 'listOfPDF'
 }
 
 export interface ISeo {
@@ -392,8 +397,8 @@ export interface IBlockListLogo extends IBlock {
         },
         "id": "2e3f72cf-be8e-4882-9c19-2b69c5213b34",
         "isHidden": false,
-        "type": "logos-list"
     }
+    "type": "logos-list"
 }
 
 /**
@@ -403,8 +408,8 @@ export interface IBlockListLogo extends IBlock {
 
 export interface IBlockTimeline extends IBlock {
     "content": {
-        type: 'timeline'
     }
+    type: 'timeline'
 }
 
 /**
