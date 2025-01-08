@@ -1,7 +1,7 @@
 <script lang="ts" >
     import type {
         IAnimatedList, IBlockImage,
-        IBlockListLogo, IBlockMap,
+        IBlockListLogo, IBlockMap, IBlockVideo,
         ICapsules,
         ICards, ICardsFocus,
         ICta, IDropdown, IGoogleMaps, IHtmlContent,
@@ -25,6 +25,7 @@
           | IAnimatedList
           | IGoogleMaps
           | IBlockImage
+          | IBlockVideo
           | IBlockListLogo
   };
 
