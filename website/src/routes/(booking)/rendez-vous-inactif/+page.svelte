@@ -5,6 +5,6 @@
     </h3>
     <p>En savoir plus sur ForPro et rencontrer nos équipes? Participez à l'une de nos prochaines séances d'information!</p>
     <a class="app-button app-button--rounded"
-       href="/"
+       href="/agenda"
     >Découvrir tous les événements</a>
 </div>
