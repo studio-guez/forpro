@@ -31,6 +31,10 @@ export interface IPage {
     seo: ISeo
 }
 
+export interface IPageEvents extends IPage {
+    childrenDetails: IChildrenDetils[]
+}
+
 export interface IOptions {
     showMenu: boolean
     showNewsletter: boolean
@@ -38,6 +42,41 @@ export interface IOptions {
         text: string
         backgroundcolor: string
         textcolor: string
+    }
+}
+
+export interface IChildrenDetils {
+    cover: IImage[],
+    pageContent: {
+        content: {
+            title: string,
+            cover: string,
+            target: string,
+            category: string,
+            place: string,
+            googlemapaddress: string,
+            description: string,
+            datestart: string,
+            hourstart: string,
+            dateend: string,
+            hourend: string,
+            body: string,
+            uuid: string,
+            dates: string
+        },
+        translations: [],
+        children: [],
+        files: string[],
+        id: string,
+        mediaUrl: string,
+        mediaRoot: string,
+        num: number,
+        parent: string,
+        slug: string,
+        template: {},
+        uid: string,
+        uri: string,
+        url: string
     }
 }
 
