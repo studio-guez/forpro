@@ -252,7 +252,6 @@
                     >
                         <h3>PopUp</h3>
                         <p>#accueil #café #expo</p>
-                        <p>ouverture: été 2024</p>
                     </div>
                 {:else if currentOverSection === 'makerlab'}
                     <div
@@ -268,7 +267,6 @@
                     >
                         <h3>LearningLab</h3>
                         <p>#orienter #explorer #tester #construire #activités</p>
-                        <p>ouverture: été 2024</p>
                     </div>
                 {:else if currentOverSection === 'grandlab'}
                     <div
@@ -292,7 +290,6 @@
                     >
                         <h3>FactoryLab</h3>
                         <p>#entrepreneuriat #incubation #entreprises</p>
-                        <p>ouverture: été 2024</p>
                     </div>
                 {:else if currentOverSection === 'creche'}
                     <div
@@ -300,7 +297,6 @@
                     >
                         <h3>Crèche</h3>
                         <p>#petiteenfance #popepoppa </p>
-                        <p>ouverture: décembre 2024</p>
                     </div>
                 {:else if (currentOverSection === 'foodlab')}
                     <div
@@ -308,7 +304,6 @@
                     >
                         <h3>FoodLab</h3>
                         <p>#restaurants #juniorteam #apprentissage</p>
-                        <p>ouverture: été 2024</p>
                     </div>
                 {/if}
             </div>
@@ -441,7 +436,6 @@
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="Creche">La crèche</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
                         <p>Ce nouvel espace de vie enfantine accueillera 32 enfants et permettra de former aux métiers de la petite enfance.</p>
-                        <p>Ouverture: décembre 2024</p>
                     </div>
                 </div>
             </div>
