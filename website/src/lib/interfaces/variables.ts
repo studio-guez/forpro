@@ -16,6 +16,7 @@ export interface AppointmentDetails {
 
 export interface BookingCMSResponse {
 	readonly headline: string;
+	readonly bookingIsActive: boolean;
 	readonly description: string;
 	readonly bookingServicesLabel: string;
 	readonly bookingSlotsLabel: string;
