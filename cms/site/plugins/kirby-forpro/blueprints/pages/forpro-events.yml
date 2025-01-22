@@ -11,6 +11,7 @@ columns:
     fields:
 
       hero:
+        required: true
         type: structure
         max: 1
         label:
