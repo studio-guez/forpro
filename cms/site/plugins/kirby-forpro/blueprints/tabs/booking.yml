@@ -16,6 +16,15 @@ fields:
       en: Title
       fr: Titre
     type: text
+    width: 3/4
+
+  bookingIsActive:
+    label:
+      en: Booking service visibility
+      fr: Status du service de rendez-vous
+    type: toggle
+    default: true
+    width: 1/4
 
   bookingBandeauInfo:
     label:
