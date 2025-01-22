@@ -7,7 +7,7 @@ import {
     getSchedulesFromCalendarId,
     getServicesFromCalendarId,
 } from "$lib/utils/booking/api";
-import { fail } from "@sveltejs/kit";
+import {fail, redirect} from "@sveltejs/kit";
 import {getEachSlotByDayBetweenTwoDates} from "./utils";
 import dayjs from "dayjs";
 
@@ -20,6 +20,8 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 
     const res = await fetch(cmsBookingUrl);
     const content: BookingCMSResponse = await res.json();
+
+    if( !content.bookingIsActive ) redirect(302, '/rendez-vous-inactif');
 
     const options = await getCalendarOptions(calendarId);
 
