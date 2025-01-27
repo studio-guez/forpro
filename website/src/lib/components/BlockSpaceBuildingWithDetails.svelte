@@ -282,7 +282,6 @@
                     >
                         <h3>L’École d’Horlogerie de Genève</h3>
                         <p>#horlogerie #micromecanique #cfpt #dip</p>
-                        <p>ouvert</p>
                     </div>
                 {:else if currentOverSection === 'FactoryLab'}
                     <div
