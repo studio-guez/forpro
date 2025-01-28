@@ -7,14 +7,20 @@
     <div class="s-evenements__events"
     >
         <div class="s-evenements__events__tags">
-            {#each listOfTags as tag}
-                <div class="s-evenements__events__tags__item">{tag}</div>
+            {#each listOfTags as tag, index}
+                <div class="s-evenements__events__tags__item"
+                     class:is-active={index === 0}
+                     style="--s-evenements__tags-color: var(--app-color--blue)"
+                >{tag}</div>
             {/each}
         </div>
 
         <div class="s-evenements__events__tags">
-            {#each listOfSubcat as tag}
-                <div class="s-evenements__events__tags__item" style="background: #3df069">{tag}</div>
+            {#each listOfSubcat as tag, index}
+                <div class="s-evenements__events__tags__item"
+                     class:is-active={index === 0}
+                     style="--s-evenements__tags-color: var(--app-color--green)"
+                >{tag}</div>
             {/each}
         </div>
 
@@ -22,18 +28,41 @@
         <div class="s-evenements__events__events-wrap">
             {#each data.childrenDetails as event}
                 <div class="s-evenements__events__events-wrap__item">
-                    <div>
-                        {event.pageContent.content.datestart}
+                    <div class="s-evenements__events__events-wrap__item__date">
+                        {formatDate(event.pageContent.content.datestart)}
                     </div>
-                    <div>
+                    <div class="s-evenements__events__events-wrap__item__title">
                         {event.pageContent.content.title}
                     </div>
-                    <img
-                            alt="cover"
-                            src="{event.cover[0]?.resize.reg}"
-                    />
+                    {#if event.cover[0]}
+                        <img class="s-evenements__events__events-wrap__item__cover"
+                             alt="cover"
+                             src="{event.cover[0]?.resize.reg}"
+                        />
+                    {:else}
+                        <div class="s-evenements__events__events-wrap__item__cover s-evenements__events__events-wrap__item__cover--default"
+                        >
+                            <div>default design element</div>
+                        </div>
+                    {/if}
+                    <div class="s-evenements__events__events-wrap__item__tags">
+                        {#each event.pageContent.content.category.split(',') as eventItem}
+                            <div class="s-evenements__events__events-wrap__item__tags__item">
+                                {eventItem}
+                            </div>
+                        {/each}
+                    </div>
+
+                    <div class="s-evenements__events__events-wrap__item__description">
+                        <div>
+                            {event.pageContent.content.description}
+                        </div>
+                    </div>
+
                     <div>
-                        {event.pageContent.content.category}
+                        <a class="app-button app-button--rounded"
+                           href="/"
+                        >En savoir plus</a>
                     </div>
                 </div>
             {/each}
@@ -46,6 +75,7 @@
 <script lang="ts">
     import {type IPage, type IPageEvents} from "$lib/interfaces/cmsApiResponse";
     import AppPage from "$lib/components/AppPage.svelte";
+    import {formatDate} from "$lib/utils/formatDate";
 
     export let data: IPageEvents;
 
@@ -86,39 +116,122 @@
 </script>
 
 <style lang="scss">
-    .s-evenements {
+:global(.s-evenements .s-page) {
+    min-height: initial !important;
+}
 
-    }
 .s-evenements__events__tags {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
+    gap: .5rem;
     box-sizing: border-box;
     padding: 0 2rem;
     width: 100%;
+    margin-bottom: .5rem;
 }
 
     .s-evenements__events__tags__item {
-        background: var(--app-color--blue);
+        background: var(--s-evenements__tags-color);
         color: white;
         border-radius: 1rem;
         white-space: nowrap;
-        padding: .25rem .75rem .35rem;
+        padding: .15em 1em .35em;
+        border: solid 2px currentColor;
+
+        &.is-active {
+            color: var(--s-evenements__tags-color);
+            background: white;
+        }
     }
 
     .s-evenements__events__events-wrap {
         display: flex;
         text-align: center;
         flex-wrap: wrap;
+        gap: var(--app-gutter_regular);
+        justify-content: center;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 1rem 1rem 5rem;
     }
 
     .s-evenements__events__events-wrap__item {
         display: block;
-        background: var(--app-color--grey--light);
-        width: 50%;
+        width: calc( 50% - (var(--app-gutter_regular) / 2 ));
         box-sizing: border-box;
-        padding: 1rem;
+        padding: 3rem 1rem 1rem;
         border-radius: 1rem;
+        position: relative;
+        background: var(--app-color-beige);
+        //background: var(--app-color--blue--light);
+        border: solid 2px var(--app-color--blue);
     }
+
+    .s-evenements__events__events-wrap__item__date {
+        position: absolute;
+        top: var(--app-gutter_regular);
+        left: var(--app-gutter_regular);
+        background: white;
+        font-size: .75rem;
+        padding: .15em .75em .3em;
+        border-radius: 1em;
+    }
+
+    .s-evenements__events__events-wrap__item__title {
+        font-size: 2rem;
+        line-height: 1em;
+        font-weight: 900;
+        margin-bottom: 1rem;
+        color: var(--app-color--blue);
+        //color: var(--fp-color-makerlab);
+    }
+
+    .s-evenements__events__events-wrap__item__cover {
+        display: block;
+        width: 100%;
+        aspect-ratio: 5/3;
+        object-fit: cover;
+        border-radius: 1rem;
+
+        &.s-evenements__events__events-wrap__item__cover--default {
+            background: var(--app-color--blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            > div {
+                font-size: 3rem;
+                flex-wrap: nowrap;
+                font-weight: 900;
+                line-height: 1em;
+                transform: rotate(-5deg);
+            }
+        }
+    }
+
+.s-evenements__events__events-wrap__item__tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .5rem;
+    padding: .5rem 0;
+}
+
+.s-evenements__events__events-wrap__item__tags__item {
+    display: block;
+    background: var(--app-color--blue);
+    color: white;
+    padding: .15em .5em .35em;
+    font-size: .75rem;
+    border-radius: 1em;
+}
+
+.s-evenements__events__events-wrap__item__description {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.15em;
+    padding-bottom: 1rem;
+    text-align: left;
+}
 </style>
