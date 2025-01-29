@@ -82,7 +82,7 @@
       flex-direction: column;
       align-items: center;
       flex-wrap: nowrap;
-      width: calc( (100% / 2) - 1rem / 2) ;
+      width: calc( (100% / 2) - 1rem / 2);
       box-sizing: border-box;
 
       @media (max-width: scss-params.$fp-breakpoint-sm) {
@@ -199,7 +199,7 @@
   .s-cards.style2 .s-cards__container__card {
 
 
-      border: solid 2px;
+      border: solid var(--app-line-with);
       border-radius: 2rem;
       overflow: hidden;
 
