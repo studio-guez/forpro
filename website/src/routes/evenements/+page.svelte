@@ -10,7 +10,7 @@
             {#each listOfTags as tag, index}
                 <div class="s-evenements__events__tags__item"
                      class:is-active={index === 0}
-                     style="--s-evenements__tags-color: var(--app-color--blue)"
+                     style="--s-evenements__tags-color: white; --s-evenements__tags-bg: var(--app-color--blue);"
                 >{tag}</div>
             {/each}
         </div>
@@ -19,7 +19,7 @@
             {#each listOfSubcat as tag, index}
                 <div class="s-evenements__events__tags__item"
                      class:is-active={index === 0}
-                     style="--s-evenements__tags-color: var(--app-color--green)"
+                     style="--s-evenements__tags-color: black; --s-evenements__tags-bg: var(--app-color--green);"
                 >{tag}</div>
             {/each}
         </div>
@@ -28,23 +28,25 @@
         <div class="s-evenements__events__events-wrap">
             {#each data.childrenDetails as event}
                 <div class="s-evenements__events__events-wrap__item">
-                    <div class="s-evenements__events__events-wrap__item__date">
-                        {formatDate(event.pageContent.content.datestart)}
-                    </div>
                     <div class="s-evenements__events__events-wrap__item__title">
                         {event.pageContent.content.title}
                     </div>
-                    {#if event.cover[0]}
-                        <img class="s-evenements__events__events-wrap__item__cover"
-                             alt="cover"
-                             src="{event.cover[0]?.resize.reg}"
-                        />
-                    {:else}
-                        <div class="s-evenements__events__events-wrap__item__cover s-evenements__events__events-wrap__item__cover--default"
-                        >
-                            <div>default design element</div>
+                        <div class="s-evenements__events__events-wrap__item__cover">
+                            {#if event.cover[0]}
+                                <img class="s-evenements__events__events-wrap__item__cover__image"
+                                     alt="cover"
+                                     src="{event.cover[0]?.resize.reg}"
+                                />
+                            {:else}
+                                <img class="s-evenements__events__events-wrap__item__cover__image"
+                                     alt="cover"
+                                     src="empty_images/240625_intro:outro_ForPro_Admin-3.jpg"
+                                />
+                            {/if}
+                            <div class="s-evenements__events__events-wrap__item__cover__date">
+                                {formatDate(event.pageContent.content.datestart)}
+                            </div>
                         </div>
-                    {/if}
                     <div class="s-evenements__events__events-wrap__item__tags">
                         {#each event.pageContent.content.category.split(',') as eventItem}
                             <div class="s-evenements__events__events-wrap__item__tags__item">
@@ -132,15 +134,15 @@
 }
 
     .s-evenements__events__tags__item {
-        background: var(--s-evenements__tags-color);
-        color: white;
+        background: var(--s-evenements__tags-bg);
+        color: var(--s-evenements__tags-color);
         border-radius: 1rem;
         white-space: nowrap;
         padding: .15em 1em .35em;
-        border: solid 2px currentColor;
+        border: solid 2px var(--s-evenements__tags-bg);
 
         &.is-active {
-            color: var(--s-evenements__tags-color);
+            color: black;
             background: white;
         }
     }
@@ -160,18 +162,20 @@
         display: block;
         width: calc( 50% - (var(--app-gutter_regular) / 2 ));
         box-sizing: border-box;
-        padding: 3rem 1rem 1rem;
+        padding: 2rem 1rem;
         border-radius: 1rem;
         position: relative;
         background: var(--app-color-beige);
         //background: var(--app-color--blue--light);
         border: solid 2px var(--app-color--blue);
+        margin-top: 2rem;
     }
 
-    .s-evenements__events__events-wrap__item__date {
+    .s-evenements__events__events-wrap__item__cover__date {
         position: absolute;
-        top: var(--app-gutter_regular);
-        left: var(--app-gutter_regular);
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%);
         background: white;
         font-size: .75rem;
         padding: .15em .75em .3em;
@@ -182,12 +186,24 @@
         font-size: 2rem;
         line-height: 1em;
         font-weight: 900;
-        margin-bottom: 1rem;
-        color: var(--app-color--blue);
-        //color: var(--fp-color-makerlab);
+        color: white;
+        background: var(--fp-color-makerlab);
+        padding: var(--app-gutter_regular);
+        top: 0;
+        left: 0;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 2rem;
+        transform: translate( 0, -4rem );
+        margin-bottom: -2rem;
     }
 
     .s-evenements__events__events-wrap__item__cover {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+
+    .s-evenements__events__events-wrap__item__cover__image {
         display: block;
         width: 100%;
         aspect-ratio: 5/3;
