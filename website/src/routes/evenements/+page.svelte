@@ -161,6 +161,7 @@
     .s-evenements__events__events-wrap__item {
         display: block;
         width: calc( 50% - (var(--app-gutter_regular) / 2 ));
+        max-width: 20rem;
         box-sizing: border-box;
         padding: 2rem 1rem;
         border-radius: 1rem;
@@ -183,7 +184,7 @@
     }
 
     .s-evenements__events__events-wrap__item__title {
-        font-size: 2rem;
+        font-size: 1.65rem;
         line-height: 1em;
         font-weight: 900;
         color: white;
