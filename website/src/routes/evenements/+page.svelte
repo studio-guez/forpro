@@ -40,7 +40,7 @@
                             {:else}
                                 <img class="s-evenements__events__events-wrap__item__cover__image"
                                      alt="cover"
-                                     src="empty_images/240625_intro:outro_ForPro_Admin-3.jpg"
+                                     src="empty_images/240625_intro-outro_ForPro_Admin-3.jpg"
                                 />
                             {/if}
                             <div class="s-evenements__events__events-wrap__item__cover__date">
