@@ -14,3 +14,48 @@ fields:
       Affiche la timeline,
       le contenu n'est pas éditable encore,
       un peu le faire si besoin
+
+  items:
+    label: Timeline items
+    type: structure
+    columns:
+
+    fields:
+      title:
+        label: titre
+        type: writer
+        inline: true
+        marks:
+          - italic
+      date:
+        label: date
+        type: date
+      details:
+        label: détails
+        type: writer
+        inline: true
+        marks:
+          - italic
+          - link
+        nodes:
+          - paragraph
+      content:
+        label: contenu
+        type: writer
+        nodes:
+          - paragraph
+        marks:
+          - italic
+          - link
+          - bold
+      button_text:
+        width: 1/2
+        label: text du bouton
+        help: si vide, plus d'information
+        type: text
+      button_link:
+        width: 1/2
+        label: lien du bouton
+        type: url
+        nodes:
+          - paragraph
