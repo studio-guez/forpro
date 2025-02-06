@@ -18,8 +18,6 @@ fields:
   items:
     label: Timeline items
     type: structure
-    columns:
-
     fields:
       title:
         label: titre
