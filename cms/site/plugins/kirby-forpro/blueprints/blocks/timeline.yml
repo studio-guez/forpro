@@ -26,8 +26,18 @@ fields:
         marks:
           - italic
       date:
-        label: date
+        width: 1/2
+        label: date de début
         type: date
+      dateEnd:
+        width: 1/2
+        label: date de fin
+        type: date
+        help: si pas remplie, rien ne s'affiche
+      dateMessage:
+        label: message à la place de la ou des dates
+        type: text
+        help: si remplie, ce message s'affichera à la place de la ou les dates précédentes
       details:
         label: détails
         type: writer
