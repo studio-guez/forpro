@@ -28,6 +28,7 @@ class Image extends File
 	protected Dimensions|null $dimensions = null;
 
 	public static array $resizableTypes = [
+		'avif',
 		'jpg',
 		'jpeg',
 		'gif',
@@ -76,10 +77,11 @@ class Image extends File
 		}
 
 		if (in_array($this->mime(), [
+			'image/avif',
+			'image/gif',
 			'image/jpeg',
 			'image/jp2',
 			'image/png',
-			'image/gif',
 			'image/webp'
 		])) {
 			return $this->dimensions = Dimensions::forImage($this->root);
