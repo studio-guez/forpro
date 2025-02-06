@@ -96,8 +96,6 @@ class Collection extends Iterator implements Countable
 	 * Low-level setter for elements
 	 *
 	 * @param string $key string or array
-	 * @param mixed $value
-	 * @return void
 	 */
 	public function __set(string $key, $value): void
 	{
@@ -1258,74 +1256,58 @@ Collection::$filters['!='] = function ($collection, $field, $test, $split = fals
  * In Filter
  */
 Collection::$filters['in'] = [
-	'validator' => function ($value, $test) {
-		return in_array($value, $test) === true;
-	},
-	'strict' => false
+	'validator' => fn ($value, $test) => in_array($value, $test) === true,
+	'strict'    => false
 ];
 
 /**
  * Not In Filter
  */
 Collection::$filters['not in'] = [
-	'validator' => function ($value, $test) {
-		return in_array($value, $test) === false;
-	},
+	'validator' => fn ($value, $test) => in_array($value, $test) === false
 ];
 
 /**
  * Contains Filter
  */
 Collection::$filters['*='] = [
-	'validator' => function ($value, $test) {
-		return strpos($value, $test) !== false;
-	},
-	'strict' => false
+	'validator' => fn ($value, $test) => strpos($value, $test) !== false,
+	'strict'    => false
 ];
 
 /**
  * Not Contains Filter
  */
 Collection::$filters['!*='] = [
-	'validator' => function ($value, $test) {
-		return strpos($value, $test) === false;
-	},
+	'validator' => fn ($value, $test) => strpos($value, $test) === false
 ];
 
 /**
  * More Filter
  */
 Collection::$filters['>'] = [
-	'validator' => function ($value, $test) {
-		return $value > $test;
-	}
+	'validator' => fn ($value, $test) => $value > $test
 ];
 
 /**
  * Min Filter
  */
 Collection::$filters['>='] = [
-	'validator' => function ($value, $test) {
-		return $value >= $test;
-	}
+	'validator' => fn ($value, $test) => $value >= $test
 ];
 
 /**
  * Less Filter
  */
 Collection::$filters['<'] = [
-	'validator' => function ($value, $test) {
-		return $value < $test;
-	}
+	'validator' => fn ($value, $test) => $value < $test
 ];
 
 /**
  * Max Filter
  */
 Collection::$filters['<='] = [
-	'validator' => function ($value, $test) {
-		return $value <= $test;
-	}
+	'validator' => fn ($value, $test) => $value <= $test
 ];
 
 /**
@@ -1340,9 +1322,7 @@ Collection::$filters['$='] = [
  * Not Ends With Filter
  */
 Collection::$filters['!$='] = [
-	'validator' => function ($value, $test) {
-		return V::endsWith($value, $test) === false;
-	}
+	'validator' => fn ($value, $test) => V::endsWith($value, $test) === false
 ];
 
 /**
@@ -1357,19 +1337,15 @@ Collection::$filters['^='] = [
  * Not Starts With Filter
  */
 Collection::$filters['!^='] = [
-	'validator' => function ($value, $test) {
-		return V::startsWith($value, $test) === false;
-	}
+	'validator' => fn ($value, $test) => V::startsWith($value, $test) === false
 ];
 
 /**
  * Between Filter
  */
 Collection::$filters['between'] = Collection::$filters['..'] = [
-	'validator' => function ($value, $test) {
-		return V::between($value, ...$test) === true;
-	},
-	'strict' => false
+	'validator' => fn ($value, $test) => V::between($value, ...$test) === true,
+	'strict'    => false
 ];
 
 /**
@@ -1384,9 +1360,7 @@ Collection::$filters['*'] = [
  * Not Match Filter
  */
 Collection::$filters['!*'] = [
-	'validator' => function ($value, $test) {
-		return V::match($value, $test) === false;
-	}
+	'validator' => fn ($value, $test) => V::match($value, $test) === false
 ];
 
 /**
@@ -1421,63 +1395,49 @@ Collection::$filters['minwords'] = [
  * Date Equals Filter
  */
 Collection::$filters['date =='] = [
-	'validator' => function ($value, $test) {
-		return V::date($value, '==', $test);
-	}
+	'validator' => fn ($value, $test) => V::date($value, '==', $test)
 ];
 
 /**
  * Date Not Equals Filter
  */
 Collection::$filters['date !='] = [
-	'validator' => function ($value, $test) {
-		return V::date($value, '!=', $test);
-	}
+	'validator' => fn ($value, $test) => V::date($value, '!=', $test)
 ];
 
 /**
  * Date More Filter
  */
 Collection::$filters['date >'] = [
-	'validator' => function ($value, $test) {
-		return V::date($value, '>', $test);
-	}
+	'validator' => fn ($value, $test) => V::date($value, '>', $test)
 ];
 
 /**
  * Date Min Filter
  */
 Collection::$filters['date >='] = [
-	'validator' => function ($value, $test) {
-		return V::date($value, '>=', $test);
-	}
+	'validator' => fn ($value, $test) => V::date($value, '>=', $test)
 ];
 
 /**
  * Date Less Filter
  */
 Collection::$filters['date <'] = [
-	'validator' => function ($value, $test) {
-		return V::date($value, '<', $test);
-	}
+	'validator' => fn ($value, $test) => V::date($value, '<', $test)
 ];
 
 /**
  * Date Max Filter
  */
 Collection::$filters['date <='] = [
-	'validator' => function ($value, $test) {
-		return V::date($value, '<=', $test);
-	}
+	'validator' => fn ($value, $test) => V::date($value, '<=', $test)
 ];
 
 /**
  * Date Between Filter
  */
 Collection::$filters['date between'] = Collection::$filters['date ..'] = [
-	'validator' => function ($value, $test) {
-		return
+	'validator' => fn ($value, $test) =>
 			V::date($value, '>=', $test[0]) &&
-			V::date($value, '<=', $test[1]);
-	}
+			V::date($value, '<=', $test[1])
 ];
