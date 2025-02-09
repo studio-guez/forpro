@@ -1,8 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import {copyTextToClipboard} from "$lib/utils/copyTextToClipboard";
+  import type {IBlockTimeline, IBlockTimeline_item} from "$lib/interfaces/cmsApiResponse";
+  import {formatDate} from "$lib/utils/formatDate";
 
   let timelineElement: HTMLElement | null = null
+
+  export let timelineData: IBlockTimeline
 
   onMount(() => {
     setTimelineInteractionObserver(timelineElement)
@@ -50,66 +54,50 @@
 
 <section class="v-time-line" bind:this={timelineElement}>
   <div class="v-time-line__wrap">
-    <div class="v-time-line__item">
-      <h6 class="v-time-line__item__date">Mercredi 18 septembre 2024</h6>
-      <h3 class="v-time-line__item__title">Ouverture des candidatures</h3>
-    </div>
+    {#each timelineData.content.items as timelineItem}
+      <div class="v-time-line__item">
+        {#if (timelineItem.datemessage)}
+          <h6 class="v-time-line__item__date">
+            {timelineItem.datemessage}
+          </h6>
+        {:else if timelineItem.date}
+          <h6 class="v-time-line__item__date">
+            {#if timelineItem.dateend}du{/if}
+            {formatDate(timelineItem.date)}
+            {#if timelineItem.dateend}
+              au {formatDate(timelineItem.dateend)}
+            {/if}
+            {#if timelineItem.details}
+                | {timelineItem.details}
+            {/if}
+          </h6>
+        {/if}
+        <h3 class="v-time-line__item__title">{timelineItem.title}</h3>
 
-    <div class="v-time-line__item">
-      <h6 class="v-time-line__item__date">Dimanche 06 octobre 2024</h6>
-      <h3 class="v-time-line__item__title">Délai de postulation</h3>
-      <p class="v-time-line__item__desc">
-        <a class="app-button app-button--rounded" target="_blank"
-           href="https://api.for-pro.ch/comment-postuler.pdf"
-           style="--app-button--color: var(--app-color--green);"
-        >
-          Comment déposer ma&nbsp;candidature
-        </a>
-      </p>
-    </div>
+        <div class="v-time-line__item__desc app-remove-margin-child">
+          {@html timelineItem.content}
 
-    <div class="v-time-line__item">
-      <h6 class="v-time-line__item__date">Jeudi 10 octobre 2024</h6>
-      <h3 class="v-time-line__item__title">Sélection sur&nbsp;dossier</h3>
-      <p class="v-time-line__item__desc">Mail d’annonce aux candidat·e·s sélectionné·e·s pour l'atelier.</p>
-    </div>
-
-    <div class="v-time-line__item">
-      <h6 class="v-time-line__item__date">Mardi 15 octobre 2024</h6>
-      <h3 class="v-time-line__item__title">Atelier collectif de recrutement</h3>
-      <p class="v-time-line__item__desc">
-        <strong>Horaire: 17h à 20h</strong>
-      </p>
-      <p class="v-time-line__item__desc fp-text-small">
-        Afin de vous plonger dans la logique de fonctionnement ForPro et de mettre en avant vos compétences personnelles et
-        sociales, nous mettons en place une série d'ateliers collaboratifs. Dans ces ateliers, vous serez associé·e
-        avec notre public – des jeunes de 16 à 20 ans – pour réaliser une tâche demandant de se coordonner et de se mettre&nbsp;d'accord.
-        <br />
-        <br />Un temps de retour sur votre expérience de groupe est prévu en deuxième partie.
-      </p>
-    </div>
-
-    <div class="v-time-line__item v-time-line__item--gant">
-      <h6 class="v-time-line__item__date">Du jeudi 17 octobre au vendredi 25 octobre 2024</h6>
-      <h3 class="v-time-line__item__title">Entretiens individuels</h3>
-    </div>
-
-    <div class="v-time-line__item v-time-line__item--gant">
-      <h6 class="v-time-line__item__date">Au plus tard le lundi 28 octobre 2024</h6>
-      <h3 class="v-time-line__item__title">Décisions finales</h3>
-      <p class="v-time-line__item__desc">Appels téléphoniques pour informer les candidat·e·s.</p>
-    </div>
-
-    <div class="v-time-line__item v-time-line__item--gant">
-      <h6 class="v-time-line__item__date">Lundi 03 février 2025</h6>
-      <h3 class="v-time-line__item__title">Entrée en fonction</h3>
-    </div>
+          {#if (timelineItem.button_link)}
+            <a class="app-button app-button--rounded" target="_blank"
+               href="{timelineItem.button_link}"
+               style="--app-button--color: var(--app-color--green);"
+            >
+              {#if (timelineItem.button_text)}
+                {timelineItem.button_text}
+              {:else}
+                plus d'information
+              {/if}
+            </a>
+          {/if}
+        </div>
+      </div>
+    {/each}
   </div>
 
   <div class="v-time-line__button">
     <div class="app-button app-button--rounded"
          style="--app-button--color: var(--app-color--green);"
-            on:click={onClickCopyButton}>{textButtonShareLink}
+         on:click={onClickCopyButton}>{textButtonShareLink}
     </div>
   </div>
 
@@ -236,6 +224,10 @@
         transition: opacity .75s ease-in-out, transform .75s ease-in-out;
         transform: translateY(2rem);
         opacity: 0;
+      }
+      :global(.v-time-line__item__desc p) {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
       }
 
       //&.ts-is-intersecting {
