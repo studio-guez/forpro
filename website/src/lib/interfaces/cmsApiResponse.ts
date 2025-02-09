@@ -447,8 +447,20 @@ export interface IBlockListLogo extends IBlock {
 
 export interface IBlockTimeline extends IBlock {
     "content": {
+        items: IBlockTimeline_item[]
     }
     type: 'timeline'
+}
+
+export interface IBlockTimeline_item {
+    title: string,
+    date: string,
+    dateend: string,
+    datemessage: string,
+    details: string,
+    content: string,
+    button_text: string,
+    button_link: string
 }
 
 /**
