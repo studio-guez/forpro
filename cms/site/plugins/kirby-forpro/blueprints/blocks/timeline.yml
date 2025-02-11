@@ -10,6 +10,7 @@ fields:
   items:
     label: Timeline items
     type: structure
+    min: 1
     fields:
       title:
         label: titre
