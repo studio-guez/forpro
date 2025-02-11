@@ -14,6 +14,7 @@
       <a class="block-list-of-links__item"
          style="--color-button: {linkContent.color}"
          href="{linkContent.lien}"
+         target="_blank"
       >
         <div>
           {linkContent.title}
