@@ -1,13 +1,14 @@
-export function formatDate(stringDate: string): string {
+export function formatDate(stringDate: string, withYear = false): string {
 
     const startDate = new Date(stringDate)
 
     const options: Intl.DateTimeFormatOptions = {
         weekday: "long",
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
+        year: withYear ? 'numeric' : undefined
     }
     const formatter = new Intl.DateTimeFormat('fr-FR', options)
 
-    return formatter.format(startDate)
+    return formatter.format(startDate).replace(/\b1\b/, '1<sup>er</sup>')
 }

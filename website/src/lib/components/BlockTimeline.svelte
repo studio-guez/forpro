@@ -63,9 +63,9 @@
         {:else if timelineItem.date}
           <h6 class="v-time-line__item__date">
             {#if timelineItem.dateend}du{/if}
-            {formatDate(timelineItem.date)}
+            {@html formatDate(timelineItem.date, true)}
             {#if timelineItem.dateend}
-              au {formatDate(timelineItem.dateend)}
+              au {@html formatDate(timelineItem.dateend, true)}
             {/if}
             {#if timelineItem.details}
                 | {timelineItem.details}
