@@ -203,7 +203,7 @@
         transition: opacity .75s ease-in-out, transform .55s ease-in-out;
         transform: translateY(2rem);
         opacity: 0;
-        text-transform: uppercase;
+        text-transform: capitalize;
       }
 
       .v-time-line__item__title {
@@ -239,7 +239,7 @@
       .v-time-line__item__date {
         opacity: 1;
         transform: translateY(0);
-        text-transform: uppercase;
+        text-transform: capitalize;
       }
 
       .v-time-line__item__title {
