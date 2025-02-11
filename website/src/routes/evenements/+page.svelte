@@ -44,7 +44,7 @@
                                 />
                             {/if}
                             <div class="s-evenements__events__events-wrap__item__cover__date">
-                                {formatDate(event.pageContent.content.datestart)}
+                                {@html formatDate(event.pageContent.content.datestart)}
                             </div>
                         </div>
                     <div class="s-evenements__events__events-wrap__item__tags">
