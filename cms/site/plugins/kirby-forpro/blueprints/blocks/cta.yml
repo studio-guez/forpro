@@ -23,10 +23,18 @@ fields:
     type: text
 
   link:
+    width: 3/4
     label:
       fr: Lien
       en: Link
     type: url
+
+  target_blank:
+    width: 1/4
+    label:
+      fr: Ouvrir dans un autre onglet
+      en: Open in new tab
+    type: toggle
 
   backgroundColor:
     label:
