@@ -32,6 +32,7 @@
             --s-cat-background-color: {content.content.backgroundcolor};
             --s-cat-color: {content.content.textcolor};
         "
+       target="{content.content.target_blank === 'true' ? '_blank' : ''}"
     >
         {#if (image.length > 0)}
             <img class="s-block-cta__icon"

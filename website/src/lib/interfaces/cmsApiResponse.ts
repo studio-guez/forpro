@@ -184,6 +184,7 @@ export interface ICta extends IBlock {
         backgroundcolor: string
         textcolor: string
         styles: 'style1' | 'style2'
+        target_blank: 'true' | 'false'
     }
 }
 
