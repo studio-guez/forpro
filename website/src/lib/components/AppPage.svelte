@@ -50,14 +50,8 @@
                     <iframe title="youtube embed"
                             width="720"
                             height="405"
-                            style="
-                                width: 100%;
-                                display: block;
-                                height: auto;
-                                aspect-ratio: 720/405;
-                                margin: auto;
-                                max-width: 50rem;
-                            "
+                            class:is-vertical={content.content.is_vertical}
+                            class="s-page__content__youtube"
                             src="{`https://www.youtube.com/embed/${content.content.url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|.*\/))([a-zA-Z0-9_-]{11})/)[1]}?modestbranding=1&playsinline=1&color=white`}"
                             frameborder="0"
                             allowfullscreen
@@ -208,6 +202,21 @@
     &:last-child {
       margin-bottom: 4rem;
     }
+  }
+
+  .s-page__content__youtube {
+      width: 100%;
+      display: block;
+      height: auto;
+      aspect-ratio: 720/405;
+      margin: auto;
+      max-width: 50rem;
+
+      &.is-vertical {
+          aspect-ratio: 1080/1920;
+
+          max-width: 18rem;
+      }
   }
 
 </style>

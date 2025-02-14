@@ -104,9 +104,24 @@ fields:
                 fr: 'non'
 
       video:
-          extends: blocks/video
-          fields:
-            caption: false
+#        extends: blocks/video
+        fields:
+          is_vertical:
+            type: toggle
+            label: Vidéo verticale
+          url:
+            label: field.blocks.video.url.label
+            type: url
+            placeholder: field.blocks.video.url.placeholder
+          location: false
+          caption: false
+          video: false
+          poster: false
+          autoplay: false
+          muted: false
+          loop: false
+          controls: false
+          preload: false
       - body
       - list
       - dropdown
