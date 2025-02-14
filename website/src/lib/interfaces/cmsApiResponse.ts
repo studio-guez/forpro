@@ -237,7 +237,8 @@ export interface IBlockVideo extends IBlock {
         "muted": "true",
         "loop": "false",
         "controls": "true",
-        "preload": "auto"
+        "preload": "auto",
+        is_vertical: 'true' | 'false'
     }
     "type": "video"
     "id": string,
