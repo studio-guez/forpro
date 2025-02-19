@@ -17,6 +17,14 @@ columns:
         file:
           type: image
         layout: cards
+        width: 3/4
+
+
+      isArchive:
+        label: Archiver?
+        type: toggle
+        default: false
+        width: 1/4
 
       title:
         label: Titre
@@ -33,40 +41,24 @@ columns:
         type: multiselect
         min: 1
         options:
-          - Soutien
-          - Apprentissage
-          - Formation
-          - Orientation
-          - Entreprises
-          - Art et culture
-          - Cuisine
-          - Do it yourself
+          - parents & entourage
+          - jeunes
+          - entreprises
+          - tout public
       subOptions:
         width: 1/3
         label: Sous categories
         type: multiselect
         min: 1
         options:
-          - Débat
-          - Conférence
-          - Rencontre
-          - Expo-vente
-          - Jeudredi
-          - Afterwork
-          - Soirée festive
-          - Vitrine métier
-          - Visite
-          - Exposition
-          - Vernissage
-          - Concert
-          - Défilé de mode
-          - Cinéma
-          - Danse
-          - Performance
-          - Résidence
-          - Programme EXPLORE
-          - CAMPUS
-          - Atelier
+          - s’orienter
+          - trouver du soutien
+          - accompagne
+          - former
+          - s’émerveille
+          - manger
+          - fabriquer
+          - expérimenter
       place:
         width: 1/3
         label: Lieu
