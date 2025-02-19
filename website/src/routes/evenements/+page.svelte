@@ -6,27 +6,37 @@
 
     <div class="s-evenements__events"
     >
+        <div class="s-evenements__events__search">
+            <div class="s-evenements__events__search__bar">
+                <input type="text" class="s-evenements__events__search__bar__input" >
+                <div class="s-evenements__events__search__bar__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
+                </div>
+            </div>
+        </div>
         <div class="s-evenements__events__tags">
             {#each listOfTags as tag, index}
                 <div class="s-evenements__events__tags__item"
-                     class:is-active={index === 0}
-                     style="--s-evenements__tags-color: white; --s-evenements__tags-bg: var(--app-color--blue);"
-                >{tag}</div>
+                     on:click={() => activeTag === tag ? activeTag = null : activeTag = tag}
+                     class:is-active={ activeTag === tag }
+                     style="--s-evenements__tags-color: var(--app-color--blue); --s-evenements__tags-bg: {tag.color};"
+                >{tag.title}</div>
             {/each}
         </div>
 
         <div class="s-evenements__events__tags">
-            {#each listOfSubcat as tag, index}
+            {#each listOfSubcategories as tag, index}
                 <div class="s-evenements__events__tags__item"
-                     class:is-active={index === 0}
-                     style="--s-evenements__tags-color: black; --s-evenements__tags-bg: var(--app-color--green);"
-                >{tag}</div>
+                     on:click={() => activeSubCategory.includes(tag) ? activeSubCategory = activeSubCategory.filter(t => t !== tag) : activeSubCategory = [...activeSubCategory, tag] }
+                     class:is-active={ activeSubCategory.includes(tag) }
+                     style="--s-evenements__tags-color: white; --s-evenements__tags-bg: {tag.color};"
+                >{tag.title}</div>
             {/each}
         </div>
 
 
         <div class="s-evenements__events__events-wrap">
-            {#each data.childrenDetails as event}
+            {#each data.childrenDetails.filter(value => value.pageContent.content.isarchive !== 'true') as event}
                 <div class="s-evenements__events__events-wrap__item">
                     <div class="s-evenements__events__events-wrap__item__title">
                         {event.pageContent.content.title}
@@ -69,6 +79,54 @@
                 </div>
             {/each}
         </div>
+
+
+        <div class="s-evenements__events__events-wrap s-evenements__events__events-wrap--archive">
+            <h3 style="width: 100%;">Archives</h3>
+            {#each data.childrenDetails.filter(value => value.pageContent.content.isarchive === 'true') as event}
+                <div class="s-evenements__events__events-wrap__item">
+                    <div class="s-evenements__events__events-wrap__item__title">
+                        {event.pageContent.content.title}
+                    </div>
+                    <div class="s-evenements__events__events-wrap__item__cover">
+                        {#if event.cover[0]}
+                            <img class="s-evenements__events__events-wrap__item__cover__image"
+                                 alt="cover"
+                                 src="{event.cover[0]?.resize.reg}"
+                            />
+                        {:else}
+                            <img class="s-evenements__events__events-wrap__item__cover__image"
+                                 alt="cover"
+                                 src="empty_images/240625_intro-outro_ForPro_Admin-3.jpg"
+                            />
+                        {/if}
+                        <div class="s-evenements__events__events-wrap__item__cover__date">
+                            {@html formatDate(event.pageContent.content.datestart)}
+                        </div>
+                    </div>
+                    <div class="s-evenements__events__events-wrap__item__tags">
+                        {#each event.pageContent.content.category.split(',') as eventItem}
+                            <div class="s-evenements__events__events-wrap__item__tags__item">
+                                {eventItem}
+                            </div>
+                        {/each}
+                    </div>
+
+                    <div class="s-evenements__events__events-wrap__item__description">
+                        <div>
+                            {event.pageContent.content.description}
+                        </div>
+                    </div>
+
+                    <div>
+                        <a class="app-button app-button--rounded"
+                           href="/"
+                        >En savoir plus</a>
+                    </div>
+                </div>
+            {/each}
+        </div>
+
     </div>
 
 </div>
@@ -81,38 +139,43 @@
 
     export let data: IPageEvents;
 
-    const listOfTags = [
-        'Soutien',
-        'Apprentissage',
-        'Formation',
-        'Orientation',
-        'Entreprises',
-        'Art et culture',
-        'Cuisine',
-        'Do it yourself',
+    let activeTag: null | Tag = null
+
+    type Tag = {
+        title: string;
+        color: string;
+    }
+
+    const listOfTags: Tag[] = [
+        {
+            title: "parents & entourage",
+            color: '#3df069',
+        },
+        {
+            title: "jeunes",
+            color: '#3df069',
+        },
+        {
+            title: "entreprises",
+            color: '#3df069',
+        },
+        {
+            title: "tout public",
+            color: '#3df069',
+        },
     ]
 
-    const listOfSubcat = [
-        'Débat',
-        'Conférence',
-        'Rencontre',
-        'Expo-vente',
-        'Jeudredi',
-        'Afterwork',
-        'Soirée festive',
-        'Vitrine métier',
-        'Visite',
-        'Exposition',
-        'Vernissage',
-        'Concert',
-        'Défilé de mode',
-        'Cinéma',
-        'Danse',
-        'Performance',
-        'Résidence',
-        'Programme EXPLORE',
-        'CAMPUS',
-        'Atelier',
+    let activeSubCategory: Tag[] = []
+
+    const listOfSubcategories: Tag[] = [
+        {color: '#1754ff', title: "s’orienter",},
+        {color: '#1754ff', title: "trouver du soutien",},
+        {color: '#1754ff', title: "accompagner",},
+        {color: '#1754ff', title: "former",},
+        {color: '#1754ff', title: "s’émerveiller",},
+        {color: '#1754ff', title: "manger",},
+        {color: '#1754ff', title: "fabriquer",},
+        {color: '#1754ff', title: "expérimenter",},
     ]
 
 </script>
@@ -120,6 +183,50 @@
 <style lang="scss">
 :global(.s-evenements .s-page) {
     min-height: initial !important;
+}
+
+
+.s-evenements__events__search {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    .s-evenements__events__search__bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        border: solid 3px var(--app-color--blue);
+        border-radius: 2rem;
+
+        .s-evenements__events__search__bar__icon {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--app-color--blue);
+            cursor: pointer;
+
+            svg {
+                display: block;
+                height: 1rem;
+                width: auto;
+                fill: white;
+            }
+        }
+
+        .s-evenements__events__search__bar__input {
+            cursor: pointer;
+            all: unset;
+            box-sizing: border-box;
+            padding: .5rem 1rem;
+            color: var(--app-color--blue);
+        }
+
+    }
 }
 
 .s-evenements__events__tags {
@@ -131,6 +238,8 @@
     padding: 0 2rem;
     width: 100%;
     margin-bottom: .5rem;
+    user-select: none;
+    cursor: pointer;
 }
 
     .s-evenements__events__tags__item {
@@ -142,7 +251,7 @@
         border: solid 2px var(--s-evenements__tags-bg);
 
         &.is-active {
-            color: black;
+            color: var(--app-color--blue);
             background: white;
         }
     }
@@ -160,8 +269,8 @@
 
     .s-evenements__events__events-wrap__item {
         display: block;
-        width: calc( 50% - (var(--app-gutter_regular) / 2 ));
-        max-width: 20rem;
+        width: calc( 33% - (var(--app-gutter_regular) / 1 ));
+        //max-width: 20rem;
         box-sizing: border-box;
         padding: 2rem 1rem;
         border-radius: 1rem;
@@ -170,6 +279,16 @@
         //background: var(--app-color--blue--light);
         border: solid 2px var(--app-color--blue);
         margin-top: 2rem;
+        cursor: pointer;
+
+        .s-evenements__events__events-wrap--archive & {
+            filter: grayscale(100%);
+            transition: filter .25s ease-in-out;
+
+            &:hover {
+                filter: grayscale(0%);
+            }
+        }
     }
 
     .s-evenements__events__events-wrap__item__cover__date {
@@ -197,11 +316,20 @@
         border-radius: 2rem;
         transform: translate( 0, -4rem );
         margin-bottom: -2rem;
+
+        .s-evenements__events__events-wrap--archive & {
+            transform: translate( 0, 0 );
+            margin-bottom: 1rem;
+        }
     }
 
     .s-evenements__events__events-wrap__item__cover {
         position: relative;
         margin-bottom: 1rem;
+
+        .s-evenements__events__events-wrap--archive & {
+            display: none;
+        }
     }
 
     .s-evenements__events__events-wrap__item__cover__image {
@@ -250,5 +378,9 @@
     line-height: 1.15em;
     padding-bottom: 1rem;
     text-align: left;
+
+    .s-evenements__events__events-wrap--archive & {
+        display: none;
+    }
 }
 </style>
