@@ -320,7 +320,6 @@
                         <p><strong>L'ACCUEIL, L'ESPACE CAFÉ ET L'EXPO DU MOMENT</strong></p>
                         <p>Retrouvez à l'entrée du ForPro l’espace d’accueil et&nbsp;d’information ainsi que le <strong>PopUp</strong> Café où savourer viennoiseries et sandwichs faits maison. Profitez&nbsp;également des expositions et événements du&nbsp;moment.</p>
                         <p>Ouvert dès 7h</p>
-                        <p>Expo en cours: <a href="https://for-pro.ch/batir-un-projet" ><strong>ForPro, bâtir un projet</strong></a></p>
                     </div>
                 </div>
             </div>
@@ -434,7 +433,7 @@
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="Creche">La crèche</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
-                        <p>Ce nouvel espace de vie enfantine accueillera 32 enfants et permettra de former aux métiers de la petite enfance.</p>
+                        <p>Ce nouvel espace de vie enfantine accueil 32 enfants et permet de former aux métiers de la petite enfance.</p>
                     </div>
                 </div>
             </div>
