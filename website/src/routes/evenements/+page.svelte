@@ -71,7 +71,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="s-evenements__events__events-wrap__item__details">
                         <a class="app-button app-button--rounded"
                            href="/"
                         >En savoir plus</a>
@@ -118,7 +118,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="s-evenements__events__events-wrap__item__details">
                         <a class="app-button app-button--rounded"
                            href="/"
                         >En savoir plus</a>
@@ -284,6 +284,20 @@
         .s-evenements__events__events-wrap--archive & {
             filter: grayscale(100%);
             transition: filter .25s ease-in-out;
+            width: 100%;
+            display: flex;
+            padding: .5rem;
+            border-radius: 0;
+            border: none;
+            border-top: solid 2px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+
+            &:last-child {
+                border-bottom: 2px solid;
+            }
 
             &:hover {
                 filter: grayscale(0%);
@@ -303,7 +317,7 @@
     }
 
     .s-evenements__events__events-wrap__item__title {
-        font-size: 1.65rem;
+        font-size: 1.25rem;
         line-height: 1em;
         font-weight: 900;
         color: white;
@@ -319,7 +333,13 @@
 
         .s-evenements__events__events-wrap--archive & {
             transform: translate( 0, 0 );
-            margin-bottom: 1rem;
+            background: none;
+            text-align: left;
+            margin-bottom: 0;
+            color: black;
+            font-size: 1.25rem;
+            padding: 0;
+            width: calc( 100% - 9rem);
         }
     }
 
@@ -361,6 +381,7 @@
     justify-content: center;
     gap: .5rem;
     padding: .5rem 0;
+    order: 3;
 }
 
 .s-evenements__events__events-wrap__item__tags__item {
@@ -381,6 +402,15 @@
 
     .s-evenements__events__events-wrap--archive & {
         display: none;
+    }
+}
+
+.s-evenements__events__events-wrap__item__details {
+    .s-evenements__events__events-wrap--archive & {
+        position: absolute;
+        top: 50%;
+        right: .5rem;
+        transform: translate(0, -50%);
     }
 }
 </style>
