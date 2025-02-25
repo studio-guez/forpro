@@ -32,7 +32,7 @@
 </script>
 
 <div class="s-block-logos">
-  <div class="flex flex-wrap justify-start s-block-logos__wrapper">
+  <div class="flex flex-wrap justify-center s-block-logos__wrapper">
     {#each data.image as image}
       <img class="object-contain filter grayscale hover:grayscale-0 transition ease-in-out duration-300"
            src="{image.resize.xxl}"
