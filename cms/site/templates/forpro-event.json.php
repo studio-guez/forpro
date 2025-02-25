@@ -67,6 +67,8 @@ $json['seo'] = [
     'twitterCreator'    => getValueNotEmpty($page->twitterCreator(), $site->twitterCreator()),
 ];
 
+$json['pageInfo'] = $page->content()->toArray();
+
 echo json_encode($json);
 
 
