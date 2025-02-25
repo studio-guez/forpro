@@ -73,7 +73,7 @@
 
                     <div class="s-evenements__events__events-wrap__item__details">
                         <a class="app-button app-button--rounded"
-                           href="/"
+                           href="{event.pageContent.uri}"
                         >En savoir plus</a>
                     </div>
                 </div>
