@@ -35,6 +35,25 @@ export interface IPageEvents extends IPage {
     childrenDetails: IChildrenDetils__event[]
 }
 
+export interface IPage_Event extends IPage {
+    pageInfo: {
+        title: string,
+        cover: string,
+        target: string,
+        category: string,
+        suboptions: string,
+        place: string,
+        googlemapaddress: string,
+        description: string,
+        datestart: string,
+        hourstart: string,
+        dateend: string,
+        hourend: string,
+        body: string,
+        uuid: string
+    }
+}
+
 export interface IOptions {
     showMenu: boolean
     showNewsletter: boolean
