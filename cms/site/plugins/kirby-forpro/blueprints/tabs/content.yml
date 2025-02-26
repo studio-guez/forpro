@@ -78,6 +78,7 @@ fields:
       - code
       - timeline
       - listOfPDF
+      - agenda
       image:
         extends: blocks/image
         fields:

@@ -24,6 +24,7 @@ Kirby::plugin('mediumsans/forpro', [
         'blocks/logos-list'    => __DIR__ . '/blueprints/blocks/logos-list.yml',
         'blocks/timeline'    => __DIR__ . '/blueprints/blocks/timeline.yml',
         'blocks/listOfPDF'    => __DIR__ . '/blueprints/blocks/listOfPDF.yml',
+        'blocks/agenda'    => __DIR__ . '/blueprints/blocks/agenda.yml.yml',
     ],
     'templates' => [
         'forpro'                => __DIR__ . '/templates/forpro.php',
