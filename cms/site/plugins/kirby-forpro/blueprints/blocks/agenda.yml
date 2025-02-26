@@ -1,0 +1,12 @@
+title:
+  en: Agenda
+  fr: Agenda
+icon: star
+
+preview: fields
+wysiwyg: true
+
+fields:
+  info:
+    type: info
+    text: "Affiche les événements à venir de l'agenda"
