@@ -133,7 +133,7 @@
 
 
 <script lang="ts">
-    import {type IPage, type IPageEvents} from "$lib/interfaces/cmsApiResponse";
+    import {type IPageEvents} from "$lib/interfaces/cmsApiResponse";
     import AppPage from "$lib/components/AppPage.svelte";
     import {formatDate} from "$lib/utils/formatDate";
 
@@ -314,6 +314,14 @@
         font-size: .75rem;
         padding: .15em .75em .3em;
         border-radius: 1em;
+
+        .s-evenements__events__events-wrap--archive & {
+            white-space: nowrap;
+            top: initial;
+            transform: translate(-50%, 25%);
+            background: var(--app-color--pink);
+            font-size: .65rem;
+        }
     }
 
     .s-evenements__events__events-wrap__item__title {
@@ -348,7 +356,7 @@
         margin-bottom: 1rem;
 
         .s-evenements__events__events-wrap--archive & {
-            display: none;
+            position: static;
         }
     }
 
@@ -372,6 +380,10 @@
                 line-height: 1em;
                 transform: rotate(-5deg);
             }
+        }
+
+        .s-evenements__events__events-wrap--archive & {
+            display: none;
         }
     }
 
