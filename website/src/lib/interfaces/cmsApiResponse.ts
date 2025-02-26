@@ -154,6 +154,7 @@ export interface IBody {
             | IBlockVideo
             | IBlockTimeline
             | IBlockLinkListContent
+            | IBlockLinkAgenda
     }
 }
 
@@ -178,6 +179,7 @@ export interface IBlock {
         | 'video'
         | 'timeline'
         | 'listOfPDF'
+        | 'agenda'
 }
 
 export interface ISeo {
@@ -540,4 +542,13 @@ export interface IBlockLinkListContent {
     "id": string,
     "isHidden": boolean,
     "type": "listOfPDF"
+}
+
+/**
+ * block agenda
+ * */
+
+export interface IBlockLinkAgenda extends IBlock {
+    "image": [],
+    "type": "agenda"
 }
