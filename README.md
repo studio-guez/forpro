@@ -25,6 +25,11 @@
 - Kirby CMS 4.0
 - PHP 8.1
 
+### Docker Dev
+To be able to access services using the compose.dev.yml add this to your
+/etc/hosts file
+```127.0.0.1 restaurant.localhost website.localhost cms.localhost```
+
 ### Server Dependencies
 #### Foodlab Plugin
 To generate PDFs, the server needs to have the following dependencies installed:
