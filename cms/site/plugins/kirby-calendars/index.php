@@ -10,7 +10,8 @@ load([
     'MediumSans\KirbyCalendars\Event'       => __DIR__ . '/classes/Event.php',
     'MediumSans\KirbyCalendars\Leave'       => __DIR__ . '/classes/Leave.php',
     'MediumSans\KirbyCalendars\Invitation'  => __DIR__ . '/classes/Invitation.php',
-    'MediumSans\KirbyCalendars\Utils'       => __DIR__ . '/classes/Utils.php'
+    'MediumSans\KirbyCalendars\Utils'       => __DIR__ . '/classes/Utils.php',
+    'MediumSans\KirbyCalendars\BaseClass'   => __DIR__ . '/classes/BaseClass.php'
 ]);
 
 $pluginPermissionNameForBlueprint = 'mediumsans.kirby-calendars';
@@ -80,16 +81,16 @@ Kirby::plugin('mediumsans/kirby-calendars', [
         },
     ],
     'templates' => [
-        'emails/event_confirmation.html' => __DIR__ . '/templates/event_confirmation.html.php',
-        'emails/event_confirmation.text' => __DIR__ . '/templates/event_confirmation.text.php',
-        'emails/calendar_incharge.html'  => __DIR__ . '/templates/calendar_incharge.html.php',
-        'emails/calendar_incharge.text'  => __DIR__ . '/templates/calendar_incharge.text.php',
-        'emails/event_remind.html'        => __DIR__ . '/templates/event_remind.html.php',
-        'emails/event_remind.text'        => __DIR__ . '/templates/event_remind.txt.php',
-        'emails/event_rm_assignation.html'        => __DIR__ . '/templates/event_rm_assignation.html.php',
-        'emails/event_rm_assignation.text'        => __DIR__ . '/templates/event_rm_assignation.txt.php',
-        'emails/event_share.html'        => __DIR__ . '/templates/event_share.html.php',
-        'emails/event_share.text'        => __DIR__ . '/templates/event_share.text.php',
+        'emails/event_confirmation.html'    => __DIR__ . '/templates/event_confirmation.html.php',
+        'emails/event_confirmation.text'    => __DIR__ . '/templates/event_confirmation.text.php',
+        'emails/calendar_incharge.html'     => __DIR__ . '/templates/calendar_incharge.html.php',
+        'emails/calendar_incharge.text'     => __DIR__ . '/templates/calendar_incharge.text.php',
+        'emails/event_remind.html'          => __DIR__ . '/templates/event_remind.html.php',
+        'emails/event_remind.text'          => __DIR__ . '/templates/event_remind.txt.php',
+        'emails/event_rm_assignation.html'  => __DIR__ . '/templates/event_rm_assignation.html.php',
+        'emails/event_rm_assignation.text'  => __DIR__ . '/templates/event_rm_assignation.txt.php',
+        'emails/event_share.html'           => __DIR__ . '/templates/event_share.html.php',
+        'emails/event_share.text'           => __DIR__ . '/templates/event_share.text.php',
     ],
     'routes' => require __DIR__ . '/routes/index.php',
     'hooks' => [
