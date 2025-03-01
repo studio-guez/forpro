@@ -19,7 +19,9 @@ services:
 
   # SvelteKit
   restaurant:
-    build: ./restaurant
+    build:
+      context: ./restaurant
+      dockerfile: Dockerfile.prod
     expose:
       - "3000"
     restart: unless-stopped
@@ -33,7 +35,9 @@ services:
 
   # SvelteKit
   website:
-    build: ./website
+    build:
+      context: ./website
+      dockerfile: Dockerfile.prod
     expose:
       - "3000"
     restart: unless-stopped
