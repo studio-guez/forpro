@@ -39,7 +39,7 @@ services:
   website:
     build:
       context: ./website
-      dockerfile: Dockerfile.prod.dev
+      dockerfile: Dockerfile.dev
     volumes:
       - ./website:/app
       - /app/node_modules
@@ -60,7 +60,7 @@ services:
   cms:
     build:
       context: ./cms
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     volumes:
       - ./cms:/var/www/html
     ports:
