@@ -1,25 +1,28 @@
 FROM node:lts-alpine AS builder
 
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 WORKDIR /app
 
-COPY package.json ./
+COPY package.json pnpm-lock.yaml* ./
 
-RUN npm install
+RUN pnpm install
 
 COPY . .
 
-RUN npm run build
+RUN pnpm run build
 
 FROM node:lts-alpine
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
 USER node:node
 
 WORKDIR /app
 
 COPY --from=builder --chown=node:node /app/build ./build
-
 COPY --from=builder --chown=node:node /app/node_modules ./node_modules
 
-COPY --chown=node:node package.json .
+COPY --chown=node:node package.json pnpm-lock.yaml* ./
 
-CMD ["node","build"]
+CMD ["node", "build"]
