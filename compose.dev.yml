@@ -1,4 +1,5 @@
 services:
+
   traefik:
     image: traefik:v2.11
     command:
@@ -9,7 +10,7 @@ services:
       - "--entrypoints.web.address=:80"
     ports:
       - "80:80"
-      - "8080:8080"  # Traefik dashboard
+      - "8888:8080"  # Traefik dashboard
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
@@ -62,7 +63,12 @@ services:
       context: ./cms
       dockerfile: Dockerfile
     volumes:
-      - ./cms:/var/www/html
+      - ./cms/site/config:/var/www/html/site/config:rw
+      - ./cms/site/plugins:/var/www/html/site/plugins:ro
+      - kirby_media:/var/www/html/media:rw
+      - kirby_cache:/var/www/html/site/cache:rw
+      - kirby_sessions:/var/www/html/site/sessions:rw
+      - kirby_accounts:/var/www/html/site/accounts:rw
     ports:
       - "8000:80"
     environment:
@@ -75,3 +81,12 @@ services:
       - "traefik.http.routers.cms.rule=Host(`cms.localhost`)"
       - "traefik.http.routers.cms.entrypoints=web"
       - "traefik.http.services.cms.loadbalancer.server.port=80"
+
+volumes:
+  kirby_data:
+  kirby_accounts:
+  kirby_cache:
+  kirby_plugins:
+  kirby_content:
+  kirby_media:
+  kirby_sessions:
