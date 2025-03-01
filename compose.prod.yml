@@ -1,0 +1,77 @@
+services:
+
+  traefik:
+    image: traefik:v2.11
+    command:
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_certs:/etc/traefik/certs
+      - traefik_config:/etc/traefik/config
+    restart: unless-stopped
+
+  # SvelteKit
+  restaurant:
+    build: ./restaurant
+    expose:
+      - "3000"
+    restart: unless-stopped
+    depends_on:
+      - cms
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.restaurant.rule=Host(`foodlab.for-pro.ch`)"
+      - "traefik.http.routers.restaurant.entrypoints=web"
+      - "traefik.http.services.restaurant.loadbalancer.server.port=3000"
+
+  # SvelteKit
+  website:
+    build: ./website
+    expose:
+      - "3000"
+    restart: unless-stopped
+    depends_on:
+      - cms
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.website.rule=Host(`www.for-pro.ch`) || Host(`for-pro.ch`)"
+      - "traefik.http.routers.website.entrypoints=web"
+      - "traefik.http.services.website.loadbalancer.server.port=3000"
+
+  # Kirby CMS
+  cms:
+    build: ./cms
+    volumes:
+      - kirby_data:/var/www/html
+      - kirby_accounts:/var/www/html/site/accounts
+      - kirby_cache:/var/www/html/site/cache
+      - kirby_plugins:/var/www/html/site/plugins
+      - kirby_content:/var/www/html/content
+      - kirby_media:/var/www/html/media
+    expose:
+      - "80"
+    restart: unless-stopped
+    depends_on:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cms.rule=Host(`api.for-pro.ch`)"
+      - "traefik.http.routers.cms.entrypoints=web"
+      - "traefik.http.services.cms.loadbalancer.server.port=80"
+
+volumes:
+  kirby_data:
+  kirby_accounts:
+  kirby_cache:
+  kirby_plugins:
+  kirby_content:
+  kirby_media:
+  traefik_certs:
+  traefik_config:
