@@ -1,0 +1,77 @@
+services:
+  traefik:
+    image: traefik:v2.11
+    command:
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"  # Traefik dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+
+  # SvelteKit
+  restaurant:
+    build:
+      context: ./restaurant
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./restaurant:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+    depends_on:
+      - cms
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.restaurant.rule=Host(`restaurant.localhost`)"
+      - "traefik.http.routers.restaurant.entrypoints=web"
+      - "traefik.http.services.restaurant.loadbalancer.server.port=5173"
+
+  # SvelteKit
+  website:
+    build:
+      context: ./website
+      dockerfile: Dockerfile.prod.dev
+    volumes:
+      - ./website:/app
+      - /app/node_modules
+    ports:
+      - "5174:5173"
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+    depends_on:
+      - cms
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.website.rule=Host(`website.localhost`)"
+      - "traefik.http.routers.website.entrypoints=web"
+      - "traefik.http.services.website.loadbalancer.server.port=5173"
+
+  # Kirby CMS
+  cms:
+    build:
+      context: ./cms
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./cms:/var/www/html
+    ports:
+      - "8000:80"
+    environment:
+      - KIRBY_DEBUG=true
+    restart: unless-stopped
+    depends_on:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cms.rule=Host(`cms.localhost`)"
+      - "traefik.http.routers.cms.entrypoints=web"
+      - "traefik.http.services.cms.loadbalancer.server.port=80"
