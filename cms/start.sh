@@ -16,6 +16,14 @@ else
   fi
 fi
 
+chown -R www-data:www-data /var/www/html/site/plugins/kirby-foodlab/data
+chown -R www-data:www-data /var/www/html/site/plugins
+chown -R www-data:www-data /var/www/html/site/config
+chown -R www-data:www-data /var/www/html/media
+chown -R www-data:www-data /var/www/html/site/cache
+chown -R www-data:www-data /var/www/html/site/sessions
+chown -R www-data:www-data /var/www/html/site/accounts
+
 # Start Nginx in foreground
 echo "Starting Nginx"
 nginx -g "daemon off;"
