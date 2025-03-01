@@ -18,6 +18,7 @@ load([
     "MediumSans\MenuSpecial"                => __DIR__ . "/classes/MenuSpecial.php",
     "MediumSans\MenuSpecial\DishSpecial"    => __DIR__ . "/classes/DishSpecial.php",
     "MediumSans\MenuSpecial\WineSpecial"    => __DIR__ . "/classes/WineSpecial.php",
+    "MediumSans\Menu\Utils"                 => __DIR__ . "/classes/Utils.php"
 ]);
 
 $pluginPermissionNameForBlueprint = 'mediumsans.kirby-foodlab';
