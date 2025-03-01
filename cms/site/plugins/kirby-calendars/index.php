@@ -10,6 +10,7 @@ load([
     'MediumSans\KirbyCalendars\Event'       => __DIR__ . '/classes/Event.php',
     'MediumSans\KirbyCalendars\Leave'       => __DIR__ . '/classes/Leave.php',
     'MediumSans\KirbyCalendars\Invitation'  => __DIR__ . '/classes/Invitation.php',
+    'MediumSans\KirbyCalendars\Utils'       => __DIR__ . '/classes/Utils.php'
 ]);
 
 $pluginPermissionNameForBlueprint = 'mediumsans.kirby-calendars';
