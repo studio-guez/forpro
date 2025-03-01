@@ -299,7 +299,7 @@
         </div>
     </div>
     <div class="half-page right">
-        <?php if($menu['partnerLogo']): ?>
+        <?php if(isset($menu['partnerLogo'])): ?>
             <div id="partner" style="
                     <?= trim($menu['partnerLogoWidth']) != '' ? 'width:' . $menu['partnerLogoWidth'] . 'px;' : '' ?>
                     <?= trim($menu['partnerLogoHeight']) != '' ? 'height:' . $menu['partnerLogoHeight'] . 'px;' : '' ?>
@@ -314,15 +314,21 @@
         <?php endif; ?>
         <div id="partner-header">
             <span class="title">
-                <?= $menu['titlePartner'] != "" ? $menu['titlePartner'] : "" ?>
+                <?php if(isset($menu['titlePartner'])): ?>
+                    <?= $menu['titlePartner'] != "" ? $menu['titlePartner'] : "" ?>
+                <?php endif; ?>
             </span>
             <br/>
             <span class="subtitle">
-                <?= $menu['subtitlePartner'] != "" ? $menu['subtitlePartner'] : "" ?>
+                <?php if(isset($menu['titlePartner'])): ?>
+                    <?= $menu['subtitlePartner'] != "" ? $menu['subtitlePartner'] : "" ?>
+                <?php endif; ?>
             </span>
         </div>
         <div id="partner-text">
-            <?= trim($menu['textPartner']) ?>
+            <?php if(isset($menu['textPartner'])): ?>
+                <?= trim($menu['textPartner']) ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>
