@@ -34,15 +34,16 @@ COPY content /var/www/html/content
 
 RUN mkdir -p /var/www/html/site/sessions
 RUN mkdir -p /var/www/html/site/accounts
+RUN mkdir -p /var/www/html/site/plugins
 RUN mkdir -p /var/www/html/media
 
 RUN chown -R www-data:www-data /var/www/html/
 
 RUN nginx -t
 
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
 
-CMD ["/start.sh"]
+CMD ["/entrypoint.sh"]
