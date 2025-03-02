@@ -96,26 +96,38 @@
         </div>
       </k-grid>
 
-      <!-- Vins section -->
+      <!-- Vins section with toggle -->
       <k-grid style="margin-top: 40px">
-        <div class="k-column" style="--width: 1/3; justify-self: start">
-          <k-text>
-            <h3>Vins</h3>
-          </k-text>
+        <div class="k-column" style="--width: 1/2; justify-self: start">
+          <k-input
+              :value="page.winesTitle"
+              type="text"
+              icon="edit"
+              @input="updateWinesTitles($event, page.id)"
+              :disabled="page.showWines === false"
+              placeholder="Vins"
+          />
         </div>
-        <div class="k-column" style="--width: 2/3; justify-self: end">
+        <div class="k-column" style="--width: 1/2; justify-self: end">
           <k-button-group layout="collapsed">
             <k-button
                 variant="filled"
                 icon="plus"
                 @click="$dialog('/menu/special/wine/add/' + page.id)"
+                :disabled="page.showWines === false"
             >
-              Ajouter
+              Ajouter un vin
             </k-button>
+            <k-button
+                :icon="page.showWines === false ? 'preview' : 'hidden'"
+                :text="page.showWines === false ? 'Afficher' : 'Masquer'"
+                @click="toggleWinesSection(page.id)"
+                variant="filled"
+            />
           </k-button-group>
         </div>
       </k-grid>
-      <table class="k-table" style="margin-top: 20px; margin-bottom: 25px">
+      <table class="k-table" style="margin-top: 20px; margin-bottom: 25px" :class="{ 'disabled-section': page.showWines === false }">
         <thead>
         <tr>
           <th class="k-table-index-column"></th>
@@ -131,9 +143,10 @@
             :handle="true"
             @change="updateOrder('wines', page.id)"
             :options="{
-                  fallbackClass: 'k-table-row-fallback',
-                  ghostClass: 'k-table-row-ghost',
-              }"
+            fallbackClass: 'k-table-row-fallback',
+            ghostClass: 'k-table-row-ghost',
+            disabled: page.showWines === false
+        }"
             element="tbody"
         >
           <tr v-for="(item, index) in page.wines" :key="item.id">
@@ -148,65 +161,79 @@
             <td class="k-table-options-column">
               <k-options-dropdown
                   :options="[
-                      {
-                          text: 'Modifier',
-                          icon: 'edit',
-                          click: () =>
-                              $dialog(`menu/special/wine/${item.id}/edit/${page.id}`),
-                      },
-                      {
-                          text: 'Supprimer',
-                          icon: 'trash',
-                          click: () =>
-                              $dialog(`menu/special/wine/${item.id}/delete/${page.id}`),
-                      },
-                  ]"
+                {
+                    text: 'Modifier',
+                    icon: 'edit',
+                    click: () =>
+                        $dialog(`menu/special/wine/${item.id}/edit/${page.id}`),
+                    disabled: page.showWines === false
+                },
+                {
+                    text: 'Supprimer',
+                    icon: 'trash',
+                    click: () =>
+                        $dialog(`menu/special/wine/${item.id}/delete/${page.id}`),
+                    disabled: page.showWines === false
+                },
+            ]"
               />
             </td>
           </tr>
         </k-draggable>
       </table>
 
-
-      <!-- Menu section -->
+      <!-- Menu section with toggle -->
       <k-grid style="margin-top: 40px">
-        <div class="k-column" style="--width: 1/3; justify-self: start">
-          <k-text>
-            <h3>Menu</h3>
-          </k-text>
+        <div class="k-column" style="--width: 1/2; justify-self: start">
+          <k-input
+              :value="page.dishesTitle"
+              type="text"
+              icon="edit"
+              @input="updateDishesTitle($event, page.id)"
+              :disabled="page.showDishes === false"
+              placeholder="Menu"
+          />
         </div>
-        <div class="k-column" style="--width: 2/3; justify-self: end">
+        <div class="k-column" style="--width: 1/2; justify-self: end">
           <k-button-group layout="collapsed">
             <k-button
                 variant="filled"
                 icon="plus"
                 @click="$dialog('/menu/special/dish/add/' + page.id)"
+                :disabled="page.showDishes === false"
             >
               Ajouter un plat ou choix
             </k-button>
+            <k-button
+                :icon="page.showDishes === false ? 'preview' : 'hidden'"
+                :text="page.showDishes === false ? 'Afficher' : 'Masquer'"
+                @click="toggleDishesSection(page.id)"
+                variant="filled"
+            />
           </k-button-group>
         </div>
       </k-grid>
-      <table class="k-table" style="margin-top: 20px; margin-bottom: 25px">
+      <table class="k-table" style="margin-top: 20px; margin-bottom: 25px" :class="{ 'disabled-section': page.showDishes === false }">
         <thead>
-          <tr>
-            <th class="k-table-index-column"></th>
-            <th>Plat</th>
-            <th>Description</th>
-            <th style="text-align: center;">Choix</th>
-            <th>Plat</th>
-            <th>Description</th>
-            <th class="k-table-options-column"></th>
-          </tr>
+        <tr>
+          <th class="k-table-index-column"></th>
+          <th>Plat</th>
+          <th>Description</th>
+          <th style="text-align: center;">Choix</th>
+          <th>Plat</th>
+          <th>Description</th>
+          <th class="k-table-options-column"></th>
+        </tr>
         </thead>
         <k-draggable
             :list="page.menu"
             :handle="true"
             @change="updateOrder('menu', page.id)"
             :options="{
-                  fallbackClass: 'k-table-row-fallback',
-                  ghostClass: 'k-table-row-ghost',
-              }"
+            fallbackClass: 'k-table-row-fallback',
+            ghostClass: 'k-table-row-ghost',
+            disabled: page.showDishes === false
+        }"
             element="tbody"
         >
           <tr v-for="(item, index) in page.dishes" :key="item.id">
@@ -222,19 +249,21 @@
             <td class="k-table-options-column">
               <k-options-dropdown
                   :options="[
-                      {
-                          text: 'Modifier',
-                          icon: 'edit',
-                          click: () =>
-                              $dialog(`menu/special/dish/${item.id}/edit/${page.id}`),
-                      },
-                      {
-                          text: 'Supprimer',
-                          icon: 'trash',
-                          click: () =>
-                              $dialog(`menu/special/dish/${item.id}/delete/${page.id}`),
-                      },
-                  ]"
+                {
+                    text: 'Modifier',
+                    icon: 'edit',
+                    click: () =>
+                        $dialog(`menu/special/dish/${item.id}/edit/${page.id}`),
+                    disabled: page.showDishes === false
+                },
+                {
+                    text: 'Supprimer',
+                    icon: 'trash',
+                    click: () =>
+                        $dialog(`menu/special/dish/${item.id}/delete/${page.id}`),
+                    disabled: page.showDishes === false
+                },
+            ]"
               />
             </td>
           </tr>
@@ -248,7 +277,7 @@
 export default {
   props: {
     menu: {
-      type: Array,
+      type: Object,
       default: () => ({
         pages: [
           {
@@ -256,6 +285,10 @@ export default {
             title: "Page 1",
             menuTitle: "",
             menuDescription: "",
+            winesTitle: "Vins",
+            dishesTitle: "Plats",
+            showWines: true,
+            showDishes: true,
             wines: [],
             dishes: []
           }
@@ -278,8 +311,8 @@ export default {
       isGeneratingPDF: false,
       isSubmitting: false,
       hasBeenSubmitted: false,
-      isEditing: false,
-      hasBeenEdited: false,
+      updateTimeout: null,
+      debouncedGetHtml: null,
       formFields: {
         textInfo: {
           label: "Informations Contact",
@@ -348,17 +381,63 @@ export default {
       html: '',
     };
   },
+  created() {
+    // Create debounced versions of methods
+    this.debouncedGetHtml = this.debounce(this.getHtml, 500);
+    this.debouncedUpdateMenu = this.debounce(this.updateMenuOnServer, 500);
+  },
   mounted() {
     this.getHtml();
   },
-  watch: {
-    menu: {
-      deep: true,
-      handler: 'submit'
+  beforeDestroy() {
+    // Clean up any pending timeouts
+    if (this.updateTimeout) {
+      clearTimeout(this.updateTimeout);
     }
   },
+  watch: {
+    // Only watch specific properties that should trigger updates
+    'menu.textInfo': 'debouncedUpdateMenu',
+    'menu.partnerLogo': 'debouncedUpdateMenu',
+    'menu.titlePartner': 'debouncedUpdateMenu',
+    'menu.subtitlePartner': 'debouncedUpdateMenu',
+  },
   methods: {
+    // Utility function for debouncing
+    debounce(fn, wait) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn.apply(this, args), wait);
+      };
+    },
+
+    // Form input handler
+    input() {
+      this.debouncedUpdateMenu();
+    },
+
+    // Updated method for updating wine titles
+    updateWinesTitles(value, pageId) {
+      const page = this.menu.pages.find(p => p.id === pageId);
+      if (page) {
+        this.$set(page, 'winesTitle', value);
+        this.debouncedUpdateMenu();
+      }
+    },
+
+    // Updated method for updating dishes title
+    updateDishesTitle(value, pageId) {
+      const page = this.menu.pages.find(p => p.id === pageId);
+      if (page) {
+        this.$set(page, 'dishesTitle', value);
+        this.debouncedUpdateMenu();
+      }
+    },
+
     submit() {
+      if (this.isSubmitting) return;
+
       this.isSubmitting = true;
       this.$api.post("/restaurant/menu/special/create", this.menu)
           .then(() => {
@@ -376,14 +455,15 @@ export default {
             console.error("Error submitting menu:", error);
           });
     },
+
     getHtml() {
       this.$api.get("/restaurant/menu/special/html")
           .then(response => {
-            console.log(response);
-            // Wrap the HTML content in a style tag to constrain it
+            // Sanitize the HTML content by wrapping it in a restrictive container
             this.html = `
             <html>
               <head>
+                <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline';">
                 <style>
                   body {
                     margin: 0;
@@ -409,128 +489,164 @@ export default {
             console.error("Error getting HTML:", error);
           });
     },
+
     generatePDF(withAssets = false) {
       if (this.isGeneratingPDF) return;
 
       this.isGeneratingPDF = true;
 
-      const iframe = document.createElement("iframe");
-      iframe.style.display = "none";
-      document.body.appendChild(iframe);
+      // Ensure we have the latest menu saved before generating PDF
+      this.submit();
 
-      iframe.onload = () => {
-        setTimeout(() => {
-          document.body.removeChild(iframe);
-          this.isGeneratingPDF = false;
-          this.$store.dispatch(
-              "notification/success",
-              "Le PDF a été généré avec succès",
-          );
-        }, 1000);
-      };
-
-      let url =
-          this.$api.endpoint +
+      const url = this.$api.endpoint +
           "/restaurant/menu/special/generate/" +
           (withAssets ? "with-assets" : "without-assets");
 
-      iframe.src = url;
-      setTimeout(() => {
+      // Use a more reliable approach to open the PDF
+      const pdfWindow = window.open(url, '_blank');
+
+      // Set a timeout to reset the state, but also handle cases where
+      // the window couldn't be opened (e.g., popup blocked)
+      if (pdfWindow) {
+        setTimeout(() => {
+          this.isGeneratingPDF = false;
+          this.$store.dispatch(
+              "notification/success",
+              "Le PDF a été généré avec succès"
+          );
+        }, 1500);
+      } else {
         this.isGeneratingPDF = false;
-      }, 2500);
+        this.$store.dispatch(
+            "notification/error",
+            "Le PDF n'a pas pu être généré. Vérifiez que les pop-ups sont autorisés."
+        );
+      }
     },
+
     updateOrder(category, pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
-        this.updateMenuOnServer();
+        this.debouncedUpdateMenu();
       }
     },
+
     addPage() {
-      const newId = this.menu.pages.length + 1;
+      if (!this.menu.pages) {
+        this.menu.pages = [];
+      }
+
+      // Use maximum existing ID + 1 for better reliability
+      const maxId = this.menu.pages.reduce((max, page) => Math.max(max, page.id), 0);
+      const newId = maxId + 1;
+
       this.menu.pages.push({
         id: newId,
-        title: `Page ${newId}`,
+        title: `Page ${this.menu.pages.length + 1}`,
         menuTitle: "",
         menuDescription: "",
+        winesTitle: "Vins",
+        dishesTitle: "Plats",
+        showWines: true,
+        showDishes: true,
         wines: [],
         dishes: []
       });
-      this.updateMenuOnServer();
+
+      this.debouncedUpdateMenu();
     },
+
+// Toggle visibility of Wines section
+    toggleWinesSection(pageId) {
+      const page = this.menu.pages.find(p => p.id === pageId);
+      if (page) {
+        // Toggle the current value
+        const newValue = page.showWines === false;
+        this.$set(page, 'showWines', newValue);
+        this.debouncedUpdateMenu();
+
+        // Show appropriate notification
+        if (newValue) {
+          this.$store.dispatch("notification/success", "Section Vins activée");
+        } else {
+          this.$store.dispatch("notification/info", "Section Vins désactivée");
+        }
+      }
+    },
+
+// Toggle visibility of Dishes section
+    toggleDishesSection(pageId) {
+      const page = this.menu.pages.find(p => p.id === pageId);
+      if (page) {
+        // Toggle the current value
+        const newValue = page.showDishes === false;
+        this.$set(page, 'showDishes', newValue);
+        this.debouncedUpdateMenu();
+
+        // Show appropriate notification
+        if (newValue) {
+          this.$store.dispatch("notification/success", "Section Plats activée");
+        } else {
+          this.$store.dispatch("notification/info", "Section Plats désactivée");
+        }
+      }
+    },
+
     deletePage(pageId) {
+      // Don't allow deleting the last page
+      if (this.menu.pages.length <= 1) {
+        this.$store.dispatch("notification/error", "Impossible de supprimer la dernière page");
+        return;
+      }
+
       const index = this.menu.pages.findIndex(page => page.id === pageId);
       if (index !== -1) {
         this.menu.pages.splice(index, 1);
         this.updatePageTitles();
-        this.updateMenuOnServer();
+        this.debouncedUpdateMenu();
       }
     },
+
     movePageUp(pageId) {
       const index = this.menu.pages.findIndex(page => page.id === pageId);
       if (index > 0) {
         const temp = this.menu.pages[index];
-        this.menu.pages.splice(index, 1);
-        this.menu.pages.splice(index - 1, 0, temp);
+        this.$set(this.menu.pages, index, this.menu.pages[index - 1]);
+        this.$set(this.menu.pages, index - 1, temp);
         this.updatePageTitles();
-        this.updateMenuOnServer();
+        this.debouncedUpdateMenu();
       }
     },
+
     movePageDown(pageId) {
       const index = this.menu.pages.findIndex(page => page.id === pageId);
       if (index < this.menu.pages.length - 1) {
         const temp = this.menu.pages[index];
-        this.menu.pages.splice(index, 1);
-        this.menu.pages.splice(index + 1, 0, temp);
+        this.$set(this.menu.pages, index, this.menu.pages[index + 1]);
+        this.$set(this.menu.pages, index + 1, temp);
         this.updatePageTitles();
-        this.updateMenuOnServer();
+        this.debouncedUpdateMenu();
       }
     },
+
     updatePageTitles() {
       this.menu.pages.forEach((page, index) => {
         this.$set(page, 'title', `Page ${index + 1}`);
       });
     },
-    updateMenuTitle(value, pageId) {
-      const page = this.menu.pages.find(p => p.id === pageId);
-      if (page) {
-        page.menuTitle = value;
-        this.updateMenuOnServer();
-      }
-    },
-    updateMenuDescription(value, pageId) {
-      const page = this.menu.pages.find(p => p.id === pageId);
-      if (page) {
-        page.menuDescription = value;
-        this.updateMenuOnServer();
-      }
-    },
+
     updateMenuOnServer() {
-      if (this.updateTimeout) {
-        clearTimeout(this.updateTimeout);
-      }
-      this.updateTimeout = setTimeout(() => {
-        this.$api.post("restaurant/menu/special/create", this.menu)
-            .then(() => {
-              this.$store.dispatch("notification/success", "Menu mis à jour avec succès");
-            })
-            .catch(error => {
-              this.$store.dispatch("notification/error", "Erreur lors de la mise à jour du menu");
-              console.error("Error updating menu:", error);
-            });
-      }, 500);
+      this.$api.post("restaurant/menu/special/create", this.menu)
+          .then(() => {
+            // Only get HTML after successful update
+            this.debouncedGetHtml();
+          })
+          .catch(error => {
+            this.$store.dispatch("notification/error", "Erreur lors de la mise à jour du menu");
+            console.error("Error updating menu:", error);
+          });
     },
-  },
-  computed: {
-    menuTitleIcon() {
-      if (this.hasBeenEdited) {
-        return "check";
-      } else if (this.isEditing) {
-        return "loader";
-      } else {
-        return "edit";
-      }
-    },
-  },
+  }
 };
 </script>
 
@@ -539,5 +655,37 @@ export default {
 .k-restaurant-button[data-theme^="positive"] {
   color: black;
   background-color: hsl(80, 60%, calc(80% + -2.5%)) !important;
+}
+
+/* Additional styles for improved UI */
+.k-table {
+  width: 100%;
+}
+
+/* Add transitions for smoother UI */
+.k-button, .k-dropdown-item {
+  transition: background-color 0.2s ease;
+}
+
+.disabled-section {
+  opacity: 0.6;
+  pointer-events: none;
+  position: relative;
+}
+
+.disabled-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  z-index: 1;
+}
+
+/* Button transition for smoother toggle */
+.k-button {
+  transition: all 0.2s ease-in-out;
 }
 </style>
