@@ -64,7 +64,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./cms/site/config:/var/www/html/site/config:rw
-      - ./cms/site/plugins:/var/www/html/site/plugins:ro
+      - ./cms/site/plugins:/var/www/html/site/plugins:rw
+      - ./cms/site/plugins/kirby-foodlab/data:/var/www/html/site/plugins/kirby-foodlab/data:rw
       - kirby_media:/var/www/html/media:rw
       - kirby_cache:/var/www/html/site/cache:rw
       - kirby_sessions:/var/www/html/site/sessions:rw
