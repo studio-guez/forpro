@@ -270,14 +270,15 @@
 				</div>
 
 				<div class="h-full self-center align-bottom lg:self-start">
-					<a
-						href={data.page.food.btn.link}
-						type="button"
-						class="mt-10 block w-max rounded-full bg-white px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-						target={data.page.food.btn.target ? '_blank' : '_self'}
-					>
-						{data.page.food.btn.text}
-					</a>
+					{#if data.page.food.btn?.text}
+						<a href={data.page.food.btn.link}
+						   type="button"
+						   class="mt-10 block w-max rounded-full bg-white px-14 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+						   target={data.page.food.btn.target ? '_blank' : '_self'}
+						>
+							{data.page.food.btn.text}
+						</a>
+					{/if}
 				</div>
 			</div>
 
@@ -365,14 +366,16 @@
 					<span>{@html data.page.formation.text}</span>
 				</div>
 
-				<a
-					href={data.page.formation.btn.link}
-					type="button"
-					class="mt-10 rounded-full bg-secondary px-4 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 lg:px-14"
-					target={data.page.formation.btn.target ? '_blank' : '_self'}
-				>
-					<span>{data.page.formation.btn.text}</span>
-				</a>
+				{#if data.page.formation.btn?.text}
+					<a
+							href={data.page.formation.btn.link}
+							type="button"
+							class="mt-10 rounded-full bg-secondary px-4 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 lg:px-14"
+							target={data.page.formation.btn.target ? '_blank' : '_self'}
+					>
+						<span>{data.page.formation.btn.text}</span>
+					</a>
+				{/if}
 			</div>
 
 			<!-- Image -->
