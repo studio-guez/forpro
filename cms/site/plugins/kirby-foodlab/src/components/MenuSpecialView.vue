@@ -463,7 +463,6 @@ export default {
             this.html = `
             <html>
               <head>
-                <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline';">
                 <style>
                   body {
                     margin: 0;
