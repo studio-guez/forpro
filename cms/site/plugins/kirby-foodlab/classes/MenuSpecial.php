@@ -43,6 +43,8 @@ class MenuSpecial extends BaseClass
             "partnerLogoLeft" => $input["partnerLogoLeft"] ?? "",
             "partnerLogoRight" => $input["partnerLogoRight"] ?? "",
             "partnerLogoBottom" => $input["partnerLogoBottom"] ?? "",
+            "showDishes" => $input["showDishes"] ?? true,
+            "showWines" => $input["showWines"] ?? true,
         ];
 
         return Data::write(static::file(), $menu);
