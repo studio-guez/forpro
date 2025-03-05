@@ -288,7 +288,7 @@
                             class="v-space-building__sections__description fp-remove-margin-child v-space-building__section-description--Hotel_Entreprises"
                     >
                         <h3>FactoryLab</h3>
-                        <p>#entrepreneuriat #incubation #entreprises</p>
+                        <p>#entrepreneuriat #entreprises</p>
                     </div>
                 {:else if currentOverSection === 'creche'}
                     <div
