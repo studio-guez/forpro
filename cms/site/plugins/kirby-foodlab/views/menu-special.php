@@ -1,8 +1,8 @@
 <?php
 
-use MediumSans\MenuSpecial;
-use MediumSans\MenuSpecial\DishSpecial;
-use MediumSans\MenuSpecial\WineSpecial;
+use Eclypsys\MenuSpecial;
+use Eclypsys\MenuSpecial\DishSpecial;
+use Eclypsys\MenuSpecial\WineSpecial;
 
 return [
     "pattern" => "foodlab/restaurant/menu/special",

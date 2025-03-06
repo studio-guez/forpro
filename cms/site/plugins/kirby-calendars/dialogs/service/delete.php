@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\KirbyCalendars\Service;
+use Eclypsys\KirbyCalendars\Service;
 
 return [
     'pattern' => 'service/(:any)/delete',

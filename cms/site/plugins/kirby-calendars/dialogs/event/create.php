@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\KirbyCalendars\Event;
+use Eclypsys\KirbyCalendars\Event;
 
 return [
     'pattern' => 'event/create',

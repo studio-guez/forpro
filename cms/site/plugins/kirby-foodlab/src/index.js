@@ -12,7 +12,7 @@ import RedWineTable from "./components/RedWineTable.vue";
 import BubbleWineTable from "./components/BubbleWineTable.vue";
 import SoftDrinkTable from "./components/SoftDrinkTable.vue";
 
-panel.plugin("mediumsans/foodlab", {
+panel.plugin("eclypsys/foodlab", {
   components: {
     "k-menu-view": MenuView,
     "k-menu-special-view": MenuSpecialView,

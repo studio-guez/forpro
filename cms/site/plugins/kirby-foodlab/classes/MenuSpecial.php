@@ -1,6 +1,6 @@
 <?php
 
-namespace MediumSans;
+namespace Eclypsys;
 
 use Kirby\Data\Data;
 

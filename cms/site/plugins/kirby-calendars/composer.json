@@ -1,5 +1,5 @@
 {
-  "name": "mediumsans/kirby-calendars",
+  "name": "eclypsys/kirby-calendars",
   "description": "Generate and manage Google Calendars from Kirby",
   "license": "proprietary",
   "type": "kirby-plugin",
@@ -7,7 +7,7 @@
   "authors": [
     {
       "name": "Samuel Cardoso",
-      "email": "samuel@mediumsans.studio"
+      "email": "s.cardoso@eclypsys.ch"
     }
   ],
   "require": {
@@ -18,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "MediumSans\\KirbyCalendars\\": "classes/"
+      "Eclypsys\\KirbyCalendars\\": "classes/"
     }
   },
   "config": {

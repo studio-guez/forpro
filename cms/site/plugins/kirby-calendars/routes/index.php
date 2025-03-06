@@ -2,10 +2,10 @@
 
 use Kirby\Data\Json;
 use Kirby\Http\Response;
-use MediumSans\KirbyCalendars\Calendar;
-use MediumSans\KirbyCalendars\Schedule;
-use MediumSans\KirbyCalendars\Service;
-use MediumSans\KirbyCalendars\Event;
+use Eclypsys\KirbyCalendars\Calendar;
+use Eclypsys\KirbyCalendars\Schedule;
+use Eclypsys\KirbyCalendars\Service;
+use Eclypsys\KirbyCalendars\Event;
 
 return [
     [

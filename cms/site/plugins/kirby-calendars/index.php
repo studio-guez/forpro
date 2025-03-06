@@ -3,15 +3,15 @@
 @include_once __DIR__ . '/vendor/autoload.php';
 
 load([
-    'MediumSans\KirbyCalendars\Calendar'    => __DIR__ . '/classes/Calendar.php',
-    'MediumSans\KirbyCalendars\Schedule'    => __DIR__ . '/classes/Schedule.php',
-    'MediumSans\KirbyCalendars\Service'     => __DIR__ . '/classes/Service.php',
-    'MediumSans\KirbyCalendars\Database'    => __DIR__ . '/classes/Database.php',
-    'MediumSans\KirbyCalendars\Event'       => __DIR__ . '/classes/Event.php',
-    'MediumSans\KirbyCalendars\Leave'       => __DIR__ . '/classes/Leave.php',
-    'MediumSans\KirbyCalendars\Invitation'  => __DIR__ . '/classes/Invitation.php',
-    'MediumSans\KirbyCalendars\Utils'       => __DIR__ . '/classes/Utils.php',
-    'MediumSans\KirbyCalendars\BaseClass'   => __DIR__ . '/classes/BaseClass.php'
+    'Eclypsys\KirbyCalendars\Calendar'    => __DIR__ . '/classes/Calendar.php',
+    'Eclypsys\KirbyCalendars\Schedule'    => __DIR__ . '/classes/Schedule.php',
+    'Eclypsys\KirbyCalendars\Service'     => __DIR__ . '/classes/Service.php',
+    'Eclypsys\KirbyCalendars\Database'    => __DIR__ . '/classes/Database.php',
+    'Eclypsys\KirbyCalendars\Event'       => __DIR__ . '/classes/Event.php',
+    'Eclypsys\KirbyCalendars\Leave'       => __DIR__ . '/classes/Leave.php',
+    'Eclypsys\KirbyCalendars\Invitation'  => __DIR__ . '/classes/Invitation.php',
+    'Eclypsys\KirbyCalendars\Utils'       => __DIR__ . '/classes/Utils.php',
+    'Eclypsys\KirbyCalendars\BaseClass'   => __DIR__ . '/classes/BaseClass.php'
 ]);
 
 $pluginPermissionNameForBlueprint = 'mediumsans.kirby-calendars';
@@ -95,7 +95,7 @@ Kirby::plugin('mediumsans/kirby-calendars', [
     'routes' => require __DIR__ . '/routes/index.php',
     'hooks' => [
         'panel.route:after' => function ($route, $path, $method) use ($pluginPermissionNameForBlueprint) {
-            MediumSans\KirbyCalendars\Utils::checkRoleAccess($route, $path, $method, $pluginPermissionNameForBlueprint);
+            Eclypsys\KirbyCalendars\Utils::checkRoleAccess($route, $path, $method, $pluginPermissionNameForBlueprint);
         }
     ],
 ]);

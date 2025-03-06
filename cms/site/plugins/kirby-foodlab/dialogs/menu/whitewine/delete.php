@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\Menu\Whitewine;
+use Eclypsys\Menu\Whitewine;
 
 return [
     'pattern' => 'menu/whitewine/(:any)/delete',

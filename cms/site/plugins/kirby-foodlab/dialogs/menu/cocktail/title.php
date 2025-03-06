@@ -1,7 +1,7 @@
 <?php
 
-use MediumSans\Menu\Metadata;
-use MediumSans\Menu\Cocktail;
+use Eclypsys\Menu\Metadata;
+use Eclypsys\Menu\Cocktail;
 
 return [
     'pattern' => 'menu/cocktail/title',

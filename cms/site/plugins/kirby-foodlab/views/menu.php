@@ -1,7 +1,7 @@
 <?php
 
-use MediumSans\Menu;
-use MediumSans\Menu\Metadata;
+use Eclypsys\Menu;
+use Eclypsys\Menu\Metadata;
 
 return [
     "pattern" => "foodlab/restaurant/menu",

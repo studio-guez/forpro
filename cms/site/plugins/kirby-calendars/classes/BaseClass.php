@@ -1,6 +1,6 @@
 <?php
 
-namespace MediumSans\KirbyCalendars;
+namespace Eclypsys\KirbyCalendars;
 
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;

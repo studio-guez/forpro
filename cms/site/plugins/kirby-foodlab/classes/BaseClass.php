@@ -1,10 +1,10 @@
 <?php
 
-namespace MediumSans;
+namespace Eclypsys;
 
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
-use MediumSans\Menu\Metadata;
+use Eclypsys\Menu\Metadata;
 
 class BaseClass
 {

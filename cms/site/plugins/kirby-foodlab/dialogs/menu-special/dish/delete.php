@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\MenuSpecial\DishSpecial;
+use Eclypsys\MenuSpecial\DishSpecial;
 
 return [
     'pattern' => 'menu/special/dish/(:any)/delete/(:any)',

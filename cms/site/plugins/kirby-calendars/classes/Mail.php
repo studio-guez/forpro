@@ -1,6 +1,6 @@
 <?php
 
-namespace MediumSans\KirbyCalendars;
+namespace Eclypsys\KirbyCalendars;
 
 use Kirby\Exception\Exception;
 use Kirby\Cms\User;

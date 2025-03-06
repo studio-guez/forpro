@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\KirbyCalendars\Schedule;
+use Eclypsys\KirbyCalendars\Schedule;
 
 return [
     'pattern' => 'schedule/(:any)/create',

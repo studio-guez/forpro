@@ -1,11 +1,11 @@
 <?php
 
-namespace MediumSans\MenuSpecial;
+namespace Eclypsys\MenuSpecial;
 
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
-use MediumSans\BaseClass;
-use MediumSans\MenuSpecial;
+use Eclypsys\BaseClass;
+use Eclypsys\MenuSpecial;
 
 class DishSpecial extends BaseClass
 {

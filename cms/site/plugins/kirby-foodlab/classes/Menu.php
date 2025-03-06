@@ -1,20 +1,20 @@
 <?php
 
-namespace MediumSans;
+namespace Eclypsys;
 
 use Kirby\Data\Data;
-use MediumSans\Menu\Beer;
-use MediumSans\Menu\BubbleWine;
-use MediumSans\Menu\Cocktail;
-use MediumSans\Menu\Dessert;
-use MediumSans\Menu\HotDrink;
-use MediumSans\Menu\MainCourse;
-use MediumSans\Menu\RedWine;
-use MediumSans\Menu\SoftDrink;
-use MediumSans\Menu\Starter;
-use MediumSans\Menu\WhiteWine;
-use MediumSans\Menu\Metadata;
-use MediumSans\Menu\Origin;
+use Eclypsys\Menu\Beer;
+use Eclypsys\Menu\BubbleWine;
+use Eclypsys\Menu\Cocktail;
+use Eclypsys\Menu\Dessert;
+use Eclypsys\Menu\HotDrink;
+use Eclypsys\Menu\MainCourse;
+use Eclypsys\Menu\RedWine;
+use Eclypsys\Menu\SoftDrink;
+use Eclypsys\Menu\Starter;
+use Eclypsys\Menu\WhiteWine;
+use Eclypsys\Menu\Metadata;
+use Eclypsys\Menu\Origin;
 
 class Menu extends BaseClass
 {
