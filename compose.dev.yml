@@ -63,13 +63,15 @@ services:
       context: ./cms
       dockerfile: Dockerfile
     volumes:
+      - ./cms/content:/var/www/html/content:rw
       - ./cms/site/config:/var/www/html/site/config:rw
       - ./cms/site/plugins:/var/www/html/site/plugins:rw
-      - ./cms/site/plugins/kirby-foodlab/data:/var/www/html/site/plugins/kirby-foodlab/data:rw
+      - ./cms/site/accounts:/var/www/html/site/accounts:rw
+      - ./cms/site/blueprints:/var/www/html/site/blueprints:rw
+      - ./cms/site/templates:/var/www/html/site/templates:rw
       - kirby_media:/var/www/html/media:rw
       - kirby_cache:/var/www/html/site/cache:rw
       - kirby_sessions:/var/www/html/site/sessions:rw
-      - kirby_accounts:/var/www/html/site/accounts:rw
     ports:
       - "8000:80"
     environment:
