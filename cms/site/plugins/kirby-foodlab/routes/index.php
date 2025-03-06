@@ -2,10 +2,10 @@
 
 use Kirby\Cms\Page;
 use Kirby\Cms\Response;
-use MediumSans\Menu;
-use MediumSans\MenuSpecial;
-use MediumSans\Menu\Metadata;
-use MediumSans\MenuSpecial\DishSpecial;
+use Eclypsys\Menu;
+use Eclypsys\MenuSpecial;
+use Eclypsys\Menu\Metadata;
+use Eclypsys\MenuSpecial\DishSpecial;
 use Spatie\Browsershot\Browsershot;
 
 return [

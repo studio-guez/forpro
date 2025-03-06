@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\Menu\Starter;
+use Eclypsys\Menu\Starter;
 
 return [
     'pattern' => 'menu/starter/(:any)/edit',

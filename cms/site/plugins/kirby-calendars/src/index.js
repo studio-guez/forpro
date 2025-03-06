@@ -6,7 +6,7 @@ import EventsView from "./components/EventsView.vue";
 import LeavesView from "./components/LeavesView.vue";
 import DeniedAcces from "./components/DeniedAcces.vue";
 
-panel.plugin("mediumsans/kirby-calendars", {
+panel.plugin("eclypsys/kirby-calendars", {
   components: {
     'k-calendars-view': CalendarsView,
     'k-calendar-view': CalendarView,

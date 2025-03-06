@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\Menu\Maincourse;
+use Eclypsys\Menu\Maincourse;
 
 return [
     'pattern' => 'menu/maincourse/(:any)/edit',

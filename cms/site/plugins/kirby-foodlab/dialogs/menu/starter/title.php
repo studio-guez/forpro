@@ -1,7 +1,7 @@
 <?php
 
-use MediumSans\Menu\Metadata;
-use MediumSans\Menu\Starter;
+use Eclypsys\Menu\Metadata;
+use Eclypsys\Menu\Starter;
 
 return [
     'pattern' => 'menu/starter/title',

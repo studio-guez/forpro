@@ -1,7 +1,7 @@
 <?php
 
-use MediumSans\Menu\Metadata;
-use MediumSans\Menu\SoftDrink;
+use Eclypsys\Menu\Metadata;
+use Eclypsys\Menu\SoftDrink;
 
 return [
     'pattern' => 'menu/softdrink/title',

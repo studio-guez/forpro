@@ -1,6 +1,6 @@
 <?php
 
-namespace MediumSans\Menu;
+namespace Eclypsys\Menu;
 
 class RedWine extends Wine
 {

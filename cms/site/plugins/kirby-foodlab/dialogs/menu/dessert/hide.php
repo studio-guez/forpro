@@ -1,7 +1,7 @@
 <?php
 
-use MediumSans\Menu\Metadata;
-use MediumSans\Menu\Dessert;
+use Eclypsys\Menu\Metadata;
+use Eclypsys\Menu\Dessert;
 
 return [
     'pattern' => 'menu/dessert/hide',

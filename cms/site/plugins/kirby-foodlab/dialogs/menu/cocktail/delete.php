@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\Menu\Cocktail;
+use Eclypsys\Menu\Cocktail;
 
 return [
     'pattern' => 'menu/cocktail/(:any)/delete',

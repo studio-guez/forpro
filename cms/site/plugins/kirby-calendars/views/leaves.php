@@ -1,7 +1,7 @@
 <?php
 
-use MediumSans\KirbyCalendars\Calendar;
-use MediumSans\KirbyCalendars\Leave;
+use Eclypsys\KirbyCalendars\Calendar;
+use Eclypsys\KirbyCalendars\Leave;
 
 return [
     'pattern' => 'kirby-calendars/calendar/(:any)/leaves',

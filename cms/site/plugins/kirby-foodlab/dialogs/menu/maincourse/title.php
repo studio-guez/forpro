@@ -1,7 +1,7 @@
 <?php
 
-use MediumSans\Menu\Metadata;
-use MediumSans\Menu\MainCourse;
+use Eclypsys\Menu\Metadata;
+use Eclypsys\Menu\MainCourse;
 
 return [
     'pattern' => 'menu/maincourse/title',
