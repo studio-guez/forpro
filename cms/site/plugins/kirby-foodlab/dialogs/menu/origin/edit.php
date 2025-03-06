@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\Menu\Origin;
+use Eclypsys\Menu\Origin;
 
 return [
     "pattern" => "menu/origin/(:any)/edit",

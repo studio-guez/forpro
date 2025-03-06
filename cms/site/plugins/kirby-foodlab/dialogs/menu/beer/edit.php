@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\Menu\Beer;
+use Eclypsys\Menu\Beer;
 
 return [
     'pattern' => 'menu/beer/(:any)/edit',

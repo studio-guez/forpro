@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\Menu\Dessert;
+use Eclypsys\Menu\Dessert;
 
 return [
     'pattern' => 'menu/dessert/create',

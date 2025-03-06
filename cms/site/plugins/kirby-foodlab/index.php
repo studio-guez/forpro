@@ -3,30 +3,65 @@
 @include_once __DIR__ . "/vendor/autoload.php";
 
 load([
-    "MediumSans\BaseClass"                  => __DIR__ . "/classes/BaseClass.php",
-    "MediumSans\Menu"                       => __DIR__ . "/classes/Menu.php",
-    "MediumSans\Menu\Metadata"              => __DIR__ . "/classes/Metadata.php",
-    "MediumSans\Menu\MainCourse"            => __DIR__ . "/classes/MainCourse.php",
-    "MediumSans\Menu\Starter"               => __DIR__ . "/classes/Starter.php",
-    "MediumSans\Menu\Dessert"               => __DIR__ . "/classes/Dessert.php",
-    "MediumSans\Menu\Wine"                  => __DIR__ . "/classes/Wine.php",
-    "MediumSans\Menu\RedWine"               => __DIR__ . "/classes/RedWine.php",
-    "MediumSans\Menu\WhiteWine"             => __DIR__ . "/classes/WhiteWine.php",
-    "MediumSans\Menu\BubbleWine"            => __DIR__ . "/classes/BubbleWine.php",
-    "MediumSans\Menu\SoftDrink"             => __DIR__ . "/classes/SoftDrink.php",
-    "MediumSans\Menu\Beer"                  => __DIR__ . "/classes/Beer.php",
-    "MediumSans\Menu\Cocktail"              => __DIR__ . "/classes/Cocktail.php",
-    "MediumSans\Menu\HotDrink"              => __DIR__ . "/classes/HotDrink.php",
-    "MediumSans\Menu\Origin"                => __DIR__ . "/classes/Origin.php",
-    "MediumSans\MenuSpecial"                => __DIR__ . "/classes/MenuSpecial.php",
-    "MediumSans\MenuSpecial\DishSpecial"    => __DIR__ . "/classes/DishSpecial.php",
-    "MediumSans\MenuSpecial\WineSpecial"    => __DIR__ . "/classes/WineSpecial.php",
-    "MediumSans\Menu\Utils"                 => __DIR__ . "/classes/Utils.php"
+    "Eclypsys\BaseClass"                  => __DIR__ . "/classes/BaseClass.php",
+    "Eclypsys\Menu"                       => __DIR__ . "/classes/Menu.php",
+    "Eclypsys\Menu\Metadata"              => __DIR__ . "/classes/Metadata.php",
+    "Eclypsys\Menu\MainCourse"            => __DIR__ . "/classes/MainCourse.php",
+    "Eclypsys\Menu\Starter"               => __DIR__ . "/classes/Starter.php",
+    "Eclypsys\Menu\Dessert"               => __DIR__ . "/classes/Dessert.php",
+    "Eclypsys\Menu\Wine"                  => __DIR__ . "/classes/Wine.php",
+    "Eclypsys\Menu\RedWine"               => __DIR__ . "/classes/RedWine.php",
+    "Eclypsys\Menu\WhiteWine"             => __DIR__ . "/classes/WhiteWine.php",
+    "Eclypsys\Menu\BubbleWine"            => __DIR__ . "/classes/BubbleWine.php",
+    "Eclypsys\Menu\SoftDrink"             => __DIR__ . "/classes/SoftDrink.php",
+    "Eclypsys\Menu\Beer"                  => __DIR__ . "/classes/Beer.php",
+    "Eclypsys\Menu\Cocktail"              => __DIR__ . "/classes/Cocktail.php",
+    "Eclypsys\Menu\HotDrink"              => __DIR__ . "/classes/HotDrink.php",
+    "Eclypsys\Menu\Origin"                => __DIR__ . "/classes/Origin.php",
+    "Eclypsys\MenuSpecial"                => __DIR__ . "/classes/MenuSpecial.php",
+    "Eclypsys\MenuSpecial\DishSpecial"    => __DIR__ . "/classes/DishSpecial.php",
+    "Eclypsys\MenuSpecial\WineSpecial"    => __DIR__ . "/classes/WineSpecial.php",
+    "Eclypsys\Menu\Utils"                 => __DIR__ . "/classes/Utils.php"
 ]);
 
-$pluginPermissionNameForBlueprint = 'mediumsans.kirby-foodlab';
+$pluginPermissionNameForBlueprint = 'eclypsys.kirby-foodlab';
 
-Kirby::plugin("mediumsans/foodlab", [
+Kirby::plugin("eclypsys/foodlab", [
+    'hooks' => [
+        'page.render:before' => function () {
+            var_dump(kirby()->roots);
+            die();
+            $dataFolder = __DIR__ . '/data';
+
+            if (!is_dir($dataFolder)) {
+                Dir::make($dataFolder);
+
+                $jsonFiles = [
+                    'beer.json',
+                    'bubblewine.json',
+                    'cocktail.json',
+                    'dessert.json',
+                    'hotdrink.json',
+                    'maincourse.json',
+                    'menu.json',
+                    'menu-special.json',
+                    'metadata.json',
+                    'origin.json',
+                    'redwine.json',
+                    'softdrink.json',
+                    'starter.json',
+                    'whitewine.json'
+                ];
+
+                foreach ($jsonFiles as $filename) {
+                    F::write(
+                        $dataFolder . '/' . $filename,
+                        '[]'
+                    );
+                }
+            }
+        }
+    ],
     "areas" => [
         "menu" => function ($kirby) {
             return [
@@ -148,12 +183,13 @@ Kirby::plugin("mediumsans/foodlab", [
     ],
     "blueprints" => [
         "tabs/restaurant" => __DIR__ . "/blueprints/tabs/restaurant.yml",
+        "pages/restaurant" => __DIR__ . "/blueprints/pages/restaurant.yml",
     ],
     "api" => require __DIR__ . "/routes/index.php",
 
     'hooks' => [
         'panel.route:after' => function ($route, $path, $method) use ($pluginPermissionNameForBlueprint) {
-            \MediumSans\Menu\Utils::checkRoleAccess($route, $path, $method, $pluginPermissionNameForBlueprint);
+            \Eclypsys\Menu\Utils::checkRoleAccess($route, $path, $method, $pluginPermissionNameForBlueprint);
         }
     ],
 ]);

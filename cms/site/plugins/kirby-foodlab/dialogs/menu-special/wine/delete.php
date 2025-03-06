@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\MenuSpecial\WineSpecial;
+use Eclypsys\MenuSpecial\WineSpecial;
 
 return [
     'pattern' => 'menu/special/wine/(:any)/delete/(:any)',

@@ -1,5 +1,5 @@
 <?php
-Kirby::plugin('mediumsans/kirby-foodlab', [
+Kirby::plugin('eclypsys/kirby-foodlab', [
     'permissions' => [
         'access' => false,
     ]

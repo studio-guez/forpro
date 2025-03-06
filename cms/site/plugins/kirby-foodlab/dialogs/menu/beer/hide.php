@@ -1,7 +1,7 @@
 <?php
 
-use MediumSans\Menu\Metadata;
-use MediumSans\Menu\Beer;
+use Eclypsys\Menu\Metadata;
+use Eclypsys\Menu\Beer;
 
 return [
     'pattern' => 'menu/beer/hide',

@@ -1,7 +1,7 @@
 <?php
 
-use MediumSans\Menu\Metadata;
-use MediumSans\Menu\Origin;
+use Eclypsys\Menu\Metadata;
+use Eclypsys\Menu\Origin;
 
 return [
     "pattern" => "menu/origin/title",

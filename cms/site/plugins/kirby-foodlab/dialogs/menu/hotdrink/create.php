@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\Menu\Hotdrink;
+use Eclypsys\Menu\Hotdrink;
 
 return [
     'pattern' => 'menu/hotdrink/create',

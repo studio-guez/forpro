@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\Menu\Softdrink;
+use Eclypsys\Menu\Softdrink;
 
 return [
     'pattern' => 'menu/softdrink/(:any)/delete',

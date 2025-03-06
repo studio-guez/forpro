@@ -1,7 +1,7 @@
 <?php
 
-use MediumSans\Menu\Metadata;
-use MediumSans\Menu\BubbleWine;
+use Eclypsys\Menu\Metadata;
+use Eclypsys\Menu\BubbleWine;
 
 return [
     'pattern' => 'menu/bubblewine/hide',

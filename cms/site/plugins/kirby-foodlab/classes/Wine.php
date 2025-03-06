@@ -1,10 +1,10 @@
 <?php
 
 
-namespace MediumSans\Menu;
+namespace Eclypsys\Menu;
 
 use Kirby\Data\Data;
-use MediumSans\BaseClass;
+use Eclypsys\BaseClass;
 
 class Wine extends BaseClass
 {

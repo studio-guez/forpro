@@ -1,6 +1,6 @@
 <?php
 
-use MediumSans\Menu\BubbleWine;
+use Eclypsys\Menu\BubbleWine;
 
 return [
     'pattern' => 'menu/bubblewine/create',

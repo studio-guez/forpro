@@ -1,7 +1,7 @@
 <?php
 
-use MediumSans\Menu\Metadata;
-use MediumSans\Menu\RedWine;
+use Eclypsys\Menu\Metadata;
+use Eclypsys\Menu\RedWine;
 
 return [
     'pattern' => 'menu/redwine/title',
