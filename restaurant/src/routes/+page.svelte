@@ -503,7 +503,7 @@
 			</div>
 		</div>
 
-		<div class="mt-10 grid grid-cols-1 justify-around lg:col-span-full lg:grid-cols-4 gap-12">
+		<div class="mt-10 grid grid-cols-1 justify-around lg:col-span-full lg:grid-cols-5 gap-12">
 			{#each data.page.values.list as value}
 				<div class="flex items-center justify-center mt-5 lg:mt-0">
 					<div class="inline-grid h-full w-full justify-center text-center">
