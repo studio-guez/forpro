@@ -143,6 +143,7 @@ export interface IBody {
             | ICards
             | IProfiles
             | IList
+            | IBlockListGraphic
             | IDropdown
             | ICardsFocus
             | IHtmlContent
@@ -168,6 +169,7 @@ export interface IBlock {
         | 'cards'
         | 'profiles'
         | 'list'
+        | 'graphic-list'
         | 'dropdown'
         | 'cards-focus'
         | 'body'
@@ -497,6 +499,20 @@ export interface IBlockListLogo extends IBlock {
     }
     "type": "logos-list"
 }
+
+/**
+ * graphic list
+ */
+
+export interface IBlockListGraphic extends IBlock {
+	type: 'graphic-list'
+	content: {
+		items: {
+			title: string
+		}[]
+	}
+}
+
 
 /**
  * timeline en speed
