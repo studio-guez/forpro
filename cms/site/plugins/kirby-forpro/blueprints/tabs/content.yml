@@ -125,6 +125,7 @@ fields:
           preload: false
       - body
       - list
+      - graphic-list
       - dropdown
       - cards-focus
       - google-maps

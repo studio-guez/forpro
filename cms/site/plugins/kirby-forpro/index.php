@@ -19,6 +19,7 @@ Kirby::plugin('mediumsans/forpro', [
         'blocks/body'             => __DIR__ . '/blueprints/blocks/body.yml',
         'blocks/dropdown'         => __DIR__ . '/blueprints/blocks/dropdown.yml',
         'blocks/list'             => __DIR__ . '/blueprints/blocks/list.yml',
+        'blocks/graphic-list'             => __DIR__ . '/blueprints/blocks/graphic-list.yml',
         'blocks/google-maps'      => __DIR__ . '/blueprints/blocks/google-maps.yml',
         'blocks/animated-list'    => __DIR__ . '/blueprints/blocks/animated-list.yml',
         'blocks/logos-list'    => __DIR__ . '/blueprints/blocks/logos-list.yml',
