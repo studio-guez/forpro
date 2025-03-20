@@ -1,0 +1,20 @@
+title: Liste Graphique
+
+icon: list-bullet
+
+wysiwyg: false
+preview: fields
+
+fields:
+
+  items:
+    label: Éléments de la liste
+    type: structure
+    min: 1
+    fields:
+      title:
+        label: titre
+        type: writer
+        inline: true
+        marks:
+          - italic
