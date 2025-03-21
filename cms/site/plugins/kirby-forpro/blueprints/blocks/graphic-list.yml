@@ -20,5 +20,5 @@ fields:
           - italic
       scrollToBlock:
         type: number
-        label: Nombre de bloc vers lequel scroller
-        info: Si renseigné, le clic sur l'élément de la part de l'utilisateur·icexs fera scroller la page vers le nombre de blocs renseignés
+        label: Index du bloc vers lequel scroller
+        info: Si renseigné, le clic sur l'élément de la part de l'utilisateur·icexs fera scroller la page vers l'index de blocs renseignés
