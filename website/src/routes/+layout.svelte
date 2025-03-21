@@ -20,7 +20,7 @@
 
 <script lang="ts">
     import "../style/_main.scss"
-    import {menuIsOpen, modaleIsOpen, showCookieConsent, showFooter, showNav, siteInfo} from "../store";
+    import {menuIsOpen, modaleIsOpen, showCookieConsent, siteInfo} from "../store";
     import AppNav from "$lib/components/AppNav.svelte";
     import AppFooter from "$lib/components/AppFooter.svelte";
     import type {ISiteInfo} from "$lib/interfaces/cmsApiResponse";
@@ -37,7 +37,6 @@
 
     onMount(() => {
       if(  Number($page.url.searchParams.get('m')) === 1 ) modaleIsOpen.set(true)
-      setNavAndFooterVisibility(window.location.pathname)
     })
 
     beforeNavigate((navigation) => {
@@ -49,9 +48,6 @@
           behavior: 'smooth',
         })
       })
-
-        setNavAndFooterVisibility(navigation.to?.route.id || '')
-
     })
 
     afterNavigate((navigation) => {
@@ -70,22 +66,10 @@
         }
     })
 
-    function setNavAndFooterVisibility(rootId: string) {
-        if( rootId === '/changerderegard' ) {
-            showNav.set(false)
-            showFooter.set(false)
-        } else {
-            showNav.set(true)
-            showFooter.set(true)
-        }
-    }
-
-
 </script>
 
 <div class="s-layout"
      class:menu-is-open="{$menuIsOpen}"
-     class:has-no-nav="{!$showNav}"
 >
   {#if ($modaleIsOpen)}
     <div class="s-layout__modal-box">
@@ -93,11 +77,9 @@
     </div>
   {/if}
 
-  {#if $showNav}
   <div class="s-layout__nav-box">
     <AppNav/>
   </div>
-  {/if}
 
   {#key $page.params.slug}
   <div class="s-layout__main"
@@ -113,12 +95,10 @@
     </div>
   {/if}
 
-  {#if $showFooter}
   <div class="s-layout__footer-box"
   >
     <AppFooter/>
   </div>
-  {/if}
 </div>
 
 <style lang="scss">
@@ -135,10 +115,6 @@
 
     &.menu-is-open {
       overflow: hidden;
-    }
-
-    &.has-no-nav {
-      padding-top: 0;
     }
   }
 
