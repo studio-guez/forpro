@@ -27,7 +27,10 @@ fields:
     label:
       fr: Lien
       en: Link
-    type: url
+    type: link
+    options:
+      - url
+      - email
 
   target_blank:
     width: 1/4
