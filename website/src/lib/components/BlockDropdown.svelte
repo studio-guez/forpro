@@ -62,6 +62,13 @@
 </div>
 
 <style lang="scss">
+  .s-dropdown {
+    max-width: 70rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
   .s-dropdown__item {
     --s-dropdown-line-width: 3px;
     --s-dropdown-line-spacing: 10px;
