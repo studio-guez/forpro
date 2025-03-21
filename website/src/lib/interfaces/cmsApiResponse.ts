@@ -509,6 +509,7 @@ export interface IBlockListGraphic extends IBlock {
 	content: {
 		items: {
 			title: string
+            scrolltoblock?: number | ''
 		}[]
 	}
 }

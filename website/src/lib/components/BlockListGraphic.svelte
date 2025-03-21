@@ -1,6 +1,7 @@
 <script lang="ts">
   import type {IBlockListGraphic} from "$lib/interfaces/cmsApiResponse";
   import {onMount} from "svelte";
+  import {scrollToBlockByIndex} from "$lib/utils/scrollToBlockByIndex";
 
   export let data: IBlockListGraphic
 
@@ -29,7 +30,12 @@
 <section class="s-block-list-graphic">
   <div class="s-block-list-graphic__content">
     {#each data.content.items as item}
-      <div class="s-block-list-graphic__content__item">{item.title}</div>
+      <div class="s-block-list-graphic__content__item"
+           role="button"
+           tabindex="0"
+           on:keydown={() => scrollToBlockByIndex(item.scrolltoblock)}
+           on:click={() => scrollToBlockByIndex(item.scrolltoblock)}
+      >{item.title}</div>
     {/each}
   </div>
 </section>
