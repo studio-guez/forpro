@@ -1,0 +1,23 @@
+.k-blocks-list {
+    counter-reset: block-counter; /* Nom du compteur */
+    position: relative;
+}
+
+.k-blocks-list > .k-block-container:not([data-hidden="true"])::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -25%);
+    counter-increment: block-counter;
+    content: "" counter(block-counter) "";
+    font-weight: bold;
+    margin-right: 10px;
+    color: #000;
+    background: white;
+    border-radius: 2rem;
+    height:         2rem;
+    width:          2rem;
+    line-height:    2rem;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .25);
+    text-align: center;
+}
