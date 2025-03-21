@@ -1,7 +1,28 @@
 <script lang="ts">
-    import type {IBlockListGraphic} from "$lib/interfaces/cmsApiResponse";
+  import type {IBlockListGraphic} from "$lib/interfaces/cmsApiResponse";
+  import {onMount} from "svelte";
 
   export let data: IBlockListGraphic
+
+
+  onMount(() => {
+      runAnimation()
+      setInterval(runAnimation, 3_000)
+  })
+
+  function runAnimation() {
+      const items = document.querySelectorAll('.s-block-list-graphic__content__item')
+
+      const randomIndex = Math.floor(Math.random() * items.length)
+
+      const rendomIten = items[randomIndex]
+
+      rendomIten.classList.add('animate-ding-ding')
+
+      rendomIten.addEventListener('animationend', () => {
+          rendomIten.classList.remove('animate-ding-ding')
+      }, { once: true })
+  }
 
 </script>
 
@@ -26,19 +47,24 @@
   .s-block-list-graphic__content {
     display: flex;
     width: 100%;
-    max-width: 30rem;
-    flex-direction: column;
+    max-width: 70rem;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    user-select: none;
+    cursor: pointer;
+    gap: 2rem 1rem;
   }
 
   .s-block-list-graphic__content__item {
     background: var(--app-color--orange);
     color: var(--app-color--blue);
     padding: .5rem;
-    width: 100%;
+    width: 25%;
     text-align: center;
     position: relative;
-    //margin-top: -.5rem;
+    min-width: 8rem;
 
     &:before, &:after {
       content: '';
@@ -58,11 +84,9 @@
       }
     }
 
-
     //1
     &:nth-child(1n) {
-      left: -50%;
-      transform: translate(75%) rotate(-10deg);
+      transform: translate(0%) rotate(-10deg);
       max-width: 10rem;
       padding-top: 0rem;
       padding-bottom: 2rem;
@@ -84,20 +108,16 @@
 
     //2
     &:nth-child(2n) {
-      left: 0%;
-      transform: translate(0%, 0%) rotate(8deg);
-      max-width: 8.5rem;
-      padding-top: 1rem;
+      transform: translate(0%) rotate(20deg);
+      max-width: 10rem;
+      padding-top: 0rem;
       padding-bottom: 2rem;
 
       &:before {
-        width: 100%;
+        width:calc(100% + 2rem);
         top: 0;
         left: 50%;
         transform: translate(-50%, -90%);
-        border-top-left-radius: 2rem;
-        border-top-right-radius: 2rem;
-
       }
       &:after {
         width:calc(100% + 2rem);
@@ -113,13 +133,11 @@
 
 
 
+
+
     // 3
     &:nth-child(3n) {
-      left: 50%;
-      transform: translate(-75%, 0%) rotate(-10deg);
-      max-width: 10rem;
-
-
+      transform: translate(0%, 0%) rotate(-20deg);
       padding-top: 1rem;
       padding-bottom: 2rem;
 
@@ -148,44 +166,59 @@
 
 
     &:nth-child(4n) {
-      left: 0%;
-      transform: translate(-10%, 0%) rotate(15deg);
-      max-width: 10rem;
+      transform: translate(0%, 0%) rotate(15deg);
     }
+
+
+
+
+
+
     &:nth-child(5n) {
-      left: -50%;
-      transform: translate(50%) rotate(-10deg);
-      max-width: 10rem;
+      transform: translate(0%, 0%) rotate(-25deg);
     }
     &:nth-child(6n) {
-      left: 0%;
-      transform: translate(10%, -15%) rotate(5deg);
-      max-width: 10rem;
+      transform: translate(0%, 0%) rotate(5deg);
     }
     &:nth-child(7n) {
-      left: 50%;
-      transform: translate(-50%, 0%) rotate(-5deg);
-      max-width: 10rem;
+      transform: translate(0%, 0%) rotate(-10deg);
     }
     &:nth-child(8n) {
-      left: 0%;
-      transform: translate(0%, 0%) rotate(-15deg);
-      max-width: 10rem;
-    }
-    &:nth-child(9n) {
-      left: 0%;
-      transform: translate(-25%, 10%) rotate(5deg);
-      max-width: 10rem;
-    }
-    &:nth-child(10n) {
-      left: 0%;
-      transform: translate(15%, 20%) rotate(-2deg);
-      max-width: 10rem;
+      transform: translate(0%, 0%) rotate(5deg);
     }
 
 
+  }
 
 
+  :global(.s-block-list-graphic__content__item.animate-ding-ding) {
+    animation: ding-ding 0.5s ease-in-out;
+    transform-origin: center center;
+  }
+
+
+  @keyframes ding-ding {
+    0% {
+      transform: rotate(-10deg);
+    }
+    10% {
+      transform: rotate(10deg);
+    }
+    20% {
+      transform: rotate(-20deg);
+    }
+    50% {
+      transform: rotate(20deg);
+    }
+    70% {
+      transform: rotate(-10deg);
+    }
+    80% {
+      transform: rotate(15deg);
+    }
+    100% {
+      transform: rotate(-15deg);
+    }
   }
 
 </style>
