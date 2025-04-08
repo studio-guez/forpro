@@ -50,7 +50,7 @@
                     <iframe title="youtube embed"
                             width="720"
                             height="405"
-                            class:is-vertical={content.content.is_vertical}
+                            class:is-vertical={content.content.is_vertical === 'true'}
                             class="s-page__content__youtube"
                             src="{`https://www.youtube.com/embed/${content.content.url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|.*\/))([a-zA-Z0-9_-]{11})/)[1]}?modestbranding=1&playsinline=1&color=white`}"
                             frameborder="0"
