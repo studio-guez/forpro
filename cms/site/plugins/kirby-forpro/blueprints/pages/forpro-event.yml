@@ -25,6 +25,9 @@ columns:
         type: toggle
         default: false
         width: 1/4
+        text:
+          - "non"
+          - "oui"
 
       title:
         label: Titre
