@@ -333,7 +333,7 @@
     .s-evenements__events__events-wrap__item {
         display: block;
         width: calc( 33% - (var(--app-gutter_regular) / 1 ));
-        //max-width: 20rem;
+        min-width: 20rem;
         box-sizing: border-box;
         padding: 2rem 1rem;
         border-radius: 1rem;
@@ -342,7 +342,11 @@
         //background: var(--app-color--blue--light);
         border: solid 2px var(--app-color--blue);
         margin-top: 2rem;
-        cursor: pointer;
+
+        @media (max-width: 960px) {
+            width: 100%;
+            min-width: initial;
+        }
 
         .s-evenements__events__events-wrap--archive & {
             filter: grayscale(100%);
