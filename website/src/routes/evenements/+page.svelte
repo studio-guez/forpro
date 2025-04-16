@@ -168,7 +168,7 @@
 
         const eventIsPast =  eventDateEnd < today
 
-        const isVisible = !eventIsPast ? true : event.pageContent.content.isarchive !== 'true'
+        const isVisible = !eventIsPast
 
         const matchesSearch = searchValue.length === 0 ||
                 [event.pageContent.content.title, event.pageContent.content.description, event.pageContent.content.body]
