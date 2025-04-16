@@ -8,7 +8,10 @@
     >
         <div class="s-evenements__events__search">
             <div class="s-evenements__events__search__bar">
-                <input type="text" class="s-evenements__events__search__bar__input" >
+                <input type="text"
+                       class="s-evenements__events__search__bar__input"
+                       bind:value={searchValue}
+                >
                 <div class="s-evenements__events__search__bar__icon">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
                 </div>
@@ -36,7 +39,7 @@
 
 
         <div class="s-evenements__events__events-wrap">
-            {#each data.childrenDetails.filter(value => value.pageContent.content.isarchive !== 'true') as event}
+            {#each events as event}
                 <div class="s-evenements__events__events-wrap__item">
                     <div class="s-evenements__events__events-wrap__item__title">
                         {event.pageContent.content.title}
@@ -83,7 +86,7 @@
 
         <div class="s-evenements__events__events-wrap s-evenements__events__events-wrap--archive">
             <h3 style="width: 100%;">Archives</h3>
-            {#each data.childrenDetails.filter(value => value.pageContent.content.isarchive === 'true') as event}
+            {#each eventArchived as event}
                 <div class="s-evenements__events__events-wrap__item">
                     <div class="s-evenements__events__events-wrap__item__title">
                         {event.pageContent.content.title}
@@ -140,6 +143,30 @@
     export let data: IPageEvents;
 
     let activeTag: null | Tag = null
+    let searchValue: string = ''
+
+    $: events = data.childrenDetails.filter(event => {
+        const isVisible = event.pageContent.content.isarchive !== 'true'
+
+        const matchesSearch = searchValue.length === 0 ||
+                [event.pageContent.content.title, event.pageContent.content.description, event.pageContent.content.body]
+                .some(text => text?.toLowerCase().includes(searchValue.toLowerCase()))
+
+        return isVisible && matchesSearch
+    })
+
+
+
+    $:eventArchived     = data.childrenDetails.filter(event => {
+        const isVisible = event.pageContent.content.isarchive === 'true'
+
+        const matchesSearch = searchValue.length === 0 ||
+                [event.pageContent.content.title, event.pageContent.content.description, event.pageContent.content.body]
+                        .some(text => text?.toLowerCase().includes(searchValue.toLowerCase()))
+
+        return isVisible && matchesSearch
+    })
+
 
     type Tag = {
         title: string;
