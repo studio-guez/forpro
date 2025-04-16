@@ -99,6 +99,9 @@
             <h3 style="width: 100%;">Archives</h3>
             {#each eventArchived as event}
                 <div class="s-evenements__events__events-wrap__item">
+                    <div class="s-evenements__events__events-wrap__item__cover__date">
+                        {@html formatDate(event.pageContent.content.datestart)}
+                    </div>
                     <div class="s-evenements__events__events-wrap__item__title">
                         {event.pageContent.content.title}
                     </div>
@@ -381,7 +384,9 @@
             transform: none;
             left: 0;
             font-size: .65rem;
-            margin: 0;
+            margin-right: 100%;
+            margin-bottom: .5em;
+            padding: 0;
         }
     }
 
@@ -408,7 +413,6 @@
             color: black;
             font-size: 1.25rem;
             padding: 0;
-            width: calc( 100% - 9rem);
         }
     }
 
