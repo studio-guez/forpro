@@ -117,9 +117,6 @@
                                  src="empty_images/240625_intro-outro_ForPro_Admin-3.jpg"
                             />
                         {/if}
-                        <div class="s-evenements__events__events-wrap__item__cover__date">
-                            {@html formatDate(event.pageContent.content.datestart)}
-                        </div>
                     </div>
                     <div class="s-evenements__events__events-wrap__item__tags">
                         {#each event.pageContent.content.category.split(',') as eventItem}
