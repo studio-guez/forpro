@@ -11,6 +11,7 @@ fields:
       - bold
       - italic
       - underline
+      - email
       - link
     headings:
       - 2
