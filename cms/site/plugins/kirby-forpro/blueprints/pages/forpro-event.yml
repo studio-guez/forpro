@@ -21,7 +21,7 @@ columns:
 
 
       isArchive:
-        label: Archiver?
+        label: Afficher dans l'archive?
         type: toggle
         default: false
         width: 1/4
