@@ -19,12 +19,20 @@ columns:
         layout: cards
         width: 3/4
 
-
       isArchive:
         label: Afficher dans l'archive?
         type: toggle
         default: false
         width: 1/4
+        text:
+          - "non"
+          - "oui"
+
+      withPartner:
+        label: avec partenaire?
+        type: toggle
+        default: false
+        width: 1/3
         text:
           - "non"
           - "oui"
