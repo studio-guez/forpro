@@ -82,7 +82,13 @@
                     <div class="s-evenements__events__events-wrap__item__details">
                         <a class="app-button app-button--rounded"
                            href="{event.pageContent.uri}"
-                        >En savoir plus</a>
+                        >
+                            {#if event.pageContent.content.parent_page_link_text && event.pageContent.content.parent_page_link_text.length > 0}
+                                {event.pageContent.content.parent_page_link_text}
+                            {:else }
+                            En savoir plus
+                            {/if}
+                        </a>
                     </div>
                 </div>
             {/each}
