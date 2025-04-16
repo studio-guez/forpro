@@ -146,7 +146,18 @@
     let searchValue: string = ''
 
     $: events = data.childrenDetails.filter(event => {
-        const isVisible = event.pageContent.content.isarchive !== 'true'
+
+        const stringEventDateEnd = event.pageContent.content.dateend || event.pageContent.content.datestart
+
+        const eventDateEnd = new Date(stringEventDateEnd)
+        eventDateEnd.setHours(0, 0, 0, 0)
+
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+
+        const eventIsPast =  eventDateEnd < today
+
+        const isVisible = !eventIsPast ? true : event.pageContent.content.isarchive !== 'true'
 
         const matchesSearch = searchValue.length === 0 ||
                 [event.pageContent.content.title, event.pageContent.content.description, event.pageContent.content.body]
@@ -158,7 +169,18 @@
 
 
     $:eventArchived     = data.childrenDetails.filter(event => {
-        const isVisible = event.pageContent.content.isarchive === 'true'
+
+        const stringEventDateEnd = event.pageContent.content.dateend || event.pageContent.content.datestart
+
+        const eventDateEnd = new Date(stringEventDateEnd)
+        eventDateEnd.setHours(0, 0, 0, 0)
+
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+
+        const eventIsPast =  eventDateEnd < today
+
+        const isVisible = eventIsPast && event.pageContent.content.isarchive === 'true'
 
         const matchesSearch = searchValue.length === 0 ||
                 [event.pageContent.content.title, event.pageContent.content.description, event.pageContent.content.body]
