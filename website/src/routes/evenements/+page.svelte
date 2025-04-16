@@ -350,10 +350,6 @@
             &:last-child {
                 border-bottom: 2px solid;
             }
-
-            &:hover {
-                filter: grayscale(0%);
-            }
         }
     }
 
@@ -368,11 +364,13 @@
         border-radius: 1em;
 
         .s-evenements__events__events-wrap--archive & {
+            position: relative;
             white-space: nowrap;
             top: initial;
-            transform: translate(-50%, 25%);
-            background: var(--app-color--pink);
+            transform: none;
+            left: 0;
             font-size: .65rem;
+            margin: 0;
         }
     }
 
@@ -408,7 +406,7 @@
         margin-bottom: 1rem;
 
         .s-evenements__events__events-wrap--archive & {
-            position: static;
+            margin-bottom: 0;
         }
     }
 
@@ -446,6 +444,11 @@
     gap: .5rem;
     padding: .5rem 0;
     order: 3;
+
+    .s-evenements__events__events-wrap--archive & {
+        order: initial;
+        margin-top: 1rem;
+    }
 }
 
 .s-evenements__events__events-wrap__item__tags__item {
@@ -466,15 +469,6 @@
 
     .s-evenements__events__events-wrap--archive & {
         display: none;
-    }
-}
-
-.s-evenements__events__events-wrap__item__details {
-    .s-evenements__events__events-wrap--archive & {
-        position: absolute;
-        top: 50%;
-        right: .5rem;
-        transform: translate(0, -50%);
     }
 }
 </style>
