@@ -44,22 +44,27 @@
                     <div class="s-evenements__events__events-wrap__item__title">
                         {event.pageContent.content.title}
                     </div>
-                        <div class="s-evenements__events__events-wrap__item__cover">
-                            {#if event.cover[0]}
-                                <img class="s-evenements__events__events-wrap__item__cover__image"
-                                     alt="cover"
-                                     src="{event.cover[0]?.resize.reg}"
-                                />
-                            {:else}
-                                <img class="s-evenements__events__events-wrap__item__cover__image"
-                                     alt="cover"
-                                     src="empty_images/240625_intro-outro_ForPro_Admin-3.jpg"
-                                />
-                            {/if}
-                            <div class="s-evenements__events__events-wrap__item__cover__date">
-                                {@html formatDate(event.pageContent.content.datestart)}
-                            </div>
+                    {#if event.pageContent.content.withpartner === 'true'}
+                    <div class="s-evenements__events__events-wrap__item__partner">
+                        partenaires
+                    </div>
+                    {/if}
+                    <div class="s-evenements__events__events-wrap__item__cover">
+                        {#if event.cover[0]}
+                            <img class="s-evenements__events__events-wrap__item__cover__image"
+                                 alt="cover"
+                                 src="{event.cover[0]?.resize.reg}"
+                            />
+                        {:else}
+                            <img class="s-evenements__events__events-wrap__item__cover__image"
+                                 alt="cover"
+                                 src="empty_images/240625_intro-outro_ForPro_Admin-3.jpg"
+                            />
+                        {/if}
+                        <div class="s-evenements__events__events-wrap__item__cover__date">
+                            {@html formatDate(event.pageContent.content.datestart)}
                         </div>
+                    </div>
                     <div class="s-evenements__events__events-wrap__item__tags">
                         {#each event.pageContent.content.category.split(',') as eventItem}
                             <div class="s-evenements__events__events-wrap__item__tags__item">
@@ -399,6 +404,18 @@
             padding: 0;
             width: calc( 100% - 9rem);
         }
+    }
+
+    .s-evenements__events__events-wrap__item__partner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: var(--app-color--green);
+        transform: translate(40%, 0) rotate(25deg);
+        padding: .15em .5em .35em;
+        font-size: .65rem;
+        border-radius: 2em;
+        color: var(--app);
     }
 
     .s-evenements__events__events-wrap__item__cover {

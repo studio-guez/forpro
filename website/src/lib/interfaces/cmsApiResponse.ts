@@ -49,6 +49,7 @@ export interface IPage_Event extends IPage {
         hourstart: string,
         dateend: string,
         hourend: string,
+        withpartner: 'true' | 'false'
         body: string,
         uuid: string
     }
@@ -79,6 +80,7 @@ export interface IChildrenDetils {
             hourstart: string,
             dateend: string,
             hourend: string,
+            withpartner: 'true' | 'false'
             body: string,
             uuid: string,
             dates: string
