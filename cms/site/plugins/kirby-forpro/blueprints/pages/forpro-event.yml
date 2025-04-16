@@ -28,6 +28,11 @@ columns:
           - "non"
           - "oui"
 
+      parent_page_link_text:
+        label: texte du lien dans la page parent
+        type: text
+        width: 1/3
+
       withPartner:
         label: avec partenaire?
         type: toggle
