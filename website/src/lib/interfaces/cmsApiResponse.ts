@@ -69,6 +69,7 @@ export interface IChildrenDetils {
     cover: IImage[],
     pageContent: {
         content: {
+            isarchive: "true" | "false",
             title: string,
             cover: string,
             target: string,
@@ -84,6 +85,7 @@ export interface IChildrenDetils {
             body: string,
             uuid: string,
             dates: string
+            parent_page_link_text: string
         },
         translations: [],
         children: [],
@@ -116,9 +118,11 @@ export interface IChildrenDetils__event extends IChildrenDetils {
             hourstart: string,
             dateend: string,
             hourend: string,
+            withpartner: 'true' | 'false'
             body: string,
             uuid: string,
             dates: string
+            parent_page_link_text: string
         }
         translations: [],
         children: [],
