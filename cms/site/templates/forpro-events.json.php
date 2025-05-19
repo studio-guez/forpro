@@ -67,7 +67,17 @@ $json['seo'] = [
     'twitterCreator'    => getValueNotEmpty($page->twitterCreator(), $site->twitterCreator()),
 ];
 
-$children = $page->children()->listed()->map(function ($item){
+
+
+
+
+
+$pageChildren = $page->getQueryFilterValue($kirby) == FilterType::upcoming ?
+    $page->getUpcomingEvents()
+    : $page->children()->listed();
+
+
+$children = $pageChildren->map(function ($item){
 
     $content = $item->content();
 
