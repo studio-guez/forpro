@@ -67,17 +67,15 @@ fields:
       fr: Contenu
     fieldsets:
       - agenda
-      - animated-list
       - appointment
-      - body
       - cards
       - cards-focus
-      - capsules
-      - code
       - cta
-      - dropdown
+      - capsules
+      - quote
+      - code
+      - body
       - google-maps
-      - graphic-list
       image:
         extends: blocks/image
         fields:
@@ -102,12 +100,14 @@ fields:
               false:
                 en: 'no'
                 fr: 'non'
-      - list
+      - animated-list
+      - graphic-list
       - listOfPDF
       - logos-list
+      - dropdown
       - map
       - profiles
-      - quote
+      - list
       - timeline
       video:
         #        extends: blocks/video
