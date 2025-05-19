@@ -411,6 +411,7 @@
                         <p>Le <strong>MakerLab</strong> sera l’espace de fabrication où la créativité et le «faire» seront au cœur des activités et où il sera possible d’expérimenter, de rater et de recommencer autour du terme <em>Do-It-Yourself</em>. </p>
                         <p>L’ambition est de favoriser le processus d'apprentissage et de compréhension à travers le «faire», encourageant ainsi le test et développant l'esprit d'expérimentation et la curiosité.</p>
                         <p>En collaboration avec Onl’Fait, le MakerLab s’inscrit dans une dynamique commune portée par l’envie de transmettre, de créer et d’innover.</p>
+                        <p>Ouverture: printemps 2025</p>
                     </div>
                 </div>
             </div>
