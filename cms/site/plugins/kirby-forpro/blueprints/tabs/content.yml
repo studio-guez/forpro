@@ -66,19 +66,18 @@ fields:
       en: Content
       fr: Contenu
     fieldsets:
-      - cta
-      - animated-list
-      - logos-list
-      - quote
-      - capsules
-      - cards
-      - profiles
-      - map
-      - appointment
-      - code
-      - timeline
-      - listOfPDF
       - agenda
+      - animated-list
+      - appointment
+      - body
+      - cards
+      - cards-focus
+      - capsules
+      - code
+      - cta
+      - dropdown
+      - google-maps
+      - graphic-list
       image:
         extends: blocks/image
         fields:
@@ -103,9 +102,15 @@ fields:
               false:
                 en: 'no'
                 fr: 'non'
-
+      - list
+      - listOfPDF
+      - logos-list
+      - map
+      - profiles
+      - quote
+      - timeline
       video:
-#        extends: blocks/video
+        #        extends: blocks/video
         fields:
           is_vertical:
             type: toggle
@@ -123,9 +128,3 @@ fields:
           loop: false
           controls: false
           preload: false
-      - body
-      - list
-      - graphic-list
-      - dropdown
-      - cards-focus
-      - google-maps
