@@ -126,6 +126,12 @@
                             blockListOfLinksData="{content}"
                     />
                 </div>
+
+            {:else if content.type === 'agenda' }
+              <div class="app-flex__basis-20-24 app-flex app-flex--justify_center">
+                <BlockAgenda/>
+              </div>
+
             {/if}
 
         {/each}
@@ -161,6 +167,7 @@
     import BlockTimeline from "$lib/components/BlockTimeline.svelte";
     import BlockListOfLinks from "$lib/components/BlockListOfLinks.svelte";
     import BlockListGraphic from "$lib/components/BlockListGraphic.svelte";
+    import BlockAgenda from "$lib/components/BlockAgenda.svelte";
 
     export let data: IPage;
 </script>

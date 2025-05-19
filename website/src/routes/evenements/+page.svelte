@@ -40,110 +40,23 @@
 
         <div class="s-evenements__events__events-wrap">
             {#each events as event}
-                <div class="s-evenements__events__events-wrap__item">
-                    <div class="s-evenements__events__events-wrap__item__title">
-                        {event.pageContent.content.title}
-                    </div>
-                    {#if event.pageContent.content.withpartner === 'true'}
-                    <div class="s-evenements__events__events-wrap__item__partner">
-                        partenaires
-                    </div>
-                    {/if}
-                    <div class="s-evenements__events__events-wrap__item__cover">
-                        {#if event.cover[0]}
-                            <img class="s-evenements__events__events-wrap__item__cover__image"
-                                 alt="cover"
-                                 src="{event.cover[0]?.resize.reg}"
-                            />
-                        {:else}
-                            <img class="s-evenements__events__events-wrap__item__cover__image"
-                                 alt="cover"
-                                 src="empty_images/240625_intro-outro_ForPro_Admin-3.jpg"
-                            />
-                        {/if}
-                        <div class="s-evenements__events__events-wrap__item__cover__date">
-                            {@html formatDate(event.pageContent.content.datestart)}
-                        </div>
-                    </div>
-                    <div class="s-evenements__events__events-wrap__item__tags">
-                        {#each event.pageContent.content.category.split(',') as eventItem}
-                            <div class="s-evenements__events__events-wrap__item__tags__item">
-                                {eventItem}
-                            </div>
-                        {/each}
-                    </div>
-
-                    <div class="s-evenements__events__events-wrap__item__description">
-                        <div>
-                            {event.pageContent.content.description}
-                        </div>
-                    </div>
-
-                    <div class="s-evenements__events__events-wrap__item__details">
-                        <a class="app-button app-button--rounded"
-                           href="{event.pageContent.uri}"
-                        >
-                            {#if event.pageContent.content.parent_page_link_text && event.pageContent.content.parent_page_link_text.length > 0}
-                                {event.pageContent.content.parent_page_link_text}
-                            {:else }
-                            En savoir plus
-                            {/if}
-                        </a>
-                    </div>
-                </div>
+              <div class="s-evenements__events__events-wrap__item">
+                  <AppEventTile
+                      event={event}
+                  />
+              </div>
             {/each}
         </div>
 
 
-        <div class="s-evenements__events__events-wrap s-evenements__events__events-wrap--archive">
+        <div class="s-evenements__events__events-wrap">
             <h3 style="width: 100%;">Archives</h3>
             {#each eventArchived as event}
-                <div class="s-evenements__events__events-wrap__item">
-                    <div class="s-evenements__events__events-wrap__item__cover__date">
-                        {@html formatDate(event.pageContent.content.datestart)}
-                    </div>
-                    <div class="s-evenements__events__events-wrap__item__title">
-                        {event.pageContent.content.title}
-                    </div>
-                    <div class="s-evenements__events__events-wrap__item__cover">
-                        {#if event.cover[0]}
-                            <img class="s-evenements__events__events-wrap__item__cover__image"
-                                 alt="cover"
-                                 src="{event.cover[0]?.resize.reg}"
-                            />
-                        {:else}
-                            <img class="s-evenements__events__events-wrap__item__cover__image"
-                                 alt="cover"
-                                 src="empty_images/240625_intro-outro_ForPro_Admin-3.jpg"
-                            />
-                        {/if}
-                    </div>
-                    <div class="s-evenements__events__events-wrap__item__tags">
-                        {#each event.pageContent.content.category.split(',') as eventItem}
-                            <div class="s-evenements__events__events-wrap__item__tags__item">
-                                {eventItem}
-                            </div>
-                        {/each}
-                    </div>
+                <AppEventTile
+                        event={event}
+                        isArchive="{true}"
 
-                    <div class="s-evenements__events__events-wrap__item__description">
-                        <div>
-                            {event.pageContent.content.description}
-                        </div>
-                    </div>
-
-                    <div class="s-evenements__events__events-wrap__item__details">
-                      <a class="app-button app-button--rounded"
-                         href="{event.pageContent.uri}"
-                      >
-                        {#if event.pageContent.content.parent_page_link_text && event.pageContent.content.parent_page_link_text.length > 0}
-                          {event.pageContent.content.parent_page_link_text}
-                        {:else }
-                          En savoir plus
-                        {/if}
-                      </a>
-                    </div>
-                </div>
+                />
             {/each}
         </div>
 
@@ -156,6 +69,7 @@
     import {type IPageEvents} from "$lib/interfaces/cmsApiResponse";
     import AppPage from "$lib/components/AppPage.svelte";
     import {formatDate} from "$lib/utils/formatDate";
+    import AppEventTile from "$lib/components/AppEventTile.svelte";
 
     export let data: IPageEvents;
 
@@ -311,198 +225,36 @@
     cursor: pointer;
 }
 
-    .s-evenements__events__tags__item {
-        background: var(--s-evenements__tags-bg);
-        color: var(--s-evenements__tags-color);
-        border-radius: 1rem;
-        white-space: nowrap;
-        padding: .15em 1em .35em;
-        border: solid 2px var(--s-evenements__tags-bg);
+.s-evenements__events__tags__item {
+    background: var(--s-evenements__tags-bg);
+    color: var(--s-evenements__tags-color);
+    border-radius: 1rem;
+    white-space: nowrap;
+    padding: .15em 1em .35em;
+    border: solid 2px var(--s-evenements__tags-bg);
 
-        &.is-active {
-            color: var(--app-color--blue);
-            background: white;
-        }
-    }
-
-    .s-evenements__events__events-wrap {
-        display: flex;
-        text-align: center;
-        flex-wrap: wrap;
-        gap: var(--app-gutter_regular);
-        justify-content: center;
-        box-sizing: border-box;
-        width: 100%;
-        padding: 1rem 1rem 5rem;
-    }
-
-    .s-evenements__events__events-wrap__item {
-        display: block;
-        width: calc( 33% - (var(--app-gutter_regular) / 1 ));
-        min-width: 20rem;
-        box-sizing: border-box;
-        padding: 2rem 1rem;
-        border-radius: 1rem;
-        position: relative;
-        background: var(--app-color-beige);
-        //background: var(--app-color--blue--light);
-        border: solid 2px var(--app-color--blue);
-        margin-top: 2rem;
-
-        @media (max-width: 960px) {
-            width: 100%;
-            min-width: initial;
-        }
-
-        .s-evenements__events__events-wrap--archive & {
-            filter: grayscale(100%);
-            transition: filter .25s ease-in-out;
-            width: 100%;
-            display: flex;
-            padding: .5rem;
-            border-radius: 0;
-            border: none;
-            border-top: solid 2px;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            background: transparent;
-
-            &:last-child {
-                border-bottom: 2px solid;
-            }
-        }
-    }
-
-    .s-evenements__events__events-wrap__item__cover__date {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translate(-50%, 50%);
+    &.is-active {
+        color: var(--app-color--blue);
         background: white;
-        font-size: .75rem;
-        padding: .15em .75em .3em;
-        border-radius: 1em;
-
-        .s-evenements__events__events-wrap--archive & {
-            position: relative;
-            white-space: nowrap;
-            top: initial;
-            transform: none;
-            left: 0;
-            font-size: .65rem;
-            margin-right: 100%;
-            margin-bottom: .5em;
-            padding: 0;
-        }
     }
+}
 
-    .s-evenements__events__events-wrap__item__title {
-        font-size: 1.25rem;
-        line-height: 1em;
-        font-weight: 900;
-        color: white;
-        background: var(--fp-color-makerlab);
-        padding: var(--app-gutter_regular);
-        top: 0;
-        left: 0;
-        width: 100%;
-        box-sizing: border-box;
-        border-radius: 2rem;
-        transform: translate( 0, -4rem );
-        margin-bottom: -2rem;
-
-        .s-evenements__events__events-wrap--archive & {
-            transform: translate( 0, 0 );
-            background: none;
-            text-align: left;
-            margin-bottom: 0;
-            color: black;
-            font-size: 1.25rem;
-            padding: 0;
-        }
-    }
-
-    .s-evenements__events__events-wrap__item__partner {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background: var(--app-color--green);
-        transform: translate(40%, 0) rotate(25deg);
-        padding: .15em .5em .35em;
-        font-size: .65rem;
-        border-radius: 2em;
-        color: var(--app);
-    }
-
-    .s-evenements__events__events-wrap__item__cover {
-        position: relative;
-        margin-bottom: 1rem;
-
-        .s-evenements__events__events-wrap--archive & {
-            margin-bottom: 0;
-        }
-    }
-
-    .s-evenements__events__events-wrap__item__cover__image {
-        display: block;
-        width: 100%;
-        aspect-ratio: 5/3;
-        object-fit: cover;
-        border-radius: 1rem;
-
-        &.s-evenements__events__events-wrap__item__cover--default {
-            background: var(--app-color--blue);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            > div {
-                font-size: 3rem;
-                flex-wrap: nowrap;
-                font-weight: 900;
-                line-height: 1em;
-                transform: rotate(-5deg);
-            }
-        }
-
-        .s-evenements__events__events-wrap--archive & {
-            display: none;
-        }
-    }
-
-.s-evenements__events__events-wrap__item__tags {
+.s-evenements__events__events-wrap {
     display: flex;
     flex-wrap: wrap;
+    gap: var(--app-gutter_regular);
     justify-content: center;
-    gap: .5rem;
-    padding: .5rem 0;
-    order: 3;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1rem 1rem 5rem;
+    align-items: stretch;
 
-    .s-evenements__events__events-wrap--archive & {
-        order: initial;
-        margin-top: 1rem;
-    }
 }
 
-.s-evenements__events__events-wrap__item__tags__item {
-    display: block;
-    background: var(--app-color--blue);
-    color: white;
-    padding: .15em .5em .35em;
-    font-size: .75rem;
-    border-radius: 1em;
-}
-
-.s-evenements__events__events-wrap__item__description {
-    font-weight: 500;
-    font-size: 1rem;
-    line-height: 1.15em;
-    padding-bottom: 1rem;
-    text-align: left;
-
-    .s-evenements__events__events-wrap--archive & {
-        display: none;
-    }
+.s-evenements__events__events-wrap__item {
+  position: relative;
+  width: calc(33% - (var(--app-gutter_regular) / 1));
+  min-width: 20rem;
+  box-sizing: border-box;
 }
 </style>
