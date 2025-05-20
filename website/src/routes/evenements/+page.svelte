@@ -253,8 +253,13 @@
 
 .s-evenements__events__events-wrap__item {
   position: relative;
-  width: calc(33% - (var(--app-gutter_regular) / 1));
+  width: calc( (100% + var(--app-gutter_regular)) / 3 - var(--app-gutter_regular));
   min-width: 20rem;
   box-sizing: border-box;
+
+  @media (max-width: 960px) {
+    width: 100%;
+    min-width: initial;
+  }
 }
 </style>
