@@ -1,13 +1,31 @@
 <section class="block-agenda">
+
+  <h3 class="block-agenda__title">Prochains événements ForPro</h3>
+
   {#if eventPage}
-    {#each eventPage.childrenDetails as childrenDetail}
-      <div class="block-agenda__item">
-        <AppEventTile
-                event="{childrenDetail}"
-        />
-      </div>
-    {/each}
+    <div class="block-agenda__wrapper">
+      {#each eventPage.childrenDetails as childrenDetail}
+        <div class="block-agenda__item">
+          <AppEventTile
+                  event="{childrenDetail}"
+          />
+        </div>
+      {/each}
+    </div>
   {/if}
+
+  <div class="s-block-cta app-flex app-flex--justify_center block-agenda__link-to-events">
+    <a href="/evenements"
+       class="app-button app-button--rounded app-button--xl"
+       style="
+          --app-button--color: white;
+          --app-button--background-color: var(--app-color--blue);
+      "
+    >
+      Plus d'événements
+    </a>
+  </div>
+
 </section>
 
 <script lang="ts">
@@ -42,6 +60,21 @@ onMount(() => {
 <style lang="scss">
   .block-agenda {
     display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .block-agenda__title {
+    text-align: center;
+    margin-bottom: 2rem;
+    max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .block-agenda__wrapper {
+    display: flex;
     flex-wrap: wrap;
     gap: var(--app-gutter_regular);
     justify-content: center;
@@ -60,5 +93,10 @@ onMount(() => {
       width: 100%;
       min-width: initial;
     }
+  }
+
+  .block-agenda__link-to-events {
+    margin-top: 2rem;
+    width: 100%;
   }
 </style>
