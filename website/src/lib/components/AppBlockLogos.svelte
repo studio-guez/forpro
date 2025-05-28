@@ -34,7 +34,7 @@
 <div class="s-block-logos">
   <div class="flex flex-wrap justify-center s-block-logos__wrapper">
     {#each data.image as image}
-      <img class="object-contain filter grayscale hover:grayscale-0 transition ease-in-out duration-300"
+      <img class="object-contain"
            src="{image.resize.xxl}"
            alt=""
       />
