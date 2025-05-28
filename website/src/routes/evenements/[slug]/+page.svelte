@@ -1,9 +1,12 @@
 <div class="s-page-events-slug s-page-events-slug--events__slug"
 >
     <div class="s-page-events-slug__hero">
-        <h1 class="s-page-events-slug__hero__title"
+        <h1 class="s-page-events-slug__hero__title fp-heading-h3"
         >{data.pageInfo.title}</h1>
-        <div class="s-page-events-slug__hero__date">{@html formatDate(data.pageInfo.datestart)}</div>
+        <div class="s-page-events-slug__hero__date">
+          {@html formatDate(data.pageInfo.datestart)}
+          <div>{formatTime(data.pageInfo.hourstart)}</div>
+        </div>
     </div>
     <AppPage
             data="{data}"
@@ -15,6 +18,7 @@
     import {type IPage_Event} from "$lib/interfaces/cmsApiResponse";
     import AppPage from "$lib/components/AppPage.svelte";
     import {formatDate} from "$lib/utils/formatDate";
+    import {formatTime} from "$lib/utils/formatTime";
 
     export let data: IPage_Event;
 
@@ -35,16 +39,26 @@
     }
 
     .s-page-events-slug__hero__date {
-        background: var(--app-color--pink);
+        background: var(--app-color--blue);
         color: white;
-        border-radius: 1rem;
         white-space: nowrap;
-        padding: .15em 1em .35em;
+        padding: .4em 1.5em .6em;
+        border-radius: 4em;
+        font-weight: 800;
+        font-size: 1rem;
+        line-height: 1.25em;
+        &:first-letter {
+          text-transform: uppercase;
+        }
+
+        > div {
+          font-weight: 400;
+        }
     }
 
     .s-page-events-slug__hero__title {
         font-weight: 600;
-        color: var(--app-color--blue);
+        color: var(--app-color--pink);
     }
 
     .s-page-events-slug__hero {
