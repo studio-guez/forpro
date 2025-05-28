@@ -213,6 +213,10 @@
     }
   }
 
+  :global(.s-page-events-slug .s-page__content) {
+    row-gap: 6rem;
+  }
+
   .app-page-block-container--body {
     &:last-child {
       margin-bottom: 4rem;
