@@ -65,6 +65,9 @@ export let isArchive = false;
 
 
 <style lang="scss">
+  @use "../../../src/style/_scss-params";
+
+
   .app-event-tile {
     text-align: center;
     display: block;
@@ -128,6 +131,10 @@ export let isArchive = false;
       color: black;
       font-size: 1.25rem;
       padding: 0;
+    }
+
+    @media (max-width: scss-params.$fp-breakpoint-xs) {
+      font-size: 1rem;
     }
   }
 
