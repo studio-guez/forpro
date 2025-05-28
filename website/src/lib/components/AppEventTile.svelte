@@ -1,6 +1,7 @@
 <script lang="ts">
 import {formatDate} from "$lib/utils/formatDate.js";
 import type {IChildrenDetils__event} from "$lib/interfaces/cmsApiResponse.js";
+import {formatTime} from "$lib/utils/formatTime";
 
 export let event: IChildrenDetils__event;
 
@@ -37,6 +38,7 @@ export let isArchive = false;
   <div class="app-event-tile__tags">
     <div class="app-event-tile__tags__item">
       {@html formatDate(event.pageContent.content.datestart)}
+      <br>{formatTime(event.pageContent.content.hourstart)}
     </div>
   </div>
 
@@ -140,7 +142,6 @@ export let isArchive = false;
 
   .app-event-tile__cover {
     position: relative;
-    margin-bottom: 1rem;
 
     .app-event-tile--is-archive & {
       margin-bottom: 0;
@@ -192,9 +193,9 @@ export let isArchive = false;
     display: block;
     background: var(--app-color--blue);
     color: white;
-    padding: .15em .5em .35em;
+    padding: .4em 1.5em .6em;
     font-size: .75rem;
-    border-radius: 1em;
+    border-radius: 4em;
   }
 
   .app-event-tile__description {
