@@ -39,7 +39,7 @@ export let isArchive = false;
     <div class="app-event-tile__tags__item">
       {@html formatDate(event.pageContent.content.datestart)}
       {#if !isArchive}
-        <br>{formatTime(event.pageContent.content.hourstart)}
+        <div>{formatTime(event.pageContent.content.hourstart)}</div>
       {/if}
     </div>
   </div>
@@ -196,8 +196,22 @@ export let isArchive = false;
     background: var(--app-color--blue);
     color: white;
     padding: .4em 1.5em .6em;
-    font-size: .75rem;
     border-radius: 4em;
+    font-weight: 800;
+    font-size: 1rem;
+    line-height: 1.25em;
+    &:first-letter {
+      text-transform: uppercase;
+    }
+
+    > div {
+      font-weight: 400;
+    }
+
+    .app-event-tile--is-archive & {
+      font-size: inherit;
+      font-weight: inherit;
+    }
   }
 
   .app-event-tile__description {
