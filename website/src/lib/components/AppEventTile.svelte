@@ -38,7 +38,9 @@ export let isArchive = false;
   <div class="app-event-tile__tags">
     <div class="app-event-tile__tags__item">
       {@html formatDate(event.pageContent.content.datestart)}
-      <br>{formatTime(event.pageContent.content.hourstart)}
+      {#if !isArchive}
+        <br>{formatTime(event.pageContent.content.hourstart)}
+      {/if}
     </div>
   </div>
 
@@ -83,8 +85,6 @@ export let isArchive = false;
     }
 
     &.app-event-tile--is-archive {
-      filter: grayscale(100%);
-      transition: filter .25s ease-in-out;
       width: 100%;
       display: flex;
       padding: .5rem;
@@ -116,6 +116,9 @@ export let isArchive = false;
     border-radius: 2rem;
     transform: translate(0, -4rem);
     margin-bottom: -2rem;
+    max-width: 34rem;
+    flex-shrink: 0;
+    margin-right: 100%;
 
     .app-event-tile--is-archive & {
       transform: translate(0, 0);
@@ -185,7 +188,6 @@ export let isArchive = false;
 
     .app-event-tile--is-archive & {
       order: initial;
-      margin-top: 1rem;
     }
   }
 
