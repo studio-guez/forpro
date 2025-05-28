@@ -7,7 +7,7 @@
 </script>
 
 <section class="block-list-of-links">
-  <h4>{blockListOfLinksData.content.title}</h4>
+  {#if blockListOfLinksData.content.title}<h4>{blockListOfLinksData.content.title}</h4>{/if}
 
   <div class="block-list-of-links__box">
     {#each blockListOfLinksData.content.listoflinks as linkContent}
