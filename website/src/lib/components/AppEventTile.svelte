@@ -32,17 +32,12 @@ export let isArchive = false;
              src="empty_images/240625_intro-outro_ForPro_Admin-3.jpg"
         />
       {/if}
-      <div class="app-event-tile__cover__date">
-        {@html formatDate(event.pageContent.content.datestart)}
-      </div>
     </div>
   {/if}
   <div class="app-event-tile__tags">
-    {#each event.pageContent.content.category.split(',') as eventItem}
-      <div class="app-event-tile__tags__item">
-        {eventItem}
-      </div>
-    {/each}
+    <div class="app-event-tile__tags__item">
+      {@html formatDate(event.pageContent.content.datestart)}
+    </div>
   </div>
 
   <div class="app-event-tile__description">
@@ -178,30 +173,6 @@ export let isArchive = false;
       display: none;
     }
   }
-
-  .app-event-tile__cover__date {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 50%);
-    background: white;
-    font-size: .75rem;
-    padding: .15em .75em .3em;
-    border-radius: 1em;
-
-    .app-event-tile--is-archive & {
-      position: relative;
-      white-space: nowrap;
-      top: initial;
-      transform: none;
-      left: 0;
-      font-size: .65rem;
-      margin-right: 100%;
-      margin-bottom: .5em;
-      padding: 0;
-    }
-  }
-
 
   .app-event-tile__tags {
     display: flex;
