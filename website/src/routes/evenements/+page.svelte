@@ -165,10 +165,6 @@
     min-height: initial !important;
 }
 
-.s-evenements__events {
-    margin-top: 5rem;
-}
-
 .s-evenements__events__search {
     display: flex;
     align-content: center;
