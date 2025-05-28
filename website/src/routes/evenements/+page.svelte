@@ -249,6 +249,9 @@
     padding: 1rem 1rem 5rem;
     align-items: stretch;
 
+  h3 {
+    text-align: center;
+  }
 }
 
 .s-evenements__events__events-wrap__item {
