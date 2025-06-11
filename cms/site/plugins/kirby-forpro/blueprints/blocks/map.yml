@@ -14,8 +14,230 @@ fields:
       fr: Styles
       en: Styles
     type: select
-    default: style1
+    default: style2
+    required: true
     options:
-      style1: Style 1
-      style2: Style 2
-      style3: Style 3
+      style2: Sans les infos
+      style3: Avec les infos
+
+
+
+
+  section_popup_content:
+    width: 1/2
+    label: PopUp
+    type: writer
+    nodes:
+      - bulletList
+      - paragraph
+    marks:
+      - bold
+      - link
+    when:
+      style: style3
+  section_popup_button_custom_text:
+    width: 1/4
+    label: Crèche - text "En savoir plus"
+    type: text
+    when:
+      style: style3
+  section_popup_button_url:
+    width: 1/4
+    label: PopUp - lien
+    type: url
+    when:
+      style: style3
+
+
+
+
+  section_learninglab_content:
+    width: 1/2
+    label: LearningLab
+    type: writer
+    nodes:
+      - bulletList
+      - paragraph
+    marks:
+      - bold
+      - link
+    when:
+      style: style3
+  section_learninglab_button_custom_text:
+    width: 1/4
+    label: Crèche - text "En savoir plus"
+    type: text
+    when:
+      style: style3
+  section_learninglab_button_url:
+    width: 1/4
+    label: LearningLab - lien
+    type: url
+    when:
+      style: style3
+
+
+
+
+  section_factorylab_content:
+    width: 1/2
+    label: FactoryLab
+    type: writer
+    nodes:
+      - bulletList
+      - paragraph
+    marks:
+      - bold
+      - link
+    when:
+      style: style3
+  section_factorylab_button_custom_text:
+    width: 1/4
+    label: Crèche - text "En savoir plus"
+    type: text
+    when:
+      style: style3
+  section_factorylab_button_url:
+    width: 1/4
+    label: FactoryLab - lien
+    type: url
+    when:
+      style: style3
+
+
+
+
+  section_foodlab_content:
+    width: 1/2
+    label: FoodLab
+    type: writer
+    nodes:
+      - bulletList
+      - paragraph
+    marks:
+      - bold
+      - link
+    when:
+      style: style3
+  section_foodlab_button_custom_text:
+    width: 1/4
+    label: Crèche - text "En savoir plus"
+    type: text
+    when:
+      style: style3
+  section_foodlab_button_url:
+    width: 1/4
+    label: FoodLab - lien
+    type: url
+    when:
+      style: style3
+
+
+
+
+  section_grandlab_content:
+    width: 1/2
+    label: GrandLab
+    type: writer
+    nodes:
+      - bulletList
+      - paragraph
+    marks:
+      - bold
+      - link
+    when:
+      style: style3
+  section_grandlab_button_custom_text:
+    width: 1/4
+    label: Crèche - text "En savoir plus"
+    type: text
+    when:
+      style: style3
+  section_grandlab_button_url:
+    width: 1/4
+    label: GrandLab - lien
+    type: url
+    when:
+      style: style3
+
+
+
+
+  section_makerlab_content:
+    width: 1/2
+    label: MakerLab
+    type: writer
+    nodes:
+      - bulletList
+      - paragraph
+    marks:
+      - bold
+      - link
+    when:
+      style: style3
+  section_makerlab_button_custom_text:
+    width: 1/4
+    label: Crèche - text "En savoir plus"
+    type: text
+    when:
+      style: style3
+  section_makerlab_button_url:
+    width: 1/4
+    label: MakerLab - lien
+    type: url
+    when:
+      style: style3
+
+
+
+
+  section_ecole_content:
+    width: 1/2
+    label: École
+    type: writer
+    nodes:
+      - bulletList
+      - paragraph
+    marks:
+      - bold
+      - link
+    when:
+      style: style3
+  section_ecole_button_custom_text:
+    width: 1/4
+    label: Crèche - text "En savoir plus"
+    type: text
+    when:
+      style: style3
+  section_ecole_button_url:
+    width: 1/4
+    label: École - lien
+    type: url
+    when:
+      style: style3
+
+
+  section_creche_content:
+    width: 1/2
+    label: Crèche
+    type: writer
+    nodes:
+      - bulletList
+      - paragraph
+    marks:
+      - bold
+      - link
+    when:
+      style: style3
+  section_creche_button_custom_text:
+    width: 1/4
+    label: Crèche - text "En savoir plus"
+    type: text
+    when:
+      style: style3
+  section_creche_button_url:
+    width: 1/4
+    label: Crèche - lien
+    type: url
+    when:
+      style: style3
