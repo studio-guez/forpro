@@ -317,9 +317,20 @@
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="PopUp">Le PopUp</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
-                        <p><strong>L'ACCUEIL, L'ESPACE CAFÉ ET L'EXPO DU MOMENT</strong></p>
-                        <p>Retrouvez à l'entrée du ForPro l’espace d’accueil et&nbsp;d’information ainsi que le <strong>PopUp</strong> Café où savourer viennoiseries et sandwichs faits maison. Profitez&nbsp;également des expositions et événements du&nbsp;moment.</p>
-                        <p>Ouvert dès 7h</p>
+                      {@html  content.content.section_popup_content}
+
+                      {#if content.content.section_popup_button_url}
+                        <a href="{content.content.section_popup_button_url}"
+                           class="app-button app-button--rounded app-button--without-over-effect"
+                           style="--app-button--color: var(--fp-color-learninglab);"
+                        >
+                          {#if content.content.section_popup_button_custom_text?.length > 0}
+                            {content.content.section_popup_button_custom_text}
+                            {:else}
+                            en savoir plus
+                          {/if}
+                        </a>
+                      {/if}
                     </div>
                 </div>
             </div>
@@ -331,11 +342,20 @@
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="LearningLab">Le LearningLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
-                        <p><strong>POUR SE CONSTRUIRE UN CHEMIN SUR-MESURE</strong></p>
-                        <p>Le LearningLab est un espace dédié aux apprenti·e·s avant, pendant et après leur apprentissage. Cet espace met l’humain au centre et intègre les apprentissages et le travail à d’autres aspects de la vie en collectif.</p>
-                        <p>C'est un lieu de vie centré sur le développement des individus, l’échange et la transmission des savoirs, ainsi que sur le développement des compétences professionnelles et de l’employabilité.</p>
-                        <p>En tant que carrefour de connaissances, le LearningLab offre une vision globale et intégrée de l'acquisition et de la diffusion des savoirs et compétences.</p>
-                        <p style="text-align: center"><a href="https://for-pro.ch/jeunes" target="_blank"><strong>En savoir plus</strong></a></p>
+                      {@html  content.content.section_learninglab_content}
+
+                      {#if content.content.section_learninglab_button_url}
+                        <a href="{content.content.section_learninglab_button_url}"
+                           class="app-button app-button--rounded app-button--without-over-effect"
+                           style="--app-button--color: var(--fp-color-learninglab);"
+                        >
+                          {#if content.content.section_learninglab_button_custom_text?.length > 0}
+                            {content.content.section_learninglab_button_custom_text}
+                          {:else}
+                            en savoir plus
+                          {/if}
+                        </a>
+                      {/if}
                     </div>
                 </div>
             </div>
@@ -347,12 +367,20 @@
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="FactoryLab">Le FactoryLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
-                        <p><strong>POUR SE LANCER, ÉCHANGER ET GRANDIR</strong></p>
-                        <p>Un lieu pour accueillir des entreprises du secteur secondaire ainsi que de jeunes entrepreneur·e·s.</p>
-                        <p>Au FactoryLab, les entreprises peuvent bénéficier de prestations variées pour soutenir la formation professionnelle au plus près du marché de l'emploi: devenir entreprise formatrice, obtenir du soutien administratif, du soutien aux formateur·trice·s, développer leur réseau… et devenir des lieux d’expérimentation en situation réelle pour les jeunes en orientation!</p>
-                        <p style="text-align: center"><a href="https://for-pro.ch/entreprises" target="_blank"><strong>En savoir plus</strong></a></p>
-                        <p>Les diplômé·e·s à l’âme entrepreneuriale peuvent s’installer dans le FactoryLab et être entouré·e·s dans leur projet de jeunes entreprises.</p>
-                        <p style="text-align: center"><a href="https://for-pro.ch/jeunes" target="_blank"><strong>En savoir plus</strong></a></p>
+                      {@html  content.content.section_factorylab_content}
+
+                      {#if content.content.section_factorylab_button_url}
+                        <a href="{content.content.section_factorylab_button_url}"
+                           class="app-button app-button--rounded app-button--without-over-effect"
+                           style="--app-button--color: var(--fp-color-learninglab);"
+                        >
+                          {#if content.content.section_factorylab_button_custom_text?.length > 0}
+                            {content.content.section_factorylab_button_custom_text}
+                          {:else}
+                            en savoir plus
+                          {/if}
+                        </a>
+                      {/if}
                     </div>
                 </div>
             </div>
@@ -365,24 +393,22 @@
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="FoodLab">Le FoodLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
-                        <p><strong>POUR SE NOURRIR, SE QUESTIONNER ET DÉCOUVRIR</strong></p>
-                        <p>Le <strong>FoodLab</strong> forme des apprenti·e·s aux métiers de la restauration et invite gourmand·e·s et professionnel·le·s· à déguster une cuisine authentique, responsable, saine et séduisante.</p>
-                        <p>Pour concevoir la cuisine de demain, des terrains d’expérimentation variés ont été imaginés:</p>
-                        <ul>
-                            <li>Un restaurant, le «FoodLab», au 6e étage;</li>
-                            <li>Un espace de stands culinaires, le «FoodCourt», au 6e étage;</li>
-                            <li>Et un espace café, le «PopUp Café», au rez-de-chaussée.</li>
-                        </ul>
-                        <p>Ces espaces offrent de nombreuses opportunités de développement pour les jeunes:</p>
-                        <ul>
-                            <li>
-                                Apprentissages en cuisine, service et boulangerie-pâtisserie;
-                            </li>
-                            <li>
-                                Mise en place progressive d’une «Junior Team» pour amener les jeunes à travailler de manière autonome, encadrés par des formateur·trice·s expérimenté·e·s.
-                            </li>
-                        </ul>
-                        <p style="text-align: center"><a target="_blank" href="https://foodlab.for-pro.ch/"><strong>Découvrez le FoodLab!</strong></a></p>
+
+                      {@html  content.content.section_foodlab_content}
+
+                      {#if content.content.section_foodlab_button_url}
+                        <a href="{content.content.section_foodlab_button_url}"
+                           class="app-button app-button--rounded app-button--without-over-effect"
+                           style="--app-button--color: var(--fp-color-learninglab);"
+                        >
+                          {#if content.content.section_foodlab_button_custom_text?.length > 0}
+                            {content.content.section_foodlab_button_custom_text}
+                          {:else}
+                            en savoir plus
+                          {/if}
+                        </a>
+                      {/if}
+
                     </div>
                 </div>
             </div>
@@ -393,10 +419,22 @@
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="GrandLab">Le GrandLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
-                        <p><strong>UN LIEU POUR IMAGINER EN GRAND</strong></p>
-                        <p>Le <strong>GrandLab</strong> est un espace polyvalent de 300 m2 qui met l’art et la culture à la portée de chaque individu, en particulier des jeunes. Complémentaire aux autres Labs de ForPro, le lieu encouragera les projets culturels transverses et ouvrira des perspectives sur les métiers de la scène et du design d’espace, en valorisant leur utilité économique et sociale.</p>
-                        <p>Dans ce lieu polyvalent, il sera possible de prototyper et simuler des espaces à échelle réelle, participer à des ateliers d’expression orale et accueillir des événements divers. Découvrir, rêver, oser, exceller, expérimenter et se retrouver: tels seront les principes inspirants qui guideront chaque projet développé au GrandLab.</p>
-                        <p>Ouverture: printemps 2025</p>
+
+                      {@html  content.content.section_grandlab_content}
+
+                      {#if content.content.section_grandlab_button_url}
+                        <a href="{content.content.section_grandlab_button_url}"
+                           class="app-button app-button--rounded app-button--without-over-effect"
+                           style="--app-button--color: var(--fp-color-learninglab);"
+                        >
+                          {#if content.content.section_grandlab_button_custom_text?.length > 0}
+                            {content.content.section_grandlab_button_custom_text}
+                          {:else}
+                            en savoir plus
+                          {/if}
+                        </a>
+                      {/if}
+
                     </div>
                 </div>
             </div>
@@ -407,11 +445,20 @@
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="MakerLab">Le MakerLab</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
-                        <p><strong>POUR EXPÉRIMENTER, CRÉER, ÉCHOUER ET CONSTRUIRE</strong></p>
-                        <p>Le <strong>MakerLab</strong> sera l’espace de fabrication où la créativité et le «faire» seront au cœur des activités et où il sera possible d’expérimenter, de rater et de recommencer autour du terme <em>Do-It-Yourself</em>. </p>
-                        <p>L’ambition est de favoriser le processus d'apprentissage et de compréhension à travers le «faire», encourageant ainsi le test et développant l'esprit d'expérimentation et la curiosité.</p>
-                        <p>En collaboration avec Onl’Fait, le MakerLab s’inscrit dans une dynamique commune portée par l’envie de transmettre, de créer et d’innover.</p>
-                        <p>Ouverture: printemps 2025</p>
+                      {@html  content.content.section_makerlab_content}
+
+                      {#if content.content.section_makerlab_button_url}
+                        <a href="{content.content.section_makerlab_button_url}"
+                           class="app-button app-button--rounded app-button--without-over-effect"
+                           style="--app-button--color: var(--fp-color-learninglab);"
+                        >
+                          {#if content.content.section_makerlab_button_custom_text?.length > 0}
+                            {content.content.section_makerlab_button_custom_text}
+                          {:else}
+                            en savoir plus
+                          {/if}
+                        </a>
+                      {/if}
                     </div>
                 </div>
             </div>
@@ -422,8 +469,20 @@
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="Ecole">L’École d’Horlogerie de Genève</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
-                        <p><strong>L’École d’Horlogerie</strong> a pris ses quartiers chez ForPro en août 2023 où les apprenti·e·s disposent d’infrastructures à la hauteur de leurs ambitions: nouveaux métiers et formations variées. </p>
-                        <p>Elle bénéficie de sa proximité avec le secteur horloger pour rester en phase avec les évolutions constantes et pour créer du lien avec les entreprises.</p>
+                      {@html  content.content.section_ecole_content}
+
+                      {#if content.content.section_ecole_button_url}
+                        <a href="{content.content.section_ecole_button_url}"
+                           class="app-button app-button--rounded app-button--without-over-effect"
+                           style="--app-button--color: var(--fp-color-learninglab);"
+                        >
+                          {#if content.content.section_ecole_button_custom_text?.length > 0}
+                            {content.content.section_ecole_button_custom_text}
+                          {:else}
+                            en savoir plus
+                          {/if}
+                        </a>
+                      {/if}
                     </div>
                 </div>
             </div>
@@ -434,7 +493,20 @@
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="Creche">La crèche</h3>
                     <div class="v-space-building__cards__container__card__content__content app-typo_text-content">
-                        <p>Ce nouvel espace de vie enfantine accueil 32 enfants et permet de former aux métiers de la petite enfance.</p>
+                      {@html  content.content.section_creche_content}
+
+                      {#if content.content.section_creche_button_url}
+                        <a href="{content.content.section_creche_button_url}"
+                           class="app-button app-button--rounded app-button--without-over-effect"
+                           style="--app-button--color: var(--fp-color-learninglab);"
+                        >
+                          {#if content.content.section_creche_button_custom_text?.length > 0}
+                            {content.content.section_creche_button_custom_text}
+                          {:else}
+                            en savoir plus
+                          {/if}
+                        </a>
+                      {/if}
                     </div>
                 </div>
             </div>
