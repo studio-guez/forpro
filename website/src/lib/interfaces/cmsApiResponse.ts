@@ -449,7 +449,7 @@ export interface IHtmlContent extends IBlock {
  */
 export interface IBlockMap extends IBlock {
     "content": {
-        "style": "style1" | "style2" | "style3"
+        "style": "style2" | "style3"
     },
     type: 'map'
 }
