@@ -3,7 +3,6 @@
 header("Access-Control-Allow-Origin: *");
 
 return [
-    "debug" => true,
     "tobimori.seo.canonicalBase" => "https://for-pro.ch",
     "url_frontend" => "https://for-pro.ch/",
     'panel' => [
