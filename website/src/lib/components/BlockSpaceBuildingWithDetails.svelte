@@ -320,16 +320,18 @@
                       {@html  content.content.section_popup_content}
 
                       {#if content.content.section_popup_button_url}
-                        <a href="{content.content.section_popup_button_url}"
-                           class="app-button app-button--rounded app-button--without-over-effect"
-                           style="--app-button--color: var(--fp-color-learninglab);"
-                        >
-                          {#if content.content.section_popup_button_custom_text?.length > 0}
-                            {content.content.section_popup_button_custom_text}
-                            {:else}
-                            en savoir plus
-                          {/if}
-                        </a>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                          <a href="{content.content.section_popup_button_url}"
+                             class="app-button app-button--rounded app-button--without-over-effect"
+                             style="--app-button--color: var(--fp-color-learninglab);"
+                          >
+                            {#if content.content.section_popup_button_custom_text?.length > 0}
+                              {content.content.section_popup_button_custom_text}
+                              {:else}
+                              en savoir plus
+                            {/if}
+                          </a>
+                        </div>
                       {/if}
                     </div>
                 </div>
@@ -345,16 +347,18 @@
                       {@html  content.content.section_learninglab_content}
 
                       {#if content.content.section_learninglab_button_url}
-                        <a href="{content.content.section_learninglab_button_url}"
-                           class="app-button app-button--rounded app-button--without-over-effect"
-                           style="--app-button--color: var(--fp-color-learninglab);"
-                        >
-                          {#if content.content.section_learninglab_button_custom_text?.length > 0}
-                            {content.content.section_learninglab_button_custom_text}
-                          {:else}
-                            en savoir plus
-                          {/if}
-                        </a>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                          <a href="{content.content.section_learninglab_button_url}"
+                             class="app-button app-button--rounded app-button--without-over-effect"
+                             style="--app-button--color: var(--fp-color-learninglab);"
+                          >
+                            {#if content.content.section_learninglab_button_custom_text?.length > 0}
+                              {content.content.section_learninglab_button_custom_text}
+                            {:else}
+                              en savoir plus
+                            {/if}
+                          </a>
+                        </div>
                       {/if}
                     </div>
                 </div>
@@ -370,16 +374,18 @@
                       {@html  content.content.section_factorylab_content}
 
                       {#if content.content.section_factorylab_button_url}
-                        <a href="{content.content.section_factorylab_button_url}"
-                           class="app-button app-button--rounded app-button--without-over-effect"
-                           style="--app-button--color: var(--fp-color-learninglab);"
-                        >
-                          {#if content.content.section_factorylab_button_custom_text?.length > 0}
-                            {content.content.section_factorylab_button_custom_text}
-                          {:else}
-                            en savoir plus
-                          {/if}
-                        </a>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                          <a href="{content.content.section_factorylab_button_url}"
+                             class="app-button app-button--rounded app-button--without-over-effect"
+                             style="--app-button--color: var(--fp-color-learninglab);"
+                          >
+                            {#if content.content.section_factorylab_button_custom_text?.length > 0}
+                              {content.content.section_factorylab_button_custom_text}
+                            {:else}
+                              en savoir plus
+                            {/if}
+                          </a>
+                        </div>
                       {/if}
                     </div>
                 </div>
@@ -397,16 +403,18 @@
                       {@html  content.content.section_foodlab_content}
 
                       {#if content.content.section_foodlab_button_url}
-                        <a href="{content.content.section_foodlab_button_url}"
-                           class="app-button app-button--rounded app-button--without-over-effect"
-                           style="--app-button--color: var(--fp-color-learninglab);"
-                        >
-                          {#if content.content.section_foodlab_button_custom_text?.length > 0}
-                            {content.content.section_foodlab_button_custom_text}
-                          {:else}
-                            en savoir plus
-                          {/if}
-                        </a>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                          <a href="{content.content.section_foodlab_button_url}"
+                             class="app-button app-button--rounded app-button--without-over-effect"
+                             style="--app-button--color: var(--fp-color-learninglab);"
+                          >
+                            {#if content.content.section_foodlab_button_custom_text?.length > 0}
+                              {content.content.section_foodlab_button_custom_text}
+                            {:else}
+                              en savoir plus
+                            {/if}
+                          </a>
+                        </div>
                       {/if}
 
                     </div>
@@ -423,16 +431,18 @@
                       {@html  content.content.section_grandlab_content}
 
                       {#if content.content.section_grandlab_button_url}
-                        <a href="{content.content.section_grandlab_button_url}"
-                           class="app-button app-button--rounded app-button--without-over-effect"
-                           style="--app-button--color: var(--fp-color-learninglab);"
-                        >
-                          {#if content.content.section_grandlab_button_custom_text?.length > 0}
-                            {content.content.section_grandlab_button_custom_text}
-                          {:else}
-                            en savoir plus
-                          {/if}
-                        </a>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                          <a href="{content.content.section_grandlab_button_url}"
+                             class="app-button app-button--rounded app-button--without-over-effect"
+                             style="--app-button--color: var(--fp-color-learninglab);"
+                          >
+                            {#if content.content.section_grandlab_button_custom_text?.length > 0}
+                              {content.content.section_grandlab_button_custom_text}
+                            {:else}
+                              en savoir plus
+                            {/if}
+                          </a>
+                        </div>
                       {/if}
 
                     </div>
@@ -448,16 +458,18 @@
                       {@html  content.content.section_makerlab_content}
 
                       {#if content.content.section_makerlab_button_url}
-                        <a href="{content.content.section_makerlab_button_url}"
-                           class="app-button app-button--rounded app-button--without-over-effect"
-                           style="--app-button--color: var(--fp-color-learninglab);"
-                        >
-                          {#if content.content.section_makerlab_button_custom_text?.length > 0}
-                            {content.content.section_makerlab_button_custom_text}
-                          {:else}
-                            en savoir plus
-                          {/if}
-                        </a>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                          <a href="{content.content.section_makerlab_button_url}"
+                             class="app-button app-button--rounded app-button--without-over-effect"
+                             style="--app-button--color: var(--fp-color-learninglab);"
+                          >
+                            {#if content.content.section_makerlab_button_custom_text?.length > 0}
+                              {content.content.section_makerlab_button_custom_text}
+                            {:else}
+                              en savoir plus
+                            {/if}
+                          </a>
+                        </div>
                       {/if}
                     </div>
                 </div>
@@ -472,16 +484,18 @@
                       {@html  content.content.section_ecole_content}
 
                       {#if content.content.section_ecole_button_url}
-                        <a href="{content.content.section_ecole_button_url}"
-                           class="app-button app-button--rounded app-button--without-over-effect"
-                           style="--app-button--color: var(--fp-color-learninglab);"
-                        >
-                          {#if content.content.section_ecole_button_custom_text?.length > 0}
-                            {content.content.section_ecole_button_custom_text}
-                          {:else}
-                            en savoir plus
-                          {/if}
-                        </a>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                          <a href="{content.content.section_ecole_button_url}"
+                             class="app-button app-button--rounded app-button--without-over-effect"
+                             style="--app-button--color: var(--fp-color-learninglab);"
+                          >
+                            {#if content.content.section_ecole_button_custom_text?.length > 0}
+                              {content.content.section_ecole_button_custom_text}
+                            {:else}
+                              en savoir plus
+                            {/if}
+                          </a>
+                        </div>
                       {/if}
                     </div>
                 </div>
@@ -496,16 +510,18 @@
                       {@html  content.content.section_creche_content}
 
                       {#if content.content.section_creche_button_url}
-                        <a href="{content.content.section_creche_button_url}"
-                           class="app-button app-button--rounded app-button--without-over-effect"
-                           style="--app-button--color: var(--fp-color-learninglab);"
-                        >
-                          {#if content.content.section_creche_button_custom_text?.length > 0}
-                            {content.content.section_creche_button_custom_text}
-                          {:else}
-                            en savoir plus
-                          {/if}
-                        </a>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                          <a href="{content.content.section_creche_button_url}"
+                             class="app-button app-button--rounded app-button--without-over-effect"
+                             style="--app-button--color: var(--fp-color-learninglab);"
+                          >
+                            {#if content.content.section_creche_button_custom_text?.length > 0}
+                              {content.content.section_creche_button_custom_text}
+                            {:else}
+                              en savoir plus
+                            {/if}
+                          </a>
+                        </div>
                       {/if}
                     </div>
                 </div>
