@@ -37,7 +37,7 @@ fields:
       style: style3
   section_popup_button_custom_text:
     width: 1/4
-    label: Crèche - text "En savoir plus"
+    label: PopUp - text "En savoir plus"
     type: text
     when:
       style: style3
@@ -65,7 +65,7 @@ fields:
       style: style3
   section_learninglab_button_custom_text:
     width: 1/4
-    label: Crèche - text "En savoir plus"
+    label: LearningLab - text "En savoir plus"
     type: text
     when:
       style: style3
@@ -93,7 +93,7 @@ fields:
       style: style3
   section_factorylab_button_custom_text:
     width: 1/4
-    label: Crèche - text "En savoir plus"
+    label: FactoryLab - text "En savoir plus"
     type: text
     when:
       style: style3
@@ -121,7 +121,7 @@ fields:
       style: style3
   section_foodlab_button_custom_text:
     width: 1/4
-    label: Crèche - text "En savoir plus"
+    label: FoodLab - text "En savoir plus"
     type: text
     when:
       style: style3
@@ -149,7 +149,7 @@ fields:
       style: style3
   section_grandlab_button_custom_text:
     width: 1/4
-    label: Crèche - text "En savoir plus"
+    label: GrandLab - text "En savoir plus"
     type: text
     when:
       style: style3
@@ -177,7 +177,7 @@ fields:
       style: style3
   section_makerlab_button_custom_text:
     width: 1/4
-    label: Crèche - text "En savoir plus"
+    label: MakerLab - text "En savoir plus"
     type: text
     when:
       style: style3
@@ -205,7 +205,7 @@ fields:
       style: style3
   section_ecole_button_custom_text:
     width: 1/4
-    label: Crèche - text "En savoir plus"
+    label: École - text "En savoir plus"
     type: text
     when:
       style: style3
