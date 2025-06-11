@@ -312,7 +312,10 @@
             <div
                     class="v-space-building__cards__container__card__content"
                     style="--v-space-building__cards__container__card--color: var(--fp-color-accueil);"
-
+                    on:click="{() => {
+                        if( content.content.section_popup_button_url )
+                            window.location.href = content.content.section_popup_button_url
+                    }}"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="PopUp">Le PopUp</h3>
@@ -340,6 +343,10 @@
             <div
                     class="v-space-building__cards__container__card__content"
                     style="--v-space-building__cards__container__card--color: var(--fp-color-learninglab);"
+                    on:click="{() => {
+                        if( content.content.section_learninglab_button_url )
+                            window.location.href = content.content.section_learninglab_button_url
+                    }}"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="LearningLab">Le LearningLab</h3>
@@ -367,6 +374,10 @@
             <div
                     class="v-space-building__cards__container__card__content"
                     style="--v-space-building__cards__container__card--color: var(--fp-color-hotel_entreprises);"
+                    on:click="{() => {
+                        if( content.content.section_factorylab_button_url )
+                            window.location.href = content.content.section_factorylab_button_url
+                    }}"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="FactoryLab">Le FactoryLab</h3>
@@ -395,6 +406,10 @@
             <div
                     class="v-space-building__cards__container__card__content"
                     style="--v-space-building__cards__container__card--color: hsl(55,100%,45%);"
+                    on:click="{() => {
+                        if( content.content.section_foodlab_button_url)
+                            window.location.href = content.content.section_foodlab_button_url
+                    }}"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="FoodLab">Le FoodLab</h3>
@@ -423,6 +438,10 @@
             <div
                     class="v-space-building__cards__container__card__content"
                     style="--v-space-building__cards__container__card--color: var(--fp-color-grandlab);"
+                    on:click="{() => {
+                        if( content.content.section_grandlab_button_url )
+                            window.location.href = content.content.section_grandlab_button_url
+                    }}"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="GrandLab">Le GrandLab</h3>
@@ -451,6 +470,10 @@
             <div
                     class="v-space-building__cards__container__card__content"
                     style="--v-space-building__cards__container__card--color: var(--fp-color-makerlab);"
+                    on:click="{() => {
+                        if( content.content.section_makerlab_button_url )
+                            window.location.href = content.content.section_makerlab_button_url
+                    }}"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="MakerLab">Le MakerLab</h3>
@@ -477,6 +500,10 @@
             <div
                     class="v-space-building__cards__container__card__content"
                     style="--v-space-building__cards__container__card--color: var(--fp-color-ecole_horlogerie);"
+                    on:click="{() => {
+                        if( content.content.section_ecole_button_url )
+                            window.location.href = content.content.section_ecole_button_url
+                    }}"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="Ecole">L’École d’Horlogerie de Genève</h3>
@@ -503,6 +530,10 @@
             <div
                     class="v-space-building__cards__container__card__content"
                     style="--v-space-building__cards__container__card--color: var(--fp-color-creche);"
+                    on:click="{() => {
+                        if( content.content.section_creche_button_url )
+                            window.location.href = content.content.section_creche_button_url
+                    }}"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="Creche">La crèche</h3>
