@@ -17,7 +17,7 @@ export let isArchive = false;
   </div>
   {#if event.pageContent.content.withpartner === 'true'}
     <div class="app-event-tile__partner">
-      partenaires
+      partenaire
     </div>
   {/if}
   {#if !isArchive}
