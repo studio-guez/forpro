@@ -18,4 +18,4 @@ fields:
     image:
       back: black
     uploads:
-      template: blocks/image
+      template: blocks/image_logo
