@@ -259,7 +259,6 @@
                     >
                         <h3>MakerLab</h3>
                         <p>#fabriquer #experimenter #innover #doityourself</p>
-                        <p>ouverture: printemps 2025</p>
                     </div>
                 {:else if currentOverSection === 'learninglab'}
                     <div
@@ -274,7 +273,6 @@
                     >
                         <h3>GrandLab</h3>
                         <p>#culture #art #evenements #simulation #designespace</p>
-                        <p>ouverture: printemps 2025</p>
                     </div>
                 {:else if currentOverSection === 'horlogerie'}
                     <div
