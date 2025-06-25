@@ -8,6 +8,14 @@
           <div>{formatTime(data.pageInfo.hourstart)}</div>
         </div>
     </div>
+  <div class="s-page-events-slug__ariane">
+    <div class="s-page-events-slug__ariane__wrap">
+      <a href="/evenements">événements</a>
+      <svg style="display: block; fill: currentColor; height: 1em; width: auto; margin-left: .5em;"
+              xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
+      {data.pageInfo.title}
+    </div>
+  </div>
     <AppPage
             data="{data}"
     />
@@ -81,5 +89,28 @@
             padding-top: 1rem;
             padding-bottom: 3rem;
         }
+    }
+
+    .s-page-events-slug__ariane {
+      width: 100%;
+      position: sticky;
+      top: 0;
+      margin-bottom: 1rem;
+      display: flex;
+    }
+
+    .s-page-events-slug__ariane__wrap {
+      //width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 62.5rem;
+      background: white;
+      padding: .5rem 2rem;
+      border-radius: 1rem;
+      border: 2px solid var(--app-color--blue);
+      color: var(--app-color--blue);
+      font-size: .75rem;
+      display: flex;
+      align-items: center;
     }
 </style>
