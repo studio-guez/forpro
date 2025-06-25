@@ -226,8 +226,9 @@
     color: var(--s-evenements__tags-color);
     border-radius: 1rem;
     white-space: nowrap;
-    padding: .15em 1em .35em;
+    padding: .05em .5em .25em;
     border: solid 2px var(--s-evenements__tags-bg);
+    font-size: .75rem;
 
     &.is-active {
         color: var(--app-color--blue);
