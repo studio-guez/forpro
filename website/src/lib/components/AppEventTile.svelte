@@ -98,6 +98,7 @@ export let isArchive = false;
       justify-content: space-between;
       align-items: center;
       background: transparent;
+      margin-top: 0;
 
       &:last-child {
         border-bottom: 2px solid;
