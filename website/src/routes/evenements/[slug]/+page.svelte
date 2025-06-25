@@ -10,10 +10,9 @@
     </div>
   <div class="s-page-events-slug__ariane">
     <div class="s-page-events-slug__ariane__wrap">
-      <a href="/evenements">événements</a>
-      <svg style="display: block; fill: currentColor; height: 1em; width: auto; margin-left: .5em;"
+      <svg style="display: block; fill: currentColor; height: 1em; width: auto; margin-left: .5em;top: .15em;position: relative;"
               xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
-      {data.pageInfo.title}
+      <a href="/evenements">retour à la page agenda</a>
     </div>
   </div>
     <AppPage
