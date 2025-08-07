@@ -73,6 +73,11 @@
       border-radius: 1rem;
       border: solid 2px var(--app-color--blue);
 
+      @media (max-width: scss-params.$fp-breakpoint-xs) {
+        gap: .25rem;
+        padding: .125rem .55rem;
+      }
+
       a {
         display: block;
       }
