@@ -5,7 +5,12 @@
         >{data.pageInfo.title}</h1>
         <div class="s-page-events-slug__hero__date">
           {@html formatDate(data.pageInfo.datestart)}
-          <div>{formatTime(data.pageInfo.hourstart)}</div>
+          <div>
+            {formatTime(data.pageInfo.hourstart)}
+            {#if data.pageInfo.hourend}
+            - {formatTime(data.pageInfo.hourend)}
+            {/if}
+          </div>
         </div>
     </div>
   <div class="s-page-events-slug__ariane">
@@ -94,8 +99,11 @@
       width: 100%;
       position: sticky;
       top: 0;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
       display: flex;
+      margin-top: -3rem;
+      z-index: 1;
+      user-select: none;
     }
 
     .s-page-events-slug__ariane__wrap {
