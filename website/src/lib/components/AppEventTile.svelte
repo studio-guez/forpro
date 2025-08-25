@@ -39,7 +39,12 @@ export let isArchive = false;
     <div class="app-event-tile__tags__item">
       {@html formatDate(event.pageContent.content.datestart)}
       {#if !isArchive}
-        <div>{formatTime(event.pageContent.content.hourstart)}</div>
+        <div>
+          {formatTime(event.pageContent.content.hourstart)}
+          {#if event.pageContent.content.hourend}
+            - {formatTime(event.pageContent.content.hourend)}
+          {/if}
+        </div>
       {/if}
     </div>
   </div>
