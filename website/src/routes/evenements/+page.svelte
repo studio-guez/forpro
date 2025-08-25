@@ -48,7 +48,7 @@
             {/each}
         </div>
 
-
+      {#if eventArchived.length > 0}
         <div class="s-evenements__events__events-wrap">
             <h3 style="width: 100%;">Archives</h3>
             {#each eventArchived as event}
@@ -59,6 +59,7 @@
                 />
             {/each}
         </div>
+      {/if}
 
     </div>
 
