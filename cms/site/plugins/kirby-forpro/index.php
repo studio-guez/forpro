@@ -13,6 +13,7 @@ Kirby::plugin('mediumsans/forpro', [
         'blocks/cards-focus'      => __DIR__ . '/blueprints/blocks/cards-focus.yml',
         'blocks/cta'              => __DIR__ . '/blueprints/blocks/cta.yml',
         'blocks/profiles'         => __DIR__ . '/blueprints/blocks/profiles.yml',
+        'blocks/program'         => __DIR__ . '/blueprints/blocks/program.yml',
         'blocks/quote'            => __DIR__ . '/blueprints/blocks/quote.yml',
         'blocks/capsules'         => __DIR__ . '/blueprints/blocks/capsules.yml',
         'blocks/map'              => __DIR__ . '/blueprints/blocks/map.yml',

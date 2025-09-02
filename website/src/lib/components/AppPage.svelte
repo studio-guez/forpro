@@ -128,7 +128,13 @@
                 <BlockAgenda/>
               </div>
 
+            {:else if content.type === 'program' }
+              <div class="app-flex__basis-20-24 app-flex app-flex--justify_center">
+                <BLockProgram data="{content}"/>
+              </div>
+
             {/if}
+
 
         {/each}
     </div>
@@ -164,6 +170,7 @@
     import BlockListOfLinks from "$lib/components/BlockListOfLinks.svelte";
     import BlockListGraphic from "$lib/components/BlockListGraphic.svelte";
     import BlockAgenda from "$lib/components/BlockAgenda.svelte";
+    import BLockProgram from "$lib/components/BLockProgram.svelte";
 
     export let data: IPage;
 </script>

@@ -18,6 +18,7 @@ fields:
       - cta
       - animated-list
       - quote
+      - program
       - content
       - capsule
       - cards

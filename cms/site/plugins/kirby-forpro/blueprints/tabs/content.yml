@@ -73,6 +73,7 @@ fields:
       - cta
       - capsules
       - quote
+      - program
       - code
       - body
       - google-maps

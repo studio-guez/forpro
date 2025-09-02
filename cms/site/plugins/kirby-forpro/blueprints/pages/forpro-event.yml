@@ -138,6 +138,7 @@ columns:
           - listOfPDF
           - list
           - google-maps
+          - program
           image:
             extends: blocks/image
             fields:
