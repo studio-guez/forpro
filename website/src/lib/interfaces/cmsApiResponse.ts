@@ -162,6 +162,7 @@ export interface IBody {
             | IBlockTimeline
             | IBlockLinkListContent
             | IBlockLinkAgenda
+            | IBlockLinkProgram
     }
 }
 
@@ -188,6 +189,7 @@ export interface IBlock {
         | 'timeline'
         | 'listOfPDF'
         | 'agenda'
+        | 'program'
 }
 
 export interface ISeo {
@@ -575,3 +577,29 @@ export interface IBlockLinkAgenda extends IBlock {
     "image": [],
     "type": "agenda"
 }
+
+
+/**
+ * block program
+ * */
+
+export interface IBlockLinkProgram extends IBlock {
+    "image": [],
+    "type": "program",
+    content: {
+        program_title: string,
+        program_list: IBlockLinkProgram_content_list[]
+    }
+}
+
+export interface IBlockLinkProgram_content_list {
+    program_list_title: string
+    program_list_subtitle: string
+    program_list_heure: string
+    program_list_space: string
+    program_list_content: string
+    program_list_tags: string
+    program_list_cta_url: string
+    program_list_cta_text: string
+}
+

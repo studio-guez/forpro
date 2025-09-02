@@ -73,6 +73,7 @@ columns:
           - cta
           - animated-list
           - logos-list
+          - program
           - quote
           - capsules
           - cards
