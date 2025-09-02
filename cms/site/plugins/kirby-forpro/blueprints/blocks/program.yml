@@ -1,0 +1,89 @@
+title:
+  en: Program
+  fr: Programme
+icon: calendar
+
+preview: fields
+wysiwyg: true
+
+fields:
+  program_title:
+    label: Titre
+    type: text
+
+  program_list:
+    label: Événement
+    type: structure
+    columns:
+      program_list_title:
+        width: 1/1
+    fields:
+      program_list_title:
+        label: Titre
+        type: text
+        required: true
+
+      program_list_subtitle:
+        label: Sous-titre
+        type: text
+        required: true
+
+      program_list_heure:
+        label: Heure
+        help: (ou information sur l'heure)
+        type: text
+        required: true
+
+      program_list_space:
+        type: multiselect
+        label: Espace
+        min: 1
+        max: 1
+        options:
+          - Village ForPro
+          - LearningLab
+          - MakerLab
+          - FoodLab
+          - GrandLab
+
+      program_list_content:
+        type: writer
+        marks:
+          - link
+          - italic
+        nodes:
+          - paragraph
+
+      program_list_tags:
+        type: multiselect
+        label: Tag(s)
+        min: 1
+        options:
+          - stand
+          - atelier
+          - atelier cuisine
+          - jeu
+          - visite
+          - radio-live
+          - démo
+          - conférence
+          - atelier collaboratif
+          - concert
+          - apéro
+          - restauration
+          - expo
+
+      program_list_cta_url:
+        type: url
+        label: CTA url
+
+      program_list_cta_text:
+        type: text
+        label: CTA texte
+
+
+
+
+
+
+
