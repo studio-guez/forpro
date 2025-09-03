@@ -36,7 +36,7 @@
                 </div>
 
             {:else if content.type === 'profiles'}
-                <div class="app-flex__basis-20-24">
+                <div class="app-flex__basis-24-24 app-flex app-flex--justify_center app-width-gutter">
                     <BlockProfiles content="{content}" />
                 </div>
 
@@ -129,7 +129,7 @@
               </div>
 
             {:else if content.type === 'program' }
-              <div class="app-flex__basis-20-24 app-flex app-flex--justify_center">
+              <div class="app-flex__basis-24-24 app-flex app-flex--justify_center app-width-gutter">
                 <BLockProgram data="{content}"/>
               </div>
 
