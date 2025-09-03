@@ -49,6 +49,24 @@
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        overflow: hidden;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 4rem 1rem 1rem;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        &.first-child-is-animation {
+            padding-top: 0;
+            padding-bottom: 1rem;
+            margin-bottom: -2rem;
+        }
+
+        @media (max-width: scss-params.$fp-breakpoint-xs) {
+            padding-top: 1rem;
+            padding-bottom: 3rem;
+        }
     }
 
     .s-page-events-slug__hero__date {
@@ -74,33 +92,11 @@
         color: var(--app-color--pink);
     }
 
-    .s-page-events-slug__hero {
-        overflow: hidden;
-        box-sizing: border-box;
-        width: 100%;
-        padding: 4rem 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-
-        &.first-child-is-animation {
-            padding-top: 0;
-            padding-bottom: 1rem;
-            margin-bottom: -2rem;
-        }
-
-        @media (max-width: scss-params.$fp-breakpoint-xs) {
-            padding-top: 1rem;
-            padding-bottom: 3rem;
-        }
-    }
 
     .s-page-events-slug__ariane {
       width: 100%;
       box-sizing: border-box;
       padding: var(--app-flex--gap_half);
-      margin-bottom: 2rem;
       display: flex;
       justify-content: flex-start;
       user-select: none;
