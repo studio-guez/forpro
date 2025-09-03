@@ -56,9 +56,9 @@
 
   <div class="block-program__tags">
     {#each tags as tag}
-      <div class="block-program__tags__item">
-        {tag}
-      </div>
+      <button class="block-program__tags__item"
+              on:click={() => console.log(tag)}
+      >{tag}</button>
     {/each}
   </div>
 
@@ -115,6 +115,12 @@
     justify-content: center;
     padding-top: 2rem;
     max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+      justify-content: flex-start;
+    }
   }
 
   .block-program__spaces__item {
@@ -141,9 +147,16 @@
     justify-content: center;
     padding-top: 2rem;
     max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+      justify-content: flex-start;
+    }
   }
 
   .block-program__tags__item {
+    all: unset;
     background: rgb(237 237 237);
     color: #4b4b4b;
     //background: white;
@@ -160,18 +173,29 @@
       color: var(--app-color--blue);
       background: white;
     }
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+      font-size: .65rem;
+    }
   }
 
   .block-program__content {
     padding-top: 3rem;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-gap: 3rem 1rem;
+    display: flex;
+    column-gap: 1rem;
+    row-gap: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
 
     @media (max-width: scss-params.$fp-breakpoint-sm) {
       grid-template-columns: repeat(1, minmax(0, 1fr));
-      grid-gap: 2rem 1rem;
+      row-gap: 2rem;
     }
+  }
+
+  .block-program__content__item {
+    width: 100%;
+    max-width: 20rem;
   }
 
   .block-program__content__item__hour {
@@ -205,6 +229,10 @@
 
     :global(p) {
       margin-top: .25rem;
+    }
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+      font-size: .75rem;
     }
   }
 
