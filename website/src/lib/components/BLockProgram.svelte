@@ -6,16 +6,12 @@
   const tags = [
       "stand",
       "atelier",
-      "atelier cuisine",
       "jeu",
       "visite",
       "radio-live",
       "démo",
-      "conférence",
-      "atelier collaboratif",
       "concert",
       "apéro",
-      "restauration",
       "expo",
   ]
 

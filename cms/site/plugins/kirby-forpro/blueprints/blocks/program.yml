@@ -56,16 +56,12 @@ fields:
         options:
           - stand
           - atelier
-          - atelier cuisine
           - jeu
           - visite
           - radio-live
           - démo
-          - conférence
-          - atelier collaboratif
           - concert
           - apéro
-          - restauration
           - expo
 
       program_list_cta_url:
