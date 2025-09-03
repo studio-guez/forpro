@@ -1,6 +1,8 @@
 <script lang="ts">
   import type {IBlockLinkProgram} from "$lib/interfaces/cmsApiResponse";
 
+  export let data: IBlockLinkProgram;
+
   const tags = [
       "stand",
       "atelier",
@@ -33,7 +35,45 @@
       "GrandLab": "rgb(0, 145, 133)",
   } as {[key: string]: string}
 
-  export let data: IBlockLinkProgram;
+
+  let activatedTags: string[] = []
+
+  function toggleTag(tag: string) {
+
+      activatedSpaces = []
+
+      activatedTags = activatedTags.includes(tag)
+          ? activatedTags.filter(value => value !== tag)
+          // : [...activatedTags, tag]
+          : [tag]
+  }
+
+  let activatedSpaces: string[] = []
+
+  function toggleSpaces(space: string) {
+
+      activatedTags = []
+
+      activatedSpaces = activatedSpaces.includes(space)
+          ? activatedTags.filter(value => value !== space)
+          // : [...activatedTags, tag]
+          : [space]
+  }
+
+  $: program_list_filteredByTag_and_filteredBySpace =  data.content.program_list.filter(value => {
+
+      if(activatedTags.length === 0) return true
+
+      if(value.program_list_tags.includes(activatedTags.join(','))) return true
+
+  }).filter(value => {
+      if(activatedSpaces.length === 0) return true
+
+      if(value.program_list_space.includes(activatedSpaces.join(','))) return true
+  })
+
+
+
 </script>
 
 <div class="block-program">
@@ -46,24 +86,34 @@
 
   <div class="block-program__spaces">
     {#each spaces as space}
-      <div class="block-program__spaces__item"
+      <button class="block-program__spaces__item"
            style="--space-color: {spacesColors[space]}"
+           on:click={() => toggleSpaces(space)}
       >
         {space}
-      </div>
+        {#if activatedSpaces.includes(space)}
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        {/if}
+      </button>
     {/each}
   </div>
 
   <div class="block-program__tags">
     {#each tags as tag}
       <button class="block-program__tags__item"
-              on:click={() => console.log(tag)}
-      >{tag}</button>
+              class:is-active="{activatedTags.includes(tag)}"
+              on:click={() => toggleTag(tag)}
+      >
+        {tag}
+        {#if activatedTags.includes(tag)}
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        {/if}
+      </button>
     {/each}
   </div>
 
   <div class="block-program__content">
-    {#each data.content.program_list as event}
+    {#each program_list_filteredByTag_and_filteredBySpace as event}
       <section class="block-program__content__item"
                data-space="{event.program_list_space}"
                style="--space-color: {spacesColors[event.program_list_space]}"
@@ -124,6 +174,7 @@
   }
 
   .block-program__spaces__item {
+    all: unset;
     background: white;
     color: var(--space-color);
     border-radius: 1rem;
@@ -137,6 +188,15 @@
     &.is-active {
       color: var(--app-color--blue);
       background: white;
+    }
+
+    svg {
+      display: inline;
+      fill: var(--space-color);
+      height: 1em;
+      width: auto;
+      vertical-align: middle;
+      line-height: 1em;
     }
   }
 
@@ -159,8 +219,6 @@
     all: unset;
     background: rgb(237 237 237);
     color: #4b4b4b;
-    //background: white;
-    //color: var(--app-color--blue);
     border-radius: 1rem;
     white-space: nowrap;
     padding: .05em 1em .25em;
@@ -169,9 +227,19 @@
     user-select: none;
     cursor: pointer;
 
+    svg {
+      display: inline;
+      fill: var(--app-color--blue);
+      height: 1em;
+      width: auto;
+      vertical-align: middle;
+      line-height: 1em;
+    }
+
     &.is-active {
       color: var(--app-color--blue);
       background: white;
+      box-shadow: inset 0 0 0 2px var(--app-color--blue);
     }
 
     @media (max-width: scss-params.$fp-breakpoint-sm) {
@@ -180,6 +248,7 @@
   }
 
   .block-program__content {
+    width: 100%;
     padding-top: 3rem;
     display: flex;
     column-gap: 1rem;
@@ -188,14 +257,14 @@
     justify-content: center;
 
     @media (max-width: scss-params.$fp-breakpoint-sm) {
-      grid-template-columns: repeat(1, minmax(0, 1fr));
+      //grid-template-columns: repeat(1, minmax(0, 1fr));
       row-gap: 2rem;
     }
   }
 
   .block-program__content__item {
     width: 100%;
-    max-width: 20rem;
+    max-width: 19rem;
   }
 
   .block-program__content__item__hour {
@@ -221,11 +290,11 @@
   }
 
   .block-program__content__item__header__content {
-    font-size: 1rem;
     line-height: 1em;
     font-weight: 500;
     font-style: italic;
     margin-top: .25rem;
+    font-size: .85rem;
 
     :global(p) {
       margin-top: .25rem;
