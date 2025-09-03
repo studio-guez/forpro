@@ -594,7 +594,6 @@ export interface IBlockLinkProgram extends IBlock {
 
 export interface IBlockLinkProgram_content_list {
     program_list_title: string
-    program_list_subtitle: string
     program_list_heure: string
     program_list_space: string
     program_list_content: string
