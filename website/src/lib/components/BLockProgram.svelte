@@ -69,26 +69,16 @@
                style="--space-color: {spacesColors[event.program_list_space]}"
       >
 
-        <div class="block-program__content__item__header">
-          <h6 class="block-program__content__item__hour">
-            {event.program_list_heure}
-          </h6>
-          {#each event.program_list_tags.split(',') as tag}
-            <div class="block-program__content__item__header__tag">
-              {tag}
-            </div>
-          {/each}
-        </div>
+        <h6 class="block-program__content__item__hour">
+          {event.program_list_heure}
+        </h6>
         <h4 class="block-program__content__item__header__title">
           {event.program_list_title}
         </h4>
-        <h5 class="block-program__content__item__header__subtitle">
-          {event.program_list_subtitle}
-        </h5>
 
-        <div class="block-program__content__item__content">
+        <h5 class="block-program__content__item__header__content">
           {@html event.program_list_content}
-        </div>
+        </h5>
 
         {#if event.program_list_cta_url}
           <a class="block-program__content__item__cta"
@@ -97,6 +87,14 @@
             {event.program_list_cta_text}
           </a>
         {/if}
+
+        <div class="block-program__content__item__tags-wrap">
+          {#each event.program_list_tags.split(',') as tag}
+            <div class="block-program__content__item__tags-wrap__tag">
+              {tag}
+            </div>
+          {/each}
+        </div>
       </section>
     {/each}
   </div>
@@ -146,8 +144,8 @@
   }
 
   .block-program__tags__item {
-    background: var(--app-color--blue);
-    color: white;
+    background: rgb(237 237 237);
+    color: #4b4b4b;
     //background: white;
     //color: var(--app-color--blue);
     border-radius: 1rem;
@@ -179,33 +177,38 @@
   .block-program__content__item__hour {
     font-size: .75rem;
     line-height: 1em;
-    font-weight: 600;
+    font-weight: 500;
+    color: var(--space-color);
   }
 
-  .block-program__content__item__header {
+  .block-program__content__item__tags-wrap {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: .25rem;
+    padding-top: .5rem;
   }
 
   .block-program__content__item__header__title {
     font-size: 1rem;
     line-height: 1em;
-    //color: var(--space-color);
+    color: var(--space-color);
     margin-top: .25rem;
   }
 
-  .block-program__content__item__header__subtitle {
+  .block-program__content__item__header__content {
     font-size: 1rem;
     line-height: 1em;
     font-weight: 500;
     font-style: italic;
     margin-top: .25rem;
-    //color: var(--space-color);
+
+    :global(p) {
+      margin-top: .25rem;
+    }
   }
 
-  .block-program__content__item__header__tag {
+  .block-program__content__item__tags-wrap__tag {
     background: var(--space-color);
     color: white;
     border-radius: 1rem;
@@ -218,22 +221,16 @@
     cursor: pointer;
   }
 
-  .block-program__content__item__content {
-    font-style: italic;
-    font-weight: 500;
-
-    :global(p) {
-      margin-top: .25rem;
-    }
-  }
-
   .block-program__content__item__cta {
     display: inline-block;
-    border: solid 2px var(--space-color);
+    //border: solid 2px var(--space-color);
+    border-bottom: solid 2px var(--space-color);
+    line-height: 1em;
+    padding-bottom: .15rem;
     color: var(--space-color);
-    padding: .4em 1em .6em;
-    line-height: 1ex;
-    border-radius: 1rem;
-    margin-top: .5rem;
+    //padding: .4em 1em .6em;
+    //line-height: 1ex;
+    //border-radius: 1rem;
+    margin-top: .25rem;
   }
 </style>

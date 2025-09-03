@@ -15,10 +15,10 @@
     </div>
   <div class="s-page-events-slug__ariane">
     <a href="/evenements" class="s-page-events-slug__ariane__wrap">
-      <svg style="display: block; fill: currentColor; height: 1em; width: auto; margin-left: .5em;top: .15em;position: relative;"
+      <svg style="display: block; fill: currentColor; height: 1em; width: auto;top: .15em;position: relative;"
               xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/>
       </svg>
-      <div>retour à la page Agenda</div>
+      <div>Agenda</div>
       <svg class="s-page-events-slug__ariane__wrap__current_page_icon" style="display: block; fill: currentColor; height: 1em; width: auto; margin-left: .5em;top: .15em;position: relative;"
            xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/>
       </svg>
@@ -109,7 +109,7 @@
       justify-content: flex-start;
       user-select: none;
       position: sticky;
-      top: 0;
+      top: -.75rem;
       z-index: 1;
     }
 
@@ -117,7 +117,7 @@
       //width: 100%;
       max-width: 62.5rem  ;
       background: white;
-      padding: .5rem 2rem;
+      padding: 0.25rem 1rem;
       border-radius: 1rem;
       color: var(--app-color--blue);
       font-size: .75rem;
