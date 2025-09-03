@@ -23,11 +23,6 @@ fields:
         type: text
         required: true
 
-      program_list_subtitle:
-        label: Sous-titre
-        type: text
-        required: true
-
       program_list_heure:
         label: Heure
         help: (ou information sur l'heure)
