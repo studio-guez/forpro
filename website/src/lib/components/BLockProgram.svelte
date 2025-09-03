@@ -35,6 +35,7 @@
       "GrandLab": "rgb(0, 145, 133)",
   } as {[key: string]: string}
 
+  let timeFilterStatus: null | 'byDate' | 'continue' = null
 
   let activatedTags: string[] = []
 
@@ -70,6 +71,12 @@
       if(activatedSpaces.length === 0) return true
 
       if(value.program_list_space.includes(activatedSpaces.join(','))) return true
+  }).filter(value => {
+      if(timeFilterStatus === null) return true
+
+      if(timeFilterStatus === 'continue') return value.program_list_heure === 'En continu'
+
+      return value.program_list_heure !== 'En continu'
   })
 
 
@@ -147,6 +154,24 @@
         </div>
       </section>
     {/each}
+  </div>
+
+  <div class="block-program__filter-time"
+       class:is-active="{timeFilterStatus !== null}"
+  >
+      <button class="block-program__filter-time__tag"
+              on:click={() => timeFilterStatus = 'byDate'}
+              class:is-active={timeFilterStatus === 'byDate'}
+      >par heure</button>
+      <button class="block-program__filter-time__tag"
+              on:click={() => timeFilterStatus = 'continue'}
+              class:is-active={timeFilterStatus === 'continue'}
+      >en continu</button>
+    {#if timeFilterStatus !== null}
+      <button class="block-program__filter-time__tag" on:click={() => timeFilterStatus = null} style="padding-bottom: 0;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+      </button>
+    {/if}
   </div>
 
 </div>
@@ -329,5 +354,46 @@
     //line-height: 1ex;
     //border-radius: 1rem;
     margin-top: .25rem;
+  }
+
+  .block-program__filter-time {
+    position: fixed;
+    bottom: .5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    background: white;
+    box-shadow:
+            0 15px 30px rgba(0, 0, 0, .2),
+            0 5px 5px rgba(0, 0, 0, .1);
+    line-height: 1ex;
+    padding: .25rem;
+    border-radius: 1rem;
+    gap: .25rem;
+  }
+
+  .block-program__filter-time__tag {
+    user-select: none;
+    background: white;
+    color: rgba(0, 0, 0, .35);
+    padding: .1em .5em .4em;
+    border-radius: 1rem;
+    line-height: 1em;
+    display: flex;
+    align-items: center;
+
+    &.is-active {
+      background: var(--app-color--green);
+      color: var(--app-color--blue);
+    }
+
+    svg {
+      display: block;
+      fill: black;
+      //background: rgba(0, 0, 0, .1);
+      border-radius: 100%;
+    }
   }
 </style>
