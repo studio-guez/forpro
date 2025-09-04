@@ -246,7 +246,6 @@
     border: solid 2px var(--s-evenements__tags-bg);
     font-size: .75rem;
     user-select: none;
-    cursor: pointer;
 
     svg {
       display: inline;
