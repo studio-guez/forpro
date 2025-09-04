@@ -336,7 +336,6 @@
     font-size: .6rem;
     line-height: 1ex;
     user-select: none;
-    cursor: pointer;
   }
 
   .block-program__content__item__cta {
