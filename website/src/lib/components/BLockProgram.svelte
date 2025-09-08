@@ -152,23 +152,26 @@
     {/each}
   </div>
 
-  <div class="block-program__filter-time"
-       class:is-active="{timeFilterStatus !== null}"
-  >
-      <button class="block-program__filter-time__tag"
-              on:click={() => timeFilterStatus = 'byDate'}
-              class:is-active={timeFilterStatus === 'byDate'}
-      >par heure</button>
-      <button class="block-program__filter-time__tag"
-              on:click={() => timeFilterStatus = 'continue'}
-              class:is-active={timeFilterStatus === 'continue'}
-      >en continu</button>
-    {#if timeFilterStatus !== null}
-      <button class="block-program__filter-time__tag" on:click={() => timeFilterStatus = null} style="padding-bottom: 0;">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-      </button>
-    {/if}
+  <div class="block-program__filter-time">
+    <div class="block-program__filter-time__container"
+         class:is-active="{timeFilterStatus !== null}"
+    >
+        <button class="block-program__filter-time__container__tag"
+                on:click={() => timeFilterStatus = 'byDate'}
+                class:is-active={timeFilterStatus === 'byDate'}
+        >par heure</button>
+        <button class="block-program__filter-time__container__tag"
+                on:click={() => timeFilterStatus = 'continue'}
+                class:is-active={timeFilterStatus === 'continue'}
+        >en continu</button>
+      {#if timeFilterStatus !== null}
+        <button class="block-program__filter-time__container__tag" on:click={() => timeFilterStatus = null} style="padding-bottom: 0;">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        </button>
+      {/if}
+    </div>
   </div>
+
 
 </div>
 
@@ -352,10 +355,15 @@
   }
 
   .block-program__filter-time {
-    position: fixed;
+    position: sticky;
     bottom: .5rem;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .block-program__filter-time__container {
     display: flex;
     align-items: center;
     z-index: 10;
@@ -369,7 +377,7 @@
     gap: .25rem;
   }
 
-  .block-program__filter-time__tag {
+  .block-program__filter-time__container__tag {
     user-select: none;
     background: white;
     color: rgba(0, 0, 0, .35);
