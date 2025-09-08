@@ -23,6 +23,7 @@ Kirby::plugin('mediumsans/forpro', [
         'blocks/graphic-list'             => __DIR__ . '/blueprints/blocks/graphic-list.yml',
         'blocks/google-maps'      => __DIR__ . '/blueprints/blocks/google-maps.yml',
         'blocks/animated-list'    => __DIR__ . '/blueprints/blocks/animated-list.yml',
+        'blocks/animated-image'    => __DIR__ . '/blueprints/blocks/animated-image.yml',
         'blocks/logos-list'    => __DIR__ . '/blueprints/blocks/logos-list.yml',
         'blocks/timeline'    => __DIR__ . '/blueprints/blocks/timeline.yml',
         'blocks/listOfPDF'    => __DIR__ . '/blueprints/blocks/listOfPDF.yml',

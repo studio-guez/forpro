@@ -133,6 +133,8 @@
                 <BLockProgram data="{content}"/>
               </div>
 
+            {:else if content.type === 'animated-image' }
+              <AppBlockAnimatedImage/>
             {/if}
 
 
@@ -171,6 +173,7 @@
     import BlockListGraphic from "$lib/components/BlockListGraphic.svelte";
     import BlockAgenda from "$lib/components/BlockAgenda.svelte";
     import BLockProgram from "$lib/components/BLockProgram.svelte";
+    import AppBlockAnimatedImage from "$lib/components/AppBlockAnimatedImage.svelte";
 
     export let data: IPage;
 </script>
