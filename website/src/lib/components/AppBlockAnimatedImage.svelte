@@ -9,6 +9,7 @@
 <style lang="scss">
   .s-block-animated-image {
     position: relative;
+    overflow: hidden;
   }
 
   .s-block-animated-image__img {
