@@ -24,7 +24,7 @@
 
     width: 100%;
     height: auto;
-    max-height: 100vh;
+    max-height: 90vh;
     object-fit: contain;
     animation: float-animation-x ease-in-out infinite;
 
