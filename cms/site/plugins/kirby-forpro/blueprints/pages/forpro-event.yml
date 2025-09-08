@@ -139,6 +139,7 @@ columns:
           - list
           - google-maps
           - program
+          - animated-image
           image:
             extends: blocks/image
             fields:

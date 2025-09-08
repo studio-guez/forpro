@@ -102,6 +102,7 @@ fields:
                 en: 'no'
                 fr: 'non'
       - animated-list
+      - animated-image
       - graphic-list
       - listOfPDF
       - logos-list

@@ -1,0 +1,13 @@
+title:
+  en: PNG Animated Plan
+  fr: Images PNG Animée
+icon: layers
+
+preview: fields
+wysiwyg: true
+
+fields:
+  info:
+    type: info
+    text: "Affiche une animation effet 'flottaison' entre plusieurs png"
+

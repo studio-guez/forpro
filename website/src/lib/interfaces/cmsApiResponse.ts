@@ -163,6 +163,7 @@ export interface IBody {
             | IBlockLinkListContent
             | IBlockLinkAgenda
             | IBlockLinkProgram
+            | IBlockAnimatedImage
     }
 }
 
@@ -190,6 +191,7 @@ export interface IBlock {
         | 'listOfPDF'
         | 'agenda'
         | 'program'
+        | 'animated-image'
 }
 
 export interface ISeo {
@@ -386,6 +388,23 @@ export interface IList extends IBlock {
         list: ListItem[];
     }
     type: 'list'
+}
+
+export interface ListItem {
+    key: string;
+    value: string;
+}
+
+
+
+
+
+/**
+ * BLOCK animated-image
+ */
+
+export interface IBlockAnimatedImage extends IBlock {
+    type: 'animated-image'
 }
 
 export interface ListItem {
