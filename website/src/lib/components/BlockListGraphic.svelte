@@ -12,7 +12,7 @@
   })
 
   function runAnimation() {
-      const items = document.querySelectorAll('.s-block-list-graphic__content__item')
+      const items = document?.querySelectorAll('.s-block-list-graphic__content__item')
 
       const randomIndex = Math.floor(Math.random() * items.length)
 

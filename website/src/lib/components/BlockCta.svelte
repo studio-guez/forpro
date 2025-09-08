@@ -5,10 +5,12 @@
     export let content: ICta;
     export let image: IImage[];
 
-    let textAnimatedWrapper: HTMLDivElement
+    let textAnimatedWrapper: HTMLDivElement | undefined
 
     onMount(async ()=> {
         await tick()
+
+        if( textAnimatedWrapper === undefined ) return
 
         const textWrapperWidth = textAnimatedWrapper.getBoundingClientRect().width
 
