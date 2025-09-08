@@ -369,7 +369,7 @@
 
   .block-program__filter-time {
     position: sticky;
-    bottom: .5rem;
+    bottom: 3rem;
     left: 0;
     display: flex;
     justify-content: center;
