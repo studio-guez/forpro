@@ -31,7 +31,18 @@
       "GrandLab": "rgb(0, 145, 133)",
   } as {[key: string]: string}
 
+  let blockProgramElement: null | HTMLElement = null
+
   let timeFilterStatus: null | 'byDate' | 'continue' = null
+
+  function setTimeFilterStatus(status: 'byDate' | 'continue' | null) {
+      console.log(blockProgramElement)
+
+      if (blockProgramElement) {
+          blockProgramElement.scrollIntoView({behavior: "smooth", block: 'start'});
+      }
+      timeFilterStatus = status
+  }
 
   let activatedTags: string[] = []
 
@@ -79,7 +90,9 @@
 
 </script>
 
-<div class="block-program">
+<div class="block-program"
+     bind:this={blockProgramElement}
+>
 
   <div class="block-program__title">
     <h2>
@@ -157,15 +170,15 @@
          class:is-active="{timeFilterStatus !== null}"
     >
         <button class="block-program__filter-time__container__tag"
-                on:click={() => timeFilterStatus = 'byDate'}
+                on:click={() => setTimeFilterStatus('byDate')}
                 class:is-active={timeFilterStatus === 'byDate'}
         >par heure</button>
         <button class="block-program__filter-time__container__tag"
-                on:click={() => timeFilterStatus = 'continue'}
+                on:click={() => setTimeFilterStatus('continue')}
                 class:is-active={timeFilterStatus === 'continue'}
         >en continu</button>
       {#if timeFilterStatus !== null}
-        <button class="block-program__filter-time__container__tag" on:click={() => timeFilterStatus = null} style="padding-bottom: 0;">
+        <button class="block-program__filter-time__container__tag" on:click={() => setTimeFilterStatus(null)} style="padding-bottom: 0;">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
         </button>
       {/if}
