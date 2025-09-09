@@ -14,7 +14,7 @@ import {siteInfo} from "../../store";
                     {@html $siteInfo.footer}
                 </div>
                 <div>
-                    <img src="vignette_sbfi.svg"
+                    <img src="/vignette_sbfi.svg"
                          alt="logo SBFI"
                          style="display: block; width: 10rem"
                     >
