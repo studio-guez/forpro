@@ -1,13 +1,36 @@
 <div class="s-block-animated-image">
-  <img src="/block_animated_images/village_forpro.png" alt="logo" />
-  <img class="s-block-animated-image__img" src="/block_animated_images/MakerLab.png" alt="logo" />
-  <img class="s-block-animated-image__img" src="/block_animated_images/LearningLab.png" alt="logo" />
-  <img class="s-block-animated-image__img" src="/block_animated_images/FoodLab.png" alt="logo" />
-  <img class="s-block-animated-image__img" src="/block_animated_images/GrandLab.png" alt="logo" />
+
+  <div class="s-block-animated-image__informations">
+    <div class="s-block-animated-image__informations__icons">
+      <div class="s-block-animated-image__items"><img src="/block_animated_images/icons/A01.svg" alt="icons" /><div>Expo</div></div>
+      <div class="s-block-animated-image__items"><img src="/block_animated_images/icons/A02.svg" alt="icons" /><div>Départ visites</div></div>
+      <div class="s-block-animated-image__items"><img src="/block_animated_images/icons/A03.svg" alt="icons" /><div>Concert</div></div>
+      <div class="s-block-animated-image__items"><img src="/block_animated_images/icons/A04.svg" alt="icons" /><div>Salle panoramique</div></div>
+      <div class="s-block-animated-image__items"><img src="/block_animated_images/icons/A05.svg" alt="icons" /><div>Photobooth</div></div>
+      <div class="s-block-animated-image__items"><img src="/block_animated_images/icons/A06.svg" alt="icons" /><div>Sculpture du Maker</div></div>
+    </div>
+
+    <div class="s-block-animated-image__informations__icons">
+      <div class="s-block-animated-image__items"><img src="/block_animated_images/icons/B01.svg" alt="icons" /><div>Informations</div></div>
+      <div class="s-block-animated-image__items"><img src="/block_animated_images/icons/B02.svg" alt="icons" /><div>Pause café</div></div>
+      <div class="s-block-animated-image__items"><img src="/block_animated_images/icons/B03.svg" alt="icons" /><div>Foodcourt : 11h30–13h30</div></div>
+    </div>
+  </div>
+
+  <div class="s-block-animated-image__images">
+    <img src="/block_animated_images/village_forpro.png" alt="logo" />
+    <img class="s-block-animated-image__img" src="/block_animated_images/MakerLab.png" alt="logo" />
+    <img class="s-block-animated-image__img" src="/block_animated_images/LearningLab.png" alt="logo" />
+    <img class="s-block-animated-image__img" src="/block_animated_images/FoodLab.png" alt="logo" />
+    <img class="s-block-animated-image__img" src="/block_animated_images/GrandLab.png" alt="logo" />
+  </div>
+
 </div>
 
 <style lang="scss">
-  .s-block-animated-image {
+  @use '../../style/_scss-params';
+
+  .s-block-animated-image__images {
     position: relative;
     overflow: hidden;
   }
@@ -86,4 +109,39 @@
     }
   }
 
+
+  .s-block-animated-image__informations {
+    display: flex;
+    gap: var(--app-gutter_regular);
+    justify-content: center;
+    padding-bottom: var(--app-gutter_regular);
+    padding-left: var(--app-flex--gap_half);
+    padding-right: var(--app-flex--gap_half);
+
+    @media (max-width: scss-params.$fp-breakpoint-xs) {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+  }
+
+  .s-block-animated-image__items {
+    display: flex;
+    gap: var(--app-flex--gap_half);
+
+    @media (max-width: scss-params.$fp-breakpoint-sm) {
+      font-size: .75rem;
+    }
+
+
+    img {
+      display: block;
+      width: 1rem;
+    }
+  }
+
+  .s-block-animated-image__informations__icons {
+    display: flex;
+    gap: var(--app-flex--gap_half);
+    flex-direction: column;
+  }
 </style>
