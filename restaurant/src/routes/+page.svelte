@@ -180,7 +180,7 @@
 								on:click={() => linkTreeIsOpen.set(true)}
 					type="button"
 					class="absolute -top-3 right-10 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-					class:is-hidden={$resaButtonIsHidden}
+                class:fixed-toggle-menus="{$resaButtonIsHidden}"
 				>
 					Cartes & Plats du jour
 				</button>
@@ -231,7 +231,7 @@
 								on:click={() => linkTreeIsOpen.set(true)}
 								type="button"
 								class="block -top-3 right-10 text-center rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-								class:is-hidden={$resaButtonIsHidden}
+                class:fixed-toggle-menus="{$resaButtonIsHidden}"
 				>
 					Cartes & Plats du jour
 				</button>
@@ -592,7 +592,7 @@
 		gap: 2rem;
 	}
 
-	.is-hidden {
+	.fixed-toggle-menus {
 		position: fixed;
 		bottom: 1rem;
 		top: auto;
