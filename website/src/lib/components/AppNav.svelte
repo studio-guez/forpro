@@ -63,6 +63,10 @@
         flex-wrap: nowrap;
         align-items: flex-start;
       }
+
+      > * {
+        pointer-events: auto;
+      }
     }
 
     .s-app-nav__social-icon {
