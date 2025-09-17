@@ -17,10 +17,19 @@ columns:
         file:
           type: image
         layout: cards
-        width: 3/4
+        width: 2/4
 
       isArchive:
         label: Afficher dans l'archive?
+        type: toggle
+        default: false
+        width: 1/4
+        text:
+          - "non"
+          - "oui"
+
+      show_in_preview:
+        label: Afficher sur la prévisualisation?
         type: toggle
         default: false
         width: 1/4
