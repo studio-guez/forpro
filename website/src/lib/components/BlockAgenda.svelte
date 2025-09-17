@@ -4,7 +4,7 @@
 
   {#if eventPage}
     <div class="block-agenda__wrapper">
-      {#each eventPage.childrenDetails as childrenDetail}
+      {#each eventPage.childrenDetails.filter(event => event.pageContent.content.show_in_preview) as childrenDetail}
         <div class="block-agenda__item">
           <AppEventTile
                   event="{childrenDetail}"
