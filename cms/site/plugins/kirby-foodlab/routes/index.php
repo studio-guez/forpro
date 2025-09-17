@@ -214,6 +214,8 @@ return [
                 "action" => function () {
                     $json = [];
 
+                    $json["banner_info"] = $this->site()->banner_info()->value();
+
                     $json["menu"] = [
                         "baseline" => $this->site()
                             ->headline()

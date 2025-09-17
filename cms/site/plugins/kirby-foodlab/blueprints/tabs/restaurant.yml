@@ -6,6 +6,14 @@ icon: food
 pages: false
 
 fields:
+
+  banner_info:
+    label: Bandeau
+    type: writer
+    marks:
+      link
+    inline: true
+
   menuHeadline:
     type: headline
     label: Menu
