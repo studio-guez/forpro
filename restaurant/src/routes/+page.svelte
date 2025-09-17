@@ -6,6 +6,8 @@
 
 	export let data;
 
+    console.log(data)
+
 	menuIsOpen.subscribe((value) => {
 		console.log(value);
 	});
@@ -29,6 +31,19 @@
 		})
 	})
 </script>
+
+{#if data.page.banner_info && data.page.banner_info.length > 0}
+  <div class="app-page__banner-info bg-primary text-white">
+    <div class="app-page__banner-info__wrap">
+      <div class="app-page__banner-info__wrap__item">
+        {data.page.banner_info}
+      </div>
+      <div class="app-page__banner-info__wrap__item">
+        {data.page.banner_info}
+      </div>
+    </div>
+  </div>
+{/if}
 
 {#if $menuIsOpen}
 <div class="fixed top-0 right-0 w-full h-full z-50"
@@ -177,10 +192,11 @@
 				style:background-size="cover"
 			>
 				<button
-								on:click={() => linkTreeIsOpen.set(true)}
-					type="button"
-					class="absolute -top-3 right-10 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                on:click={() => linkTreeIsOpen.set(true)}
+                type="button"
+                class="absolute -top-3 right-10 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 class:fixed-toggle-menus="{$resaButtonIsHidden}"
+                class:content-with-fixed-banner="{data.page.banner_info && data.page.banner_info.length > 0}"
 				>
 					Cartes & Plats du jour
 				</button>
@@ -232,6 +248,7 @@
 								type="button"
 								class="block -top-3 right-10 text-center rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 class:fixed-toggle-menus="{$resaButtonIsHidden}"
+                class:content-with-fixed-banner="{data.page.banner_info && data.page.banner_info.length > 0}"
 				>
 					Cartes & Plats du jour
 				</button>
@@ -576,6 +593,38 @@
 
 
 <style>
+  .app-page__banner-info {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1.5rem;
+      z-index: 100;
+  }
+
+  .app-page__banner-info__wrap {
+      display: flex;
+      position: relative;
+      align-items: center;
+      height: 100%;
+  }
+
+  .app-page__banner-info__wrap__item {
+      padding-right: 50%;
+      padding-left: 50%;
+      white-space: nowrap;
+      animation: app-page__banner-info-animation 50s linear infinite;
+  }
+
+  @keyframes app-page__banner-info-animation {
+      from {
+          transform: translateX(0%);
+      }
+      to {
+          transform: translateX(-100%);
+      }
+  }
+
 	.s-link-tree {
 		position: fixed;
 		width: 100%;
@@ -603,5 +652,9 @@
 		height: auto;
 		box-shadow: 0 10px 10px 0 rgba(0, 0, 0, .25);
 		width: calc(100% - 4rem);
+
+      &.content-with-fixed-banner {
+          bottom: 2rem;
+      }
 	}
 </style>
