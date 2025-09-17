@@ -146,6 +146,7 @@
     width: 100%;
     box-sizing: border-box;
     z-index: 1000;
+    pointer-events: none;
   }
 
   .s-layout__cookie-consent-box {
