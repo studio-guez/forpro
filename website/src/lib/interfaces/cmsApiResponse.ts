@@ -106,7 +106,8 @@ export interface IChildrenDetils {
 export interface IChildrenDetils__event extends IChildrenDetils {
     pageContent: {
         content: {
-            isarchive: "true" | "false",
+            isarchive: "true" | "false"
+            show_in_preview: "true" | "false"
             title: string,
             cover: string,
             target: string,
