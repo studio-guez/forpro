@@ -40,7 +40,9 @@ export let isArchive = false;
       {@html formatDate(event.pageContent.content.datestart)}
       {#if !isArchive}
         <div>
+          {#if event.pageContent.content.hourstart}
           {formatTime(event.pageContent.content.hourstart)}
+          {/if}
           {#if event.pageContent.content.hourend}
             - {formatTime(event.pageContent.content.hourend)}
           {/if}
