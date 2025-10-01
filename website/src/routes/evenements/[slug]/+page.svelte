@@ -5,8 +5,13 @@
         >{data.pageInfo.title}</h1>
         <div class="s-page-events-slug__hero__date">
           {@html formatDate(data.pageInfo.datestart)}
+          {#if data.pageInfo.dateend && data.pageInfo.datestart !== data.pageInfo.dateend}
+            <br>{@html formatDate(data.pageInfo.dateend)}
+          {/if}
           <div>
+            {#if data.pageInfo.hourstart}
             {formatTime(data.pageInfo.hourstart)}
+            {/if}
             {#if data.pageInfo.hourend}
             - {formatTime(data.pageInfo.hourend)}
             {/if}
