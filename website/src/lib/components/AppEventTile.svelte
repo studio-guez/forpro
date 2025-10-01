@@ -38,6 +38,9 @@ export let isArchive = false;
   <div class="app-event-tile__tags">
     <div class="app-event-tile__tags__item">
       {@html formatDate(event.pageContent.content.datestart)}
+      {#if event.pageContent.content.dateend && event.pageContent.content.datestart !== event.pageContent.content.dateend}
+        <br>{@html formatDate(event.pageContent.content.dateend)}
+      {/if}
       {#if !isArchive}
         <div>
           {#if event.pageContent.content.hourstart}
@@ -255,5 +258,12 @@ export let isArchive = false;
         border-radius: 50%;
       }
     }
+
+    :global(p:not(:first-child)),
+    :global(ul:not(:first-child)),
+    :global(ol:not(:first-child)) {
+      margin-top: 1em;
+    }
   }
+
 </style>
