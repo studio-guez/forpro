@@ -51,7 +51,7 @@ export let isArchive = false;
 
   <div class="app-event-tile__description">
     <div>
-      {event.pageContent.content.description}
+      {@html event.pageContent.content.description}
     </div>
   </div>
 
@@ -236,6 +236,22 @@ export let isArchive = false;
 
     .app-event-tile--is-archive & {
       display: none;
+    }
+
+    :global(li) {
+      padding-left: 1em;
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: .4em;
+        width: .5em;
+        height: .5em;
+        background: var(--app-color--blue);
+        border-radius: 50%;
+      }
     }
   }
 </style>
