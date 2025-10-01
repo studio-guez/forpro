@@ -103,10 +103,14 @@ columns:
 
       description:
         label: Description
-        type: textarea
+        type: writer
+        marks:
+          link
         width: 2/3
-
-
+        nodes:
+          - paragraph
+          - bulletList
+          - orderedList
       gapStart:
         type: gap
         width: 1/4
