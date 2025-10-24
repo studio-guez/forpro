@@ -39,9 +39,13 @@ export let isArchive = false;
   {/if}
   <div class="app-event-tile__tags">
     <div class="app-event-tile__tags__item">
-      {@html formatDate(event.pageContent.content.datestart)}
       {#if event.pageContent.content.dateend && event.pageContent.content.datestart !== event.pageContent.content.dateend}
-        <br>{@html formatDate(event.pageContent.content.dateend)}
+        du
+      {/if}
+      {@html formatDate(event.pageContent.content.datestart, false, true)}
+      {#if event.pageContent.content.dateend && event.pageContent.content.datestart !== event.pageContent.content.dateend}
+        {#if !isArchive}<br>{/if}
+        au {@html formatDate(event.pageContent.content.dateend, false, true)}
       {/if}
       {#if !isArchive}
         <div>
@@ -220,9 +224,6 @@ export let isArchive = false;
     font-weight: 800;
     font-size: 1rem;
     line-height: 1.25em;
-    &:first-letter {
-      text-transform: uppercase;
-    }
 
     > div {
       font-weight: 400;
