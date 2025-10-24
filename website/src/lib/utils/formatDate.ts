@@ -1,4 +1,4 @@
-export function formatDate(stringDate: string, withYear = false): string {
+export function formatDate(stringDate: string, withYear = false, dayCapitalise = false): string {
 
     const startDate = new Date(stringDate)
 
@@ -10,5 +10,11 @@ export function formatDate(stringDate: string, withYear = false): string {
     }
     const formatter = new Intl.DateTimeFormat('fr-FR', options)
 
-    return formatter.format(startDate).replace(/\b1\b/, '1<sup>er</sup>')
+  const dateToReturn = formatter.format(startDate).replace(/\b1\b/, '1<sup>er</sup>')
+
+  if (dayCapitalise) {
+		return dateToReturn.charAt(0).toUpperCase() + dateToReturn.slice(1)
+	}
+
+    return dateToReturn
 }
