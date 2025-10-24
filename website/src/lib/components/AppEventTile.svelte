@@ -15,13 +15,15 @@ export let isArchive = false;
   <div class="app-event-tile__title">
     {event.pageContent.content.title}
   </div>
-  {#if event.pageContent.content.withpartner === 'true'}
-    <div class="app-event-tile__partner">
-      partenaire
-    </div>
-  {/if}
   {#if !isArchive}
     <div class="app-event-tile__cover">
+
+      {#if event.pageContent.content.withpartner === 'true'}
+        <div class="app-event-tile__cover__partner">
+          partenaire
+        </div>
+      {/if}
+
       {#if event.cover[0]}
         <img class="app-event-tile__cover__image"
              alt="cover"
@@ -149,12 +151,12 @@ export let isArchive = false;
     }
   }
 
-  .app-event-tile__partner {
+  .app-event-tile__cover__partner {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     background: var(--app-color--green);
-    transform: translate(40%, 0) rotate(25deg);
+    transform: translate(-10%, -17%) rotate(-20deg);
     padding: .15em .5em .35em;
     font-size: .65rem;
     border-radius: 2em;
