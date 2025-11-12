@@ -225,6 +225,7 @@
 
   .app-page-block-container--body {
     overflow: hidden;
+    padding-bottom: .5rem;
 
     &:last-child {
       margin-bottom: 4rem;
