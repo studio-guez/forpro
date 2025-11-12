@@ -234,6 +234,10 @@
         margin-bottom: 1rem;
       }
 
+      :global(.v-time-line__item__desc a) {
+        text-decoration: underline;
+      }
+
       //&.ts-is-intersecting {
       &:before {
         background-color: #ffcb8f;
