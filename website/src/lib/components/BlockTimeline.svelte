@@ -234,7 +234,7 @@
         margin-bottom: 1rem;
       }
 
-      :global(.v-time-line__item__desc a) {
+      :global(.v-time-line__item__desc a:not(.app-button)) {
         text-decoration: underline;
       }
 
