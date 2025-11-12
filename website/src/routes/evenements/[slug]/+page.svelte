@@ -4,18 +4,22 @@
         <h1 class="s-page-events-slug__hero__title fp-heading-h3"
         >{data.pageInfo.title}</h1>
         <div class="s-page-events-slug__hero__date">
-          {@html formatDate(data.pageInfo.datestart)}
           {#if data.pageInfo.dateend && data.pageInfo.datestart !== data.pageInfo.dateend}
-            <br>{@html formatDate(data.pageInfo.dateend)}
+            Du
           {/if}
-          <div>
-            {#if data.pageInfo.hourstart}
-            {formatTime(data.pageInfo.hourstart)}
-            {/if}
-            {#if data.pageInfo.hourend}
-            - {formatTime(data.pageInfo.hourend)}
-            {/if}
-          </div>
+          {@html formatDate(data.pageInfo.datestart, false, ! data.pageInfo.dateend)}
+          {#if data.pageInfo.dateend && data.pageInfo.datestart !== data.pageInfo.dateend}
+            <br>
+            au {@html formatDate(data.pageInfo.dateend, false, false)}
+          {/if}
+            <div>
+              {#if data.pageInfo.hourstart}
+                {formatTime(data.pageInfo.hourstart)}
+              {/if}
+              {#if data.pageInfo.hourend}
+                - {formatTime(data.pageInfo.hourend)}
+              {/if}
+            </div>
         </div>
     </div>
   <div class="s-page-events-slug__ariane">
