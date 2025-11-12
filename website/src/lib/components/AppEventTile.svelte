@@ -40,12 +40,12 @@ export let isArchive = false;
   <div class="app-event-tile__tags">
     <div class="app-event-tile__tags__item">
       {#if event.pageContent.content.dateend && event.pageContent.content.datestart !== event.pageContent.content.dateend}
-        du
+        Du
       {/if}
-      {@html formatDate(event.pageContent.content.datestart, false, true)}
+      {@html formatDate(event.pageContent.content.datestart, false, ! event.pageContent.content.dateend)}
       {#if event.pageContent.content.dateend && event.pageContent.content.datestart !== event.pageContent.content.dateend}
         {#if !isArchive}<br>{/if}
-        au {@html formatDate(event.pageContent.content.dateend, false, true)}
+        au {@html formatDate(event.pageContent.content.dateend, false, false)}
       {/if}
       {#if !isArchive}
         <div>
