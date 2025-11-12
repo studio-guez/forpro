@@ -45,7 +45,7 @@ fields:
           - italic
           - underline
           - link
-        maxlength: 100
+#        maxlength: 100
 
       image:
         label:
