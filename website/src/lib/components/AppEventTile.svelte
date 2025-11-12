@@ -20,7 +20,10 @@ export let isArchive = false;
 
       {#if event.pageContent.content.withpartner === 'true'}
         <div class="app-event-tile__cover__partner">
-          partenaire
+          <div>
+            Événement
+            <br>partenaire
+          </div>
         </div>
       {/if}
 
@@ -160,11 +163,17 @@ export let isArchive = false;
     top: 0;
     left: 0;
     background: var(--app-color--green);
-    transform: translate(-10%, -17%) rotate(-20deg);
+    transform: translate(calc(-50% + 10px), calc(-50% + 10px)) rotate(-20deg);
     padding: .15em .5em .35em;
     font-size: .65rem;
-    border-radius: 2em;
+    border-radius: 50%;
     color: var(--app);
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.15em;
+    font-weight: 800;
   }
 
   .app-event-tile__cover {
