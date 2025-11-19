@@ -8,7 +8,7 @@
 
 <div class="s-block-image"
      class:is-fixed={content.content.fixed === 'true'}
-     style="background-image: url({image[0]?.resize.large});"
+     style="background-image: url({image[0]?.resize.large}); background-position: {image[0]?.focus};"
 >
     {#if (content.content.fixed === 'false')}
         <img
