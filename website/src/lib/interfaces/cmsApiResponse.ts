@@ -228,6 +228,7 @@ export interface IImage {
     mediaUrl: string
     width: number
     height: number
+    focus: string
     resize: {
         tiny: string
         small: string
