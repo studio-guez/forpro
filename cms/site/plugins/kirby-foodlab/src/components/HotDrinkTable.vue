@@ -21,9 +21,8 @@
             element="tbody"
         >
             <tr v-for="(item, index) in hotDrinks" :key="item.id">
-                <td class="k-table-index-column" data-sortable="true">
-                    <span class="k-table-index">{{ index + 1 }}</span>
-                    <k-sort-handle />
+                <td data-sortable="true">
+                  <k-sort-handle />
                 </td>
                 <td>{{ item.name }}</td>
                 <td>{{ item.description }}</td>
