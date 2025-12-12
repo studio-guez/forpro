@@ -390,7 +390,7 @@ export default {
                     width: "1",
                 },
                 textTVA: {
-                    label: "TVA",
+                    label: "Text footer",
                     type: "textarea",
                     help: "Apparaît dans le footer de la deuxième, troisième et quatrième page",
                     width: "1/2",
