@@ -60,3 +60,14 @@ fields:
         type: url
         nodes:
           - paragraph
+      button_second_text:
+        width: 1/2
+        label: text du bouton
+        help: si vide, plus d'information
+        type: text
+      button_second_link:
+        width: 1/2
+        label: lien du bouton
+        type: url
+        nodes:
+          - paragraph
