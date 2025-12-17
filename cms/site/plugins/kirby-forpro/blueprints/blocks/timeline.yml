@@ -51,23 +51,23 @@ fields:
           - bold
       button_text:
         width: 1/2
-        label: text du bouton
+        label: text du bouton 1
         help: si vide, plus d'information
         type: text
       button_link:
         width: 1/2
-        label: lien du bouton
+        label: lien du bouton 1
         type: url
         nodes:
           - paragraph
       button_second_text:
         width: 1/2
-        label: text du bouton
+        label: text du bouton 2
         help: si vide, plus d'information
         type: text
       button_second_link:
         width: 1/2
-        label: lien du bouton
+        label: lien du bouton 2
         type: url
         nodes:
           - paragraph
