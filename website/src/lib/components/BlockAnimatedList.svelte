@@ -12,6 +12,7 @@ const lottiePath: {[key: AnimatedListStyle]: {desktop: string, mobil: string}} =
     'jeunes' :          {desktop: '/lottie/desktop-model-jeune_lottie.json',        mobil: '/lottie/mobile-model-jeune_lottie.json'},
     'explore' :         {desktop: '/lottie/desktop-model-explore_lottie.json',      mobil: '/lottie/mobile-model-explore_lottie.json'},
     'leLab' :           {desktop: '/lottie/desktop-model-lab_lottie.json',          mobil: '/lottie/mobile-model-lab_lottie.json'},
+    'campus' :          {desktop: '/lottie/desktop-model-campus_lottie.json',       mobil: '/lottie/mobil-model-campus_lottie.json'},
 }
 
 function scrollToBottom(e: Event) {
