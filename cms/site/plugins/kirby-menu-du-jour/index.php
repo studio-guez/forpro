@@ -34,6 +34,19 @@ Kirby::plugin("mediumsans/kirby-menu-du-jour", [
         },
     ],
     "routes" => require __DIR__ . "/routes/index.php",
+    "api" => [
+        "routes" => function ($kirby) {
+            return [
+                [
+                    "pattern" => "menu-du-jour/foodcourt-texte",
+                    "method"  => "POST",
+                    "action"  => function () {
+                        return \Eclypsys\MenuDuJour\FoddLab::setTexte(get("texte") ?? "");
+                    }
+                ]
+            ];
+        }
+    ],
     "hooks" => [
         'panel.route:after' => function ($route, $path, $method) use ($pluginPermissionNameForBlueprint) {
             if ($path === null) return;
