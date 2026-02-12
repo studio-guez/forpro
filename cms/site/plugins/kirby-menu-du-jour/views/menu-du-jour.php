@@ -11,6 +11,7 @@ return [
             'props' => [
                 'items' => MenuDuJour::list(),
                 'foddLabItems' => FoddLab::list(),
+                'foodcourtTexte' => FoddLab::getTexte(),
             ]
         ];
     }

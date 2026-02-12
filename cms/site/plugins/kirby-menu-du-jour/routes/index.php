@@ -7,7 +7,7 @@ use Eclypsys\MenuDuJour\FoddLab;
 
 return [
     [
-        'pattern' => 'menu-du-jour',
+        'pattern' => 'foodcourt',
         'method'  => 'GET',
         'auth'    => false,
         'action'  => function () {
@@ -19,7 +19,7 @@ return [
         }
     ],
     [
-        'pattern' => 'fodd-lab',
+        'pattern' => 'foodlab',
         'method'  => 'GET',
         'auth'    => false,
         'action'  => function () {

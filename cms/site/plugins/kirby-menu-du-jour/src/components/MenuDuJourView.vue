@@ -123,6 +123,18 @@
     <k-empty v-else icon="calendar" @click="$dialog('fodd-lab/create')">
       Aucun élément foddLab
     </k-empty>
+
+    <!-- Texte writer field -->
+    <k-fieldset style="margin-top: 1.5rem">
+      <k-writer-field
+        label="Texte"
+        :value="texteValue"
+        :nodes="writerNodes"
+        :marks="writerMarks"
+        :icon="texteIcon"
+        @input="onTexteInput"
+      />
+    </k-fieldset>
   </k-inside>
 </template>
 
@@ -131,6 +143,58 @@ export default {
   props: {
     items: Array,
     foddLabItems: Array,
+    foodcourtTexte: {
+      type: String,
+      default: "",
+    },
+  },
+  data() {
+    return {
+      texteValue: this.foodcourtTexte || "",
+      saveTimer: null,
+      isSaving: false,
+      hasSaved: false,
+    };
+  },
+  computed: {
+    writerNodes() {
+      return ["paragraph"];
+    },
+    writerMarks() {
+      return ["italic"];
+    },
+    texteIcon() {
+      if (this.isSaving) return "loader";
+      if (this.hasSaved) return "check";
+      return "text";
+    },
+  },
+  methods: {
+    onTexteInput(value) {
+      this.texteValue = value;
+      this.hasSaved = false;
+
+      if (this.saveTimer) clearTimeout(this.saveTimer);
+
+      this.saveTimer = setTimeout(() => {
+        this.saveTexte(value);
+      }, 800);
+    },
+    async saveTexte(value) {
+      this.isSaving = true;
+      try {
+        await this.$api.post("menu-du-jour/foodcourt-texte", {
+          texte: value,
+        });
+        this.hasSaved = true;
+        setTimeout(() => {
+          this.hasSaved = false;
+        }, 3000);
+      } catch (e) {
+        window.panel.notification.error("Erreur lors de la sauvegarde");
+      }
+      this.isSaving = false;
+    },
   },
 };
 </script>
