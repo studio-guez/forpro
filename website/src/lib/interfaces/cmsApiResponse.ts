@@ -112,6 +112,7 @@ export interface IChildrenDetils__event extends IChildrenDetils {
             cover: string,
             target: string,
             category: string,
+            suboptions: string,
             place: string,
             googlemapaddress: string,
             description: string,
