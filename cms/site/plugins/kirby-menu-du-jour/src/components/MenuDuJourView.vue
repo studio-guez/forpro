@@ -13,6 +13,8 @@
       </k-button-group>
     </k-header>
 
+    <k-headline style="margin-top: 1.5rem; margin-bottom: 0.75rem">foodLab</k-headline>
+
     <table class="k-table k-menu-du-jour" v-if="items && items.length">
       <thead>
         <tr>
