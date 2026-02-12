@@ -9,11 +9,43 @@ class FoddLab extends BaseClass
     const FILENAME = "fodd-lab.json";
 
     /**
-     * Creates a new foddLab item with the given $input
-     *
-     * @param array $input
-     * @return bool
+     * Reads the full data structure from the JSON file.
+     * Handles migration from old array format to new object format.
      */
+    private static function readAll(): array
+    {
+        $data = Data::read(static::file());
+
+        // Migration: old format was a plain array of items
+        if (array_is_list($data)) {
+            return ['items' => $data, 'texte' => ''];
+        }
+
+        return $data;
+    }
+
+    private static function writeAll(array $data): bool
+    {
+        return Data::write(static::file(), $data);
+    }
+
+    public static function list(): array
+    {
+        return static::readAll()['items'] ?? [];
+    }
+
+    public static function getTexte(): string
+    {
+        return static::readAll()['texte'] ?? '';
+    }
+
+    public static function setTexte(string $texte): bool
+    {
+        $data = static::readAll();
+        $data['texte'] = $texte;
+        return static::writeAll($data);
+    }
+
     public static function create(array $input): bool
     {
         $id = uuid();
@@ -25,19 +57,12 @@ class FoddLab extends BaseClass
             "prix"  => $input["prix"] ?? "",
         ];
 
-        $items = self::list();
-        $items[] = $item;
+        $data = static::readAll();
+        $data['items'][] = $item;
 
-        return Data::write(static::file(), $items);
+        return static::writeAll($data);
     }
 
-    /**
-     * Updates a foddLab item by id
-     *
-     * @param string $id
-     * @param array $input
-     * @return boolean
-     */
     public static function update(string $id, array $input): bool
     {
         $item = [
@@ -47,6 +72,33 @@ class FoddLab extends BaseClass
             "prix"  => $input["prix"] ?? "",
         ];
 
-        return parent::update($id, $item);
+        $data = static::readAll();
+        $items = $data['items'] ?? [];
+
+        foreach ($items as &$existingItem) {
+            if ($existingItem["id"] === $id) {
+                $existingItem = $item;
+                break;
+            }
+        }
+        unset($existingItem);
+
+        $data['items'] = $items;
+        return static::writeAll($data);
+    }
+
+    public static function delete(string $id): bool
+    {
+        $data = static::readAll();
+        $items = $data['items'] ?? [];
+
+        foreach ($items as $key => $item) {
+            if ($item["id"] === $id) {
+                unset($items[$key]);
+            }
+        }
+
+        $data['items'] = array_values($items);
+        return static::writeAll($data);
     }
 }
