@@ -44,6 +44,11 @@
                   click: () => $dialog(`menu-du-jour/${item.id}/edit`),
                 },
                 {
+                  text: 'Dupliquer',
+                  icon: 'copy',
+                  click: () => $dialog(`menu-du-jour/${item.id}/duplicate`),
+                },
+                {
                   text: 'Supprimer',
                   icon: 'trash',
                   click: () => $dialog(`menu-du-jour/${item.id}/delete`),
