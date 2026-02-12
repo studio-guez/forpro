@@ -18,22 +18,25 @@
             </div>
         </div>
         <div class="s-evenements__events__tags">
-            {#each listOfTags as tag, index}
-                <div class="s-evenements__events__tags__item"
-                     on:click={() => activeTag === tag ? activeTag = null : activeTag = tag}
-                     class:is-active={ activeTag === tag }
-                     style="--s-evenements__tags-color: var(--app-color--blue); --s-evenements__tags-bg: {tag.color};"
-                >{tag.title}</div>
+            {#each listOfTags as tag}
+              <button
+                      class="s-evenements__events__tags__item"
+                      on:click={() => activeTag === tag ? activeTag = null : activeTag = tag}
+                      on:keydown={(e) => e.key === 'Enter' && (activeTag === tag ? activeTag = null : activeTag = tag)}
+                      class:is-active={ activeTag === tag }
+                      style="--s-evenements__tags-color: var(--app-color--blue); --s-evenements__tags-bg: {tag.color};"
+              >{tag.title}</button>
             {/each}
         </div>
 
         <div class="s-evenements__events__tags">
-            {#each listOfSubcategories as tag, index}
-                <div class="s-evenements__events__tags__item"
-                     on:click={() => activeSubCategory.includes(tag) ? activeSubCategory = activeSubCategory.filter(t => t !== tag) : activeSubCategory = [...activeSubCategory, tag] }
-                     class:is-active={ activeSubCategory.includes(tag) }
-                     style="--s-evenements__tags-color: white; --s-evenements__tags-bg: {tag.color};"
-                >{tag.title}</div>
+            {#each listOfSubcategories as tag}
+                <button
+                        class="s-evenements__events__tags__item"
+                        on:click={() => activeSubCategory.includes(tag) ? activeSubCategory = activeSubCategory.filter(t => t !== tag) : activeSubCategory = [...activeSubCategory, tag] }
+                        class:is-active={ activeSubCategory.includes(tag) }
+                        style="--s-evenements__tags-color: white; --s-evenements__tags-bg: {tag.color};"
+                >{tag.title}</button>
             {/each}
         </div>
 
@@ -69,7 +72,6 @@
 <script lang="ts">
     import {type IPageEvents} from "$lib/interfaces/cmsApiResponse";
     import AppPage from "$lib/components/AppPage.svelte";
-    import {formatDate} from "$lib/utils/formatDate";
     import AppEventTile from "$lib/components/AppEventTile.svelte";
 
     export let data: IPageEvents;
@@ -95,7 +97,11 @@
                 [event.pageContent.content.title, event.pageContent.content.description, event.pageContent.content.body]
                 .some(text => text?.toLowerCase().includes(searchValue.toLowerCase()))
 
-        return isVisible && matchesSearch
+        const matchesCategory = activeTag ? event.pageContent.content.category.split(',').some(category => activeTag?.title === category) : true
+
+        const matchesSubcategory = activeSubCategory.length ? event.pageContent.content.suboptions.split(',').some(option => activeSubCategory.some( subCat => subCat.title === option ) ) : true
+
+        return isVisible && matchesSearch && matchesCategory && matchesSubcategory
     })
 
 
