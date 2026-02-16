@@ -33,10 +33,10 @@
             {{ index + 1 }}
           </td>
           <td>{{ item.date }}</td>
-          <td>{{ item.station1_menu || '–' }}</td>
-          <td>{{ item.station2_menu || '–' }}</td>
-          <td>{{ item.station3_menu || '–' }}</td>
-          <td>{{ item.station4_menu || '–' }}</td>
+          <td>{{ item.station1_name || '–' }}</td>
+          <td>{{ item.station2_name || '–' }}</td>
+          <td>{{ item.station3_name || '–' }}</td>
+          <td>{{ item.station4_name || '–' }}</td>
           <td class="k-table-options-column">
             <k-options-dropdown
               :options="[
@@ -268,5 +268,9 @@ export default {
 
 .k-foodcourt-texte-editor p:last-child {
   margin-bottom: 0;
+}
+
+.k-dialog[data-size=full] {
+  width: 100%;
 }
 </style>

@@ -1,120 +1,85 @@
 <?php
 
-return [
+$daysOfWeek = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+
+$fields = [
     'date' => [
-        'label' => 'Date',
+        'label' => 'Date (début de semaine)',
         'type' => 'date',
+        'time'    => false,
     ],
-    'station1_info' => [
+    'stations_info' => [
+        'label' => 'Noms des stations',
+        'type' => 'info',
+        'text' => 'Noms des 4 stations pour les 5 jours suivant la date sélectionnée ci-dessus',
+        'theme' => 'info',
+    ],
+    'station1_name' => [
         'label' => 'Station 1',
-        'type' => 'info',
-        'text' => 'Station 1',
-        'theme' => 'info',
-    ],
-    'station1_cuisine' => [
-        'label' => 'Type de cuisine',
         'type' => 'text',
+        'width' => '1/4',
     ],
-    'station1_menu' => [
-        'label' => 'Menu',
-        'type' => 'text',
-    ],
-    'station1_description' => [
-        'label' => 'Description',
-        'type' => 'text',
-    ],
-    'station1_prix_public' => [
-        'label' => 'Prix public',
-        'type' => 'text',
-        'width' => '1/2',
-    ],
-    'station1_prix_apprenti' => [
-        'label' => 'Prix apprenti·e·s',
-        'type' => 'text',
-        'width' => '1/2',
-    ],
-    'station2_info' => [
+    'station2_name' => [
         'label' => 'Station 2',
-        'type' => 'info',
-        'text' => 'Station 2',
-        'theme' => 'info',
-    ],
-    'station2_cuisine' => [
-        'label' => 'Type de cuisine',
         'type' => 'text',
+        'width' => '1/4',
     ],
-    'station2_menu' => [
-        'label' => 'Menu',
-        'type' => 'text',
-    ],
-    'station2_description' => [
-        'label' => 'Description',
-        'type' => 'text',
-    ],
-    'station2_prix_public' => [
-        'label' => 'Prix public',
-        'type' => 'text',
-        'width' => '1/2',
-    ],
-    'station2_prix_apprenti' => [
-        'label' => 'Prix apprenti·e·s',
-        'type' => 'text',
-        'width' => '1/2',
-    ],
-    'station3_info' => [
+    'station3_name' => [
         'label' => 'Station 3',
-        'type' => 'info',
-        'text' => 'Station 3',
-        'theme' => 'info',
-    ],
-    'station3_cuisine' => [
-        'label' => 'Type de cuisine',
         'type' => 'text',
+        'width' => '1/4',
     ],
-    'station3_menu' => [
-        'label' => 'Menu',
-        'type' => 'text',
-    ],
-    'station3_description' => [
-        'label' => 'Description',
-        'type' => 'text',
-    ],
-    'station3_prix_public' => [
-        'label' => 'Prix public',
-        'type' => 'text',
-        'width' => '1/2',
-    ],
-    'station3_prix_apprenti' => [
-        'label' => 'Prix apprenti·e·s',
-        'type' => 'text',
-        'width' => '1/2',
-    ],
-    'station4_info' => [
+    'station4_name' => [
         'label' => 'Station 4',
-        'type' => 'info',
-        'text' => 'Station 4',
-        'theme' => 'info',
-    ],
-    'station4_cuisine' => [
-        'label' => 'Type de cuisine',
         'type' => 'text',
-    ],
-    'station4_menu' => [
-        'label' => 'Menu',
-        'type' => 'text',
-    ],
-    'station4_description' => [
-        'label' => 'Description',
-        'type' => 'text',
-    ],
-    'station4_prix_public' => [
-        'label' => 'Prix public',
-        'type' => 'text',
-        'width' => '1/2',
-    ],
-    'station4_prix_apprenti' => [
-        'label' => 'Prix apprenti·e·s',
-        'type' => 'text',
-        'width' => '1/2',
+        'width' => '1/4',
     ],
 ];
+
+for ($jour = 1; $jour <= 5; $jour++) {
+    $fields["jour{$jour}_info"] = [
+        'label' => $daysOfWeek[$jour - 1],
+        'type' => 'headline',
+    ];
+
+    for ($station = 1; $station <= 4; $station++) {
+        $fields["jour{$jour}_station{$station}_info"] = [
+            'label' => " ",
+            'type' => 'info',
+            'text' => "Station $station",
+            'theme' => 'none',
+        ];
+
+        $fields["jour{$jour}_station{$station}_menu"] = [
+            'label' => 'Menu',
+            'type' => 'writer',
+            'marks' => ['italic'],
+            'nodes' => false,
+            'inline' => true,
+            'width' => '4/12'
+        ];
+
+        $fields["jour{$jour}_station{$station}_description"] = [
+            'label' => 'Description',
+            'type' => 'writer',
+            'marks' => ['italic'],
+            'nodes' => false,
+            'inline' => true,
+            'width' => '4/12'
+        ];
+
+        $fields["jour{$jour}_station{$station}_prix_public"] = [
+            'label' => 'Prix public',
+            'type' => 'text',
+            'width' => '2/12',
+        ];
+
+        $fields["jour{$jour}_station{$station}_prix_apprenti"] = [
+            'label' => "Prix apprenti\u{00B7}e\u{00B7}s",
+            'type' => 'text',
+            'width' => '2/12',
+        ];
+    }
+}
+
+return $fields;
