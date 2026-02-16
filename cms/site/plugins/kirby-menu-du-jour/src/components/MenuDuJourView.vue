@@ -101,7 +101,6 @@
         <tr>
           <th class="k-table-index-column" style="text-align: center">#</th>
           <th>Date</th>
-          <th>Menu</th>
           <th>Prix</th>
           <th class="k-table-options-column"></th>
         </tr>
@@ -112,7 +111,6 @@
             {{ index + 1 }}
           </td>
           <td>{{ item.date }}</td>
-          <td>{{ item.menu || '–' }}</td>
           <td>{{ item.prix || '–' }}</td>
           <td class="k-table-options-column">
             <k-options-dropdown

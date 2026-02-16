@@ -12,7 +12,7 @@ return [
             'props' => [
                 'fields' => require __DIR__ . '/fields.php',
                 'submitButton' => t('create'),
-                'size' => 'large',
+                'size' => 'full',
                 'value' => $item
             ]
         ];
