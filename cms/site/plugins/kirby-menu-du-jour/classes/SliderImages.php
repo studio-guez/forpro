@@ -96,6 +96,14 @@ class SliderImages
         ];
     }
 
+    public static function reorder(array $filenames): bool
+    {
+        $existing = self::readOrder();
+        $valid = array_filter($filenames, fn($f) => in_array(basename($f), $existing));
+        $valid = array_map('basename', $valid);
+        return self::writeOrder($valid);
+    }
+
     public static function delete(string $filename): bool
     {
         $filename = basename($filename);
