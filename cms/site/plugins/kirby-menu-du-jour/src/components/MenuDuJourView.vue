@@ -2,18 +2,27 @@
   <k-inside>
     <k-header>
       Menu du jour
-
-      <k-button-group slot="buttons">
-        <k-button
-          text="Ajouter"
-          variant="filled"
-          icon="add"
-          @click="$dialog('menu-du-jour/create')"
-        />
-      </k-button-group>
     </k-header>
 
-    <k-headline class="k-menu-du-jour__title">FoodCourt</k-headline>
+    <k-headline
+      class="k-menu-du-jour__title"
+      tag="h2"
+    >FoodCourt</k-headline>
+
+    <hr style="width: 100%; margin: 0.75rem 0; border: .5px solid var(--color-border);"/>
+
+    <k-headline
+      class="k-menu-du-jour__subtitle"
+      tag="h3"
+    >Menu de la semaine du FoodCourt</k-headline>
+
+    <k-button
+      text="Ajouter"
+      variant="filled"
+      icon="add"
+      style="margin-bottom: 0.75rem"
+      @click="$dialog('menu-du-jour/create')"
+    />
 
     <table class="k-table k-menu-du-jour" v-if="items && items.length">
       <thead>
@@ -67,7 +76,17 @@
     </k-empty>
 
     <!-- FoodLab -->
-    <k-headline class="k-menu-du-jour__title">FoodLab</k-headline>
+    <k-headline
+      class="k-menu-du-jour__title"
+      tag="h2"
+    >FoodLab</k-headline>
+
+    <hr style="width: 100%; margin: 0.75rem 0; border: .5px solid var(--color-border);"/>
+
+    <k-headline
+      class="k-menu-du-jour__subtitle"
+      tag="h3"
+    >Menu de la semaine du FoodLab</k-headline>
 
     <k-button
       text="Ajouter"
@@ -125,12 +144,13 @@
     </k-empty>
 
     <!-- Texte writer field -->
-    <k-headline class="k-menu-du-jour__title">
-      FoodLab | Texte d'information
-    </k-headline>
+    <k-headline
+      class="k-menu-du-jour__subtitle"
+      tag="h3"
+    >Information dans le bas du menu imprimé du FoodLab</k-headline>
 
 
-    <div class="k-foodcourt-texte" style="margin-top: 1.5rem">
+    <div class="k-foodcourt-texte">
       <label class="k-foodcourt-texte-label">
         <span v-if="isSaving" style="opacity: 0.5; font-weight: normal"> – sauvegarde…</span>
         <span v-else-if="hasSaved" style="opacity: 0.5; font-weight: normal"> – sauvegardé</span>
@@ -228,7 +248,13 @@ export default {
 
 .k-menu-du-jour__title {
   margin-top: 3rem;
-  margin-bottom: 0.75rem
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+}
+
+.k-menu-du-jour__subtitle {
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .k-foodcourt-texte {
