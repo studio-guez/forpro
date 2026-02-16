@@ -4,6 +4,48 @@
       Menu du jour
     </k-header>
 
+    <!-- Image slider écran d'entrée -->
+    <k-headline
+      class="k-menu-du-jour__title"
+      tag="h2"
+    >Image slider écran d'entrée</k-headline>
+
+    <hr style="width: 100%; margin: 0.75rem 0; border: .5px solid var(--color-border);"/>
+
+    <div class="k-slider-images__grid" v-if="sliderImagesList.length">
+      <div v-for="image in sliderImagesList" :key="image.filename" class="k-slider-images__item">
+        <img :src="image.url" :alt="image.filename" />
+        <k-button
+          class="k-slider-images__delete"
+          icon="trash"
+          size="xs"
+          variant="filled"
+          theme="negative"
+          @click="deleteSliderImage(image.filename)"
+        />
+      </div>
+    </div>
+
+    <k-empty v-else icon="image">
+      Aucune image
+    </k-empty>
+
+    <k-button
+      text="Ajouter une image"
+      variant="filled"
+      icon="upload"
+      style="margin-top: 0.75rem"
+      @click="$refs.sliderFileInput.click()"
+    />
+    <input
+      ref="sliderFileInput"
+      type="file"
+      accept="image/*"
+      multiple
+      style="display: none"
+      @change="uploadSliderImages"
+    />
+
     <k-headline
       class="k-menu-du-jour__title"
       tag="h2"
@@ -183,9 +225,14 @@ export default {
       type: String,
       default: "",
     },
+    sliderImages: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
+      sliderImagesList: this.sliderImages || [],
       texteValue: this.foodcourtTexte || "",
       saveTimer: null,
       isSaving: false,
@@ -194,6 +241,55 @@ export default {
     };
   },
   methods: {
+    fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(",")[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    },
+    async uploadSliderImages(event) {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+
+      for (const file of files) {
+        if (file.size > 10 * 1024 * 1024) {
+          window.panel.notification.error(
+            `${file.name} est trop volumineux (max 10 Mo)`
+          );
+          continue;
+        }
+
+        try {
+          const base64 = await this.fileToBase64(file);
+          const result = await this.$api.post("menu-du-jour/slider-images", {
+            filename: file.name,
+            data: base64,
+            type: file.type,
+          });
+          this.sliderImagesList.push(result);
+          window.panel.notification.success("Image ajoutée");
+        } catch (e) {
+          window.panel.notification.error(`Erreur: ${file.name}`);
+        }
+      }
+
+      event.target.value = "";
+    },
+    async deleteSliderImage(filename) {
+      try {
+        await this.$api.delete(
+          "menu-du-jour/slider-images/" + encodeURIComponent(filename)
+        );
+        this.sliderImagesList = this.sliderImagesList.filter(
+          (img) => img.filename !== filename
+        );
+        window.panel.notification.success("Image supprimée");
+      } catch (e) {
+        window.panel.notification.error("Erreur lors de la suppression");
+      }
+    },
     onTexteInput() {
       const html = this.$refs.editor.innerHTML;
       this.hasSaved = false;
@@ -292,6 +388,33 @@ export default {
 
 .k-foodcourt-texte-editor p:last-child {
   margin-bottom: 0;
+}
+
+.k-slider-images__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+
+.k-slider-images__item {
+  position: relative;
+  border-radius: var(--rounded);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-white);
+}
+
+.k-slider-images__item img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+.k-slider-images__delete {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
 }
 
 .k-dialog[data-size=full] {
