@@ -4,7 +4,7 @@ $daysOfWeek = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dim
 
 $fields = [
     'date' => [
-        'label' => 'Date (début de semaine)',
+        'label' => 'Date (le jours sélectionné représente la semaine entière)',
         'type' => 'date',
         'time'    => false,
     ],

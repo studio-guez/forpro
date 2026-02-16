@@ -12,7 +12,7 @@ return [
             'props' => [
                 'fields' => require __DIR__ . '/fields.php',
                 'value' => $item,
-                'size' => 'large',
+                'size' => 'full',
             ]
         ];
     },
