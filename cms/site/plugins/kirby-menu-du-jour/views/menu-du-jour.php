@@ -2,6 +2,7 @@
 
 use Eclypsys\MenuDuJour\MenuDuJour;
 use Eclypsys\MenuDuJour\FoddLab;
+use Eclypsys\MenuDuJour\SliderImages;
 
 return [
     'pattern' => 'kirby-menu-du-jour',
@@ -12,6 +13,7 @@ return [
                 'items' => MenuDuJour::list(),
                 'foddLabItems' => FoddLab::list(),
                 'foodcourtTexte' => FoddLab::getTexte(),
+                'sliderImages' => SliderImages::list(),
             ]
         ];
     }
