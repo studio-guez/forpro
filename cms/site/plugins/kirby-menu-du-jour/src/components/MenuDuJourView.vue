@@ -13,8 +13,20 @@
     <hr style="width: 100%; margin: 0.75rem 0; border: .5px solid var(--color-border);"/>
 
     <div class="k-slider-images__grid" v-if="sliderImagesList.length">
-      <div v-for="image in sliderImagesList" :key="image.filename" class="k-slider-images__item">
+      <div
+        v-for="(image, index) in sliderImagesList"
+        :key="image.filename"
+        class="k-slider-images__item"
+        :class="{ 'k-slider-images__item--dragover': dragOverIndex === index }"
+        draggable="true"
+        @dragstart="onDragStart(index, $event)"
+        @dragover.prevent="onDragOver(index)"
+        @dragleave="onDragLeave"
+        @drop.prevent="onDrop(index)"
+        @dragend="onDragEnd"
+      >
         <img :src="image.url" :alt="image.filename" />
+        <span class="k-slider-images__index">{{ index + 1 }}</span>
         <k-button
           class="k-slider-images__delete"
           icon="trash"
@@ -233,6 +245,8 @@ export default {
   data() {
     return {
       sliderImagesList: this.sliderImages || [],
+      dragFromIndex: null,
+      dragOverIndex: null,
       texteValue: this.foodcourtTexte || "",
       saveTimer: null,
       isSaving: false,
@@ -276,6 +290,40 @@ export default {
       }
 
       event.target.value = "";
+    },
+    onDragStart(index, event) {
+      this.dragFromIndex = index;
+      event.dataTransfer.effectAllowed = "move";
+    },
+    onDragOver(index) {
+      this.dragOverIndex = index;
+    },
+    onDragLeave() {
+      this.dragOverIndex = null;
+    },
+    onDragEnd() {
+      this.dragFromIndex = null;
+      this.dragOverIndex = null;
+    },
+    async onDrop(toIndex) {
+      const fromIndex = this.dragFromIndex;
+      this.dragFromIndex = null;
+      this.dragOverIndex = null;
+
+      if (fromIndex === null || fromIndex === toIndex) return;
+
+      const list = [...this.sliderImagesList];
+      const [moved] = list.splice(fromIndex, 1);
+      list.splice(toIndex, 0, moved);
+      this.sliderImagesList = list;
+
+      try {
+        await this.$api.post("menu-du-jour/slider-images/order", {
+          order: list.map((img) => img.filename),
+        });
+      } catch (e) {
+        window.panel.notification.error("Erreur lors du réordonnancement");
+      }
     },
     async deleteSliderImage(filename) {
       try {
@@ -400,8 +448,19 @@ export default {
   position: relative;
   border-radius: var(--rounded);
   overflow: hidden;
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   background: var(--color-white);
+  cursor: grab;
+  transition: border-color 0.15s, opacity 0.15s;
+}
+
+.k-slider-images__item:active {
+  cursor: grabbing;
+}
+
+.k-slider-images__item--dragover {
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 2px var(--color-focus-outline);
 }
 
 .k-slider-images__item img {
@@ -409,6 +468,24 @@ export default {
   height: 120px;
   object-fit: cover;
   display: block;
+  pointer-events: none;
+}
+
+.k-slider-images__index {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--rounded);
+  pointer-events: none;
 }
 
 .k-slider-images__delete {

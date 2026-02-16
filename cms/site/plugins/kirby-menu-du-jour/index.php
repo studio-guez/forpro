@@ -57,6 +57,13 @@ Kirby::plugin("mediumsans/kirby-menu-du-jour", [
                     }
                 ],
                 [
+                    "pattern" => "menu-du-jour/slider-images/order",
+                    "method"  => "POST",
+                    "action"  => function () {
+                        return \Eclypsys\MenuDuJour\SliderImages::reorder(get("order") ?? []);
+                    }
+                ],
+                [
                     "pattern" => "menu-du-jour/slider-images/(:any)",
                     "method"  => "DELETE",
                     "action"  => function (string $filename) {
