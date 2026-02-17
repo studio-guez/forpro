@@ -11,7 +11,7 @@ $fields = [
     'stations_info' => [
         'label' => 'Noms des stations',
         'type' => 'info',
-        'text' => 'Noms des 4 stations pour les 5 jours suivant la date sélectionnée ci-dessus',
+        'text' => 'Noms des 4 stations pour les 5 jours suivant la date sélectionnée ci-dessus. Les stations sont de gauche à droite lorsqu\'on est devant les écrans.',
         'theme' => 'info',
     ],
     'station1_name' => [
@@ -70,13 +70,15 @@ for ($jour = 1; $jour <= 5; $jour++) {
 
         $fields["jour{$jour}_station{$station}_prix_public"] = [
             'label' => 'Prix public',
-            'type' => 'text',
+            'type' => 'number',
+            'step' => 0.10,
             'width' => '2/12',
         ];
 
         $fields["jour{$jour}_station{$station}_prix_apprenti"] = [
             'label' => "Prix apprenti\u{00B7}e\u{00B7}s",
-            'type' => 'text',
+            'type' => 'number',
+            'step' => 0.10,
             'width' => '2/12',
         ];
     }
