@@ -51,10 +51,14 @@ class FoddLab extends BaseClass
         $id = uuid();
 
         $item = [
-            "id"    => $id,
-            "date"  => $input["date"] ?? "",
-            "menu"  => $input["menu"] ?? "",
-            "prix"  => $input["prix"] ?? "",
+            "id"      => $id,
+            "date"    => $input["date"] ?? "",
+            "prix"    => $input["prix"] ?? "",
+            "jour1_menu" => $input["jour1_menu"] ?? "",
+            "jour2_menu" => $input["jour2_menu"] ?? "",
+            "jour3_menu" => $input["jour3_menu"] ?? "",
+            "jour4_menu" => $input["jour4_menu"] ?? "",
+            "jour5_menu" => $input["jour5_menu"] ?? "",
         ];
 
         $data = static::readAll();
@@ -66,10 +70,14 @@ class FoddLab extends BaseClass
     public static function update(string $id, array $input): bool
     {
         $item = [
-            "id"    => $id,
-            "date"  => $input["date"] ?? "",
-            "menu"  => $input["menu"] ?? "",
-            "prix"  => $input["prix"] ?? "",
+            "id"      => $id,
+            "date"    => $input["date"] ?? "",
+            "prix"    => $input["prix"] ?? "",
+            "jour1_menu" => $input["jour1_menu"] ?? "",
+            "jour2_menu" => $input["jour2_menu"] ?? "",
+            "jour3_menu" => $input["jour3_menu"] ?? "",
+            "jour4_menu" => $input["jour4_menu"] ?? "",
+            "jour5_menu" => $input["jour5_menu"] ?? "",
         ];
 
         $data = static::readAll();
