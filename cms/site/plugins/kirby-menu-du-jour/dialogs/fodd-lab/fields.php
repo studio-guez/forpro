@@ -1,6 +1,6 @@
 <?php
 
-$daysOfWeek = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+$daysOfWeek = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Suggestion végétarienne', 'Dimanche'];
 
 $fields = [
     'date' => [
@@ -20,7 +20,7 @@ $fields = [
 ];
 
 
-for ($jour = 1; $jour <= 5; $jour++) {
+for ($jour = 1; $jour <= 6; $jour++) {
   $fields["jour{$jour}_info"] = [
     'label' => $daysOfWeek[$jour - 1],
     'type' => 'headline',
