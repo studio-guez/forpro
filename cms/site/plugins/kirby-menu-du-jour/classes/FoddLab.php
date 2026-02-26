@@ -59,6 +59,7 @@ class FoddLab extends BaseClass
             "jour3_menu" => $input["jour3_menu"] ?? "",
             "jour4_menu" => $input["jour4_menu"] ?? "",
             "jour5_menu" => $input["jour5_menu"] ?? "",
+            "vegetarian_suggestion" => $input["vegetarian_suggestion"] ?? "",
         ];
 
         $data = static::readAll();
@@ -78,6 +79,7 @@ class FoddLab extends BaseClass
             "jour3_menu" => $input["jour3_menu"] ?? "",
             "jour4_menu" => $input["jour4_menu"] ?? "",
             "jour5_menu" => $input["jour5_menu"] ?? "",
+            "vegetarian_suggestion" => $input["vegetarian_suggestion"] ?? "",
         ];
 
         $data = static::readAll();
