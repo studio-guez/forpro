@@ -27,7 +27,10 @@ return [
             kirby()->impersonate('kirby');
 
             return Response::json(
-                Json::encode(FoddLab::list())
+              array_merge(
+                ['menus' => FoddLab::list()],
+                ['footer' => FoddLab::getTexte()]
+              )
             );
         }
     ],
