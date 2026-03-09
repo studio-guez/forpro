@@ -1,6 +1,6 @@
 <?php
 
-use Eclypsys\MenuDuJour\MenuDuJour;
+use Villa1203\MenuDuJour\MenuDuJour;
 
 return [
     'pattern' => 'menu-du-jour/create',
