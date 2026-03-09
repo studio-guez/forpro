@@ -201,7 +201,7 @@
       tag="h3"
     >
       Information dans le bas du menu imprimé du FoodLab
-      — <span v-if="isSaving" style="opacity: 0.5; font-weight: normal"> – sauvegarde…</span>
+      <span v-if="isSaving" style="opacity: 0.5; font-weight: normal"> – sauvegarde…</span>
       <span v-else-if="hasSaved" style="opacity: 0.5; font-weight: normal"> – sauvegardé</span>
     </k-headline>
 
