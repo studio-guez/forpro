@@ -1,6 +1,6 @@
 <?php
 
-use Eclypsys\MenuDuJour\FoddLab;
+use Villa1203\MenuDuJour\FoddLab;
 
 return [
     'pattern' => 'fodd-lab/(:any)/edit',

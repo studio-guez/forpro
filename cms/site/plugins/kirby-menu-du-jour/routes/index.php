@@ -2,9 +2,9 @@
 
 use Kirby\Data\Json;
 use Kirby\Http\Response;
-use Eclypsys\MenuDuJour\MenuDuJour;
-use Eclypsys\MenuDuJour\FoddLab;
-use Eclypsys\MenuDuJour\SliderImages;
+use Villa1203\MenuDuJour\MenuDuJour;
+use Villa1203\MenuDuJour\FoddLab;
+use Villa1203\MenuDuJour\SliderImages;
 
 return [
     [

@@ -1,6 +1,6 @@
 <?php
 
-namespace Eclypsys\MenuDuJour;
+namespace Villa1203\MenuDuJour;
 
 use Kirby\Http\Response;
 use Kirby\Exception\NotFoundException;

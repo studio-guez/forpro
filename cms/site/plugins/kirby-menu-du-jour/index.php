@@ -1,10 +1,10 @@
 <?php
 
 load([
-    "Eclypsys\MenuDuJour\BaseClass"   => __DIR__ . "/classes/BaseClass.php",
-    "Eclypsys\MenuDuJour\MenuDuJour"  => __DIR__ . "/classes/MenuDuJour.php",
-    "Eclypsys\MenuDuJour\FoddLab"        => __DIR__ . "/classes/FoddLab.php",
-    "Eclypsys\MenuDuJour\SliderImages"   => __DIR__ . "/classes/SliderImages.php",
+    "Villa1203\MenuDuJour\BaseClass"   => __DIR__ . "/classes/BaseClass.php",
+    "Villa1203\MenuDuJour\MenuDuJour"  => __DIR__ . "/classes/MenuDuJour.php",
+    "Villa1203\MenuDuJour\FoddLab"        => __DIR__ . "/classes/FoddLab.php",
+    "Villa1203\MenuDuJour\SliderImages"   => __DIR__ . "/classes/SliderImages.php",
 ]);
 
 $pluginPermissionNameForBlueprint = 'mediumsans.kirby-menu-du-jour';
@@ -42,14 +42,14 @@ Kirby::plugin("mediumsans/kirby-menu-du-jour", [
                     "pattern" => "menu-du-jour/foodcourt-texte",
                     "method"  => "POST",
                     "action"  => function () {
-                        return \Eclypsys\MenuDuJour\FoddLab::setTexte(get("texte") ?? "");
+                        return \Villa1203\MenuDuJour\FoddLab::setTexte(get("texte") ?? "");
                     }
                 ],
                 [
                     "pattern" => "menu-du-jour/slider-images",
                     "method"  => "POST",
                     "action"  => function () {
-                        return \Eclypsys\MenuDuJour\SliderImages::upload(
+                        return \Villa1203\MenuDuJour\SliderImages::upload(
                             get("filename") ?? "",
                             get("data") ?? "",
                             get("type") ?? ""
@@ -60,14 +60,14 @@ Kirby::plugin("mediumsans/kirby-menu-du-jour", [
                     "pattern" => "menu-du-jour/slider-images/order",
                     "method"  => "POST",
                     "action"  => function () {
-                        return \Eclypsys\MenuDuJour\SliderImages::reorder(get("order") ?? []);
+                        return \Villa1203\MenuDuJour\SliderImages::reorder(get("order") ?? []);
                     }
                 ],
                 [
                     "pattern" => "menu-du-jour/slider-images/(:any)",
                     "method"  => "DELETE",
                     "action"  => function (string $filename) {
-                        return \Eclypsys\MenuDuJour\SliderImages::delete($filename);
+                        return \Villa1203\MenuDuJour\SliderImages::delete($filename);
                     }
                 ]
             ];
