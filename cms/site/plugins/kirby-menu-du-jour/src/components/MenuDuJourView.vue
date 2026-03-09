@@ -206,24 +206,17 @@
     </k-headline>
 
 
-    <div class="k-foodcourt-texte">
-      <div class="k-foodcourt-texte-toolbar">
-        <k-button
-          icon="italic"
-          :variant="isItalicActive ? 'filled' : 'dimmed'"
-          size="xs"
-          title="Italique"
-          @click="toggleItalic"
-        />
-      </div>
-      <div
-        ref="editor"
+      <k-writer-input
+        @input="onTexteInput($event)"
+        :value="texteValue"
+        :nodes="false"
+        :marks="['italic']"
+        :inline="true"
         class="k-foodcourt-texte-editor"
-        contenteditable="true"
-        @input="onTexteInput"
-        v-html="texteValue"
-      ></div>
-    </div>
+      />
+
+
+
   </k-inside>
 </template>
 
@@ -337,8 +330,8 @@ export default {
         window.panel.notification.error("Erreur lors de la suppression");
       }
     },
-    onTexteInput() {
-      const html = this.$refs.editor.innerHTML;
+    onTexteInput(event) {
+      const html = event;
       this.hasSaved = false;
 
       if (this.saveTimer) clearTimeout(this.saveTimer);
@@ -346,15 +339,6 @@ export default {
       this.saveTimer = setTimeout(() => {
         this.saveTexte(html);
       }, 800);
-    },
-    toggleItalic() {
-      document.execCommand("italic", false, null);
-      this.$refs.editor.focus();
-      this.checkItalicState();
-      this.onTexteInput();
-    },
-    checkItalicState() {
-      this.isItalicActive = document.queryCommandState("italic");
     },
     async saveTexte(value) {
       this.isSaving = true;
@@ -371,12 +355,6 @@ export default {
       }
       this.isSaving = false;
     },
-  },
-  mounted() {
-    if (this.$refs.editor) {
-      this.$refs.editor.addEventListener("mouseup", this.checkItalicState);
-      this.$refs.editor.addEventListener("keyup", this.checkItalicState);
-    }
   },
 };
 </script>
@@ -396,21 +374,6 @@ export default {
 .k-menu-du-jour__subtitle {
   margin-top: 1rem;
   margin-bottom: 0.75rem;
-}
-
-.k-foodcourt-texte {
-  margin-top: 0 !important;
-}
-
-.k-foodcourt-texte-label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.k-foodcourt-texte-toolbar {
-  margin-bottom: 0.25rem;
 }
 
 .k-foodcourt-texte-editor {
