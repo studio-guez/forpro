@@ -1,7 +1,7 @@
 <template>
   <k-inside>
     <k-header>
-      Menu du jour
+      Menu de la semaine
     </k-header>
 
     <!-- Image slider écran d'entrée -->
@@ -458,5 +458,11 @@ export default {
 
 .k-dialog[data-size=full] {
   width: 100%;
+
+  .k-grid[data-variant=fields] {
+    row-gap: 5px;
+  }
 }
+
+
 </style>
