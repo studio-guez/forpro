@@ -33,7 +33,7 @@
             {#each listOfSubcategories as tag}
                 <button
                         class="s-evenements__events__tags__item"
-                        on:click={() => activeSubCategory.includes(tag) ? activeSubCategory = activeSubCategory.filter(t => t !== tag) : activeSubCategory = [...activeSubCategory, tag] }
+                        on:click={() => activeSubCategory.includes(tag) ? activeSubCategory = [] : activeSubCategory = [tag] }
                         class:is-active={ activeSubCategory.includes(tag) }
                         style="--s-evenements__tags-color: white; --s-evenements__tags-bg: {tag.color};"
                 >{tag.title}</button>
