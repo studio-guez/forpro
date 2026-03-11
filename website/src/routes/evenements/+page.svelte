@@ -44,6 +44,8 @@
         <div class="s-evenements__events__events-wrap">
             {#each events as event}
               <div class="s-evenements__events__events-wrap__item">
+                {JSON.stringify(event.pageContent?.content?.category)}
+                {JSON.stringify(event.pageContent?.content?.suboptions)}
                   <AppEventTile
                       event={event}
                   />
@@ -97,9 +99,9 @@
                 [event.pageContent.content.title, event.pageContent.content.description, event.pageContent.content.body]
                 .some(text => text?.toLowerCase().includes(searchValue.toLowerCase()))
 
-        const matchesCategory = activeTag ? event.pageContent.content.category.split(',').some(category => activeTag?.title === category) : true
+        const matchesCategory = activeTag ? event.pageContent.content.category.split(',').some(category => activeTag?.title.trim() === category.trim() ) : true
 
-        const matchesSubcategory = activeSubCategory.length ? event.pageContent.content.suboptions.split(',').some(option => activeSubCategory.some( subCat => subCat.title === option ) ) : true
+        const matchesSubcategory = activeSubCategory.length ? event.pageContent.content.suboptions.split(',').some(option => activeSubCategory.some( subCat => subCat.title.trim() === option.trim() ) ) : true
 
         return isVisible && matchesSearch && matchesCategory && matchesSubcategory
     })
