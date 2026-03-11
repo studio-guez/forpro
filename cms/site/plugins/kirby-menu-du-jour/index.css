@@ -1,1 +1,91 @@
-.k-table.k-menu-du-jour,.k-table.k-fodd-lab{table-layout:fixed}.k-menu-du-jour__title{margin-top:3rem;margin-bottom:.75rem;font-size:1.5rem}.k-menu-du-jour__subtitle{margin-top:1rem;margin-bottom:.75rem}.k-foodcourt-texte-editor{background:var(--color-white);border:1px solid var(--color-border);border-radius:var(--rounded);padding:.5rem .75rem;min-height:5rem;font-size:.875rem;line-height:1.5;outline:none}.k-foodcourt-texte-editor:focus{border-color:var(--color-focus);box-shadow:0 0 0 2px var(--color-focus-outline)}.k-foodcourt-texte-editor p{margin:0 0 .5em}.k-foodcourt-texte-editor p:last-child{margin-bottom:0}.k-slider-images__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem}.k-slider-images__item{position:relative;border-radius:var(--rounded);overflow:hidden;border:2px solid var(--color-border);background:var(--color-white);cursor:grab;transition:border-color .15s,opacity .15s}.k-slider-images__item:active{cursor:grabbing}.k-slider-images__item--dragover{border-color:var(--color-focus);box-shadow:0 0 0 2px var(--color-focus-outline)}.k-slider-images__item img{width:100%;height:120px;object-fit:cover;display:block;pointer-events:none}.k-slider-images__index{position:absolute;top:.25rem;left:.25rem;background:#0009;color:#fff;font-size:.7rem;font-weight:600;width:1.25rem;height:1.25rem;display:flex;align-items:center;justify-content:center;border-radius:var(--rounded);pointer-events:none}.k-slider-images__delete{position:absolute;top:.25rem;right:.25rem}.k-dialog[data-size=full]{width:100%}.k-dialog[data-size=full] .k-grid[data-variant=fields]{row-gap:5px}
+
+.k-table.k-menu-du-jour,
+.k-table.k-fodd-lab {
+  table-layout: fixed;
+}
+.k-menu-du-jour__title {
+  margin-top: 3rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+}
+.k-menu-du-jour__subtitle {
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
+}
+.k-foodcourt-texte-editor {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--rounded);
+  padding: 0.5rem 0.75rem;
+  min-height: 5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  outline: none;
+}
+.k-foodcourt-texte-editor:focus {
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 2px var(--color-focus-outline);
+}
+.k-foodcourt-texte-editor p {
+  margin: 0 0 0.5em;
+}
+.k-foodcourt-texte-editor p:last-child {
+  margin-bottom: 0;
+}
+.k-slider-images__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+.k-slider-images__item {
+  position: relative;
+  border-radius: var(--rounded);
+  overflow: hidden;
+  border: 2px solid var(--color-border);
+  background: var(--color-white);
+  cursor: grab;
+  transition: border-color 0.15s, opacity 0.15s;
+}
+.k-slider-images__item:active {
+  cursor: grabbing;
+}
+.k-slider-images__item--dragover {
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 2px var(--color-focus-outline);
+}
+.k-slider-images__item img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+.k-slider-images__index {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--rounded);
+  pointer-events: none;
+}
+.k-slider-images__delete {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+}
+.k-dialog[data-size=full] {
+  width: 100%;
+.k-grid[data-variant=fields] {
+    row-gap: 5px;
+}
+}
+
+
