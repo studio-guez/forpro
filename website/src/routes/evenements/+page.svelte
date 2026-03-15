@@ -54,7 +54,7 @@
         </div>
 
       {#if eventArchived.length > 0}
-        <div class="s-evenements__events__events-wrap">
+        <div class="s-evenements__events__events-wrap s-evenements__events__events-wrap--is-archive">
             <h3 style="width: 100%;">Archives</h3>
             {#each eventArchived as event}
                 <AppEventTile
@@ -257,6 +257,14 @@
 
   h3 {
     text-align: center;
+  }
+
+  &.s-evenements__events__events-wrap--is-archive {
+    gap: 0;
+
+    h3 {
+      margin-bottom: var(--app-gutter_regular);
+    }
   }
 }
 

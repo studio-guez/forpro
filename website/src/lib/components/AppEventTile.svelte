@@ -45,7 +45,7 @@ export let isArchive = false;
       {#if event.pageContent.content.dateend && event.pageContent.content.datestart !== event.pageContent.content.dateend}
         Du
       {/if}
-      {@html formatDate(event.pageContent.content.datestart, false, ! event.pageContent.content.dateend)}
+      {@html formatDate(event.pageContent.content.datestart, isArchive, ! event.pageContent.content.dateend)}
       {#if event.pageContent.content.dateend && event.pageContent.content.datestart !== event.pageContent.content.dateend}
         {#if !isArchive}<br>{/if}
         au {@html formatDate(event.pageContent.content.dateend, false, false)}
@@ -113,11 +113,12 @@ export let isArchive = false;
       border-radius: 0;
       border: none;
       border-top: solid 2px;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
       align-items: center;
       background: transparent;
       margin-top: 0;
+      column-gap: 1rem;
 
       &:last-child {
         border-bottom: 2px solid;
@@ -147,10 +148,13 @@ export let isArchive = false;
       transform: translate(0, 0);
       background: none;
       text-align: left;
-      margin-bottom: 0;
+      margin: 0;
       color: black;
       font-size: 1.25rem;
       padding: 0;
+      width: 100%;
+      max-width: none;
+      flex-shrink: 1;
     }
 
     @media (max-width: scss-params.$fp-breakpoint-xs) {
@@ -221,6 +225,17 @@ export let isArchive = false;
 
     .app-event-tile--is-archive & {
       order: initial;
+      flex-shrink: 0;
+    }
+  }
+
+  .app-event-tile__details {
+    .app-event-tile--is-archive & {
+      flex-shrink: 0;
+
+      .app-button {
+        padding: 0.4em 1.5em 0.6em;
+      }
     }
   }
 
