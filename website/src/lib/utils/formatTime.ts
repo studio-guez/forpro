@@ -1,4 +1,4 @@
-export function formatTime(time: string): string {
+export function formatTime(time: string, withYear = false): string {
     const parts = time.split(':')
     const hours = parts[0]
     const minutes = parts[1]
