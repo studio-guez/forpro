@@ -1,0 +1,17 @@
+title: Liste de liens courts
+
+options:
+  changeStatus: false
+  changeTemplate: false
+  changeSlug: false
+  delete: false
+  create: false
+
+columns:
+  - width: 1/1
+
+    sections:
+      subpages:
+        label: Listes des liens courts
+        type: pages
+        template: short-link
