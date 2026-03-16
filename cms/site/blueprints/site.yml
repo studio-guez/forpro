@@ -28,6 +28,13 @@ tabs:
               - site-info
               - home
 
+          short_links_list:
+            create: false
+            label: "Liste de liens courts"
+            type: pages
+            templates:
+              - short-links-list
+
           events:
             create: false
             label: "Événements"

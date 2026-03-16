@@ -6,6 +6,9 @@ Kirby::plugin('mediumsans/forpro', [
         'pages/forpro-events'          => __DIR__ . '/blueprints/pages/forpro-events.yml',
         'pages/forpro-event'          => __DIR__ . '/blueprints/pages/forpro-event.yml',
 
+        'pages/short-link'          => __DIR__ . '/blueprints/pages/short-link.yml',
+        'pages/short-links-list'          => __DIR__ . '/blueprints/pages/short-links-list.yml',
+
         'tabs/content'          => __DIR__ . '/blueprints/tabs/content.yml',
         'tabs/booking'          => __DIR__ . '/blueprints/tabs/booking.yml',
 
