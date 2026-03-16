@@ -40,6 +40,11 @@ a.app-button {
     border-radius: 1rem;
   }
 
+  &.app-button--small {
+    padding: .05rem .5rem .25rem;
+    font-size: .75rem;
+  }
+
   &.app-button--xl {
     padding: max(1rem, 2vw) max(2rem, 4vw);
     font-size: max(1rem, 2vw);
