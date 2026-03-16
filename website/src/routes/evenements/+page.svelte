@@ -44,8 +44,6 @@
         <div class="s-evenements__events__events-wrap">
             {#each events as event}
               <div class="s-evenements__events__events-wrap__item">
-                {JSON.stringify(event.pageContent?.content?.category)}
-                {JSON.stringify(event.pageContent?.content?.suboptions)}
                   <AppEventTile
                       event={event}
                   />
@@ -55,14 +53,31 @@
 
       {#if eventArchived.length > 0}
         <div class="s-evenements__events__events-wrap s-evenements__events__events-wrap--is-archive">
-            <h3 style="width: 100%;">Archives</h3>
-            {#each eventArchived as event}
-                <AppEventTile
-                        event={event}
-                        isArchive="{true}"
+          <h3 style="width: 100%;">Archives</h3>
 
-                />
-            {/each}
+          <div class="w-full flex justify-end" style="margin-bottom: .5rem;">
+            <button class="app-button app-button--rounded app-button--without-over-effect app-button--small"
+                    on:click={() => archiveSorted = archiveSorted === 'asc' ? 'desc' : 'asc'}
+            >
+              <div class="flex items-center align-middle gap-1">
+                <span>date</span>
+                {#if archiveSorted === 'asc'}
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="M480-360 280-560h400L480-360Z"/></svg>
+                {:else}
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="m280-400 200-200 200 200H280Z"/></svg>
+                {/if}
+              </div>
+            </button>
+          </div>
+
+
+          {#each eventArchived as event}
+              <AppEventTile
+                      event={event}
+                      isArchive="{true}"
+
+              />
+          {/each}
         </div>
       {/if}
 
@@ -106,6 +121,7 @@
         return isVisible && matchesSearch && matchesCategory && matchesSubcategory
     })
 
+    let archiveSorted: 'asc' | 'desc' = 'asc'
 
 
     $:eventArchived     = data.childrenDetails.filter(event => {
@@ -127,6 +143,11 @@
                         .some(text => text?.toLowerCase().includes(searchValue.toLowerCase()))
 
         return isVisible && matchesSearch
+    }).toSorted( (a, b) => {
+      const dateA = new Date(a.pageContent.content.datestart)
+      const dateB = new Date(b.pageContent.content.datestart)
+      if(archiveSorted === 'asc') return dateB.getTime() - dateA.getTime()
+      return dateA.getTime() - dateB.getTime()
     })
 
 
