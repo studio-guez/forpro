@@ -109,7 +109,7 @@ export let isArchive = false;
     &.app-event-tile--is-archive {
       width: 100%;
       display: flex;
-      padding: .5rem;
+      padding: .5rem 0;
       border-radius: 0;
       border: none;
       border-top: solid 2px;
@@ -226,6 +226,7 @@ export let isArchive = false;
     .app-event-tile--is-archive & {
       order: initial;
       flex-shrink: 0;
+      padding: 0;
     }
   }
 
@@ -235,6 +236,7 @@ export let isArchive = false;
 
       .app-button {
         padding: 0.4em 1.5em 0.6em;
+        font-size: .75rem;
       }
     }
   }
