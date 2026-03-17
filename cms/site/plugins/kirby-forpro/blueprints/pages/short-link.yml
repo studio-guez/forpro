@@ -14,7 +14,7 @@ columns:
 
     fields:
 
-      url:
+      url_redirection:
         label: URL de destination
         type: url
         required: true
