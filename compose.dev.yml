@@ -63,6 +63,7 @@ services:
       context: ./cms
       dockerfile: Dockerfile
     volumes:
+      - ./cms/composer.json:/var/www/html/composer.json:rw
       - ./cms/content:/var/www/html/content:rw
       - ./cms/site/config:/var/www/html/site/config:rw
       - ./cms/site/plugins:/var/www/html/site/plugins:rw
