@@ -29,8 +29,6 @@ $pluginPermissionNameForBlueprint = 'eclypsys.kirby-foodlab';
 Kirby::plugin("eclypsys/foodlab", [
     'hooks' => [
         'page.render:before' => function () {
-            var_dump(kirby()->roots);
-            die();
             $dataFolder = __DIR__ . '/data';
 
             if (!is_dir($dataFolder)) {
@@ -60,6 +58,9 @@ Kirby::plugin("eclypsys/foodlab", [
                     );
                 }
             }
+        },
+        'panel.route:after' => function ($route, $path, $method) use ($pluginPermissionNameForBlueprint) {
+            \Eclypsys\Menu\Utils::checkRoleAccess($route, $path, $method, $pluginPermissionNameForBlueprint);
         }
     ],
     "areas" => [
@@ -187,9 +188,4 @@ Kirby::plugin("eclypsys/foodlab", [
     ],
     "api" => require __DIR__ . "/routes/index.php",
 
-    'hooks' => [
-        'panel.route:after' => function ($route, $path, $method) use ($pluginPermissionNameForBlueprint) {
-            \Eclypsys\Menu\Utils::checkRoleAccess($route, $path, $method, $pluginPermissionNameForBlueprint);
-        }
-    ],
 ]);
