@@ -22,8 +22,6 @@
   import {showCookieConsent} from "../../store";
 
   function closeCookieConsent() {
-      localStorage.setItem('cookieConsent', 'accepted')
-
       showCookieConsent.set(false)
   }
 </script>

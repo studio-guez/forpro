@@ -10,7 +10,6 @@
     import {writable} from "svelte/store";
     import {browser} from "$app/environment";
     import BlockCta from "$lib/components/BlockCta.svelte";
-    import {getSlotsByDate, type Scedules} from "./utils";
 
     export let data;
     export let form;
@@ -37,21 +36,20 @@
     let selectedSlotId: number | null = null;
     let selectedDate: string = dayjs().format('YYYY-MM-DD');
 
-    let selectedDateStringFormated: string
-    $: selectedDateStringFormated = new Date(selectedDate).toLocaleDateString('fr-FR', {
-        timeZone: 'Europe/Paris',
-        dateStyle: 'full',
-    })
-
     let formattedDate: string | null = null;
 
     let services = data.services ?? [];
-    let schedules: Scedules[] = Object.values(data.schedules) ?? [];
+    let schedules = Object.values(data.schedules) ?? [];
 
-    let slots: Slot[] | {status: 'error'} = data.availabilities;   //todo: ?
+    let slots: Slot[] = data.availabilities;
     let loading: boolean = false;
 
+    let minDaysBeforeAppointment = data.options.minDaysBeforeRdvs ?? 1;
+    let today = dayjs();
+    let startDateDayJs = today.add(minDaysBeforeAppointment, 'day');
+    let startDate = startDateDayJs.toDate();
 
+    const endDate = startDateDayJs.add(1, 'month').toDate();
     config.i18n = fr;
 
     const handleDateSelection = async (event) => {
@@ -62,7 +60,17 @@
             return;
         }
 
-        slots = await getSlotsByDate(selectedDate, calendarId, selectedServiceId.toString());
+        const data = new FormData();
+        data.append('calendarId', calendarId);
+        data.append('selectedServiceId', selectedServiceId);
+        data.append('selectedDate', selectedDate);
+
+        const response = await fetch('/api/booking/get-slots', {
+            method: 'POST',
+            body: data
+        });
+
+        slots = await response.json();
 
         formattedDate = new Date(event.detail).toLocaleDateString('fr-CH');
     }
@@ -75,22 +83,16 @@
         return services.find(service => service.id === id).duration;
     }
 
-    const formatDate = (dateString: string) => {
+    const formatDate = (dateString) => {
         const date = new Date(dateString);
         const hours = date.getHours().toString().padStart(2, '0');
         const minutes = date.getMinutes().toString().padStart(2, '0');
         return `${hours}:${minutes}`;
     };
 
-    function disableDays(date: Date) {
+    function disableDays(date) {
         if (schedules.length > 0) {
-            const slotOfDay = data.eachSlotByDayBetweenTwoDates.filter(value => {
-                return `${value.date.getFullYear()}${value.date.getMonth()}${value.date.getDate()}` === `${date.getFullYear()}${date.getMonth()}${date.getDate()}`
-            })
-
-            if( Array.isArray(slotOfDay[0]?.value) && slotOfDay[0]?.value.length === 0 ) return true
-
-            return schedules.filter(schedule => schedule.is_closed && parseInt(schedule.day_id) === date.getDay()).length === 1;
+            return schedules.filter(schedule => schedule.is_closed && schedule.day_id == date.getDay()).length === 1;
         } else {
             return false;
         }
@@ -110,14 +112,12 @@
                                     image="{[]}"
                                     content="{{
                                         type: 'cta',
-                                        id: '',
-                                        isHidden: false,
                                         content: {
                                             image: [],
                                             text: data.content.bandeauInfo,
                                             link: data.content.bookingBandeauUrl || '',
-                                            backgroundcolor: 'var(--app-color--green)',
-                                            textcolor: 'var(--app-color--blue)',
+                                            backgroundcolor: 'blue',
+                                            textcolor: 'white',
                                             styles: 'style1'
                                         }
                                     }}"
@@ -132,9 +132,7 @@
 
                                     <div>
                                         <div class="mt-4 sm:mt-2">
-                                            <div class="inline-block overflow-hidden w-20 h-20 bg-gray-100 bg-cover rounded-full"
-                                                 style="background: var(--app-color--green)"
-                                            >
+                                            <div class="inline-block overflow-hidden w-20 h-20 bg-gray-100 bg-cover rounded-full">
                                                 <img src="/favicon.svg" alt="icon" />
                                             </div>
                                         </div>
@@ -144,9 +142,9 @@
                                     </div>
 
                                     <div class="mt-2 mb-10 text-base font-light leading-5 break-words">
-                                        <div class="m-0 app-html-render" style="list-style: outside;">
-                                            {@html data.content.description}
-                                        </div>
+                                        <p class="m-0" style="list-style: outside;">
+                                            {data.content.description}
+                                        </p>
                                     </div>
 
                                     <p class="flex w-full text-center justify-center mb-10 font-semibold">{data.content.bookingCalendarLabel}</p>
@@ -156,8 +154,8 @@
                                                 pickerOnly
                                                 disableDatesFn={disableDays}
                                                 on:change={handleDateSelection}
-                                                endDate={data.endDate}
-                                                startDate={data.startDate}
+                                                endDate={endDate}
+                                                startDate={startDate}
                                         />
                                     </div>
                                 </div>
@@ -166,7 +164,6 @@
                             <!-- right side -->
                             <div class="flex overflow-x-hidden justify-center flex-col border-t border-r border-b border-solid border-gray-200 p-6 w-full text-gray-600 md:w-1/2 md:p-8">
                                 <div class="font-semibold">
-                                    <h5 style="color: var(--app-color--blue); text-align: center">{selectedDateStringFormated}</h5>
                                     {data.content.bookingServicesLabel}
                                 </div>
                                 <div class="flex flex-wrap flex-shrink-0 -mx-2">
@@ -478,9 +475,5 @@
         --sdt-table-data-bg-hover: #eee; /** table selection data hover background color */
         --sdt-table-today-indicator: #ccc; /** date picker current day marker color */
 
-    }
-
-    .app-html-render :global(a) {
-        color: var(--app-color--blue);
     }
 </style>

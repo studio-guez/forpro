@@ -35,7 +35,7 @@ import {modaleIsOpen} from "../../store";
     }
 
     .s-app-modal__box {
-      border: solid var(--app-line-with) var(--app-color--blue);
+      border: solid 3px var(--app-color--blue);
       overflow: hidden;
       background: white;
       display: flex;

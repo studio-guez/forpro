@@ -9,7 +9,7 @@ const handleError = (errorMsg: string, error: any) => {
     console.error(`${errorMsg}: ${error}`);
 }
 
-export const fetchFromAPI = async <T>(request: Request, errorMsg: string): Promise<T | null> => {
+export const fetchFromAPI = async <T>(request: Request, errorMsg: string): Promise<T> => {
     try {
         const response = await fetch(request);
         if (!response.ok) {
@@ -20,6 +20,5 @@ export const fetchFromAPI = async <T>(request: Request, errorMsg: string): Promi
         return data as T;
     } catch (error) {
         handleError(errorMsg, error);
-        return null
     }
 }

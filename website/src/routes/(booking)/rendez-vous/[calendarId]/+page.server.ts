@@ -1,15 +1,13 @@
 import type { Actions, PageServerLoad } from './$types';
 import { variables } from "$lib/utils/constants";
-import type {BookingCMSResponse, Slot} from "$lib/interfaces/variables";
+import type { BookingCMSResponse } from "$lib/interfaces/variables";
 import {
     createAppointment,
     getCalendarOptions,
     getSchedulesFromCalendarId,
     getServicesFromCalendarId,
 } from "$lib/utils/booking/api";
-import {fail, redirect} from "@sveltejs/kit";
-import {getEachSlotByDayBetweenTwoDates} from "./utils";
-import dayjs from "dayjs";
+import { fail } from "@sveltejs/kit";
 
 const REQUIRED = 'required';
 export const prerender = false;
@@ -21,8 +19,6 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     const res = await fetch(cmsBookingUrl);
     const content: BookingCMSResponse = await res.json();
 
-    if( !content.bookingIsActive ) redirect(302, '/rendez-vous-inactif');
-
     const options = await getCalendarOptions(calendarId);
 
     const servicesKirby = await getServicesFromCalendarId(calendarId);
@@ -30,17 +26,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 
     const services = Object.values(servicesKirby);
 
-    //todo: eachSlotByDayBetweenTwoDates need to move to client render?
-    const minDaysBeforeAppointment = options.minDaysBeforeRdvs ?? 1;
-    const today = dayjs();
-    const startDateDayJs = today.add(minDaysBeforeAppointment, 'day');
-    const startDate = startDateDayJs.toDate();
-
-    const endDate = startDateDayJs.add(1, 'month').toDate();
-
-    const eachSlotByDayBetweenTwoDates = await getEachSlotByDayBetweenTwoDates(startDate, endDate, calendarId, services[0]?.id, fetch)
-
-    return { content, services, calendarId, schedules, options, startDate, endDate, eachSlotByDayBetweenTwoDates };
+    return { content, services, calendarId, schedules, options };
 };
 
 function validateInput(value: unknown, name: string, errors: Record<string, unknown>) {

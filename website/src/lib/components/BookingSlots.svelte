@@ -4,11 +4,11 @@
     let currentPage: number = 0;
     const itemsPerPage: number = 5;
 
-    export let slots: Slot[] | {status: 'error'} = [];
+    export let slots: Slot[] = [];
     export let selectedSlotId: string = '';
     export let labelNoSlots: string = '';
 
-    const maxPage: number = Array.isArray(slots) ? Math.ceil(slots.length / itemsPerPage) - 1 : 0;
+    const maxPage: number = Math.ceil(slots.length / itemsPerPage) - 1;
 
     const nextPage = () => {
         currentPage = (currentPage === maxPage) ? 0 : currentPage + 1;
@@ -25,7 +25,7 @@
 </script>
 
 <div class="overflow-y-auto h-full flex flex-col pt-1 pr-2 mt-2 space-y-2 mb-5">
-    {#if Array.isArray(slots) && slots.length > 0}
+    {#if slots.length > 0}
         {#each slots.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage) as slot, i (slot)}
             <div class="relative mt-0 w-full text-base rounded border border-solid"
                  class:border-black={selectedSlotId === slot}

@@ -112,7 +112,6 @@ export interface IChildrenDetils__event extends IChildrenDetils {
             cover: string,
             target: string,
             category: string,
-            suboptions: string,
             place: string,
             googlemapaddress: string,
             description: string,
@@ -229,7 +228,6 @@ export interface IImage {
     mediaUrl: string
     width: number
     height: number
-    focus: string
     resize: {
         tiny: string
         small: string

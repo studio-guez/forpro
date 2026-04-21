@@ -51,23 +51,8 @@
 
 <script lang="ts">
     import {fly} from "svelte/transition"
-    import {onMount} from "svelte";
 
     let emailValue = ''
-
-
-    onMount(() => {
-        const hash = window.location.hash
-        if(hash.length === 0) return
-        const el = document.querySelector(hash)
-
-        queueMicrotask(() => {
-            if  ( ! (hash === '#s-newsletter' ) ) return
-            if  ( ! (el instanceof HTMLElement) ) return
-
-            el.scrollIntoView({ behavior: 'smooth' })
-        })
-    })
 </script>
 
 
