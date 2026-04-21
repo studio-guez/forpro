@@ -1,7 +1,7 @@
 <template>
   <k-inside>
     <k-header>
-      Menu de la semaine
+      Menu du jour
     </k-header>
 
     <!-- Image slider écran d'entrée -->
@@ -201,22 +201,29 @@
       tag="h3"
     >
       Information dans le bas du menu imprimé du FoodLab
-      <span v-if="isSaving" style="opacity: 0.5; font-weight: normal"> – sauvegarde…</span>
+      — <span v-if="isSaving" style="opacity: 0.5; font-weight: normal"> – sauvegarde…</span>
       <span v-else-if="hasSaved" style="opacity: 0.5; font-weight: normal"> – sauvegardé</span>
     </k-headline>
 
 
-      <k-writer-input
-        @input="onTexteInput($event)"
-        :value="texteValue"
-        :nodes="false"
-        :marks="['italic']"
-        :inline="true"
+    <div class="k-foodcourt-texte">
+      <div class="k-foodcourt-texte-toolbar">
+        <k-button
+          icon="italic"
+          :variant="isItalicActive ? 'filled' : 'dimmed'"
+          size="xs"
+          title="Italique"
+          @click="toggleItalic"
+        />
+      </div>
+      <div
+        ref="editor"
         class="k-foodcourt-texte-editor"
-      />
-
-
-
+        contenteditable="true"
+        @input="onTexteInput"
+        v-html="texteValue"
+      ></div>
+    </div>
   </k-inside>
 </template>
 
@@ -330,8 +337,8 @@ export default {
         window.panel.notification.error("Erreur lors de la suppression");
       }
     },
-    onTexteInput(event) {
-      const html = event;
+    onTexteInput() {
+      const html = this.$refs.editor.innerHTML;
       this.hasSaved = false;
 
       if (this.saveTimer) clearTimeout(this.saveTimer);
@@ -339,6 +346,15 @@ export default {
       this.saveTimer = setTimeout(() => {
         this.saveTexte(html);
       }, 800);
+    },
+    toggleItalic() {
+      document.execCommand("italic", false, null);
+      this.$refs.editor.focus();
+      this.checkItalicState();
+      this.onTexteInput();
+    },
+    checkItalicState() {
+      this.isItalicActive = document.queryCommandState("italic");
     },
     async saveTexte(value) {
       this.isSaving = true;
@@ -355,6 +371,12 @@ export default {
       }
       this.isSaving = false;
     },
+  },
+  mounted() {
+    if (this.$refs.editor) {
+      this.$refs.editor.addEventListener("mouseup", this.checkItalicState);
+      this.$refs.editor.addEventListener("keyup", this.checkItalicState);
+    }
   },
 };
 </script>
@@ -374,6 +396,21 @@ export default {
 .k-menu-du-jour__subtitle {
   margin-top: 1rem;
   margin-bottom: 0.75rem;
+}
+
+.k-foodcourt-texte {
+  margin-top: 0 !important;
+}
+
+.k-foodcourt-texte-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.k-foodcourt-texte-toolbar {
+  margin-bottom: 0.25rem;
 }
 
 .k-foodcourt-texte-editor {
@@ -458,11 +495,5 @@ export default {
 
 .k-dialog[data-size=full] {
   width: 100%;
-
-  .k-grid[data-variant=fields] {
-    row-gap: 5px;
-  }
 }
-
-
 </style>

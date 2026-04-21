@@ -32,7 +32,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@lottiefiles/svelte-lottie-player": "^0.3.1",
+        "@lottiefiles/svelte-lottie-player": "^0.3.1",
+		"@lottiefiles/dotlottie-svelte": "^0.7.2",
 		"@tailwindcss/forms": "^0.5.7",
 		"autoprefixer": "^10.4.17",
 		"dayjs": "^1.11.10",

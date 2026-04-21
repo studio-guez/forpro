@@ -1,10 +1,10 @@
-FROM ubuntu:latest
+FROM php:8.1-apache
 
-ENV TZ=Europe/Zurich
+RUN a2enmod ssl && a2enmod rewrite
 
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+COPY ./apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
-ARG DEBIAN_FRONTEND=noninteractive
+WORKDIR /var/www/html
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
   ca-certificates \
@@ -53,5 +53,4 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
-
-CMD ["/entrypoint.sh"]
+EXPOSE 443

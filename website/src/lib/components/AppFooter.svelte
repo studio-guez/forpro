@@ -5,23 +5,9 @@ import {siteInfo} from "../../store";
 <footer class="s-footer app-flex"
 >
     <div class="app-grid--column-2 app-grid--xs--column-1 app-width-gutter app-grid--gap_regular s-footer__text">
-
-        <div class="app-flex">
-            <div class="app-grid--column-2 app-grid--xs--column-1"
-                 style="gap: 2rem"
-            >
-                <div class="app-typo_text-content">
-                    {@html $siteInfo.footer}
-                </div>
-                <div>
-                    <img src="/vignette_sbfi-v2.png"
-                         alt="logo SBFI"
-                         style="display: block; width: 10rem"
-                    >
-                </div>
-            </div>
+        <div class="app-typo_text-content">
+            {@html $siteInfo.footer}
         </div>
-
         <div class="app-grid--column-2 app-grid--sm--column-1">
             <div>
                 {#each $siteInfo.nav as item}

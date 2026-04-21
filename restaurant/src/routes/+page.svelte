@@ -36,10 +36,10 @@
   <div class="app-page__banner-info bg-primary text-white">
     <div class="app-page__banner-info__wrap">
       <div class="app-page__banner-info__wrap__item">
-        {@html data.page.banner_info}
+        {data.page.banner_info}
       </div>
       <div class="app-page__banner-info__wrap__item">
-        {@html data.page.banner_info}
+        {data.page.banner_info}
       </div>
     </div>
   </div>
@@ -592,7 +592,7 @@
 </section>
 
 
-<style lang="scss">
+<style>
   .app-page__banner-info {
       position: fixed;
       bottom: 0;
@@ -614,20 +614,6 @@
       padding-left: 50%;
       white-space: nowrap;
       animation: app-page__banner-info-animation 50s linear infinite;
-
-      :global(a) {
-        display: flex;
-        align-items: center;
-        gap: 0.25em;
-      }
-
-      :global(a:after), :global(a:before) {
-        content: url('/link_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
-        display: block;
-        width: 1em;
-        height: 1em;
-        transform: translateX(-.1em) rotate(-45deg);
-      }
   }
 
   @keyframes app-page__banner-info-animation {

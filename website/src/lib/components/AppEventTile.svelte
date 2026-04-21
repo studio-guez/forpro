@@ -15,18 +15,13 @@ export let isArchive = false;
   <div class="app-event-tile__title">
     {event.pageContent.content.title}
   </div>
+  {#if event.pageContent.content.withpartner === 'true'}
+    <div class="app-event-tile__partner">
+      partenaire
+    </div>
+  {/if}
   {#if !isArchive}
     <div class="app-event-tile__cover">
-
-      {#if event.pageContent.content.withpartner === 'true'}
-        <div class="app-event-tile__cover__partner">
-          <div>
-            Événement
-            <br>partenaire
-          </div>
-        </div>
-      {/if}
-
       {#if event.cover[0]}
         <img class="app-event-tile__cover__image"
              alt="cover"
@@ -42,19 +37,10 @@ export let isArchive = false;
   {/if}
   <div class="app-event-tile__tags">
     <div class="app-event-tile__tags__item">
-      {#if event.pageContent.content.dateend && event.pageContent.content.datestart !== event.pageContent.content.dateend}
-        Du
-      {/if}
-      {@html formatDate(event.pageContent.content.datestart, isArchive, ! event.pageContent.content.dateend)}
-      {#if event.pageContent.content.dateend && event.pageContent.content.datestart !== event.pageContent.content.dateend}
-        {#if !isArchive}<br>{/if}
-        au {@html formatDate(event.pageContent.content.dateend, false, false)}
-      {/if}
+      {@html formatDate(event.pageContent.content.datestart)}
       {#if !isArchive}
         <div>
-          {#if event.pageContent.content.hourstart}
           {formatTime(event.pageContent.content.hourstart)}
-          {/if}
           {#if event.pageContent.content.hourend}
             - {formatTime(event.pageContent.content.hourend)}
           {/if}
@@ -109,16 +95,15 @@ export let isArchive = false;
     &.app-event-tile--is-archive {
       width: 100%;
       display: flex;
-      padding: .5rem 0;
+      padding: .5rem;
       border-radius: 0;
       border: none;
       border-top: solid 2px;
-      flex-wrap: nowrap;
-      justify-content: flex-end;
+      flex-wrap: wrap;
+      justify-content: space-between;
       align-items: center;
       background: transparent;
       margin-top: 0;
-      column-gap: 1rem;
 
       &:last-child {
         border-bottom: 2px solid;
@@ -148,13 +133,10 @@ export let isArchive = false;
       transform: translate(0, 0);
       background: none;
       text-align: left;
-      margin: 0;
+      margin-bottom: 0;
       color: black;
       font-size: 1.25rem;
       padding: 0;
-      width: 100%;
-      max-width: none;
-      flex-shrink: 1;
     }
 
     @media (max-width: scss-params.$fp-breakpoint-xs) {
@@ -162,22 +144,16 @@ export let isArchive = false;
     }
   }
 
-  .app-event-tile__cover__partner {
+  .app-event-tile__partner {
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     background: var(--app-color--green);
-    transform: translate(calc(-50% + 10px), calc(-50% + 10px)) rotate(-20deg);
+    transform: translate(40%, 0) rotate(25deg);
     padding: .15em .5em .35em;
     font-size: .65rem;
-    border-radius: 50%;
+    border-radius: 2em;
     color: var(--app);
-    aspect-ratio: 1/1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    line-height: 1.15em;
-    font-weight: 800;
   }
 
   .app-event-tile__cover {
@@ -225,19 +201,6 @@ export let isArchive = false;
 
     .app-event-tile--is-archive & {
       order: initial;
-      flex-shrink: 0;
-      padding: 0;
-    }
-  }
-
-  .app-event-tile__details {
-    .app-event-tile--is-archive & {
-      flex-shrink: 0;
-
-      .app-button {
-        padding: 0.4em 1.5em 0.6em;
-        font-size: .75rem;
-      }
     }
   }
 
@@ -250,6 +213,9 @@ export let isArchive = false;
     font-weight: 800;
     font-size: 1rem;
     line-height: 1.25em;
+    &:first-letter {
+      text-transform: uppercase;
+    }
 
     > div {
       font-weight: 400;
@@ -287,12 +253,5 @@ export let isArchive = false;
         border-radius: 50%;
       }
     }
-
-    :global(p:not(:first-child)),
-    :global(ul:not(:first-child)),
-    :global(ol:not(:first-child)) {
-      margin-top: 1em;
-    }
   }
-
 </style>
