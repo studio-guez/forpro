@@ -336,7 +336,7 @@
 
     <h2 class="title"><?= $menu["textTitle1"] ?></h2>
     <h4 class="subtitle"><?= $menu["textSubtitle1"] ?></h4>
-    <p><?= $menu["textContent1"] ?></p>
+    <p><?= kt($menu["textContent1"]) ?></p>
     <h2 class="title"><?= $menu["textTitle2"] ?></h2>
     <h4 class="subtitle"><?= $menu["textSubtitle2"] ?></h4>
     <p><?= kt($menu["textContent2"]) ?></p>

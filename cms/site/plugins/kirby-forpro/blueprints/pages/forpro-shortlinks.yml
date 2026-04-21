@@ -1,0 +1,32 @@
+title: Liens courts
+
+options:
+  changeStatus: false
+  changeTemplate: false
+  changeSlug: false
+
+columns:
+  - width: 1/1
+    sections:
+      info:
+        type: info
+        text: |
+          Gestion des liens courts de type https://for-pro.ch/liens-cours/[id-court]
+          Créez un nouveau lien court en ajoutant une sous-page ci-dessous.
+
+      subpages:
+        label: Liens courts
+        type: pages
+        template: forpro-shortlink
+        sortBy: createdAt desc
+        columns:
+          title: true
+          shortId:
+            label: ID
+            width: 1/6
+          targetUrl:
+            label: Destination
+            width: 1/3
+          clicks:
+            label: Clics
+            width: 1/6

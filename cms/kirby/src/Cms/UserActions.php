@@ -209,7 +209,7 @@ trait UserActions
 	/**
 	 * Creates a new User from the given props and returns a new User object
 	 */
-	public static function create(array|null $props = null): User
+	public static function create(array $props = null): User
 	{
 		$data = $props;
 
@@ -364,8 +364,8 @@ trait UserActions
 	 * Updates the user data
 	 */
 	public function update(
-		array|null $input = null,
-		string|null $languageCode = null,
+		array $input = null,
+		string $languageCode = null,
 		bool $validate = false
 	): static {
 		$user = parent::update($input, $languageCode, $validate);
@@ -408,7 +408,7 @@ trait UserActions
 	 */
 	protected function writePassword(
 		#[SensitiveParameter]
-		string|null $password = null
+		string $password = null
 	): bool {
 		return $this->writeSecret('password', $password);
 	}

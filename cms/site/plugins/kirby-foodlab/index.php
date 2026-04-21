@@ -167,6 +167,10 @@ Kirby::plugin("eclypsys/foodlab", [
                     require __DIR__ . "/dialogs/menu-special/dish/add.php",
                     require __DIR__ . "/dialogs/menu-special/dish/delete.php",
                     require __DIR__ . "/dialogs/menu-special/dish/edit.php",
+                    // Dish2
+                    require __DIR__ . "/dialogs/menu-special/dish2/add.php",
+                    require __DIR__ . "/dialogs/menu-special/dish2/delete.php",
+                    require __DIR__ . "/dialogs/menu-special/dish2/edit.php",
                     // Wine
                     require __DIR__ . "/dialogs/menu-special/wine/fields.php",
                     require __DIR__ . "/dialogs/menu-special/wine/add.php",

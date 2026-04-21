@@ -19,7 +19,7 @@ class DishSpecial extends BaseClass
      * @param array $input
      * @return bool
      */
-    public static function add(string $pageId, array $input): bool
+    public static function add(string $pageId, array $input, string $target = 'dishes'): bool
     {
         $id = uuid();
         $menu = MenuSpecial::list();
@@ -35,7 +35,10 @@ class DishSpecial extends BaseClass
 
         foreach ($menu['pages'] as &$page) {
             if ($page['id'] == $pageId) {
-                $page['dishes'][] = $dish;
+                if (!isset($page[$target])) {
+                    $page[$target] = [];
+                }
+                $page[$target][] = $dish;
                 break;
             }
         }
@@ -52,7 +55,7 @@ class DishSpecial extends BaseClass
      * @param string $pageId
      * @return boolean
      */
-    public static function update(string $id, array $input, string $pageId = ''): bool
+    public static function update(string $id, array $input, string $pageId = '', string $target = 'dishes'): bool
     {
         if ($pageId === "") {
             return false;
@@ -62,7 +65,8 @@ class DishSpecial extends BaseClass
 
         foreach ($menu['pages'] as &$page) {
             if ($page['id'] == $pageId) {
-                foreach ($page['dishes'] as &$dish) {
+                if (!isset($page[$target])) continue;
+                foreach ($page[$target] as &$dish) {
                     if ($dish["id"] === $id) {
                         $dish['name1'] = $input['name1'] ?? $dish['name1'];
                         $dish['description1'] = $input['description1'] ?? $dish['description1'];
@@ -78,7 +82,7 @@ class DishSpecial extends BaseClass
         return Data::write(static::file(), $menu);
     }
 
-    public static function delete(string $id, string $pageId = ""): bool
+    public static function delete(string $id, string $pageId = "", string $target = 'dishes'): bool
     {
         if ($pageId === "") {
             return false;
@@ -88,10 +92,11 @@ class DishSpecial extends BaseClass
 
         foreach ($menu['pages'] as &$page) {
             if ($page['id'] == $pageId) {
-                foreach ($page['dishes'] as $key => $dish) {
+                if (!isset($page[$target])) continue;
+                foreach ($page[$target] as $key => $dish) {
                     if ($dish["id"] === $id) {
-                        unset($page['dishes'][$key]);
-                        $page['dishes'] = array_values($page['dishes']);
+                        unset($page[$target][$key]);
+                        $page[$target] = array_values($page[$target]);
                         return Data::write(static::file(), $menu);
                     }
                 }
@@ -101,13 +106,14 @@ class DishSpecial extends BaseClass
         return Data::write(static::file(), $menu);
     }
 
-    public static function find(string $id, string $pageId = ''): array
+    public static function find(string $id, string $pageId = '', string $target = 'dishes'): array
     {
         $menu = MenuSpecial::list();
 
         foreach ($menu['pages'] as &$page) {
             if ($page['id'] == $pageId) {
-                foreach ($page['dishes'] as $dish) {
+                if (!isset($page[$target])) continue;
+                foreach ($page[$target] as $dish) {
                     if ($dish["id"] === $id) {
                         return $dish;
                     }
