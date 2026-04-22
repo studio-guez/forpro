@@ -4,16 +4,25 @@
 docker/*
 deploy.md
 
-### WEBSITE =============================================================================================================
+### FRONTENDS ===========================================================================================================
 
-website/node_modules/*
 .DS_Store
+
+# website (SvelteKit)
 website/node_modules
 website/build
 website/.svelte-kit
 website/package
 website/vite.config.js.timestamp-*
 website/vite.config.ts.timestamp-*
+
+# restaurant (SvelteKit)
+restaurant/node_modules
+restaurant/build
+restaurant/.svelte-kit
+restaurant/package
+restaurant/vite.config.js.timestamp-*
+restaurant/vite.config.ts.timestamp-*
 
 ### CMS ================================================================================================================
 
@@ -56,4 +65,3 @@ node_modules
 vendor
 
 cms/id.env
-cms/apache/*

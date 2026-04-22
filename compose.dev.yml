@@ -27,6 +27,10 @@ services:
       - "5173:5173"
     environment:
       - NODE_ENV=development
+    # Make `cms.localhost` resolvable from inside the container so SSR fetches
+    # hit Traefik on the Docker host (same URL the browser uses).
+    extra_hosts:
+      - "cms.localhost:host-gateway"
     restart: unless-stopped
     depends_on:
       - cms
@@ -48,6 +52,10 @@ services:
       - "5174:5173"
     environment:
       - NODE_ENV=development
+    # Make `cms.localhost` resolvable from inside the container so SSR fetches
+    # hit Traefik on the Docker host (same URL the browser uses).
+    extra_hosts:
+      - "cms.localhost:host-gateway"
     restart: unless-stopped
     depends_on:
       - cms
@@ -70,6 +78,8 @@ services:
       - ./cms/site/accounts:/var/www/html/site/accounts:rw
       - ./cms/site/blueprints:/var/www/html/site/blueprints:rw
       - ./cms/site/templates:/var/www/html/site/templates:rw
+      - ./cms/utils:/var/www/html/utils:rw
+      - ./cms/index.php:/var/www/html/index.php:rw
       - kirby_media:/var/www/html/media:rw
       - kirby_cache:/var/www/html/site/cache:rw
       - kirby_sessions:/var/www/html/site/sessions:rw
