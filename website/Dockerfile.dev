@@ -1,0 +1,14 @@
+FROM node:lts-alpine
+
+WORKDIR /app
+
+# Copy the whole project first so that postinstall scripts (e.g. SvelteKit
+# `svelte-kit sync`) can find svelte.config.js, vite.config.ts, etc.
+COPY . .
+
+RUN npm install
+
+EXPOSE 5173
+
+# Bind to 0.0.0.0 so the dev server is reachable from outside the container
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
