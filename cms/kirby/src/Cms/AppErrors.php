@@ -190,19 +190,8 @@ trait AppErrors
 	protected function getAdditionalWhoopsHandler(): CallbackHandler
 	{
 		return new CallbackHandler(function ($exception, $inspector, $run) {
-			$isLogged = true;
-
-			// allow hook to modify whether the exception should be logged
-			$isLogged = $this->apply(
-				'system.exception',
-				compact('exception', 'isLogged'),
-				'isLogged'
-			);
-
-			if ($isLogged !== false) {
-				error_log($exception);
-			}
-
+			$this->trigger('system.exception', compact('exception'));
+			error_log($exception);
 			return Handler::DONE;
 		});
 	}

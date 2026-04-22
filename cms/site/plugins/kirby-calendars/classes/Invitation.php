@@ -1,6 +1,6 @@
 <?php
 
-namespace Eclypsys\KirbyCalendars;
+namespace MediumSans\KirbyCalendars;
 
 use Kirby\Data\Data;
 

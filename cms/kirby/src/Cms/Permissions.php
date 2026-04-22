@@ -41,8 +41,7 @@ class Permissions
 		],
 		'languages' => [
 			'create' => true,
-			'delete' => true,
-			'update' => true
+			'delete' => true
 		],
 		'pages' => [
 			'access'     	 => true,
@@ -110,21 +109,18 @@ class Permissions
 		}
 	}
 
-	public function for(
-		string|null $category = null,
-		string|null $action = null,
-		bool $default = false
-	): bool {
+	public function for(string $category = null, string $action = null): bool
+	{
 		if ($action === null) {
 			if ($this->hasCategory($category) === false) {
-				return $default;
+				return false;
 			}
 
 			return $this->actions[$category];
 		}
 
 		if ($this->hasAction($category, $action) === false) {
-			return $default;
+			return false;
 		}
 
 		return $this->actions[$category][$action];

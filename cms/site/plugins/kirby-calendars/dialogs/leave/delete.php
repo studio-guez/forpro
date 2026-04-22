@@ -1,6 +1,6 @@
 <?php
 
-use Eclypsys\KirbyCalendars\Leave;
+use MediumSans\KirbyCalendars\Leave;
 
 return [
     'pattern' => 'leave/(:any)/delete',

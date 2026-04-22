@@ -18,3 +18,8 @@ columns:
         label: URL de destination
         type: url
         required: true
+
+      url_generated:
+        type: info
+        label: lien pour la redirection
+        text: 'https://for-pro.ch/lien-court/{{ page.slug }}'

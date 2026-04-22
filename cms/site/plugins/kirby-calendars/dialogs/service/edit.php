@@ -1,6 +1,6 @@
 <?php
 
-use Eclypsys\KirbyCalendars\Service;
+use MediumSans\KirbyCalendars\Service;
 
 return [
     'pattern' => 'service/(:any)/edit',

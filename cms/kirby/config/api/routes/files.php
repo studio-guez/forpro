@@ -1,7 +1,7 @@
 <?php
 
 // routing pattern to match all models with files
-$filePattern   = '(account/|pages/[^/]+/|site/|users/[^/]+/|)files/(:any)';
+$filePattern = '(account/|pages/[^/]+/|site/|users/[^/]+/|)files/(:any)';
 $parentPattern = '(account|pages/[^/]+|site|users/[^/]+)/files';
 
 /**
@@ -47,15 +47,17 @@ return [
 			// move_uploaded_file() not working with unit test
 			// @codeCoverageIgnoreStart
 			return $this->upload(function ($source, $filename) use ($path) {
-				// move the source file from the temp dir
-				return $this->parent($path)->createFile([
+				$props = [
 					'content' => [
 						'sort' => $this->requestBody('sort')
 					],
 					'source'   => $source,
 					'template' => $this->requestBody('template'),
 					'filename' => $filename
-				], true);
+				];
+
+				// move the source file from the temp dir
+				return $this->parent($path)->createFile($props, true);
 			});
 			// @codeCoverageIgnoreEnd
 		}

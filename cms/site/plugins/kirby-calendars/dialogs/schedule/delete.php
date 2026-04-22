@@ -1,6 +1,6 @@
 <?php
 
-use Eclypsys\KirbyCalendars\Schedule;
+use MediumSans\KirbyCalendars\Schedule;
 
 return [
     'pattern' => 'schedule/(:any)/delete',

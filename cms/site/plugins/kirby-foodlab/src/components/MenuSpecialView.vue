@@ -39,7 +39,26 @@
         v-model="menu"
         @input="input"
         @submit="submit"
-        :fields="formFields"
+        :fields="mainFormFields"
+    />
+
+    <k-grid style="margin-top: 20px; margin-bottom: 10px;">
+      <div class="k-column" style="--width: 1">
+        <k-button
+          :icon="menu.showPartner ? 'hidden' : 'preview'"
+          :text="menu.showPartner ? 'Masquer Logo Partenaire' : 'Afficher Logo Partenaire'"
+          @click="togglePartner"
+          variant="filled"
+        />
+      </div>
+    </k-grid>
+
+    <k-form
+        v-if="menu.showPartner"
+        v-model="menu"
+        @input="input"
+        @submit="submit"
+        :fields="partnerFormFields"
     />
 
     <k-label style="margin-top: 40px;">
@@ -56,10 +75,15 @@
           <k-button
               variant="filled"
               icon="plus"
-              @click="addPage"
+              @click="$refs.addPageDropdown.toggle()"
           >
             Ajouter une page
           </k-button>
+          <k-dropdown-content ref="addPageDropdown" align-x="end">
+            <k-dropdown-item icon="grid-left" @click="addPage('wines-dishes')">Vins - Menu</k-dropdown-item>
+            <k-dropdown-item icon="grid-right" @click="addPage('dishes-wines')">Menu - Vins</k-dropdown-item>
+            <k-dropdown-item icon="grid-full" @click="addPage('dishes-dishes')">Menu - Menu</k-dropdown-item>
+          </k-dropdown-content>
         </k-button-group>
       </k-button-group>
     </k-header>
@@ -70,6 +94,7 @@
           <k-text>
             <h2>{{ page.title }}</h2>
           </k-text>
+          <span class="page-layout-badge">{{ layoutLabel(page.layout) }}</span>
         </div>
         <div class="k-column" style="--width: 1/2; justify-self: end">
           <k-button-group>
@@ -96,8 +121,8 @@
         </div>
       </k-grid>
 
-      <!-- Vins section with toggle -->
-      <k-grid style="margin-top: 40px">
+      <!-- Vins section with toggle (hidden for dishes-dishes layout) -->
+      <k-grid v-if="(page.layout || 'wines-dishes') !== 'dishes-dishes'" style="margin-top: 40px">
         <div class="k-column" style="--width: 1/2; justify-self: start">
           <k-input
               :value="page.winesTitle"
@@ -127,7 +152,7 @@
           </k-button-group>
         </div>
       </k-grid>
-      <table class="k-table" style="margin-top: 20px; margin-bottom: 25px" :class="{ 'disabled-section': page.showWines === false }">
+      <table v-if="(page.layout || 'wines-dishes') !== 'dishes-dishes'" class="k-table" style="margin-top: 20px; margin-bottom: 25px" :class="{ 'disabled-section': page.showWines === false }">
         <thead>
         <tr>
           <th class="k-table-index-column"></th>
@@ -269,6 +294,96 @@
           </tr>
         </k-draggable>
       </table>
+
+      <!-- Second dishes section (only for dishes-dishes layout) -->
+      <template v-if="(page.layout || 'wines-dishes') === 'dishes-dishes'">
+        <k-grid style="margin-top: 40px">
+          <div class="k-column" style="--width: 1/2; justify-self: start">
+            <k-input
+                :value="page.dishesTitle2 || 'Plats 2'"
+                type="text"
+                icon="edit"
+                @input="updateDishesTitle2($event, page.id)"
+                :disabled="page.showDishes2 === false"
+                placeholder="Menu 2"
+            />
+          </div>
+          <div class="k-column" style="--width: 1/2; justify-self: end">
+            <k-button-group layout="collapsed">
+              <k-button
+                  variant="filled"
+                  icon="plus"
+                  @click="$dialog('/menu/special/dish2/add/' + page.id)"
+                  :disabled="page.showDishes2 === false"
+              >
+                Ajouter un plat ou choix
+              </k-button>
+              <k-button
+                  :icon="page.showDishes2 === false ? 'preview' : 'hidden'"
+                  :text="page.showDishes2 === false ? 'Afficher' : 'Masquer'"
+                  @click="toggleDishesSection2(page.id)"
+                  variant="filled"
+              />
+            </k-button-group>
+          </div>
+        </k-grid>
+        <table class="k-table" style="margin-top: 20px; margin-bottom: 25px" :class="{ 'disabled-section': page.showDishes2 === false }">
+          <thead>
+          <tr>
+            <th class="k-table-index-column"></th>
+            <th>Plat</th>
+            <th>Description</th>
+            <th style="text-align: center;">Choix</th>
+            <th>Plat</th>
+            <th>Description</th>
+            <th class="k-table-options-column"></th>
+          </tr>
+          </thead>
+          <k-draggable
+              :list="page.dishes2 || []"
+              :handle="true"
+              @change="updateOrder('dishes2', page.id)"
+              :options="{
+              fallbackClass: 'k-table-row-fallback',
+              ghostClass: 'k-table-row-ghost',
+              disabled: page.showDishes2 === false
+          }"
+              element="tbody"
+          >
+            <tr v-for="(item, index) in (page.dishes2 || [])" :key="item.id">
+              <td class="k-table-index-column" data-sortable="true">
+                <span class="k-table-index">{{ index + 1 }}</span>
+                <k-sort-handle />
+              </td>
+              <td>{{ item.name1 }}</td>
+              <td>{{ item.description1 }}</td>
+              <td style="text-align: center;">{{ item.option == true ? 'oui' : 'non' }}</td>
+              <td>{{ item.name2 }}</td>
+              <td>{{ item.description2 }}</td>
+              <td class="k-table-options-column">
+                <k-options-dropdown
+                    :options="[
+                  {
+                      text: 'Modifier',
+                      icon: 'edit',
+                      click: () =>
+                          $dialog(`menu/special/dish2/${item.id}/edit/${page.id}`),
+                      disabled: page.showDishes2 === false
+                  },
+                  {
+                      text: 'Supprimer',
+                      icon: 'trash',
+                      click: () =>
+                          $dialog(`menu/special/dish2/${item.id}/delete/${page.id}`),
+                      disabled: page.showDishes2 === false
+                  },
+              ]"
+                />
+              </td>
+            </tr>
+          </k-draggable>
+        </table>
+      </template>
     </div>
   </k-inside>
 </template>
@@ -293,7 +408,9 @@ export default {
             dishes: []
           }
         ],
-        textInfo: "",
+        qrUrl: "",
+        textAboveQr: "",
+        showPartner: false,
         partnerLogo: "",
         titlePartner: "",
         subtitlePartner: "",
@@ -313,13 +430,22 @@ export default {
       hasBeenSubmitted: false,
       updateTimeout: null,
       debouncedGetHtml: null,
-      formFields: {
-        textInfo: {
-          label: "Informations Contact",
-          type: "textarea",
-          width: "1",
-          help: "S'affiche seulement lors de la génération avec les images"
+      mainFormFields: {
+        qrUrl: {
+          label: "URL du QR Code",
+          type: "text",
+          width: "1/2",
+          help: "L'URL vers laquelle le QR code redirigera. S'affiche seulement lors de la génération avec les images.",
+          placeholder: "https://..."
         },
+        textAboveQr: {
+          label: "Texte au-dessus du QR",
+          type: "text",
+          width: "1/2",
+          help: "Court texte affiché au-dessus du QR code sur la première page"
+        },
+      },
+      partnerFormFields: {
         partnerLogo: {
           label: "Logo partenaire",
           type: "textarea",
@@ -397,12 +523,22 @@ export default {
   },
   watch: {
     // Only watch specific properties that should trigger updates
-    'menu.textInfo': 'debouncedUpdateMenu',
+    'menu.qrUrl': 'debouncedUpdateMenu',
+    'menu.textAboveQr': 'debouncedUpdateMenu',
     'menu.partnerLogo': 'debouncedUpdateMenu',
     'menu.titlePartner': 'debouncedUpdateMenu',
     'menu.subtitlePartner': 'debouncedUpdateMenu',
   },
   methods: {
+    layoutLabel(layout) {
+      const labels = {
+        'wines-dishes': 'Vins - Menu',
+        'dishes-wines': 'Menu - Vins',
+        'dishes-dishes': 'Menu - Menu'
+      };
+      return labels[layout] || labels['wines-dishes'];
+    },
+
     // Utility function for debouncing
     debounce(fn, wait) {
       let timeout;
@@ -410,6 +546,11 @@ export default {
         clearTimeout(timeout);
         timeout = setTimeout(() => fn.apply(this, args), wait);
       };
+    },
+
+    togglePartner() {
+      this.$set(this.menu, 'showPartner', !this.menu.showPartner);
+      this.debouncedUpdateMenu();
     },
 
     // Form input handler
@@ -432,6 +573,44 @@ export default {
       if (page) {
         this.$set(page, 'dishesTitle', value);
         this.debouncedUpdateMenu();
+      }
+    },
+
+    // Layout selector
+    updatePageLayout(value, pageId) {
+      const page = this.menu.pages.find(p => p.id === pageId);
+      if (page) {
+        this.$set(page, 'layout', value);
+        // Initialize dishes2 array if switching to dishes-dishes layout
+        if (value === 'dishes-dishes' && !page.dishes2) {
+          this.$set(page, 'dishes2', []);
+          this.$set(page, 'dishesTitle2', 'Plats 2');
+          this.$set(page, 'showDishes2', true);
+        }
+        this.debouncedUpdateMenu();
+      }
+    },
+
+    // Dishes 2 methods
+    updateDishesTitle2(value, pageId) {
+      const page = this.menu.pages.find(p => p.id === pageId);
+      if (page) {
+        this.$set(page, 'dishesTitle2', value);
+        this.debouncedUpdateMenu();
+      }
+    },
+
+    toggleDishesSection2(pageId) {
+      const page = this.menu.pages.find(p => p.id === pageId);
+      if (page) {
+        const newValue = page.showDishes2 === false;
+        this.$set(page, 'showDishes2', newValue);
+        this.debouncedUpdateMenu();
+        if (newValue) {
+          this.$store.dispatch("notification/success", "Section Plats 2 activée");
+        } else {
+          this.$store.dispatch("notification/info", "Section Plats 2 désactivée");
+        }
       }
     },
 
@@ -530,7 +709,7 @@ export default {
       }
     },
 
-    addPage() {
+    addPage(layout = 'wines-dishes') {
       if (!this.menu.pages) {
         this.menu.pages = [];
       }
@@ -542,6 +721,7 @@ export default {
       this.menu.pages.push({
         id: newId,
         title: `Page ${this.menu.pages.length + 1}`,
+        layout: layout,
         menuTitle: "",
         menuDescription: "",
         winesTitle: "Vins",
@@ -549,7 +729,10 @@ export default {
         showWines: true,
         showDishes: true,
         wines: [],
-        dishes: []
+        dishes: [],
+        dishesTitle2: "Plats 2",
+        showDishes2: true,
+        dishes2: []
       });
 
       this.debouncedUpdateMenu();
@@ -681,6 +864,19 @@ export default {
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.2);
   z-index: 1;
+}
+
+/* Layout badge under page title */
+.page-layout-badge {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background-color: #ff5300;
+  border-radius: 3px;
 }
 
 /* Button transition for smoother toggle */
