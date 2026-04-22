@@ -366,6 +366,8 @@ export default {
                 textContent1: {
                     label: "Contenu 1",
                     type: "textarea",
+                    buttons: ["bold", "italic"],
+                    help: "Les retours à la ligne sont préservés automatiquement dans le PDF. Le gras et l'italique sont supportés.",
                 },
                 textTitle2: {
                     label: "Titre 2",
@@ -380,6 +382,8 @@ export default {
                 textContent2: {
                     label: "Contenu 2",
                     type: "textarea",
+                    buttons: ["bold", "italic"],
+                    help: "Les retours à la ligne sont préservés automatiquement dans le PDF. Le gras et l'italique sont supportés.",
                 },
             },
             diversFields: {
@@ -436,31 +440,44 @@ export default {
 
             this.isGeneratingPDF = true;
 
-            const iframe = document.createElement("iframe");
-            iframe.style.display = "none";
-            document.body.appendChild(iframe);
-
-            iframe.onload = () => {
-                setTimeout(() => {
-                    document.body.removeChild(iframe);
-                    this.isGeneratingPDF = false;
-                    this.$store.dispatch(
-                        "notification/success",
-                        "Le PDF a été généré avec succès",
-                    );
-                }, 1000);
-            };
-
             let url =
                 this.$api.endpoint +
                 "/restaurant/menu/generate/" +
                 (withAssets ? "with-assets" : "without-assets") +
                 (publish ? "/publish" : "");
 
-            iframe.src = url;
-            setTimeout(() => {
+            if (publish) {
+                // Publish: hidden iframe to trigger save + download
+                const iframe = document.createElement("iframe");
+                iframe.style.display = "none";
+                document.body.appendChild(iframe);
+
+                iframe.onload = () => {
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                        this.isGeneratingPDF = false;
+                        this.$store.dispatch(
+                            "notification/success",
+                            "Le PDF a été publié avec succès",
+                        );
+                    }, 1000);
+                };
+
+                iframe.src = url;
+                setTimeout(() => {
+                    this.isGeneratingPDF = false;
+                }, 2500);
+            } else {
+                // Preview: open in new tab via link click (avoids popup blocker)
+                const a = document.createElement("a");
+                a.href = url;
+                a.target = "_blank";
+                a.rel = "noopener";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
                 this.isGeneratingPDF = false;
-            }, 2500);
+            }
         },
         updateTableOrder(category) {
             const updatedList = this[category];
