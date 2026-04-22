@@ -77,11 +77,9 @@ services:
       - "8000:80"
     environment:
       - KIRBY_DEBUG=true
-      - LOCAL_USER_ID=1000
+      - HOST_UID=1000
       - HOST_GID=1000
     restart: unless-stopped
-    depends_on:
-      - traefik
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.cms.rule=Host(`cms.localhost`)"

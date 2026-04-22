@@ -19,7 +19,7 @@ website/vite.config.ts.timestamp-*
 
 # Temporary files
 cms/media/*
-cms/!/media/index.html
+cms/**/media/index.html
 
 # Lock files
 cms/.lock
@@ -30,15 +30,15 @@ cms/.lock
 
 # Cache Files
 cms/site/cache/*
-cms/!/site/cache/index.html
+cms/**/site/cache/index.html
 
 # Accounts
 cms/site/accounts/*
-cms/!/site/accounts/index.html
+cms/**/site/accounts/index.html
 
 # Sessions
 cms/site/sessions/*
-cms/!/site/sessions/index.html
+cms/**/site/sessions/index.html
 
 # License
 cms/site/config/.license
@@ -47,12 +47,13 @@ cms/site/config/.license
 cms/content
 
 # NODE
-cms/site/plugins/!/node_modules/*
+cms/site/plugins/**/node_modules/*
 
 # DATA PLUGINS
-cms/site/plugins/!/data/!*.json
+cms/site/plugins/**/data/*.json
 
 node_modules
 vendor
-/cms/site/plugins/kirby-calendars/data/
-/cms/site/plugins/kirby-foodlab/data/
+
+cms/id.env
+cms/apache/*
