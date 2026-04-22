@@ -96,12 +96,22 @@
             margin-bottom: 3mm;
         }
 
-        .contact-info {
+        .qr-section {
             position: absolute;
             bottom: 10mm;
             left: 59mm;
+            text-align: center;
+        }
+
+        .qr-text {
             font-size: 8pt;
             font-weight: 800;
+            margin-bottom: 2mm;
+        }
+
+        .qr-code svg {
+            width: 25mm;
+            height: 25mm;
         }
 
         .menu-title {
@@ -167,10 +177,10 @@
         }
 
         #badge {
-            top: 50mm;
-            left: 53mm;
+            bottom: 15mm;
+            left: 40mm;
             position: absolute;
-            height: 100mm;
+            height: 80mm;
         }
 
         #bowl {
@@ -268,137 +278,154 @@
             </g>
         </svg>
         <div class="header">
-            <svg id="badge" xmlns="http://www.w3.org/2000/svg"
-                 style="fill-rule:evenodd;clip-rule:evenodd;stroke-miterlimit:10;display: <?php echo $menu["renderWithAssets"]
-                     ? "block"
-                     : "none"; ?>"
-                 viewBox="-40.55 -40.56 5222.57 11728.92">
-                <path d="M4712.38,2587.07l-0,6473.64c-0,1191.82 -958.844,2157.99 -2141.64,2157.99c-1182.8,-0 -2141.64,-966.169 -2141.64,-2157.99l0,-6473.64c0,-1191.81 958.838,-2157.97 2141.64,-2157.97c1182.8,0 2141.64,966.163 2141.64,2157.97Z"
-                      style="fill:transparent;fill-opacity:0.6;fill-rule:nonzero;stroke:#ff5300;stroke-width:130px; stroke-opacity:1;"/>
-                <path d="M2125.84,9214.94l0,1275.73l452.044,0c244.781,0 437.75,-144.725 437.75,-382.362c0,-185.819 -144.725,-280.519 -221.556,-300.169l-7.144,-0c71.469,-48.244 137.575,-126.863 137.575,-269.8c0,-196.544 -167.95,-323.4 -382.362,-323.4l-416.307,-0Zm400.232,536.025l-217.982,-0l0,-368.069l212.619,0c117.925,0 226.913,46.456 226.913,185.819c-0,132.219 -108.988,182.25 -221.55,182.25m60.743,562.819l-278.725,-0l0,-393.082l287.663,0c121.494,1.788 232.275,58.963 232.275,192.969c-0,137.581 -114.35,198.325 -241.213,200.113"
-                      style="fill:#ff5300;fill-rule:nonzero;"/>
-                <path d="M3245.09,7553.36l-437.75,1275.73l192.969,0l92.906,-275.156l500.288,0l92.912,275.156l192.969,0l-435.969,-1275.73l-198.325,0Zm293.025,827.256l-387.725,0l194.756,-578.9l192.969,578.9Z"
-                      style="fill:#ff5300;fill-rule:nonzero;"/>
-                <path d="M1460.22,6461.76l-0,1275.73l821.9,0l-0,-178.675l-637.869,0l-0,-1097.06l-184.031,0Z"
-                      style="fill:#ff5300;fill-rule:nonzero;"/>
-                <path d="M2807.34,5186.04l-0,1275.73l459.187,0c357.35,0 621.788,-243 621.788,-652.162c-0,-350.2 -253.719,-623.569 -668.238,-623.569l-412.737,-0Zm446.681,998.787l-166.163,0l0,-721.843l137.575,-0c60.75,-0 112.569,5.356 159.019,23.225c128.65,51.818 219.769,167.956 219.769,337.693c-0,223.344 -148.294,360.925 -350.2,360.925"
-                      style="fill:#ff5300;fill-rule:nonzero;"/>
-                <path d="M1906.08,5186.02c353.775,-1.787 664.668,-280.518 664.668,-662.881c0,-373.425 -293.025,-666.45 -664.668,-664.662c-371.644,1.787 -664.669,291.237 -664.669,664.662c-0,382.363 310.894,664.669 664.669,662.881m-0,-273.368c-194.757,-0 -369.857,-148.3 -369.857,-389.513c0,-251.925 176.888,-391.294 369.857,-391.294c192.968,0 371.643,141.157 371.643,391.294c0,241.213 -176.887,389.513 -371.643,389.513"
-                      style="fill:#ff5300;fill-rule:nonzero;"/>
-                <path d="M3235.41,3858.46c353.775,-1.788 664.669,-280.519 664.669,-662.882c0,-373.425 -293.025,-666.45 -664.669,-664.662c-371.643,1.781 -664.668,291.237 -664.668,664.662c-0,382.363 310.893,664.669 664.668,662.882m0,-273.369c-194.756,-0 -369.856,-148.3 -369.856,-389.513c0,-251.931 176.888,-391.293 369.856,-391.293c192.969,-0 371.644,141.156 371.644,391.293c0,241.213 -176.887,389.513 -371.644,389.513"
-                      style="fill:#ff5300;fill-rule:nonzero;"/>
-                <path d="M1462.96,1356.04l-0,1275.73l280.519,0l-0,-507.437l566.393,-0l0,-280.519l-566.393,0l-0,-207.256l605.7,-0l-0,-280.519l-886.219,0Z"
-                      style="fill:#ff5300;fill-rule:nonzero;"/>
-            </svg>
-            <?php if ($menu["renderWithAssets"]): ?>
-                <div class="contact-info">
-                    <?= $menu['textInfo'] ?>
+            <?php if ($menu["renderWithAssets"] && !empty($menu['qrUrl'])): ?>
+                <div class="qr-section">
+                    <?php if (!empty($menu['textAboveQr'])): ?>
+                        <div class="qr-text"><?= $menu['textAboveQr'] ?></div>
+                    <?php endif; ?>
+                    <div class="qr-code">
+                        <?php
+                        $qrOptions = new \chillerlan\QRCode\QROptions([
+                            'outputType' => \chillerlan\QRCode\Output\QROutputInterface::MARKUP_SVG,
+                            'svgUseCssProperties' => false,
+                            'drawLightModules' => false,
+                            'addQuietzone' => true,
+                            'cssClass' => 'qr-svg',
+                            'outputBase64' => false,
+                        ]);
+                        echo (new \chillerlan\QRCode\QRCode($qrOptions))->render($menu['qrUrl']);
+                        ?>
+                    </div>
                 </div>
             <?php endif; ?>
         </div>
     </div>
     <div class="half-page right">
-        <?php if($menu['partnerLogo']): ?>
-            <div id="partner" style="
-                    <?= trim($menu['partnerLogoWidth']) != '' ? 'width:' . $menu['partnerLogoWidth'] . 'px !important;' : '' ?>
-                    <?= trim($menu['partnerLogoHeight']) != '' ? 'height:' . $menu['partnerLogoHeight'] . 'px !important;' : '' ?>
-                    <?= trim($menu['partnerLogoTop']) != '' ? 'top:' . $menu['partnerLogoTop'] . 'px;' : '' ?>
-                    <?= trim($menu['partnerLogoRight']) != '' ? 'right:' .  $menu['partnerLogoRight'] . 'px;' : '' ?>
-                    <?= trim($menu['partnerLogoBottom']) != '' ? 'bottom:' . $menu['partnerLogoBottom'] . 'px;' : '' ?>
-                    <?= trim($menu['partnerLogoLeft']) != '' ? 'left:' . $menu['partnerLogoLeft'] . 'px;' : '' ?>
-                    "
-            >
-                <?= trim($menu['partnerLogo']) ?>
+        <?php if($menu['showPartner'] ?? false): ?>
+            <?php if($menu['partnerLogo']): ?>
+                <div id="partner" style="
+                        <?= trim($menu['partnerLogoWidth']) != '' ? 'width:' . $menu['partnerLogoWidth'] . 'px !important;' : '' ?>
+                        <?= trim($menu['partnerLogoHeight']) != '' ? 'height:' . $menu['partnerLogoHeight'] . 'px !important;' : '' ?>
+                        <?= trim($menu['partnerLogoTop']) != '' ? 'top:' . $menu['partnerLogoTop'] . 'px;' : '' ?>
+                        <?= trim($menu['partnerLogoRight']) != '' ? 'right:' .  $menu['partnerLogoRight'] . 'px;' : '' ?>
+                        <?= trim($menu['partnerLogoBottom']) != '' ? 'bottom:' . $menu['partnerLogoBottom'] . 'px;' : '' ?>
+                        <?= trim($menu['partnerLogoLeft']) != '' ? 'left:' . $menu['partnerLogoLeft'] . 'px;' : '' ?>
+                        "
+                >
+                    <?= trim($menu['partnerLogo']) ?>
+                </div>
+            <?php endif; ?>
+            <div id="partner-header">
+                <span class="title">
+                    <?= $menu['titlePartner'] != "" ? $menu['titlePartner'] : "" ?>
+                </span>
+                <br/>
+                <span class="subtitle">
+                    <?= $menu['subtitlePartner'] != "" ? $menu['subtitlePartner'] : "" ?>
+                </span>
+            </div>
+            <div id="partner-text">
+                <?= trim($menu['textPartner']) ?>
             </div>
         <?php endif; ?>
-        <div id="partner-header">
-            <span class="title">
-                <?= $menu['titlePartner'] != "" ? $menu['titlePartner'] : "" ?>
-            </span>
-            <br/>
-            <span class="subtitle">
-                <?= $menu['subtitlePartner'] != "" ? $menu['subtitlePartner'] : "" ?>
-            </span>
-        </div>
-        <div id="partner-text">
-            <?= trim($menu['textPartner']) ?>
-        </div>
     </div>
+    <svg id="badge" xmlns="http://www.w3.org/2000/svg"
+         style="fill-rule:evenodd;clip-rule:evenodd;stroke-miterlimit:10;position:absolute;top:50mm;left:53mm;height:100mm;bottom:auto;display: <?= $menu["renderWithAssets"] ? "block" : "none" ?>"
+         viewBox="-40.55 -40.56 5222.57 11728.92">
+        <path d="M4712.38,2587.07l-0,6473.64c-0,1191.82 -958.844,2157.99 -2141.64,2157.99c-1182.8,-0 -2141.64,-966.169 -2141.64,-2157.99l0,-6473.64c0,-1191.81 958.838,-2157.97 2141.64,-2157.97c1182.8,0 2141.64,966.163 2141.64,2157.97Z"
+              style="fill:transparent;fill-opacity:0.6;fill-rule:nonzero;stroke:#ff5300;stroke-width:130px; stroke-opacity:1;"/>
+        <path d="M2125.84,9214.94l0,1275.73l452.044,0c244.781,0 437.75,-144.725 437.75,-382.362c0,-185.819 -144.725,-280.519 -221.556,-300.169l-7.144,-0c71.469,-48.244 137.575,-126.863 137.575,-269.8c0,-196.544 -167.95,-323.4 -382.362,-323.4l-416.307,-0Zm400.232,536.025l-217.982,-0l0,-368.069l212.619,0c117.925,0 226.913,46.456 226.913,185.819c-0,132.219 -108.988,182.25 -221.55,182.25m60.743,562.819l-278.725,-0l0,-393.082l287.663,0c121.494,1.788 232.275,58.963 232.275,192.969c-0,137.581 -114.35,198.325 -241.213,200.113"
+              style="fill:#ff5300;fill-rule:nonzero;"/>
+        <path d="M3245.09,7553.36l-437.75,1275.73l192.969,0l92.906,-275.156l500.288,0l92.912,275.156l192.969,0l-435.969,-1275.73l-198.325,0Zm293.025,827.256l-387.725,0l194.756,-578.9l192.969,578.9Z"
+              style="fill:#ff5300;fill-rule:nonzero;"/>
+        <path d="M1460.22,6461.76l-0,1275.73l821.9,0l-0,-178.675l-637.869,0l-0,-1097.06l-184.031,0Z"
+              style="fill:#ff5300;fill-rule:nonzero;"/>
+        <path d="M2807.34,5186.04l-0,1275.73l459.187,0c357.35,0 621.788,-243 621.788,-652.162c-0,-350.2 -253.719,-623.569 -668.238,-623.569l-412.737,-0Zm446.681,998.787l-166.163,0l0,-721.843l137.575,-0c60.75,-0 112.569,5.356 159.019,23.225c128.65,51.818 219.769,167.956 219.769,337.693c-0,223.344 -148.294,360.925 -350.2,360.925"
+              style="fill:#ff5300;fill-rule:nonzero;"/>
+        <path d="M1906.08,5186.02c353.775,-1.787 664.668,-280.518 664.668,-662.881c0,-373.425 -293.025,-666.45 -664.668,-664.662c-371.644,1.787 -664.669,291.237 -664.669,664.662c-0,382.363 310.894,664.669 664.669,662.881m-0,-273.368c-194.757,-0 -369.857,-148.3 -369.857,-389.513c0,-251.925 176.888,-391.294 369.857,-391.294c192.968,0 371.643,141.157 371.643,391.294c0,241.213 -176.887,389.513 -371.643,389.513"
+              style="fill:#ff5300;fill-rule:nonzero;"/>
+        <path d="M3235.41,3858.46c353.775,-1.788 664.669,-280.519 664.669,-662.882c0,-373.425 -293.025,-666.45 -664.669,-664.662c-371.643,1.781 -664.668,291.237 -664.668,664.662c-0,382.363 310.893,664.669 664.668,662.882m0,-273.369c-194.756,-0 -369.856,-148.3 -369.856,-389.513c0,-251.931 176.888,-391.293 369.856,-391.293c192.969,-0 371.644,141.156 371.644,391.293c0,241.213 -176.887,389.513 -371.644,389.513"
+              style="fill:#ff5300;fill-rule:nonzero;"/>
+        <path d="M1462.96,1356.04l-0,1275.73l280.519,0l-0,-507.437l566.393,-0l0,-280.519l-566.393,0l-0,-207.256l605.7,-0l-0,-280.519l-886.219,0Z"
+              style="fill:#ff5300;fill-rule:nonzero;"/>
+    </svg>
 </div>
-<?php foreach($menu['pages'] as $page): ?>
-    <div class="page">
-        <div class="half-page menu">
-            <?php if($page['showWines']): ?>
-                <div class="menu-title"><?= $page['winesTitle'] ?></div>
-                <div class="wine-info">
-                    <?php foreach ($page['wines'] as $wine): ?>
-                    <div class="menu-item">
-                        <div class="dish-name"><?= $wine['name'] ?></div>
-                        <div class="dish-description"><?= $wine['domain'] ?>, <?= $wine['mill'] ?></div>
-                        <div class="dish-description"><?= $wine['description'] ?></div>
-                    </div>
-                    <?php endforeach; ?>
+<?php
+// Helper function to render wines section
+function renderWinesSection($page, $menu) { ?>
+    <div class="half-page menu">
+        <?php if($page['showWines']): ?>
+            <div class="menu-title"><?= $page['winesTitle'] ?></div>
+            <div class="wine-info">
+                <?php foreach ($page['wines'] as $wine): ?>
+                <div class="menu-item">
+                    <div class="dish-name"><?= $wine['name'] ?></div>
+                    <div class="dish-description"><?= $wine['domain'] ?>, <?= $wine['mill'] ?></div>
+                    <div class="dish-description"><?= $wine['description'] ?></div>
                 </div>
-                <svg
-                        id="bottle"
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 782 1292"
-                        xmlns="http://www.w3.org/2000/svg"
-                        style="display: <?php echo $menu["renderWithAssets"]
-                            ? "block"
-                            : "none"; ?>"
-                >
-                    <g transform="matrix(4.16667,0,0,4.16667,33.9946,148.004)">
-                        <path
-                                d="M0,240.296C6.437,242.021 118.59,272.072 125.125,273.823C132.567,275.817 136.381,273.164 138.361,265.772C140.342,258.379 175.201,128.283 177.955,118.007C184.174,94.797 168.081,79.047 157.279,63.132C143.132,42.285 141.58,23.088 148.474,-2.64L155.105,-27.357L124.636,-35.521L118.012,-10.803C111.118,14.925 100.176,30.775 77.499,41.754C60.188,50.137 38.376,55.73 32.156,78.941C29.403,89.216 -5.456,219.313 -7.437,226.705C-9.418,234.098 -7.442,238.302 0,240.296"
-                                style="fill: rgb(255, 83, 0); fill-rule: nonzero"
-                        />
-                    </g>
-                </svg>
-            <?php endif; ?>
-        </div>
-        <div class="half-page menu">
-            <?php if($page['showDishes']): ?>
-                <div class="menu-title"><?= $page['dishesTitle'] ?></div>
-                <div class="menu-items">
-                    <?php foreach ($page['dishes'] as $dish): ?>
-                        <?php if ($dish['option']): ?>
-                            <div class="menu-item group">
-                                <div class="dish-name"><?= $dish['name1'] ?></div>
-                                <div class="dish-description"><?= $dish['description1'] ?></div>
-                                <div class="dish-option">ou</div>
-                                <div class="dish-name"><?= $dish['name2'] ?></div>
-                                <div class="dish-description"><?= $dish['description2'] ?></div>
-                            </div>
-                        <?php else: ?>
-                            <div class="menu-item">
-                                <div class="dish-name"><?= $dish['name1'] ?></div>
-                                <div class="dish-description"><?= $dish['description1'] ?></div>
-                            </div>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
-                <div class="bowl-info">
-                    Notre équipe de service se tient à votre<br/> disposition en cas d'allergies alimentaires.
-                </div>
+                <?php endforeach; ?>
             </div>
-            <svg
-                    id="bowl"
-                    width="100%"
-                    height="100%"
-                    viewBox="0 0 1129 786"
-                    style="display: <?php echo $menu["renderWithAssets"]
-                        ? "block"
-                        : "none"; ?>"
-            >
-                <g transform="matrix(4.16667,0,0,4.16667,1128.05,587.713)">
-                    <path
-                            d="M0,-93.676L-268.678,-141.051C-278.689,-84.279 -251.34,-29.128 -203.612,1.7L-208.754,30.862L-115.107,47.375L-109.965,18.213C-54.573,5.567 -10.011,-36.904 0,-93.676"
-                            style="fill: rgb(255, 83, 0); fill-rule: nonzero"
-                    />
+            <svg id="bottle" width="100%" height="100%" viewBox="0 0 782 1292" xmlns="http://www.w3.org/2000/svg"
+                 style="display: <?= $menu["renderWithAssets"] ? "block" : "none" ?>">
+                <g transform="matrix(4.16667,0,0,4.16667,33.9946,148.004)">
+                    <path d="M0,240.296C6.437,242.021 118.59,272.072 125.125,273.823C132.567,275.817 136.381,273.164 138.361,265.772C140.342,258.379 175.201,128.283 177.955,118.007C184.174,94.797 168.081,79.047 157.279,63.132C143.132,42.285 141.58,23.088 148.474,-2.64L155.105,-27.357L124.636,-35.521L118.012,-10.803C111.118,14.925 100.176,30.775 77.499,41.754C60.188,50.137 38.376,55.73 32.156,78.941C29.403,89.216 -5.456,219.313 -7.437,226.705C-9.418,234.098 -7.442,238.302 0,240.296"
+                          style="fill: rgb(255, 83, 0); fill-rule: nonzero" />
                 </g>
             </svg>
+        <?php endif; ?>
+    </div>
+<?php }
+
+// Helper function to render dishes section
+function renderDishesSection($page, $dishes, $title, $menu) { ?>
+    <div class="half-page menu">
+        <?php if(!empty($dishes)): ?>
+            <div class="menu-title"><?= $title ?></div>
+            <div class="menu-items">
+                <?php foreach ($dishes as $dish): ?>
+                    <?php if ($dish['option']): ?>
+                        <div class="menu-item group">
+                            <div class="dish-name"><?= $dish['name1'] ?></div>
+                            <div class="dish-description"><?= $dish['description1'] ?></div>
+                            <div class="dish-option">ou</div>
+                            <div class="dish-name"><?= $dish['name2'] ?></div>
+                            <div class="dish-description"><?= $dish['description2'] ?></div>
+                        </div>
+                    <?php else: ?>
+                        <div class="menu-item">
+                            <div class="dish-name"><?= $dish['name1'] ?></div>
+                            <div class="dish-description"><?= $dish['description1'] ?></div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+            <div class="bowl-info">
+                Notre équipe de service se tient à votre<br/> disposition en cas d'allergies alimentaires.
+            </div>
+        <?php endif; ?>
+        <svg id="bowl" width="100%" height="100%" viewBox="0 0 1129 786"
+             style="display: <?= $menu["renderWithAssets"] ? "block" : "none" ?>">
+            <g transform="matrix(4.16667,0,0,4.16667,1128.05,587.713)">
+                <path d="M0,-93.676L-268.678,-141.051C-278.689,-84.279 -251.34,-29.128 -203.612,1.7L-208.754,30.862L-115.107,47.375L-109.965,18.213C-54.573,5.567 -10.011,-36.904 0,-93.676"
+                      style="fill: rgb(255, 83, 0); fill-rule: nonzero" />
+            </g>
+        </svg>
+    </div>
+<?php }
+?>
+
+<?php foreach($menu['pages'] as $pageIndex => $page): ?>
+    <?php $layout = $page['layout'] ?? 'wines-dishes'; ?>
+    <div class="page">
+        <?php if ($layout === 'wines-dishes'): ?>
+            <?php renderWinesSection($page, $menu); ?>
+            <?php renderDishesSection($page, $page['dishes'] ?? [], $page['dishesTitle'] ?? 'Plats', $menu); ?>
+        <?php elseif ($layout === 'dishes-wines'): ?>
+            <?php renderDishesSection($page, $page['dishes'] ?? [], $page['dishesTitle'] ?? 'Plats', $menu); ?>
+            <?php renderWinesSection($page, $menu); ?>
+        <?php elseif ($layout === 'dishes-dishes'): ?>
+            <?php renderDishesSection($page, $page['dishes'] ?? [], $page['dishesTitle'] ?? 'Plats', $menu); ?>
+            <?php renderDishesSection($page, $page['dishes2'] ?? [], $page['dishesTitle2'] ?? 'Plats 2', $menu); ?>
         <?php endif; ?>
     </div>
 <?php endforeach ?>
