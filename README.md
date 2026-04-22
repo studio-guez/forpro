@@ -79,7 +79,7 @@ done
 
 ### 5. Fix permissions
 ```bash
-docker compose -f compose.dev.yml exec cms chown -R www-data:www-data /var/www/html/site/sessions /var/www/html/site/accounts /var/www/html/content /var/www/html/media
+docker compose -f compose.dev.yml exec cms chown -R www-data:www-data /var/www/html/site/sessions /var/www/html/site/accounts /var/www/html/content /var/www/html/media /var/www/html/site/plugins /var/www/html/site/cache
 ```
 
 ### Access the services
