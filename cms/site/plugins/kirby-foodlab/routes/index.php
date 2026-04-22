@@ -54,13 +54,9 @@ return [
                         ->fullPage()
                         ->pdf();
 
-                    $pdfHtml = Browsershot::html($html)
-                        ->format("A4")
-                        ->bodyHtml();
-
                     return new Response($pdfContent, "application/pdf", 200, [
                         "Content-Disposition" =>
-                            'attachment; filename="menu.pdf"',
+                            'inline; filename="menu.pdf"',
                     ]);
                 },
             ],
@@ -190,13 +186,9 @@ return [
                         ->fullPage()
                         ->pdf();
 
-                    $pdfHtml = Browsershot::html($html)
-                        ->format("A4")
-                        ->bodyHtml();
-
                     return new Response($pdfContent, "application/pdf", 200, [
                         "Content-Disposition" =>
-                            'attachment; filename="menu.pdf"',
+                            'inline; filename="menu.pdf"',
                     ]);
                 },
             ],
