@@ -153,8 +153,8 @@ class Environment
 	 * @param array|null $info Optional override for `$_SERVER`
 	 */
 	public function detect(
-		array|null $options = null,
-		array|null $info = null
+		array $options = null,
+		array $info = null
 	): array {
 		$defaults = [
 			'cli'     => null,
@@ -178,11 +178,11 @@ class Environment
 		if ($options['allowed'] === '*' || $options['allowed'] === ['*']) {
 			$this->detectAuto(true);
 
-			// fixed environments
+		// fixed environments
 		} elseif (empty($options['allowed']) === false) {
 			$this->detectAllowed($options['allowed']);
 
-			// secure auto-detection
+		// secure auto-detection
 		} else {
 			$this->detectAuto();
 		}
@@ -602,7 +602,13 @@ class Environment
 	 */
 	protected function detectRequestUri(string|null $requestUri = null): Uri
 	{
-		$uri = new Uri($requestUri ?? '');
+		// make sure the URL parser works properly when there's a
+		// colon in the request URI but the URI is relative
+		if (Url::isAbsolute($requestUri) === false) {
+			$requestUri = 'https://getkirby.com' . $requestUri;
+		}
+
+		$uri = new Uri($requestUri);
 
 		// create the URI object as a combination of base uri parts
 		// and the parts from REQUEST_URI

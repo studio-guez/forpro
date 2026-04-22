@@ -352,15 +352,12 @@ class File extends Model
 		$id   = $this->model->id();
 
 		if (empty($params['model']) === false) {
-			$parent   = $this->model->parent();
-			$absolute = $parent !== $params['model'];
+			$parent = $this->model->parent();
 
 			// if the file belongs to the current parent model,
 			// store only name as ID to keep its path relative to the model
-			$id = match ($absolute) {
-				true  => $id,
-				false => $name
-			};
+			$id       = $parent === $params['model'] ? $name : $id;
+			$absolute = $parent !== $params['model'];
 		}
 
 		$params['text'] ??= '{{ file.filename }}';
@@ -402,7 +399,6 @@ class File extends Model
 					'template'   => $file->template(),
 					'type'       => $file->type(),
 					'url'        => $file->url(),
-					'uuid'       => fn () => $file->uuid()?->toString(),
 				],
 				'preview' => [
 					'focusable' => $this->isFocusable(),
