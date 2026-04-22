@@ -12,7 +12,6 @@ use Kirby\Cms\Site;
 use Kirby\Cms\User;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\LogicException;
-use Kirby\Exception\NotFoundException;
 use Kirby\Toolkit\Str;
 
 /**
@@ -218,13 +217,7 @@ abstract class Uuid
 			return (static::$generator)($length);
 		}
 
-		$option = App::instance()->option('content.uuid');
-
-		if (is_array($option) === true) {
-			$option = $option['format'] ?? null;
-		}
-
-		if ($option === 'uuid-v4') {
+		if (App::instance()->option('content.uuid') === 'uuid-v4') {
 			return Str::uuid();
 		}
 
@@ -339,10 +332,6 @@ abstract class Uuid
 		}
 
 		if ($lazy === false) {
-			if (App::instance()->option('content.uuid.index') === false) {
-				throw new NotFoundException('Model for UUID ' . $this->uri->toString() . ' could not be found without searching in the site index');
-			}
-
 			if ($this->model = $this->findByIndex()) {
 				// lazily fill cache by writing to cache
 				// whenever looked up from index to speed

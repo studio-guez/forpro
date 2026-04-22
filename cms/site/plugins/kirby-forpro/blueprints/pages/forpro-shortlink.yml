@@ -1,0 +1,87 @@
+title: Lien court
+
+options:
+  changeStatus: true
+  changeTemplate: false
+  changeSlug: false
+
+columns:
+  - width: 2/3
+    fields:
+
+      shortId:
+        label: Identifiant court (généré automatiquement)
+        type: text
+        readonly: true
+        width: 1/2
+
+      shortUrlDisplay:
+        label: URL courte
+        type: info
+        text: "https://for-pro.ch/liens-cours/{{ page.shortId }}"
+        width: 1/2
+
+      title:
+        label: Titre
+        type: text
+        required: true
+        help: Utilisé pour les meta tags sociaux
+
+      targetUrl:
+        label: URL de destination
+        type: url
+        required: true
+        placeholder: https://exemple.com ou /page-interne
+
+      description:
+        label: Description (pour réseaux sociaux)
+        type: textarea
+        maxlength: 300
+
+      socialImage:
+        label: Image pour le partage social
+        type: files
+        max: 1
+        layout: cards
+        help: Recommandé 1200x630px
+
+      isActive:
+        label: Lien actif
+        type: toggle
+        default: true
+        width: 1/2
+
+      expirationDate:
+        label: Date d'expiration (optionnelle)
+        type: date
+        width: 1/2
+
+  - width: 1/3
+    fields:
+
+      statsHeadline:
+        type: headline
+        label: Statistiques
+
+      clicks:
+        label: Nombre de clics
+        type: number
+        readonly: true
+        default: 0
+
+      createdAt:
+        label: Créé le
+        type: date
+        readonly: true
+        default: now
+        time: true
+
+      lastClickAt:
+        label: Dernier clic
+        type: date
+        readonly: true
+        time: true
+
+      notes:
+        label: Notes internes
+        type: textarea

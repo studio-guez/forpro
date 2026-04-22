@@ -1,6 +1,6 @@
 <?php
 
-use Eclypsys\KirbyCalendars\Event;
+use MediumSans\KirbyCalendars\Event;
 
 return [
     'pattern' => 'event/(:any)/edit',
@@ -10,7 +10,13 @@ return [
         return [
             'component' => 'k-form-dialog',
             'props' => [
-                'fields' => require __DIR__ . '/fields.php',
+                'fields' => [
+                    'info' => [
+                        'label' => 'info',
+                        'type' => 'info',
+                        'content' => 'envoyer un mail de rappel?'
+                    ],
+                ],
                 'value' => $event
             ]
         ];

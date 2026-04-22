@@ -366,6 +366,8 @@ export default {
                 textContent1: {
                     label: "Contenu 1",
                     type: "textarea",
+                    buttons: ["bold", "italic"],
+                    help: "Les retours à la ligne sont préservés automatiquement dans le PDF. Le gras et l'italique sont supportés.",
                 },
                 textTitle2: {
                     label: "Titre 2",
@@ -380,6 +382,8 @@ export default {
                 textContent2: {
                     label: "Contenu 2",
                     type: "textarea",
+                    buttons: ["bold", "italic"],
+                    help: "Les retours à la ligne sont préservés automatiquement dans le PDF. Le gras et l'italique sont supportés.",
                 },
             },
             diversFields: {

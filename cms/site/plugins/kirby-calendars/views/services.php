@@ -1,7 +1,7 @@
 <?php
 
-use Eclypsys\KirbyCalendars\Calendar;
-use Eclypsys\KirbyCalendars\Service;
+use MediumSans\KirbyCalendars\Calendar;
+use MediumSans\KirbyCalendars\Service;
 
 return [
     'pattern' => 'kirby-calendars/calendar/(:any)/services',

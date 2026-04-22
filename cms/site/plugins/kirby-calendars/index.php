@@ -3,15 +3,13 @@
 @include_once __DIR__ . '/vendor/autoload.php';
 
 load([
-    'Eclypsys\KirbyCalendars\Calendar'    => __DIR__ . '/classes/Calendar.php',
-    'Eclypsys\KirbyCalendars\Schedule'    => __DIR__ . '/classes/Schedule.php',
-    'Eclypsys\KirbyCalendars\Service'     => __DIR__ . '/classes/Service.php',
-    'Eclypsys\KirbyCalendars\Database'    => __DIR__ . '/classes/Database.php',
-    'Eclypsys\KirbyCalendars\Event'       => __DIR__ . '/classes/Event.php',
-    'Eclypsys\KirbyCalendars\Leave'       => __DIR__ . '/classes/Leave.php',
-    'Eclypsys\KirbyCalendars\Invitation'  => __DIR__ . '/classes/Invitation.php',
-    'Eclypsys\KirbyCalendars\Utils'       => __DIR__ . '/classes/Utils.php',
-    'Eclypsys\KirbyCalendars\BaseClass'   => __DIR__ . '/classes/BaseClass.php'
+    'MediumSans\KirbyCalendars\Calendar'    => __DIR__ . '/classes/Calendar.php',
+    'MediumSans\KirbyCalendars\Schedule'    => __DIR__ . '/classes/Schedule.php',
+    'MediumSans\KirbyCalendars\Service'     => __DIR__ . '/classes/Service.php',
+    'MediumSans\KirbyCalendars\Database'    => __DIR__ . '/classes/Database.php',
+    'MediumSans\KirbyCalendars\Event'       => __DIR__ . '/classes/Event.php',
+    'MediumSans\KirbyCalendars\Leave'       => __DIR__ . '/classes/Leave.php',
+    'MediumSans\KirbyCalendars\Invitation'  => __DIR__ . '/classes/Invitation.php',
 ]);
 
 $pluginPermissionNameForBlueprint = 'mediumsans.kirby-calendars';
@@ -81,21 +79,21 @@ Kirby::plugin('mediumsans/kirby-calendars', [
         },
     ],
     'templates' => [
-        'emails/event_confirmation.html'    => __DIR__ . '/templates/event_confirmation.html.php',
-        'emails/event_confirmation.text'    => __DIR__ . '/templates/event_confirmation.text.php',
-        'emails/calendar_incharge.html'     => __DIR__ . '/templates/calendar_incharge.html.php',
-        'emails/calendar_incharge.text'     => __DIR__ . '/templates/calendar_incharge.text.php',
-        'emails/event_remind.html'          => __DIR__ . '/templates/event_remind.html.php',
-        'emails/event_remind.text'          => __DIR__ . '/templates/event_remind.txt.php',
-        'emails/event_rm_assignation.html'  => __DIR__ . '/templates/event_rm_assignation.html.php',
-        'emails/event_rm_assignation.text'  => __DIR__ . '/templates/event_rm_assignation.txt.php',
-        'emails/event_share.html'           => __DIR__ . '/templates/event_share.html.php',
-        'emails/event_share.text'           => __DIR__ . '/templates/event_share.text.php',
+        'emails/event_confirmation.html' => __DIR__ . '/templates/event_confirmation.html.php',
+        'emails/event_confirmation.text' => __DIR__ . '/templates/event_confirmation.text.php',
+        'emails/calendar_incharge.html'  => __DIR__ . '/templates/calendar_incharge.html.php',
+        'emails/calendar_incharge.text'  => __DIR__ . '/templates/calendar_incharge.text.php',
+        'emails/event_remind.html'        => __DIR__ . '/templates/event_remind.html.php',
+        'emails/event_remind.text'        => __DIR__ . '/templates/event_remind.txt.php',
+        'emails/event_rm_assignation.html'        => __DIR__ . '/templates/event_rm_assignation.html.php',
+        'emails/event_rm_assignation.text'        => __DIR__ . '/templates/event_rm_assignation.txt.php',
+        'emails/event_share.html'        => __DIR__ . '/templates/event_share.html.php',
+        'emails/event_share.text'        => __DIR__ . '/templates/event_share.text.php',
     ],
     'routes' => require __DIR__ . '/routes/index.php',
     'hooks' => [
         'panel.route:after' => function ($route, $path, $method) use ($pluginPermissionNameForBlueprint) {
-            Eclypsys\KirbyCalendars\Utils::checkRoleAccess($route, $path, $method, $pluginPermissionNameForBlueprint);
+            MediumSans\KirbyCalendars\Utils::checkRoleAccess($route, $path, $method, $pluginPermissionNameForBlueprint);
         }
     ],
 ]);
