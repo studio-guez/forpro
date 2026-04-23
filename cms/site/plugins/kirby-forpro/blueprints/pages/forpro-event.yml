@@ -182,3 +182,6 @@ columns:
             extends: blocks/video
             fields:
               caption: false
+              is_vertical:
+                type: toggle
+                label: Vidéo verticale
