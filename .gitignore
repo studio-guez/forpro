@@ -59,7 +59,7 @@ cms/content
 cms/site/plugins/**/node_modules/*
 
 # DATA PLUGINS
-cms/site/plugins/**/data/*.json
+cms/site/plugins/**/data/*
 
 node_modules
 vendor
