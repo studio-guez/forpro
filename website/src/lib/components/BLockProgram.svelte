@@ -68,6 +68,12 @@
           : [space]
   }
 
+  $: usedTags = [...new Set(data.content.program_list.flatMap(v => v.program_list_tags ? v.program_list_tags.split(',').map(t => t.trim()).filter(Boolean) : []))]
+  $: usedSpaces = [...new Set(data.content.program_list.map(v => v.program_list_space).filter(Boolean))]
+  $: hasMultipleTags = usedTags.length > 1
+  $: hasMultipleSpaces = usedSpaces.length > 1
+  $: hasMultipleTimeCategories = data.content.program_list.some(v => v.program_list_heure === 'En continu') && data.content.program_list.some(v => v.program_list_heure !== 'En continu')
+
   $: program_list_filteredByTag_and_filteredBySpace =  data.content.program_list.filter(value => {
 
       if(activatedTags.length === 0) return true
@@ -100,8 +106,9 @@
     </h2>
   </div>
 
+  {#if hasMultipleSpaces}
   <div class="block-program__spaces">
-    {#each spaces as space}
+    {#each usedSpaces as space}
       <button class="block-program__spaces__item"
            style="--space-color: {spacesColors[space]}"
            on:click={() => toggleSpaces(space)}
@@ -113,9 +120,11 @@
       </button>
     {/each}
   </div>
+  {/if}
 
+  {#if hasMultipleTags}
   <div class="block-program__tags">
-    {#each tags as tag}
+    {#each usedTags as tag}
       <button class="block-program__tags__item"
               class:is-active="{activatedTags.includes(tag)}"
               on:click={() => toggleTag(tag)}
@@ -127,6 +136,7 @@
       </button>
     {/each}
   </div>
+  {/if}
 
   <div class="block-program__content">
     {#each program_list_filteredByTag_and_filteredBySpace as event}
@@ -165,6 +175,7 @@
     {/each}
   </div>
 
+  {#if hasMultipleTimeCategories}
   <div class="block-program__filter-time">
     <div class="block-program__filter-time__container"
          class:is-active="{timeFilterStatus !== null}"
@@ -184,6 +195,7 @@
       {/if}
     </div>
   </div>
+  {/if}
 
 
 </div>
