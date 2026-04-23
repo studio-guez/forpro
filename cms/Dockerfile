@@ -40,6 +40,13 @@ RUN cd /var/www/html && composer install --no-dev --no-security-blocking --optim
 RUN rm -rf /var/www/html/content
 COPY content /var/www/html/content
 
+# Bake custom site files (templates, models, blueprints, snippets, config, plugins, ...)
+# into the image so prod (which initializes the kirby_data named volume from the image)
+# has all of them. In dev these are overlaid by bind-mounts from compose.dev.yml.
+COPY site /var/www/html/site
+COPY utils /var/www/html/utils
+COPY index.php /var/www/html/index.php
+
 RUN mkdir -p /var/www/html/site/sessions
 RUN mkdir -p /var/www/html/site/accounts
 RUN mkdir -p /var/www/html/site/plugins
