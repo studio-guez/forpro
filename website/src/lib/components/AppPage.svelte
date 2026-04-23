@@ -213,6 +213,7 @@
 
   .s-page__content {
     row-gap: 8rem;
+    margin-bottom: 5rem;
 
     @media (max-width: scss-params.$fp-breakpoint-xs) {
       row-gap: 4rem;
