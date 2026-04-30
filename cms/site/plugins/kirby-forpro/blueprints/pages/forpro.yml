@@ -4,3 +4,21 @@ tabs:
   content: tabs/content
 
   seo: seo/page
+
+  settings:
+    label:
+      en: Settings
+      fr: Paramètres
+    icon: settings
+    fields:
+      trackWithMatomo:
+        type: toggle
+        label:
+          en: Track with Matomo
+          fr: Suivi avec Matomo
+        default: true
+        text:
+          - en: 'No'
+            fr: 'Non'
+          - en: 'Yes'
+            fr: 'Oui'
