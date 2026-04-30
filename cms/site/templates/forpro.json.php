@@ -42,6 +42,9 @@ $json['options'] = [
     'showNewsletter' => $showNewsletter,
     'gradientColor' => $page->gradientColor()->value(),
     'hero' => Utils::getHeroFromPage($page),
+    // Default to true when the field has never been set so existing pages keep
+    // their Matomo tracking. Only an explicit "false" disables it.
+    'trackWithMatomo' => $page->trackWithMatomo()->isEmpty() ? true : $page->trackWithMatomo()->toBool(),
 ];
 
 $json['body'] = $body;
