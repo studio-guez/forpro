@@ -58,6 +58,7 @@ export interface IPage_Event extends IPage {
 export interface IOptions {
     showMenu: boolean
     showNewsletter: boolean
+    trackWithMatomo?: boolean
     hero: {
         text: string
         backgroundcolor: string

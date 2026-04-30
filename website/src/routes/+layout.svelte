@@ -1,4 +1,5 @@
 <svelte:head>
+  {#if trackWithMatomo}
   <!-- Matomo -->
   <script>
       var _paq = window._paq = window._paq || [];
@@ -15,6 +16,7 @@
   </script>
   <noscript><p><img referrerpolicy="no-referrer-when-downgrade" src="//matomo.for-pro.ch/matomo.php?idsite=1&amp;rec=1" style="border:0;" alt="" /></p></noscript>
   <!-- End Matomo Code -->
+  {/if}
 </svelte:head>
 
 
@@ -34,6 +36,11 @@
     declare var _paq: unknown
 
     siteInfo.set(data)
+
+    // Default to true so unsaved pages and pages without the option keep
+    // their Matomo tracking. Tracking is only disabled when explicitly set
+    // to false on a page.
+    $: trackWithMatomo = $page.data?.options?.trackWithMatomo ?? true
 
     onMount(() => {
       if(  Number($page.url.searchParams.get('m')) === 1 ) modaleIsOpen.set(true)
@@ -58,7 +65,7 @@
             })
         })
 
-        if (_paq) {
+        if (trackWithMatomo && _paq) {
             _paq.push(['setCustomUrl', '/' + window.location.href])
             _paq.push(['setDocumentTitle', window.location.pathname])
             _paq.push(['setReferrerUrl', navigation.from])
