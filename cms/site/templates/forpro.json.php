@@ -14,7 +14,7 @@ $json = [];
 
 $showMenu = $page->showMenu()->toBool();
 $showNewsletter = $page->showNewsletter()->toBool();
-$body = $page->body()->toBlocks()->map(function ($item){
+$body = $page->body()->toBlocks()->map(function ($item) {
 
     $content = $item->toArray();
 
@@ -23,15 +23,16 @@ $body = $page->body()->toBlocks()->map(function ($item){
     Utils::muteImageFilesDataIfBlocksHasKeyValue('profiles', $content);
 
     return [
-        'image'     => array_values( Utils::getImageArrayDataInPage($item->image()->toFiles()) ),
+        'image'     => array_values(Utils::getImageArrayDataInPage($item->image()->toFiles())),
         'content'   => $content,
     ];
 })->data();
 
-function getValueNotEmpty($pageAttribute, $siteAttribute) {
-    if($pageAttribute->isNotEmpty()) {
+function getValueNotEmpty($pageAttribute, $siteAttribute)
+{
+    if ($pageAttribute->isNotEmpty()) {
         return $pageAttribute->value();
-    } elseif($siteAttribute->isNotEmpty()) {
+    } elseif ($siteAttribute->isNotEmpty()) {
         return $siteAttribute->value();
     }
     return "";
@@ -42,6 +43,8 @@ $json['options'] = [
     'showNewsletter' => $showNewsletter,
     'gradientColor' => $page->gradientColor()->value(),
     'hero' => Utils::getHeroFromPage($page),
+    'trackWithMatomo' => $page->trackWithMatomo()->isEmpty() ? true : $page->trackWithMatomo()->toBool(), // Defaults to true 
+
 ];
 
 $json['body'] = $body;
@@ -60,7 +63,7 @@ $json['seo'] = [
     'ogSiteName'        => getValueNotEmpty($page->ogSiteName(), $site->ogSiteName()),
     // Twitter ===========================================================
     'twitterTemplate'   => getValueNotEmpty($page->twitterTemplate(), $site->twitterTemplate()),
-    'twitterDescription'=> getValueNotEmpty($page->twitterDescription(), $site->twitterDescription()),
+    'twitterDescription' => getValueNotEmpty($page->twitterDescription(), $site->twitterDescription()),
     'twitterImage'      => getValueNotEmpty($page->twitterImage(), $site->twitterImage()),
     'twitterCardType'   => getValueNotEmpty($page->twitterCardType(), $site->twitterCardType()),
     'twitterSite'       => getValueNotEmpty($page->twitterSite(), $site->twitterSite()),
@@ -68,8 +71,3 @@ $json['seo'] = [
 ];
 
 echo json_encode($json);
-
-
-
-
-
