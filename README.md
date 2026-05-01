@@ -114,6 +114,12 @@ Where `<service>` is `cms`, `restaurant`, or `website`.
 
 ### 1. Sync code from local to server (run locally)
 
+Make sure you have the latest code from `main`:
+
+```bash
+git checkout main && git pull
+```
+
 #### Website (SvelteKit)
 
 Excludes `node_modules`, build artifacts and env files. We rebuild on the server.
