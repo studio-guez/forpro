@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:24.04
 
 ENV TZ=Europe/Zurich
 
@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
 COPY nginx/default.conf /etc/nginx/sites-available/default
 
