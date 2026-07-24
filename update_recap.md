@@ -124,13 +124,14 @@ each frontend now has:
 
 ```yaml
 verifyDepsBeforeRun: false
-strictDepBuilds: false
-neverBuiltDependencies:
-  - esbuild
-  - '@parcel/watcher'
+allowBuilds:
+  esbuild: false
+  '@parcel/watcher': false
 ```
 
-With this, both `pnpm install` and `pnpm run build` exit `0` on a clean install.
+`allowBuilds: false` explicitly denies those build scripts, so pnpm neither
+prompts nor exits non-zero for them. With this, both `pnpm install` and
+`pnpm run build` exit `0` on a clean install.
 (The old `.npmrc` `engine-strict=true` setting is preserved; pnpm 11 no longer
 reads the `pnpm` field from `package.json`.)
 

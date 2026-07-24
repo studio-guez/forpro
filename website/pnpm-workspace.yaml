@@ -1,8 +1,9 @@
+# pnpm 11 configuration for this single-package project.
+# - verifyDepsBeforeRun: don't auto-run `pnpm install` before `pnpm run <script>`.
+# - allowBuilds: esbuild and @parcel/watcher ship (optional) native build scripts
+#   with no toolchain in the alpine image; explicitly deny them so `pnpm install`
+#   does not prompt or fail (which would break the Docker build).
 verifyDepsBeforeRun: false
-strictDepBuilds: false
-neverBuiltDependencies:
-  - esbuild
-  - '@parcel/watcher'
 allowBuilds:
-  '@parcel/watcher': set this to true or false
-  esbuild: set this to true or false
+  esbuild: false
+  '@parcel/watcher': false
