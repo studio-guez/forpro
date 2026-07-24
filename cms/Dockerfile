@@ -10,16 +10,19 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   ca-certificates \
   curl \
   git \
+  gnupg \
   nginx \
-  php-fpm \
-  php-curl \
-  php-dom \
-  php-gd \
-  php-intl \
-  php-json \
-  php-mbstring \
-  php-xml \
-  php-zip \
+  software-properties-common && \
+  add-apt-repository -y ppa:ondrej/php && \
+  apt-get update && apt-get install --no-install-recommends -y \
+  php8.4-fpm \
+  php8.4-curl \
+  php8.4-dom \
+  php8.4-gd \
+  php8.4-intl \
+  php8.4-mbstring \
+  php8.4-xml \
+  php8.4-zip \
   unzip && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 

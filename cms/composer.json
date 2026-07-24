@@ -22,9 +22,10 @@
     "source": "https://github.com/getkirby/starterkit"
   },
   "require": {
-    "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
-    "getkirby/cms": "^4.0",
-    "chillerlan/php-qrcode": "^5.0"
+    "php": "~8.3.0 || ~8.4.0",
+    "getkirby/cms": "^5.0",
+    "chillerlan/php-qrcode": "^5.0",
+    "spatie/schema-org": "^3.14"
   },
   "config": {
     "allow-plugins": {
