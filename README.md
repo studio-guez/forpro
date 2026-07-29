@@ -157,7 +157,7 @@ All `composer` commands run inside the running dev container — no local PHP/Co
 
    To upgrade beyond the current constraints (e.g. a new Kirby major), edit `cms/composer.json` first, then re-run the command above.
 
-   > Note: the Docker image resolves dependencies fresh from `composer.json` at build time — `composer.lock` is only used for local (non-Docker) development.
+   > The Docker image copies both `composer.json` and `composer.lock` and runs `composer install`, so builds are fully reproducible and pinned to the exact versions in the lock file. Commit `composer.lock` after every update.
 
 3. **Audit for vulnerabilities**: run `composer audit` inside the container and address any advisories:
 
