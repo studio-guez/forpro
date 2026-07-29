@@ -11,3 +11,5 @@ verifyDepsBeforeRun: false
 allowBuilds:
   esbuild: false
   '@parcel/watcher': false
+minimumReleaseAgeExclude:
+  - cookie@0.7.0
