@@ -69,7 +69,10 @@ services:
   cms:
     build:
       context: ./cms
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
+      args:
+        UID: 1000
+        GID: 1000
     volumes:
       - ./cms/composer.json:/var/www/html/composer.json:rw
       - ./cms/content:/var/www/html/content:rw
@@ -88,8 +91,6 @@ services:
       - "8000:80"
     environment:
       - KIRBY_DEBUG=true
-      - HOST_UID=1000
-      - HOST_GID=1000
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
