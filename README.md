@@ -5,9 +5,9 @@ A multi-service platform running Kirby CMS (API), a restaurant frontend and a we
 ## Architecture
 
 ```
-├── cms/            Kirby CMS 5.0 (PHP 8.4, Nginx)
-├── restaurant/     SvelteKit 2.0 / Svelte 5 frontend
-├── website/        SvelteKit 2.0 / Svelte 5 frontend
+├── cms/            Kirby CMS 5.0 (PHP 8.4, Apache)
+├── restaurant/     SvelteKit 2.0 / Svelte 5 frontend (Node 24, pnpm)
+├── website/        SvelteKit 2.0 / Svelte 5 frontend (Node 24, pnpm)
 ├── compose.dev.yml Docker Compose for local development
 └── compose.prod.yml Docker Compose for production
 ```
@@ -103,11 +103,41 @@ rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:/var/www/cms/site/p
 rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:/var/www/cms/site/plugins/kirby-menu-du-jour/data/ ./cms/site/plugins/kirby-menu-du-jour/data
 ```
 
-Where `<service>` is `cms`, `restaurant`, or `website`.
+## Upgrading
+
+Follow these steps whenever you bump dependency or Docker base-image versions in one of the three stacks. After upgrading, always rebuild the images (`--build`) — a plain `up` will keep running the old ones.
+
+### Restaurant & Website (SvelteKit)
+
+Both frontends are upgraded the same way, in their own directory (`restaurant/` or `website/`):
+
+1. **Node**: bump the version in `.nvmrc` and the `node:<version>-alpine` base image in `Dockerfile.dev` and `Dockerfile.prod` (keep them in sync).
+2. **Dependencies**: bump the version ranges in `package.json`, then regenerate the lockfile with `pnpm install` (or `pnpm update` to pick up the newest versions within the existing ranges). `pnpm-lock.yaml` is the authoritative lockfile — the project uses pnpm, not npm.
+3. **Build scripts**: if a new dependency needs to run install scripts, review `pnpm-workspace.yaml` (`allowBuilds`) — pnpm blocks dependency build scripts by default.
+4. **Verify locally**: run `pnpm run check` and `pnpm run build` and fix any errors introduced by the new versions (e.g. Svelte/SvelteKit breaking changes — see the [Svelte migration guides](https://svelte.dev/docs/svelte/v5-migration-guide)).
+5. **Rebuild the containers**:
+
+   ```bash
+   docker compose -f compose.dev.yml up -d --build restaurant website
+   ```
+
+### CMS (Kirby)
+
+1. **PHP / Apache**: bump the `php:<version>-apache` base image in `cms/Dockerfile.dev` and `cms/Dockerfile.prod`, and align the `php` version constraint in `cms/composer.json`.
+2. **Kirby & Composer dependencies**: bump `getkirby/cms` (and other packages) in `cms/composer.json`, then run `composer update` in `cms/` to refresh `composer.lock`. Note: the Docker image resolves dependencies fresh from `composer.json` at build time — `composer.lock` is only used for local (non-Docker) development.
+3. **Plugins**: check every plugin in `cms/site/plugins/` for compatibility with the new Kirby major version (e.g. `kirby-seo` has a Kirby version guard in its `index.php`). Update or patch plugins as needed — plugin dependencies must be declared in `cms/composer.json` (plugins rely on the root autoloader).
+4. **Verify & rebuild**:
+
+   ```bash
+   docker compose -f compose.dev.yml up -d --build cms
+   ```
+
+   Then log into the Panel at http://cms.localhost/panel and check the frontends still receive API data.
+5. **Production**: rebuild with `docker compose -f compose.prod.yml up -d --build cms`, or on a non-Docker server re-run `composer install --no-dev --optimize-autoloader` and clear `site/cache/` (see the deployment section below).
 
 ## Troubleshooting
 
-- **Permission errors on CMS**: The entrypoint script aligns container permissions with the host UID/GID. If issues persist, check `HOST_UID` / `HOST_GID` environment variables in `compose.dev.yml`.
+- **Permission errors on CMS**: In development, the image maps the `www-data` user to your host user via the `UID` / `GID` build args in `compose.dev.yml` (defaults: `1000` / `1000`). If your host user has a different UID/GID, adjust the args and rebuild with `docker compose -f compose.dev.yml build cms`.
 - **Port conflicts**: Ensure ports `80`, `443` (prod) or `80`, `5173`, `5174`, `8000`, `8888` (dev) are not in use.
 
 ## Deployment process PROD
@@ -192,17 +222,19 @@ ssh <user>@<server> -i ~/.ssh/<key>
 
 Then on the server:
 
+Node 24 and pnpm are required for the frontends (see `.nvmrc`) — the lockfiles are `pnpm-lock.yaml` (npm is no longer used).
+
 ```bash
 # Website
 cd /var/www/website
-npm install
-npm run build
+pnpm install
+pnpm run build
 pm2 restart website
 
 # Restaurant
 cd /var/www/restaurant
-npm install
-npm run build
+pnpm install
+pnpm run build
 pm2 restart restaurant
 
 # CMS
