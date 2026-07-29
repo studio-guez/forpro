@@ -10,7 +10,7 @@ for dir in \
   /var/www/html/site/sessions
 do
   mkdir -p "$dir"
-  chown www-data:www-data "$dir"
+  chown -R www-data:www-data "$dir"
 done
 
 echo "Starting Apache"
