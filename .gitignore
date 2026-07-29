@@ -55,6 +55,10 @@ cms/site/config/.license
 # Content
 cms/content
 
+# Kirby core & composer vendor (baked into Docker image, not tracked in git)
+cms/kirby/
+cms/vendor/
+
 # NODE
 cms/site/plugins/**/node_modules/*
 
