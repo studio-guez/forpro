@@ -1,26 +1,27 @@
 declare module '@lottiefiles/svelte-lottie-player' {
+    import { SvelteComponent } from 'svelte';
 
-
-    export class LottiePlayer {
+    export interface LottiePlayerProps {
         autoplay?: boolean
-        background: string
-        controls: boolean
-        controlsLayout?: string[]
+        background?: string
+        controls?: boolean
+        controlsLayout?: string[] | string
         count?: number
         defaultFrame?: number
-        direction?: number
-        height: number
+        direction?: number | string
+        height?: number | string
         hover?: boolean
         loop?: boolean
         mode?: 'normal' | 'bounce'
         onToggleZoom?: (isZoomed: boolean) => void
         renderer?: 'svg' | 'canvas'
-        speed?: number
+        speed?: number | string
         src?: string
         style?: string
-        width: number
+        width?: number | string
+    }
 
-
+    export class LottiePlayer extends SvelteComponent<LottiePlayerProps> {
 
         /**
          * Returns the lottie-web version and this player's version
