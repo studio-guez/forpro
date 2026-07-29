@@ -5,8 +5,17 @@ header("Access-Control-Allow-Origin: *");
 return [
     "tobimori.seo.canonicalBase" => "https://for-pro.ch",
     "url_frontend" => "https://for-pro.ch/",
+    'content' => [
+        'salt' => getenv('KIRBY_CONTENT_SALT'),
+    ],
+    'cookie' => [
+        'key' => getenv('KIRBY_COOKIE_KEY'),
+    ],
     'panel' => [
         'css' => '_custom-panel/main.css',
+        'vue' => [
+            'compiler' => getenv('KIRBY_VUE_COMPILER') === 'true',
+        ],
     ],
     "routes" => [
         [
