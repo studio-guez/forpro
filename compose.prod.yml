@@ -51,7 +51,9 @@ services:
 
   # Kirby CMS
   cms:
-    build: ./cms
+    build:
+      context: ./cms
+      dockerfile: Dockerfile.prod
     volumes:
       - kirby_data:/var/www/html
       - kirby_accounts:/var/www/html/site/accounts
