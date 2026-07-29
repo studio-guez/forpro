@@ -109,13 +109,36 @@ Follow these steps whenever you bump dependency or Docker base-image versions in
 
 ### Restaurant & Website (SvelteKit)
 
-Both frontends are upgraded the same way, in their own directory (`restaurant/` or `website/`):
+Both frontends are upgraded the same way. All `pnpm` commands run inside the running dev container — no local Node/pnpm installation is needed.
 
 1. **Node**: bump the version in `.nvmrc` and the `node:<version>-alpine` base image in `Dockerfile.dev` and `Dockerfile.prod` (keep them in sync).
-2. **Dependencies**: bump the version ranges in `package.json`, then regenerate the lockfile with `pnpm install` (or `pnpm update` to pick up the newest versions within the existing ranges). `pnpm-lock.yaml` is the authoritative lockfile — the project uses pnpm, not npm.
-3. **Build scripts**: if a new dependency needs to run install scripts, review `pnpm-workspace.yaml` (`allowBuilds`) — pnpm blocks dependency build scripts by default.
-4. **Verify locally**: run `pnpm run check` and `pnpm run build` and fix any errors introduced by the new versions (e.g. Svelte/SvelteKit breaking changes — see the [Svelte migration guides](https://svelte.dev/docs/svelte/v5-migration-guide)).
-5. **Rebuild the containers**:
+2. **Update dependencies**: run `pnpm update` inside the container to upgrade all packages to the newest versions allowed by the ranges in `package.json` and refresh `pnpm-lock.yaml`:
+
+   ```bash
+   docker compose -f compose.dev.yml exec restaurant pnpm update
+   # or for the website:
+   docker compose -f compose.dev.yml exec website pnpm update
+   ```
+
+   To upgrade beyond the current ranges (e.g. a new major), edit the version constraints in `package.json` first, then re-run the command above.
+
+3. **Audit for vulnerabilities**: run `pnpm audit` inside the container and resolve any reported issues:
+
+   ```bash
+   docker compose -f compose.dev.yml exec restaurant pnpm audit
+   # fix automatically where possible:
+   docker compose -f compose.dev.yml exec restaurant pnpm audit --fix
+   ```
+
+4. **Build scripts**: if a new dependency needs to run install scripts, review `pnpm-workspace.yaml` (`allowBuilds`) — pnpm blocks dependency build scripts by default.
+5. **Verify**: run `pnpm run check` and `pnpm run build` inside the container and fix any errors introduced by the new versions (e.g. Svelte/SvelteKit breaking changes — see the [Svelte migration guides](https://svelte.dev/docs/svelte/v5-migration-guide)):
+
+   ```bash
+   docker compose -f compose.dev.yml exec restaurant pnpm run check
+   docker compose -f compose.dev.yml exec restaurant pnpm run build
+   ```
+
+6. **Rebuild the containers** to bake the updated lockfile into the image:
 
    ```bash
    docker compose -f compose.dev.yml up -d --build restaurant website
@@ -123,17 +146,34 @@ Both frontends are upgraded the same way, in their own directory (`restaurant/` 
 
 ### CMS (Kirby)
 
+All `composer` commands run inside the running dev container — no local PHP/Composer installation is needed.
+
 1. **PHP / Apache**: bump the `php:<version>-apache` base image in `cms/Dockerfile.dev` and `cms/Dockerfile.prod`, and align the `php` version constraint in `cms/composer.json`.
-2. **Kirby & Composer dependencies**: bump `getkirby/cms` (and other packages) in `cms/composer.json`, then run `composer update` in `cms/` to refresh `composer.lock`. Note: the Docker image resolves dependencies fresh from `composer.json` at build time — `composer.lock` is only used for local (non-Docker) development.
-3. **Plugins**: check every plugin in `cms/site/plugins/` for compatibility with the new Kirby major version (e.g. `kirby-seo` has a Kirby version guard in its `index.php`). Update or patch plugins as needed — plugin dependencies must be declared in `cms/composer.json` (plugins rely on the root autoloader).
-4. **Verify & rebuild**:
+2. **Update Kirby & Composer dependencies**: run `composer update` inside the container to upgrade all packages to the newest versions allowed by the constraints in `composer.json` and refresh `composer.lock`:
+
+   ```bash
+   docker compose -f compose.dev.yml exec cms composer update
+   ```
+
+   To upgrade beyond the current constraints (e.g. a new Kirby major), edit `cms/composer.json` first, then re-run the command above.
+
+   > Note: the Docker image resolves dependencies fresh from `composer.json` at build time — `composer.lock` is only used for local (non-Docker) development.
+
+3. **Audit for vulnerabilities**: run `composer audit` inside the container and address any advisories:
+
+   ```bash
+   docker compose -f compose.dev.yml exec cms composer audit
+   ```
+
+4. **Plugins**: check every plugin in `cms/site/plugins/` for compatibility with the new Kirby major version (e.g. `kirby-seo` has a Kirby version guard in its `index.php`). Update or patch plugins as needed — plugin dependencies must be declared in `cms/composer.json` (plugins rely on the root autoloader).
+5. **Verify & rebuild**:
 
    ```bash
    docker compose -f compose.dev.yml up -d --build cms
    ```
 
    Then log into the Panel at http://cms.localhost/panel and check the frontends still receive API data.
-5. **Production**: rebuild with `docker compose -f compose.prod.yml up -d --build cms`, or on a non-Docker server re-run `composer install --no-dev --optimize-autoloader` and clear `site/cache/` (see the deployment section below).
+6. **Production**: rebuild with `docker compose -f compose.prod.yml up -d --build cms`, or on a non-Docker server re-run `composer install --no-dev --optimize-autoloader` and clear `site/cache/` (see the deployment section below).
 
 ## Troubleshooting
 
