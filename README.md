@@ -5,9 +5,9 @@ A multi-service platform running Kirby CMS (API), a restaurant frontend and a we
 ## Architecture
 
 ```
-├── cms/            Kirby CMS 4.0 (PHP 8.1, Nginx)
-├── restaurant/     SvelteKit 2.0 frontend
-├── website/        SvelteKit 2.0 frontend
+├── cms/            Kirby CMS 5.0 (PHP 8.4, Nginx)
+├── restaurant/     SvelteKit 2.0 / Svelte 5 frontend
+├── website/        SvelteKit 2.0 / Svelte 5 frontend
 ├── compose.dev.yml Docker Compose for local development
 └── compose.prod.yml Docker Compose for production
 ```
