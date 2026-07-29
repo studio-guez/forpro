@@ -127,7 +127,7 @@ Both frontends are upgraded the same way. All `pnpm` commands run inside the run
    ```bash
    docker compose -f compose.dev.yml exec restaurant pnpm audit
    # fix automatically where possible:
-   docker compose -f compose.dev.yml exec restaurant pnpm audit --fix
+   docker compose -f compose.dev.yml exec restaurant pnpm audit --fix update
    ```
 
 4. **Build scripts**: if a new dependency needs to run install scripts, review `pnpm-workspace.yaml` (`allowBuilds`) — pnpm blocks dependency build scripts by default.
