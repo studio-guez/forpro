@@ -10,7 +10,6 @@ RUN a2enmod rewrite
 # Installer dépendances système + extensions PHP
 RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
-    git \
     libzip-dev \
     libicu-dev \
     libpng-dev \
@@ -39,10 +38,9 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 RUN rm -rf /var/www/html/*
 
-RUN git clone --depth 1 https://github.com/getkirby/plainkit.git /var/www/html
-
-COPY composer.json /var/www/html/composer.json
-RUN cd /var/www/html && composer install --no-dev --no-security-blocking --optimize-autoloader
+WORKDIR /var/www/html
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader
 
 RUN rm -rf /var/www/html/content
 COPY content /var/www/html/content
