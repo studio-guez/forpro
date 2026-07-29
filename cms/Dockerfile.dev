@@ -14,7 +14,6 @@ RUN a2enmod rewrite
 # Installer dépendances système + extensions PHP
 RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
-    git \
     libzip-dev \
     libicu-dev \
     libpng-dev \
@@ -50,10 +49,9 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 RUN rm -rf /var/www/html/*
 
-RUN git clone --depth 1 https://github.com/getkirby/plainkit.git /var/www/html
-
-COPY composer.json /var/www/html/composer.json
-RUN cd /var/www/html && composer install --no-dev --no-security-blocking --optimize-autoloader
+WORKDIR /var/www/html
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader
 
 # In dev, content, site/*, utils and index.php are bind-mounted from the host
 # (see compose.dev.yml), so they are not baked into the image.
