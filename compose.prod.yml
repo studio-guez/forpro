@@ -61,6 +61,8 @@ services:
       - kirby_plugins:/var/www/html/site/plugins
       - kirby_content:/var/www/html/content
       - kirby_media:/var/www/html/media
+    env_file:
+      - ./cms/.env
     expose:
       - "80"
     restart: unless-stopped
