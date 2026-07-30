@@ -1,5 +1,5 @@
 <template>
-  <k-inside>
+  <k-panel-inside>
     <k-header>
       Menu Spécial
       <k-button-group slot="buttons">
@@ -385,7 +385,7 @@
         </table>
       </template>
     </div>
-  </k-inside>
+  </k-panel-inside>
 </template>
 
 <script>
@@ -607,9 +607,9 @@ export default {
         this.$set(page, 'showDishes2', newValue);
         this.debouncedUpdateMenu();
         if (newValue) {
-          this.$store.dispatch("notification/success", "Section Plats 2 activée");
+          this.$panel.notification.success("Section Plats 2 activée");
         } else {
-          this.$store.dispatch("notification/info", "Section Plats 2 désactivée");
+          this.$panel.notification.info("Section Plats 2 désactivée");
         }
       }
     },
@@ -622,7 +622,7 @@ export default {
           .then(() => {
             this.isSubmitting = false;
             this.hasBeenSubmitted = true;
-            this.$store.dispatch("notification/success", "Menu enregistré avec succès");
+            this.$panel.notification.success("Menu enregistré avec succès");
             setTimeout(() => {
               this.hasBeenSubmitted = false;
             }, 5000);
@@ -630,7 +630,7 @@ export default {
           })
           .catch(error => {
             this.isSubmitting = false;
-            this.$store.dispatch("notification/error", "Erreur lors de l'enregistrement du menu");
+            this.$panel.notification.error("Erreur lors de l'enregistrement du menu");
             console.error("Error submitting menu:", error);
           });
     },
@@ -663,7 +663,7 @@ export default {
           `;
           })
           .catch(error => {
-            this.$store.dispatch("notification/error", "Erreur lors de la récupération du HTML");
+            this.$panel.notification.error("Erreur lors de la récupération du HTML");
             console.error("Error getting HTML:", error);
           });
     },
@@ -688,16 +688,12 @@ export default {
       if (pdfWindow) {
         setTimeout(() => {
           this.isGeneratingPDF = false;
-          this.$store.dispatch(
-              "notification/success",
-              "Le PDF a été généré avec succès"
+          this.$panel.notification.success("Le PDF a été généré avec succès"
           );
         }, 1500);
       } else {
         this.isGeneratingPDF = false;
-        this.$store.dispatch(
-            "notification/error",
-            "Le PDF n'a pas pu être généré. Vérifiez que les pop-ups sont autorisés."
+        this.$panel.notification.error("Le PDF n'a pas pu être généré. Vérifiez que les pop-ups sont autorisés."
         );
       }
     },
@@ -749,9 +745,9 @@ export default {
 
         // Show appropriate notification
         if (newValue) {
-          this.$store.dispatch("notification/success", "Section Vins activée");
+          this.$panel.notification.success("Section Vins activée");
         } else {
-          this.$store.dispatch("notification/info", "Section Vins désactivée");
+          this.$panel.notification.info("Section Vins désactivée");
         }
       }
     },
@@ -767,9 +763,9 @@ export default {
 
         // Show appropriate notification
         if (newValue) {
-          this.$store.dispatch("notification/success", "Section Plats activée");
+          this.$panel.notification.success("Section Plats activée");
         } else {
-          this.$store.dispatch("notification/info", "Section Plats désactivée");
+          this.$panel.notification.info("Section Plats désactivée");
         }
       }
     },
@@ -777,7 +773,7 @@ export default {
     deletePage(pageId) {
       // Don't allow deleting the last page
       if (this.menu.pages.length <= 1) {
-        this.$store.dispatch("notification/error", "Impossible de supprimer la dernière page");
+        this.$panel.notification.error("Impossible de supprimer la dernière page");
         return;
       }
 
@@ -824,7 +820,7 @@ export default {
             this.debouncedGetHtml();
           })
           .catch(error => {
-            this.$store.dispatch("notification/error", "Erreur lors de la mise à jour du menu");
+            this.$panel.notification.error("Erreur lors de la mise à jour du menu");
             console.error("Error updating menu:", error);
           });
     },
