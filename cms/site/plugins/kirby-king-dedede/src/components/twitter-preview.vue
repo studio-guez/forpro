@@ -84,27 +84,27 @@ export default {
   },
   computed: {
     changes() {
-      return this.$store.getters['content/changes']()
+      return window.panel.content.diff()
     },
     twitterCardType() {
       let twitterCardType =
-        this.$store.getters['content/values']().twittercardtype
+        (window.panel.content.version("changes") ?? {}).twittercardtype
 
       return twitterCardType
     },
     twitterDescription() {
-      let twitterDescription = this.$store.getters["content/values"]()
+      let twitterDescription = (window.panel.content.version("changes") ?? {})
         .twitterdescription
       
       if(!twitterDescription) {
-        twitterDescription = this.$store.getters["content/values"]()
+        twitterDescription = (window.panel.content.version("changes") ?? {})
           .metadescription
       }
       
       return twitterDescription === '' ? this.fallbackDescription : twitterDescription
     },
     storeImage() {
-      return this.$store.getters['content/values']().twitterimage
+      return (window.panel.content.version("changes") ?? {}).twitterimage
     }
   },
   watch: {
@@ -115,7 +115,7 @@ export default {
         } else {
           this.$api.files
             .get(
-              this.$store.getters['content/model']().api,
+              window.panel.view.props.api,
               this.storeImage[0].filename,
               {
                 view: 'compact'
