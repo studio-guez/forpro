@@ -14,22 +14,23 @@ A multi-service platform running Kirby CMS (API), a restaurant frontend and a we
 
 Services are routed through **Traefik** reverse proxy:
 
-| Service    | Local URL                    | Production URL              |
-|------------|------------------------------|-----------------------------|
-| CMS        | http://cms.localhost         | https://api.for-pro.ch      |
-| Restaurant | http://restaurant.localhost  | https://foodlab.for-pro.ch  |
-| Website    | http://website.localhost     | https://for-pro.ch          |
-| Traefik    | http://localhost:8888        | —                           |
+| Service    | Local URL                   | Production URL             |
+| ---------- | --------------------------- | -------------------------- |
+| CMS        | http://cms.localhost        | https://api.for-pro.ch     |
+| Restaurant | http://restaurant.localhost | https://foodlab.for-pro.ch |
+| Website    | http://website.localhost    | https://for-pro.ch         |
+| Traefik    | http://localhost:8888       | —                          |
 
 ### CMS Plugins
 
-| Plugin            | Notes                                            |
-|-------------------|--------------------------------------------------|
-| kirby-calendars   | Calendar data (critical)                         |
-| kirby-foodlab     | Requires Chromium Headless + Puppeteer for PDFs  |
-| kirby-forpro      | Core plugin                                      |
-| kirby-menu-du-jour| Menu management                                  |
-| kirby-seo         | SEO utilities                                    |
+| Plugin             | Notes                                                    |
+| ------------------ | -------------------------------------------------------- |
+| image-guard        | Downscales oversized uploads, converts CMYK JPEGs to RGB |
+| kirby-calendars    | Calendar data (critical)                                 |
+| kirby-foodlab      | Requires Chromium Headless + Puppeteer for PDFs          |
+| kirby-forpro       | Core plugin                                              |
+| kirby-menu-du-jour | Menu management                                          |
+| kirby-seo          | SEO utilities                                            |
 
 ## Local Development
 
@@ -101,6 +102,28 @@ docker compose -f compose.dev.yml exec cms sh -c 'chown -R www-data:www-data /va
 
 - **CMS**: Source files in `cms/` are mounted into the container. Changes to `site/plugins/`, `site/blueprints/`, `site/templates/`, `site/config/`, and `content/` are reflected immediately.
 - **Restaurant / Website**: Source files are mounted with hot-reload via SvelteKit dev server.
+
+## Maintenance: fix oversized / CMYK images
+
+Oversized originals and CMYK JPEGs (a common export from Illustrator/Photoshop) can exhaust PHP's memory limit when Kirby/GD generates thumbnails. New uploads are handled automatically by the `image-guard` plugin (`cms/site/plugins/image-guard`), which downscales images whose longest edge exceeds 4000 px and converts CMYK JPEGs to RGB.
+
+For images that are already in `content/`, run the one-off cleanup script `cms/site/plugins/image-guard/fix-large-images.php` inside the container:
+
+```bash
+# List what would change, without writing anything:
+docker compose -f compose.dev.yml exec cms php site/plugins/image-guard/fix-large-images.php --dry-run
+
+# Actually fix the files in place:
+docker compose -f compose.dev.yml exec cms php site/plugins/image-guard/fix-large-images.php
+```
+
+Afterwards, clear the media cache so Kirby regenerates thumbnails from the fixed originals:
+
+```bash
+docker compose -f compose.dev.yml exec cms sh -c 'rm -rf media/pages media/site'
+```
+
+Both the plugin and the script share the same logic in `cms/site/plugins/image-guard/ImageGuard.php`, so the plugin is fully self-contained.
 
 ## Sync content from PROD (local)
 
