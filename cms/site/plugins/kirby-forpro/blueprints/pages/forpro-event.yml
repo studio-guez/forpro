@@ -158,12 +158,13 @@ columns:
             extends: blocks/image
             fields:
               location: false
+              src: false
               caption: false
               link: false
               ratio: false
               crop: false
               image:
-                when: false
+                when: ~
               fixed:
                 label:
                   en: fixed
