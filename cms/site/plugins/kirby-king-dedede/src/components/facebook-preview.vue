@@ -65,25 +65,25 @@ export default {
   },
   computed: {
     changes() {
-      return this.$store.getters['content/changes']()
+      return window.panel.content.diff()
     },
     ogDescription() {
       let ogDescription =
-        this.$store.getters['content/values']().ogdescription
+        (window.panel.content.version("changes") ?? {}).ogdescription
 
       if (!ogDescription) {
-        ogDescription = this.$store.getters['content/values']().metadescription
+        ogDescription = (window.panel.content.version("changes") ?? {}).metadescription
       }
 
       return ogDescription === '' ? this.fallbackDescription : ogDescription
     },
     ogSiteName() {
-      let ogSiteName = this.$store.getters['content/values']().ogsitename
+      let ogSiteName = (window.panel.content.version("changes") ?? {}).ogsitename
 
       return ogSiteName === '' ? this.fallbackSiteName : ogSiteName
     },
     storeImage() {
-      return this.$store.getters['content/values']().ogimage
+      return (window.panel.content.version("changes") ?? {}).ogimage
     }
   },
   watch: {
@@ -94,7 +94,7 @@ export default {
         } else {
           this.$api.files
             .get(
-              this.$store.getters['content/model']().api,
+              window.panel.view.props.api,
               this.storeImage[0].filename,
               {
                 view: 'compact'
