@@ -41,6 +41,10 @@ class BaseClass
      */
     public static function list(): array
     {
+        if (file_exists(static::file()) === false) {
+            return [];
+        }
+
         return Data::read(static::file());
     }
 
