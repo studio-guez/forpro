@@ -198,18 +198,19 @@ export interface IBlock {
 }
 
 export interface ISeo {
-    metaTemplate: string
-    metaDescription: string
-    metaAuthor: string
-    metaImage: string
-    metaPhoneNumber: string
-    ogTemplate: string
+    /** Page title with the title template already applied */
+    title: string
+    description: string
+    canonicalUrl: string
+    /** Robots directives, e.g. "all" or "noindex,nofollow" */
+    robots: string
+    /** Locale in og:locale format, e.g. "fr_CH" */
+    locale: string
+    ogTitle: string
     ogDescription: string
-    ogImage: string
-    ogSiteName: string
-    twitterTemplate: string
-    twitterDescription: string
-    twitterImage: string
+    ogSiteName: string | null
+    ogType: string
+    ogImage: string | null
     twitterCardType: string
     twitterSite: string
     twitterCreator: string

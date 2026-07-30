@@ -4,6 +4,10 @@ header("Access-Control-Allow-Origin: *");
 
 return [
     "tobimori.seo.canonicalBase" => "https://for-pro.ch",
+    "tobimori.seo.lang" => "fr_CH",
+    "tobimori.seo.default.metaTemplate" => fn($page) => $page->site()->title()->isNotEmpty()
+        ? '{{ title }} - {{ site.title }}'
+        : '{{ title }}',
     "url_frontend" => "https://for-pro.ch/",
     'content' => [
         'salt' => getenv('KIRBY_CONTENT_SALT'),
