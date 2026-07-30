@@ -45,10 +45,10 @@ export default {
   },
   computed: {
     changes() {
-      return this.$store.getters['content/changes']()
+      return window.panel.content.diff()
     },
     metaDescription() {
-      let metaDescription = this.$store.getters["content/values"]()
+      let metaDescription = (window.panel.content.version("changes") ?? {})
         .metadescription;
 
       return metaDescription === '' ? this.fallbackDescription : metaDescription
