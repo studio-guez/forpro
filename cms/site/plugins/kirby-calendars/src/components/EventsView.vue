@@ -1,5 +1,5 @@
 <template>
-  <k-inside>
+  <k-panel-inside>
     <k-header>
       {{ $t('kirbycalendars.events') }}
     </k-header>
@@ -44,7 +44,7 @@
           </td>
         </template>
         <template v-else>
-          <td style="color: lightgrey">
+          <td style="color: var(--color-text-dimmed)">
             before request save option
           </td>
         </template>
@@ -100,7 +100,7 @@
         >CSV export</k-button>
       </k-button-group>
     </div>
-  </k-inside>
+  </k-panel-inside>
 </template>
 
 <script>

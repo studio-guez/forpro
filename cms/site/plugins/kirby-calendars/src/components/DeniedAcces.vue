@@ -1,5 +1,5 @@
 <template>
-  <k-inside>
+  <k-panel-inside>
     <k-header>
       <h1>Access Denied</h1>
     </k-header>
@@ -8,7 +8,7 @@
       <p>Sorry, you do not have permission to access this area.</p>
     </k-text>
 
-  </k-inside>
+  </k-panel-inside>
 </template>
 
 <script>

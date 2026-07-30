@@ -1,5 +1,5 @@
 <template>
-  <k-inside>
+  <k-panel-inside>
     <k-header>
       {{ $t('kirbycalendars.calendar') }} - {{ calendar.name }}
 
@@ -85,7 +85,7 @@
       </k-field>
     </k-grid>
 
-  </k-inside>
+  </k-panel-inside>
 </template>
 
 <script>
@@ -131,6 +131,6 @@ export default {
 }
 
 .k-url-field-preview a:hover {
-  color: var(--color-black);
+  color: var(--color-text);
 }
 </style>
