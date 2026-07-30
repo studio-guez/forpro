@@ -64,4 +64,33 @@ Kirby::plugin('mediumsans/forpro', [
             ],
         ];
     },
+    'pageMethods' => [
+        /**
+         * Resolves the page metadata through Kirby SEO's cascade
+         * (page fields -> parent -> site -> plugin defaults) and returns it
+         * in the shape consumed by the SvelteKit frontend.
+         */
+        'seoData' => function () {
+            $meta = $this->metadata();
+
+            return [
+                // General
+                'title'           => $meta->metaTitle()->value(),
+                'description'     => $meta->get('metaDescription')->value(),
+                'canonicalUrl'    => $meta->canonicalUrl(),
+                'robots'          => $meta->robots(),
+                'locale'          => $meta->get('lang')->value(),
+                // Open Graph
+                'ogTitle'         => $meta->ogTitle()->value(),
+                'ogDescription'   => $meta->get('ogDescription')->value(),
+                'ogSiteName'      => $meta->get('ogSiteName')->value(),
+                'ogType'          => $meta->get('ogType')->value(),
+                'ogImage'         => $meta->ogImage(),
+                // Twitter
+                'twitterCardType' => $meta->get('twitterCardType')->value(),
+                'twitterSite'     => $meta->twitterSite()->value(),
+                'twitterCreator'  => $meta->get('twitterCreator')->value(),
+            ];
+        },
+    ],
 ]);
