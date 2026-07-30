@@ -65,10 +65,8 @@ Then edit `cms/.env` and set unique random values for `KIRBY_CONTENT_SALT` and `
 ### 4. Build and start all services
 
 ```bash
-docker compose -f compose.dev.yml up -d --build
+docker compose -f compose.dev.yml up -d --build && docker compose -f compose.dev.yml logs -f restaurant website
 ```
-
-
 
 ### 5. Initialize plugin data OR rsync it from Prod server
 
@@ -87,6 +85,7 @@ done
 ```
 
 ### 6. Fix permissions
+
 ```bash
 docker compose -f compose.dev.yml exec cms sh -c 'chown -R www-data:www-data /var/www/html/site/sessions /var/www/html/site/accounts /var/www/html/content /var/www/html/media /var/www/html/site/plugins/*/data /var/www/html/site/cache'
 ```
@@ -204,6 +203,7 @@ All `composer` commands run inside the running dev container — no local PHP/Co
    ```
 
    Then log into the Panel at http://cms.localhost/panel and check the frontends still receive API data.
+
 6. **Production**: rebuild with `docker compose -f compose.prod.yml up -d --build cms`, or on a non-Docker server re-run `composer install --no-dev --optimize-autoloader` and clear `site/cache/` (see the deployment section below).
 
 ## Troubleshooting
