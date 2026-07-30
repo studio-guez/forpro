@@ -1,5 +1,5 @@
 <template>
-  <k-inside>
+  <k-panel-inside>
     <k-header>
       {{ $t('kirbycalendars.calendars') }}
 
@@ -89,13 +89,10 @@
         </tr>
       </tbody>
     </table>
-  </k-inside>
+  </k-panel-inside>
 </template>
 
 <script>
-import VueClipboard from 'vue-clipboard2';
-Vue.use(VueClipboard);
-
 export default {
   props: {
     calendars: Array,
