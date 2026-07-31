@@ -11,6 +11,5 @@ Dockerfile.dev
 Dockerfile.prod
 .dockerignore
 README.md
-bun.lockb
 menus.conf
 menus-le-ssl.conf
