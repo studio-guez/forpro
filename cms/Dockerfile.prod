@@ -53,8 +53,9 @@ WORKDIR /var/www/html
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader
 
+# content, media, site/accounts, site/sessions, site/cache et les dossiers `data`
+# des plugins sont bind-mountés depuis l'hôte (voir compose.prod.yml).
 RUN rm -rf /var/www/html/content
-COPY content /var/www/html/content
 
 # Bake custom site files (templates, models, blueprints, snippets, config, plugins, ...)
 # into the image so prod (which initializes the kirby_data named volume from the image)
@@ -71,6 +72,7 @@ RUN mkdir -p /var/www/html/site/sessions \
     /var/www/html/site/accounts \
     /var/www/html/site/plugins \
     /var/www/html/site/cache \
+    /var/www/html/content \
     /var/www/html/media
 
 RUN chown -R www-data:www-data /var/www/html/
