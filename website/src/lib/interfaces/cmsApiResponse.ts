@@ -214,6 +214,8 @@ export interface ISeo {
     twitterCardType: string
     twitterSite: string
     twitterCreator: string
+    /** schema.org JSON-LD objects to render as <script type="application/ld+json"> */
+    schemas: Record<string, unknown>[]
 }
 
 
