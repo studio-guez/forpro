@@ -57,15 +57,44 @@
 
 
 <script setup lang="ts">
-import {nextTick, onBeforeUnmount, onMounted, ref, type Ref, type UnwrapRef} from 'vue'
+import {nextTick, onBeforeUnmount, onMounted, ref, computed, type Ref, type UnwrapRef} from 'vue'
+import {useHead} from '#imports'
 import AppHeader from "../components/AppHeader.vue";
 import AppTextContentFoodLab from "../components/AppTextContentFoodLab.vue";
 import AppSvgFoodLab from "../components/AppSvgFoodLab.vue";
 import {scaleTransform} from "~/utils/scaleTransform";
 import {foodLab_GetCurrentWeekMenu, getfoodLabData, type IMenuData__foodLab__weekMenu} from "~/composables/foodLabData";
 
+useHead({ title: 'Food Lab — Menus de la semaine | ForPro' })
+
 const foodLabData = ref<null | IMenuData__foodLab__weekMenu>(null)
 const foodLabData_footer = ref<null | string>(null)
+
+const strip = (html: string) => html?.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() ?? ''
+const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+
+useHead(computed(() => {
+  if (!foodLabData.value) return {}
+  return {
+    script: [{
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Menu',
+        name: 'Food Lab — Menus de la semaine',
+        hasMenuSection: days.map((day, i) => ({
+          '@type': 'MenuSection',
+          name: day,
+          hasMenuItem: [{
+            '@type': 'MenuItem',
+            description: strip((foodLabData.value as any)[`jour${i + 1}_menu`]),
+            offers: { '@type': 'Offer', price: foodLabData.value!.prix, priceCurrency: 'CHF' },
+          }],
+        })),
+      }),
+    }],
+  }
+}))
 
 const elementToScale: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
 const elementForSize: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
