@@ -125,10 +125,5 @@ services:
       - "traefik.http.services.cms.loadbalancer.server.port=80"
 
 volumes:
-  kirby_data:
-  kirby_accounts:
   kirby_cache:
-  kirby_plugins:
-  kirby_content:
-  kirby_media:
   kirby_sessions:

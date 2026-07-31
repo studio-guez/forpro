@@ -72,13 +72,17 @@ services:
     build:
       context: ./cms
       dockerfile: Dockerfile.prod
+    # Ne monter QUE l'état mutable : le code vient de l'image. Bind mounts (et non
+    # volumes nommés) pour que le contenu reste rsyncable/sauvegardable depuis l'hôte.
     volumes:
-      - kirby_data:/var/www/html
-      - kirby_accounts:/var/www/html/site/accounts
-      - kirby_cache:/var/www/html/site/cache
-      - kirby_plugins:/var/www/html/site/plugins
-      - kirby_content:/var/www/html/content
-      - kirby_media:/var/www/html/media
+      - ./cms/content:/var/www/html/content
+      - ./cms/media:/var/www/html/media
+      - ./cms/site/accounts:/var/www/html/site/accounts
+      - ./cms/site/sessions:/var/www/html/site/sessions
+      - ./cms/site/cache:/var/www/html/site/cache
+      - ./cms/site/plugins/kirby-calendars/data:/var/www/html/site/plugins/kirby-calendars/data
+      - ./cms/site/plugins/kirby-foodlab/data:/var/www/html/site/plugins/kirby-foodlab/data
+      - ./cms/site/plugins/kirby-menu-du-jour/data:/var/www/html/site/plugins/kirby-menu-du-jour/data
     env_file:
       - ./cms/.env
     expose:
@@ -93,11 +97,5 @@ services:
       - "traefik.http.services.cms.loadbalancer.server.port=80"
 
 volumes:
-  kirby_data:
-  kirby_accounts:
-  kirby_cache:
-  kirby_plugins:
-  kirby_content:
-  kirby_media:
   traefik_certs:
   traefik_config:
