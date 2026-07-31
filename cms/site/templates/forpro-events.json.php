@@ -38,7 +38,7 @@ $json['options'] = [
 
 $json['body'] = $body;
 
-$json['seo'] = $page->seoData();
+$json['seo'] = Utils::getSeoDataFromPage($page);
 
 
 
