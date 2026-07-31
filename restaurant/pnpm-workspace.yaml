@@ -1,12 +1,4 @@
 # pnpm 11 configuration for this single-package project.
-# - verifyDepsBeforeRun: don't auto-run `pnpm install` before `pnpm run <script>`.
-# - allowBuilds: pnpm 11 blocks dependency build scripts by default and, with
-#   strictDepBuilds defaulting to true, fails the install on unreviewed ones.
-#   esbuild (via vite) and @parcel/watcher (via sass) both ship prebuilt binaries
-#   as platform-specific optional packages, so their install scripts are only an
-#   optimisation. Denying them keeps `pnpm install` non-interactive and avoids
-#   running third-party code at install time; verified that `pnpm run build`
-#   still succeeds with both denied.
 verifyDepsBeforeRun: false
 allowBuilds:
   esbuild: false
