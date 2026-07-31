@@ -27,6 +27,11 @@
     "chillerlan/php-qrcode": "^5.0",
     "spatie/schema-org": "^3.14"
   },
+  "autoload": {
+    "psr-4": {
+      "tobimori\\Seo\\": "site/plugins/kirby-seo/classes"
+    }
+  },
   "config": {
     "allow-plugins": {
       "getkirby/composer-installer": true
