@@ -84,7 +84,7 @@ Then edit `cms/.env` and set unique random values for `KIRBY_CONTENT_SALT` and `
 ### 4. Build and start all services
 
 ```bash
-docker compose -f compose.dev.yml up -d --build && docker compose -f compose.dev.yml logs -f restaurant website
+docker compose -f compose.dev.yml up -d --build && docker compose -f compose.dev.yml logs -f restaurant website menu
 ```
 
 ### 5. Initialize plugin data OR rsync it from Prod server
