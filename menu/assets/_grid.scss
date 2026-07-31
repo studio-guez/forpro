@@ -1,0 +1,198 @@
+@use '_scss-params';
+
+.app-width-gutter {
+  box-sizing: border-box;
+  padding-left: var(--app-flex--gap_half);
+  padding-right: var(--app-flex--gap_half);
+}
+
+.app-width-100 {
+  width: 100%;
+}
+
+.app-flex {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  &.app-flex--nowrap {flex-wrap: nowrap}
+
+  &.app-flex--gap_half    {gap: var(--app-flex--gap_half)}
+  &.app-flex--gap_regular {gap: var(--app-gutter_regular)}
+  &.app-flex--gap_large   {gap: var(--app-gutter_large)}
+
+  &.app-flex--column-gap_half    {column-gap: var(--app-flex--gap_half)}
+  &.app-flex--column-gap_regular {column-gap: var(--app-gutter_regular)}
+  &.app-flex--column-gap_large   {column-gap: var(--app-gutter_large)}
+
+  &.app-flex--row-gap_half    {row-gap: var(--app-flex--gap_half)}
+  &.app-flex--row-gap_regular {row-gap: var(--app-gutter_regular)}
+  &.app-flex--row-gap_large   {row-gap: var(--app-gutter_large)}
+
+
+  &.app-flex--row             {flex-direction: row;}
+  &.app-flex--row-reverse     {flex-direction: row-reverse;}
+  &.app-flex--column          {flex-direction: column;}
+  &.app-flex--column-reverse  {flex-direction: column-reverse;}
+
+  &.app-flex--wrap          {flex-wrap: wrap;}
+  &.app-flex--wrap-reverse  {flex-wrap: wrap-reverse;}
+  &.app-flex--nowrap        {flex-wrap: nowrap;}
+
+  &.app-flex--align_center      {align-items: center}
+  &.app-flex--align_baseline    {align-items: baseline}
+  &.app-flex--align_flex-start  {align-items: flex-start}
+  &.app-flex--align_flex-end    {align-items: flex-end}
+
+  &.app-flex--justify_center        {justify-content: center}
+  &.app-flex--justify_space-around  {justify-content: space-around}
+  &.app-flex--justify_space-between {justify-content: space-between}
+  &.app-flex--justify_space-evenly  {justify-content: space-evenly}
+  &.app-flex--justify_end  {justify-content: flex-end}
+
+  > [class*=app-flex__basis-] { box-sizing: border-box}
+  > .app-flex__basis-auto  { flex-basis: auto;}
+  > .app-flex__basis-0-24  { flex-basis: calc(100% / 24 * 0);}
+  > .app-flex__basis-1-24  { flex-basis: calc(100% / 24 * 1);}
+  > .app-flex__basis-2-24  { flex-basis: calc(100% / 24 * 2);}
+  > .app-flex__basis-3-24  { flex-basis: calc(100% / 24 * 3);}
+  > .app-flex__basis-4-24  { flex-basis: calc(100% / 24 * 4);}
+  > .app-flex__basis-5-24  { flex-basis: calc(100% / 24 * 5);}
+  > .app-flex__basis-6-24  { flex-basis: calc(100% / 24 * 6);}
+  > .app-flex__basis-7-24  { flex-basis: calc(100% / 24 * 7);}
+  > .app-flex__basis-8-24  { flex-basis: calc(100% / 24 * 8);}
+  > .app-flex__basis-9-24  { flex-basis: calc(100% / 24 * 9);}
+  > .app-flex__basis-10-24 { flex-basis: calc(100% / 24 * 10);}
+  > .app-flex__basis-11-24 { flex-basis: calc(100% / 24 * 11);}
+  > .app-flex__basis-12-24 { flex-basis: calc(100% / 24 * 12);}
+  > .app-flex__basis-13-24 { flex-basis: calc(100% / 24 * 13);}
+  > .app-flex__basis-14-24 { flex-basis: calc(100% / 24 * 14);}
+  > .app-flex__basis-15-24 { flex-basis: calc(100% / 24 * 15);}
+  > .app-flex__basis-16-24 { flex-basis: calc(100% / 24 * 16);}
+  > .app-flex__basis-17-24 { flex-basis: calc(100% / 24 * 17);}
+  > .app-flex__basis-18-24 { flex-basis: calc(100% / 24 * 18);}
+  > .app-flex__basis-19-24 { flex-basis: calc(100% / 24 * 19);}
+  > .app-flex__basis-20-24 { flex-basis: calc(100% / 24 * 20);}
+  > .app-flex__basis-21-24 { flex-basis: calc(100% / 24 * 21);}
+  > .app-flex__basis-22-24 { flex-basis: calc(100% / 24 * 22);}
+  > .app-flex__basis-23-24 { flex-basis: calc(100% / 24 * 23);}
+  > .app-flex__basis-24-24 { flex-basis: calc(100% / 24 * 24);}
+
+  > .app-flex__basis-1-1  { flex-basis: calc(100% / 1 * 1);}
+
+  > .app-flex__basis-1-2  { flex-basis: calc(100% / 2 * 1);}
+  > .app-flex__basis-2-2  { flex-basis: calc(100% / 2 * 1);}
+
+  > .app-flex__basis-1-3  { flex-basis: calc(100% / 3 * 1);}
+  > .app-flex__basis-2-3  { flex-basis: calc(100% / 3 * 2);}
+  > .app-flex__basis-2-3  { flex-basis: calc(100% / 3 * 3);}
+
+  > .app-flex__basis-1-4  { flex-basis: calc(100% / 4 * 1);}
+  > .app-flex__basis-2-4  { flex-basis: calc(100% / 4 * 2);}
+  > .app-flex__basis-3-4  { flex-basis: calc(100% / 4 * 3);}
+  > .app-flex__basis-3-4  { flex-basis: calc(100% / 4 * 4);}
+
+  > .app-flex__basis-1-5  { flex-basis: calc(100% / 5 * 1);}
+  > .app-flex__basis-2-5  { flex-basis: calc(100% / 5 * 2);}
+  > .app-flex__basis-3-5  { flex-basis: calc(100% / 5 * 3);}
+  > .app-flex__basis-4-5  { flex-basis: calc(100% / 5 * 4);}
+  > .app-flex__basis-5-5  { flex-basis: calc(100% / 5 * 5);}
+}
+
+
+[class*=app-grid--] {
+  display: grid;
+  gap: var(--app-gutter_regular);
+
+  &.app-grid--gap_half    {gap: var(--app-flex--gap_half)}
+  &.app-grid--gap_regular {gap: var(--app-gutter_regular)}
+  &.app-grid--gap_large   {gap: var(--app-gutter_large)}
+  &.app-grid--column-gap_half    {column-gap: var(--app-flex--gap_half)}
+  &.app-grid--column-gap_regular {column-gap: var(--app-gutter_regular)}
+  &.app-grid--column-gap_large   {column-gap: var(--app-gutter_large)}
+  &.app-grid--row-gap_half    {row-gap: var(--app-flex--gap_half)}
+  &.app-grid--row-gap_regular {row-gap: var(--app-gutter_regular)}
+  &.app-grid--row-gap_large   {row-gap: var(--app-gutter_large)}
+}
+
+
+.app-grid--column-1     {grid-template-columns: repeat(1,minmax(0,1fr)); }
+.app-grid--column-2     {grid-template-columns: repeat(2,minmax(0,1fr)); }
+.app-grid--column-3     {grid-template-columns: repeat(3,minmax(0,1fr)); }
+.app-grid--column-4     {grid-template-columns: repeat(4,minmax(0,1fr)); }
+.app-grid--column-5     {grid-template-columns: repeat(5,minmax(0,1fr)); }
+.app-grid--column-6     {grid-template-columns: repeat(6,minmax(0,1fr)); }
+.app-grid--column-7     {grid-template-columns: repeat(7,minmax(0,1fr)); }
+.app-grid--column-8     {grid-template-columns: repeat(8,minmax(0,1fr)); }
+.app-grid--column-9     {grid-template-columns: repeat(9,minmax(0,1fr)); }
+.app-grid--column-10    {grid-template-columns: repeat(10,minmax(0,1fr)) }
+.app-grid--column-11    {grid-template-columns: repeat(11,minmax(0,1fr)) }
+.app-grid--column-12    {grid-template-columns: repeat(12,minmax(0,1fr)) }
+.app-grid--column-13    {grid-template-columns: repeat(13,minmax(0,1fr)) }
+.app-grid--column-14    {grid-template-columns: repeat(14,minmax(0,1fr)) }
+.app-grid--column-15    {grid-template-columns: repeat(15,minmax(0,1fr)) }
+.app-grid--column-16    {grid-template-columns: repeat(16,minmax(0,1fr)) }
+.app-grid--column-17    {grid-template-columns: repeat(17,minmax(0,1fr)) }
+.app-grid--column-18    {grid-template-columns: repeat(18,minmax(0,1fr)) }
+.app-grid--column-19    {grid-template-columns: repeat(19,minmax(0,1fr)) }
+.app-grid--column-20    {grid-template-columns: repeat(20,minmax(0,1fr)) }
+.app-grid--column-21    {grid-template-columns: repeat(21,minmax(0,1fr)) }
+.app-grid--column-22    {grid-template-columns: repeat(22,minmax(0,1fr)) }
+.app-grid--column-23    {grid-template-columns: repeat(23,minmax(0,1fr)) }
+.app-grid--column-24    {grid-template-columns: repeat(24,minmax(0,1fr)) }
+
+
+
+@media (max-width: scss-params.$fp-breakpoint-sm) {
+  .app-grid--sm--column-1     {grid-template-columns: repeat(1,minmax(0,1fr)); }
+  .app-grid--sm--column-2     {grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .app-grid--sm--column-3     {grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .app-grid--sm--column-4     {grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .app-grid--sm--column-5     {grid-template-columns: repeat(5,minmax(0,1fr)); }
+  .app-grid--sm--column-6     {grid-template-columns: repeat(6,minmax(0,1fr)); }
+  .app-grid--sm--column-7     {grid-template-columns: repeat(7,minmax(0,1fr)); }
+  .app-grid--sm--column-8     {grid-template-columns: repeat(8,minmax(0,1fr)); }
+  .app-grid--sm--column-9     {grid-template-columns: repeat(9,minmax(0,1fr)); }
+  .app-grid--sm--column-10    {grid-template-columns: repeat(10,minmax(0,1fr)) }
+  .app-grid--sm--column-11    {grid-template-columns: repeat(11,minmax(0,1fr)) }
+  .app-grid--sm--column-12    {grid-template-columns: repeat(12,minmax(0,1fr)) }
+  .app-grid--sm--column-13    {grid-template-columns: repeat(13,minmax(0,1fr)) }
+  .app-grid--sm--column-14    {grid-template-columns: repeat(14,minmax(0,1fr)) }
+  .app-grid--sm--column-15    {grid-template-columns: repeat(15,minmax(0,1fr)) }
+  .app-grid--sm--column-16    {grid-template-columns: repeat(16,minmax(0,1fr)) }
+  .app-grid--sm--column-17    {grid-template-columns: repeat(17,minmax(0,1fr)) }
+  .app-grid--sm--column-18    {grid-template-columns: repeat(18,minmax(0,1fr)) }
+  .app-grid--sm--column-19    {grid-template-columns: repeat(19,minmax(0,1fr)) }
+  .app-grid--sm--column-20    {grid-template-columns: repeat(20,minmax(0,1fr)) }
+  .app-grid--sm--column-21    {grid-template-columns: repeat(21,minmax(0,1fr)) }
+  .app-grid--sm--column-22    {grid-template-columns: repeat(22,minmax(0,1fr)) }
+  .app-grid--sm--column-23    {grid-template-columns: repeat(23,minmax(0,1fr)) }
+  .app-grid--sm--column-24    {grid-template-columns: repeat(24,minmax(0,1fr)) }
+}
+
+@media (max-width: scss-params.$fp-breakpoint-xs) {
+  .app-grid--xs--column-1     {grid-template-columns: repeat(1,minmax(0,1fr)); }
+  .app-grid--xs--column-2     {grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .app-grid--xs--column-3     {grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .app-grid--xs--column-4     {grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .app-grid--xs--column-5     {grid-template-columns: repeat(5,minmax(0,1fr)); }
+  .app-grid--xs--column-6     {grid-template-columns: repeat(6,minmax(0,1fr)); }
+  .app-grid--xs--column-7     {grid-template-columns: repeat(7,minmax(0,1fr)); }
+  .app-grid--xs--column-8     {grid-template-columns: repeat(8,minmax(0,1fr)); }
+  .app-grid--xs--column-9     {grid-template-columns: repeat(9,minmax(0,1fr)); }
+  .app-grid--xs--column-10    {grid-template-columns: repeat(10,minmax(0,1fr)) }
+  .app-grid--xs--column-11    {grid-template-columns: repeat(11,minmax(0,1fr)) }
+  .app-grid--xs--column-12    {grid-template-columns: repeat(12,minmax(0,1fr)) }
+  .app-grid--xs--column-13    {grid-template-columns: repeat(13,minmax(0,1fr)) }
+  .app-grid--xs--column-14    {grid-template-columns: repeat(14,minmax(0,1fr)) }
+  .app-grid--xs--column-15    {grid-template-columns: repeat(15,minmax(0,1fr)) }
+  .app-grid--xs--column-16    {grid-template-columns: repeat(16,minmax(0,1fr)) }
+  .app-grid--xs--column-17    {grid-template-columns: repeat(17,minmax(0,1fr)) }
+  .app-grid--xs--column-18    {grid-template-columns: repeat(18,minmax(0,1fr)) }
+  .app-grid--xs--column-19    {grid-template-columns: repeat(19,minmax(0,1fr)) }
+  .app-grid--xs--column-20    {grid-template-columns: repeat(20,minmax(0,1fr)) }
+  .app-grid--xs--column-21    {grid-template-columns: repeat(21,minmax(0,1fr)) }
+  .app-grid--xs--column-22    {grid-template-columns: repeat(22,minmax(0,1fr)) }
+  .app-grid--xs--column-23    {grid-template-columns: repeat(23,minmax(0,1fr)) }
+  .app-grid--xs--column-24    {grid-template-columns: repeat(24,minmax(0,1fr)) }
+}
