@@ -1,6 +1,6 @@
 # ForPro
 
-A multi-service platform running Kirby CMS (API), a restaurant frontend and a website frontend, all orchestrated with Docker and Traefik.
+A multi-service platform running Kirby CMS (API), a restaurant frontend, a website frontend and a daily-menus screens app, all orchestrated with Docker and Traefik.
 
 ## Architecture
 
@@ -8,6 +8,7 @@ A multi-service platform running Kirby CMS (API), a restaurant frontend and a we
 ├── cms/            Kirby CMS 5.0 (PHP 8.4, Apache)
 ├── restaurant/     SvelteKit 2.0 / Svelte 5 frontend (Node 24, pnpm)
 ├── website/        SvelteKit 2.0 / Svelte 5 frontend (Node 24, pnpm)
+├── menu/           Nuxt 3 daily-menus screens app (Node 24, npm)
 ├── compose.dev.yml Docker Compose for local development
 └── compose.prod.yml Docker Compose for production
 ```
@@ -19,7 +20,23 @@ Services are routed through **Traefik** reverse proxy:
 | CMS        | http://cms.localhost        | https://api.for-pro.ch     |
 | Restaurant | http://restaurant.localhost | https://foodlab.for-pro.ch |
 | Website    | http://website.localhost    | https://for-pro.ch         |
+| Menu       | http://menu.localhost       | https://menus.for-pro.ch   |
 | Traefik    | http://localhost:8888       | —                          |
+
+### Menu app (Nuxt)
+
+`menu/` renders the daily menus for the FoodLab and the FoodCourt screens. It is a
+client-only SPA (`ssr: false`) that fetches the CMS site routes exposed by the
+`kirby-menu-du-jour` plugin (`/foodlab`, `/foodcourt`, `/slider-images`).
+
+The CMS base URL is not hardcoded: it comes from the `cmsBaseUrl` public runtime
+config in `menu/nuxt.config.ts`, overridable with the `NUXT_PUBLIC_CMS_BASE_URL`
+environment variable (set to `http://cms.localhost` in `compose.dev.yml`). Because the
+app is a SPA, the value is baked in at build time in production — `compose.prod.yml`
+passes it as a build arg.
+
+The restaurant frontend links to this app through `PUBLIC_MENU_BASE_URL`
+(`restaurant/.env.development` / `restaurant/.env.production`).
 
 ### CMS Plugins
 
@@ -53,7 +70,7 @@ cd forpro/
 Add the following line to your `/etc/hosts` file:
 
 ```
-127.0.0.1 restaurant.localhost website.localhost cms.localhost
+127.0.0.1 restaurant.localhost website.localhost cms.localhost menu.localhost
 ```
 
 ### 3. Set up environment variables
@@ -97,12 +114,14 @@ docker compose -f compose.dev.yml exec cms sh -c 'chown -R www-data:www-data /va
 - **CMS Panel**: http://cms.localhost/panel
 - **Restaurant**: http://restaurant.localhost
 - **Website**: http://website.localhost
+- **Menu**: http://menu.localhost (FoodLab) and http://menu.localhost/foodcourt
 - **Traefik Dashboard**: http://localhost:8888
 
 ### Development workflow
 
 - **CMS**: Source files in `cms/` are mounted into the container. Changes to `site/plugins/`, `site/blueprints/`, `site/templates/`, `site/config/`, and `content/` are reflected immediately.
 - **Restaurant / Website**: Source files are mounted with hot-reload via SvelteKit dev server.
+- **Menu**: Source files are mounted with hot-reload via the Nuxt dev server.
 
 ## Maintenance: fix oversized / CMYK images
 
@@ -176,6 +195,22 @@ Both frontends are upgraded the same way. All `pnpm` commands run inside the run
    docker compose -f compose.dev.yml up -d --build restaurant website
    ```
 
+### Menu (Nuxt)
+
+The menu app uses **npm** (`package-lock.json`), not pnpm. All commands run inside the running dev container.
+
+```bash
+# Upgrade packages within the ranges of package.json and refresh the lockfile
+docker compose -f compose.dev.yml exec menu npm update
+# Audit for vulnerabilities
+docker compose -f compose.dev.yml exec menu npm audit
+# Rebuild
+docker compose -f compose.dev.yml up -d --build menu
+```
+
+> `Dockerfile.prod` runs `npm ci`, so `package-lock.json` must stay in sync with `package.json`.
+> Regenerate it inside the container with `docker compose -f compose.dev.yml exec menu npm install --package-lock-only` and commit the result.
+
 ### CMS (Kirby)
 
 All `composer` commands run inside the running dev container — no local PHP/Composer installation is needed.
@@ -211,7 +246,7 @@ All `composer` commands run inside the running dev container — no local PHP/Co
 ## Troubleshooting
 
 - **Permission errors on CMS**: In development, the image maps the `www-data` user to your host user via the `UID` / `GID` build args in `compose.dev.yml` (defaults: `1000` / `1000`). If your host user has a different UID/GID, adjust the args and rebuild with `docker compose -f compose.dev.yml build cms`.
-- **Port conflicts**: Ensure ports `80`, `443` (prod) or `80`, `5173`, `5174`, `8000`, `8888` (dev) are not in use.
+- **Port conflicts**: Ensure ports `80`, `443` (prod) or `80`, `3000`, `5173`, `5174`, `8000`, `8888` (dev) are not in use.
 
 ## Deployment process PROD
 
@@ -253,6 +288,21 @@ rsync -avz --delete \
   --exclude='ecosystem.config.cjs' \
   -e "ssh -i ~/.ssh/<key>" \
   ./restaurant/ <user>@<server>:/var/www/restaurant
+```
+
+#### Menu (Nuxt)
+
+```bash
+rsync -avz --delete \
+  --exclude='node_modules' \
+  --exclude='.nuxt' \
+  --exclude='.output' \
+  --exclude='.env' \
+  --exclude='.env.*' \
+  --exclude='.DS_Store' \
+  --exclude='ecosystem.config.cjs' \
+  -e "ssh -i ~/.ssh/<key>" \
+  ./menu/ <user>@<server>:/var/www/menu
 ```
 
 #### CMS (Kirby)
@@ -309,6 +359,12 @@ cd /var/www/restaurant
 pnpm install
 pnpm run build
 pm2 restart restaurant
+
+# Menu (npm, not pnpm)
+cd /var/www/menu
+npm ci
+npm run build
+pm2 restart menus
 
 # CMS
 cd /var/www/cms

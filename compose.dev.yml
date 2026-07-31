@@ -65,6 +65,30 @@ services:
       - "traefik.http.routers.website.entrypoints=web"
       - "traefik.http.services.website.loadbalancer.server.port=5173"
 
+  # Nuxt
+  menu:
+    build:
+      context: ./menu
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./menu:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NUXT_PUBLIC_CMS_BASE_URL=http://cms.localhost
+    extra_hosts:
+      - "cms.localhost:host-gateway"
+    restart: unless-stopped
+    depends_on:
+      - cms
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.menu.rule=Host(`menu.localhost`)"
+      - "traefik.http.routers.menu.entrypoints=web"
+      - "traefik.http.services.menu.loadbalancer.server.port=3000"
+
   # Kirby CMS
   cms:
     build:
