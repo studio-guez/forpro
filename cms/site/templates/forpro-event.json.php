@@ -14,7 +14,7 @@ $json = [];
 
 $showMenu = $page->showMenu()->toBool();
 $showNewsletter = $page->showNewsletter()->toBool();
-$body = $page->body()->toBlocks()->map(function ($item){
+$body = $page->body()->toBlocks()->map(function ($item) {
 
     $content = $item->toArray();
 
@@ -23,7 +23,7 @@ $body = $page->body()->toBlocks()->map(function ($item){
     Utils::muteImageFilesDataIfBlocksHasKeyValue('profiles', $content);
 
     return [
-        'image'     => array_values( Utils::getImageArrayDataInPage($item->image()->toFiles()) ),
+        'image'     => array_values(Utils::getImageArrayDataInPage($item->image()->toFiles())),
         'content'   => $content,
     ];
 })->data();
@@ -38,13 +38,8 @@ $json['options'] = [
 
 $json['body'] = $body;
 
-$json['seo'] = $page->seoData();
+$json['seo'] = Utils::getSeoDataFromPage($page);
 
 $json['pageInfo'] = $page->content()->toArray();
 
 echo json_encode($json);
-
-
-
-
-

@@ -28,9 +28,11 @@ Services are routed through **Traefik** reverse proxy:
 | image-guard        | Downscales oversized uploads, converts CMYK JPEGs to RGB |
 | kirby-calendars    | Calendar data (critical)                                 |
 | kirby-foodlab      | Requires Chromium Headless + Puppeteer for PDFs          |
-| kirby-forpro       | Core plugin                                              |
 | kirby-menu-du-jour | Menu management                                          |
 | kirby-seo          | SEO utilities                                            |
+
+ForPro page types, blocks and the `booking` route live directly in `cms/site/`
+(blueprints, models, templates, config) rather than in a plugin.
 
 ## Local Development
 
