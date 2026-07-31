@@ -33,8 +33,7 @@ Run it through Docker with the rest of the stack, then open http://menu.localhos
 docker compose -f compose.dev.yml up -d --build menu
 ```
 
-The package manager is **npm** (`package-lock.json`), unlike the SvelteKit apps which
-use pnpm.
+The package manager is **pnpm** (`pnpm-lock.yaml`), matching the SvelteKit apps.
 
 ## Menu source files (historical)
 
