@@ -440,42 +440,40 @@ export default {
 
             this.isGeneratingPDF = true;
 
-            let url =
-                this.$api.endpoint +
-                "/restaurant/menu/generate/" +
-                (withAssets ? "with-assets" : "without-assets") +
-                (publish ? "/publish" : "");
-
             if (publish) {
-                // Publish: hidden iframe to trigger save + download
-                const iframe = document.createElement("iframe");
-                iframe.style.display = "none";
-                document.body.appendChild(iframe);
-
-                iframe.onload = () => {
-                    setTimeout(() => {
-                        document.body.removeChild(iframe);
-                        this.isGeneratingPDF = false;
+                // Authenticated POST: the endpoint writes files and updates site content
+                this.$api
+                    .post("/restaurant/menu/generate/with-assets/publish")
+                    .then(() => {
                         this.$panel.notification.success("Le PDF a été publié avec succès",
                         );
-                    }, 1000);
-                };
+                    })
+                    .catch((error) => {
+                        this.$panel.notification.error(
+                            error.message || "La publication du PDF a échoué",
+                        );
+                    })
+                    .finally(() => {
+                        this.isGeneratingPDF = false;
+                    });
 
-                iframe.src = url;
-                setTimeout(() => {
-                    this.isGeneratingPDF = false;
-                }, 2500);
-            } else {
-                // Preview: open in new tab via link click (avoids popup blocker)
-                const a = document.createElement("a");
-                a.href = url;
-                a.target = "_blank";
-                a.rel = "noopener";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                this.isGeneratingPDF = false;
+                return;
             }
+
+            // Preview: open in new tab via link click (avoids popup blocker)
+            const url =
+                this.$api.endpoint +
+                "/restaurant/menu/generate/" +
+                (withAssets ? "with-assets" : "without-assets");
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.target = "_blank";
+            a.rel = "noopener";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            this.isGeneratingPDF = false;
         },
         updateTableOrder(category) {
             const updatedList = this[category];
