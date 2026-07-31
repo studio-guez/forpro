@@ -65,7 +65,8 @@
 
 
 <script setup lang="ts">
-import {nextTick, onBeforeUnmount, onMounted, ref, type Ref, type UnwrapRef} from 'vue'
+import {nextTick, onBeforeUnmount, onMounted, ref, computed, type Ref, type UnwrapRef} from 'vue'
+import {useHead} from '#imports'
 import AppHeader from "../components/AppHeader.vue";
 import AppTextContent from "../components/AppTextContent.vue";
 import AppSvgFoodCourt from "../components/AppSvgFoodCourt.vue";
@@ -76,7 +77,36 @@ import {
   type IMenuData__foodCourt__weekMenu
 } from "~/composables/foodCourtData";
 
+useHead({ title: 'Food Court — Menus de la semaine | ForPro' })
+
 const foodCourtData = ref<null | IMenuData__foodCourt__weekMenu>(null)
+
+const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+
+useHead(computed(() => {
+  if (!foodCourtData.value) return {}
+  const d = foodCourtData.value
+  return {
+    script: [{
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Menu',
+        name: 'Food Court — Menus de la semaine',
+        hasMenuSection: ['jour1', 'jour2', 'jour3', 'jour4', 'jour5'].map((jour, i) => ({
+          '@type': 'MenuSection',
+          name: days[i],
+          hasMenuItem: [1, 2, 3, 4].map(s => ({
+            '@type': 'MenuItem',
+            name: (d as any)[`station${s}_name`],
+            description: [(d as any)[`${jour}_station${s}_menu`], (d as any)[`${jour}_station${s}_description`]].filter(Boolean).join(' — '),
+            offers: { '@type': 'Offer', price: (d as any)[`${jour}_station${s}_prix_public`], priceCurrency: 'CHF' },
+          })),
+        })),
+      }),
+    }],
+  }
+}))
 
 const elementToScale: Ref<UnwrapRef<null | HTMLElement>> = ref(null)
 const elementForSize: Ref<UnwrapRef<null | HTMLElement>> = ref(null)

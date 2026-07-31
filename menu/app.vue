@@ -14,6 +14,24 @@
 
 
 <script setup lang="ts">
+import { useHead } from '#imports'
+
+useHead({
+    script: [{
+        type: 'application/ld+json',
+        innerHTML: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FoodEstablishment',
+            name: 'ForPro',
+            url: 'https://menus.for-pro.ch',
+            hasMenu: {
+                '@type': 'Menu',
+                name: 'Menus de la semaine',
+                url: 'https://menus.for-pro.ch',
+            },
+        }),
+    }],
+})
 </script>
 
 
