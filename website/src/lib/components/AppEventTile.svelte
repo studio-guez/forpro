@@ -195,21 +195,6 @@ export let isArchive = false;
     object-fit: cover;
     border-radius: 1rem;
 
-    &.app-event-tile__cover--default {
-      background: var(--app-color--blue);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      > div {
-        font-size: 3rem;
-        flex-wrap: nowrap;
-        font-weight: 900;
-        line-height: 1em;
-        transform: rotate(-5deg);
-      }
-    }
-
     .app-event-tile--is-archive & {
       display: none;
     }

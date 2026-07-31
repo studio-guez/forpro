@@ -57,7 +57,7 @@
                                 src="{`https://www.youtube.com/embed/${youtubeId}?modestbranding=1&playsinline=1&color=white`}"
                                 frameborder="0"
                                 allowfullscreen
-                        />
+                        ></iframe>
                     </div>
                 {/if}
 

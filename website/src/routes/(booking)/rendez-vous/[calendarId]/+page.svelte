@@ -173,7 +173,10 @@
                                     {#each services as service, index}
                                         <div class="flex-grow p-2 mx-2 mt-3 text-xs leading-4 text-center text-black bg-gray-200 rounded border border-solid border-2 cursor-pointer"
                                              class:border-black={selectedServiceId === service.id}
+                                             role="button"
+                                             tabindex="0"
                                              on:click={() => selectedServiceId = service.id}
+                                             on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && (selectedServiceId = service.id)}
                                         >
                                             {service.name}
                                         </div>
@@ -277,12 +280,13 @@
                                                     <div class="px-2 mt-6 w-full sm:mt-0 sm:w-1/2">
                                                         <div class="flex flex-col">
                                                             <div class="block">
-                                                                <label class="flex text-sm font-semibold leading-5 cursor-default">Nom *</label>
+                                                                <label for="booking-lastname" class="flex text-sm font-semibold leading-5 cursor-default">Nom *</label>
                                                             </div>
                                                             <div class="relative mt-1 rounded-md"
                                                                  style="box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px; list-style: outside;"
                                                             >
                                                                 <input name="lastname"
+                                                                       id="booking-lastname"
                                                                        type="text"
                                                                        placeholder="Nom"
                                                                        class="block py-2 px-3 m-0 w-full text-base bg-white rounded-md border border-gray-300 border-solid appearance-none cursor-text sm:text-sm sm:leading-5 focus:border-blue-600 focus:outline-offset-2"

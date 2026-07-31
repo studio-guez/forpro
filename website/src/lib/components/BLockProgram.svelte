@@ -111,6 +111,7 @@
     {#each usedSpaces as space}
       <button class="block-program__spaces__item"
            style="--space-color: {spacesColors[space]}"
+           class:is-active={activatedSpaces.includes(space)}
            on:click={() => toggleSpaces(space)}
       >
         {space}
@@ -189,7 +190,7 @@
                 class:is-active={timeFilterStatus === 'continue'}
         >en continu</button>
       {#if timeFilterStatus !== null}
-        <button class="block-program__filter-time__container__tag" on:click={() => setTimeFilterStatus(null)} style="padding-bottom: 0;">
+        <button class="block-program__filter-time__container__tag" aria-label="Effacer le filtre horaire" on:click={() => setTimeFilterStatus(null)} style="padding-bottom: 0;">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
         </button>
       {/if}

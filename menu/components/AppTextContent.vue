@@ -14,7 +14,6 @@
 
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import type {CellValue} from "read-excel-file";
 
 const props = defineProps<{

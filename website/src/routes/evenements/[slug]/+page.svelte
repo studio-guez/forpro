@@ -66,11 +66,6 @@
         justify-content: center;
         text-align: center;
 
-        &.first-child-is-animation {
-            padding-top: 0;
-            padding-bottom: 1rem;
-            margin-bottom: -2rem;
-        }
 
         @media (max-width: scss-params.$fp-breakpoint-xs) {
             padding-top: 1rem;
