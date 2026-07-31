@@ -30,6 +30,10 @@
         {#if seo.twitterCreator}
             <meta name="twitter:creator" content="@{seo.twitterCreator}">
         {/if}
+
+        {#each seo.schemas as schema}
+            {@html `<script type="application/ld+json">${JSON.stringify(schema)}</script>`}
+        {/each}
     {/if}
 </svelte:head>
 

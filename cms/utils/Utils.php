@@ -68,6 +68,21 @@ class Utils {
     {
         $meta = $kirbyPage->metadata();
 
+        $schemas = [];
+        if (option('tobimori.seo.generateSchema', false)) {
+            // The hook (page.render:before) only builds WebSite with page-level
+            // data, which is wrong for content pages. Build WebPage ourselves.
+            $webPage = $kirbyPage->schema('WebPage')
+                ->url($meta->canonicalUrl())
+                ->name($meta->metaTitle()->value())
+                ->description($meta->get('metaDescription')->value());
+            if ($ogImage = $meta->ogImage()) {
+                $webPage->image($ogImage);
+            }
+            // Serialize only the WebPage schema; skip WebSite (built by hook).
+            $schemas = [json_decode(json_encode($webPage), true)];
+        }
+
         return [
             // General
             'title'           => $meta->metaTitle()->value(),
@@ -85,6 +100,8 @@ class Utils {
             'twitterCardType' => $meta->get('twitterCardType')->value(),
             'twitterSite'     => $meta->twitterSite()->value(),
             'twitterCreator'  => $meta->get('twitterCreator')->value(),
+            // Schema.org JSON-LD
+            'schemas'         => $schemas,
         ];
     }
 }
