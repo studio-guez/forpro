@@ -20,6 +20,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && docker-php-ext-install -j"$(nproc)" zip gd intl opcache \
     && rm -rf /var/lib/apt/lists/*
 
+# Node + Chromium: requis par Browsershot/puppeteer (génération des PDF du menu)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    nodejs \
+    chromium \
+    fonts-liberation \
+    && rm -rf /var/lib/apt/lists/*
+
+# puppeteer n'embarque pas de binaire ici : on pointe sur le Chromium système
+ENV PUPPETEER_SKIP_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
 # Installe Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -63,6 +74,9 @@ RUN mkdir -p /var/www/html/site/sessions \
     /var/www/html/media
 
 RUN chown -R www-data:www-data /var/www/html/
+
+# Chromium écrit dans $HOME (/var/www) au démarrage : sans droit d'écriture il crashe
+RUN chown www-data:www-data /var/www
 
 RUN apache2ctl configtest
 
