@@ -1,0 +1,36 @@
+@use '_scss-params';
+
+:root {
+  //typo
+  --app-font-baseline: 24px;
+
+  /**
+    color
+   */
+  // color
+  --app-color--pink:              rgb(255, 0, 252);
+  --app-color--green--pastel:     rgb(155, 204, 0);
+  --app-color--orange:      rgb(255, 105, 23);
+  --app-color--yellow:      #ffeb00;
+  --app-color--blue--light: rgb(185, 230, 255);
+  //--app-color--blue--light:  rgb(170, 200, 255); todo: --app-color--blue--light / voir avec ROb le quel bleu on prend
+  --app-color--purple:      #bea5e6;
+  --app-color--purple--dark:      #37007d;
+  --app-color--red:         #f2030d;
+  --app-color--grey--light: #E3D4BE;
+
+  --app-color--green:       rgb(61, 240, 105);
+  --app-color--blue:        rgb(23, 84, 255);
+  --app-color-beige:    #E3D4BE;
+
+
+
+  --fp-color-accueil:                 rgb(242, 3, 13);
+  --fp-color-makerlab:                rgb(255, 0, 252);
+  --fp-color-learninglab:             rgb(23, 84, 255);
+  --fp-color-foodlab:                 rgb(255, 248, 0);
+  --fp-color-grandlab:                rgb(0, 145, 133);
+  --fp-color-hotel_entreprises:       rgb(120, 210, 0);
+  --fp-color-ecole_horlogerie:        rgb(255, 199, 140);
+  --fp-color-creche:                  rgb(185, 230, 255);
+}

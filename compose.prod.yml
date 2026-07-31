@@ -49,6 +49,24 @@ services:
       - "traefik.http.routers.website.entrypoints=web"
       - "traefik.http.services.website.loadbalancer.server.port=3000"
 
+  # Nuxt
+  menu:
+    build:
+      context: ./menu
+      dockerfile: Dockerfile.prod
+      args:
+        NUXT_PUBLIC_CMS_BASE_URL: https://api.for-pro.ch
+    expose:
+      - "3000"
+    restart: unless-stopped
+    depends_on:
+      - cms
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.menu.rule=Host(`menus.for-pro.ch`)"
+      - "traefik.http.routers.menu.entrypoints=web"
+      - "traefik.http.services.menu.loadbalancer.server.port=3000"
+
   # Kirby CMS
   cms:
     build:

@@ -3,6 +3,7 @@
 
 	import {linkTreeIsOpen, menuIsOpen, resaButtonIsHidden} from '../store';
 	import {onMount, tick} from "svelte";
+	import {variables} from '$lib/utils/constants';
 
 	export let data;
 
@@ -119,7 +120,7 @@
 		</a>
 
 		<a
-						href="https://menus.for-pro.ch"
+						href={variables.MENU_BASE_URL}
 						type="button"
 						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 						target="_blank"
@@ -128,7 +129,7 @@
 		</a>
 
 		<a
-						href="https://menus.for-pro.ch/foodcourt"
+						href="{variables.MENU_BASE_URL}/foodcourt"
 						type="button"
 						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 						target="_blank"
