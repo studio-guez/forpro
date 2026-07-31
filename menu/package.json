@@ -10,13 +10,11 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "nuxt": "^3.13.0",
-    "read-excel-file": "^5.8.6",
-    "vue": "latest",
-    "vue-router": "latest"
+    "nuxt": "^4.0.0",
+    "read-excel-file": "^5.8.6"
   },
   "devDependencies": {
     "modern-normalize": "^3.0.1",
-    "sass-embedded": "^1.79.4"
+    "sass-embedded": "^1.89.0"
   }
 }
