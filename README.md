@@ -181,15 +181,22 @@ Both frontends are upgraded the same way. All `pnpm` commands run inside the run
    docker compose -f compose.dev.yml exec restaurant pnpm audit --fix update
    ```
 
-4. **Build scripts**: if a new dependency needs to run install scripts, review `pnpm-workspace.yaml` (`allowBuilds`) — pnpm blocks dependency build scripts by default.
-5. **Verify**: run `pnpm run check` and `pnpm run build` inside the container and fix any errors introduced by the new versions (e.g. Svelte/SvelteKit breaking changes — see the [Svelte migration guides](https://svelte.dev/docs/svelte/v5-migration-guide)):
+4. **Prune stale workarounds**: `overrides` and `minimumReleaseAgeExclude` in `pnpm-workspace.yaml` are stopgaps for upstream problems, and pnpm never reports them as obsolete. Worse, an override caps the range for every consumer in the tree, so a forgotten one silently blocks future majors. After each upgrade, comment them out, re-run `pnpm install` and `pnpm audit`, and delete whatever is no longer needed:
+
+   ```bash
+   docker compose -f compose.dev.yml exec restaurant pnpm install
+   docker compose -f compose.dev.yml exec restaurant pnpm audit
+   ```
+
+5. **Build scripts**: if a new dependency needs to run install scripts, review `pnpm-workspace.yaml` (`allowBuilds`) — pnpm blocks dependency build scripts by default.
+6. **Verify**: run `pnpm run check` and `pnpm run build` inside the container and fix any errors introduced by the new versions (e.g. Svelte/SvelteKit breaking changes — see the [Svelte migration guides](https://svelte.dev/docs/svelte/v5-migration-guide)):
 
    ```bash
    docker compose -f compose.dev.yml exec restaurant pnpm run check
    docker compose -f compose.dev.yml exec restaurant pnpm run build
    ```
 
-6. **Rebuild the containers** to bake the updated lockfile into the image:
+7. **Rebuild the containers** to bake the updated lockfile into the image:
 
    ```bash
    docker compose -f compose.dev.yml up -d --build restaurant website
@@ -213,17 +220,28 @@ All `pnpm` commands run inside the running dev container — no local Node/pnpm 
    ```bash
    docker compose -f compose.dev.yml exec menu pnpm audit
    # fix automatically where possible:
-   docker compose -f compose.dev.yml exec restaurant pnpm audit --fix update
+   docker compose -f compose.dev.yml exec menu pnpm audit --fix update
    ```
 
-4. **Build scripts**: if a new dependency needs to run install scripts, review `pnpm-workspace.yaml` (`allowBuilds`) — pnpm blocks dependency build scripts by default.
-5. **Verify**: run `pnpm run build` inside the container and fix any errors introduced by the new versions:
+   When `pnpm audit --fix` reports "0 vulnerabilities were fixed", no version inside the declared ranges is patched — the fix has to come from an `overrides` entry. Prefer overriding the *closest* dependency that upstream already fixed, and verify with `pnpm run build` that nothing breaks.
+
+4. **Prune stale workarounds**: `overrides` and `minimumReleaseAgeExclude` in `pnpm-workspace.yaml` are stopgaps for upstream problems, and pnpm never reports them as obsolete. Worse, an override caps the range for every consumer in the tree, so a forgotten one silently blocks future majors. After each upgrade, comment them out, re-run `pnpm install` and `pnpm audit`, and delete whatever is no longer needed:
+
+   ```bash
+   docker compose -f compose.dev.yml exec menu pnpm install
+   docker compose -f compose.dev.yml exec menu pnpm audit
+   ```
+
+   The current `glob` / `minimatch` overrides exist only because `nitropack` still pins `archiver@7` (which depends on the unmaintained `archiver-utils`). They become removable as soon as nitropack ships with `archiver@8`.
+
+5. **Build scripts**: if a new dependency needs to run install scripts, review `pnpm-workspace.yaml` (`allowBuilds`) — pnpm blocks dependency build scripts by default.
+6. **Verify**: run `pnpm run build` inside the container and fix any errors introduced by the new versions:
 
    ```bash
    docker compose -f compose.dev.yml exec menu pnpm run build
    ```
 
-6. **Rebuild the container** to bake the updated lockfile into the image:
+7. **Rebuild the container** to bake the updated lockfile into the image:
 
    ```bash
    docker compose -f compose.dev.yml up -d --build menu
