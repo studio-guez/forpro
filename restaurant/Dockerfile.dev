@@ -3,10 +3,13 @@ FROM node:24-alpine
 RUN npm install -g pnpm
 
 WORKDIR /app
+RUN chown node:node /app
 
-COPY package.json pnpm-workspace.yaml .
+USER node
+
+COPY --chown=node:node package.json pnpm-workspace.yaml ./
 RUN pnpm install
 
-COPY . .
+COPY --chown=node:node . .
 
 CMD ["pnpm", "run", "dev", "--host", "0.0.0.0"]
