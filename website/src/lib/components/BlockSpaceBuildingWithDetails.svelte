@@ -376,7 +376,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_popup_button_custom_text?.length > 0}
+                            {#if content.content.section_popup_button_custom_text}
                               {content.content.section_popup_button_custom_text}
                               {:else}
                               en savoir plus
@@ -423,7 +423,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_learninglab_button_custom_text?.length > 0}
+                            {#if content.content.section_learninglab_button_custom_text}
                               {content.content.section_learninglab_button_custom_text}
                             {:else}
                               en savoir plus
@@ -470,7 +470,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_factorylab_button_custom_text?.length > 0}
+                            {#if content.content.section_factorylab_button_custom_text}
                               {content.content.section_factorylab_button_custom_text}
                             {:else}
                               en savoir plus
@@ -519,7 +519,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_foodlab_button_custom_text?.length > 0}
+                            {#if content.content.section_foodlab_button_custom_text}
                               {content.content.section_foodlab_button_custom_text}
                             {:else}
                               en savoir plus
@@ -567,7 +567,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_grandlab_button_custom_text?.length > 0}
+                            {#if content.content.section_grandlab_button_custom_text}
                               {content.content.section_grandlab_button_custom_text}
                             {:else}
                               en savoir plus
@@ -614,7 +614,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_makerlab_button_custom_text?.length > 0}
+                            {#if content.content.section_makerlab_button_custom_text}
                               {content.content.section_makerlab_button_custom_text}
                             {:else}
                               en savoir plus
@@ -660,7 +660,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_ecole_button_custom_text?.length > 0}
+                            {#if content.content.section_ecole_button_custom_text}
                               {content.content.section_ecole_button_custom_text}
                             {:else}
                               en savoir plus
@@ -706,7 +706,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_creche_button_custom_text?.length > 0}
+                            {#if content.content.section_creche_button_custom_text}
                               {content.content.section_creche_button_custom_text}
                             {:else}
                               en savoir plus

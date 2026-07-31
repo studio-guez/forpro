@@ -478,6 +478,30 @@ export interface IHtmlContent extends IBlock {
 export interface IBlockMap extends IBlock {
     "content": {
         "style": "style2" | "style3"
+        "section_popup_content"?: string
+        "section_popup_button_url"?: string
+        "section_popup_button_custom_text"?: string
+        "section_makerlab_content"?: string
+        "section_makerlab_button_url"?: string
+        "section_makerlab_button_custom_text"?: string
+        "section_learninglab_content"?: string
+        "section_learninglab_button_url"?: string
+        "section_learninglab_button_custom_text"?: string
+        "section_grandlab_content"?: string
+        "section_grandlab_button_url"?: string
+        "section_grandlab_button_custom_text"?: string
+        "section_foodlab_content"?: string
+        "section_foodlab_button_url"?: string
+        "section_foodlab_button_custom_text"?: string
+        "section_factorylab_content"?: string
+        "section_factorylab_button_url"?: string
+        "section_factorylab_button_custom_text"?: string
+        "section_ecole_content"?: string
+        "section_ecole_button_url"?: string
+        "section_ecole_button_custom_text"?: string
+        "section_creche_content"?: string
+        "section_creche_button_url"?: string
+        "section_creche_button_custom_text"?: string
     },
     type: 'map'
 }

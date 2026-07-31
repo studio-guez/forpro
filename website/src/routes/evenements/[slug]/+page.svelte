@@ -121,14 +121,4 @@
       align-items: center;
     }
 
-    .s-page-events-slug__ariane__wrap__current_page_icon {
-      @media (max-width: scss-params.$fp-breakpoint-xs) {
-        display: none !important;
-      }
-    }
-    .s-page-events-slug__ariane__wrap__current_page_title {
-      @media (max-width: scss-params.$fp-breakpoint-xs) {
-        display: none !important;
-      }
-    }
 </style>

@@ -100,7 +100,7 @@
          role="button"
          tabindex="0"
          on:click={onClickCopyButton}
-         on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onClickCopyButton(e)}>{textButtonShareLink}
+         on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onClickCopyButton()}>{textButtonShareLink}
     </div>
   </div>
 

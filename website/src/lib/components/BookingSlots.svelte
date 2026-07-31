@@ -5,8 +5,9 @@
     const itemsPerPage: number = 5;
 
     export let slots: Slot[] | {status: 'error'} = [];
-    export let selectedSlotId: string = '';
+    export let selectedSlotId: Slot | null = null;
     export let labelNoSlots: string = '';
+    export const loading: boolean = false;
 
     const maxPage: number = Array.isArray(slots) ? Math.ceil(slots.length / itemsPerPage) - 1 : 0;
 

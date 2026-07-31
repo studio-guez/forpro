@@ -31,10 +31,10 @@
 
     const calendarId = data.calendarId;
 
-    let selectedServiceId: number = data.services ? data.services[0]?.id : null;
+    let selectedServiceId: string = data.services?.[0]?.id ?? '';
     if(data.services.length === 0) console.error('There are no services in the administration')
 
-    let selectedSlotId: number | null = null;
+    let selectedSlotId: Slot | null = null;
     let selectedDate: string = dayjs().format('YYYY-MM-DD');
 
     let selectedDateStringFormated: string
@@ -48,7 +48,7 @@
     let services = data.services ?? [];
     let schedules: Scedules[] = Object.values(data.schedules) ?? [];
 
-    let slots: Slot[] | {status: 'error'} = data.availabilities;   //todo: ?
+    let slots: Slot[] | {status: 'error'} = [];
     let loading: boolean = false;
 
 
@@ -67,11 +67,11 @@
         formattedDate = new Date(event.detail).toLocaleDateString('fr-CH');
     }
 
-    const getServiceName = (id: number) => {
+    const getServiceName = (id: string) => {
         return services.find(service => service.id === id).name;
     }
 
-    const getServiceDuration = (id: number) => {
+    const getServiceDuration = (id: string) => {
         return services.find(service => service.id === id).duration;
     }
 
