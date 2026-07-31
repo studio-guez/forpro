@@ -1,5 +1,7 @@
 <?php
 
+require_once 'utils/Utils.php';
+
 use Kirby\Cms\App;
 use Kirby\Cms\Page;
 use Kirby\Cms\Site;
@@ -41,6 +43,6 @@ $json['options'] = [
 
 $json['body'] = $body;
 
-$json['seo'] = $page->seoData();
+$json['seo'] = Utils::getSeoDataFromPage($page);
 
 echo json_encode($json);
