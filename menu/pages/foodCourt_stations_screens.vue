@@ -31,6 +31,7 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref, type Ref} from 'vue'
+import {useHead} from '#imports'
 import {formatPrice} from "~/utils/formatPrice";
 import {useRouter} from "#app";
 
@@ -42,6 +43,8 @@ import {
 
 
 const currentWeekMenuData: Ref<IMenuData__foodCourt__weekMenu | null> = ref(null)
+
+useHead({ title: 'Food Court — Écran station | ForPro', meta: [{ name: 'robots', content: 'noindex, nofollow' }] })
 
 const currentDayXLSXIndex = new Date().getDay()
 

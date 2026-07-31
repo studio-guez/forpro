@@ -1,1 +1,7 @@
+User-agent: *
+Disallow: /foodCourt_screen_main
+Disallow: /foodCourt_stations_screens
+Allow: /
+
+Sitemap: https://menus.for-pro.ch/sitemap.xml
 

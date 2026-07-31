@@ -46,6 +46,7 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref, type Ref} from 'vue'
+import {useHead} from '#imports'
 import {useRouter} from "#app";
 import {
   foodCourt_GetCurrentWeekMenu,
@@ -57,6 +58,8 @@ import {formatPrice} from "~/utils/formatPrice";
 import {getCmsBaseUrl} from "~/utils/cmsBaseUrl";
 
 const cmsBaseUrl = getCmsBaseUrl()
+
+useHead({ title: 'Food Court — Écran principal | ForPro', meta: [{ name: 'robots', content: 'noindex, nofollow' }] })
 
 const imageListe = ref<{filename: string, url: string}[]>()
 const currentVisibleIndex = ref(0)
