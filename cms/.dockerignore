@@ -1,0 +1,24 @@
+# Build-context exclusions for the CMS image.
+#
+# Dockerfile.prod does `COPY site /var/www/html/site`, which reads from the
+# host filesystem and ignores .gitignore. Without this file, local build
+# artifacts get baked into the image and into the kirby_data volume.
+#
+# IMPORTANT: do NOT exclude `vendor/`. The kirby-seo plugin ships its own
+# PSR-4 autoloader (vendor/composer/autoload_psr4.php) for the tobimori\Seo\
+# namespace — not just for Spatie. Excluding it breaks every page render that
+# calls $page->metadata().
+
+# Panel build toolchain for kirby-seo (~85 MB). The compiled assets
+# (index.js / index.css) are committed, so this is never needed at runtime.
+**/node_modules
+
+# VCS + local dev tooling
+.git
+.gitignore
+**/.husky
+**/.php-cs-fixer.dist.php
+**/.nvmrc
+
+# Secrets are injected at runtime via compose `env_file`, never baked in
+.env
