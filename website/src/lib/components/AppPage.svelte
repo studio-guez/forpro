@@ -46,17 +46,20 @@
                 </div>
 
             {:else if content.type === 'video'}
-                <div class="app-flex__basis-20-24">
-                    <iframe title="youtube embed"
-                            width="720"
-                            height="405"
-                            class:is-vertical={content.content.is_vertical === 'true'}
-                            class="s-page__content__youtube"
-                            src="{`https://www.youtube.com/embed/${content.content.url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|.*\/))([a-zA-Z0-9_-]{11})/)[1]}?modestbranding=1&playsinline=1&color=white`}"
-                            frameborder="0"
-                            allowfullscreen
-                    />
-                </div>
+                {@const youtubeId = content.content.url?.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|.*\/))([a-zA-Z0-9_-]{11})/)?.[1]}
+                {#if youtubeId}
+                    <div class="app-flex__basis-20-24">
+                        <iframe title="youtube embed"
+                                width="720"
+                                height="405"
+                                class:is-vertical={content.content.is_vertical === 'true'}
+                                class="s-page__content__youtube"
+                                src="{`https://www.youtube.com/embed/${youtubeId}?modestbranding=1&playsinline=1&color=white`}"
+                                frameborder="0"
+                                allowfullscreen
+                        />
+                    </div>
+                {/if}
 
             {:else if content.type === 'dropdown'}
                 <div class="app-flex__basis-20-24">
