@@ -8,7 +8,7 @@ A multi-service platform running Kirby CMS (API), a restaurant frontend, a websi
 ├── cms/            Kirby CMS 5.0 (PHP 8.4, Apache)
 ├── restaurant/     SvelteKit 2.0 / Svelte 5 frontend (Node 24, pnpm)
 ├── website/        SvelteKit 2.0 / Svelte 5 frontend (Node 24, pnpm)
-├── menu/           Nuxt 3 daily-menus screens app (Node 24, npm)
+├── menu/           Nuxt 4 daily-menus screens app (Node 24, pnpm)
 ├── compose.dev.yml Docker Compose for local development
 └── compose.prod.yml Docker Compose for production
 ```
@@ -197,19 +197,35 @@ Both frontends are upgraded the same way. All `pnpm` commands run inside the run
 
 ### Menu (Nuxt)
 
-The menu app uses **npm** (`package-lock.json`), not pnpm. All commands run inside the running dev container.
+All `pnpm` commands run inside the running dev container — no local Node/pnpm installation is needed.
 
-```bash
-# Upgrade packages within the ranges of package.json and refresh the lockfile
-docker compose -f compose.dev.yml exec menu npm update
-# Audit for vulnerabilities
-docker compose -f compose.dev.yml exec menu npm audit
-# Rebuild
-docker compose -f compose.dev.yml up -d --build menu
-```
+1. **Node**: bump the `node:<version>-alpine` base image in `Dockerfile.dev` and `Dockerfile.prod` (keep them in sync).
+2. **Update dependencies**: run `pnpm update` inside the container to upgrade all packages to the newest versions allowed by the ranges in `package.json` and refresh `pnpm-lock.yaml`:
 
-> `Dockerfile.prod` runs `npm ci`, so `package-lock.json` must stay in sync with `package.json`.
-> Regenerate it inside the container with `docker compose -f compose.dev.yml exec menu npm install --package-lock-only` and commit the result.
+   ```bash
+   docker compose -f compose.dev.yml exec menu pnpm update
+   ```
+
+   To upgrade beyond the current ranges (e.g. a new Nuxt major), edit the version constraints in `package.json` first, then re-run the command above.
+
+3. **Audit for vulnerabilities**: run `pnpm audit` inside the container and resolve any reported issues:
+
+   ```bash
+   docker compose -f compose.dev.yml exec menu pnpm audit
+   ```
+
+4. **Build scripts**: if a new dependency needs to run install scripts, review `pnpm-workspace.yaml` (`allowBuilds`) — pnpm blocks dependency build scripts by default.
+5. **Verify**: run `pnpm run build` inside the container and fix any errors introduced by the new versions:
+
+   ```bash
+   docker compose -f compose.dev.yml exec menu pnpm run build
+   ```
+
+6. **Rebuild the container** to bake the updated lockfile into the image:
+
+   ```bash
+   docker compose -f compose.dev.yml up -d --build menu
+   ```
 
 ### CMS (Kirby)
 
@@ -360,10 +376,10 @@ pnpm install
 pnpm run build
 pm2 restart restaurant
 
-# Menu (npm, not pnpm)
+# Menu
 cd /var/www/menu
-npm ci
-npm run build
+pnpm install
+pnpm run build
 pm2 restart menus
 
 # CMS
