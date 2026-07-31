@@ -3,6 +3,7 @@
 header("Access-Control-Allow-Origin: *");
 
 return [
+    'debug' => getenv('KIRBY_DEBUG') === 'true',
     "tobimori.seo.canonicalBase" => "https://for-pro.ch",
     "tobimori.seo.lang" => "fr_CH",
     "tobimori.seo.default.metaTemplate" => fn($page) => $page->site()->title()->isNotEmpty()
