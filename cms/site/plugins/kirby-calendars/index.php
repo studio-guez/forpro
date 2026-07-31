@@ -15,6 +15,10 @@ load([
 $pluginPermissionNameForBlueprint = 'mediumsans.kirby-calendars';
 
 Kirby::plugin('mediumsans/kirby-calendars', [
+    // catégorie de permission « mediumsans.kirby-calendars » utilisée par les blueprints de rôles
+    'permissions' => [
+        'access' => false,
+    ],
     'translations' => require __DIR__ . '/i18n/i18n.php',
     'options' => [
         'notifications' => [
