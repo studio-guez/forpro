@@ -80,7 +80,6 @@ columns:
           - cards
           - profiles
           - map
-          - appointment
           - code
           - timeline
           - listOfPDF
