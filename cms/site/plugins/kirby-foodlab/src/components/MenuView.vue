@@ -1,5 +1,5 @@
 <template>
-    <k-inside>
+    <k-panel-inside>
         <k-header>
             Menu
             <k-button-group slot="buttons">
@@ -280,7 +280,7 @@
                 </tr>
             </k-draggable>
         </table>
-    </k-inside>
+    </k-panel-inside>
 </template>
 
 <script>
@@ -440,44 +440,40 @@ export default {
 
             this.isGeneratingPDF = true;
 
-            let url =
+            if (publish) {
+                // Authenticated POST: the endpoint writes files and updates site content
+                this.$api
+                    .post("/restaurant/menu/generate/with-assets/publish")
+                    .then(() => {
+                        this.$panel.notification.success("Le PDF a été publié avec succès",
+                        );
+                    })
+                    .catch((error) => {
+                        this.$panel.notification.error(
+                            error.message || "La publication du PDF a échoué",
+                        );
+                    })
+                    .finally(() => {
+                        this.isGeneratingPDF = false;
+                    });
+
+                return;
+            }
+
+            // Preview: open in new tab via link click (avoids popup blocker)
+            const url =
                 this.$api.endpoint +
                 "/restaurant/menu/generate/" +
-                (withAssets ? "with-assets" : "without-assets") +
-                (publish ? "/publish" : "");
+                (withAssets ? "with-assets" : "without-assets");
 
-            if (publish) {
-                // Publish: hidden iframe to trigger save + download
-                const iframe = document.createElement("iframe");
-                iframe.style.display = "none";
-                document.body.appendChild(iframe);
-
-                iframe.onload = () => {
-                    setTimeout(() => {
-                        document.body.removeChild(iframe);
-                        this.isGeneratingPDF = false;
-                        this.$store.dispatch(
-                            "notification/success",
-                            "Le PDF a été publié avec succès",
-                        );
-                    }, 1000);
-                };
-
-                iframe.src = url;
-                setTimeout(() => {
-                    this.isGeneratingPDF = false;
-                }, 2500);
-            } else {
-                // Preview: open in new tab via link click (avoids popup blocker)
-                const a = document.createElement("a");
-                a.href = url;
-                a.target = "_blank";
-                a.rel = "noopener";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                this.isGeneratingPDF = false;
-            }
+            const a = document.createElement("a");
+            a.href = url;
+            a.target = "_blank";
+            a.rel = "noopener";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            this.isGeneratingPDF = false;
         },
         updateTableOrder(category) {
             const updatedList = this[category];
@@ -486,16 +482,12 @@ export default {
                 .post(`/restaurant/menu/${category}/reorder`, updatedList)
                 .then(() => {
                     // The list is already updated in the component's data, so we don't need to set it again
-                    this.$store.dispatch(
-                        "notification/success",
-                        "Order updated successfully",
+                    this.$panel.notification.success("Order updated successfully",
                     );
                 })
                 .catch((error) => {
                     console.error("Error updating order:", error);
-                    this.$store.dispatch(
-                        "notification/error",
-                        "Failed to update order",
+                    this.$panel.notification.error("Failed to update order",
                     );
                 });
         },
@@ -543,17 +535,13 @@ export default {
                     setTimeout(() => {
                         this.hasBeenEdited = false;
                     }, 2000);
-                    this.$store.dispatch(
-                        "notification/success",
-                        "Page title updated successfully",
+                    this.$panel.notification.success("Page title updated successfully",
                     );
                 })
                 .catch((error) => {
                     console.error("Error updating page title:", error);
                     this.isEditing = false;
-                    this.$store.dispatch(
-                        "notification/error",
-                        "Failed to update page title",
+                    this.$panel.notification.error("Failed to update page title",
                     );
                 });
         },
@@ -568,17 +556,13 @@ export default {
                     setTimeout(() => {
                         this.hasBeenEdited = false;
                     }, 2000);
-                    this.$store.dispatch(
-                        "notification/success",
-                        "Page title updated successfully",
+                    this.$panel.notification.success("Page title updated successfully",
                     );
                 })
                 .catch((error) => {
                     console.error("Error updating page title:", error);
                     this.isEditing = false;
-                    this.$store.dispatch(
-                        "notification/error",
-                        "Failed to update page title",
+                    this.$panel.notification.error("Failed to update page title",
                     );
                 });
         },
@@ -597,9 +581,7 @@ export default {
                 .catch((error) => {
                     console.error("Error updating page title:", error);
                     this.isEditing = false;
-                    this.$store.dispatch(
-                        "notification/error",
-                        "Failed to update page title",
+                    this.$panel.notification.error("Failed to update page title",
                     );
                 });
         },
@@ -618,9 +600,7 @@ export default {
                 .catch((error) => {
                     console.error("Error updating page title:", error);
                     this.isEditing = false;
-                    this.$store.dispatch(
-                        "notification/error",
-                        "Failed to update URL",
+                    this.$panel.notification.error("Failed to update URL",
                     );
                 });
         },
@@ -635,17 +615,13 @@ export default {
                     setTimeout(() => {
                         this.hasBeenEdited = false;
                     }, 2000);
-                    this.$store.dispatch(
-                        "notification/success",
-                        "URL has been updated successfully",
+                    this.$panel.notification.success("URL has been updated successfully",
                     );
                 })
                 .catch((error) => {
                     console.error("Error updating page title:", error);
                     this.isEditing = false;
-                    this.$store.dispatch(
-                        "notification/error",
-                        "Failed to update URL",
+                    this.$panel.notification.error("Failed to update URL",
                     );
                 });
         },
@@ -655,16 +631,12 @@ export default {
                 .then(() => {
                     const propName = `${this.getSectionProp(category)}Title`;
                     this.$set(this, propName, value);
-                    this.$store.dispatch(
-                        "notification/success",
-                        "Section title updated successfully",
+                    this.$panel.notification.success("Section title updated successfully",
                     );
                 })
                 .catch((error) => {
                     console.error("Error updating section title:", error);
-                    this.$store.dispatch(
-                        "notification/error",
-                        "Failed to update section title",
+                    this.$panel.notification.error("Failed to update section title",
                     );
                 });
         },
@@ -675,16 +647,12 @@ export default {
                     value,
                 })
                 .then(() => {
-                    this.$store.dispatch(
-                        "notification/success",
-                        "Section title updated successfully",
+                    this.$panel.notification.success("Section title updated successfully",
                     );
                 })
                 .catch((error) => {
                     console.error("Error updating section title:", error);
-                    this.$store.dispatch(
-                        "notification/error",
-                        "Failed to update section title",
+                    this.$panel.notification.error("Failed to update section title",
                     );
                 });
         },
@@ -736,16 +704,12 @@ export default {
                 })
                 .then(() => {
                     this.$set(this, `page${page}Order`, newOrder);
-                    this.$store.dispatch(
-                        "notification/success",
-                        "Section order updated successfully",
+                    this.$panel.notification.success("Section order updated successfully",
                     );
                 })
                 .catch((error) => {
                     console.error("Error updating section order:", error);
-                    this.$store.dispatch(
-                        "notification/error",
-                        "Failed to update section order",
+                    this.$panel.notification.error("Failed to update section order",
                     );
                 });
         },

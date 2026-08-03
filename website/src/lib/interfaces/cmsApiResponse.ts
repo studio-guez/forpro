@@ -198,21 +198,24 @@ export interface IBlock {
 }
 
 export interface ISeo {
-    metaTemplate: string
-    metaDescription: string
-    metaAuthor: string
-    metaImage: string
-    metaPhoneNumber: string
-    ogTemplate: string
+    /** Page title with the title template already applied */
+    title: string
+    description: string
+    canonicalUrl: string
+    /** Robots directives, e.g. "all" or "noindex,nofollow" */
+    robots: string
+    /** Locale in og:locale format, e.g. "fr_CH" */
+    locale: string
+    ogTitle: string
     ogDescription: string
-    ogImage: string
-    ogSiteName: string
-    twitterTemplate: string
-    twitterDescription: string
-    twitterImage: string
+    ogSiteName: string | null
+    ogType: string
+    ogImage: string | null
     twitterCardType: string
     twitterSite: string
     twitterCreator: string
+    /** schema.org JSON-LD objects to render as <script type="application/ld+json"> */
+    schemas: Record<string, unknown>[]
 }
 
 
@@ -475,6 +478,30 @@ export interface IHtmlContent extends IBlock {
 export interface IBlockMap extends IBlock {
     "content": {
         "style": "style2" | "style3"
+        "section_popup_content"?: string
+        "section_popup_button_url"?: string
+        "section_popup_button_custom_text"?: string
+        "section_makerlab_content"?: string
+        "section_makerlab_button_url"?: string
+        "section_makerlab_button_custom_text"?: string
+        "section_learninglab_content"?: string
+        "section_learninglab_button_url"?: string
+        "section_learninglab_button_custom_text"?: string
+        "section_grandlab_content"?: string
+        "section_grandlab_button_url"?: string
+        "section_grandlab_button_custom_text"?: string
+        "section_foodlab_content"?: string
+        "section_foodlab_button_url"?: string
+        "section_foodlab_button_custom_text"?: string
+        "section_factorylab_content"?: string
+        "section_factorylab_button_url"?: string
+        "section_factorylab_button_custom_text"?: string
+        "section_ecole_content"?: string
+        "section_ecole_button_url"?: string
+        "section_ecole_button_custom_text"?: string
+        "section_creche_content"?: string
+        "section_creche_button_url"?: string
+        "section_creche_button_custom_text"?: string
     },
     type: 'map'
 }

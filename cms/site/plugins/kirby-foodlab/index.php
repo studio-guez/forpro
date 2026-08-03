@@ -24,9 +24,13 @@ load([
     "Eclypsys\Menu\Utils"                 => __DIR__ . "/classes/Utils.php"
 ]);
 
-$pluginPermissionNameForBlueprint = 'eclypsys.kirby-foodlab';
+$pluginPermissionNameForBlueprint = 'eclypsys.foodlab';
 
 Kirby::plugin("eclypsys/foodlab", [
+    // catégorie de permission « eclypsys.foodlab » utilisée par les blueprints de rôles
+    'permissions' => [
+        'access' => false,
+    ],
     'hooks' => [
         'page.render:before' => function () {
             var_dump(kirby()->roots);

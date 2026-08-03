@@ -1,5 +1,5 @@
 <template>
-  <k-inside>
+  <k-panel-inside>
     <k-header>
       {{ $t('kirbycalendars.services') }}
 
@@ -51,7 +51,7 @@
       </tbody>
 
     </table>
-  </k-inside>
+  </k-panel-inside>
 </template>
 
 <script>
