@@ -13,7 +13,12 @@ export const fetchFromAPI = async <T>(request: Request, errorMsg: string): Promi
     try {
         const response = await fetch(request);
         if (!response.ok) {
-            handleError(errorMsg, new Error(errorMsg));
+            // A 404 is an expected outcome (unknown slug / short link): let the
+            // caller decide what to do with `null` without polluting the logs.
+            if (response.status !== 404) {
+                handleError(errorMsg, new Error(`${response.status} ${response.statusText} (${request.url})`));
+            }
+            return null
         }
         const data = await response.json();
 
