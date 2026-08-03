@@ -2,7 +2,7 @@ import {error} from "@sveltejs/kit";
 import {fetchFromAPI} from "$lib/utils/shared";
 import {type IPage} from "$lib/interfaces/cmsApiResponse";
 import {variables} from "$lib/utils/constants";
-import type {PageServerLoad} from "../../.svelte-kit/types/src/routes/$types";
+import type {PageServerLoad} from "./$types";
 
 export const prerender = false;
 

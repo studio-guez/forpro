@@ -7,7 +7,7 @@ import {
     getSchedulesFromCalendarId,
     getServicesFromCalendarId,
 } from "$lib/utils/booking/api";
-import {fail, redirect} from "@sveltejs/kit";
+import {error, fail, redirect} from "@sveltejs/kit";
 import {getEachSlotByDayBetweenTwoDates} from "./utils";
 import dayjs from "dayjs";
 
@@ -19,11 +19,13 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     const calendarId = params.calendarId;
 
     const res = await fetch(cmsBookingUrl);
+    if (!res.ok) error(502, {message: 'Impossible de charger les informations de réservation.'});
     const content: BookingCMSResponse = await res.json();
 
     if( !content.bookingIsActive ) redirect(302, '/rendez-vous-inactif');
 
     const options = await getCalendarOptions(calendarId);
+    if (!options) error(502, {message: 'Impossible de charger ce calendrier.'});
 
     const servicesKirby = await getServicesFromCalendarId(calendarId);
     const schedules = await getSchedulesFromCalendarId(calendarId);
