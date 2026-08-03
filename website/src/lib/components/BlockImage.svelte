@@ -20,34 +20,3 @@
 </div>
 
 
-<style lang="scss">
-  @use "../../style/_scss-params";
-
-  .s-block-image {
-    max-width: 1000px;
-
-    &.is-fixed {
-      max-width: none;
-      height: calc(100vh - var(--app-nav_height));
-      width: 100%;
-      background-attachment: fixed;
-      background-size: cover;
-      background-position: center;
-
-      @media (max-width: scss-params.$fp-breakpoint-xs) {
-        background-attachment: scroll;
-      }
-    }
-  }
-
-  .s-block-image__img {
-    display: block;
-
-    .is-fixed & {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-
-    }
-  }
-</style>

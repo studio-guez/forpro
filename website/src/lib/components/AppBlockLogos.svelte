@@ -51,18 +51,3 @@
   </div>
 </div>
 
-<style lang="scss">
-  .s-block-logos {
-    width: min(70rem, 100%);
-  }
-
-  img {
-    display: block;
-    height: 5rem;
-    max-width: 75vw;
-  }
-
-  .s-block-logos__wrapper {
-    gap: 3rem 5rem;
-  }
-</style>

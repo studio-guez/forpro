@@ -49,31 +49,3 @@
 	<AppPage {data} />
 </div>
 
-<style lang="scss">
-	@use '../style/_scss-params';
-
-	.s-page-home__header {
-		position: relative;
-		height: max(80vh, 40vw);
-
-		@media (max-width: scss-params.$fp-breakpoint-xs) {
-			height: auto;
-		}
-	}
-
-	.s-page-home__header__logo__desktop {
-		display: block;
-		width: 100%;
-
-		@media (max-width: scss-params.$fp-breakpoint-xs) {
-			display: none;
-		}
-	}
-	.s-page-home__header__logo__mobile {
-		display: none;
-
-		@media (max-width: scss-params.$fp-breakpoint-xs) {
-			display: block;
-		}
-	}
-</style>

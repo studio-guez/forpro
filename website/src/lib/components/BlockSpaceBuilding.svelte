@@ -66,34 +66,3 @@
   $:currentOverSectionName = getSectionNameBySlug(currentOverSection);
 </script>
 
-<style lang="scss">
-  .s-block-space-build--nav {
-    position: relative;
-    max-width: 40rem;
-  }
-
-  .s-block-space-build--nav__title {
-    height: 2rem;
-    position: relative;
-  }
-
-  .s-block-space-build--nav__title__value {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    font-size: 1rem;
-    line-height: 1rem;
-    text-align: center;
-    white-space: nowrap;
-    font-weight: 500;
-  }
-
-  svg rect:not(.is-over) {
-    fill: white !important;
-  }
-
-  .s-block-space-build--nav__svg-building-link {
-    cursor: pointer;
-  }
-</style>
