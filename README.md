@@ -268,7 +268,26 @@ All `composer` commands run inside the running dev container — no local PHP/Co
    docker compose -f compose.dev.yml exec cms composer audit
    ```
 
-4. **Plugins**: check every plugin in `cms/site/plugins/` for compatibility with the new Kirby major version (e.g. `kirby-seo` has a Kirby version guard in its `index.php`). Update or patch plugins as needed — plugin dependencies must be declared in `cms/composer.json` (plugins rely on the root autoloader).
+4. **Plugins**: check every plugin in `cms/site/plugins/` for compatibility with the new Kirby major version (e.g. `kirby-seo` has a Kirby version guard in its `index.php`). Update or patch plugins as needed.
+
+   `kirby-calendars`, `kirby-foodlab`, and `kirby-seo` each have their own `composer.json` and `vendor/` directory — they self-bootstrap via `@include_once __DIR__ . '/vendor/autoload.php'` and are independent of the root Composer setup. To update their dependencies, run `composer update` inside each plugin directory:
+
+   ```bash
+   docker compose -f compose.dev.yml exec cms composer update --working-dir site/plugins/kirby-seo
+   docker compose -f compose.dev.yml exec cms composer update --working-dir site/plugins/kirby-calendars
+   docker compose -f compose.dev.yml exec cms composer update --working-dir site/plugins/kirby-foodlab
+   ```
+
+   Commit the updated `composer.lock` files alongside the plugin changes.
+
+   To audit each plugin for vulnerabilities:
+
+   ```bash
+   docker compose -f compose.dev.yml exec cms composer audit --working-dir site/plugins/kirby-seo
+   docker compose -f compose.dev.yml exec cms composer audit --working-dir site/plugins/kirby-calendars
+   docker compose -f compose.dev.yml exec cms composer audit --working-dir site/plugins/kirby-foodlab
+   ```
+
 5. **Verify & rebuild**:
 
    ```bash
