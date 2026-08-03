@@ -85,35 +85,3 @@ import {siteInfo} from "../../store";
     </div>
 </footer>
 
-<style lang="scss">
-  @use "../../style/_scss-params";
-
-    .s-footer {
-      width: 100%;
-      box-sizing: border-box;
-      background: var(--app-color-beige);
-      overflow: hidden;
-    }
-
-    .s-footer__text {
-       padding-top: 1rem;
-      padding-bottom: 1rem;
-    }
-
-    .s-footer__img {
-      display: block;
-      width: 90%;
-      bottom: 0;
-      margin: 1rem auto;
-    }
-
-    .s-app-footer__list__item {
-      &.is-subpage {
-        padding-left: 1em;
-
-        @media (max-width: scss-params.$fp-breakpoint-xs) {
-          padding-left: 0;
-        }
-      }
-    }
-</style>
