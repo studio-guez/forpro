@@ -28,35 +28,3 @@
   }
 </script>
 
-<style lang="scss">
-  .s-app-cookie-consent {
-    background: white;
-    color: var(--app-color--blue);
-    font-size: .75rem;
-    box-sizing: border-box;
-    width: 100%;
-    padding: .5rem .75rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    border: solid 2px var(--app-color--blue);
-    border-radius: 1rem;
-    max-width: 25rem;
-
-    a {
-      text-decoration: underline;
-    }
-
-    .s-app-cookie-consent__icon {
-      flex-shrink: 0;
-      cursor: pointer;
-      padding: .05rem;
-
-      svg {
-        display: block;
-        height: 1rem;
-      }
-    }
-  }
-</style>

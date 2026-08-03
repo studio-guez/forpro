@@ -8,9 +8,3 @@
     {@html content.content.text}
 </div>
 
-<style lang="scss">
-    .s-block-html {
-        margin: auto;
-        width: min(70rem, 100%);
-    }
-</style>
