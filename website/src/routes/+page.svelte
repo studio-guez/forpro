@@ -76,13 +76,4 @@
 			display: block;
 		}
 	}
-
-	.s-page-home__header__logo {
-		display: block;
-		width: 90%;
-
-		& + & {
-			margin-top: 2rem;
-		}
-	}
 </style>

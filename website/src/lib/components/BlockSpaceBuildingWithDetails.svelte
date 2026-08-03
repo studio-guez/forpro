@@ -758,11 +758,6 @@
     width: 100%;
     overflow: hidden;
     user-select: none;
-
-    .v-space-building__cards__container__card__img + & {
-      border-top-color: var(--app-color--grey--light);
-      margin-top: -1.5rem;
-    }
   }
 
 
