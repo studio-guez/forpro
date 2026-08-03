@@ -259,28 +259,6 @@
       }
       //}
 
-      &.v-time-line__item--gant:global(.ts-is-intersecting) {
-        &:before {
-          border-width: 4px;
-          width:  2.5rem;
-          height: 2.5rem;
-          background-image: url('/icons/gant.svg');
-          background-size: 66% 66%;
-          background-repeat: no-repeat;
-          background-position: center;
-        }
-      }
-      &.v-time-line__item--pen:global(.ts-is-intersecting) {
-        &:before {
-          border-width: 4px;
-          width:  2.5rem;
-          height: 2.5rem;
-          background-image: url('/icons/pen.svg');
-          background-size: 66% 66%;
-          background-repeat: no-repeat;
-          background-position: center;
-        }
-      }
     }
   }
 
