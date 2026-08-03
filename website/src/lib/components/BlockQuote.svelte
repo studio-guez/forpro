@@ -118,21 +118,6 @@
     }
   }
 
-  blockquote {
-    footer {
-      font-weight: 500;
-      margin-top: var(--fp-line-height-small);
-      font-size: var(--fp-font-size-small);
-      line-height: var(--fp-line-height-small);
-    }
-  }
-
-  .s-text-quote__container {
-    box-sizing: border-box;
-    position: relative;
-    pointer-events: none;
-  }
-
   .s-text-quote__img-1 {
     position: absolute;
     top: 5vw;
@@ -198,7 +183,4 @@
     padding-bottom: 1em;
   }
 
-  blockquote {
-    margin: 0;
-  }
 </style>
