@@ -97,7 +97,10 @@
   <div class="v-time-line__button">
     <div class="app-button app-button--rounded"
          style="--app-button--color: var(--app-color--green);"
-         on:click={onClickCopyButton}>{textButtonShareLink}
+         role="button"
+         tabindex="0"
+         on:click={onClickCopyButton}
+         on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && onClickCopyButton()}>{textButtonShareLink}
     </div>
   </div>
 
