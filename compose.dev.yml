@@ -102,6 +102,7 @@ services:
         GID: 1000
     volumes:
       - ./cms/composer.json:/var/www/html/composer.json:rw
+      - ./cms/composer.lock:/var/www/html/composer.lock:rw
       - ./cms/content:/var/www/html/content:rw
       - ./cms/site/config:/var/www/html/site/config:rw
       - ./cms/site/plugins:/var/www/html/site/plugins:rw
