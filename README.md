@@ -258,7 +258,7 @@ All `composer` commands run inside the running dev container — no local PHP/Co
    docker compose -f compose.dev.yml exec cms composer update
    ```
 
-   To upgrade beyond the current constraints (e.g. a new Kirby major), edit `cms/composer.json` first, then re-run the command above.
+   To upgrade beyond the current constraints (e.g. a new Kirby major), edit `cms/composer.json` first, then re-run the command above. Also check each plugin in `cms/site/plugins/` for compatibility (e.g. `kirby-seo` has a Kirby version guard in its `index.php`).
 
    > The Docker image copies both `composer.json` and `composer.lock` and runs `composer install`, so builds are fully reproducible and pinned to the exact versions in the lock file. Commit `composer.lock` after every update.
 
@@ -268,27 +268,7 @@ All `composer` commands run inside the running dev container — no local PHP/Co
    docker compose -f compose.dev.yml exec cms composer audit
    ```
 
-4. **Plugins**: check every plugin in `cms/site/plugins/` for compatibility with the new Kirby major version (e.g. `kirby-seo` has a Kirby version guard in its `index.php`). Update or patch plugins as needed.
-
-   `kirby-calendars`, `kirby-foodlab`, and `kirby-seo` each have their own `composer.json` and `vendor/` directory — they self-bootstrap via `@include_once __DIR__ . '/vendor/autoload.php'` and are independent of the root Composer setup. To update their dependencies, run `composer update` inside each plugin directory:
-
-   ```bash
-   docker compose -f compose.dev.yml exec cms composer update --working-dir site/plugins/kirby-seo
-   docker compose -f compose.dev.yml exec cms composer update --working-dir site/plugins/kirby-calendars
-   docker compose -f compose.dev.yml exec cms composer update --working-dir site/plugins/kirby-foodlab
-   ```
-
-   Commit the updated `composer.lock` files alongside the plugin changes.
-
-   To audit each plugin for vulnerabilities:
-
-   ```bash
-   docker compose -f compose.dev.yml exec cms composer audit --working-dir site/plugins/kirby-seo
-   docker compose -f compose.dev.yml exec cms composer audit --working-dir site/plugins/kirby-calendars
-   docker compose -f compose.dev.yml exec cms composer audit --working-dir site/plugins/kirby-foodlab
-   ```
-
-5. **Verify & rebuild**:
+4. **Verify & rebuild**:
 
    ```bash
    docker compose -f compose.dev.yml up -d --build cms
@@ -296,7 +276,7 @@ All `composer` commands run inside the running dev container — no local PHP/Co
 
    Then log into the Panel at http://cms.localhost/panel and check the frontends still receive API data.
 
-6. **Production**: rebuild with `docker compose -f compose.prod.yml up -d --build cms`, or on a non-Docker server re-run `composer install --no-dev --optimize-autoloader` and clear `site/cache/` (see the deployment section below).
+5. **Production**: rebuild with `docker compose -f compose.prod.yml up -d --build cms`, or on a non-Docker server re-run `composer install --no-dev --optimize-autoloader` and clear `site/cache/` (see the deployment section below).
 
 ## Troubleshooting
 

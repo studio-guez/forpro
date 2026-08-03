@@ -25,7 +25,15 @@
     "php": "~8.3.0 || ~8.4.0",
     "getkirby/cms": "^5.0",
     "chillerlan/php-qrcode": "^5.0",
-    "spatie/schema-org": "^3.14"
+    "spatie/schema-org": "^3.14",
+    "spatie/browsershot": "^5.0",
+    "google/apiclient": "^2.12",
+    "eluceo/ical": "^2.13"
+  },
+  "autoload": {
+    "psr-4": {
+      "tobimori\\Seo\\": "site/plugins/kirby-seo/classes"
+    }
   },
   "config": {
     "allow-plugins": {
