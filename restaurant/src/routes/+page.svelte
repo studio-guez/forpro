@@ -7,12 +7,6 @@
 
 	export let data;
 
-    console.log(data)
-
-	menuIsOpen.subscribe((value) => {
-		console.log(value);
-	});
-
 	const handleMenuClick = () => {
 		$menuIsOpen = !$menuIsOpen;
 	};
