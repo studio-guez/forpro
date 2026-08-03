@@ -1,9 +1,10 @@
+@use 'variables';
+@use 'grid';
+@use 'typography';
+@use 'ui';
+
 @import '../node_modules/modern-normalize/modern-normalize.css';
 @import '_jungka-import.css';
-@import 'variables';
-@import "grid";
-@import "typography";
-@import "ui";
 
 
 //
