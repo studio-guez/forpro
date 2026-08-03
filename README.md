@@ -43,7 +43,6 @@ The restaurant frontend links to this app through `PUBLIC_MENU_BASE_URL`
 | Plugin             | Notes                                                    |
 | ------------------ | -------------------------------------------------------- |
 | image-guard        | Downscales oversized uploads, converts CMYK JPEGs to RGB |
-| kirby-calendars    | Calendar data (critical)                                 |
 | kirby-foodlab      | Requires Chromium Headless + Puppeteer for PDFs          |
 | kirby-menu-du-jour | Menu management                                          |
 | kirby-seo          | SEO utilities                                            |
@@ -89,14 +88,9 @@ docker compose -f compose.dev.yml up -d --build && docker compose -f compose.dev
 
 ### 5. Initialize plugin data OR rsync it from Prod server
 
-Create the required JSON files for `kirby-calendars` and `kirby-foodlab` (these directories are git-ignored):
+Create the required JSON files for `kirby-foodlab` (this directory is git-ignored):
 
 ```bash
-mkdir -p cms/site/plugins/kirby-calendars/data
-for f in calendars events invitations leaves schedules services; do
-  echo '{}' > cms/site/plugins/kirby-calendars/data/$f.json
-done
-
 mkdir -p cms/site/plugins/kirby-foodlab/data
 for f in beer bubblewine cocktail dessert hotdrink maincourse menu menu-special metadata origin redwine softdrink starter whitewine; do
   echo '[]' > cms/site/plugins/kirby-foodlab/data/$f.json
@@ -149,7 +143,6 @@ Both the plugin and the script share the same logic in `cms/site/plugins/image-g
 
 ```bash
 rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:/var/www/cms/content/ ./cms/content
-rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:/var/www/cms/site/plugins/kirby-calendars/data/ ./cms/site/plugins/kirby-calendars/data
 rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:/var/www/cms/site/plugins/kirby-foodlab/data/ ./cms/site/plugins/kirby-foodlab/data
 rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:/var/www/cms/site/plugins/kirby-menu-du-jour/data/ ./cms/site/plugins/kirby-menu-du-jour/data
 ```
@@ -347,7 +340,7 @@ We exclude every path that contains server-side content or is generated/installe
 - `content/` — pages and uploads (managed via the Panel)
 - `media/` — generated thumbs cache
 - `site/accounts/`, `site/sessions/`, `site/cache/` — runtime state
-- `site/plugins/kirby-calendars/data/`, `site/plugins/kirby-foodlab/data/`, `site/plugins/kirby-menu-du-jour/data/` — plugin data
+- `site/plugins/kirby-foodlab/data/`, `site/plugins/kirby-menu-du-jour/data/` — plugin data
 - `kirby/`, `vendor/` — installed via `composer install` on the server
 - `.env*`, `id.env` — server-specific config
 
@@ -358,7 +351,6 @@ rsync -avz --delete \
   --exclude='site/accounts' \
   --exclude='site/sessions' \
   --exclude='site/cache' \
-  --exclude='site/plugins/kirby-calendars/data' \
   --exclude='site/plugins/kirby-foodlab/data' \
   --exclude='site/plugins/kirby-menu-du-jour/data' \
   --exclude='kirby' \

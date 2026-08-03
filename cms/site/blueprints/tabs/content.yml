@@ -67,7 +67,6 @@ fields:
       fr: Contenu
     fieldsets:
       - agenda
-      - appointment
       - cards
       - cards-focus
       - cta

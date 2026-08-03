@@ -9,7 +9,6 @@ for dir in \
   /var/www/html/site/accounts \
   /var/www/html/site/cache \
   /var/www/html/site/sessions \
-  /var/www/html/site/plugins/kirby-calendars/data \
   /var/www/html/site/plugins/kirby-foodlab/data \
   /var/www/html/site/plugins/kirby-menu-du-jour/data
 do

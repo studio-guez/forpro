@@ -80,7 +80,6 @@ services:
       - ./cms/site/accounts:/var/www/html/site/accounts
       - ./cms/site/sessions:/var/www/html/site/sessions
       - ./cms/site/cache:/var/www/html/site/cache
-      - ./cms/site/plugins/kirby-calendars/data:/var/www/html/site/plugins/kirby-calendars/data
       - ./cms/site/plugins/kirby-foodlab/data:/var/www/html/site/plugins/kirby-foodlab/data
       - ./cms/site/plugins/kirby-menu-du-jour/data:/var/www/html/site/plugins/kirby-menu-du-jour/data
     env_file:
