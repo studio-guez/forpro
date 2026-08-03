@@ -52,7 +52,11 @@
 	<Menu items={data.menu.content} />
 	<div class="fixed top-0 right-0 w-full h-full"
 			 style="background: rgba(0,0,0,.5);"
+			 role="button"
+			 tabindex="0"
+			 aria-label="Fermer le menu"
 			 on:click={()=> $menuIsOpen = false}
+			 on:keydown={(e) => { if (e.key === 'Escape' || e.key === 'Enter') $menuIsOpen = false }}
 	></div>
 </div>
 {/if}
@@ -108,7 +112,11 @@
 			height: 100%;
 			z-index: -1;
 		"
+				 role="button"
+				 tabindex="0"
+				 aria-label="Fermer le menu de liens"
 				 on:click={() => linkTreeIsOpen.set(false)}
+				 on:keydown={(e) => { if (e.key === 'Escape' || e.key === 'Enter') linkTreeIsOpen.set(false) }}
 		></div>
 		<a
 						href={data.page.lab.btn?.link}
@@ -260,7 +268,7 @@
 
 <section id="lefood" class="relative mt-24 w-full lg:mt-20">
 	<!-- Background -->
-	<img class="absolute -left-10 -top-10 z-10 lg:-left-10 lg:-top-10 lg:w-3/5" src="/bg_2_1.svg" />
+	<img class="absolute -left-10 -top-10 z-10 lg:-left-10 lg:-top-10 lg:w-3/5" src="/bg_2_1.svg" alt="" />
 
 	<!-- Container -->
 	<div class="grid h-full w-full grid-cols-1 px-3 lg:grid-cols-12 lg:px-0">
@@ -355,6 +363,7 @@
 	<img
 		class="absolute -right-20 bottom-20 z-10 lg:-bottom-52 lg:-right-52 lg:w-3/5"
 		src="/bg_3_1.svg"
+		alt=""
 	/>
 </section>
 
@@ -440,6 +449,7 @@
 			<img
 				class=" col-span-12 mx-auto h-auto rounded-2xl object-contain object-center lg:col-span-8 lg:col-start-3 lg:h-full lg:w-full lg:rounded-3xl"
 				src={data.page.univers.blogPictureUrl1}
+				alt=""
 			/>
 			<a href="https://for-pro.ch" target="_blank">
 				<img
@@ -458,7 +468,7 @@
 	</div>
 
 	<!-- Background -->
-	<img class="absolute -right-32 top-20 z-10 w-[50em] lg:-right-64 lg:top-0" src="/bg_5_1.svg" />
+	<img class="absolute -right-32 top-20 z-10 w-[50em] lg:-right-64 lg:top-0" src="/bg_5_1.svg" alt="" />
 </section>
 
 <section class="relative mt-10 bg-background px-5 pb-20 lg:px-0">
@@ -477,6 +487,7 @@
 			<img
 				class=" col-span-12 mx-auto h-auto rounded-2xl object-contain object-center lg:col-span-8 lg:col-start-3 lg:h-full lg:w-full lg:rounded-3xl"
 				src={data.page.univers.blogPictureUrl2}
+				alt=""
 			/>
 			<a href="https://for-pro.ch" target="_blank">
 				<img
@@ -499,6 +510,7 @@
 	<img
 		class="z-1 absolute left-[-6rem] top-[-0rem] lg:left-[-23rem] lg:top-[-5rem] lg:w-[175em]"
 		src="/bg_5_2.svg"
+		alt=""
 	/>
 </section>
 
@@ -525,7 +537,7 @@
 			{#each data.page.values.list as value}
 				<div class="flex items-center justify-center mt-5 lg:mt-0">
 					<div class="inline-grid h-full w-full justify-center text-center">
-						<img src={value.icon} class="w-32 justify-self-center pb-3" />
+						<img src={value.icon} class="w-32 justify-self-center pb-3" alt="" />
 						<span class="uppercase text-white">{@html value.title}</span>
 					</div>
 				</div>
@@ -583,11 +595,12 @@
 			<img
 				class="absolute -left-14 -top-12 hidden w-36 -rotate-12 lg:block"
 				src="/badge_footer.svg"
+				alt=""
 			/>
 			<div class="prose-sm my-5 text-xs text-primary">
 				{@html data.page.footer.text3}
 			</div>
-			<img src="/footer_logo_2.svg" class="w-full lg:w-44" />
+			<img src="/footer_logo_2.svg" class="w-full lg:w-44" alt="logo ForPro" />
 		</div>
 	</div>
 </section>
