@@ -9,5 +9,5 @@ permissions:
     users:      false
   mediumsans.kirby-calendars:
     access: false
-  mediumsans.kirby-foodlab:
+  eclypsys.foodlab:
     access: true

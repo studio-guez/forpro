@@ -37,7 +37,7 @@ function scrollToBottom(e: Event) {
          role="button"
          tabindex="0"
          class="s-animated-list__desktop__click-event"
-    />
+    ></div>
     {#if browser}
         <div class="s-animated-list__desktop"
         >

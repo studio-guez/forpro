@@ -66,11 +66,6 @@
         justify-content: center;
         text-align: center;
 
-        &.first-child-is-animation {
-            padding-top: 0;
-            padding-bottom: 1rem;
-            margin-bottom: -2rem;
-        }
 
         @media (max-width: scss-params.$fp-breakpoint-xs) {
             padding-top: 1rem;
@@ -126,14 +121,4 @@
       align-items: center;
     }
 
-    .s-page-events-slug__ariane__wrap__current_page_icon {
-      @media (max-width: scss-params.$fp-breakpoint-xs) {
-        display: none !important;
-      }
-    }
-    .s-page-events-slug__ariane__wrap__current_page_title {
-      @media (max-width: scss-params.$fp-breakpoint-xs) {
-        display: none !important;
-      }
-    }
 </style>

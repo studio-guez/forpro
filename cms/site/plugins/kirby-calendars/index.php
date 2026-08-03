@@ -3,18 +3,24 @@
 @include_once __DIR__ . '/vendor/autoload.php';
 
 load([
+    'MediumSans\KirbyCalendars\BaseClass'   => __DIR__ . '/classes/BaseClass.php',
     'MediumSans\KirbyCalendars\Calendar'    => __DIR__ . '/classes/Calendar.php',
     'MediumSans\KirbyCalendars\Schedule'    => __DIR__ . '/classes/Schedule.php',
     'MediumSans\KirbyCalendars\Service'     => __DIR__ . '/classes/Service.php',
-    'MediumSans\KirbyCalendars\Database'    => __DIR__ . '/classes/Database.php',
     'MediumSans\KirbyCalendars\Event'       => __DIR__ . '/classes/Event.php',
     'MediumSans\KirbyCalendars\Leave'       => __DIR__ . '/classes/Leave.php',
     'MediumSans\KirbyCalendars\Invitation'  => __DIR__ . '/classes/Invitation.php',
+    'MediumSans\KirbyCalendars\Mail'        => __DIR__ . '/classes/Mail.php',
+    'MediumSans\KirbyCalendars\Utils'       => __DIR__ . '/classes/Utils.php',
 ]);
 
 $pluginPermissionNameForBlueprint = 'mediumsans.kirby-calendars';
 
 Kirby::plugin('mediumsans/kirby-calendars', [
+    // catégorie de permission « mediumsans.kirby-calendars » utilisée par les blueprints de rôles
+    'permissions' => [
+        'access' => false,
+    ],
     'translations' => require __DIR__ . '/i18n/i18n.php',
     'options' => [
         'notifications' => [
