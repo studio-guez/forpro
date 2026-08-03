@@ -43,6 +43,8 @@
             class="v-space-building__plan"
             class:on-section-is-active={currentOverSection.length > 0}
             on:mouseout={() => currentOverSection = ''}
+            on:blur={() => currentOverSection = ''}
+            role="presentation"
     >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 478">
             <g
@@ -187,30 +189,50 @@
             </g>
             <g id="Cache-Accueil"
                on:click={() => location.hash = 'PopUp'}
-               on:mouseover="{()=> currentOverSection = 'popup'}">
+               on:mouseover="{()=> currentOverSection = 'popup'}"
+               on:focus="{()=> currentOverSection = 'popup'}"
+               on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') location.hash = 'PopUp' }}
+               role="button"
+               tabindex="0">
                 <rect y="394" width="227" height="84" style="fill: #ffffff00;"/>
             </g>
             <g id="Cache-MakerLab"
                on:click={() => location.hash = 'MakerLab'}
                on:mouseover="{()=>currentOverSection = 'makerlab'}"
+               on:focus="{()=>currentOverSection = 'makerlab'}"
+               on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') location.hash = 'MakerLab' }}
+               role="button"
+               tabindex="0"
             >
                 <rect x="861" y="255" width="339" height="139" style="fill: #ffffff00;"/>
             </g>
             <g id="Cache-LearningLab"
                on:click={() => location.hash = 'LearningLab'}
                on:mouseover="{()=>currentOverSection = 'learninglab'}"
+               on:focus="{()=>currentOverSection = 'learninglab'}"
+               on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') location.hash = 'LearningLab' }}
+               role="button"
+               tabindex="0"
             >
                 <rect x="215" y="255" width="646" height="139" style="fill: #ffffff00;"/>
             </g>
             <g id="Cache-GrandLab"
                on:click={() => location.hash = 'GrandLab'}
                on:mouseover="{()=>currentOverSection = 'grandlab'}"
+               on:focus="{()=>currentOverSection = 'grandlab'}"
+               on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') location.hash = 'GrandLab' }}
+               role="button"
+               tabindex="0"
             >
                 <rect y="255" width="215" height="139" style="fill: #ffffff00;"/>
             </g>
             <g id="Cache-Ecole_Horlogerie"
                on:click={() => location.hash = 'Ecole'}
                on:mouseover="{()=>currentOverSection = 'horlogerie'}"
+               on:focus="{()=>currentOverSection = 'horlogerie'}"
+               on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') location.hash = 'Ecole' }}
+               role="button"
+               tabindex="0"
             >
                 <g>
                     <rect y="127" width="1200" height="128" style="fill: #ffffff00;"/>
@@ -220,6 +242,10 @@
             <g id="Cache-FactoryLab"
                on:click={() => location.hash = 'FactoryLab'}
                on:mouseover="{()=>currentOverSection = 'FactoryLab'}"
+               on:focus="{()=>currentOverSection = 'FactoryLab'}"
+               on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') location.hash = 'FactoryLab' }}
+               role="button"
+               tabindex="0"
             >
                 <g>
                     <rect y="61" width="1200" height="66" style="fill: #ffffff00;"/>
@@ -229,12 +255,20 @@
             <g id="Cache-Creche"
                on:click={() => location.hash = 'Creche'}
                on:mouseover="{()=>currentOverSection = 'creche'}"
+               on:focus="{()=>currentOverSection = 'creche'}"
+               on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') location.hash = 'Creche' }}
+               role="button"
+               tabindex="0"
             >
                 <rect x="863" width="268" height="61" style="fill: #ffffff00;"/>
             </g>
             <g id="Cache-Foodlab"
                on:click={() => location.hash = 'FoodLab'}
                on:mouseover="{()=>currentOverSection = 'foodlab'}"
+               on:focus="{()=>currentOverSection = 'foodlab'}"
+               on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') location.hash = 'FoodLab' }}
+               role="button"
+               tabindex="0"
             >
                 <rect x="70" width="793" height="61" style="fill: #ffffff00;"/>
             </g>
@@ -314,6 +348,22 @@
                         if( content.content.section_popup_button_url )
                             window.location.href = content.content.section_popup_button_url
                     }}"
+
+                    on:keydown={(e) => {
+
+                        if(e.key === 'Enter' || e.key === ' ') {
+
+                            if( content.content.section_popup_button_url )
+
+                                window.location.href = content.content.section_popup_button_url
+
+                        }
+
+                    }}
+
+                    role="button"
+
+                    tabindex="0"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="PopUp">Le PopUp</h3>
@@ -326,7 +376,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_popup_button_custom_text?.length > 0}
+                            {#if content.content.section_popup_button_custom_text}
                               {content.content.section_popup_button_custom_text}
                               {:else}
                               en savoir plus
@@ -345,6 +395,22 @@
                         if( content.content.section_learninglab_button_url )
                             window.location.href = content.content.section_learninglab_button_url
                     }}"
+
+                    on:keydown={(e) => {
+
+                        if(e.key === 'Enter' || e.key === ' ') {
+
+                            if( content.content.section_learninglab_button_url )
+
+                                window.location.href = content.content.section_learninglab_button_url
+
+                        }
+
+                    }}
+
+                    role="button"
+
+                    tabindex="0"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="LearningLab">Le LearningLab</h3>
@@ -357,7 +423,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_learninglab_button_custom_text?.length > 0}
+                            {#if content.content.section_learninglab_button_custom_text}
                               {content.content.section_learninglab_button_custom_text}
                             {:else}
                               en savoir plus
@@ -376,6 +442,22 @@
                         if( content.content.section_factorylab_button_url )
                             window.location.href = content.content.section_factorylab_button_url
                     }}"
+
+                    on:keydown={(e) => {
+
+                        if(e.key === 'Enter' || e.key === ' ') {
+
+                            if( content.content.section_factorylab_button_url )
+
+                                window.location.href = content.content.section_factorylab_button_url
+
+                        }
+
+                    }}
+
+                    role="button"
+
+                    tabindex="0"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="FactoryLab">Le FactoryLab</h3>
@@ -388,7 +470,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_factorylab_button_custom_text?.length > 0}
+                            {#if content.content.section_factorylab_button_custom_text}
                               {content.content.section_factorylab_button_custom_text}
                             {:else}
                               en savoir plus
@@ -408,6 +490,22 @@
                         if( content.content.section_foodlab_button_url)
                             window.location.href = content.content.section_foodlab_button_url
                     }}"
+
+                    on:keydown={(e) => {
+
+                        if(e.key === 'Enter' || e.key === ' ') {
+
+                            if( content.content.section_foodlab_button_url )
+
+                                window.location.href = content.content.section_foodlab_button_url
+
+                        }
+
+                    }}
+
+                    role="button"
+
+                    tabindex="0"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="FoodLab">Le FoodLab</h3>
@@ -421,7 +519,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_foodlab_button_custom_text?.length > 0}
+                            {#if content.content.section_foodlab_button_custom_text}
                               {content.content.section_foodlab_button_custom_text}
                             {:else}
                               en savoir plus
@@ -440,6 +538,22 @@
                         if( content.content.section_grandlab_button_url )
                             window.location.href = content.content.section_grandlab_button_url
                     }}"
+
+                    on:keydown={(e) => {
+
+                        if(e.key === 'Enter' || e.key === ' ') {
+
+                            if( content.content.section_grandlab_button_url )
+
+                                window.location.href = content.content.section_grandlab_button_url
+
+                        }
+
+                    }}
+
+                    role="button"
+
+                    tabindex="0"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="GrandLab">Le GrandLab</h3>
@@ -453,7 +567,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_grandlab_button_custom_text?.length > 0}
+                            {#if content.content.section_grandlab_button_custom_text}
                               {content.content.section_grandlab_button_custom_text}
                             {:else}
                               en savoir plus
@@ -472,6 +586,22 @@
                         if( content.content.section_makerlab_button_url )
                             window.location.href = content.content.section_makerlab_button_url
                     }}"
+
+                    on:keydown={(e) => {
+
+                        if(e.key === 'Enter' || e.key === ' ') {
+
+                            if( content.content.section_makerlab_button_url )
+
+                                window.location.href = content.content.section_makerlab_button_url
+
+                        }
+
+                    }}
+
+                    role="button"
+
+                    tabindex="0"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="MakerLab">Le MakerLab</h3>
@@ -484,7 +614,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_makerlab_button_custom_text?.length > 0}
+                            {#if content.content.section_makerlab_button_custom_text}
                               {content.content.section_makerlab_button_custom_text}
                             {:else}
                               en savoir plus
@@ -502,6 +632,22 @@
                         if( content.content.section_ecole_button_url )
                             window.location.href = content.content.section_ecole_button_url
                     }}"
+
+                    on:keydown={(e) => {
+
+                        if(e.key === 'Enter' || e.key === ' ') {
+
+                            if( content.content.section_ecole_button_url )
+
+                                window.location.href = content.content.section_ecole_button_url
+
+                        }
+
+                    }}
+
+                    role="button"
+
+                    tabindex="0"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="Ecole">L’École d’Horlogerie de Genève</h3>
@@ -514,7 +660,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_ecole_button_custom_text?.length > 0}
+                            {#if content.content.section_ecole_button_custom_text}
                               {content.content.section_ecole_button_custom_text}
                             {:else}
                               en savoir plus
@@ -532,6 +678,22 @@
                         if( content.content.section_creche_button_url )
                             window.location.href = content.content.section_creche_button_url
                     }}"
+
+                    on:keydown={(e) => {
+
+                        if(e.key === 'Enter' || e.key === ' ') {
+
+                            if( content.content.section_creche_button_url )
+
+                                window.location.href = content.content.section_creche_button_url
+
+                        }
+
+                    }}
+
+                    role="button"
+
+                    tabindex="0"
             >
                 <div style="width: 100%">
                     <h3 class="v-space-building__cards__container__card__content__tilte" id="Creche">La crèche</h3>
@@ -544,7 +706,7 @@
                              class="app-button app-button--rounded app-button--without-over-effect"
                              style="--app-button--color: var(--fp-color-learninglab);"
                           >
-                            {#if content.content.section_creche_button_custom_text?.length > 0}
+                            {#if content.content.section_creche_button_custom_text}
                               {content.content.section_creche_button_custom_text}
                             {:else}
                               en savoir plus
@@ -563,16 +725,6 @@
 
 <style lang="scss" >
   @use "../../style/_scss-params";
-
-    .is-Accueil-color               {color: var(--fp-color-accueil);}
-    .is-MakerLab-color              {color: var(--fp-color-makerlab);}
-    .is-LearningLab-color           {color: var(--fp-color-learninglab);}
-    .is-Foodlab-color               {color: var(--fp-color-foodlab);}
-    .is-GrandLab-color              {color: var(--fp-color-grandlab);}
-    .is-Hotel_Entreprises-color     {color: var(--fp-color-hotel_entreprises);}
-    .is-Ecole_Horlogerie-color      {color: var(--fp-color-ecole_horlogerie);}
-    .is-Creche-color                {color: var(--fp-color-creche);}
-
 
     [id^="Cache-"] {
         cursor: pointer;
@@ -632,11 +784,11 @@
             margin-bottom: .5em;
         }
 
-        .app-button {
+        :global(.app-button) {
             margin-top: 1em;
         }
 
-        > *:not(.app-button) {
+        > *:not(:global(.app-button)) {
             color: black;
         }
 
@@ -648,14 +800,14 @@
         }
     }
 
-    .v-space-building__section-description--Accueil             {@extend .is-Accueil-color;}
-    .v-space-building__section-description--MakerLab            {@extend .is-MakerLab-color;}
-    .v-space-building__section-description--LearningLab         {@extend .is-LearningLab-color;}
-    .v-space-building__section-description--Foodlab             {@extend .is-Foodlab-color;}
-    .v-space-building__section-description--GrandLab            {@extend .is-GrandLab-color;}
-    .v-space-building__section-description--Hotel_Entreprises   {@extend .is-Hotel_Entreprises-color;}
-    .v-space-building__section-description--Ecole_Horlogerie    {@extend .is-Ecole_Horlogerie-color;}
-    .v-space-building__section-description--Creche              {@extend .is-Creche-color;}
+    .v-space-building__section-description--Accueil             {color: var(--fp-color-accueil);}
+    .v-space-building__section-description--MakerLab            {color: var(--fp-color-makerlab);}
+    .v-space-building__section-description--LearningLab         {color: var(--fp-color-learninglab);}
+    .v-space-building__section-description--Foodlab             {color: var(--fp-color-foodlab);}
+    .v-space-building__section-description--GrandLab            {color: var(--fp-color-grandlab);}
+    .v-space-building__section-description--Hotel_Entreprises   {color: var(--fp-color-hotel_entreprises);}
+    .v-space-building__section-description--Ecole_Horlogerie    {color: var(--fp-color-ecole_horlogerie);}
+    .v-space-building__section-description--Creche              {color: var(--fp-color-creche);}
 
 
 
