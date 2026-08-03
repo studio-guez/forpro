@@ -6,6 +6,8 @@ export const load: PageServerLoad = async ({params, fetch}) => {
     const eventId = params.eventId;
     const resp = await confirmAppointment(eventId);
 
+    if (!resp) error(502, {message: 'Impossible de confirmer le rendez-vous.'});
+
     switch (resp.state) {
         case 'confirmed':
             redirect(302, '/confirm/valid');
