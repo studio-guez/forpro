@@ -1,0 +1,90 @@
+FROM php:8.4-apache
+
+ENV TZ=Europe/Zurich
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Activer mod_rewrite pour Kirby
+RUN a2enmod rewrite
+
+# Installer dépendances système + extensions PHP
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    unzip \
+    libzip-dev \
+    libicu-dev \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    libwebp-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install -j"$(nproc)" zip gd intl opcache \
+    && rm -rf /var/lib/apt/lists/*
+
+# Node + Chromium: requis par Browsershot/puppeteer (génération des PDF du menu)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    nodejs \
+    chromium \
+    fonts-liberation \
+    && rm -rf /var/lib/apt/lists/*
+
+# puppeteer n'embarque pas de binaire ici : on pointe sur le Chromium système
+ENV PUPPETEER_SKIP_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
+# Installe Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Ajouter un ServerName pour éviter les logs
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Activer config Apache custom
+COPY apache.conf /etc/apache2/conf-available/custom.conf
+RUN a2enconf custom
+
+# Appliquer la config PHP custom (memory_limit, upload_max_filesize, ...)
+COPY php.ini /usr/local/etc/php/conf.d/zz-custom.ini
+
+# Production php.ini: display_errors off, sensible defaults
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+RUN rm -rf /var/www/html/*
+
+WORKDIR /var/www/html
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader
+
+# content, media, site/accounts, site/sessions, site/cache et les dossiers `data`
+# des plugins sont bind-mountés depuis l'hôte (voir compose.prod.yml).
+RUN rm -rf /var/www/html/content
+
+# Bake custom site files (templates, models, blueprints, snippets, config, plugins, ...)
+# into the image so prod (which initializes the kirby_data named volume from the image)
+# has all of them. In dev these are overlaid by bind-mounts from compose.dev.yml.
+COPY site /var/www/html/site
+COPY utils /var/www/html/utils
+COPY index.php /var/www/html/index.php
+
+# Use the version-controlled .htaccess (front-controller rewrites + rules that
+# block direct access to content, site and kirby sources).
+COPY .htaccess /var/www/html/.htaccess
+
+RUN mkdir -p /var/www/html/site/sessions \
+    /var/www/html/site/accounts \
+    /var/www/html/site/plugins \
+    /var/www/html/site/cache \
+    /var/www/html/content \
+    /var/www/html/media
+
+RUN chown -R www-data:www-data /var/www/html/
+
+# Chromium écrit dans $HOME (/var/www) au démarrage : sans droit d'écriture il crashe
+RUN chown www-data:www-data /var/www
+
+RUN apache2ctl configtest
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 80
+
+CMD ["/entrypoint.sh"]

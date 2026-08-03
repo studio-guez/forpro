@@ -14,6 +14,10 @@ class FoddLab extends BaseClass
      */
     private static function readAll(): array
     {
+        if (file_exists(static::file()) === false) {
+            return ['items' => [], 'texte' => ''];
+        }
+
         $data = Data::read(static::file());
 
         // Migration: old format was a plain array of items

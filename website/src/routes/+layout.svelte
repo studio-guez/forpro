@@ -1,3 +1,5 @@
+<AppSeo seo="{$page.data?.seo ?? null}" siteTitle="{data?.title ?? null}"/>
+
 <svelte:head>
   {#if trackWithMatomo}
   <!-- Matomo -->
@@ -25,6 +27,7 @@
     import {menuIsOpen, modaleIsOpen, showCookieConsent, siteInfo} from "../store";
     import AppNav from "$lib/components/AppNav.svelte";
     import AppFooter from "$lib/components/AppFooter.svelte";
+    import AppSeo from "$lib/components/AppSeo.svelte";
     import type {ISiteInfo} from "$lib/interfaces/cmsApiResponse";
     import {page} from '$app/stores';
     import {afterNavigate, beforeNavigate} from "$app/navigation";

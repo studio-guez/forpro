@@ -52,8 +52,15 @@ cms/**/site/sessions/index.html
 # License
 cms/site/config/.license
 
+# Environment files with secrets (use cms/.env.example as template)
+cms/.env
+
 # Content
 cms/content
+
+# Kirby core & composer vendor (baked into Docker image, not tracked in git)
+cms/kirby/
+cms/vendor/
 
 # NODE
 cms/site/plugins/**/node_modules/*

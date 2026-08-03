@@ -1,7 +1,8 @@
+import {error} from "@sveltejs/kit";
 import {fetchFromAPI} from "$lib/utils/shared";
 import {type IPage_Event} from "$lib/interfaces/cmsApiResponse";
 import {variables} from "$lib/utils/constants";
-import type { PageServerLoad } from "../../evenements/[slug]/$types";
+import type { PageServerLoad } from "./$types";
 
 export const prerender = false;
 
@@ -11,5 +12,9 @@ export const load: PageServerLoad = async ({params}) => {
         method: 'GET',
     })
 
-    return await fetchFromAPI<IPage_Event>(request, 'Failed to fetch page data')
+    const data = await fetchFromAPI<IPage_Event>(request, 'Failed to fetch page data')
+
+    if (!data) error(404, {message: 'Cet événement n\'existe pas.'})
+
+    return data
 }

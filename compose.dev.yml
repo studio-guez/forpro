@@ -20,9 +20,10 @@ services:
     build:
       context: ./restaurant
       dockerfile: Dockerfile.dev
+    user: "1000:1000"
     volumes:
       - ./restaurant:/app
-      - /app/node_modules
+      - restaurant_node_modules:/app/node_modules
     ports:
       - "5173:5173"
     environment:
@@ -45,9 +46,10 @@ services:
     build:
       context: ./website
       dockerfile: Dockerfile.dev
+    user: "1000:1000"
     volumes:
       - ./website:/app
-      - /app/node_modules
+      - website_node_modules:/app/node_modules
     ports:
       - "5174:5173"
     environment:
@@ -65,13 +67,42 @@ services:
       - "traefik.http.routers.website.entrypoints=web"
       - "traefik.http.services.website.loadbalancer.server.port=5173"
 
+  # Nuxt
+  menu:
+    build:
+      context: ./menu
+      dockerfile: Dockerfile.dev
+    user: "1000:1000"
+    volumes:
+      - ./menu:/app
+      - menu_node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NUXT_PUBLIC_CMS_BASE_URL=http://cms.localhost
+    extra_hosts:
+      - "cms.localhost:host-gateway"
+    restart: unless-stopped
+    depends_on:
+      - cms
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.menu.rule=Host(`menu.localhost`)"
+      - "traefik.http.routers.menu.entrypoints=web"
+      - "traefik.http.services.menu.loadbalancer.server.port=3000"
+
   # Kirby CMS
   cms:
     build:
       context: ./cms
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
+      args:
+        UID: 1000
+        GID: 1000
     volumes:
       - ./cms/composer.json:/var/www/html/composer.json:rw
+      - ./cms/composer.lock:/var/www/html/composer.lock:rw
       - ./cms/content:/var/www/html/content:rw
       - ./cms/site/config:/var/www/html/site/config:rw
       - ./cms/site/plugins:/var/www/html/site/plugins:rw
@@ -81,15 +112,15 @@ services:
       - ./cms/site/models:/var/www/html/site/models:rw
       - ./cms/utils:/var/www/html/utils:rw
       - ./cms/index.php:/var/www/html/index.php:rw
-      - kirby_media:/var/www/html/media:rw
+      - ./cms/media:/var/www/html/media:rw
       - kirby_cache:/var/www/html/site/cache:rw
       - kirby_sessions:/var/www/html/site/sessions:rw
+    env_file:
+      - ./cms/.env
     ports:
       - "8000:80"
     environment:
       - KIRBY_DEBUG=true
-      - HOST_UID=1000
-      - HOST_GID=1000
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
@@ -98,10 +129,8 @@ services:
       - "traefik.http.services.cms.loadbalancer.server.port=80"
 
 volumes:
-  kirby_data:
-  kirby_accounts:
   kirby_cache:
-  kirby_plugins:
-  kirby_content:
-  kirby_media:
   kirby_sessions:
+  restaurant_node_modules:
+  website_node_modules:
+  menu_node_modules:

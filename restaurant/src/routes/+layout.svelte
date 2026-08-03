@@ -5,6 +5,19 @@
 					content="Le FoodLab est un des 6 labs dédiés à la formation professionnelle au sein du campus ForPro."
 	/>
 
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Restaurant",
+		"name": "Foodlab - Imaginé par ForPro",
+		"description": "Le FoodLab est un des 6 labs dédiés à la formation professionnelle au sein du campus ForPro.",
+		"url": "https://foodlab.for-pro.ch",
+		"parentOrganization": {
+			"@type": "Organization",
+			"name": "Fondation ForPro",
+			"url": "https://for-pro.ch"
+		}
+	})}</script>`}
+
 	<!-- Matomo -->
 	<script>
 		var _paq = window._paq = window._paq || [];

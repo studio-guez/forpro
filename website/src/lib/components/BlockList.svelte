@@ -15,9 +15,4 @@
     {/each}
 </div>
 
-<style lang="scss" >
-.s-app__list {
-
-}
-</style>
 

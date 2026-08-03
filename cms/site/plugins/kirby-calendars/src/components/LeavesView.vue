@@ -1,5 +1,5 @@
 <template>
-  <k-inside>
+  <k-panel-inside>
     <k-header>
       {{ $t('kirbycalendars.leaves') }}
 
@@ -52,7 +52,7 @@
       </tr>
       </tbody>
     </table>
-  </k-inside>
+  </k-panel-inside>
 </template>
 
 <script>
