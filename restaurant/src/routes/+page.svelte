@@ -113,7 +113,7 @@
 				 on:keydown={(e) => { if (e.key === 'Escape' || e.key === 'Enter') linkTreeIsOpen.set(false) }}
 		></div>
 		<a
-						href={data.page.lab.btn?.link}
+						href="/menu_foodlab.pdf"
 						type="button"
 						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 						target={data.page.lab.btn?.target ? '_blank' : '_self'}
@@ -140,7 +140,7 @@
 		</a>
 
 		<a
-						href="https://api.for-pro.ch/media/site/7a047d9699-1730810358/menu_popup.pdf"
+						href="/menu_popup_cafe.pdf"
 						type="button"
 						class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 						target="_blank"
@@ -340,7 +340,7 @@
 				<div class="h-full align-bottom">
 					{#if data.page.lab.btn.text}
 					<a
-						href={data.page.lab.btn.link}
+						href="/menu_foodlab.pdf"
 						type="button"
 						class="mt-10 block w-max rounded-full bg-white px-5 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 lg:ml-10 lg:px-14"
 						target={data.page.lab.btn.target ? '_blank' : '_self'}
