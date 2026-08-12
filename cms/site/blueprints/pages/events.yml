@@ -1,0 +1,59 @@
+title:
+  en: Event
+  fr: Événement
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+
+    icon: text
+
+    fields:
+      cover:
+        label:
+          en: Cover image
+          fr: Image de couverture
+        type: files
+        max: 1
+        layout: small
+
+      description:
+        label:
+          en: Description
+          fr: Description
+        type: textarea
+
+      date_start:
+        label:
+          en: Start date
+          fr: Date de début
+        type: date
+
+      date_end:
+        label:
+          en: End date
+          fr: Date de fin
+        type: date
+
+      location:
+        label:
+          en: Location
+          fr: Lieu
+        type: text
+
+      registration:
+        label:
+          en: Registration link
+          fr: Lien d'inscription
+        type: url
+
+      body:
+        type: blocks
+        label:
+          en: Content
+          fr: Contenu
+        fieldsets: []
+
+  seo: seo/page

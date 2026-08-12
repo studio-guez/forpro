@@ -1,0 +1,56 @@
+title:
+  en: Project
+  fr: Projet
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+
+    icon: text
+
+    fields:
+      cover:
+        label:
+          en: Cover image
+          fr: Image de couverture
+        type: files
+        max: 1
+        layout: small
+
+      description:
+        label:
+          en: Description
+          fr: Description
+        type: textarea
+
+      date:
+        label:
+          en: Date
+          fr: Date
+        type: date
+
+      tags:
+        label:
+          en: Tags
+          fr: Étiquettes
+        type: tags
+
+      gallery:
+        label:
+          en: Gallery
+          fr: Galerie
+        type: files
+        layout: cards
+        image:
+          cover: true
+
+      body:
+        type: blocks
+        label:
+          en: Content
+          fr: Contenu
+        fieldsets: []
+
+  seo: seo/page
