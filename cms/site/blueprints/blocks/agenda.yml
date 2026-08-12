@@ -1,0 +1,7 @@
+extends: blocks/base
+
+name:
+  en: Agenda
+  fr: Agenda
+
+icon: calendar
