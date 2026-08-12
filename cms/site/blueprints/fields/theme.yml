@@ -2,7 +2,8 @@ label:
   en: Theme
   fr: Thème
 type: select
-default: light
+default: blue
+required: true
 options:
   blue:
     en: Blue
