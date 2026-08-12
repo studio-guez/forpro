@@ -1,0 +1,22 @@
+title:
+  en: Page
+  fr: Page
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+
+    icon: text
+
+    fields:
+      body:
+        type: blocks
+        label:
+          en: Content
+          fr: Contenu
+        # New blocks for the rebuilt website will be added here.
+        fieldsets: []
+
+  seo: seo/page
