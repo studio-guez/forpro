@@ -64,15 +64,7 @@ git clone https://github.com/studio-guez/forpro.git
 cd forpro/
 ```
 
-### 2. Configure local hostnames
-
-Add the following line to your `/etc/hosts` file:
-
-```
-127.0.0.1 restaurant.localhost website.localhost cms.localhost menu.localhost
-```
-
-### 3. Set up environment variables
+### 2. Set up environment variables
 
 ```bash
 cp cms/.env.example cms/.env
@@ -80,13 +72,13 @@ cp cms/.env.example cms/.env
 
 Then edit `cms/.env` and set unique random values for `KIRBY_CONTENT_SALT` and `KIRBY_COOKIE_KEY` (generate with `openssl rand -hex 32`). Set `KIRBY_VUE_COMPILER` to `true` for local development.
 
-### 4. Build and start all services
+### 3. Build and start all services
 
 ```bash
 docker compose -f compose.dev.yml up -d --build && docker compose -f compose.dev.yml logs -f restaurant website menu
 ```
 
-### 5. Initialize plugin data OR rsync it from Prod server
+### 4. Initialize plugin data OR rsync it from Prod server
 
 Create the required JSON files for `kirby-foodlab` (this directory is git-ignored):
 
@@ -97,7 +89,7 @@ for f in beer bubblewine cocktail dessert hotdrink maincourse menu menu-special 
 done
 ```
 
-### 6. Fix permissions
+### 5. Fix permissions
 
 ```bash
 docker compose -f compose.dev.yml exec cms sh -c 'chown -R www-data:www-data /var/www/html/site/sessions /var/www/html/site/accounts /var/www/html/content /var/www/html/media /var/www/html/site/plugins/*/data /var/www/html/site/cache'
