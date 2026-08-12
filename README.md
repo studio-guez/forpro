@@ -52,7 +52,6 @@ The website frontend is being rebuilt: `cms/site/` now only keeps the basics —
 into, plus the SEO tab) and its JSON representation (`default.json.php`). The
 restaurant and menu stacks live entirely in their plugins
 (`kirby-foodlab`, `kirby-menu-du-jour`).
-(blueprints, models, templates, config) rather than in a plugin.
 
 ## Local Development
 
