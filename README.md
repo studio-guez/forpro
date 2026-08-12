@@ -47,8 +47,9 @@ The restaurant frontend links to this app through `PUBLIC_MENU_BASE_URL`
 | kirby-menu-du-jour | Menu management                                          |
 | kirby-seo          | SEO utilities                                            |
 
-ForPro page types, blocks and the `booking` route live directly in `cms/site/`
-(blueprints, models, templates, config) rather than in a plugin.
+The website is served from `cms/site/` (blueprints, templates, config). The
+restaurant and menu stacks live entirely in their plugins
+(`kirby-foodlab`, `kirby-menu-du-jour`).
 
 ## Local Development
 
