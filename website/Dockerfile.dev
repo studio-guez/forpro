@@ -12,4 +12,4 @@ RUN pnpm install
 
 COPY --chown=node:node . .
 
-CMD ["pnpm", "run", "dev", "--host", "0.0.0.0"]
+CMD ["sh", "-c", "pnpm install && pnpm run dev --host 0.0.0.0"]
