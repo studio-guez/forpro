@@ -23,7 +23,6 @@ services:
     user: "1000:1000"
     volumes:
       - ./restaurant:/app
-      - restaurant_node_modules:/app/node_modules
     ports:
       - "5173:5173"
     environment:
@@ -49,7 +48,6 @@ services:
     user: "1000:1000"
     volumes:
       - ./website:/app
-      - website_node_modules:/app/node_modules
     ports:
       - "5174:5173"
     environment:
@@ -75,7 +73,6 @@ services:
     user: "1000:1000"
     volumes:
       - ./menu:/app
-      - menu_node_modules:/app/node_modules
     ports:
       - "3000:3000"
     environment:
