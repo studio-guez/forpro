@@ -1,3 +1,5 @@
+preview: fields
+wysiwyg: true
 fields:
   theme:
     extends: fields/theme
