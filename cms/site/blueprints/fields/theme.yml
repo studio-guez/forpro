@@ -1,0 +1,18 @@
+label:
+  en: Theme
+  fr: Thème
+type: select
+default: light
+options:
+  blue:
+    en: Blue
+    fr: Bleu
+  blue_reversed:
+    en: Blue Reversed
+    fr: Bleu Inversé
+  orange:
+    en: Orange
+    fr: Orange
+  orange_reversed:
+    en: Orange Reversed
+    fr: Orange Inversé
