@@ -1,0 +1,29 @@
+title:
+  en: Page
+  fr: Page
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+
+    icon: text
+
+    fields:
+      cover:
+        label:
+          en: Cover image
+          fr: Image de couverture
+        type: files
+        max: 1
+        layout: small
+
+      body:
+        type: blocks
+        label:
+          en: Content
+          fr: Contenu
+        fieldsets: []
+
+  seo: seo/page
