@@ -47,7 +47,11 @@ The restaurant frontend links to this app through `PUBLIC_MENU_BASE_URL`
 | kirby-menu-du-jour | Menu management                                          |
 | kirby-seo          | SEO utilities                                            |
 
-ForPro page types, blocks and the `booking` route live directly in `cms/site/`
+The website frontend is being rebuilt: `cms/site/` now only keeps the basics — a
+`default` page blueprint (with an empty blocks field that new blocks will plug
+into, plus the SEO tab) and its JSON representation (`default.json.php`). The
+restaurant and menu stacks live entirely in their plugins
+(`kirby-foodlab`, `kirby-menu-du-jour`).
 (blueprints, models, templates, config) rather than in a plugin.
 
 ## Local Development
