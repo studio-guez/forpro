@@ -24,6 +24,7 @@ tabs:
         label:
           en: Content
           fr: Contenu
-        fieldsets: []
+        fieldsets:
+          - agenda
 
   seo: seo/page
