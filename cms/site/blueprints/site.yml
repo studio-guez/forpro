@@ -20,35 +20,29 @@ tabs:
       - width: 2/3
 
         sections:
-          global:
-            create: false
-            label: "Global"
-            type: pages
-            templates:
-              - site-info
-              - home
-
-          short_links_list:
-            create: false
-            label: "Liste de liens courts"
-            type: pages
-            templates:
-              - short-links-list
-
           events:
-            create: false
             label: "Événements"
-            type: pages
-            templates:
-              - forpro-events
-
-          pages:
             type: pages
             image:
               cover: true
-            limit: 100
             templates:
-              - forpro
+              - events
+
+          projects:
+            label: "Projets"
+            type: pages
+            image:
+              cover: true
+            templates:
+              - projects
+
+          pages:
+            label: "Pages"
+            type: pages
+            image:
+              cover: true
+            templates:
+              - pages
 
   restaurant: tabs/restaurant
 
