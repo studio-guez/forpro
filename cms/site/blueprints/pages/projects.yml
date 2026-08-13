@@ -1,0 +1,19 @@
+title:
+  en: Projects
+  fr: Projets
+
+icon: layout
+
+options:
+  changeTemplate: false
+
+sections:
+  projects:
+    label:
+      en: Projects
+      fr: Projets
+    type: pages
+    image: false
+    templates:
+      - project
+    create: project

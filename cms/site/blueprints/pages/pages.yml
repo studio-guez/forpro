@@ -1,0 +1,19 @@
+title:
+  en: Pages
+  fr: Pages
+
+icon: document
+
+options:
+  changeTemplate: false
+
+sections:
+  pages:
+    label:
+      en: Pages
+      fr: Pages
+    type: pages
+    image: false
+    templates:
+      - page
+    create: page
