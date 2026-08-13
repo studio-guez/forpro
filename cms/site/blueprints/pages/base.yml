@@ -1,0 +1,23 @@
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    columns:
+      sidebar:
+        width: 1/4
+        sticky: true
+        fields:
+          cover:
+            label:
+              en: Cover image
+              fr: Image de couverture
+            type: files
+            max: 1
+            layout: cards
+      main:
+        width: 3/4
+        fields:
+
+  seo: tabs/seo
