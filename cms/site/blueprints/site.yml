@@ -43,6 +43,34 @@ tabs:
               cover: true
             templates:
               - pages
+  taxonomies:
+    label:
+      en: Taxonomies
+      fr: Taxonomies
+    icon: tag
+    columns:
+      - width: 1/2
+        sections:
+          event_types:
+            type: pages
+            image: false
+            label:
+              en: Event types
+              fr: Types d'événement
+            templates:
+              - event-type
+            parent: site.find("taxonomies").find("event-types")
+      - width: 1/2
+        sections:
+          domaines:
+            type: pages
+            image: false
+            label:
+              en: Domains
+              fr: Domaines
+            templates:
+              - domaine
+            parent: site.find("taxonomies").find("domaines")
 
   restaurant: tabs/restaurant
 
