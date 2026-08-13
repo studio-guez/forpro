@@ -24,6 +24,7 @@ tabs:
             label: "Événements"
             type: pages
             image:
+              query: page.cover.toFile
               cover: true
             parent: site.find("events")
             templates:
@@ -34,6 +35,7 @@ tabs:
             label: "Projets"
             type: pages
             image:
+              query: page.cover.toFile
               cover: true
             parent: site.find("projects")
             templates:
@@ -44,6 +46,7 @@ tabs:
             label: "Pages"
             type: pages
             image:
+              query: page.cover.toFile
               cover: true
             parent: site.find("pages")
             templates:
