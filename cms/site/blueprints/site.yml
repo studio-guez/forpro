@@ -71,6 +71,17 @@ tabs:
             templates:
               - domaine
             parent: site.find("taxonomies").find("domaines")
+      - width: 1/2
+        sections:
+          thematiques_de_projet:
+            type: pages
+            image: false
+            label:
+              en: Project themes
+              fr: Thématiques de projet
+            templates:
+              - thematique-de-projet
+            parent: site.find("taxonomies").find("thematiques-de-projet")
 
   restaurant: tabs/restaurant
 
