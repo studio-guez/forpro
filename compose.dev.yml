@@ -117,11 +117,26 @@ services:
     ports:
       - "8000:80"
     restart: unless-stopped
+    depends_on:
+      - mailpit
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.cms.rule=Host(`cms.localhost`)"
       - "traefik.http.routers.cms.entrypoints=web"
       - "traefik.http.services.cms.loadbalancer.server.port=80"
+
+  # Mailpit — catches all outgoing mail in dev (SMTP on 1025, web UI on 8025)
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mailpit.rule=Host(`mailpit.localhost`)"
+      - "traefik.http.routers.mailpit.entrypoints=web"
+      - "traefik.http.services.mailpit.loadbalancer.server.port=8025"
 
 volumes:
   kirby_cache:

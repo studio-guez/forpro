@@ -36,12 +36,12 @@ return [
     "email" => [
         "transport" => [
             "type" => "smtp",
-            "host" => "mail.infomaniak.com",
-            "port" => 465,
-            "security" => true,
-            "auth" => true,
-            "username" => "ne-pas-repondre@for-pro.ch",
-            "password" => "b.PCS#/.b163rf",
+            "host" => getenv('KIRBY_SMTP_HOST') ?: 'localhost',
+            "port" => (int)(getenv('KIRBY_SMTP_PORT') ?: 587),
+            "security" => getenv('KIRBY_SMTP_SECURITY') === 'true',
+            "auth" => getenv('KIRBY_SMTP_AUTH') === 'true',
+            "username" => getenv('KIRBY_SMTP_USERNAME') ?: null,
+            "password" => getenv('KIRBY_SMTP_PASSWORD') ?: null,
         ],
     ],
 ];
