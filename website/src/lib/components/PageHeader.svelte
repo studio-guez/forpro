@@ -21,7 +21,7 @@
 	const arrowFill = $derived(arrowColor ? (arrowColors[arrowColor] ?? 'currentColor') : 'currentColor');
 </script>
 
-<header class="flex flex-col gap-6">
+<div class="min-h-138 relative">
 	<div>
 		{#if overtitle}
 		<p class="text-sm uppercase tracking-[0.08em] opacity-70">{overtitle}</p>
@@ -48,7 +48,7 @@
 
 	{#if cover}
     <img
-        class="block h-auto w-full rounded-xl object-cover"
+        class="absolute inset-0 h-full w-full object-cover rounded-3xl -z-1"
         src={cover.url}
         srcset={cover.srcset}
         sizes="100vw"
@@ -60,4 +60,4 @@
         fetchpriority="high"
     />
 	{/if}
-</header>
+</div>
