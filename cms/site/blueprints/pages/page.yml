@@ -2,31 +2,16 @@ title:
   en: Page
   fr: Page
 
+extends: pages/base
+
 status:
   draft: true
   listed: true
 
 tabs:
   content:
-    label:
-      en: Content
-      fr: Contenu
-
-    icon: text
-
     columns:
-      - width: 1/4
-        sticky: true
-        fields:
-          cover:
-            label:
-              en: Cover image
-              fr: Image de couverture
-            type: files
-            max: 1
-            layout: cards
-
-      - width: 3/4
+      main:
         fields:
           body:
             type: blocks
@@ -35,5 +20,3 @@ tabs:
               fr: Contenu
             fieldsets:
               - agenda
-
-  seo: seo/page

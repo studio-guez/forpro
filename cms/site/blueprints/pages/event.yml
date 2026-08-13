@@ -2,58 +2,46 @@ title:
   en: Event
   fr: Événement
 
+extends: pages/base
+
 tabs:
   content:
-    label:
-      en: Content
-      fr: Contenu
+    columns:
+      main:
+        fields:
+          description:
+            label:
+              en: Description
+              fr: Description
+            type: textarea
 
-    icon: text
+          date_start:
+            label:
+              en: Start date
+              fr: Date de début
+            type: date
 
-    fields:
-      cover:
-        label:
-          en: Cover image
-          fr: Image de couverture
-        type: files
-        max: 1
-        layout: small
+          date_end:
+            label:
+              en: End date
+              fr: Date de fin
+            type: date
 
-      description:
-        label:
-          en: Description
-          fr: Description
-        type: textarea
+          location:
+            label:
+              en: Location
+              fr: Lieu
+            type: text
 
-      date_start:
-        label:
-          en: Start date
-          fr: Date de début
-        type: date
+          registration:
+            label:
+              en: Registration link
+              fr: Lien d'inscription
+            type: url
 
-      date_end:
-        label:
-          en: End date
-          fr: Date de fin
-        type: date
-
-      location:
-        label:
-          en: Location
-          fr: Lieu
-        type: text
-
-      registration:
-        label:
-          en: Registration link
-          fr: Lien d'inscription
-        type: url
-
-      body:
-        type: blocks
-        label:
-          en: Content
-          fr: Contenu
-        fieldsets: []
-
-  seo: seo/page
+          body:
+            type: blocks
+            label:
+              en: Content
+              fr: Contenu
+            fieldsets: []
