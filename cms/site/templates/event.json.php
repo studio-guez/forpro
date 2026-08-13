@@ -15,8 +15,8 @@ $coverFile = $page->cover()->toFile();
 $json['cover'] = $coverFile ? Utils::getJsonEncodeImageData($coverFile) : null;
 
 $json['description'] = $page->description()->value();
-$json['date_start'] = $page->date_start()->toDate('Y-m-d');
-$json['date_end'] = $page->date_end()->toDate('Y-m-d');
+$json['dateStart'] = $page->dateStart()->toDate('Y-m-d');
+$json['dateEnd'] = $page->dateEnd()->toDate('Y-m-d');
 $json['location'] = $page->location()->value();
 $json['registration'] = $page->registration()->value();
 
