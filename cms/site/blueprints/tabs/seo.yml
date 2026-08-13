@@ -3,9 +3,9 @@ extends: seo/page
 columns:
   main:
     fields:
-      matomo_separator:
+      matomoSeparator:
         type: line
-      track_with_matomo:
+      trackWithMatomo:
         label:
           en: Track with Matomo
           fr: Suivi avec Matomo

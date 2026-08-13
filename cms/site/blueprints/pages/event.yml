@@ -15,13 +15,13 @@ tabs:
               fr: Description
             type: textarea
 
-          date_start:
+          dateStart:
             label:
               en: Start date
               fr: Date de début
             type: date
 
-          date_end:
+          dateEnd:
             label:
               en: End date
               fr: Date de fin
