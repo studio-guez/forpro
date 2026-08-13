@@ -5,16 +5,9 @@ export interface CmsImage {
 	readonly link: string | null;
 	readonly photoCredit: string | null;
 	readonly url: string;
-	readonly mediaUrl: string;
+	readonly srcset: string;
 	readonly width: number;
 	readonly height: number;
-	readonly resize: {
-		readonly tiny: string;
-		readonly small: string;
-		readonly reg: string;
-		readonly large: string;
-		readonly xxl: string;
-	};
 }
 
 export interface Block {
