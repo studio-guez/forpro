@@ -26,7 +26,7 @@ tabs:
             image:
               cover: true
             templates:
-              - events
+              - event
 
           projects:
             label: "Projets"
@@ -34,7 +34,7 @@ tabs:
             image:
               cover: true
             templates:
-              - projects
+              - project
 
           pages:
             label: "Pages"
@@ -42,7 +42,7 @@ tabs:
             image:
               cover: true
             templates:
-              - pages
+              - page
   taxonomies:
     label:
       en: Taxonomies
