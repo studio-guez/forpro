@@ -2,6 +2,10 @@ title:
   en: Page
   fr: Page
 
+status:
+  draft: true
+  listed: true
+  
 tabs:
   content:
     label:
