@@ -1,0 +1,5 @@
+title:
+  en: Domain
+  fr: Domaine
+
+extends: pages/taxonomy-term
