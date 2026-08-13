@@ -25,24 +25,30 @@ tabs:
             type: pages
             image:
               cover: true
+            parent: site.find("events")
             templates:
               - event
+            create: event
 
           projects:
             label: "Projets"
             type: pages
             image:
               cover: true
+            parent: site.find("projects")
             templates:
               - project
+            create: project
 
           pages:
             label: "Pages"
             type: pages
             image:
               cover: true
+            parent: site.find("pages")
             templates:
               - page
+            create: page
   taxonomies:
     label:
       en: Taxonomies
