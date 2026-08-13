@@ -1,3 +1,6 @@
+status:
+  draft: true
+  listed: true
 fields:
   title:
     label:
