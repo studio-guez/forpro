@@ -21,6 +21,7 @@ Services are routed through **Traefik** reverse proxy:
 | Restaurant | http://restaurant.localhost | https://foodlab.for-pro.ch |
 | Website    | http://website.localhost    | https://for-pro.ch         |
 | Menu       | http://menu.localhost       | https://menus.for-pro.ch   |
+| Mailpit    | http://mailpit.localhost    | — (dev only)               |
 | Traefik    | http://localhost:8888       | —                          |
 
 ### Menu app (Nuxt)
@@ -71,7 +72,7 @@ cd forpro/
 cp cms/.env.example cms/.env
 ```
 
-Then edit `cms/.env` and set unique random values for `KIRBY_CONTENT_SALT` and `KIRBY_COOKIE_KEY` (generate with `openssl rand -hex 32`). Set `KIRBY_VUE_COMPILER` to `true` for local development.
+Then edit `cms/.env` and set unique random values for `KIRBY_CONTENT_SALT` and `KIRBY_COOKIE_KEY` (generate with `openssl rand -hex 32`). Set `KIRBY_VUE_COMPILER` to `true` for local development. The `KIRBY_SMTP_*` values point at the Mailpit container by default, so outgoing mail is caught locally instead of being sent (view it at http://mailpit.localhost).
 
 ### 3. Build and start all services
 
@@ -102,6 +103,7 @@ docker compose -f compose.dev.yml exec cms sh -c 'chown -R www-data:www-data /va
 - **Restaurant**: http://restaurant.localhost
 - **Website**: http://website.localhost
 - **Menu**: http://menu.localhost (FoodLab) and http://menu.localhost/foodcourt
+- **Mailpit** (dev mail catcher): http://mailpit.localhost
 - **Traefik Dashboard**: http://localhost:8888
 
 ### Development workflow
