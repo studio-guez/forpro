@@ -11,6 +11,35 @@ status:
 tabs:
   content:
     columns:
+      sidebar:
+        sections:
+          title:
+            fields:
+              overtitle:
+                label:
+                  en: Overtitle
+                  fr: Sur-titre
+                type: text
+              title_has_arrow:
+                label:
+                  en: Title has arrow
+                  fr: Le titre a une flèche
+                type: toggle
+                default: false
+              arrow_color:
+                label:
+                  en: Arrow color
+                  fr: Couleur de la flèche
+                type: select
+                when:
+                  title_has_arrow: true
+                options:
+                  - value: white
+                    text: { en: White, fr: Blanc }
+                  - value: pink
+                    text: { en: Pink, fr: Rose }
+                  - value: purple
+                    text: { en: Purple, fr: Violet }
       main:
         fields:
           body:
