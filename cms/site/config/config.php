@@ -7,6 +7,17 @@ $frontendUrl = rtrim(getenv('KIRBY_FRONTEND_URL') ?: 'https://for-pro.ch', '/');
 return [
     'debug' => getenv('KIRBY_DEBUG') === 'true',
     'home' => 'pages/home',
+    // WebP for every generated thumb (GD driver, installed --with-webp).
+    // `default` is the width ladder used for srcset: it spans small phones
+    // up to 4K / high-DPR displays so the browser can pick per viewport × dpr.
+    'thumbs' => [
+        'driver' => 'gd',
+        'quality' => 80,
+        'format' => 'webp',
+        'srcsets' => [
+            'default' => [480, 768, 1024, 1366, 1600, 1920, 2560, 3840],
+        ],
+    ],
     "tobimori.seo.canonicalBase" => $frontendUrl,
     "tobimori.seo.lang" => "fr_CH",
     "tobimori.seo.default.metaTemplate" => fn($page) => $page->site()->title()->isNotEmpty()
