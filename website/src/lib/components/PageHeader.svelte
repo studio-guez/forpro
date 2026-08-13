@@ -50,14 +50,17 @@
 	</div>
 
 	{#if cover}
-    <figure class="m-0">
         <img
             class="block h-auto w-full rounded-xl object-cover"
             src={cover.url}
+        srcset={cover.srcset}
+        sizes="100vw"
+        width={cover.width}
+        height={cover.height}
             alt={cover.alt ?? ''}
             style:object-position={cover.focus ?? 'center'}
             loading="eager"
+        fetchpriority="high"
         />
-    </figure>
 	{/if}
 </header>
