@@ -50,7 +50,7 @@ class Utils {
             // `src`; `srcset` lets the browser pick per viewport × pixel density.
             'width'         => $file->width(),
             'height'        => $file->height(),
-            'url'           => $file->resize(1280)->url(),
+            'url'           => $file->resize(1920)->url(),
             'srcset'        => $file->srcset('default'),
         ];
     }
