@@ -6,6 +6,7 @@ $frontendUrl = rtrim(getenv('KIRBY_FRONTEND_URL') ?: 'https://for-pro.ch', '/');
 
 return [
     'debug' => getenv('KIRBY_DEBUG') === 'true',
+    'home' => 'pages/home',
     "tobimori.seo.canonicalBase" => $frontendUrl,
     "tobimori.seo.lang" => "fr_CH",
     "tobimori.seo.default.metaTemplate" => fn($page) => $page->site()->title()->isNotEmpty()
