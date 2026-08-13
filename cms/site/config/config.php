@@ -2,14 +2,16 @@
 
 header("Access-Control-Allow-Origin: *");
 
+$frontendUrl = rtrim(getenv('KIRBY_FRONTEND_URL') ?: 'https://for-pro.ch', '/');
+
 return [
     'debug' => getenv('KIRBY_DEBUG') === 'true',
-    "tobimori.seo.canonicalBase" => "https://for-pro.ch",
+    "tobimori.seo.canonicalBase" => $frontendUrl,
     "tobimori.seo.lang" => "fr_CH",
     "tobimori.seo.default.metaTemplate" => fn($page) => $page->site()->title()->isNotEmpty()
         ? '{{ title }} - {{ site.title }}'
         : '{{ title }}',
-    "url_frontend" => "https://for-pro.ch/",
+    "url_frontend" => $frontendUrl . "/",
     'content' => [
         'salt' => getenv('KIRBY_CONTENT_SALT'),
     ],
