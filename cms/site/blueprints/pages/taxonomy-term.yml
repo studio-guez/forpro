@@ -1,0 +1,6 @@
+fields:
+  title:
+    label:
+      en: Name
+      fr: Nom
+    type: text
