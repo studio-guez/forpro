@@ -29,6 +29,8 @@ tabs:
                 max: 1
                 layout: cards
                 required: true
+                uploads:
+                  template: image
       main:
         width: 3/4
         fields:
