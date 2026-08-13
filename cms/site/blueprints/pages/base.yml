@@ -8,14 +8,27 @@ tabs:
       sidebar:
         width: 1/4
         sticky: true
-        fields:
+        sections:
+          title:
+            type: fields
+            fields:
+              title:
+                label:
+                  en: Title
+                  fr: Titre
+                type: text
+                required: true
           cover:
-            label:
-              en: Cover image
-              fr: Image de couverture
-            type: files
-            max: 1
-            layout: cards
+            type: fields
+            fields:
+              cover:
+                label:
+                  en: Cover image
+                  fr: Image de couverture
+                type: files
+                max: 1
+                layout: cards
+                required: true
       main:
         width: 3/4
         fields:
