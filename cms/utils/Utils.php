@@ -45,17 +45,13 @@ class Utils {
             'alt'           => $file->alt()->value(),
             'link'          => $file->link()->value(),
             'photoCredit'   => $file->photoCredit()->value(),
-            'url'           => $file->url(),
-            'mediaUrl'      => $file->mediaUrl(),
+            // `width`/`height` are the intrinsic dimensions so the frontend can
+            // reserve space (avoid CLS). `url` is a mid-size WebP fallback for
+            // `src`; `srcset` lets the browser pick per viewport × pixel density.
             'width'         => $file->width(),
             'height'        => $file->height(),
-            'resize'        => [
-                'tiny'          => $file->resize(50, null, 10)->url(),
-                'small'         => $file->resize(500)->url(),
-                'reg'           => $file->resize(1280)->url(),
-                'large'         => $file->resize(1920)->url(),
-                'xxl'           => $file->resize(2500)->url(),
-            ]
+            'url'           => $file->resize(1280)->url(),
+            'srcset'        => $file->srcset('default'),
         ];
     }
 
