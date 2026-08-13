@@ -20,6 +20,3 @@ sections:
     sortable: false
     create: false
     label: Groupes de taxonomies
-    templates:
-      - event-types
-      - domaines
