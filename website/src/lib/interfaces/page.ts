@@ -36,6 +36,11 @@ export interface Seo {
 
 export type ArrowColor = 'white' | 'blue' | 'orange' | 'pink' | 'purple';
 
+export interface PageParent {
+	readonly title: string;
+	readonly slug: string;
+}
+
 export interface Page {
 	readonly title: string;
 	readonly slug: string;
@@ -48,4 +53,5 @@ export interface Page {
 	readonly body: Block[];
 	readonly seo: Seo;
 	readonly trackWithMatomo: boolean;
+	readonly parentPage: PageParent | null;
 }
