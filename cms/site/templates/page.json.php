@@ -12,8 +12,7 @@ $json['title'] = $page->title()->value();
 $json['slug'] = $page->slug();
 
 $json['overtitle'] = $page->overtitle()->value();
-$json['titleHasArrow'] = $page->titleHasArrow()->toBool();
-$json['arrowColor'] = $page->arrowColor()->value();
+$json['titleArrow'] = $page->titleArrow()->value();
 
 $json['introTitle'] = $page->introTitle()->value();
 $json['intro'] = $page->intro()->value();

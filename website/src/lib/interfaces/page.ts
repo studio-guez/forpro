@@ -46,8 +46,7 @@ export interface Page {
 	readonly title: string;
 	readonly slug: string;
 	readonly overtitle: string | null;
-	readonly titleHasArrow: boolean;
-	readonly arrowColor: ArrowColor | '' | null;
+	readonly titleArrow: ArrowColor | '' | null;
 	readonly cover: CmsImage | null;
 	readonly introTitle: string;
 	readonly intro: string;
