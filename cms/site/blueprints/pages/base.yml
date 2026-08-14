@@ -47,7 +47,22 @@ tabs:
             label:
               en: Intro
               fr: Introduction
-            type: textarea
+            type: writer
             required: true
-
+            marks:
+              - bold
+              - italic
+              - underline
+              - strike
+              - sub
+              - sup
+              - '|'
+              - link
+              - email
+              - '|'
+              - clear
+            nodes:
+              - paragraph
+              - bulletList
+              - orderedList
   seo: tabs/seo
