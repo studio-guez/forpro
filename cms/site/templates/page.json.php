@@ -15,6 +15,9 @@ $json['overtitle'] = $page->overtitle()->value();
 $json['titleHasArrow'] = $page->titleHasArrow()->toBool();
 $json['arrowColor'] = $page->arrowColor()->value();
 
+$json['introTitle'] = $page->introTitle()->value();
+$json['intro'] = $page->intro()->value();
+
 $coverFile = $page->cover()->toFile();
 $json['cover'] = $coverFile ? Utils::getJsonEncodeImageData($coverFile) : null;
 

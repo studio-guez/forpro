@@ -43,6 +43,8 @@ export interface Page {
 	readonly titleHasArrow: boolean;
 	readonly arrowColor: ArrowColor | '' | null;
 	readonly cover: CmsImage | null;
+	readonly introTitle: string;
+	readonly intro: string;
 	readonly body: Block[];
 	readonly seo: Seo;
 	readonly trackWithMatomo: boolean;
