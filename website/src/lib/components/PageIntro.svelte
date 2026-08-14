@@ -9,7 +9,7 @@
 
 <section class="py-12 px-base text-center" aria-labelledby="page-intro-title">
 	<h2 id="page-intro-title" class="text-h2 mb-12">{title}</h2>
-	<div class="text-body-1 prose">
+	<div class="prose">
 		{@html text}
 	</div>
 </section>
