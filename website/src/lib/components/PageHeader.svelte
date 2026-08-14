@@ -28,7 +28,7 @@
 		{#if overtitle || titleHasArrow}
 		<div>
 			{#if overtitle}
-			<span class="text-h4 -mb-2">{overtitle}</span>
+			<p class="inline-block text-h4 -mb-2">{overtitle}</p>
 			{/if}
 			{#if titleHasArrow}
 			<svg xmlns="http://www.w3.org/2000/svg" width="133" height="69" viewBox="0 0 133 69" fill="none" class="inline-block absolute -translate-y-1/2 ml-1 w-32.5 h-16" aria-hidden="true" focusable="false">
