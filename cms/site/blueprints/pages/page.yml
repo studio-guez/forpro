@@ -13,6 +13,21 @@ tabs:
     columns:
       sidebar:
         sections:
+          hierarchy:
+            fields:
+              parentPage:
+                label:
+                  en: Parent page
+                  fr: Page parente
+                type: pages
+                query: page.possibleParents
+                multiple: false
+                max: 1
+                empty:
+                  en: No parent page
+                  fr: Aucune page parente
+              sepHierarchy:
+                type: line
           title:
             fields:
               overtitle:
