@@ -71,4 +71,24 @@
     .px-base {
         @apply px-8 md:px-30;
     }
+    
+    /* PROSE */
+    .prose {
+        p:not(:last-child), ul:not(:last-child), ol:not(:last-child) {
+            margin-bottom: 1em;
+            margin-bottom: .75lh;
+        }
+        ul, ol {
+            @apply list-inside;
+            & > li > p {
+                @apply inline;
+            }
+        }
+        ul {
+            @apply list-disc;
+        }
+        ol {
+            @apply list-decimal;
+        }
+    }
 }
