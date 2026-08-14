@@ -21,6 +21,7 @@ tabs:
                   fr: Page parente
                 type: pages
                 query: page.possibleParents
+                text: "{{ page.breadcrumbTitle }}"
                 multiple: false
                 max: 1
                 link: false
