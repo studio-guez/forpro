@@ -92,5 +92,8 @@
         ol {
             @apply list-decimal;
         }
+        a {
+            @apply opacity-50 underline hover:opacity-100 transition-opacity;
+        }
     }
 }
