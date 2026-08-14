@@ -12,6 +12,7 @@ Kirby::plugin('forpro/parent-page', [
             return $this->site()
                 ->index(true)
                 ->filterBy('intendedTemplate', 'page')
+                ->not($this->site()->homePage())
                 ->filter(function ($candidate) use ($self) {
                     $current = $candidate;
                     $visited = [];
@@ -33,20 +34,41 @@ Kirby::plugin('forpro/parent-page', [
         },
 
         /**
-         * Title prefixed with the parentPage chain: "Grandparent > Parent > Title".
+         * The parentPage chain from root to this page (cycle-safe),
+         * e.g. [Grandparent, Parent, This page].
          */
-        'breadcrumbTitle' => function () {
-            $titles = [$this->title()->value()];
+        'parentChain' => function (): array {
+            $chain = [$this];
             $visited = [$this->id()];
             $current = $this->parentPage()->toPage();
 
             while ($current !== null && in_array($current->id(), $visited, true) === false) {
-                array_unshift($titles, $current->title()->value());
+                array_unshift($chain, $current);
                 $visited[] = $current->id();
                 $current = $current->parentPage()->toPage();
             }
 
-            return implode(' > ', $titles);
+            return $chain;
+        },
+
+        /**
+         * Virtual URL path built from the parentPage chain: "grandparent/parent/slug".
+         */
+        'virtualPath' => function (): string {
+            return implode('/', array_map(
+                fn ($p) => $p->slug(),
+                $this->parentChain()
+            ));
+        },
+
+        /**
+         * Title prefixed with the parentPage chain: "Grandparent > Parent > Title".
+         */
+        'breadcrumbTitle' => function (): string {
+            return implode(' > ', array_map(
+                fn ($p) => $p->title()->value(),
+                $this->parentChain()
+            ));
         },
     ],
 ]);
