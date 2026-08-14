@@ -66,4 +66,9 @@
         @apply text-xs md:text-base;
     }
 
+    /* PADDING */
+
+    .px-base {
+        @apply px-8 md:px-30;
+    }
 }
