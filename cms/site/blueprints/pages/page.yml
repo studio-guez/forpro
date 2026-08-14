@@ -40,19 +40,11 @@ tabs:
                   en: Overtitle
                   fr: Sur-titre
                 type: text
-              titleHasArrow:
+              titleArrow:
                 label:
-                  en: Title has arrow
-                  fr: Le titre a une flèche
-                type: toggle
-                default: false
-              arrowColor:
-                label:
-                  en: Arrow color
-                  fr: Couleur de la flèche
+                  en: Arrow
+                  fr: Flèche
                 type: select
-                when:
-                  titleHasArrow: true
                 options:
                   - value: white
                     text: { en: White, fr: Blanc }

@@ -58,8 +58,7 @@
 <PageHeader
 	title={page.title}
 	overtitle={page.overtitle}
-	titleHasArrow={page.titleHasArrow}
-	arrowColor={page.arrowColor}
+	titleArrow={page.titleArrow}
 	cover={page.cover}
 />
 
