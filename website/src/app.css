@@ -3,7 +3,22 @@
 @plugin "@tailwindcss/forms";
 
 @theme {
+    /* FONT FAMILY */
     --font-sans: 'Jungka-ForPro', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+    /* COLORS */
+    --color-white: #FFFFFF;
+    --color-black: #525252;
+    --color-blue: #1754FF;
+    --color-blue-light: #007DFF;
+    --color-orange: #FF6917;
+    --color-orange-light: #FFB86D;
+    --color-pink: #FF00FC;
+    --color-purple: #37007D;
+    --color-purple-light: #8C78DC;
+    --color-purple-pale: #BEA5E6;
+    --color-green: #009185;
+    --color-green-light: #A5CEBA;
 }
 
 @layer utilities {
