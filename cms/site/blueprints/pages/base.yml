@@ -9,6 +9,8 @@ tabs:
         width: 1/4
         sticky: true
         sections:
+          hierarchy:
+            type: fields
           title:
             type: fields
             fields:
@@ -21,7 +23,7 @@ tabs:
           cover:
             type: fields
             fields:
-              sep:
+              sepCover:
                 type: line
               cover:
                 label:
