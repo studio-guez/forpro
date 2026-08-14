@@ -23,7 +23,7 @@
 	const arrowColorClass = $derived(arrowColor ? (arrowColors[arrowColor] ?? 'fill-white') : 'fill-white');
 </script>
 
-<div class="min-h-138 relative text-white bg-grey-light rounded-3xl overflow-hidden flex">
+<section class="min-h-138 relative text-white bg-grey-light rounded-3xl overflow-hidden flex">
 	<div class="w-full bg-linear-to-t from-blacker/20 relative z-1 flex flex-col justify-end py-6 px-8">
 		{#if overtitle || titleHasArrow}
 		<div>
@@ -58,4 +58,4 @@
         fetchpriority="high"
     />
 	{/if}
-</div>
+</section>
