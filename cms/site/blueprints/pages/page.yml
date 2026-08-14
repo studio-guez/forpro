@@ -8,6 +8,9 @@ status:
   draft: true
   listed: true
 
+options:
+  preview: "{{ page.frontendUrl }}"
+
 tabs:
   content:
     columns:

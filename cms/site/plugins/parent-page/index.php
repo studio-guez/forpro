@@ -70,5 +70,20 @@ Kirby::plugin('forpro/parent-page', [
                 $this->parentChain()
             ));
         },
+
+        /**
+         * Public URL on the decoupled frontend. The panel's open/preview links
+         * use this so they point at the frontend instead of the Kirby domain.
+         * Home lives at the root; every other page uses its virtualPath.
+         */
+        'frontendUrl' => function (): string {
+            $base = rtrim(option('url_frontend', $this->site()->url()), '/');
+
+            if ($this->isHomePage() === true) {
+                return $base . '/';
+            }
+
+            return $base . '/' . $this->virtualPath();
+        },
     ],
 ]);
