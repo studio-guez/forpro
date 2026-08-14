@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PageHeader from '$lib/components/PageHeader.svelte';
+	import PageIntro from '$lib/components/PageIntro.svelte';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -61,3 +62,5 @@
 	arrowColor={page.arrowColor}
 	cover={page.cover}
 />
+
+<PageIntro title={page.introTitle} text={page.intro} />
