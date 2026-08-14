@@ -23,13 +23,17 @@
 	const arrowColorClass = $derived(arrowColor ? (arrowColors[arrowColor] ?? 'fill-white') : 'fill-white');
 </script>
 
-<div class="min-h-138 relative">
-	<div>
+<div class="min-h-138 relative text-white bg-grey-light rounded-3xl overflow-hidden flex">
+	<div class="w-full bg-linear-to-t from-blacker/20 relative z-1 flex flex-col justify-end py-6 px-8">
+		{#if overtitle || titleHasArrow}
+		<div>
 		{#if overtitle}
-		<p class="text-sm uppercase tracking-[0.08em] opacity-70">{overtitle}</p>
+		<p class="text-h4 -mb-2">{overtitle}</p>
+		{/if}
+		</div>
 		{/if}
 
-		<h1 class="m-0 flex items-center gap-2 text-[clamp(2rem,5vw,4rem)] leading-[1.05]">
+		<h1 class="text-h0">
 			<span>{title}</span>
 			{#if titleHasArrow}
             <svg
@@ -48,7 +52,7 @@
 
 	{#if cover}
     <img
-        class="absolute inset-0 h-full w-full object-cover rounded-3xl -z-1"
+        class="absolute inset-0 h-full w-full object-cover"
         src={cover.url}
         srcset={cover.srcset}
         sizes="100vw"
