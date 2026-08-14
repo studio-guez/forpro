@@ -23,6 +23,7 @@ tabs:
                 query: page.possibleParents
                 multiple: false
                 max: 1
+                link: false
                 empty:
                   en: No parent page
                   fr: Aucune page parente
