@@ -48,6 +48,7 @@ tabs:
             image:
               query: page.cover.toFile
               cover: true
+            text: "{{ page.breadcrumbTitle }}"
             parent: site.find("pages")
             templates:
               - page
