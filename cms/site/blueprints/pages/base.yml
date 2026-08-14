@@ -21,6 +21,8 @@ tabs:
           cover:
             type: fields
             fields:
+              sep:
+                type: line
               cover:
                 label:
                   en: Cover image
