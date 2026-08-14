@@ -27,10 +27,13 @@ $json['seo'] = Utils::getSeoDataFromPage($page);
 
 $json['trackWithMatomo'] = $page->trackWithMatomo()->toBool();
 
+$json['path'] = $page->virtualPath();
+
 $parentPage = $page->parentPage()->toPage();
 $json['parentPage'] = $parentPage ? [
     'title' => $parentPage->title()->value(),
     'slug'  => $parentPage->slug(),
+    'path'  => $parentPage->virtualPath(),
 ] : null;
 
 echo json_encode($json);
