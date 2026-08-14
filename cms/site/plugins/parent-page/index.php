@@ -31,5 +31,22 @@ Kirby::plugin('forpro/parent-page', [
                     return true;
                 });
         },
+
+        /**
+         * Title prefixed with the parentPage chain: "Grandparent > Parent > Title".
+         */
+        'breadcrumbTitle' => function () {
+            $titles = [$this->title()->value()];
+            $visited = [$this->id()];
+            $current = $this->parentPage()->toPage();
+
+            while ($current !== null && in_array($current->id(), $visited, true) === false) {
+                array_unshift($titles, $current->title()->value());
+                $visited[] = $current->id();
+                $current = $current->parentPage()->toPage();
+            }
+
+            return implode(' > ', $titles);
+        },
     ],
 ]);
