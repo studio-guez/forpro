@@ -34,7 +34,7 @@ export interface Seo {
 	readonly schemas: Record<string, unknown>[];
 }
 
-export type ArrowColor = 'white' | 'pink' | 'purple';
+export type ArrowColor = 'white' | 'blue' | 'orange' | 'pink' | 'purple';
 
 export interface Page {
 	readonly title: string;
