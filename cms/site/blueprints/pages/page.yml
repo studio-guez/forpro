@@ -60,11 +60,40 @@ tabs:
                   - value: purple
                     text: { en: Purple, fr: Violet }
       main:
-        fields:
-          body:
-            type: blocks
-            label:
-              en: Content
-              fr: Contenu
-            fieldsets:
-              - agenda
+        sections:
+          intro:
+            fields:
+              cta:
+                label:
+                  en: CTA intro
+                  fr: CTA introduction
+                type: object
+                fields:
+                  label:
+                    label: { en: Label, fr: Libellé }
+                    type: text
+                  url:
+                    label: { en: URL, fr: URL }
+                    type: url
+              layout:
+                label:
+                  en: Layout intro
+                  fr: Mise en page introduction
+                type: toggles
+                default: 1col
+                options:
+                  - value: 1col
+                    text: { en: 1 column, fr: 1 colonne }
+                  - value: 2col
+                    text: { en: 2 columns, fr: 2 colonnes }
+              sepIntro:
+                type: line
+          main:
+            fields:
+              body:
+                type: blocks
+                label:
+                  en: Content
+                  fr: Contenu
+                fieldsets:
+                  - agenda
