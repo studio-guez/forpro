@@ -16,7 +16,7 @@
 		entreprendre:   'fill-purple-light',
 		projets_jeunes: 'fill-orange',
 		tremplin_jobs:  'fill-purple-light',
-		soutien:        'fill-pink',
+		soutiens:        'fill-pink',
 		cekale:         'fill-purple',
 		la_ref:         'fill-pink',
 		learninglab:    'fill-green',

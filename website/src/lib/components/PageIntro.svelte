@@ -20,7 +20,7 @@
 		entreprendre:   'purple-light',
 		projets_jeunes: 'orange',
 		tremplin_jobs:  'purple-light',
-		soutien:        'pink',
+		soutiens:        'pink',
 		cekale:         'purple',
 		la_ref:         'pink',
 		learninglab:    'green',
