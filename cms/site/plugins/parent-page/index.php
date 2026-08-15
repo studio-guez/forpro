@@ -71,6 +71,12 @@ Kirby::plugin('forpro/parent-page', [
             ));
         },
 
+        // Lowercase alias for blueprint `sortBy`, which lowercases field names
+        // before resolving them (camelCase methods wouldn't be found).
+        'breadcrumbtitle' => function (): string {
+            return $this->breadcrumbTitle();
+        },
+
         /**
          * Public URL on the decoupled frontend. The panel's open/preview links
          * use this so they point at the frontend instead of the Kirby domain.
