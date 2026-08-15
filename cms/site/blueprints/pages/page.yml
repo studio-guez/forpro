@@ -77,6 +77,7 @@ tabs:
                   fr: Mise en page introduction
                 type: toggles
                 default: 1col
+                required: true
                 options:
                   - value: 1col
                     text: { en: 1 column, fr: 1 colonne }
