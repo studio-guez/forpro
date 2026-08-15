@@ -16,6 +16,12 @@ $json['titleArrow'] = $page->titleArrow()->value();
 
 $json['introTitle'] = $page->introTitle()->value();
 $json['intro'] = $page->intro()->value();
+$json['layout'] = $page->layout()->or('1col')->value();
+$ctaData = $page->cta()->toObject();
+$json['cta'] = ($ctaData->label()->isNotEmpty() && $ctaData->url()->isNotEmpty()) ? [
+    'label' => $ctaData->label()->value(),
+    'url'   => $ctaData->url()->value(),
+] : null;
 
 $coverFile = $page->cover()->toFile();
 $json['cover'] = $coverFile ? Utils::getJsonEncodeImageData($coverFile) : null;

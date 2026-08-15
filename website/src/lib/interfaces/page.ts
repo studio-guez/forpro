@@ -42,6 +42,13 @@ export interface PageParent {
 	readonly path: string;
 }
 
+export interface PageCta {
+	readonly label: string;
+	readonly url: string;
+}
+
+export type PageLayout = '1col' | '2col';
+
 export interface Page {
 	readonly title: string;
 	readonly slug: string;
@@ -50,6 +57,8 @@ export interface Page {
 	readonly cover: CmsImage | null;
 	readonly introTitle: string;
 	readonly intro: string;
+	readonly layout: PageLayout;
+	readonly cta: PageCta | null;
 	readonly body: Block[];
 	readonly seo: Seo;
 	readonly path: string;
