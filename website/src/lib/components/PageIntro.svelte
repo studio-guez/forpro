@@ -41,9 +41,9 @@
 		</div>
 	{/if}
 	{#if isTwoCol}
-		<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+		<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
 			<h2 id="page-intro-title" class="text-h4 max-lg:text-center">{title}</h2>
-			<div>
+			<div class="lg:col-span-2">
 				<div class="prose max-lg:text-center text-grey-dark">
 					{@html text}
 				</div>
