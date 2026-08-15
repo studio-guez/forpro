@@ -13,7 +13,7 @@
 <section class="py-18 px-base relative" aria-labelledby="page-intro-title">
 	{#if parentPage}
 		<div class="mb-6 mt-[calc(-1.5rem-1lh)]">
-			<a href="/{parentPage.path}" class="text-label text-blue hover:opacity-50 transition:opacity">&larr; {parentPage.title}</a>
+			<a href="/{parentPage.path}" class="text-label text-blue group"><span class="inline-block group-hover:-translate-x-0.75 transition-transform">&larr;</span> {parentPage.title}</a>
 		</div>
 	{/if}
 	<h2 id="page-intro-title" class="text-h2 mb-12 text-center">{title}</h2>
