@@ -58,9 +58,11 @@ return [
                 ])->values();
 
                 $secondaryMenu = [];
+                // The burger menu has 4 CMS-managed columns (see blueprints/tabs/navigation.yml);
+                // the frontend adds a 5th column with external links and social medias.
                 foreach ([1, 2, 3, 4] as $index) {
                     $groups = $site->{"secondaryColumn{$index}Groups"}()->toBlocks()->map(fn($block) => [
-                        'title' => $block->title()->or(null)->value(),
+                        'title' => $block->title()->isEmpty() ? null : $block->title()->value(),
                         'links' => $block->links()->toStructure()->map(fn($link) => [
                             'label' => $link->label()->value(),
                             'url'   => Utils::resolveLinkField($link->link()),
@@ -68,8 +70,9 @@ return [
                         ])->values(),
                     ])->values();
 
+                    $columnTitle = $site->{"secondaryColumn{$index}Title"}();
                     $secondaryMenu[] = [
-                        'title'  => $site->{"secondaryColumn{$index}Title"}()->or(null)->value(),
+                        'title'  => $columnTitle->isEmpty() ? null : $columnTitle->value(),
                         'groups' => $groups,
                     ];
                 }
