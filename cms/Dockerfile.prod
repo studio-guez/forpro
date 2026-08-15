@@ -63,6 +63,7 @@ RUN rm -rf /var/www/html/content
 COPY site /var/www/html/site
 COPY utils /var/www/html/utils
 COPY index.php /var/www/html/index.php
+COPY _custom-panel /var/www/html/_custom-panel
 
 # Use the version-controlled .htaccess (front-controller rewrites + rules that
 # block direct access to content, site and kirby sources).
