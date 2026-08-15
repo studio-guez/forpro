@@ -37,18 +37,22 @@ tabs:
                   template: image
       main:
         width: 3/4
-        type: fields
-        fields:
-          introTitle:
-            label:
-              en: Intro title
-              fr: Titre introduction
-            type: text
-            required: true
+        sections:
           intro:
-            extends: fields/writer
-            label:
-              en: Intro
-              fr: Introduction
-            required: true
+            type: fields
+            fields:
+              introTitle:
+                label:
+                  en: Intro title
+                  fr: Titre introduction
+                type: text
+                required: true
+              intro:
+                extends: fields/writer
+                label:
+                  en: Intro
+                  fr: Introduction
+                required: true
+          main:
+            type: fields
   seo: tabs/seo
