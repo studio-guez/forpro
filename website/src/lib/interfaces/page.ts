@@ -60,7 +60,6 @@ export interface Page {
 	readonly title: string;
 	readonly slug: string;
 	readonly overtitle: string | null;
-	readonly titleArrow: boolean;
 	readonly theme: Theme;
 	readonly cover: CmsImage | null;
 	readonly introTitle: string;

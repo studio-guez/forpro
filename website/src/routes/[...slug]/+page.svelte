@@ -58,9 +58,8 @@
 <PageHeader
 	title={page.title}
 	overtitle={page.overtitle}
-	titleArrow={page.titleArrow}
 	theme={page.theme}
 	cover={page.cover}
 />
 
-<PageIntro title={page.introTitle} text={page.intro} parentPage={page.parentPage} />
+<PageIntro title={page.introTitle} text={page.intro} layout={page.introLayout} cta={page.introCta} parentPage={page.parentPage} />
