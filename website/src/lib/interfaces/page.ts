@@ -57,8 +57,8 @@ export interface Page {
 	readonly cover: CmsImage | null;
 	readonly introTitle: string;
 	readonly intro: string;
-	readonly layout: PageLayout;
-	readonly cta: PageCta | null;
+	readonly introLayout: PageLayout;
+	readonly introCta: PageCta | null;
 	readonly body: Block[];
 	readonly seo: Seo;
 	readonly path: string;

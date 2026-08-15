@@ -16,9 +16,9 @@ $json['titleArrow'] = $page->titleArrow()->value();
 
 $json['introTitle'] = $page->introTitle()->value();
 $json['intro'] = $page->intro()->value();
-$json['layout'] = $page->layout()->or('1col')->value();
-$ctaData = $page->cta()->toObject();
-$json['cta'] = ($ctaData->label()->isNotEmpty() && $ctaData->url()->isNotEmpty()) ? [
+$json['introLayout'] = $page->introLayout()->or('1col')->value();
+$ctaData = $page->introCta()->toObject();
+$json['introCta'] = ($ctaData->label()->isNotEmpty() && $ctaData->url()->isNotEmpty()) ? [
     'label' => $ctaData->label()->value(),
     'url'   => $ctaData->url()->value(),
 ] : null;
