@@ -13,7 +13,6 @@
 
 	const arrowFillByTheme: Record<Theme, string> = {
 		default:        'fill-blue',
-		inverse:        'fill-blue',
 		campus:         'fill-blue',
 		entreprendre:   'fill-purple-light',
 		projets_jeunes: 'fill-orange',

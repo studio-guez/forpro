@@ -35,7 +35,7 @@ export interface Seo {
 }
 
 export type Theme =
-	| 'default' | 'inverse'
+	| 'default'
 	| 'campus' | 'entreprendre' | 'projets_jeunes'
 	| 'tremplin_jobs' | 'soutien' | 'cekale' | 'la_ref'
 	| 'learninglab' | 'foodlab' | 'grandlab' | 'makerlab';

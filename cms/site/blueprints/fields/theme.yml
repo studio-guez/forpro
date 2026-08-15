@@ -7,8 +7,6 @@ required: true
 options:
   - value: default
     text: { en: Default, fr: Défaut }
-  - value: inverse
-    text: { en: Inversed, fr: Inversé }
   - value: campus
     text: { en: Campus, fr: Campus }
   - value: entreprendre
