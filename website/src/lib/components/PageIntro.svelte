@@ -44,7 +44,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
 			<h2 id="page-intro-title" class="text-h4 max-lg:text-center">{title}</h2>
 			<div>
-				<div class="prose max-lg:text-center">
+				<div class="prose max-lg:text-center text-grey-dark">
 					{@html text}
 				</div>
 				{#if hasCta}
@@ -56,7 +56,7 @@
 		</div>
 	{:else}
 		<h2 id="page-intro-title" class="text-h2 mb-12 text-center">{title}</h2>
-		<div class="prose text-center">
+		<div class="prose text-center text-grey-dark">
 			{@html text}
 		</div>
 		{#if hasCta}
