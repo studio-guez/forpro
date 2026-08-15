@@ -59,7 +59,7 @@ tabs:
                   fr: Image à afficher à la place du titre
                 type: files
                 max: 1
-                layout: cards
+                layout: list
                 uploads:
                   template: image
                 width: 1/3
