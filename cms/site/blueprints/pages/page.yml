@@ -8,6 +8,8 @@ status:
   draft: true
   listed: true
 
+num: zero
+
 options:
   preview: "{{ page.frontendUrl }}"
 
