@@ -21,6 +21,7 @@
     --color-green: #009185;
     --color-green-light: #A5CEBA;
     --color-red: #F2030D;
+    --color-cta: var(--color-black);
 
     /* TRANSITION */
     --default-transition-duration: 250ms;
@@ -97,5 +98,9 @@
         a {
             @apply opacity-50 underline hover:opacity-100 transition-opacity;
         }
+    }
+
+    .cta {
+        @apply text-2xl font-bold leading-none inline-block px-7.5 py-4.5 rounded-full border-4 bg-transparent text-(--color-cta) border-(--color-cta) hover:bg-(--color-cta) hover:text-white transition-colors;
     }
 }
