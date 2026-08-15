@@ -6,14 +6,13 @@
 
 	interface Props {
 		cta: PageCta;
-		variant?: 'cta' | 'btn';
 		class?: string;
 	}
 
-	let { cta, variant = 'btn', class: className = '' }: Props = $props();
+	let { cta, class: className = '' }: Props = $props();
 </script>
 
-<a href={cta.url} class="{variant} inline-flex items-center gap-3 {className}">
+<a href={cta.url} class="text-2xl font-bold leading-none inline-flex items-center gap-3 px-7.5 py-4.5 rounded-full border-4 bg-transparent text-(--color-cta) border-(--color-cta) hover:bg-(--color-cta) hover:text-white transition-colors {className}">
 	{cta.label}
 	{#if cta.icon === 'arrow'}<IconArrow />
 	{:else if cta.icon === 'email'}<IconEmail />
