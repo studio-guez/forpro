@@ -56,6 +56,25 @@ class Utils {
     }
 
     /**
+     * Resolves a `link` field to a frontend-usable URL.
+     * Pages resolve to their virtual path on the decoupled frontend,
+     * anything else (external URL, mailto, tel) is passed through as-is.
+     */
+    static function resolveLinkField(\Kirby\Content\Field $field): ?string
+    {
+        if ($field->isEmpty()) {
+            return null;
+        }
+
+        $linkedPage = $field->toPage();
+        if ($linkedPage) {
+            return $linkedPage->isHomePage() ? '/' : '/' . $linkedPage->virtualPath();
+        }
+
+        return $field->value();
+    }
+
+    /**
      * Resolves the page metadata through Kirby SEO's cascade
      * (page fields -> parent -> site -> plugin defaults) and returns it
      * in the shape consumed by the SvelteKit frontend.

@@ -1,0 +1,30 @@
+label:
+  en: Social networks
+  fr: Réseaux sociaux
+icon: share
+
+columns:
+  - width: 1/2
+    fields:
+      socialLinks:
+        label:
+          en: Social media links
+          fr: Liens réseaux sociaux
+        type: structure
+        columns:
+          platform:
+            width: 1/2
+          url:
+            width: 1/2
+        fields:
+          platform:
+            label:
+              en: Platform
+              fr: Plateforme
+            type: text
+            placeholder: Instagram
+            required: true
+          url:
+            label: { en: URL, fr: URL }
+            type: url
+            required: true

@@ -1,0 +1,19 @@
+label:
+  en: Website
+  fr: Site web
+icon: cog
+
+columns:
+  - width: 1/2
+    fields:
+      logo:
+        label:
+          en: Logo
+          fr: Logo
+        type: files
+        uploads: image
+        multiple: false
+        max: 1
+        layout: cards
+        image:
+          back: pattern

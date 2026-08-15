@@ -43,6 +43,59 @@ return [
                 go("/panel");
             },
         ],
+        [
+            "pattern" => "global.json",
+            "action" => function () {
+                require_once 'utils/Utils.php';
+
+                $site = site();
+
+                $logoFile = $site->logo()->toFile();
+
+                $mainMenu = $site->mainMenu()->toStructure()->map(fn($item) => [
+                    'label' => $item->label()->value(),
+                    'url'   => Utils::resolveLinkField($item->link()),
+                ])->values();
+
+                $secondaryMenu = [];
+                foreach ([1, 2, 3, 4] as $index) {
+                    $groups = $site->{"secondaryColumn{$index}Groups"}()->toBlocks()->map(fn($block) => [
+                        'title' => $block->title()->or(null)->value(),
+                        'links' => $block->links()->toStructure()->map(fn($link) => [
+                            'label' => $link->label()->value(),
+                            'url'   => Utils::resolveLinkField($link->link()),
+                            'level' => (int)$link->level()->or(1)->value(),
+                        ])->values(),
+                    ])->values();
+
+                    $secondaryMenu[] = [
+                        'title'  => $site->{"secondaryColumn{$index}Title"}()->or(null)->value(),
+                        'groups' => $groups,
+                    ];
+                }
+
+                $externalLinks = $site->externalLinks()->toStructure()->map(fn($item) => [
+                    'label' => $item->label()->value(),
+                    'url'   => $item->url()->value(),
+                ])->values();
+
+                $socialLinks = $site->socialLinks()->toStructure()->map(fn($item) => [
+                    'platform' => $item->platform()->value(),
+                    'url'      => $item->url()->value(),
+                ])->values();
+
+                return \Kirby\Http\Response::json([
+                    'header' => [
+                        'siteTitle'     => $site->title()->value(),
+                        'logo'          => $logoFile ? Utils::getJsonEncodeImageData($logoFile) : null,
+                        'mainMenu'      => $mainMenu,
+                        'secondaryMenu' => $secondaryMenu,
+                        'externalLinks' => $externalLinks,
+                        'socialLinks'   => $socialLinks,
+                    ],
+                ]);
+            },
+        ],
     ],
     "email" => [
         "transport" => [
