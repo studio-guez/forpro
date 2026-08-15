@@ -65,12 +65,12 @@ tabs:
                     type: select
                     placeholder: { en: None, fr: Aucun }
                     options:
+                      - value: arrow
+                        text: { en: "→", fr: "→" }
                       - value: plus
                         text: { en: "+", fr: "+" }
                       - value: email
                         text: { en: Email, fr: Email }
-                      - value: arrow
-                        text: { en: Arrow, fr: Flèche }
               introLayout:
                 label:
                   en: Layout intro
