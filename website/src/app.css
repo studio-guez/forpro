@@ -21,7 +21,6 @@
     --color-green: #009185;
     --color-green-light: #A5CEBA;
     --color-red: #F2030D;
-    --color-cta: var(--color-black);
 
     /* TRANSITION */
     --default-transition-duration: 250ms;
