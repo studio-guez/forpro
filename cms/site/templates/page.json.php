@@ -13,7 +13,7 @@ $json['slug'] = $page->slug();
 
 $json['overtitle'] = $page->overtitle()->value();
 $json['titleArrow'] = $page->titleArrow()->toBool();
-$json['theme'] = $page->theme()->or('blue')->value();
+$json['theme'] = $page->theme()->or('default')->value();
 
 $json['introTitle'] = $page->introTitle()->value();
 $json['intro'] = $page->intro()->value();
