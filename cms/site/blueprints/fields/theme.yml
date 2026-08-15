@@ -15,8 +15,8 @@ options:
     text: { en: Youth Projects, fr: Projets jeunes }
   - value: tremplin_jobs
     text: { en: Tremplin Jobs, fr: Tremplin jobs }
-  - value: soutien
-    text: { en: Support, fr: Soutien }
+  - value: soutiens
+    text: { en: Support, fr: Soutiens }
   - value: cekale
     text: { en: Cékalé, fr: Cékalé }
   - value: la_ref
