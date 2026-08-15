@@ -61,6 +61,17 @@ tabs:
                   url:
                     label: { en: URL, fr: URL }
                     type: url
+                  icon:
+                    label: { en: Icon, fr: Icône }
+                    type: select
+                    placeholder: { en: None, fr: Aucun }
+                    options:
+                      - value: plus
+                        text: { en: "+", fr: "+" }
+                      - value: email
+                        text: { en: Email, fr: Email }
+                      - value: arrow
+                        text: { en: Arrow, fr: Flèche }
               introLayout:
                 label:
                   en: Layout intro
