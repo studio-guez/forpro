@@ -12,8 +12,8 @@
 	let { title, overtitle = null, titleArrow = false, theme = 'default', cover = null }: Props = $props();
 
 	const arrowFillByTheme: Record<Theme, string> = {
-		default:        'fill-white',
-		inverse:        'fill-white',
+		default:        'fill-blue',
+		inverse:        'fill-blue',
 		campus:         'fill-blue',
 		entreprendre:   'fill-purple-light',
 		projets_jeunes: 'fill-orange',
