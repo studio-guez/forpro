@@ -42,9 +42,12 @@ export interface PageParent {
 	readonly path: string;
 }
 
+export type CtaIcon = 'plus' | 'email' | 'arrow';
+
 export interface PageCta {
 	readonly label: string;
 	readonly url: string;
+	readonly icon: CtaIcon | null;
 }
 
 export type PageLayout = '1col' | '2col';
