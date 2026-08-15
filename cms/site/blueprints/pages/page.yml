@@ -41,10 +41,13 @@ tabs:
                   fr: Sur-titre
                 type: text
               titleArrow:
-                extends: fields/color
                 label:
                   en: Arrow
                   fr: Flèche
+                type: toggle
+                default: false
+              theme:
+                extends: fields/theme
       main:
         sections:
           intro:
