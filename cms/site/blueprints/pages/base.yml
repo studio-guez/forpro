@@ -41,6 +41,11 @@ tabs:
           intro:
             type: fields
             fields:
+              introLabel:
+                label:
+                  en: Intro
+                  fr: Introduction
+                type: headline
               introTitle:
                 label:
                   en: Intro title
@@ -55,4 +60,10 @@ tabs:
                 required: true
           main:
             type: fields
+            fields:
+              contentLabel:
+                label:
+                  en: Content
+                  fr: Contenu
+                type: headline
   seo: tabs/seo
