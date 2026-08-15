@@ -34,7 +34,11 @@ export interface Seo {
 	readonly schemas: Record<string, unknown>[];
 }
 
-export type Theme = 'blue' | 'blue_reversed' | 'orange' | 'orange_reversed';
+export type Theme =
+	| 'default' | 'inverse'
+	| 'campus' | 'entreprendre' | 'projets_jeunes'
+	| 'tremplin_jobs' | 'soutien' | 'cekale' | 'la_ref'
+	| 'learninglab' | 'foodlab' | 'grandlab' | 'makerlab';
 
 export interface PageParent {
 	readonly title: string;
