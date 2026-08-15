@@ -5,37 +5,29 @@ type: select
 default: default
 required: true
 options:
-  - label: { en: Base, fr: Base }
-    options:
-      - value: default
-        text: { en: Default, fr: Défaut }
-      - value: inverse
-        text: { en: Inversed, fr: Inversé }
-  - label: { en: Spaces, fr: Espaces }
-    options:
-      - value: campus
-        text: { en: Campus, fr: Campus }
-      - value: entreprendre
-        text: { en: Entreprendre, fr: Entreprendre }
-      - value: projets_jeunes
-        text: { en: Youth Projects, fr: Projets jeunes }
-  - label: { en: Programs, fr: Programmes }
-    options:
-      - value: tremplin_jobs
-        text: { en: Tremplin Jobs, fr: Tremplin jobs }
-      - value: soutien
-        text: { en: Support, fr: Soutien }
-      - value: cekale
-        text: { en: Cékalé, fr: Cékalé }
-      - value: la_ref
-        text: { en: La REF, fr: La REF }
-  - label: { en: Labs, fr: Labs }
-    options:
-      - value: learninglab
-        text: { en: LearningLab, fr: LearningLab }
-      - value: foodlab
-        text: { en: FoodLab, fr: FoodLab }
-      - value: grandlab
-        text: { en: GrandLab, fr: GrandLab }
-      - value: makerlab
-        text: { en: MakerLab, fr: MakerLab }
+  - value: default
+    text: { en: Default, fr: Défaut }
+  - value: inverse
+    text: { en: Inversed, fr: Inversé }
+  - value: campus
+    text: { en: Campus, fr: Campus }
+  - value: entreprendre
+    text: { en: Entreprendre, fr: Entreprendre }
+  - value: projets_jeunes
+    text: { en: Youth Projects, fr: Projets jeunes }
+  - value: tremplin_jobs
+    text: { en: Tremplin Jobs, fr: Tremplin jobs }
+  - value: soutien
+    text: { en: Support, fr: Soutien }
+  - value: cekale
+    text: { en: Cékalé, fr: Cékalé }
+  - value: la_ref
+    text: { en: La REF, fr: La REF }
+  - value: learninglab
+    text: { en: LearningLab, fr: LearningLab }
+  - value: foodlab
+    text: { en: FoodLab, fr: FoodLab }
+  - value: grandlab
+    text: { en: GrandLab, fr: GrandLab }
+  - value: makerlab
+    text: { en: MakerLab, fr: MakerLab }
