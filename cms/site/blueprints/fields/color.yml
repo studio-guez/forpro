@@ -1,0 +1,18 @@
+label:
+  en: Color
+  fr: Couleur
+type: select
+placeholder:
+  en: Without
+  fr: Sans
+options:
+  - value: white
+    text: { en: White, fr: Blanc }
+  - value: blue
+    text: { en: Blue, fr: Bleu }
+  - value: orange
+    text: { en: Orange, fr: Orange }
+  - value: pink
+    text: { en: Pink, fr: Rose }
+  - value: purple
+    text: { en: Purple, fr: Violet }

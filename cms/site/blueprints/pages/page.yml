@@ -41,24 +41,10 @@ tabs:
                   fr: Sur-titre
                 type: text
               titleArrow:
+                extends: fields/color
                 label:
                   en: Arrow
                   fr: Flèche
-                type: select
-                placeholder:
-                  en: Without
-                  fr: Sans
-                options:
-                  - value: white
-                    text: { en: White, fr: Blanc }
-                  - value: blue
-                    text: { en: Blue, fr: Bleu }
-                  - value: orange
-                    text: { en: Orange, fr: Orange }
-                  - value: pink
-                    text: { en: Pink, fr: Rose }
-                  - value: purple
-                    text: { en: Purple, fr: Violet }
       main:
         sections:
           intro:
