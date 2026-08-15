@@ -34,7 +34,7 @@ export interface Seo {
 	readonly schemas: Record<string, unknown>[];
 }
 
-export type ArrowColor = 'white' | 'blue' | 'orange' | 'pink' | 'purple';
+export type Theme = 'blue' | 'blue_reversed' | 'orange' | 'orange_reversed';
 
 export interface PageParent {
 	readonly title: string;
@@ -53,7 +53,8 @@ export interface Page {
 	readonly title: string;
 	readonly slug: string;
 	readonly overtitle: string | null;
-	readonly titleArrow: ArrowColor | '' | null;
+	readonly titleArrow: boolean;
+	readonly theme: Theme;
 	readonly cover: CmsImage | null;
 	readonly introTitle: string;
 	readonly intro: string;
