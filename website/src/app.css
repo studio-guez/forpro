@@ -20,6 +20,9 @@
     --color-purple-pale: #BEA5E6;
     --color-green: #009185;
     --color-green-light: #A5CEBA;
+
+    /* TRANSITION */
+    --default-transition-duration: 250ms;
 }
 
 @layer utilities {
