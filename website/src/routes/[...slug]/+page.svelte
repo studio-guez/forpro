@@ -59,6 +59,7 @@
 	title={page.title}
 	overtitle={page.overtitle}
 	titleArrow={page.titleArrow}
+	theme={page.theme}
 	cover={page.cover}
 />
 
