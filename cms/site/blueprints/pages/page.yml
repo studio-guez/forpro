@@ -40,12 +40,6 @@ tabs:
                   en: Overtitle
                   fr: Sur-titre
                 type: text
-              titleArrow:
-                label:
-                  en: Arrow
-                  fr: Flèche
-                type: toggle
-                default: false
               theme:
                 extends: fields/theme
       main:
