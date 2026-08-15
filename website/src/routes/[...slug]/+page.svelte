@@ -62,4 +62,4 @@
 	cover={page.cover}
 />
 
-<PageIntro title={page.introTitle} text={page.intro} layout={page.introLayout} cta={page.introCta} parentPage={page.parentPage} />
+<PageIntro title={page.introTitle} text={page.intro} layout={page.introLayout} cta={page.introCta} parentPage={page.parentPage} theme={page.theme} />

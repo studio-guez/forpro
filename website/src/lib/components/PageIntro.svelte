@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageCta, PageLayout, PageParent } from '$lib/interfaces/page';
+	import type { PageCta, PageLayout, PageParent, Theme } from '$lib/interfaces/page';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 
 	interface Props {
@@ -8,9 +8,27 @@
 		layout?: PageLayout;
 		cta?: PageCta | null;
 		parentPage?: PageParent | null;
+		theme?: Theme;
 	}
 
-	let { title, text, layout = '1col', cta = null, parentPage = null }: Props = $props();
+	let { title, text, layout = '1col', cta = null, parentPage = null, theme = 'default' }: Props = $props();
+
+	const colorByTheme: Record<Theme, string> = {
+		default:        'blue',
+		campus:         'blue',
+		entreprendre:   'purple-light',
+		projets_jeunes: 'orange',
+		tremplin_jobs:  'purple-light',
+		soutien:        'pink',
+		cekale:         'purple',
+		la_ref:         'pink',
+		learninglab:    'green',
+		foodlab:        'orange',
+		grandlab:       'red',
+		makerlab:       'grey-dark',
+	};
+
+	const themeColor = $derived(colorByTheme[theme] ?? 'blue');
 
 	const isTwoCol = $derived(layout === '2col');
 	const hasCta = $derived(!!cta?.label && !!cta?.url);
@@ -19,7 +37,7 @@
 <section class="py-18 px-base relative" aria-labelledby="page-intro-title">
 	{#if parentPage}
 		<div class="mb-6 mt-[calc(-1.5rem-1lh)]">
-			<a href="/{parentPage.path}" class="text-label text-blue group"><span class="inline-block group-hover:-translate-x-0.75 transition-transform">&larr;</span> {parentPage.title}</a>
+			<a href="/{parentPage.path}" style:color="var(--color-{themeColor})" class="text-label group"><span class="inline-block group-hover:-translate-x-0.75 transition-transform">&larr;</span> {parentPage.title}</a>
 		</div>
 	{/if}
 	{#if isTwoCol}
@@ -31,7 +49,7 @@
 				</div>
 				{#if hasCta}
 					<div class="max-lg:text-right mt-12">
-						<CtaLink cta={cta!} />
+						<CtaLink cta={cta!} color={themeColor} />
 					</div>
 				{/if}
 			</div>
@@ -43,7 +61,7 @@
 		</div>
 		{#if hasCta}
 			<div class="text-right mt-12">
-				<CtaLink cta={cta!} />
+				<CtaLink cta={cta!} color={themeColor} />
 			</div>
 		{/if}
 	{/if}
