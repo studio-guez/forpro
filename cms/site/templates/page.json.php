@@ -22,6 +22,7 @@ $ctaData = $page->introCta()->toObject();
 $json['introCta'] = ($ctaData->label()->isNotEmpty() && $ctaData->url()->isNotEmpty()) ? [
     'label' => $ctaData->label()->value(),
     'url'   => $ctaData->url()->value(),
+    'icon'  => $ctaData->icon()->or(null)->value(),
 ] : null;
 
 $coverFile = $page->cover()->toFile();
