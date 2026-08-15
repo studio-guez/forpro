@@ -52,7 +52,7 @@ tabs:
                   fr: Titre introduction
                 type: text
                 required: true
-                width: 1/2
+                width: 2/3
               introTitleImage:
                 label:
                   en: Image to display instead of the title
@@ -62,7 +62,7 @@ tabs:
                 layout: cards
                 uploads:
                   template: image
-                width: 1/2
+                width: 1/3
               intro:
                 extends: fields/writer
                 label:
