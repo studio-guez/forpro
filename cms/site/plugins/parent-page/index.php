@@ -56,7 +56,7 @@ Kirby::plugin('forpro/parent-page', [
          */
         'virtualPath' => function (): string {
             return implode('/', array_map(
-                fn ($p) => $p->slug(),
+                fn($p) => $p->slug(),
                 $this->parentChain()
             ));
         },
@@ -65,8 +65,8 @@ Kirby::plugin('forpro/parent-page', [
          * Title prefixed with the parentPage chain: "Grandparent > Parent > Title".
          */
         'breadcrumbTitle' => function (): string {
-            return implode(' > ', array_map(
-                fn ($p) => $p->title()->value(),
+            return implode(' » ', array_map(
+                fn($p) => $p->title()->value(),
                 $this->parentChain()
             ));
         },
