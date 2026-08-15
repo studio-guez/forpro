@@ -63,7 +63,7 @@ tabs:
         sections:
           intro:
             fields:
-              cta:
+              introCta:
                 label:
                   en: CTA intro
                   fr: CTA introduction
@@ -75,7 +75,7 @@ tabs:
                   url:
                     label: { en: URL, fr: URL }
                     type: url
-              layout:
+              introLayout:
                 label:
                   en: Layout intro
                   fr: Mise en page introduction
