@@ -49,6 +49,8 @@ tabs:
               query: page.cover.toFile
               cover: true
             text: "{{ page.breadcrumbTitle }}"
+            sortBy: breadcrumbtitle asc
+            sortable: false
             parent: site.find("pages")
             templates:
               - page
