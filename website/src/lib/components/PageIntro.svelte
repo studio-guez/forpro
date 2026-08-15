@@ -1,13 +1,19 @@
 <script lang="ts">
-	import type { PageParent } from '$lib/interfaces/page';
+	import type { PageCta, PageLayout, PageParent } from '$lib/interfaces/page';
+	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 
 	interface Props {
 		title: string;
 		text: string;
+		layout?: PageLayout;
+		cta?: PageCta | null;
 		parentPage?: PageParent | null;
 	}
 
-	let { title, text, parentPage = null }: Props = $props();
+	let { title, text, layout = '1col', cta = null, parentPage = null }: Props = $props();
+
+	const isTwoCol = $derived(layout === '2col');
+	const hasCta = $derived(!!cta?.label && !!cta?.url);
 </script>
 
 <section class="py-18 px-base relative" aria-labelledby="page-intro-title">
@@ -16,8 +22,29 @@
 			<a href="/{parentPage.path}" class="text-label text-blue group"><span class="inline-block group-hover:-translate-x-0.75 transition-transform">&larr;</span> {parentPage.title}</a>
 		</div>
 	{/if}
-	<h2 id="page-intro-title" class="text-h2 mb-12 text-center">{title}</h2>
-	<div class="prose text-center">
-		{@html text}
-	</div>
+	{#if isTwoCol}
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+			<h2 id="page-intro-title" class="text-h4 max-lg:text-center">{title}</h2>
+			<div>
+				<div class="prose max-lg:text-center">
+					{@html text}
+				</div>
+				{#if hasCta}
+					<div class="max-lg:text-right mt-12">
+						<CtaLink cta={cta!} />
+					</div>
+				{/if}
+			</div>
+		</div>
+	{:else}
+		<h2 id="page-intro-title" class="text-h2 mb-12 text-center">{title}</h2>
+		<div class="prose text-center">
+			{@html text}
+		</div>
+		{#if hasCta}
+			<div class="text-right mt-12">
+				<CtaLink cta={cta!} />
+			</div>
+		{/if}
+	{/if}
 </section>
