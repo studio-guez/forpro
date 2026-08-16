@@ -95,6 +95,8 @@ tabs:
               - thematique-de-projet
             parent: site.find("taxonomies").find("thematiques-de-projet")
 
+  social: tabs/social
+
   general: tabs/general
 
   seo: tabs/seo-site

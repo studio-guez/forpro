@@ -1,0 +1,43 @@
+label:
+  en: Social networks
+  fr: Réseaux sociaux
+icon: share
+
+columns:
+  - width: 1/2
+    fields:
+      facebook:
+        label: Facebook
+        type: url
+        icon: url
+        placeholder: https://www.facebook.com/...
+      linkedin:
+        label: LinkedIn
+        type: url
+        icon: url
+        placeholder: https://www.linkedin.com/...
+      instagram:
+        label: Instagram
+        type: url
+        icon: url
+        placeholder: https://www.instagram.com/...
+      youtube:
+        label: YouTube
+        type: url
+        icon: url
+        placeholder: https://www.youtube.com/...
+      tiktok:
+        label: TikTok
+        type: url
+        icon: url
+        placeholder: https://www.tiktok.com/@...
+      snapchat:
+        label: Snapchat
+        type: url
+        icon: url
+        placeholder: https://www.snapchat.com/add/...
+      x:
+        label: X
+        type: url
+        icon: url
+        placeholder: https://x.com/...
