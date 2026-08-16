@@ -1,5 +1,6 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- hrefs come from the CMS */
+	import { slide } from 'svelte/transition';
 	import type { Header, SocialPlatform } from '$lib/interfaces/global';
 	import IconFacebook from '$lib/components/svg/IconFacebook.svelte';
 	import IconInstagram from '$lib/components/svg/IconInstagram.svelte';
@@ -102,6 +103,7 @@
 		<div
 			id="burger-menu"
 			class="inset-x-0 top-full max-h-[calc(100dvh-100%)] overflow-y-auto"
+			transition:slide={{ duration: 300 }}
 		>
 			<nav
 				aria-label="Menu secondaire"
