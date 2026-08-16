@@ -1,0 +1,92 @@
+label:
+  en: Website
+  fr: Site web
+icon: cog
+
+columns:
+  - width: 1/2
+    fields:
+      logo:
+        label:
+          en: Logo
+          fr: Logo
+        type: files
+        uploads: image
+        multiple: false
+        required: true
+        max: 1
+        layout: cards
+        image:
+          back: pattern
+
+  - width: 1/2
+    fields:
+      faviconHeadline:
+        label:
+          en: Favicon
+          fr: Favicon
+        type: headline
+      faviconLightSvg:
+        label:
+          en: Favicon light (SVG)
+          fr: Favicon clair (SVG)
+        help:
+          en: Scalable icon used on light backgrounds.
+          fr: Icône vectorielle utilisée sur fond clair.
+        type: files
+        template: favicon
+        uploads:
+          template: favicon
+          accept: image/svg+xml
+        multiple: false
+        required: true
+        max: 1
+        layout: cards
+      faviconLightPng:
+        label:
+          en: Favicon light (PNG 512×512)
+          fr: Favicon clair (PNG 512×512)
+        help:
+          en: Square 512×512 PNG. Downscaled automatically to every standard size.
+          fr: PNG carré 512×512. Redimensionné automatiquement à toutes les tailles standard.
+        type: files
+        template: favicon
+        uploads:
+          template: favicon
+          accept: image/png
+        multiple: false
+        required: true
+        max: 1
+        layout: cards
+      faviconDarkSvg:
+        label:
+          en: Favicon dark (SVG)
+          fr: Favicon sombre (SVG)
+        help:
+          en: Scalable icon used on dark backgrounds.
+          fr: Icône vectorielle utilisée sur fond sombre.
+        type: files
+        template: favicon
+        uploads:
+          template: favicon
+          accept: image/svg+xml
+        multiple: false
+        required: true
+        max: 1
+        layout: cards
+      faviconDarkPng:
+        label:
+          en: Favicon dark (PNG 512×512)
+          fr: Favicon sombre (PNG 512×512)
+        help:
+          en: Square 512×512 PNG. Downscaled automatically to every standard size.
+          fr: PNG carré 512×512. Redimensionné automatiquement à toutes les tailles standard.
+        type: files
+        template: favicon
+        uploads:
+          template: favicon
+          accept: image/png
+        multiple: false
+        required: true
+        max: 1
+        layout: cards
