@@ -100,4 +100,38 @@ class Utils {
             'schemas'         => $schemas,
         ];
     }
+
+    /**
+     * Builds the favicon payload for the frontend head.
+     * SVGs are served as-is (scalable, one per color scheme); the 512×512 PNG
+     * masters are downscaled to every size in `option('favicon.resize')` so the
+     * frontend can emit all standard favicon `<link>` tags.
+     */
+    static function getFaviconData(\Kirby\Cms\Site $site): array
+    {
+        $sizes = option('favicon.resize', [16, 32, 48, 180, 192, 512]);
+
+        $variant = function (?\Kirby\Cms\File $svg, ?\Kirby\Cms\File $png) use ($sizes): array {
+            return [
+                'svg' => $svg?->url(),
+                'png' => $png
+                    ? array_map(fn(int $size) => [
+                        'size' => $size,
+                        'url'  => $png->resize($size)->url(),
+                    ], $sizes)
+                    : [],
+            ];
+        };
+
+        return [
+            'light' => $variant(
+                $site->faviconLightSvg()->toFile(),
+                $site->faviconLightPng()->toFile()
+            ),
+            'dark' => $variant(
+                $site->faviconDarkSvg()->toFile(),
+                $site->faviconDarkPng()->toFile()
+            ),
+        ];
+    }
 }
