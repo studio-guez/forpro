@@ -103,7 +103,7 @@ return [
                 return \Kirby\Http\Response::json([
                     'header' => [
                         'siteTitle'     => $site->title()->value(),
-                        'logo'          => $logoFile ? Utils::getJsonEncodeImageData($logoFile) : null,
+                        'logo'          => Utils::getJsonEncodeImageData($logoFile),
                         'mainMenu'      => $mainMenu,
                         'secondaryMenu' => $secondaryMenu,
                         'externalLinksTitle' => $externalLinksTitle->isEmpty() ? null : $externalLinksTitle->value(),
