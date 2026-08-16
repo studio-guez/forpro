@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PageHeader from '$lib/components/PageHeader.svelte';
+	import PageHero from '$lib/components/PageHero.svelte';
 	import PageIntro from '$lib/components/PageIntro.svelte';
 	import type { PageData } from './$types';
 
@@ -55,7 +55,7 @@
 	{/if}
 </svelte:head>
 
-<PageHeader
+<PageHero
 	title={page.title}
 	overtitle={page.overtitle}
 	theme={page.theme}
