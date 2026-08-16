@@ -39,6 +39,7 @@
 	};
 
 	let menuOpen = $state(false);
+	let headerEl = $state<HTMLElement>();
 
 	const toggleMenu = () => {
 		menuOpen = !menuOpen;
@@ -48,10 +49,21 @@
 		menuOpen = false;
 	};
 
+	$effect(() => {
+		if (!menuOpen) return;
+		const handlePointerDown = (event: PointerEvent) => {
+			if (headerEl && !headerEl.contains(event.target as Node)) {
+				closeMenu();
+			}
+		};
+		document.addEventListener('pointerdown', handlePointerDown);
+		return () => document.removeEventListener('pointerdown', handlePointerDown);
+	});
+
 	const isExternal = (url: string | null): boolean => !!url && /^https?:\/\//.test(url);
 </script>
 
-<header class="fixed top-0 inset-x-0 z-10 rounded-b-4xl shadow-xl bg-white">
+<header bind:this={headerEl} class="fixed top-0 inset-x-0 z-10 rounded-b-4xl shadow-xl bg-white">
 	<div class="max-w-360 mx-auto flex items-center gap-x-12 px-base py-3 text-blue">
 		<a href="/" onclick={closeMenu} class="shrink-0" aria-label={header.siteTitle}>
 			<img
