@@ -18,6 +18,11 @@ return [
             'default' => [480, 768, 1024, 1366, 1600, 1920, 2560, 3840],
         ],
     ],
+    // Sizes (px) downscaled from the 512×512 favicon PNG masters to cover every
+    // standard favicon `<link>` (16/32/48 browsers, 180 apple-touch, 192/512 PWA).
+    'favicon' => [
+        'resize' => [16, 32, 48, 180, 192, 512],
+    ],
     "tobimori.seo.canonicalBase" => $frontendUrl,
     "tobimori.seo.lang" => "fr_CH",
     "tobimori.seo.default.metaTemplate" => fn($page) => $page->site()->title()->isNotEmpty()
