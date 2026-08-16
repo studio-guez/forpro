@@ -7,7 +7,9 @@
 	import IconYoutube from '$lib/components/svg/IconYoutube.svelte';
 	import IconTiktok from '$lib/components/svg/IconTiktok.svelte';
 	import IconSnapchat from '$lib/components/svg/IconSnapchat.svelte';
-	import IconX from '$lib/components/svg/IconX.svelte';
+	import IconX from '$lib/components/svg/IconX.svelte';	
+	import IconHamburger from '$lib/components/svg/IconHamburger.svelte';
+	import IconClose from '$lib/components/svg/IconClose.svelte';
 
 	interface Props {
 		header: Header;
@@ -48,8 +50,8 @@
 	const isExternal = (url: string | null): boolean => !!url && /^https?:\/\//.test(url);
 </script>
 
-<header class="fixed top-0 inset-x-0 z-50">
-	<div class="relative z-10 bg-white flex items-center justify-between gap-6 px-base py-4">
+<header class="fixed top-0 inset-x-0 z-10 rounded-b-4xl shadow-xl bg-white">
+	<div class="max-w-360 mx-auto flex items-center gap-x-12 px-base py-3 text-blue">
 		<a href="/" onclick={closeMenu} class="shrink-0" aria-label={header.siteTitle}>
 			<img
 				src={header.logo.url}
@@ -58,21 +60,20 @@
 				width={header.logo.width}
 				height={header.logo.height}
 				alt={header.logo.alt ?? header.siteTitle}
-				class="h-10 w-auto"
+				class="h-7.5 w-auto"
 				loading="eager"
 			/>
 		</a>
-
-		<nav aria-label="Menu principal" class="hidden md:block">
-			<ul class="flex items-center gap-8">
+		<nav aria-label="Menu principal" class="max-md:hidden ml-auto">
+			<ul class="flex items-center gap-x-12">
 				{#each header.mainMenu as item (item)}
-					<li>
+					<li class="flex items-center">
 						<a
 							href={item.url}
 							onclick={closeMenu}
 							target={isExternal(item.url) ? '_blank' : undefined}
 							rel={isExternal(item.url) ? 'noopener noreferrer' : undefined}
-							class="text-body-2 font-bold hover:text-blue transition-colors"
+							class="text-body-2 font-bold hover:opacity-50 transition-opacity"
 						>
 							{item.label}
 						</a>
@@ -86,30 +87,25 @@
 			onclick={toggleMenu}
 			aria-expanded={menuOpen}
 			aria-controls="burger-menu"
-			class="shrink-0 flex flex-col justify-center gap-1.5 w-10 h-10 cursor-pointer"
+			class="text-body-2 font-bold flex items-center gap-x-3 hover:opacity-50 transition-opacity w-28 shrink-0 justify-end"
 			aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
 		>
-			<span
-				class="block h-0.75 w-full bg-black transition-transform {menuOpen
-					? 'translate-y-1.125 rotate-45'
-					: ''}"
-			></span>
-			<span
-				class="block h-0.75 w-full bg-black transition-transform {menuOpen
-					? '-translate-y-1.125 -rotate-45'
-					: ''}"
-			></span>
+			{#if menuOpen}
+				<span>Fermer</span><IconClose class="shrink-0 w-7 h-auto" width="28" height="29" />
+			{:else}
+				<span>Menu</span><IconHamburger class="shrink-0" />
+			{/if}
 		</button>
 	</div>
 
 	{#if menuOpen}
 		<div
 			id="burger-menu"
-			class="absolute inset-x-0 top-full max-h-[calc(100dvh-100%)] overflow-y-auto bg-white border-t border-grey-light"
+			class="inset-x-0 top-full max-h-[calc(100dvh-100%)] overflow-y-auto"
 		>
 			<nav
 				aria-label="Menu secondaire"
-				class="px-base py-10 grid grid-cols-1 md:grid-cols-5 gap-x-8 gap-y-10"
+				class="px-card py-10 grid grid-cols-1 md:grid-cols-5 gap-x-8 gap-y-10"
 			>
 				{#each header.secondaryMenu as column, i (i)}
 					<div>
