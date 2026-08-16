@@ -1,13 +1,23 @@
 import type { CmsImage } from '$lib/interfaces/page';
 
-export interface ExternalLink {
-	readonly label: string;
+export type SocialPlatform =
+	| 'facebook'
+	| 'instagram'
+	| 'linkedin'
+	| 'youtube'
+	| 'tiktok'
+	| 'snapchat'
+	| 'x';
+
+export interface SocialLink {
+	readonly platform: SocialPlatform;
 	readonly url: string;
 }
 
 export interface Header {
 	readonly siteTitle: string;
 	readonly logo: CmsImage | null;
+	readonly socialLinks: SocialLink[];
 }
 
 export interface FaviconPng {

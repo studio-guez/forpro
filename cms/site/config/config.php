@@ -57,10 +57,22 @@ return [
 
                 $logoFile = $site->logo()->toFile();
 
+                $socialLinks = [];
+                foreach (['facebook', 'instagram', 'linkedin', 'youtube', 'tiktok', 'snapchat', 'x'] as $platform) {
+                    $url = $site->{$platform}();
+                    if ($url->isNotEmpty()) {
+                        $socialLinks[] = [
+                            'platform' => $platform,
+                            'url'      => $url->value(),
+                        ];
+                    }
+                }
+
                 return \Kirby\Http\Response::json([
                     'header' => [
                         'siteTitle'     => $site->title()->value(),
                         'logo'          => $logoFile ? Utils::getJsonEncodeImageData($logoFile) : null,
+                        'socialLinks'   => $socialLinks,
                     ],
                     'favicon' => Utils::getFaviconData($site),
                 ]);
