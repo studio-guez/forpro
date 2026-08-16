@@ -100,90 +100,86 @@
 	</div>
 
 	{#if menuOpen}
-		<div
+		<nav
 			id="burger-menu"
-			class="inset-x-0 top-full max-h-[calc(100dvh-100%)] overflow-y-auto"
+			class="max-w-360 mx-auto px-base py-12 grid grid-cols-1 md:grid-cols-5 gap-x-8 gap-y-10"
 			transition:slide={{ duration: 300 }}
+			aria-label="Menu secondaire"
 		>
-			<nav
-				aria-label="Menu secondaire"
-				class="px-card py-10 grid grid-cols-1 md:grid-cols-5 gap-x-8 gap-y-10"
-			>
-				{#each header.secondaryMenu as column, i (i)}
-					<div>
-						{#if column.title}
-							<p class="text-label font-bold text-grey-dark mb-4">{column.title}</p>
-						{/if}
-						<div class="flex flex-col gap-6">
-							{#each column.groups as group, j (j)}
-								<div>
-									{#if group.title}
-										<p class="text-body-2 font-bold mb-2">{group.title}</p>
-									{/if}
-									<ul class="flex flex-col gap-1">
-										{#each group.links as link (link)}
-											<li class={link.level === 2 ? 'pl-4' : ''}>
-												<a
-													href={link.url}
-													onclick={closeMenu}
-													target={isExternal(link.url) ? '_blank' : undefined}
-													rel={isExternal(link.url) ? 'noopener noreferrer' : undefined}
-													class="text-label {link.level === 2
-														? 'text-grey-dark'
-														: ''} hover:text-blue transition-colors"
-												>
-													{link.label}
-												</a>
-											</li>
-										{/each}
-									</ul>
-								</div>
-							{/each}
-						</div>
+			{#each header.secondaryMenu as column, i (i)}
+				<div>
+					{#if column.title}
+						<p class="text-label font-bold text-grey-dark mb-4">{column.title}</p>
+					{/if}
+					<div class="flex flex-col gap-6">
+						{#each column.groups as group, j (j)}
+							<div>
+								{#if group.title}
+									<p class="text-body-2 font-bold mb-2">{group.title}</p>
+								{/if}
+								<ul class="flex flex-col gap-1">
+									{#each group.links as link (link)}
+										<li class={link.level === 2 ? 'pl-4' : ''}>
+											<a
+												href={link.url}
+												onclick={closeMenu}
+												target={isExternal(link.url) ? '_blank' : undefined}
+												rel={isExternal(link.url) ? 'noopener noreferrer' : undefined}
+												class="text-label {link.level === 2
+													? 'text-grey-dark'
+													: ''} hover:text-blue transition-colors"
+											>
+												{link.label}
+											</a>
+										</li>
+									{/each}
+								</ul>
+							</div>
+						{/each}
 					</div>
-				{/each}
-
-				<div class="flex flex-col gap-6">
-					{#if header.externalLinksTitle}
-						<p class="text-label font-bold text-grey-dark">{header.externalLinksTitle}</p>
-					{/if}
-					{#if header.externalLinks.length > 0}
-						<ul class="flex flex-col gap-1">
-							{#each header.externalLinks as link (link)}
-								<li>
-									<a
-										href={link.url}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="text-label hover:text-blue transition-colors"
-									>
-										{link.label}
-									</a>
-								</li>
-							{/each}
-						</ul>
-					{/if}
-
-					{#if header.socialLinks.length > 0}
-						<ul class="flex items-center gap-4">
-							{#each header.socialLinks as social (social.platform)}
-								{@const Icon = socialIcons[social.platform]}
-								<li>
-									<a
-										href={social.url}
-										target="_blank"
-										rel="noopener noreferrer"
-										aria-label={socialLabels[social.platform]}
-										class="block h-6 w-6 hover:text-blue transition-colors"
-									>
-										<Icon />
-									</a>
-								</li>
-							{/each}
-						</ul>
-					{/if}
 				</div>
-			</nav>
-		</div>
+			{/each}
+
+			<div class="flex flex-col gap-6">
+				{#if header.externalLinksTitle}
+					<p class="text-label font-bold text-grey-dark">{header.externalLinksTitle}</p>
+				{/if}
+				{#if header.externalLinks.length > 0}
+					<ul class="flex flex-col gap-1">
+						{#each header.externalLinks as link (link)}
+							<li>
+								<a
+									href={link.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="text-label hover:text-blue transition-colors"
+								>
+									{link.label}
+								</a>
+							</li>
+						{/each}
+					</ul>
+				{/if}
+
+				{#if header.socialLinks.length > 0}
+					<ul class="flex items-center gap-4">
+						{#each header.socialLinks as social (social.platform)}
+							{@const Icon = socialIcons[social.platform]}
+							<li>
+								<a
+									href={social.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									aria-label={socialLabels[social.platform]}
+									class="block h-6 w-6 hover:text-blue transition-colors"
+								>
+									<Icon />
+								</a>
+							</li>
+						{/each}
+					</ul>
+				{/if}
+			</div>
+		</nav>
 	{/if}
 </header>
