@@ -48,6 +48,24 @@ return [
                 go("/panel");
             },
         ],
+        [
+            "pattern" => "global.json",
+            "action" => function () {
+                require_once 'utils/Utils.php';
+
+                $site = site();
+
+                $logoFile = $site->logo()->toFile();
+
+                return \Kirby\Http\Response::json([
+                    'header' => [
+                        'siteTitle'     => $site->title()->value(),
+                        'logo'          => $logoFile ? Utils::getJsonEncodeImageData($logoFile) : null,
+                    ],
+                    'favicon' => Utils::getFaviconData($site),
+                ]);
+            },
+        ],
     ],
     "email" => [
         "transport" => [
