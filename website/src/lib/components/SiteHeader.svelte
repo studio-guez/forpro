@@ -51,20 +51,16 @@
 <header class="fixed top-0 inset-x-0 z-50">
 	<div class="relative z-10 bg-white flex items-center justify-between gap-6 px-base py-4">
 		<a href="/" onclick={closeMenu} class="shrink-0" aria-label={header.siteTitle}>
-			{#if header.logo}
-				<img
-					src={header.logo.url}
-					srcset={header.logo.srcset}
-					sizes="10rem"
-					width={header.logo.width}
-					height={header.logo.height}
-					alt={header.logo.alt ?? header.siteTitle}
-					class="h-10 w-auto"
-					loading="eager"
-				/>
-			{:else}
-				<span class="text-h4">{header.siteTitle}</span>
-			{/if}
+			<img
+				src={header.logo.url}
+				srcset={header.logo.srcset}
+				sizes="10rem"
+				width={header.logo.width}
+				height={header.logo.height}
+				alt={header.logo.alt ?? header.siteTitle}
+				class="h-10 w-auto"
+				loading="eager"
+			/>
 		</a>
 
 		<nav aria-label="Menu principal" class="hidden md:block">

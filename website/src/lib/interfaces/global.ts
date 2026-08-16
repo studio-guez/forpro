@@ -40,7 +40,7 @@ export interface ExternalLink {
 
 export interface Header {
 	readonly siteTitle: string;
-	readonly logo: CmsImage | null;
+	readonly logo: CmsImage;
 	readonly mainMenu: MenuLink[];
 	readonly secondaryMenu: SecondaryMenuColumn[];
 	readonly externalLinksTitle: string | null;
