@@ -1,0 +1,8 @@
+title:
+  en: Favicon
+  fr: Favicon
+
+accept:
+  mime:
+    - image/svg+xml
+    - image/png
