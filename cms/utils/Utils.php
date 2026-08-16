@@ -1,6 +1,7 @@
 <?php
 
-class Utils {
+class Utils
+{
     static function getHeroFromPage(\Kirby\Cms\Page $kirbyPage): array
     {
         $hero = $kirbyPage->hero()->toStructure()?->get(0);
@@ -21,12 +22,12 @@ class Utils {
 
     static function muteImageFilesDataIfBlocksHasKeyValue(string $contentTypeKey, &$content): void
     {
-        if(!isset($content['content'][$contentTypeKey])) return;
+        if (!isset($content['content'][$contentTypeKey])) return;
 
         foreach ($content['content'][$contentTypeKey] as &$itemArray) {
             //todo: images with s for profiles importation | change images to image in dataBase and profiles json result
-            if(isset($itemArray['images']))    $itemArray['imageData'] = self::getImageArrayDataInArray($itemArray, 'images');
-            if(isset($itemArray['image']))     $itemArray['imageData'] = self::getImageArrayDataInArray($itemArray, 'image');
+            if (isset($itemArray['images']))    $itemArray['imageData'] = self::getImageArrayDataInArray($itemArray, 'images');
+            if (isset($itemArray['image']))     $itemArray['imageData'] = self::getImageArrayDataInArray($itemArray, 'image');
         }
     }
 
@@ -53,6 +54,43 @@ class Utils {
             'url'           => $file->resize(1920)->url(),
             'srcset'        => $file->srcset('default'),
         ];
+    }
+
+    /**
+     * Resolves a `link` field to a frontend-usable URL.
+     * Pages resolve to their virtual path on the decoupled frontend,
+     * anything else (external URL, mailto, tel) is passed through as-is.
+     */
+    static function resolveLinkField(\Kirby\Content\Field $field): ?string
+    {
+        if ($field->isEmpty()) {
+            return null;
+        }
+
+        $linkedPage = $field->toPage();
+        if ($linkedPage) {
+            return $linkedPage->isHomePage() ? '/' : '/' . $linkedPage->virtualPath();
+        }
+
+        return $field->value();
+    }
+
+    /**
+     * Resolves a link label, falling back to the linked page title (or the raw
+     * URL) when the optional label field is left empty.
+     */
+    static function resolveLinkLabel(\Kirby\Content\Field $labelField, \Kirby\Content\Field $linkField): ?string
+    {
+        if ($labelField->isNotEmpty()) {
+            return $labelField->value();
+        }
+
+        $linkedPage = $linkField->toPage();
+        if ($linkedPage) {
+            return $linkedPage->title()->value();
+        }
+
+        return $linkField->isEmpty() ? null : $linkField->value();
     }
 
     /**
