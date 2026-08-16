@@ -71,8 +71,8 @@
     }
 
     /* PADDING */
-
-    .px-base {
+    
+    .px-card {
         @apply px-8 md:px-30;
     }
 }
