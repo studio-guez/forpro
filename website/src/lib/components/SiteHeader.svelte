@@ -63,7 +63,10 @@
 	const isExternal = (url: string | null): boolean => !!url && /^https?:\/\//.test(url);
 </script>
 
-<header bind:this={headerEl} class="fixed top-0 inset-x-0 z-10 rounded-b-4xl shadow-xl bg-white">
+<header
+	bind:this={headerEl}
+	class="fixed top-0 inset-x-0 z-10 rounded-b-4xl bg-white transition-shadow has-[#burger-menu-button:hover]:shadow {menuOpen ? 'shadow' : ''}"
+>
 	<div class="max-w-360 mx-auto flex items-center gap-x-12 px-base py-3 text-blue">
 		<a href="/" onclick={closeMenu} class="shrink-0" aria-label={header.siteTitle}>
 			<img
@@ -86,7 +89,7 @@
 							onclick={closeMenu}
 							target={isExternal(item.url) ? '_blank' : undefined}
 							rel={isExternal(item.url) ? 'noopener noreferrer' : undefined}
-							class="text-body-2 font-bold hover:opacity-50 transition-opacity"
+							class="text-body-2 font-bold underline decoration-transparent hover:decoration-current transition-colors"
 						>
 							{item.label}
 						</a>
@@ -97,16 +100,18 @@
 
 		<button
 			type="button"
+			id="burger-menu-button"
 			onclick={toggleMenu}
 			aria-expanded={menuOpen}
 			aria-controls="burger-menu"
-			class="text-body-2 font-bold flex items-center gap-x-3 hover:opacity-50 transition-opacity w-28 shrink-0 justify-end"
+			class="text-body-2 font-bold px-3 py-1 flex items-center gap-x-3 shrink-0 justify-end rounded-full hover:bg-blue hover:text-white transition-colors"
 			aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
 		>
+				<span>Menu</span>
 			{#if menuOpen}
-				<span>Fermer</span><IconClose class="shrink-0 w-7 h-auto" width="28" height="29" />
+				<IconClose class="shrink-0 w-7 h-auto" width="28" height="29" />
 			{:else}
-				<span>Menu</span><IconHamburger class="shrink-0" />
+				<IconHamburger class="shrink-0" width="28" height="29" />
 			{/if}
 		</button>
 	</div>
