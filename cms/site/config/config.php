@@ -57,6 +57,38 @@ return [
 
                 $logoFile = $site->logo()->toFile();
 
+                $mainMenu = $site->mainMenu()->toStructure()->map(fn($item) => [
+                    'label' => Utils::resolveLinkLabel($item->label(), $item->link()),
+                    'url'   => Utils::resolveLinkField($item->link()),
+                ])->values();
+
+                $secondaryMenu = [];
+                // The burger menu has 4 CMS-managed columns (see blueprints/tabs/navigation.yml);
+                // the frontend adds a 5th column with external links and social medias.
+                foreach ([1, 2, 3, 4] as $index) {
+                    $groups = $site->{"secondaryColumn{$index}Groups"}()->toBlocks()->map(fn($block) => [
+                        'title' => $block->title()->isEmpty() ? null : $block->title()->value(),
+                        'links' => $block->links()->toStructure()->map(fn($link) => [
+                            'label' => Utils::resolveLinkLabel($link->label(), $link->link()),
+                            'url'   => Utils::resolveLinkField($link->link()),
+                            'level' => (int)$link->level()->or(1)->value(),
+                        ])->values(),
+                    ])->values();
+
+                    $columnTitle = $site->{"secondaryColumn{$index}Title"}();
+                    $secondaryMenu[] = [
+                        'title'  => $columnTitle->isEmpty() ? null : $columnTitle->value(),
+                        'groups' => $groups,
+                    ];
+                }
+
+                $externalLinksTitle = $site->externalLinksTitle();
+
+                $externalLinks = $site->externalLinks()->toStructure()->map(fn($item) => [
+                    'label' => $item->label()->value(),
+                    'url'   => $item->url()->value(),
+                ])->values();
+
                 $socialLinks = [];
                 foreach (['facebook', 'instagram', 'linkedin', 'youtube', 'tiktok', 'snapchat', 'x'] as $platform) {
                     $url = $site->{$platform}();
@@ -72,6 +104,10 @@ return [
                     'header' => [
                         'siteTitle'     => $site->title()->value(),
                         'logo'          => $logoFile ? Utils::getJsonEncodeImageData($logoFile) : null,
+                        'mainMenu'      => $mainMenu,
+                        'secondaryMenu' => $secondaryMenu,
+                        'externalLinksTitle' => $externalLinksTitle->isEmpty() ? null : $externalLinksTitle->value(),
+                        'externalLinks' => $externalLinks,
                         'socialLinks'   => $socialLinks,
                     ],
                     'favicon' => Utils::getFaviconData($site),
