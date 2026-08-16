@@ -27,6 +27,12 @@
     --default-transition-duration: 250ms;
 }
 
+@layer base {
+    button:not(:disabled) {
+        @apply cursor-pointer;
+    }
+}
+
 @layer utilities {
     /* FONT STYLES */
 
@@ -71,7 +77,11 @@
     }
 
     /* PADDING */
-    
+
+    .px-base {
+        @apply px-5 md:px-9;
+    }
+
     .px-card {
         @apply px-8 md:px-30;
     }
