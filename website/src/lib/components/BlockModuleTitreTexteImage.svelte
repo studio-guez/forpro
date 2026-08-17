@@ -183,13 +183,16 @@
 
 	const colors = $derived(themeConfig[theme][content.variant]);
 	const isImageLeft = $derived(content.imagePosition === 'left');
+	const hasBackground = $derived(!!colors.bg && colors.bg !== 'transparent' && colors.bg !== 'var(--color-white)');
 
 	const uid = $props.id();
 	const titleId = `module-titre-texte-image-${uid}`;
 </script>
 
 <section
-	class="pt-12 pb-18 px-card rounded-3xl"
+	class="px-card rounded-3xl"
+	class:pt-12={hasBackground}
+	class:pb-18={hasBackground}
 	style={[colors.bg && `background-color: ${colors.bg}`, colors.text && `color: ${colors.text}`].filter(Boolean).join('; ')}
 	aria-labelledby={titleId}
 >

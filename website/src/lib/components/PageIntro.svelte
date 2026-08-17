@@ -35,7 +35,7 @@
 	const hasCta = $derived(!!cta?.label && !!cta?.url);
 </script>
 
-<section class="py-18 px-card relative" aria-labelledby="page-intro-title">
+<section class="px-card relative" aria-labelledby="page-intro-title">
 	{#if parentPage}
 		<div class="mb-6 mt-[calc(-1.5rem-1lh)]">
 			<a href="/{parentPage.path}" style:color="{themeColor}" class="text-label group"><span class="inline-block group-hover:-translate-x-0.75 transition-transform">&larr;</span> Retour à {parentPage.title}</a>
