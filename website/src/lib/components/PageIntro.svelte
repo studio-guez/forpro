@@ -74,7 +74,7 @@
 		</div>
 		{#if hasCta}
 			<div class="text-right mt-12">
-				<CtaLink cta={cta!} color={themeColor} />
+				<CtaLink cta={cta!} color={themeColor} size="lg" />
 			</div>
 		{/if}
 	{/if}
