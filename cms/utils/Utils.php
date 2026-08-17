@@ -57,40 +57,49 @@ class Utils
     }
 
     /**
-     * Resolves a `link` field to a frontend-usable URL.
-     * Pages resolve to their virtual path on the decoupled frontend,
-     * anything else (external URL, mailto, tel) is passed through as-is.
+     * Resolves the URL from a structure item using the type/page/url pattern.
      */
-    static function resolveLinkField(\Kirby\Content\Field $field): ?string
+    static function resolvePageOrUrlItem(\Kirby\Cms\StructureObject $item): ?string
     {
-        if ($field->isEmpty()) {
+        if ($item->type()->value() === 'page') {
+            $linkedPage = $item->page()->toPage();
+            if ($linkedPage) {
+                return $linkedPage->isHomePage() ? '/' : '/' . $linkedPage->virtualPath();
+            }
             return null;
         }
-
-        $linkedPage = $field->toPage();
-        if ($linkedPage) {
-            return $linkedPage->isHomePage() ? '/' : '/' . $linkedPage->virtualPath();
-        }
-
-        return $field->value();
+        return $item->url()->isNotEmpty() ? $item->url()->value() : null;
     }
 
     /**
-     * Resolves a link label, falling back to the linked page title (or the raw
-     * URL) when the optional label field is left empty.
+     * Resolves the label from a structure item, falling back to the page title or URL.
      */
-    static function resolveLinkLabel(\Kirby\Content\Field $labelField, \Kirby\Content\Field $linkField): ?string
+    static function resolvePageOrUrlLabel(\Kirby\Cms\StructureObject $item): ?string
     {
-        if ($labelField->isNotEmpty()) {
-            return $labelField->value();
+        if ($item->label()->isNotEmpty()) {
+            return $item->label()->value();
         }
-
-        $linkedPage = $linkField->toPage();
-        if ($linkedPage) {
-            return $linkedPage->title()->value();
+        if ($item->type()->value() === 'page') {
+            $linkedPage = $item->page()->toPage();
+            return $linkedPage?->title()->value();
         }
+        return $item->url()->isNotEmpty() ? $item->url()->value() : null;
+    }
 
-        return $linkField->isEmpty() ? null : $linkField->value();
+    /**
+     * Resolves a CTA structure field (max 1) to an array for JSON output, or null if empty.
+     */
+    static function resolveCtaStructure(\Kirby\Content\Field $field): ?array
+    {
+        $item = $field->toStructure()->first();
+        if (!$item || $item->label()->isEmpty()) return null;
+        $url = self::resolvePageOrUrlItem($item);
+        if (!$url) return null;
+        return [
+            'label' => $item->label()->value(),
+            'url'   => $url,
+            'icon'  => $item->icon()->isNotEmpty() ? $item->icon()->value() : null,
+        ];
     }
 
     /**
