@@ -1,6 +1,8 @@
 <script lang="ts">
 	import PageHero from '$lib/components/PageHero.svelte';
 	import PageIntro from '$lib/components/PageIntro.svelte';
+	import BlockModuleTitreTexteImage from '$lib/components/BlockModuleTitreTexteImage.svelte';
+	import type { ModuleTitreTexteImageContent } from '$lib/interfaces/page';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -63,3 +65,11 @@
 />
 
 <PageIntro title={page.introTitle} text={page.intro} layout={page.introLayout} cta={page.introCta} parentPage={page.parentPage} theme={page.theme} titleImage={page.introTitleImage} />
+
+{#each page.body as block (block.id)}
+	{#if !block.isHidden}
+		{#if block.type === 'module-titre-texte-image'}
+			<BlockModuleTitreTexteImage content={block.content as ModuleTitreTexteImageContent} />
+		{/if}
+	{/if}
+{/each}
