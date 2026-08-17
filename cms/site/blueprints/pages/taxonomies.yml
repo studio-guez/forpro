@@ -21,4 +21,6 @@ sections:
     image: false
     sortable: false
     create: false
+    template: 
+      - taxonomy
     label: Groupes de taxonomies
