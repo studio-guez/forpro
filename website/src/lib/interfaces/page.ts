@@ -46,6 +46,37 @@ export interface ModuleTitreTexteImageContent {
 	readonly cta: PageCta | null;
 }
 
+export interface CmsVideo {
+	readonly type: 'video';
+	readonly alt: string | null;
+	readonly caption: string | null;
+	readonly photoCredit: string | null;
+	readonly link: string | null;
+	readonly url: string;
+	readonly mime: string;
+}
+
+export type CmsMedia = (CmsImage & { readonly type: 'image' }) | CmsVideo;
+
+export type CasesLayout = 'alternate' | 'images-right' | 'images-left';
+
+export interface ModuleCasesRow {
+	readonly title: string;
+	readonly hideTitle: boolean;
+	readonly description: string;
+	readonly cta: PageCta | null;
+	readonly media: CmsMedia[];
+}
+
+export interface ModuleCasesContent {
+	readonly title: string;
+	readonly hideTitle: boolean;
+	readonly intro: string;
+	readonly rows: ModuleCasesRow[];
+	readonly layout: CasesLayout;
+	readonly variant: Variant;
+}
+
 export type Theme =
 	| 'default'
 	| 'campus'
