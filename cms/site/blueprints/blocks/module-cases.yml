@@ -20,6 +20,11 @@ fields:
       en: Hide title (use as aria-label only)
       fr: Masquer le titre (utilisé comme aria-label uniquement)
     type: toggle
+    text: 
+      - en: Visible
+        fr: Visible
+      - en: Hidden
+        fr: Masqué
     default: false
   intro:
     label:
@@ -46,6 +51,11 @@ fields:
           en: Hide title (use as aria-label only)
           fr: Masquer le titre (utilisé comme aria-label uniquement)
         type: toggle
+        text: 
+          - en: Visible
+            fr: Visible
+          - en: Hidden
+            fr: Masqué
         default: false
       description:
         label:
@@ -62,14 +72,20 @@ fields:
         type: files
         min: 1
         required: true
-        accept:
-          mime:
-            - image/jpeg
-            - image/png
-            - image/webp
-            - image/gif
-            - image/svg+xml
-            - video/mp4
-            - video/webm
+        uploads: media
+  layout:
+    label:
+      en: Layout
+      fr: Disposition
+    type: select
+    default: alternate
+    required: true
+    options:
+      - value: alternate
+        text: { en: Alternate, fr: Alterné }
+      - value: images-right
+        text: { en: Images right, fr: Images à droite }
+      - value: images-left
+        text: { en: Images left, fr: Images à gauche }
   variant:
     extends: fields/variant
