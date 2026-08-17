@@ -2,6 +2,8 @@ title: Taxonomies
 
 icon: tag
 
+num: zero
+
 # Taxonomies are managed by editing content files directly, not from the panel.
 options:
   changeSlug: false
