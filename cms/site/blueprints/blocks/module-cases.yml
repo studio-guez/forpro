@@ -1,0 +1,75 @@
+extends: blocks/base
+
+name:
+  en: Module - Cases
+  fr: Module - Cases
+
+icon: grid
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  hide_title:
+    width: 1/2
+    label:
+      en: Hide title (use as aria-label only)
+      fr: Masquer le titre (utilisé comme aria-label uniquement)
+    type: toggle
+    default: false
+  intro:
+    label:
+      en: Intro
+      fr: Intro
+    extends: fields/writer
+  rows:
+    label:
+      en: Rows
+      fr: Lignes
+    type: structure
+    min: 1
+    fields:
+      title:
+        width: 1/2
+        label:
+          en: Title
+          fr: Titre
+        type: text
+        required: true
+      hide_title:
+        width: 1/2
+        label:
+          en: Hide title (use as aria-label only)
+          fr: Masquer le titre (utilisé comme aria-label uniquement)
+        type: toggle
+        default: false
+      description:
+        label:
+          en: Description
+          fr: Description
+        extends: fields/writer
+        required: true
+      cta:
+        extends: fields/cta
+      media:
+        label:
+          en: Media (image or video)
+          fr: Média (image ou vidéo)
+        type: files
+        min: 1
+        required: true
+        accept:
+          mime:
+            - image/jpeg
+            - image/png
+            - image/webp
+            - image/gif
+            - image/svg+xml
+            - video/mp4
+            - video/webm
+  variant:
+    extends: fields/variant
