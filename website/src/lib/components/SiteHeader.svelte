@@ -194,7 +194,7 @@
 				</div>
 			{/each}
 
-			<div class="flex flex-col gap-6">
+			<div class="flex flex-col gap-6 bg-green rounded-2xl p-4 -m-4">
 				{#if header.externalLinksTitle}
 					<p class="text-body-2 font-bold pb-3 mb-6 border-b-2">{header.externalLinksTitle}</p>
 				{/if}
