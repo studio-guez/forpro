@@ -193,7 +193,7 @@
 	<h2 class="text-h2 text-center mb-12" style={colors.accent && `color: ${colors.accent}`}>{content.title}</h2>
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 		{#if content.image}
-			<div class:lg:order-last={!isImageLeft} class:lg:order-first={isImageLeft}>
+			<div class="overflow-hidden rounded-2xl [contain:size]" class:lg:order-last={!isImageLeft}>
 				<img
 					src={content.image.url}
 					srcset={content.image.srcset}
@@ -201,12 +201,12 @@
 					height={content.image.height}
 					alt={content.image.alt ?? ''}
 					style:object-position={content.image.focus ?? 'center'}
-					class="w-full h-auto rounded-2xl object-cover"
+					class="w-full h-full object-cover"
 				/>
 			</div>
 		{/if}
-		<div class:lg:order-first={!isImageLeft} class:lg:order-last={isImageLeft}>
-			<div class="prose text-body-2 mb-8">
+		<div>
+			<div class="prose text-body-2 mb-12">
 				{@html content.description}
 			</div>
 			{#if content.cta}
