@@ -239,37 +239,33 @@
 
 	<div class="flex flex-col gap-16 relative z-1">
 		{#each content.rows as row, i (i)}
-			<article class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center" aria-label={row.hideTitle ? row.title : undefined}>
-				{#if row.media.length}
-					<div class="flex flex-col gap-4" class:lg:order-last={!isMediaLeft(i)}>
-						{#each row.media as media, m (m)}
-							<div class="overflow-hidden rounded-2xl [contain:size]">
-								{#if media.type === 'video'}
-									<!-- svelte-ignore a11y_media_has_caption -->
-									<video
-										src={media.url}
-										autoplay
-										muted
-										loop
-										playsinline
-										class="w-full h-full object-cover"
-									></video>
-								{:else}
-									<img
-										src={media.url}
-										srcset={media.srcset}
-										width={media.width}
-										height={media.height}
-										alt={media.alt ?? ''}
-										style:object-position={media.focus ?? 'center'}
-										class="w-full h-full object-cover"
-									/>
-								{/if}
-							</div>
-						{/each}
-					</div>
-				{/if}
-				<div>
+			<article class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch" aria-label={row.hideTitle ? row.title : undefined}>
+                {#each row.media as media, m (m)}
+                    <div class="overflow-hidden rounded-2xl min-h-75 [contain:size]">
+                        {#if media.type === 'video'}
+                            <!-- svelte-ignore a11y_media_has_caption -->
+                            <video
+                                src={media.url}
+                                autoplay
+                                muted
+                                loop
+                                playsinline
+                                class="w-full h-full object-cover"
+                            ></video>
+                        {:else}
+                            <img
+                                src={media.url}
+                                srcset={media.srcset}
+                                width={media.width}
+                                height={media.height}
+                                alt={media.alt ?? ''}
+                                style:object-position={media.focus ?? 'center'}
+                                class="w-full h-full object-cover"
+                            />
+                        {/if}
+                    </div>
+                {/each}
+				<div class="min-h-75 flex flex-col justify-center" class:lg:order-first={!isMediaLeft(i)}>
 					{#if row.hideTitle}
 						<h3 class="sr-only">{row.title}</h3>
 					{:else}
