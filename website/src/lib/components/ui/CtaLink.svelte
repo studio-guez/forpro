@@ -7,13 +7,14 @@
 	interface Props {
 		cta: PageCta;
 		color?: string;
+		hoverColor?: string;
 		class?: string;
 	}
 
-	let { cta, color = 'blue', class: className = '' }: Props = $props();
+	let { cta, color = 'var(--color-blue)', hoverColor = 'var(--color-white)', class: className = '' }: Props = $props();
 </script>
 
-<a href={cta.url} style="--color-cta: var(--color-{color})" class="text-2xl font-bold leading-none inline-flex items-center gap-3 px-7.5 py-4.5 rounded-full border-4 bg-transparent text-(--color-cta) border-(--color-cta) hover:bg-(--color-cta) hover:text-white transition-colors {className}">
+<a href={cta.url} style="--color-cta: {color}; --color-cta-hover: {hoverColor}" class="text-2xl font-bold leading-none inline-flex items-center gap-3 px-7.5 py-4.5 rounded-full border-4 bg-transparent text-(--color-cta) border-(--color-cta) hover:bg-(--color-cta) hover:text-(--color-cta-hover) transition-colors {className}">
 	{cta.label}
 	{#if cta.icon === 'arrow'}<IconArrow />
 	{:else if cta.icon === 'email'}<IconEmail />
