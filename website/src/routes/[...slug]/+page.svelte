@@ -2,7 +2,8 @@
 	import PageHero from '$lib/components/PageHero.svelte';
 	import PageIntro from '$lib/components/PageIntro.svelte';
 	import BlockModuleTitreTexteImage from '$lib/components/BlockModuleTitreTexteImage.svelte';
-	import type { ModuleTitreTexteImageContent } from '$lib/interfaces/page';
+	import BlockModuleCases from '$lib/components/BlockModuleCases.svelte';
+	import type { ModuleTitreTexteImageContent, ModuleCasesContent } from '$lib/interfaces/page';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -70,6 +71,8 @@
 	{#if !block.isHidden}
 		{#if block.type === 'module-titre-texte-image'}
 			<BlockModuleTitreTexteImage content={block.content as ModuleTitreTexteImageContent} theme={page.theme} />
+		{:else if block.type === 'module-cases'}
+			<BlockModuleCases content={block.content as ModuleCasesContent} theme={page.theme} />
 		{/if}
 	{/if}
 {/each}
