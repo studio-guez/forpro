@@ -200,7 +200,7 @@
 					<p class="text-body-2 font-bold pb-3 mb-6 border-b-2">{header.externalLinksTitle}</p>
 				{/if}
 				{#if header.externalLinks.length > 0}
-					<ul class="flex flex-col mb-6">
+					<ul class="flex flex-col gap-y-3 mb-6">
 						{#each header.externalLinks as link (link)}
 							<li class="leading-none">
 								<a
@@ -217,7 +217,7 @@
 				{/if}
 
 				{#if header.socialLinks.length > 0}
-					<ul class="flex items-center gap-4">
+					<ul class="flex flex-col gap-y-3">
 						{#each header.socialLinks as social (social.platform)}
 							{@const Icon = socialIcons[social.platform]}
 							<li>
@@ -225,10 +225,12 @@
 									href={social.url}
 									target="_blank"
 									rel="noopener noreferrer"
-									aria-label={socialLabels[social.platform]}
-									class="block h-6 w-6 hover:text-blue transition-colors"
+									class="flex items-center gap-x-2 text-body-2 leading-none hover:text-blue transition-colors"
 								>
-									<Icon />
+									<span class="flex items-center justify-center h-8 w-8 rounded-full bg-white text-blue shrink-0">
+										<Icon height="24" width="24" class="h-6 w-6" />
+									</span>
+									<span>{socialLabels[social.platform]}</span>
 								</a>
 							</li>
 						{/each}
