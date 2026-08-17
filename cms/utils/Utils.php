@@ -68,6 +68,9 @@ class Utils
             }
             return null;
         }
+        if ($item->type()->value() === 'mailto') {
+            return $item->email()->isNotEmpty() ? 'mailto:' . $item->email()->value() : null;
+        }
         return $item->url()->isNotEmpty() ? $item->url()->value() : null;
     }
 
@@ -82,6 +85,9 @@ class Utils
         if ($item->type()->value() === 'page') {
             $linkedPage = $item->page()->toPage();
             return $linkedPage?->title()->value();
+        }
+        if ($item->type()->value() === 'mailto') {
+            return $item->email()->isNotEmpty() ? $item->email()->value() : null;
         }
         return $item->url()->isNotEmpty() ? $item->url()->value() : null;
     }

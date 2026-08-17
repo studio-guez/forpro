@@ -5,13 +5,15 @@ type: structure
 max: 1
 columns:
   label:
-    width: 1/4
+    width: 1/5
   page:
-    width: 1/4
+    width: 1/5
   url:
-    width: 1/4
+    width: 1/5
+  email:
+    width: 1/5
   icon:
-    width: 1/4
+    width: 1/5
 fields:
   label:
     label: { en: Label, fr: Libellé }
@@ -26,6 +28,8 @@ fields:
         text: { en: Page, fr: Page }
       - value: url
         text: { en: External URL, fr: URL externe }
+      - value: mailto
+        text: { en: Email, fr: Email }
   page:
     label: { en: Page, fr: Page }
     type: pages
@@ -40,6 +44,11 @@ fields:
     type: url
     when:
       type: url
+  email:
+    label: { en: Email, fr: Email }
+    type: email
+    when:
+      type: mailto
   icon:
     label: { en: Icon, fr: Icône }
     type: select
