@@ -34,7 +34,6 @@ columns:
           en: Scalable icon used on light backgrounds.
           fr: Icône vectorielle utilisée sur fond clair.
         type: files
-        template: favicon
         uploads:
           template: favicon
           accept: image/svg+xml
@@ -50,7 +49,6 @@ columns:
           en: Square 512×512 PNG. Downscaled automatically to every standard size.
           fr: PNG carré 512×512. Redimensionné automatiquement à toutes les tailles standard.
         type: files
-        template: favicon
         uploads:
           template: favicon
           accept: image/png
@@ -66,7 +64,6 @@ columns:
           en: Scalable icon used on dark backgrounds.
           fr: Icône vectorielle utilisée sur fond sombre.
         type: files
-        template: favicon
         uploads:
           template: favicon
           accept: image/svg+xml
@@ -82,7 +79,6 @@ columns:
           en: Square 512×512 PNG. Downscaled automatically to every standard size.
           fr: PNG carré 512×512. Redimensionné automatiquement à toutes les tailles standard.
         type: files
-        template: favicon
         uploads:
           template: favicon
           accept: image/png
