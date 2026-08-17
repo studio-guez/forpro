@@ -93,4 +93,4 @@ tabs:
                   en: Content
                   fr: Contenu
                 fieldsets:
-                  - agenda
+                  - module-agenda
