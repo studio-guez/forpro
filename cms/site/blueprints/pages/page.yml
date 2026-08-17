@@ -52,25 +52,7 @@ tabs:
                 label:
                   en: CTA intro
                   fr: CTA introduction
-                type: object
-                fields:
-                  label:
-                    label: { en: Label, fr: Libellé }
-                    type: text
-                  url:
-                    label: { en: URL, fr: URL }
-                    type: url
-                  icon:
-                    label: { en: Icon, fr: Icône }
-                    type: select
-                    placeholder: { en: None, fr: Aucun }
-                    options:
-                      - value: arrow
-                        text: { en: "→", fr: "→" }
-                      - value: plus
-                        text: { en: "+", fr: "+" }
-                      - value: email
-                        text: { en: Email, fr: Email }
+                extends: fields/cta
               introLayout:
                 label:
                   en: Layout intro
