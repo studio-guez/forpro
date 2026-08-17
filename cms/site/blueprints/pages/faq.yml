@@ -35,12 +35,12 @@ tabs:
           fr: Sections
         type: structure
         columns:
-          sectiontitle:
+          title:
             width: 1/2
           faqs:
             width: 1/2
         fields:
-          sectiontitle:
+          title:
             label:
               en: Section title
               fr: Titre de la section

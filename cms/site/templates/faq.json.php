@@ -21,7 +21,7 @@ $json['sections'] = $page->sections()->toStructure()->map(function ($section) us
     $faqs = Utils::filterStructureByTaxonomy($section->faqs()->toStructure(), 'domains', $domains);
 
     return [
-        'title' => $section->sectiontitle()->value(),
+        'title' => $section->title()->value(),
         'faqs'  => $faqs->map(fn($item) => [
             'question' => $item->question()->value(),
             'answer'   => $item->answer()->value(),

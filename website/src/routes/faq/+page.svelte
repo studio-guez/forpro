@@ -222,7 +222,7 @@
 						hidden={!open}
 					>
 						<div class="mt-9 space-y-6">
-							{#each section.faqs as faq, faqIndex (faq.question)}
+							{#each section.faqs as faq, faqIndex (faqIndex)}
 								<FaqQuestion
 									id="faq-{section.index}-{faqIndex}"
 									question={faq.question}
