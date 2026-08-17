@@ -269,7 +269,7 @@
 					{#if row.hideTitle}
 						<h3 class="sr-only">{row.title}</h3>
 					{:else}
-						<h3 class="text-h3 mb-6">{row.title}</h3>
+						<h3 class="text-h4 mb-6">{row.title}</h3>
 					{/if}
 					<div class="prose text-body-2">
 						{@html row.description}
