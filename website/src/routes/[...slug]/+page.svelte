@@ -69,7 +69,7 @@
 {#each page.body as block (block.id)}
 	{#if !block.isHidden}
 		{#if block.type === 'module-titre-texte-image'}
-			<BlockModuleTitreTexteImage content={block.content as ModuleTitreTexteImageContent} />
+			<BlockModuleTitreTexteImage content={block.content as ModuleTitreTexteImageContent} theme={page.theme} />
 		{/if}
 	{/if}
 {/each}
