@@ -16,26 +16,42 @@ fields:
     type: structure
     columns:
       label:
-        width: 1/3
-      link:
-        width: 1/3
+        width: 1/4
+      page:
+        width: 1/4
+      url:
+        width: 1/4
       level:
-        width: 1/3
+        width: 1/4
     fields:
       label:
         label:
           en: Label
           fr: Libellé
         type: text
-      link:
-        label:
-          en: Link
-          fr: Lien
-        type: link
+      type:
+        label: { en: Type, fr: Type }
+        type: select
+        default: page
         options:
-          - page
-          - url
-        required: true
+          - value: page
+            text: { en: Page, fr: Page }
+          - value: url
+            text: { en: External URL, fr: URL externe }
+      page:
+        label: { en: Page, fr: Page }
+        type: pages
+        link: false
+        max: 1
+        query: site.index.filterBy('template', 'page')
+        text: "{{ page.breadcrumbTitle }}"
+        when:
+          type: page
+      url:
+        label: { en: URL, fr: URL }
+        type: url
+        when:
+          type: url
       level:
         label:
           en: Level
