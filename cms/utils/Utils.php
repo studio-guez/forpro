@@ -57,6 +57,36 @@ class Utils
     }
 
     /**
+     * Serializes a single media file (image or video) for JSON output.
+     * Videos can't be resized/srcset, so they only expose a direct URL + mime.
+     */
+    static function getJsonEncodeMediaData(\Kirby\Cms\File $file): array
+    {
+        if ($file->type() === 'video') {
+            return [
+                'type'          => 'video',
+                'alt'           => $file->alt()->value(),
+                'caption'       => $file->caption()->value(),
+                'photoCredit'   => $file->photoCredit()->value(),
+                'link'          => $file->link()->value(),
+                'url'           => $file->url(),
+                'mime'          => $file->mime(),
+            ];
+        }
+
+        return ['type' => 'image'] + self::getJsonEncodeImageData($file);
+    }
+
+    /**
+     * Serializes a media Files collection (image or video) to a list for JSON output.
+     */
+    static function getJsonEncodeMediaArray(\Kirby\Cms\Files $files): array
+    {
+        return array_values($files->map(fn(\Kirby\Cms\File $file) => self::getJsonEncodeMediaData($file))->data());
+    }
+
+
+    /**
      * Resolves the URL from a structure item using the type/page/url pattern.
      */
     static function resolvePageOrUrlItem(\Kirby\Cms\StructureObject $item): ?string
