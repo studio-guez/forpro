@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { ModuleCasesContent, Theme, Variant } from '$lib/interfaces/page';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
+	import IconPlay from '$lib/components/svg/IconPlay.svelte';
 
 	interface Props {
 		content: ModuleCasesContent;
@@ -217,6 +218,15 @@
 
 	// For single-media rows, alternate the media column span in a 2/1/1/2 pattern.
 	const singleMediaSpan = (index: number) => [2, 2 ,1, 1][index % 4];
+
+	const playVideo = (event: MouseEvent) => {
+		const button = event.currentTarget as HTMLElement;
+		const video = button.previousElementSibling as HTMLVideoElement | null;
+		if (!video) return;
+		video.controls = true;
+		video.play();
+		button.hidden = true;
+	};
 </script>
 
 <section
@@ -246,15 +256,23 @@
                 {#each row.media as media, m (m)}
                     <div class="overflow-hidden rounded-2xl min-h-75 [contain:size]" class:lg:col-span-2={singleMediaSpan(m) === 2}>
                         {#if media.type === 'video'}
-                            <!-- svelte-ignore a11y_media_has_caption -->
-                            <video
-                                src={media.url}
-                                autoplay
-                                muted
-                                loop
-                                playsinline
-                                class="w-full h-full object-cover"
-                            ></video>
+                            <div class="relative w-full h-full">
+                                <!-- svelte-ignore a11y_media_has_caption -->
+                                <video
+                                    src={media.url}
+                                    playsinline
+                                    controlslist="nodownload"
+                                    class="w-full h-full object-cover"
+                                ></video>
+                                <button
+                                    type="button"
+                                    onclick={playVideo}
+                                    aria-label="Lire la vidéo"
+                                    class="absolute inset-0 grid place-items-center cursor-pointer text-white opacity-80"
+                                >
+                                    <IconPlay class="w-24 h-auto" />
+                                </button>
+                            </div>
                         {:else}
                             <img
                                 src={media.url}
