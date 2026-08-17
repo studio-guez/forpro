@@ -31,9 +31,19 @@ services:
       - ${SHARED_PATH}/cms/site/cache:/var/www/html/site/cache
       - ${SHARED_PATH}/cms/site/plugins/kirby-foodlab/data:/var/www/html/site/plugins/kirby-foodlab/data
       - ${SHARED_PATH}/cms/site/plugins/kirby-menu-du-jour/data:/var/www/html/site/plugins/kirby-menu-du-jour/data
+      # Kirby license file (added manually on first deploy or registered from the
+      # Panel). File bind mount so it survives redeploys — the deploy action seeds
+      # an empty file, otherwise Docker would create a directory in its place.
+      - ${SHARED_PATH}/cms/site/config/.license:/var/www/html/site/config/.license
     env_file:
       - ${SHARED_PATH}/cms.env
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 
   # SvelteKit
   website:
@@ -43,6 +53,12 @@ services:
     restart: unless-stopped
     depends_on:
       - cms
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
   # SvelteKit
   restaurant:
@@ -52,6 +68,12 @@ services:
     restart: unless-stopped
     depends_on:
       - cms
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
   # Nuxt
   menu:
@@ -61,3 +83,9 @@ services:
     restart: unless-stopped
     depends_on:
       - cms
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
