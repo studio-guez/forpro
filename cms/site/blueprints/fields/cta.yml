@@ -31,14 +31,7 @@ fields:
       - value: mailto
         text: { en: Email, fr: Email }
   page:
-    label: { en: Page, fr: Page }
-    type: pages
-    link: false
-    max: 1
-    query: site.find("pages").listed.filterBy('template', 'in', ['page', 'faq'])
-    text: "{{ page.breadcrumbTitle }}"
-    when:
-      type: page
+    extends: fields/pageLink
   url:
     label: { en: URL, fr: URL }
     type: url
