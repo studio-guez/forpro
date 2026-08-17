@@ -272,11 +272,11 @@
 					{:else}
 						<h3 class="text-h3 mb-6">{row.title}</h3>
 					{/if}
-					<div class="prose text-body-2 mb-8">
+					<div class="prose text-body-2">
 						{@html row.description}
 					</div>
 					{#if row.cta}
-						<CtaLink cta={row.cta} color={colors.text} hoverColor={colors.ctaHoverColor} />
+						<CtaLink cta={row.cta} color={colors.text} hoverColor={colors.ctaHoverColor} class="mt-8" />
 					{/if}
 				</div>
 			</article>
