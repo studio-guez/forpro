@@ -139,6 +139,43 @@ class Utils
     }
 
     /**
+     * Resolves taxonomy term slugs stored in a tags field to a stable
+     * `{slug, title}` representation using the term pages under
+     * content/taxonomies/<taxonomy>. Unknown slugs fall back to the slug.
+     */
+    static function resolveTaxonomyTerms(\Kirby\Content\Field $field, string $taxonomy): array
+    {
+        $group = site()->find('taxonomies')?->find($taxonomy);
+
+        return array_map(function (string $slug) use ($group): array {
+            $term = $group?->find($slug);
+            return [
+                'slug'  => $slug,
+                'title' => $term ? $term->title()->value() : $slug,
+            ];
+        }, $field->split(','));
+    }
+
+    /**
+     * Filters structure items on a tags-based taxonomy field, keeping items
+     * tagged with any of the given term slugs. An empty $slugs returns all
+     * items, so callers can pass through an optional filter directly.
+     *
+     * Usage:
+     *   $faqs = page('faq')->faqs()->toStructure();                                     // all FAQs
+     *   $faqs = Utils::filterStructureByTaxonomy($faqs, 'domains', ['architecture']);   // one domain
+     *   $faqs = Utils::filterStructureByTaxonomy($faqs, 'domains', ['a', 'b']);         // any of multiple domains
+     */
+    static function filterStructureByTaxonomy(\Kirby\Cms\Structure $items, string $fieldName, array $slugs): \Kirby\Cms\Structure
+    {
+        if ($slugs === []) return $items;
+
+        return $items->filter(
+            fn($item) => array_intersect($slugs, $item->{$fieldName}()->split(',')) !== []
+        );
+    }
+
+    /**
      * Resolves the page metadata through Kirby SEO's cascade
      * (page fields -> parent -> site -> plugin defaults) and returns it
      * in the shape consumed by the SvelteKit frontend.
