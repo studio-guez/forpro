@@ -11,6 +11,7 @@
 	import IconX from '$lib/components/svg/IconX.svelte';	
 	import IconHamburger from '$lib/components/svg/IconHamburger.svelte';
 	import IconClose from '$lib/components/svg/IconClose.svelte';
+	import IconSearch from '$lib/components/svg/IconSearch.svelte';
 
 	interface Props {
 		header: Header;
@@ -40,6 +41,7 @@
 
 	let menuOpen = $state(false);
 	let headerEl = $state<HTMLElement>();
+	let searchInput = $state<HTMLInputElement>();
 
 	const toggleMenu = () => {
 		menuOpen = !menuOpen;
@@ -98,13 +100,34 @@
 			</ul>
 		</nav>
 
+		<div class="w-60 flex justify-end">
+			<div class="group flex items-center has-[#search-button:hover]:bg-grey-light has-[#search-input:focus]:bg-grey-light transition-colors p-1 rounded-full focus-within:ring-2 focus-within:ring-blue shrink">
+				<input
+					bind:this={searchInput}
+					id="search-input"
+					type="text"
+					placeholder="Rechercher..."
+					class="text-body-2 font-bold text-blue bg-transparent border-0 min-w-0 w-0 opacity-0 group-has-[#search-button:hover]:w-48 group-has-[#search-button:hover]:opacity-100 group-has-[#search-button:hover]:mr-3 focus:w-48 focus:opacity-100 focus:mr-3 transition-all duration-300 ease-out placeholder:text-blue focus:placeholder:text-transparent focus:ring-0 focus:outline-none"
+				/>
+				<button
+					type="button"
+					id="search-button"
+					onclick={() => searchInput?.focus()}
+					class="shrink-0 p-2 rounded-full hover:bg-blue hover:text-white transition-colors"
+					aria-label="Rechercher"
+				>
+					<IconSearch class="shrink-0" />
+				</button>
+			</div>
+		</div>
+
 		<button
 			type="button"
 			id="burger-menu-button"
 			onclick={toggleMenu}
 			aria-expanded={menuOpen}
 			aria-controls="burger-menu"
-			class="text-body-2 font-bold px-3 py-1 flex items-center gap-x-3 shrink-0 justify-end rounded-full hover:bg-blue hover:text-white transition-colors"
+			class="text-body-2 font-bold px-3 py-2 flex items-center gap-x-3 shrink-0 justify-end rounded-full hover:bg-blue hover:text-white transition-colors"
 			aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
 		>
 				<span>Menu</span>
