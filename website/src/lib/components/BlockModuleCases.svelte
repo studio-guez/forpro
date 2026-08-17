@@ -239,9 +239,9 @@
 
 	<div class="flex flex-col gap-16 relative z-1">
 		{#each content.rows as row, i (i)}
-			<article class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch" aria-label={row.hideTitle ? row.title : undefined}>
+			<article class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch" aria-label={row.hideTitle ? row.title : undefined}>
                 {#each row.media as media, m (m)}
-                    <div class="overflow-hidden rounded-2xl min-h-75 [contain:size]">
+                    <div class="overflow-hidden rounded-2xl min-h-75 [contain:size] lg:col-span-2">
                         {#if media.type === 'video'}
                             <!-- svelte-ignore a11y_media_has_caption -->
                             <video
