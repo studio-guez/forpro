@@ -29,6 +29,7 @@ fields:
       en: Image
       fr: Image
     type: files
+    uploads: image
     max: 1
     required: true
   image_position:
