@@ -131,8 +131,13 @@ jobs:
             true
           fi
 
-          JSON=$(printf '%s\n' $SELECTED | jq -R . | jq -cs .)
-          CSV=$(echo $SELECTED | tr ' ' ',')
+          if [ -z "$SELECTED" ]; then
+            JSON="[]"
+            CSV=""
+          else
+            JSON=$(printf '%s\n' $SELECTED | jq -R . | jq -cs .)
+            CSV=$(echo $SELECTED | tr ' ' ',')
+          fi
           echo "Services: $JSON"
           echo "services=$JSON"     >> "$GITHUB_OUTPUT"
           echo "services_csv=$CSV"  >> "$GITHUB_OUTPUT"
@@ -187,7 +192,7 @@ jobs:
         if: matrix.service != 'cms'
         run: |
           corepack enable
-          corepack prepare pnpm@latest --activate
+          corepack prepare pnpm@10 --activate
 
       - name: Setup Node 24
         if: matrix.service != 'cms'
