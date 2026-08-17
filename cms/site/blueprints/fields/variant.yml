@@ -8,5 +8,5 @@ required: true
 options:
   - value: default
     text: { en: Default, fr: Défaut }
-  - value: inversé
+  - value: inverted
     text: { en: Inverted, fr: Inversé }
