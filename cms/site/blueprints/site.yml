@@ -42,6 +42,15 @@ tabs:
               - project
             create: project
 
+          faq:
+            label: "FAQ"
+            type: pages
+            image: false
+            sortable: false
+            max: 1
+            templates:
+              - faq
+
           pages:
             label: "Pages"
             type: pages
