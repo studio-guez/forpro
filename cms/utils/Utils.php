@@ -172,11 +172,16 @@ class Utils
     {
         if ($slugs === []) return $items;
 
-        return $items->filter(function ($item) use ($fieldName, $slugs): bool {
-            $itemSlugs = array_map(
-                fn(string $uuid) => page($uuid)?->slug(),
-                $item->{$fieldName}()->split(',')
-            );
+        $slugCache = [];
+        $resolveSlug = function (string $uuid) use (&$slugCache) {
+            if (!array_key_exists($uuid, $slugCache)) {
+                $slugCache[$uuid] = page($uuid)?->slug();
+            }
+            return $slugCache[$uuid];
+        };
+
+        return $items->filter(function ($item) use ($fieldName, $slugs, $resolveSlug): bool {
+            $itemSlugs = array_map($resolveSlug, $item->{$fieldName}()->split(','));
             return array_intersect($slugs, $itemSlugs) !== [];
         });
     }
