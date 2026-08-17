@@ -8,6 +8,7 @@ require_once 'utils/Utils.php';
 
 $json = [];
 
+$json['template'] = 'page';
 $json['title'] = $page->title()->value();
 $json['slug'] = $page->slug();
 
