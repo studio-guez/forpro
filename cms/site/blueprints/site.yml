@@ -74,15 +74,15 @@ tabs:
             parent: site.find("taxonomies").find("event-types")
       - width: 1/2
         sections:
-          domaines:
+          domains:
             type: pages
             image: false
             label:
               en: Domains
               fr: Domaines
             templates:
-              - domaine
-            parent: site.find("taxonomies").find("domaines")
+              - domain
+            parent: site.find("taxonomies").find("domains")
       - width: 1/2
         sections:
           project_themes:
