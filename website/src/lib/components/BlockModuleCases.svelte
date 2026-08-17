@@ -211,7 +211,7 @@
 	const isMediaLeft = (index: number) => {
 		if (content.layout === 'images-left') return true;
 		if (content.layout === 'images-right') return false;
-		return index % 2 === 0;
+		return !(index % 2 === 0);
 	};
 </script>
 
