@@ -76,8 +76,8 @@
 	bind:this={headerEl}
 	class="fixed top-0 inset-x-0 z-10 rounded-b-4xl bg-white transition-shadow has-[#burger-menu-button:hover]:shadow {menuOpen ? 'shadow' : ''}"
 >
-	<div class="max-w-360 mx-auto flex items-center gap-x-12 px-base py-3 text-blue">
-		<a href="/" onclick={closeMenu} class="shrink-0" aria-label={header.siteTitle}>
+	<div class="max-w-360 mx-auto flex items-center gap-x-3 lg:gap-x-12 px-base py-3 text-blue">
+		<a href="/" onclick={closeMenu} class="shrink-0 {menuOpen ? 'max-lg:hidden' : ''}" aria-label={header.siteTitle}>
 			<img
 				src={header.logo.url}
 				srcset={header.logo.srcset}
@@ -89,7 +89,7 @@
 				loading="eager"
 			/>
 		</a>
-		<nav aria-label="Menu principal" class="max-md:hidden ml-auto">
+		<nav aria-label="Menu principal" class="max-lg:hidden lg:ml-auto {menuOpen ? 'max-lg:block!' : ''}">
 			<ul class="flex items-center gap-x-12">
 				{#each header.mainMenu as item (item)}
 					<li class="flex items-center">
@@ -107,7 +107,7 @@
 			</ul>
 		</nav>
 
-		<div class="w-60 flex justify-end">
+		<div class="w-60 flex justify-end max-lg:ml-auto">
 			<div role="search" class="group flex items-center has-[#search-button:hover]:bg-grey-light has-[#search-input:focus]:bg-grey-light transition-colors p-1 rounded-full focus-within:ring-2 focus-within:ring-blue shrink">
 				<input
 					bind:this={searchInput}
@@ -142,7 +142,7 @@
 			class="text-body-2 font-bold px-3 py-2 flex items-center gap-x-3 shrink-0 justify-end rounded-full hover:bg-blue hover:text-white transition-colors"
 			aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
 		>
-				<span>Menu</span>
+				<span class="lg:hidden">Menu</span>
 			{#if menuOpen}
 				<IconClose class="shrink-0 w-7 h-auto" width="28" height="29" />
 			{:else}
@@ -154,14 +154,14 @@
 	{#if menuOpen}
 		<nav
 			id="burger-menu"
-			class="max-w-360 mx-auto px-base py-12 grid grid-cols-1 md:grid-cols-5 gap-x-8 gap-y-10"
+			class="max-w-360 mx-auto px-base py-12 grid grid-cols-1 lg:grid-cols-5 gap-x-8 gap-y-10"
 			transition:slide={{ duration: 300 }}
 			aria-label="Menu secondaire"
 		>
 			{#each header.secondaryMenu as column, i (i)}
 				<div>
 					{#if column.title}
-						<p class="text-body-2 font-bold text-blue pb-3 mb-6 border-b-2">{column.title}</p>
+						<p class="text-body-2 font-bold text-blue pb-3 mb-6 lg:border-b-2">{column.title}</p>
 					{/if}
 					<div class="flex flex-col gap-y-6">
 						{#each column.groups as group, j (j)}
@@ -197,7 +197,7 @@
 
 			<div class="flex flex-col bg-green rounded-2xl p-4 -m-4">
 				{#if header.externalLinksTitle}
-					<p class="text-body-2 font-bold pb-3 mb-6 border-b-2">{header.externalLinksTitle}</p>
+					<p class="text-body-2 font-bold pb-3 mb-6 lg:border-b-2">{header.externalLinksTitle}</p>
 				{/if}
 				{#if header.externalLinks.length > 0}
 					<ul class="flex flex-col gap-y-3 mb-6">
