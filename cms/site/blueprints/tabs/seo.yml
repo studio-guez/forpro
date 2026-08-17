@@ -10,6 +10,11 @@ columns:
           en: Track with Matomo
           fr: Suivi avec Matomo
         type: toggle
+        text:
+          - en: No
+            fr: Non
+          - en: Yes
+            fr: Oui
         default: true
         help:
           en: Send visits to this page to Matomo analytics.
