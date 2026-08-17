@@ -6,4 +6,4 @@ sections:
   terms:
     label: Domaines
     templates:
-      - domaine
+      - domain
