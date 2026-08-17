@@ -12,7 +12,10 @@ $json['title'] = $page->title()->value();
 $json['slug'] = $page->slug();
 
 // Optional pre-filtering by domain: /faq.json?domains=slug-a,slug-b
-$domains = array_values(array_filter(explode(',', (string)get('domains'))));
+$domains = array_values(array_filter(
+    array_slice(explode(',', (string)get('domains')), 0, 20),
+    fn(string $slug) => preg_match('/^[a-z0-9-]+$/', $slug) === 1
+));
 
 $faqs = Utils::filterStructureByTaxonomy($page->faqs()->toStructure(), 'domains', $domains);
 
