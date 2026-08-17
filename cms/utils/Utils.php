@@ -139,27 +139,29 @@ class Utils
     }
 
     /**
-     * Resolves taxonomy term slugs stored in a tags field to a stable
-     * `{slug, title}` representation using the term pages under
-     * content/taxonomies/<taxonomy>. Unknown slugs fall back to the slug.
+     * Resolves taxonomy term UUIDs stored in a tags field to a stable
+     * `{slug, title}` representation. Terms are stored as UUIDs (e.g.
+     * `page://xxx`) so selections survive slug changes; each UUID is resolved
+     * to its term page under content/taxonomies/<taxonomy> here. Unresolvable
+     * UUIDs (e.g. deleted terms) are skipped.
      */
     static function resolveTaxonomyTerms(\Kirby\Content\Field $field, string $taxonomy): array
     {
-        $group = site()->find('taxonomies')?->find($taxonomy);
-
-        return array_map(function (string $slug) use ($group): array {
-            $term = $group?->find($slug);
+        return array_values(array_filter(array_map(function (string $uuid): ?array {
+            $term = page($uuid);
+            if (!$term) return null;
             return [
-                'slug'  => $slug,
-                'title' => $term ? $term->title()->value() : $slug,
+                'slug'  => $term->slug(),
+                'title' => $term->title()->value(),
             ];
-        }, $field->split(','));
+        }, $field->split(','))));
     }
 
     /**
      * Filters structure items on a tags-based taxonomy field, keeping items
-     * tagged with any of the given term slugs. An empty $slugs returns all
-     * items, so callers can pass through an optional filter directly.
+     * tagged with any of the given term slugs. Stored values are term UUIDs,
+     * so they are resolved to slugs before comparison. An empty $slugs returns
+     * all items, so callers can pass through an optional filter directly.
      *
      * Usage:
      *   $faqs = page('faq')->faqs()->toStructure();                                     // all FAQs
@@ -170,9 +172,13 @@ class Utils
     {
         if ($slugs === []) return $items;
 
-        return $items->filter(
-            fn($item) => array_intersect($slugs, $item->{$fieldName}()->split(',')) !== []
-        );
+        return $items->filter(function ($item) use ($fieldName, $slugs): bool {
+            $itemSlugs = array_map(
+                fn(string $uuid) => page($uuid)?->slug(),
+                $item->{$fieldName}()->split(',')
+            );
+            return array_intersect($slugs, $itemSlugs) !== [];
+        });
     }
 
     /**
