@@ -160,13 +160,13 @@
 			{#each header.secondaryMenu as column, i (i)}
 				<div>
 					{#if column.title}
-						<p class="text-label font-bold text-grey-dark mb-4">{column.title}</p>
+						<p class="text-body-2 font-bold text-blue pb-3 mb-6 border-b-2">{column.title}</p>
 					{/if}
-					<div class="flex flex-col gap-6">
+					<div class="flex flex-col">
 						{#each column.groups as group, j (j)}
 							<div>
 								{#if group.title}
-									<p class="text-body-2 font-bold mb-2">{group.title}</p>
+									<p class="text-label text-blue mb-0.75">{group.title}</p>
 								{/if}
 								<ul class="flex flex-col gap-1">
 									{#each group.links as link (link)}
