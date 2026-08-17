@@ -164,6 +164,7 @@
 					{/if}
 					<div class="flex flex-col">
 						{#each column.groups as group, j (j)}
+							{@const hasLevel2 = group.links.some((link) => link.level === 2)}
 							<div>
 								{#if group.title}
 									<p class="text-label text-blue mb-0.75">{group.title}</p>
@@ -178,7 +179,9 @@
 												rel={isExternal(link.url) ? 'noopener noreferrer' : undefined}
 												class="text-label {link.level === 2
 													? 'text-grey-dark'
-													: ''} hover:text-blue transition-colors"
+													: hasLevel2
+														? 'font-bold'
+														: ''} hover:text-blue transition-colors"
 											>
 												{link.label}
 											</a>
