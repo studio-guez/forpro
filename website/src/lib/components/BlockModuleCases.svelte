@@ -47,9 +47,9 @@
 		entreprendre: {
 			default: {
 				bg: 'var(--color-purple-light)',
-				bgContrast: 'var(--color-purple)',
+				bgContrast: 'var(--color-purple-pale)',
 				text: 'var(--color-white)',
-				title: 'var(--color-white)',
+				title: 'var(--color-purple-light)',
 				ctaHoverColor: 'var(--color-purple-light)',
 			},
 			inverted: {
@@ -225,7 +225,7 @@
 		{#if content.hideTitle}
 			<h2 id="module-cases-title" class="sr-only">{content.title}</h2>
 		{:else}
-			<h2 id="module-cases-title" class="text-h3" style={colors.title && `color: ${colors.title}`}>{content.title}</h2>
+			<h2 id="module-cases-title" class="inline-block text-h3 pt-2 pb-3.5 px-8 bg-white rounded-2xl" style={colors.title && `color: ${colors.title}`}>{content.title}</h2>
 		{/if}
 		{#if content.intro}
 			<div class="prose text-body-2 mx-auto mt-6 max-w-3xl">
@@ -270,13 +270,13 @@
 					{#if row.hideTitle}
 						<h3 class="sr-only">{row.title}</h3>
 					{:else}
-						<h3 class="text-h3 mb-6" style={colors.title && `color: ${colors.title}`}>{row.title}</h3>
+						<h3 class="text-h3 mb-6">{row.title}</h3>
 					{/if}
 					<div class="prose text-body-2 mb-8">
 						{@html row.description}
 					</div>
 					{#if row.cta}
-						<CtaLink cta={row.cta} color={colors.title} hoverColor={colors.ctaHoverColor} />
+						<CtaLink cta={row.cta} color={colors.text} hoverColor={colors.ctaHoverColor} />
 					{/if}
 				</div>
 			</article>
