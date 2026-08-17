@@ -245,7 +245,7 @@
 		{#each content.rows as row, i (i)}
 			<article class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch" aria-label={row.hideTitle ? row.title : undefined}>
                 {#each row.media as media, m (m)}
-                    <div class="overflow-hidden rounded-2xl min-h-75 [contain:size]" class:lg:col-span-2={singleMediaSpan(m) === 2}>
+                    <div class="overflow-hidden rounded-2xl min-h-75" class:[contain:size]={media.type !== 'video'} class:lg:col-span-2={singleMediaSpan(m) === 2}>
                         {#if media.type === 'video'}
                             <VideoPlayer src={media.url} />
                         {:else}
