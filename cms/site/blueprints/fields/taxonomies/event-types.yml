@@ -1,0 +1,6 @@
+extends: fields/taxonomies/taxonomy
+label:
+  en: Event types
+  fr: Types d'événement
+options:
+  query: site.find("taxonomies").find("event-types").children
