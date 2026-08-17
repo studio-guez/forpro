@@ -8,8 +8,10 @@ require_once 'utils/Utils.php';
 
 $json = [];
 
+$json['template'] = 'faq';
 $json['title'] = $page->title()->value();
 $json['slug'] = $page->slug();
+$json['path'] = $page->virtualPath();
 
 // Optional pre-filtering by domain: /faq.json?domains=slug-a,slug-b
 $domains = array_values(array_filter(
