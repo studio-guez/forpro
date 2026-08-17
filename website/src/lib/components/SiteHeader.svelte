@@ -12,6 +12,7 @@
 	import IconHamburger from '$lib/components/svg/IconHamburger.svelte';
 	import IconClose from '$lib/components/svg/IconClose.svelte';
 	import IconSearch from '$lib/components/svg/IconSearch.svelte';
+	import IconLink from '$lib/components/svg/IconLink.svelte';
 
 	interface Props {
 		header: Header;
@@ -177,7 +178,7 @@
 												onclick={closeMenu}
 												target={isExternal(link.url) ? '_blank' : undefined}
 												rel={isExternal(link.url) ? 'noopener noreferrer' : undefined}
-												class="text-label leading-none {link.level === 2
+												class="text-body-2 leading-none {link.level === 2
 													? 'text-grey-dark'
 													: hasLevel2
 														? 'font-bold'
@@ -194,21 +195,21 @@
 				</div>
 			{/each}
 
-			<div class="flex flex-col gap-6 bg-green rounded-2xl p-4 -m-4">
+			<div class="flex flex-col bg-green rounded-2xl p-4 -m-4">
 				{#if header.externalLinksTitle}
 					<p class="text-body-2 font-bold pb-3 mb-6 border-b-2">{header.externalLinksTitle}</p>
 				{/if}
 				{#if header.externalLinks.length > 0}
-					<ul class="flex flex-col gap-1">
+					<ul class="flex flex-col mb-6">
 						{#each header.externalLinks as link (link)}
-							<li>
+							<li class="leading-none">
 								<a
 									href={link.url}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="text-label hover:text-blue transition-colors"
+									class="text-body-2 leading-none flex items-center gap-x-2"
 								>
-									{link.label}
+									<IconLink /> <span class="underline">{link.label}</span>
 								</a>
 							</li>
 						{/each}
