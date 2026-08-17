@@ -23,30 +23,53 @@ tabs:
       fr: Contenu
     icon: text
     fields:
-      faqs:
+      title:
         label:
-          en: Questions
-          fr: Questions
+          en: Title
+          fr: Titre
+        type: text
+        required: true
+      sections:
+        label:
+          en: Sections
+          fr: Sections
         type: structure
         columns:
-          question:
+          sectiontitle:
             width: 1/2
-          domains:
+          faqs:
             width: 1/2
         fields:
-          question:
+          sectiontitle:
             label:
-              en: Question
-              fr: Question
+              en: Section title
+              fr: Titre de la section
             type: text
             required: true
-          answer:
-            extends: fields/writer
+          faqs:
             label:
-              en: Answer
-              fr: Réponse
-            required: true
-          domains:
-            extends: fields/taxonomies/domains
+              en: Questions
+              fr: Questions
+            type: structure
+            columns:
+              question:
+                width: 1/2
+              domains:
+                width: 1/2
+            fields:
+              question:
+                label:
+                  en: Question
+                  fr: Question
+                type: text
+                required: true
+              answer:
+                extends: fields/writer
+                label:
+                  en: Answer
+                  fr: Réponse
+                required: true
+              domains:
+                extends: fields/taxonomies/domains
 
   seo: tabs/seo

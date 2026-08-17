@@ -17,13 +17,18 @@ $domains = array_values(array_filter(
     fn(string $slug) => preg_match('/^[a-z0-9-]+$/', $slug) === 1
 ));
 
-$faqs = Utils::filterStructureByTaxonomy($page->faqs()->toStructure(), 'domains', $domains);
+$json['sections'] = $page->sections()->toStructure()->map(function ($section) use ($domains) {
+    $faqs = Utils::filterStructureByTaxonomy($section->faqs()->toStructure(), 'domains', $domains);
 
-$json['faqs'] = $faqs->map(fn($item) => [
-    'question' => $item->question()->value(),
-    'answer'   => $item->answer()->value(),
-    'domains'  => Utils::resolveTaxonomyTerms($item->domains(), 'domains'),
-])->values();
+    return [
+        'title' => $section->sectiontitle()->value(),
+        'faqs'  => $faqs->map(fn($item) => [
+            'question' => $item->question()->value(),
+            'answer'   => $item->answer()->value(),
+            'domains'  => Utils::resolveTaxonomyTerms($item->domains(), 'domains'),
+        ])->values(),
+    ];
+})->values();
 
 $json['seo'] = Utils::getSeoDataFromPage($page);
 

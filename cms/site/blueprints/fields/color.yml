@@ -1,3 +1,5 @@
+# Reusable color picker. Values mirror the color tokens defined in
+# website/src/app.css (`--color-*`), excluding black, white and grey-light.
 label:
   en: Color
   fr: Couleur
@@ -6,13 +8,29 @@ placeholder:
   en: Without
   fr: Sans
 options:
-  - value: white
-    text: { en: White, fr: Blanc }
+  - value: grey-dark
+    text: { en: Dark grey, fr: Gris foncé }
   - value: blue
     text: { en: Blue, fr: Bleu }
+  - value: blue-light
+    text: { en: Light blue, fr: Bleu clair }
   - value: orange
     text: { en: Orange, fr: Orange }
+  - value: orange-light
+    text: { en: Light orange, fr: Orange clair }
   - value: pink
     text: { en: Pink, fr: Rose }
   - value: purple
     text: { en: Purple, fr: Violet }
+  - value: purple-light
+    text: { en: Light purple, fr: Violet clair }
+  - value: purple-pale
+    text: { en: Pale purple, fr: Violet pâle }
+  - value: teal
+    text: { en: Teal, fr: Turquoise }
+  - value: teal-light
+    text: { en: Light teal, fr: Turquoise clair }
+  - value: red
+    text: { en: Red, fr: Rouge }
+  - value: green
+    text: { en: Green, fr: Vert }
