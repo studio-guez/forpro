@@ -1,0 +1,50 @@
+extends: blocks/base
+
+name:
+  en: Module - Title, text, image
+  fr: Module - Titre, texte, image
+
+icon: text-left
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  description:
+    width: 1/2
+    label:
+      en: Description
+      fr: Description
+    extends: fields/writer
+    required: true
+  gap:
+    width: 1/2
+    type: gap
+  cta:
+    width: 3/4
+    extends: fields/cta
+  image:
+    width: 1/2
+    label:
+      en: Image
+      fr: Image
+    type: files
+    max: 1
+    required: true
+  image_position:
+    width: 1/2
+    label:
+      en: Image position
+      fr: Position de l'image
+    type: select
+    default: right
+    required: true
+    options:
+      - value: left
+        text: { en: Left, fr: Gauche }
+      - value: right
+        text: { en: Right, fr: Droite }
