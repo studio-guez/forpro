@@ -1,0 +1,8 @@
+# Generic base for selecting taxonomy terms.
+# Per-taxonomy variants extend this and set `options.query`; pass `max` to limit selection.
+type: tags
+accept: options
+options:
+  type: query
+  text: "{{ page.title }}"
+  value: "{{ page.slug }}"
