@@ -19,12 +19,7 @@ $json['intro'] = $page->intro()->value();
 $json['introLayout'] = $page->introLayout()->or('1col')->value();
 $introTitleImageFile = $page->introTitleImage()->toFile();
 $json['introTitleImage'] = $introTitleImageFile ? Utils::getJsonEncodeImageData($introTitleImageFile) : null;
-$ctaData = $page->introCta()->toObject();
-$json['introCta'] = ($ctaData->label()->isNotEmpty() && $ctaData->url()->isNotEmpty()) ? [
-    'label' => $ctaData->label()->value(),
-    'url'   => $ctaData->url()->value(),
-    'icon'  => $ctaData->icon()->or(null)->value(),
-] : null;
+$json['introCta'] = Utils::resolveCtaStructure($page->introCta());
 
 $coverFile = $page->cover()->toFile();
 $json['cover'] = $coverFile ? Utils::getJsonEncodeImageData($coverFile) : null;
