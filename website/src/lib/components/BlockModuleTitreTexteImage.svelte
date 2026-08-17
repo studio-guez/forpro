@@ -51,6 +51,7 @@
 				bg: 'var(--color-white)',
 				text: 'var(--color-black)',
 				accent: 'var(--color-purple-light)',
+				ctaHoverColor: 'var(--color-white)',
 			},
 		},
 		projets_jeunes: {
