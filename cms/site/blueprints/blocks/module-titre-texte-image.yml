@@ -48,3 +48,5 @@ fields:
         text: { en: Left, fr: Gauche }
       - value: right
         text: { en: Right, fr: Droite }
+  variant:
+    extends: fields/variant
