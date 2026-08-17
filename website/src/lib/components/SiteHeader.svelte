@@ -162,22 +162,22 @@
 					{#if column.title}
 						<p class="text-body-2 font-bold text-blue pb-3 mb-6 border-b-2">{column.title}</p>
 					{/if}
-					<div class="flex flex-col">
+					<div class="flex flex-col gap-y-6">
 						{#each column.groups as group, j (j)}
 							{@const hasLevel2 = group.links.some((link) => link.level === 2)}
 							<div>
 								{#if group.title}
-									<p class="text-label text-blue mb-0.75">{group.title}</p>
+									<p class="text-label leading-none text-blue mb-0.75">{group.title}</p>
 								{/if}
-								<ul class="flex flex-col gap-1">
+								<ul class="flex flex-col">
 									{#each group.links as link (link)}
-										<li class={link.level === 2 ? 'pl-4' : ''}>
+										<li class="leading-none {hasLevel2 && link.level !== 2 ? 'mb-0.75' : ''} {link.level === 2 ? 'pl-8' : ''}">
 											<a
 												href={link.url}
 												onclick={closeMenu}
 												target={isExternal(link.url) ? '_blank' : undefined}
 												rel={isExternal(link.url) ? 'noopener noreferrer' : undefined}
-												class="text-label {link.level === 2
+												class="text-label leading-none {link.level === 2
 													? 'text-grey-dark'
 													: hasLevel2
 														? 'font-bold'
@@ -196,7 +196,7 @@
 
 			<div class="flex flex-col gap-6">
 				{#if header.externalLinksTitle}
-					<p class="text-label font-bold text-grey-dark">{header.externalLinksTitle}</p>
+					<p class="text-body-2 font-bold pb-3 mb-6 border-b-2">{header.externalLinksTitle}</p>
 				{/if}
 				{#if header.externalLinks.length > 0}
 					<ul class="flex flex-col gap-1">
