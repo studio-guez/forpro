@@ -36,9 +36,17 @@ export interface Seo {
 
 export type Theme =
 	| 'default'
-	| 'campus' | 'entreprendre' | 'projets_jeunes'
-	| 'tremplin_jobs' | 'soutiens' | 'cekale' | 'la_ref'
-	| 'learninglab' | 'foodlab' | 'grandlab' | 'makerlab';
+	| 'campus'
+	| 'entreprendre'
+	| 'projets_jeunes'
+	| 'tremplin_jobs'
+	| 'soutiens'
+	| 'cekale'
+	| 'la_ref'
+	| 'learninglab'
+	| 'foodlab'
+	| 'grandlab'
+	| 'makerlab';
 
 export interface PageParent {
 	readonly title: string;
