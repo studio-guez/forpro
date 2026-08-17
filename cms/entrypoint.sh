@@ -16,5 +16,11 @@ do
   chown -R www-data:www-data "$dir"
 done
 
+# The Kirby license is a file bind mount (see compose.prod.yml); make sure the
+# Panel (www-data) can write it when the license is registered from the backend.
+if [ -f /var/www/html/site/config/.license ]; then
+  chown www-data:www-data /var/www/html/site/config/.license
+fi
+
 echo "Starting Apache"
 exec apache2-foreground

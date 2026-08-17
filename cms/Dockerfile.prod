@@ -7,9 +7,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Activer mod_rewrite pour Kirby
 RUN a2enmod rewrite
 
-# Installer dépendances système + extensions PHP
+# Installer dépendances système + extensions PHP (curl : healthcheck Docker)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
+    curl \
     libzip-dev \
     libicu-dev \
     libpng-dev \
@@ -57,12 +58,13 @@ RUN composer install --no-dev --optimize-autoloader
 # des plugins sont bind-mountés depuis l'hôte (voir compose.prod.yml).
 RUN rm -rf /var/www/html/content
 
-# Bake custom site files (templates, models, blueprints, snippets, config, plugins, ...)
-# into the image so prod (which initializes the kirby_data named volume from the image)
-# has all of them. In dev these are overlaid by bind-mounts from compose.dev.yml.
+# Bake custom site files (blueprints, config, plugins, templates, ...) into the
+# image. In dev these are overlaid by bind-mounts from compose.dev.yml; in prod
+# only the mutable state is bind-mounted from the host (see compose.prod.yml).
 COPY site /var/www/html/site
 COPY utils /var/www/html/utils
 COPY index.php /var/www/html/index.php
+COPY favicon.ico /var/www/html/favicon.ico
 COPY _custom-panel /var/www/html/_custom-panel
 
 # Use the version-controlled .htaccess (front-controller rewrites + rules that
