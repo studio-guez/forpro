@@ -18,4 +18,5 @@ sections:
     image: false
     templates:
       - page
+    text: "{{ page.breadcrumbTitle }}"
     create: page
