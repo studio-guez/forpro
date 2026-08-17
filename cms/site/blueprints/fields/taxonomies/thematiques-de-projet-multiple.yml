@@ -1,0 +1,6 @@
+extends: fields/taxonomies/multiple
+label:
+  en: Project themes
+  fr: Thématiques de projet
+options:
+  query: site.find("taxonomies").find("thematiques-de-projet").children

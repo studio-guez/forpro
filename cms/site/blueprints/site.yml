@@ -55,6 +55,16 @@ tabs:
             templates:
               - page
             create: page
+
+          faq:
+            label: "FAQ"
+            type: pages
+            image: false
+            sortable: false
+            max: 1
+            templates:
+              - faq
+            create: faq
   taxonomies:
     label:
       en: Taxonomies

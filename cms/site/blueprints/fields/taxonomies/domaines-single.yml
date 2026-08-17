@@ -1,0 +1,6 @@
+extends: fields/taxonomies/single
+label:
+  en: Domain
+  fr: Domaine
+options:
+  query: site.find("taxonomies").find("domaines").children

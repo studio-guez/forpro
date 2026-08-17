@@ -1,0 +1,4 @@
+# Generic base for selecting a single taxonomy term.
+# Per-taxonomy variants extend this and set `options.query`.
+extends: fields/taxonomies/multiple
+max: 1

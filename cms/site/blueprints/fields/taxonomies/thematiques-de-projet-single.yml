@@ -1,0 +1,6 @@
+extends: fields/taxonomies/single
+label:
+  en: Project theme
+  fr: Thématique de projet
+options:
+  query: site.find("taxonomies").find("thematiques-de-projet").children
