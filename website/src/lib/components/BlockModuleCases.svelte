@@ -207,6 +207,7 @@
 	};
 
 	const colors = $derived(themeConfig[theme][content.variant]);
+	const hasBackground = $derived(!!colors.bg && colors.bg !== 'transparent' && colors.bg !== 'var(--color-white)');
 
 	const isMediaLeft = (index: number) => {
 		if (content.layout === 'images-left') return true;
@@ -216,7 +217,9 @@
 </script>
 
 <section
-	class="pt-12 pb-18 px-card rounded-3xl relative overflow-hidden"
+	class="px-card rounded-3xl relative overflow-hidden"
+	class:pt-12={hasBackground}
+	class:pb-18={hasBackground}
 	style={[colors.bg && `background-color: ${colors.bg}`, colors.text && `color: ${colors.text}`].filter(Boolean).join('; ')}
 	aria-label={content.hideTitle ? content.title : undefined}
 	aria-labelledby={content.hideTitle ? undefined : 'module-cases-title'}
