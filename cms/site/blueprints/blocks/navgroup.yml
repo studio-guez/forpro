@@ -43,7 +43,7 @@ fields:
         type: pages
         link: false
         max: 1
-        query: site.index.filterBy('template', 'page')
+        query: site.find("pages").listed.filterBy('template', 'in', ['page', 'faq'])
         text: "{{ page.breadcrumbTitle }}"
         when:
           type: page
