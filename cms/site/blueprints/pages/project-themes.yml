@@ -6,4 +6,4 @@ sections:
   terms:
     label: Thématiques de projet
     templates:
-      - thematique-de-projet
+      - project-theme

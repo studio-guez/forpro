@@ -85,15 +85,15 @@ tabs:
             parent: site.find("taxonomies").find("domaines")
       - width: 1/2
         sections:
-          thematiques_de_projet:
+          project_themes:
             type: pages
             image: false
             label:
               en: Project themes
               fr: Thématiques de projet
             templates:
-              - thematique-de-projet
-            parent: site.find("taxonomies").find("thematiques-de-projet")
+              - project-theme
+            parent: site.find("taxonomies").find("project-themes")
 
   navigation: tabs/navigation
 
