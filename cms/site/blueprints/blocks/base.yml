@@ -1,15 +1,2 @@
 preview: fields
 wysiwyg: true
-fields:
-  variant:
-    label:
-      en: Theme variant
-      fr: Variante du thème
-    type: select
-    default: default
-    required: true
-    options:
-      - value: default
-        text: { en: Default, fr: Défaut }
-      - value: inversé
-        text: { en: Inverted, fr: Inversé }
