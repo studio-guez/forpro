@@ -1,6 +1,6 @@
 /* Give writer fields a minimum editable height of 4 lines. */
 .k-writer .ProseMirror {
-    min-height: 5lh;
+    min-height: 3lh;
 }
 
 .k-blocks-list {
