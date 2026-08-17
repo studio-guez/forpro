@@ -19,7 +19,7 @@
 				accent: 'var(--color-white)',        
 				ctaHoverColor: 'var(--color-black)'      
 			},
-			inversé: { 
+			inverted: { 
 				bg: 'var(--bg-grey-dark)',                         
 				text: 'var(--bg-grey-dark)',                          
 				accent: 'var(--color-blue)',         
@@ -33,7 +33,7 @@
 				accent: 'var(--color-white)',
 				ctaHoverColor: 'var(--color-blue)',
 			},
-			inversé: {
+			inverted: {
 				bg: 'var(--color-white)',
 				text: 'var(--color-blue)',
 				accent: 'var(--color-blue)',
@@ -47,7 +47,7 @@
 				accent: 'var(--color-white)',
 				ctaHoverColor: 'var(--color-purple-light)',
 			},
-			inversé: {
+			inverted: {
 				bg: 'var(--color-white)',
 				text: 'var(--color-black)',
 				accent: 'var(--color-purple-light)',
@@ -60,7 +60,7 @@
 				accent: 'var(--color-white)',
 				ctaHoverColor: 'var(--color-orange)',
 			},
-			inversé: {
+			inverted: {
 				bg: 'var(--color-orange-light)',
 				text: 'var(--color-orange)',
 				accent: 'var(--color-orange)',
@@ -74,7 +74,7 @@
 				accent: 'var(--color-white)',
 				ctaHoverColor: 'var(--color-purple-light)',
 			},
-			inversé: {
+			inverted: {
 				bg: 'var(--color-purple)',
 				text: 'var(--color-purple-light)',
 				accent: 'var(--color-purple-light)',
@@ -88,7 +88,7 @@
 				accent: 'var(--color-white)',
 				ctaHoverColor: 'var(--color-pink)',
 			},
-			inversé: {
+			inverted: {
 				bg: 'var(--color-purple)',
 				text: 'var(--color-pink)',
 				accent: 'var(--color-pink)',
@@ -102,7 +102,7 @@
 				accent: 'var(--color-white)',
 				ctaHoverColor: 'var(--color-purple)',
 			},
-			inversé: {
+			inverted: {
 				bg: 'var(--color-purple-pale)',
 				text: 'var(--color-purple)',
 				accent: 'var(--color-purple)',
@@ -116,7 +116,7 @@
 				accent: 'var(--color-white)',
 				ctaHoverColor: 'var(--color-pink)',
 			},
-			inversé: {
+			inverted: {
 				bg: 'var(--color-purple)',
 				text: 'var(--color-pink)',
 				accent: 'var(--color-pink)',
@@ -130,7 +130,7 @@
 				accent: 'var(--color-white)',
 				ctaHoverColor: 'var(--color-teal)',
 			},
-			inversé: {
+			inverted: {
 				bg: 'var(--color-teal-light)',
 				text: 'var(--color-teal)',
 				accent: 'var(--color-teal)',
@@ -144,7 +144,7 @@
 				accent: 'var(--color-white)',
 				ctaHoverColor: 'var(--color-orange)',
 			},
-			inversé: {
+			inverted: {
 				bg: 'var(--color-orange-light)',
 				text: 'var(--color-orange)',
 				accent: 'var(--color-orange)',
@@ -158,7 +158,7 @@
 				accent: 'var(--color-white)',
 				ctaHoverColor: 'var(--color-red)',
 			},
-			inversé: {
+			inverted: {
 				bg: 'var(--color-orange-light)',
 				text: 'var(--color-red)',
 				accent: 'var(--color-red)',
@@ -172,7 +172,7 @@
 				accent: 'var(--color-white)',
 				ctaHoverColor: 'var(--color-grey-dark)',
 			},
-			inversé: {
+			inverted: {
 				bg: 'var(--color-grey-light)',
 				text: 'var(--color-grey-dark)',
 				accent: 'var(--color-grey-dark)',

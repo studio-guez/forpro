@@ -34,7 +34,7 @@ export interface Seo {
 	readonly schemas: Record<string, unknown>[];
 }
 
-export type Variant = 'default' | 'inversé';
+export type Variant = 'default' | 'inverted';
 export type ImagePosition = 'left' | 'right';
 
 export interface ModuleTitreTexteImageContent {
