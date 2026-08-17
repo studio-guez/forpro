@@ -37,6 +37,25 @@ foreach ($page->body()->toBlocks() as $block) {
             'variant'       => $block->variant()->or('default')->value(),
             'cta'           => Utils::resolveCtaStructure($block->cta()),
         ];
+    } elseif ($block->type() === 'module-cases') {
+        $rows = [];
+        foreach ($block->rows()->toStructure() as $row) {
+            $rows[] = [
+                'title'       => $row->title()->value(),
+                'hideTitle'   => $row->hide_title()->toBool(),
+                'description' => $row->description()->value(),
+                'cta'         => Utils::resolveCtaStructure($row->cta()),
+                'media'       => Utils::getJsonEncodeMediaArray($row->media()->toFiles()),
+            ];
+        }
+        $content = [
+            'title'     => $block->title()->value(),
+            'hideTitle' => $block->hide_title()->toBool(),
+            'intro'     => $block->intro()->value(),
+            'rows'      => $rows,
+            'layout'    => $block->layout()->or('alternate')->value(),
+            'variant'   => $block->variant()->or('default')->value(),
+        ];
     } else {
         $content = $block->toArray()['content'] ?? [];
     }
