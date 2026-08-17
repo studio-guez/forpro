@@ -214,6 +214,9 @@
 		if (content.layout === 'images-right') return false;
 		return !(index % 2 === 0);
 	};
+
+	// For single-media rows, alternate the media column span in a 2/1/1/2 pattern.
+	const singleMediaSpan = (index: number) => [2, 2 ,1, 1][index % 4];
 </script>
 
 <section
@@ -241,7 +244,7 @@
 		{#each content.rows as row, i (i)}
 			<article class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch" aria-label={row.hideTitle ? row.title : undefined}>
                 {#each row.media as media, m (m)}
-                    <div class="overflow-hidden rounded-2xl min-h-75 [contain:size] lg:col-span-2">
+                    <div class="overflow-hidden rounded-2xl min-h-75 [contain:size]" class:lg:col-span-2={singleMediaSpan(m) === 2}>
                         {#if media.type === 'video'}
                             <!-- svelte-ignore a11y_media_has_caption -->
                             <video
