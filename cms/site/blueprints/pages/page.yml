@@ -76,4 +76,3 @@ tabs:
                   fr: Contenu
                 fieldsets:
                   - module-titre-texte-image
-                  - module-agenda
