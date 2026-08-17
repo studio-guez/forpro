@@ -54,11 +54,11 @@
 				ctaHoverColor: 'var(--color-purple-light)',
 			},
 			inverted: {
-				bg: 'var(--color-white)',
+				bg: 'var(--color-purple-pale)',
 				bgContrast: 'var(--color-purple-light)',
-				text: 'var(--color-black)',
-				title: 'var(--color-purple-light)',
-				ctaHoverColor: 'var(--color-white)',
+				text: 'var(--color-white)',
+				title: 'var(--color-purple-pale)',
+				ctaHoverColor: 'var(--color-purple-pale)',
 			},
 		},
 		projets_jeunes: {
