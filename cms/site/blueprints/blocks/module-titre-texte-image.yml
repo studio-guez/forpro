@@ -25,7 +25,7 @@ fields:
     width: 1/2
     type: gap
   cta:
-    width: 3/4
+    width: 1/2
     extends: fields/cta
   image:
     width: 1/2
