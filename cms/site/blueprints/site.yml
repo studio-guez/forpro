@@ -48,6 +48,7 @@ tabs:
             image: false
             sortable: false
             max: 1
+            parent: site.find("pages")
             templates:
               - faq
 
