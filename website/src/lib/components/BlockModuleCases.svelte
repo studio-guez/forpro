@@ -228,7 +228,7 @@
 			<h2 id="module-cases-title" class="inline-block text-h3 pt-2 pb-3.5 px-8 bg-white rounded-2xl" style={colors.title && `color: ${colors.title}`}>{content.title}</h2>
 		{/if}
 		{#if content.intro}
-			<div class="prose text-body-2 mx-auto mt-6 max-w-3xl">
+			<div class="prose font-bold" class:mt-9={!content.hideTitle}>
 				{@html content.intro}
 			</div>
 		{/if}
