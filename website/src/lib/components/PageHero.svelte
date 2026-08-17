@@ -19,7 +19,7 @@
 		soutiens:        'fill-pink',
 		cekale:         'fill-purple',
 		la_ref:         'fill-pink',
-		learninglab:    'fill-green',
+		learninglab:    'fill-teal',
 		foodlab:        'fill-orange',
 		grandlab:       'fill-red',
 		makerlab:       'fill-white',

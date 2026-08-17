@@ -23,7 +23,7 @@
 		soutiens:        'pink',
 		cekale:         'purple',
 		la_ref:         'pink',
-		learninglab:    'green',
+		learninglab:    'teal',
 		foodlab:        'orange',
 		grandlab:       'red',
 		makerlab:       'grey-dark',
