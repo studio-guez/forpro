@@ -34,6 +34,18 @@ export interface Seo {
 	readonly schemas: Record<string, unknown>[];
 }
 
+export type Variant = 'default' | 'inversé';
+export type ImagePosition = 'left' | 'right';
+
+export interface ModuleTitreTexteImageContent {
+	readonly title: string;
+	readonly description: string;
+	readonly image: CmsImage | null;
+	readonly imagePosition: ImagePosition;
+	readonly variant: Variant;
+	readonly cta: PageCta | null;
+}
+
 export type Theme =
 	| 'default'
 	| 'campus'
