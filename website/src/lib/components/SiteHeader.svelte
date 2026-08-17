@@ -42,6 +42,12 @@
 	let menuOpen = $state(false);
 	let headerEl = $state<HTMLElement>();
 	let searchInput = $state<HTMLInputElement>();
+	let searchOpen = $state(false);
+
+	const openSearch = () => {
+		searchOpen = true;
+		searchInput?.focus();
+	};
 
 	const toggleMenu = () => {
 		menuOpen = !menuOpen;
@@ -101,19 +107,24 @@
 		</nav>
 
 		<div class="w-60 flex justify-end">
-			<div class="group flex items-center has-[#search-button:hover]:bg-grey-light has-[#search-input:focus]:bg-grey-light transition-colors p-1 rounded-full focus-within:ring-2 focus-within:ring-blue shrink">
+			<div role="search" class="group flex items-center has-[#search-button:hover]:bg-grey-light has-[#search-input:focus]:bg-grey-light transition-colors p-1 rounded-full focus-within:ring-2 focus-within:ring-blue shrink">
 				<input
 					bind:this={searchInput}
 					id="search-input"
-					type="text"
+					type="search"
 					placeholder="Rechercher..."
-					class="text-body-2 font-bold text-blue bg-transparent border-0 min-w-0 w-0 opacity-0 group-has-[#search-button:hover]:w-48 group-has-[#search-button:hover]:opacity-100 group-has-[#search-button:hover]:mr-3 focus:w-48 focus:opacity-100 focus:mr-3 transition-all duration-300 ease-out placeholder:text-blue focus:placeholder:text-transparent focus:ring-0 focus:outline-none"
+					aria-label="Rechercher"
+					tabindex={searchOpen ? undefined : -1}
+					onblur={() => (searchOpen = false)}
+					class="text-body-2 font-bold text-blue bg-transparent border-0 min-w-0 w-0 opacity-0 group-has-[#search-button:hover]:w-48 group-has-[#search-button:hover]:opacity-100 group-has-[#search-button:hover]:mr-3 focus:w-48 focus:opacity-100 focus:mr-3 transition-all duration-300 ease-out placeholder:text-blue/50 focus:ring-0 focus:outline-none peer"
 				/>
 				<button
 					type="button"
 					id="search-button"
-					onclick={() => searchInput?.focus()}
-					class="shrink-0 p-2 rounded-full hover:bg-blue hover:text-white transition-colors"
+					onclick={openSearch}
+					aria-controls="search-input"
+					aria-expanded={searchOpen}
+					class="shrink-0 p-2 rounded-full hover:bg-blue hover:text-white transition-colors peer-focus:bg-white"
 					aria-label="Rechercher"
 				>
 					<IconSearch class="shrink-0" />
