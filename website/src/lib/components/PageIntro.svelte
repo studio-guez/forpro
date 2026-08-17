@@ -15,21 +15,21 @@
 	let { title, text, layout = '1col', cta = null, parentPage = null, theme = 'default', titleImage = null }: Props = $props();
 
 	const colorByTheme: Record<Theme, string> = {
-		default:        'blue',
-		campus:         'blue',
-		entreprendre:   'purple-light',
-		projets_jeunes: 'orange',
-		tremplin_jobs:  'purple-light',
-		soutiens:        'pink',
-		cekale:         'purple',
-		la_ref:         'pink',
-		learninglab:    'teal',
-		foodlab:        'orange',
-		grandlab:       'red',
-		makerlab:       'grey-dark',
+		default:        'var(--color-blue)',
+		campus:         'var(--color-blue)',
+		entreprendre:   'var(--color-purple-light)',
+		projets_jeunes: 'var(--color-orange)',
+		tremplin_jobs:  'var(--color-purple-light)',
+		soutiens:       'var(--color-pink)',
+		cekale:         'var(--color-purple)',
+		la_ref:         'var(--color-pink)',
+		learninglab:    'var(--color-teal)',
+		foodlab:        'var(--color-orange)',
+		grandlab:       'var(--color-red)',
+		makerlab:       'var(--color-grey-dark)',
 	};
 
-	const themeColor = $derived(colorByTheme[theme] ?? 'blue');
+	const themeColor = $derived(colorByTheme[theme] ?? 'var(--color-blue)');
 
 	const isTwoCol = $derived(layout === '2col');
 	const hasCta = $derived(!!cta?.label && !!cta?.url);
@@ -38,7 +38,7 @@
 <section class="py-18 px-card relative" aria-labelledby="page-intro-title">
 	{#if parentPage}
 		<div class="mb-6 mt-[calc(-1.5rem-1lh)]">
-			<a href="/{parentPage.path}" style:color="var(--color-{themeColor})" class="text-label group"><span class="inline-block group-hover:-translate-x-0.75 transition-transform">&larr;</span> Retour à {parentPage.title}</a>
+			<a href="/{parentPage.path}" style:color="{themeColor}" class="text-label group"><span class="inline-block group-hover:-translate-x-0.75 transition-transform">&larr;</span> Retour à {parentPage.title}</a>
 		</div>
 	{/if}
 	{#if isTwoCol}
