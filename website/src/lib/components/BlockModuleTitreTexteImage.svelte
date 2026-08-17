@@ -183,14 +183,17 @@
 
 	const colors = $derived(themeConfig[theme][content.variant]);
 	const isImageLeft = $derived(content.imagePosition === 'left');
+
+	const uid = $props.id();
+	const titleId = `module-titre-texte-image-${uid}`;
 </script>
 
 <section
 	class="pt-12 pb-18 px-card rounded-3xl"
 	style={[colors.bg && `background-color: ${colors.bg}`, colors.text && `color: ${colors.text}`].filter(Boolean).join('; ')}
-	aria-labelledby="module-titre-texte-image-title"
+	aria-labelledby={titleId}
 >
-	<h2 class="text-h2 text-center mb-12" style={colors.accent && `color: ${colors.accent}`}>{content.title}</h2>
+	<h2 id={titleId} class="text-h2 text-center mb-12" style={colors.accent && `color: ${colors.accent}`}>{content.title}</h2>
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 		{#if content.image}
 			<div class="overflow-hidden rounded-2xl [contain:size]" class:lg:order-last={!isImageLeft}>
