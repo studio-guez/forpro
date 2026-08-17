@@ -142,7 +142,7 @@
 			class="text-body-2 font-bold px-3 py-2 flex items-center gap-x-3 shrink-0 justify-end rounded-full hover:bg-blue hover:text-white transition-colors"
 			aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
 		>
-				<span class="lg:hidden">Menu</span>
+				<span class="max-lg:hidden">Menu</span>
 			{#if menuOpen}
 				<IconClose class="shrink-0 w-7 h-auto" width="28" height="29" />
 			{:else}
