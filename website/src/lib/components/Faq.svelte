@@ -76,6 +76,12 @@
 			.filter((section) => section.faqs.length > 0)
 	);
 
+	// A search term collapses every section into a single flat result list.
+	const hasSearch = $derived(search.trim() !== '');
+	const searchResults = $derived(
+		hasSearch ? page.sections.flatMap((section) => section.faqs.filter(matchesFilters)) : []
+	);
+
 	// The first section starts open; filtering expands every matching section.
 	let openSections = $state<number[]>([0]);
 	const isSectionOpen = (index: number): boolean => isFiltering || openSections.includes(index);
@@ -165,7 +171,30 @@
 
 <section class="px-base" aria-label="Questions et réponses">
 	<div aria-live="polite">
-		{#if filteredSections.length === 0}
+		{#if hasSearch}
+			{#if searchResults.length === 0}
+				<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
+					Aucune question ne correspond à votre recherche.
+				</p>
+			{:else}
+				<div class="border-t border-black py-6 md:py-8">
+					<h2 class="text-h2 text-teal">Résultat pour : {search.trim()}</h2>
+					<p class="text-label mt-1">
+						{searchResults.length}
+						{searchResults.length > 1 ? 'questions' : 'question'}
+					</p>
+					<div class="mt-9 space-y-6">
+						{#each searchResults as faq, faqIndex (faqIndex)}
+							<FaqQuestion
+								id="faq-search-{faqIndex}"
+								question={faq.question}
+								answer={faq.answer}
+							/>
+						{/each}
+					</div>
+				</div>
+			{/if}
+		{:else if filteredSections.length === 0}
 			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
 				Aucune question ne correspond à votre recherche.
 			</p>
