@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { slide } from 'svelte/transition';
 	import { page as appPage } from '$app/state';
 	import { replaceState } from '$app/navigation';
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
@@ -177,22 +178,24 @@
 							</span>
 						{/each}
 					</p>
-					<div
-						id="faq-section-{section.index}"
-						role="region"
-						aria-label={section.title}
-						hidden={!open}
-					>
-						<div class="mt-9 space-y-6">
-							{#each section.faqs as faq, faqIndex (faqIndex)}
-								<FaqQuestion
-									id="faq-{section.index}-{faqIndex}"
-									question={faq.question}
-									answer={faq.answer}
-								/>
-							{/each}
+					{#if open}
+						<div
+							id="faq-section-{section.index}"
+							role="region"
+							aria-label={section.title}
+							transition:slide={{ duration: 300 }}
+						>
+							<div class="mt-9 space-y-6">
+								{#each section.faqs as faq, faqIndex (faqIndex)}
+									<FaqQuestion
+										id="faq-{section.index}-{faqIndex}"
+										question={faq.question}
+										answer={faq.answer}
+									/>
+								{/each}
+							</div>
 						</div>
-					</div>
+					{/if}
 				</div>
 			{/each}
 		{/if}
