@@ -109,7 +109,7 @@
 	{count > 1 ? 'questions' : 'question'}
 {/snippet}
 
-<section class="px-base" aria-labelledby="faq-title">
+<section aria-labelledby="faq-title">
 	<h1 id="faq-title" class="text-h1 text-teal text-center">{page.title}</h1>
 
 	<SearchInput
@@ -127,7 +127,7 @@
 	/>
 </section>
 
-<section class="px-base" aria-label="Questions et réponses">
+<section aria-label="Questions et réponses">
 	<div aria-live="polite">
 		{#if hasSearch}
 			<div class="border-t border-black py-6 md:py-8">
