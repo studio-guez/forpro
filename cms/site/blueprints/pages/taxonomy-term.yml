@@ -7,3 +7,5 @@ fields:
       en: Name
       fr: Nom
     type: text
+  color:
+    extends: fields/color
