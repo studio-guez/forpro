@@ -29,6 +29,10 @@
 }
 
 @layer base {
+    html {
+        scrollbar-width: thin;
+        scrollbar-gutter: stable;
+    }
     button:not(:disabled) {
         @apply cursor-pointer;
     }
