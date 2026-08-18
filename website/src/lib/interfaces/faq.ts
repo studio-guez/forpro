@@ -22,6 +22,7 @@ export interface FaqPage {
 	readonly title: string;
 	readonly slug: string;
 	readonly path: string;
+	readonly faqCategories: TaxonomyTerm[];
 	readonly sections: FaqSection[];
 	readonly seo: Seo;
 }
