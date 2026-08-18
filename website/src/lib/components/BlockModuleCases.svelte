@@ -21,7 +21,7 @@
 
 	let { content, theme }: Props = $props();
 
-	type ThemeColors = { bg: string; bgContrast: string; text: string; title: string; ctaHoverColor: string };
+	type ThemeColors = { bg: string; bgContrast: string; text: string; title: string };
 
 	const themeConfig: Record<Theme, Record<Variant, ThemeColors>> = {
 		default: {
@@ -30,14 +30,12 @@
 				bgContrast: 'var(--color-purple-light)',
 				text: 'var(--color-white)',
 				title: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-black)',
 			},
 			inverted: {
 				bg: 'var(--bg-grey-dark)',
 				bgContrast: 'var(--color-blue)',
 				text: 'var(--bg-grey-dark)',
 				title: 'var(--color-blue)',
-				ctaHoverColor: 'var(--color-white)',
 			},
 		},
 		campus: {
@@ -46,14 +44,12 @@
 				bgContrast: 'var(--color-blue-light)',
 				text: 'var(--color-white)',
 				title: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-blue)',
 			},
 			inverted: {
 				bg: 'var(--color-white)',
 				bgContrast: 'var(--color-blue)',
 				text: 'var(--color-blue)',
 				title: 'var(--color-blue)',
-				ctaHoverColor: 'var(--color-white)',
 			},
 		},
 		entreprendre: {
@@ -62,14 +58,12 @@
 				bgContrast: 'var(--color-purple-pale)',
 				text: 'var(--color-white)',
 				title: 'var(--color-purple-light)',
-				ctaHoverColor: 'var(--color-purple-light)',
 			},
 			inverted: {
 				bg: 'var(--color-purple-pale)',
 				bgContrast: 'var(--color-purple-light)',
 				text: 'var(--color-white)',
 				title: 'var(--color-purple-pale)',
-				ctaHoverColor: 'var(--color-purple-pale)',
 			},
 		},
 		projets_jeunes: {
@@ -78,14 +72,12 @@
 				bgContrast: 'var(--color-orange-light)',
 				text: 'var(--color-white)',
 				title: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-orange)',
 			},
 			inverted: {
 				bg: 'var(--color-orange-light)',
 				bgContrast: 'var(--color-orange)',
 				text: 'var(--color-orange)',
 				title: 'var(--color-orange)',
-				ctaHoverColor: 'var(--color-orange-light)',
 			},
 		},
 		tremplin_jobs: {
@@ -94,14 +86,12 @@
 				bgContrast: 'var(--color-purple)',
 				text: 'var(--color-white)',
 				title: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-purple-light)',
 			},
 			inverted: {
 				bg: 'var(--color-purple)',
 				bgContrast: 'var(--color-purple-light)',
 				text: 'var(--color-purple-light)',
 				title: 'var(--color-purple-light)',
-				ctaHoverColor: 'var(--color-purple)',
 			},
 		},
 		soutiens: {
@@ -110,14 +100,12 @@
 				bgContrast: 'var(--color-purple)',
 				text: 'var(--color-white)',
 				title: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-pink)',
 			},
 			inverted: {
 				bg: 'var(--color-purple)',
 				bgContrast: 'var(--color-pink)',
 				text: 'var(--color-pink)',
 				title: 'var(--color-pink)',
-				ctaHoverColor: 'var(--color-purple)',
 			},
 		},
 		cekale: {
@@ -126,14 +114,12 @@
 				bgContrast: 'var(--color-purple-light)',
 				text: 'var(--color-white)',
 				title: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-purple)',
 			},
 			inverted: {
 				bg: 'var(--color-purple-pale)',
 				bgContrast: 'var(--color-purple)',
 				text: 'var(--color-purple)',
 				title: 'var(--color-purple)',
-				ctaHoverColor: 'var(--color-purple-pale)',
 			},
 		},
 		la_ref: {
@@ -142,14 +128,12 @@
 				bgContrast: 'var(--color-purple)',
 				text: 'var(--color-white)',
 				title: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-pink)',
 			},
 			inverted: {
 				bg: 'var(--color-purple)',
 				bgContrast: 'var(--color-pink)',
 				text: 'var(--color-pink)',
 				title: 'var(--color-pink)',
-				ctaHoverColor: 'var(--color-purple)',
 			},
 		},
 		learninglab: {
@@ -158,14 +142,12 @@
 				bgContrast: 'var(--color-teal-light)',
 				text: 'var(--color-white)',
 				title: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-teal)',
 			},
 			inverted: {
 				bg: 'var(--color-teal-light)',
 				bgContrast: 'var(--color-teal)',
 				text: 'var(--color-teal)',
 				title: 'var(--color-teal)',
-				ctaHoverColor: 'var(--color-teal-light)',
 			},
 		},
 		foodlab: {
@@ -174,14 +156,12 @@
 				bgContrast: 'var(--color-orange-light)',
 				text: 'var(--color-white)',
 				title: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-orange)',
 			},
 			inverted: {
 				bg: 'var(--color-orange-light)',
 				bgContrast: 'var(--color-orange)',
 				text: 'var(--color-orange)',
 				title: 'var(--color-orange)',
-				ctaHoverColor: 'var(--color-orange-light)',
 			},
 		},
 		grandlab: {
@@ -190,14 +170,12 @@
 				bgContrast: 'var(--color-orange)',
 				text: 'var(--color-white)',
 				title: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-red)',
 			},
 			inverted: {
 				bg: 'var(--color-orange-light)',
 				bgContrast: 'var(--color-red)',
 				text: 'var(--color-red)',
 				title: 'var(--color-red)',
-				ctaHoverColor: 'var(--color-orange-light)',
 			},
 		},
 		makerlab: {
@@ -206,20 +184,22 @@
 				bgContrast: 'var(--color-grey-light)',
 				text: 'var(--color-white)',
 				title: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-grey-dark)',
 			},
 			inverted: {
 				bg: 'var(--color-grey-light)',
 				bgContrast: 'var(--color-grey-dark)',
 				text: 'var(--color-grey-dark)',
 				title: 'var(--color-grey-dark)',
-				ctaHoverColor: 'var(--color-grey-light)',
 			},
 		},
 	};
 
 	const colors = $derived(themeConfig[theme][content.variant]);
 	const hasBackground = $derived(!!colors.bg && colors.bg !== 'transparent' && colors.bg !== 'var(--color-white)');
+
+	// White text means the block is drawn on a coloured background: the cta is inverted onto it.
+	const ctaInverted = $derived(colors.text === 'var(--color-white)');
+	const ctaColor = $derived(ctaInverted ? colors.bg : colors.text);
 
 	const isMediaLeft = (index: number) => {
 		if (content.layout === 'images-left') return true;
@@ -291,7 +271,7 @@
 						{@html row.description}
 					</div>
 					{#if row.cta}
-						<CtaLink cta={row.cta} color={colors.text} hoverColor={colors.ctaHoverColor} class="mt-8" />
+						<CtaLink cta={row.cta} color={ctaColor} inverted={ctaInverted} class="mt-8" />
 					{/if}
 				</div>
 			</article>
