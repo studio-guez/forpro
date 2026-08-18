@@ -16,7 +16,7 @@
 	class="flex justify-center {className}"
 	onsubmit={(event) => event.preventDefault()}
 >
-	<label class="relative block w-full max-w-70">
+	<label class="relative block w-full max-w-90">
 		<span class="sr-only">{label}</span>
 		<input
 			type="search"
