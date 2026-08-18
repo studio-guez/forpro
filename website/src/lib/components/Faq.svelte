@@ -171,13 +171,13 @@
 <section class="px-base" aria-label="Questions et réponses">
 	<div aria-live="polite">
 		{#if hasSearch}
-			{#if searchResults.length === 0}
-				<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
-					Aucune question ne correspond à votre recherche.
-				</p>
-			{:else}
-				<div class="border-t border-black py-6 md:py-8">
-					<h2 class="text-h2 text-teal">Résultat pour : {search.trim()}</h2>
+			<div class="border-t border-black py-6 md:py-8">
+				<h2 class="text-h2 text-teal">Résultat pour : {search.trim()}</h2>
+				{#if searchResults.length === 0}
+					<p class="text-body-1 text-grey-dark mt-1">
+						Aucune question ne correspond à votre recherche.
+					</p>
+				{:else}
 					<p class="text-label mt-1">
 						{searchResults.length}
 						{searchResults.length > 1 ? 'questions' : 'question'}
@@ -191,8 +191,8 @@
 							/>
 						{/each}
 					</div>
-				</div>
-			{/if}
+				{/if}
+			</div>
 		{:else if filteredSections.length === 0}
 			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
 				Aucune question ne correspond à votre recherche.
