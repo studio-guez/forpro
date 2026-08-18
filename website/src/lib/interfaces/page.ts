@@ -108,6 +108,7 @@ export interface PageCta {
 export type PageLayout = '1col' | '2col';
 
 export interface Page {
+	readonly template: 'page';
 	readonly title: string;
 	readonly slug: string;
 	readonly overtitle: string | null;
