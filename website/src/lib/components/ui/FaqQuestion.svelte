@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition';
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
 	import IconClose from '$lib/components/svg/IconClose.svelte';
 
@@ -36,9 +37,11 @@
 			{/if}
 		</button>
 	</h3>
-	<div id="{id}-answer" role="region" aria-label={question} hidden={!open}>
-		<div class="prose text-grey-dark px-6 md:px-9 pb-6 md:pb-8">
-			{@html answer}
+	{#if open}
+		<div id="{id}-answer" role="region" aria-label={question} transition:slide={{ duration: 300 }}>
+			<div class="prose px-6 md:px-9 pb-6 md:pb-8">
+				{@html answer}
+			</div>
 		</div>
-	</div>
+	{/if}
 </div>
