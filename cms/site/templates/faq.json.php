@@ -13,6 +13,9 @@ $json['title'] = $page->title()->value();
 $json['slug'] = $page->slug();
 $json['path'] = $page->virtualPath();
 
+// All FAQ categories in their CMS-defined order, so the frontend can order filters accordingly.
+$json['faqCategories'] = Utils::getTaxonomyTerms('faq-categories');
+
 // Optional pre-filtering by category: /faq.json?faqCategories=slug-a,slug-b
 $faqCategories = array_values(array_filter(
     array_slice(explode(',', (string)get('faqCategories')), 0, 20),
