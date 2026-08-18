@@ -1,0 +1,9 @@
+title: Catégories de FAQ
+
+extends: pages/taxonomy
+
+sections:
+  terms:
+    label: Catégories de FAQ
+    templates:
+      - faq-category
