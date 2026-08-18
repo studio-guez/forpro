@@ -8,6 +8,7 @@
 		question: string;
 		answer: string;
 		color?: string;
+		inverted?: boolean;
 		open?: boolean;
 	}
 
@@ -16,15 +17,27 @@
 		question,
 		answer,
 		color = 'var(--color-teal)',
+		inverted = false,
 		open = $bindable(false)
 	}: Props = $props();
+
+	const borderClass = $derived(inverted ? 'border-white' : 'border-(--faq-color)');
+	const className = $derived(
+		inverted
+			? open
+				? 'bg-white text-(--faq-color)'
+				: 'text-white hover:bg-white hover:text-(--faq-color)'
+			: open
+				? 'bg-(--faq-color) text-white'
+				: 'text-(--faq-color) hover:bg-(--faq-color) hover:text-white'
+	);
 </script>
 
-<div style:--faq-color={color} class="border-3 border-(--faq-color) rounded-4xl overflow-hidden">
+<div style:--faq-color={color} class="border-4 {borderClass} rounded-4xl overflow-hidden {className} transition-colors">
 	<h3>
 		<button
 			type="button"
-			class="w-full flex items-center justify-between gap-4 text-left px-6 md:px-9 py-4 md:py-5 text-(--faq-color)"
+			class="w-full flex items-center justify-between gap-4 text-left px-6 md:px-9 py-4 md:py-4.5"
 			aria-expanded={open}
 			aria-controls="{id}-answer"
 			onclick={() => (open = !open)}
