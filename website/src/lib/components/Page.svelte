@@ -3,7 +3,8 @@
 	import PageIntro from '$lib/components/PageIntro.svelte';
 	import BlockModuleTitreTexteImage from '$lib/components/BlockModuleTitreTexteImage.svelte';
 	import BlockModuleCases from '$lib/components/BlockModuleCases.svelte';
-	import type { Page, ModuleTitreTexteImageContent, ModuleCasesContent } from '$lib/interfaces/page';
+	import BlockModuleInfosPratiques from '$lib/components/BlockModuleInfosPratiques.svelte';
+	import type { Page, ModuleTitreTexteImageContent, ModuleCasesContent, ModuleInfosPratiquesContent } from '$lib/interfaces/page';
 
 	let { page }: { page: Page } = $props();
 </script>
@@ -31,6 +32,10 @@
 			<BlockModuleCases
 				content={block.content as unknown as ModuleCasesContent}
 				theme={page.theme}
+			/>
+		{:else if block.type === 'module-infos-pratiques'}
+			<BlockModuleInfosPratiques
+				content={block.content as unknown as ModuleInfosPratiquesContent}
 			/>
 		{/if}
 	{/if}
