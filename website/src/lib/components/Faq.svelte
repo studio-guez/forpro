@@ -2,16 +2,16 @@
 	import { browser } from '$app/environment';
 	import { page as appPage } from '$app/state';
 	import { replaceState } from '$app/navigation';
-	import IconSearch from '$lib/components/svg/IconSearch.svelte';
-	import IconClose from '$lib/components/svg/IconClose.svelte';
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
 	import FaqQuestion from '$lib/components/ui/FaqQuestion.svelte';
-	import type { FaqItem, FaqPage, TaxonomyTerm } from '$lib/interfaces/faq';
+	import SearchInput from '$lib/components/ui/SearchInput.svelte';
+	import FilterTags from '$lib/components/ui/FilterTags.svelte';
+	import { termColor } from '$lib/utils/shared';
+	import type { FaqItem, FaqPage } from '$lib/interfaces/faq';
 
 	let { page }: { page: FaqPage } = $props();
 
-	const termColor = (term: TaxonomyTerm): string =>
-		term.color ? `var(--color-${term.color})` : 'var(--color-teal)';
+	const noResultsText = 'Aucune question ne correspond à votre recherche.';
 
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
@@ -91,12 +91,6 @@
 			: [...openSections, index];
 	};
 
-	const toggleCategory = (slug: string): void => {
-		selectedCategories = selectedCategories.includes(slug)
-			? selectedCategories.filter((s) => s !== slug)
-			: [...selectedCategories, slug];
-	};
-
 	// Mirror search + filters into the query string without triggering navigation.
 	$effect(() => {
 		const parts: string[] = [];
@@ -109,63 +103,27 @@
 	});
 </script>
 
+{#snippet questionCount(count: number)}
+	{count}
+	{count > 1 ? 'questions' : 'question'}
+{/snippet}
+
 <section class="px-base" aria-labelledby="faq-title">
 	<h1 id="faq-title" class="text-h1 text-teal text-center">{page.title}</h1>
 
-	<form
-		role="search"
-		class="mt-12 md:mt-18 flex justify-center"
-		onsubmit={(event) => event.preventDefault()}
-	>
-		<label class="relative block w-full max-w-70">
-			<span class="sr-only">Rechercher une question</span>
-			<input
-				type="search"
-				bind:value={search}
-				placeholder="Rechercher une question..."
-				class="w-full rounded-full border-2 border-teal bg-transparent text-teal placeholder-teal font-bold text-lg px-5 py-3 pr-13 focus:border-teal focus:ring-teal"
-			/>
-			<IconSearch
-				width={28}
-				height={29}
-				class="text-teal absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"
-			/>
-		</label>
-	</form>
+	<SearchInput
+		bind:value={search}
+		label="Rechercher une question"
+		placeholder="Rechercher une question..."
+		class="mt-12 md:mt-18"
+	/>
 
-	{#if usedTerms.length > 0}
-		<fieldset class="mt-12 md:mt-18">
-			<legend class="text-body-2 text-center mx-auto">Questions concernant :</legend>
-			<div
-				class="mt-6 flex flex-wrap justify-center items-center gap-x-3 gap-y-4 max-w-4xl mx-auto"
-			>
-				{#each usedTerms as term (term.slug)}
-					{@const selected = activeCategories.includes(term.slug)}
-					<button
-						type="button"
-						style:--term-color={termColor(term)}
-						class="text-label rounded-full border-2 border-(--term-color) px-4 py-1.5 leading-tight transition-colors {selected
-							? 'bg-(--term-color) text-white'
-							: 'bg-transparent text-(--term-color)'}"
-						aria-pressed={selected}
-						onclick={() => toggleCategory(term.slug)}
-					>
-						{term.title}
-					</button>
-				{/each}
-				{#if activeCategories.length > 0}
-					<button
-						type="button"
-						class="text-teal p-1"
-						aria-label="Réinitialiser les filtres"
-						onclick={() => (selectedCategories = [])}
-					>
-						<IconClose width={24} height={25} />
-					</button>
-				{/if}
-			</div>
-		</fieldset>
-	{/if}
+	<FilterTags
+		terms={usedTerms}
+		bind:selected={selectedCategories}
+		legend="Questions concernant :"
+		class="mt-12 md:mt-18"
+	/>
 </section>
 
 <section class="px-base" aria-label="Questions et réponses">
@@ -174,14 +132,9 @@
 			<div class="border-t border-black py-6 md:py-8">
 				<h2 class="text-h2 text-teal">Résultat pour : {search.trim()}</h2>
 				{#if searchResults.length === 0}
-					<p class="text-body-1 text-grey-dark mt-1">
-						Aucune question ne correspond à votre recherche.
-					</p>
+					<p class="text-body-1 text-grey-dark mt-1">{noResultsText}</p>
 				{:else}
-					<p class="text-label mt-1">
-						{searchResults.length}
-						{searchResults.length > 1 ? 'questions' : 'question'}
-					</p>
+					<p class="text-label mt-1">{@render questionCount(searchResults.length)}</p>
 					<div class="mt-9 space-y-6">
 						{#each searchResults as faq, faqIndex (faqIndex)}
 							<FaqQuestion
@@ -194,9 +147,7 @@
 				{/if}
 			</div>
 		{:else if filteredSections.length === 0}
-			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
-				Aucune question ne correspond à votre recherche.
-			</p>
+			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">{noResultsText}</p>
 		{:else}
 			{#each filteredSections as section (section.index)}
 				{@const open = isSectionOpen(section.index)}
@@ -216,8 +167,7 @@
 						</button>
 					</h2>
 					<p class="text-label mt-1 flex flex-wrap items-center gap-3">
-						{section.faqs.length}
-						{section.faqs.length > 1 ? 'questions' : 'question'}
+						{@render questionCount(section.faqs.length)}
 						{#each section.commonTerms as term (term.slug)}
 							<span
 								style:--term-color={termColor(term)}
