@@ -92,11 +92,7 @@
 
 	{#if content.cta}
 		<div class="flex justify-end mt-8">
-			<CtaLink
-				cta={content.cta}
-				color={filled ? 'var(--color-white)' : colors.main}
-				hoverColor={filled ? colors.main : 'var(--color-white)'}
-			/>
+			<CtaLink cta={content.cta} color={colors.main} inverted={filled} />
 		</div>
 	{/if}
 </section>
