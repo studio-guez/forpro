@@ -104,6 +104,17 @@ tabs:
             templates:
               - project-theme
             parent: site.find("taxonomies").find("project-themes")
+      - width: 1/2
+        sections:
+          faq_categories:
+            type: pages
+            image: false
+            label:
+              en: FAQ Categories
+              fr: Catégories de FAQ
+            templates:
+              - faq-category
+            parent: site.find("taxonomies").find("faq-categories")
 
   navigation: tabs/navigation
 
