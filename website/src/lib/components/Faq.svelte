@@ -20,17 +20,16 @@
 		(initialParams.get('faqCategories') ?? '').split(',').filter(Boolean)
 	);
 
-	// Only offer terms that are actually used by at least one question.
+	// Only offer terms that are actually used by at least one question,
+	// kept in the CMS-defined taxonomy order.
 	const usedTerms = $derived.by(() => {
-		const terms: TaxonomyTerm[] = [];
+		const used = new Set<string>();
 		for (const section of page.sections) {
 			for (const faq of section.faqs) {
-				for (const term of faq.faqCategories) {
-					if (!terms.some((t) => t.slug === term.slug)) terms.push(term);
-				}
+				for (const term of faq.faqCategories) used.add(term.slug);
 			}
 		}
-		return terms;
+		return page.faqCategories.filter((term) => used.has(term.slug));
 	});
 
 	// Drop stale slugs coming from the URL so counters stay accurate.
