@@ -57,6 +57,53 @@ foreach ($page->body()->toBlocks() as $block) {
             'layout'    => $block->layout()->or('alternate')->value(),
             'variant'   => $block->variant()->or('default')->value(),
         ];
+    } elseif ($block->type() === 'module-infos-pratiques') {
+        // Either empty or exactly 3 title/description pairs (enforced by the blueprint).
+        $elements = [];
+        $row = $block->elements()->toStructure()->first();
+        if ($row) {
+            foreach ([1, 2, 3] as $i) {
+                $elements[] = [
+                    'title'       => $row->{'title' . $i}()->value(),
+                    'description' => $row->{'description' . $i}()->value(),
+                ];
+            }
+        }
+
+        $categorySlugs = array_column(Utils::resolveTaxonomyTerms($block->faqCategories(), 'faq-categories'), 'slug');
+
+        // Preview of matching FAQ questions, pulled from the FAQ page.
+        $faqPage = $site->index()->template('faq')->first();
+        $faqs = [];
+        if ($faqPage) {
+            foreach ($faqPage->sections()->toStructure() as $faqSection) {
+                foreach (Utils::filterStructureByTaxonomy($faqSection->faqs()->toStructure(), 'faqCategories', $categorySlugs) as $faq) {
+                    $faqs[] = [
+                        'question' => $faq->question()->value(),
+                        'answer'   => $faq->answer()->value(),
+                    ];
+                    if (count($faqs) === 3) break 2;
+                }
+            }
+        }
+
+        // The CTA URL is resolved here so a FAQ slug change never breaks the frontend link.
+        $ctaUrl = $faqPage
+            ? '/' . $faqPage->virtualPath() . ($categorySlugs !== [] ? '?faqCategories=' . implode(',', $categorySlugs) : '')
+            : null;
+
+        $content = [
+            'title'    => $block->title()->value(),
+            'subtitle' => $block->subtitle()->value(),
+            'elements' => $elements,
+            'faqs'     => $faqs,
+            'cta'      => $ctaUrl ? [
+                'label' => $block->ctaLabel()->or('Plus de réponses')->value(),
+                'url'   => $ctaUrl,
+                'icon'  => 'arrow',
+            ] : null,
+            'variant'  => $block->variant()->or('default')->value(),
+        ];
     } else {
         $content = $block->toArray()['content'] ?? [];
     }

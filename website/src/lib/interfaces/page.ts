@@ -77,6 +77,25 @@ export interface ModuleCasesContent {
 	readonly variant: Variant;
 }
 
+export interface InfosPratiquesElement {
+	readonly title: string;
+	readonly description: string;
+}
+
+export interface InfosPratiquesFaq {
+	readonly question: string;
+	readonly answer: string;
+}
+
+export interface ModuleInfosPratiquesContent {
+	readonly title: string;
+	readonly subtitle: string;
+	readonly elements: InfosPratiquesElement[];
+	readonly faqs: InfosPratiquesFaq[];
+	readonly cta: PageCta | null;
+	readonly variant: Variant;
+}
+
 export type Theme =
 	| 'default'
 	| 'campus'
