@@ -72,7 +72,7 @@ foreach ($page->body()->toBlocks() as $block) {
 
         $categorySlugs = array_column(Utils::resolveTaxonomyTerms($block->faqCategories(), 'faq-categories'), 'slug');
 
-        // Preview of matching FAQ questions, pulled from the FAQ page.
+        // All matching FAQ questions, pulled from the FAQ page.
         $faqPage = $site->index()->template('faq')->first();
         $faqs = [];
         if ($faqPage) {
@@ -82,7 +82,6 @@ foreach ($page->body()->toBlocks() as $block) {
                         'question' => $faq->question()->value(),
                         'answer'   => $faq->answer()->value(),
                     ];
-                    if (count($faqs) === 3) break 2;
                 }
             }
         }
