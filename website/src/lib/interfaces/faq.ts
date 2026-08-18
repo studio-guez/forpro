@@ -1,10 +1,7 @@
 import type { Seo } from './page';
+import type { TaxonomyTerm } from './taxonomy';
 
-export interface TaxonomyTerm {
-	readonly slug: string;
-	readonly title: string;
-	readonly color: string | null;
-}
+export type { TaxonomyTerm };
 
 export interface FaqItem {
 	readonly question: string;
