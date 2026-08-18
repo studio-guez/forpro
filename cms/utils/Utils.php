@@ -153,6 +153,7 @@ class Utils
             return [
                 'slug'  => $term->slug(),
                 'title' => $term->title()->value(),
+                'color' => $term->color()->isNotEmpty() ? $term->color()->value() : null,
             ];
         }, $field->split(','))));
     }
