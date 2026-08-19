@@ -152,7 +152,13 @@ runs:
           cp "$RELEASE_DIR/deploy.env.example" "$SHARED_DIR/deploy.env"
         fi
 
-        # ── Loopback port overrides ──────────────────────────────────────────
+        # ── Publish address / port overrides ─────────────────────────────────
+        # BIND_ADDRESS is server-specific and only read from shared/deploy.env
+        # (127.0.0.1 when the reverse proxy is local, the private IP when it is
+        # on another machine).
+        BIND_ADDRESS=$(sed -n -E 's/^BIND_ADDRESS=([^#[:space:]]+).*/\1/p' "$SHARED_DIR/deploy.env" | tail -n1)
+        BIND_ADDRESS="${BIND_ADDRESS:-127.0.0.1}"
+
         # Ports set on the workflow environment win over shared/deploy.env, so
         # two environments sharing a host can be given non-colliding ports
         # without editing files on the server. They are written back to
@@ -171,7 +177,7 @@ runs:
           else
             printf '%s=%s\n' "$KEY" "$PORT" >> "$SHARED_DIR/deploy.env"
           fi
-          echo "[deploy] $svc published on 127.0.0.1:$PORT"
+          echo "[deploy] $svc published on $BIND_ADDRESS:$PORT"
         done
 
         # Seed the kirby-foodlab data files on first deploy (the plugin expects

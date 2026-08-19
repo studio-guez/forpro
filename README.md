@@ -299,10 +299,10 @@ The deployed stack contains exactly four services (see `compose.prod.yml`):
 - `restaurant` — SvelteKit frontend (Node)
 - `menu`       — Nuxt daily-menus SPA (Node)
 
-Each service publishes only on `127.0.0.1:<port>` (defaults `8080`–`8083`,
-configurable in `$DEPLOY_PATH/shared/deploy.env` or via the per-environment
-`*_HTTP_PORT` Actions variables). The host's nginx must
-forward each public domain to the matching loopback port:
+Each service publishes on `${BIND_ADDRESS}:<port>` (defaults `127.0.0.1` and
+`8080`–`8083`, configurable in `$DEPLOY_PATH/shared/deploy.env` or, for the
+ports, via the per-environment `*_HTTP_PORT` Actions variables). The reverse
+proxy must forward each public domain to the matching address and port:
 
 | Domain                     | Service    | Default loopback port |
 | -------------------------- | ---------- | --------------------- |
@@ -310,6 +310,19 @@ forward each public domain to the matching loopback port:
 | https://for-pro.ch         | website    | `127.0.0.1:8081`      |
 | https://foodlab.for-pro.ch | restaurant | `127.0.0.1:8082`      |
 | https://menus.for-pro.ch   | menu       | `127.0.0.1:8083`      |
+
+When the reverse proxy runs on **another machine** (e.g. staging behind a
+shared proxy), loopback publishing makes the services unreachable. Set
+`BIND_ADDRESS` in `$DEPLOY_PATH/shared/deploy.env` to the server's private IP
+so the proxy can reach the ports over the private network:
+
+```bash
+# $DEPLOY_PATH/shared/deploy.env
+BIND_ADDRESS=10.100.0.241
+```
+
+Then recreate the stack (`docker compose … up -d`). Never use `0.0.0.0` —
+these ports carry plain HTTP and must stay off the public interface.
 
 There is no `composer`, `node` or `pnpm` on the target servers — only Docker,
 the application stack above, and the host-level nginx.
@@ -396,7 +409,7 @@ $DEPLOY_PATH/                            # e.g. /srv/forpro (preprod and prod ar
 ├── releases/<ts>-<sha7>/                # compose.prod.yml, deploy.env.example, cms.env.example
 └── shared/
     ├── cms.env                          # CMS runtime env (secrets — mode 660 www-data, never in git)
-    ├── deploy.env                       # loopback ports for this server
+    ├── deploy.env                       # publish address + ports for this server
     ├── cms/
     │   ├── content/                     # pages & uploads (Panel-editable)
     │   ├── media/                       # generated thumbs cache
@@ -638,6 +651,6 @@ deploy. Each step is a no-op when the target already exists:
 | Target on host                                       | Source                                                       |
 | ---------------------------------------------------- | ------------------------------------------------------------ |
 | `$SHARED_PATH/cms.env`                                | `cms/.env.example` — edit with real values, recreate `cms` with its recorded tag |
-| `$SHARED_PATH/deploy.env`                             | `deploy.env.example` — edit if the default ports collide, or set the `*_HTTP_PORT` environment variables |
+| `$SHARED_PATH/deploy.env`                             | `deploy.env.example` — set `BIND_ADDRESS` if the reverse proxy is on another host, edit the ports if the defaults collide (or set the `*_HTTP_PORT` environment variables) |
 | `$SHARED_PATH/cms/…` state directories                | created empty                                                 |
 | `$SHARED_PATH/cms/site/plugins/kirby-foodlab/data/*.json` | seeded as `[]` (overwritten by your rsync of real data)  |
