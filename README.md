@@ -147,10 +147,13 @@ rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/share
 rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/shared/cms/site/plugins/kirby-menu-du-jour/data/ ./cms/site/plugins/kirby-menu-du-jour/data
 ```
 
-When rsyncing in the **other direction** (local → server), the transferred
-files end up owned by the SSH user. The next deploy fixes ownership
-automatically; to fix it immediately, run the chown/chmod command from step 3
-of [First deploy](#first-deploy).
+When rsyncing in the **other direction** (local → server), add
+`--no-perms --omit-dir-times`: everything under `shared/` is owned by
+`www-data` and only a file's owner may change its mode or a directory's mtime,
+so plain `-a` exits 23 (`failed to set times on ".../content/."`) even though
+the data was transferred. The transferred files end up owned by the SSH user;
+the next deploy fixes ownership automatically, or run the chown/chmod command
+from step 3 of [First deploy](#first-deploy).
 
 ## Upgrading
 
@@ -475,16 +478,18 @@ exit
 
 # 2. Load the real content — run these from the machine holding the content
 #    (your local clone or the old prod server), not on the target server:
-rsync -avz --delete ./cms/content/ deploy@<server>:$DEPLOY_PATH/shared/cms/content
-rsync -avz --delete ./cms/site/accounts/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/accounts
-rsync -avz --delete ./cms/site/plugins/kirby-foodlab/data/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/plugins/kirby-foodlab/data
-rsync -avz --delete ./cms/site/plugins/kirby-menu-du-jour/data/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/plugins/kirby-menu-du-jour/data
+# --no-perms --omit-dir-times: shared/ is owned by www-data and only the owner
+# may set a directory's mtime or mode, so plain -a exits 23 on every directory.
+rsync -avz --delete --no-perms --omit-dir-times ./cms/content/ deploy@<server>:$DEPLOY_PATH/shared/cms/content
+rsync -avz --delete --no-perms --omit-dir-times ./cms/site/accounts/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/accounts
+rsync -avz --delete --no-perms --omit-dir-times ./cms/site/plugins/kirby-foodlab/data/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/plugins/kirby-foodlab/data
+rsync -avz --delete --no-perms --omit-dir-times ./cms/site/plugins/kirby-menu-du-jour/data/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/plugins/kirby-menu-du-jour/data
 # Kirby license — copy the existing .license from the old server (or skip and
 # register the license from the Panel later; it persists in shared/ either way):
-rsync -avz ./cms/site/config/.license deploy@<server>:$DEPLOY_PATH/shared/cms/site/config/.license
+rsync -avz --no-perms ./cms/site/config/.license deploy@<server>:$DEPLOY_PATH/shared/cms/site/config/.license
 # Optional: rsync media/ too to avoid the thumbnail-regeneration CPU spike on
 # first load — otherwise Kirby rebuilds it on demand:
-rsync -avz --delete ./cms/media/ deploy@<server>:$DEPLOY_PATH/shared/cms/media
+rsync -avz --delete --no-perms --omit-dir-times ./cms/media/ deploy@<server>:$DEPLOY_PATH/shared/cms/media
 
 # 3. SSH back to the target server, then fix ownership and recreate CMS so
 #    cms.env changes are loaded:
@@ -492,7 +497,14 @@ ssh deploy@<server>
 export DEPLOY_PATH=<deploy_path>
 cd "$DEPLOY_PATH/current"
 export SHARED_PATH="$DEPLOY_PATH/shared"
+# Required: `current` is a symlink, so compose would otherwise name the project
+# after the directory ("current") and report `service "cms" is not running`.
+export COMPOSE_PROJECT_NAME=$(cat "$SHARED_PATH/.compose-project")
 export CMS_IMAGE_TAG=$(cat "$SHARED_PATH/current-tags/cms.txt")
+# Verify it is non-empty: compose falls back to `:latest` (the PRODUCTION tag)
+# when the variable is unset, which on preprod would pull production code.
+test -n "$CMS_IMAGE_TAG" || echo 'CMS_IMAGE_TAG is empty — do not continue'
+
 docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml \
   exec --user root cms sh -c 'chown -R www-data:www-data /var/www/html/content /var/www/html/media /var/www/html/site && chmod -R g+w /var/www/html/content /var/www/html/media /var/www/html/site'
 docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml up -d --force-recreate --no-deps --wait cms
@@ -536,6 +548,7 @@ The previously deployed tag of each service is kept in
 ssh deploy@<server>
 export DEPLOY_PATH=<deploy_path> SHARED_PATH=<deploy_path>/shared
 cd "$DEPLOY_PATH/current"
+export COMPOSE_PROJECT_NAME=$(cat "$SHARED_PATH/.compose-project")
 
 # e.g. roll back the website
 export WEBSITE_IMAGE_TAG=$(cat "$SHARED_PATH/last-tags/website.txt")
@@ -554,11 +567,16 @@ images have been pushed to GHCR:
 ssh deploy@<server>
 export DEPLOY_PATH=<deploy_path> SHARED_PATH=<deploy_path>/shared
 cd "$DEPLOY_PATH/current"
+export COMPOSE_PROJECT_NAME=$(cat "$SHARED_PATH/.compose-project")
 
 # Pick the tag from the GitHub Actions "build & push" step output.
 # Only set the *_IMAGE_TAG vars of the services you want to update.
+# An unset one falls back to `:latest` — the PRODUCTION tag — so always set it
+# explicitly on preprod.
 export CMS_IMAGE_TAG=sha-<sha7>          # or preprod-sha-<sha7> on preprod
 
+# The daemon needs GHCR credentials (PAT with read:packages) to pull:
+docker login ghcr.io -u <github-user>
 docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml pull cms
 docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml up -d --force-recreate --no-deps --wait cms
 echo "$CMS_IMAGE_TAG" > "$SHARED_PATH/current-tags/cms.txt"
@@ -577,7 +595,7 @@ environment-appropriate values:
 | `DEPLOY_PATH`          | per environment       | e.g. `/srv/forpro`                                               |
 | `GHCR_PULL_TOKEN`      | per environment       | PAT with `read:packages`, used by the runner to pull from GHCR   |
 | `GHCR_PULL_USER`       | per environment (opt) | GHCR username for the pull token (defaults to actor)             |
-| `COMPOSE_PROJECT_NAME` | per environment (opt) | Docker Compose project name (defaults to `forpro`)               |
+| `COMPOSE_PROJECT_NAME` | per environment (opt) | Docker Compose project name (defaults to `forpro-preprod` / `forpro`) |
 
 | Variable                | Scope                 | Purpose                                                        |
 | ----------------------- | --------------------- | -------------------------------------------------------------- |
