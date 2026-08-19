@@ -310,6 +310,24 @@ forward each public domain to the matching loopback port:
 There is no `composer`, `node` or `pnpm` on the target servers — only Docker,
 the application stack above, and the host-level nginx.
 
+### Server-side rendering talks to the CMS internally
+
+The SvelteKit apps render server-side, so their API calls would otherwise
+hairpin out through the public domain and back in through nginx. In the
+deployed stack they use `CMS_INTERNAL_URL=http://cms` (the compose service
+name) instead — see `src/lib/server/cms.ts` in `website/` and `restaurant/`.
+Browser-side code keeps using the public `PUBLIC_CMS_BASE_URL`.
+
+Because Kirby derives absolute URLs from the incoming request, the CMS must
+pin its base URL with `KIRBY_URL` in `cms.env`; without it the API would hand
+out `http://cms/media/…` links that no browser can resolve. `CMS_INTERNAL_URL`
+is unset in development, where both apps go through `cms.localhost` as before.
+
+Each frontend also exposes a `/health` endpoint that returns `ok` without
+touching the CMS. The compose healthchecks target it, so a temporarily
+unreachable or slow CMS no longer marks the frontends unhealthy and fails the
+whole deploy.
+
 ### Two environments
 
 | Branch    | GitHub Environment | Image tags pushed               | Where it deploys     |
@@ -448,7 +466,7 @@ ssh deploy@<server>
 
 # 1. Fill in the real CMS environment values.
 #    At minimum: KIRBY_CONTENT_SALT, KIRBY_COOKIE_KEY (openssl rand -hex 32),
-#    KIRBY_FRONTEND_URL and the KIRBY_SMTP_* credentials.
+#    KIRBY_FRONTEND_URL, KIRBY_URL and the KIRBY_SMTP_* credentials.
 nano "$DEPLOY_PATH/shared/cms.env"
 exit
 
