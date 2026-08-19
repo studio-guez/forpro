@@ -3,10 +3,15 @@
 header("Access-Control-Allow-Origin: *");
 
 $frontendUrl = rtrim(getenv('KIRBY_FRONTEND_URL') ?: 'https://for-pro.ch', '/');
+$cmsUrl = getenv('KIRBY_URL') ? rtrim(getenv('KIRBY_URL'), '/') : null;
 
 return [
     'debug' => getenv('KIRBY_DEBUG') === 'true',
     'home' => 'pages/home',
+    // Pin the base URL when set: the frontends fetch the API over the internal
+    // Docker network (Host: cms), and Kirby would otherwise derive media/file
+    // URLs from that internal host, which browsers cannot resolve.
+    ...($cmsUrl ? ['url' => $cmsUrl] : []),
     // WebP for every generated thumb (GD driver, installed --with-webp).
     // `default` is the width ladder used for srcset: it spans small phones
     // up to 4K / high-DPR displays so the browser can pick per viewport × dpr.
