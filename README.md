@@ -380,7 +380,7 @@ $DEPLOY_PATH/                            # e.g. /srv/forpro (preprod and prod ar
 ├── current -> releases/<ts>-<sha7>      # symlink to active release (compose file + env examples)
 ├── releases/<ts>-<sha7>/                # compose.prod.yml, deploy.env.example, cms.env.example
 └── shared/
-    ├── cms.env                          # CMS runtime env (secrets — chmod 660, never in git)
+    ├── cms.env                          # CMS runtime env (secrets — mode 660 www-data, never in git)
     ├── deploy.env                       # loopback ports for this server
     ├── cms/
     │   ├── content/                     # pages & uploads (Panel-editable)
@@ -457,8 +457,11 @@ gh workflow run ci.yml --ref main -f target=production -f services=all
 The pipeline bootstraps `shared/` (directories, `cms.env` from
 `cms/.env.example`, `deploy.env` from `deploy.env.example`, an empty
 `site/config/.license` file, empty `kirby-foodlab` data files) and starts the
-stack. The CMS won't be fully operational until you fill in real values and
-load real content. SSH in and finish the setup:
+stack. The very first run stops with an error before starting the stack
+because `cms.env` has no `KIRBY_URL` yet — by then `shared/` is already
+group-writable, so fill it in and re-run. The CMS won't be fully operational
+until you fill in real values and load real content. SSH in and finish the
+setup:
 
 ```bash
 export DEPLOY_PATH=<deploy_path>
@@ -512,7 +515,9 @@ docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml up -d --
    - CMS content, accounts, the license file and plugin data are backed up to
      `shared/backups/` (last 14 kept);
    - the new images are pulled; unchanged services keep their recorded tag;
-   - ownership under `shared/cms` is fixed (www-data, group-writable) and the
+   - ownership of the whole `shared/` tree is fixed (www-data, group-writable —
+     the runner may create files as root, this keeps `cms.env`, `deploy.env`,
+     the tag files and the backups editable by the deploy user) and the
      Kirby cache is cleared when a new cms image ships — both run as root
      inside a throwaway container;
    - the `current` symlink is flipped and `docker compose up -d
