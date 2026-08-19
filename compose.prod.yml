@@ -52,11 +52,15 @@ services:
     image: ghcr.io/studio-guez/forpro/website:${WEBSITE_IMAGE_TAG:-latest}
     ports:
       - "127.0.0.1:${WEBSITE_HTTP_PORT:-8081}:3000"
+    # SSR fetches the API over the Docker network instead of hairpinning through
+    # the public domain (nginx). Kirby still emits public URLs, see KIRBY_URL.
+    environment:
+      - CMS_INTERNAL_URL=http://cms
     restart: unless-stopped
     depends_on:
       - cms
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/"]
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/health"]
       interval: 30s
       timeout: 5s
       retries: 3
@@ -67,11 +71,13 @@ services:
     image: ghcr.io/studio-guez/forpro/restaurant:${RESTAURANT_IMAGE_TAG:-latest}
     ports:
       - "127.0.0.1:${RESTAURANT_HTTP_PORT:-8082}:3000"
+    environment:
+      - CMS_INTERNAL_URL=http://cms
     restart: unless-stopped
     depends_on:
       - cms
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/"]
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/health"]
       interval: 30s
       timeout: 5s
       retries: 3
