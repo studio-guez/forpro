@@ -118,19 +118,21 @@ runs:
         # is cleaned up automatically on exit.
         export DOCKER_CONFIG
         DOCKER_CONFIG=$(mktemp -d)
-        trap 'rm -rf "$DOCKER_CONFIG"' EXIT
+        TAG_STAGING_DIR=$(mktemp -d)
+        trap 'rm -rf "$DOCKER_CONFIG" "$TAG_STAGING_DIR"' EXIT
         echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
 
         # ── Per-service tag resolution ───────────────────────────────────────
-        # Rebuilt services get the new immutable tag (previous tag saved for
-        # one-line rollback); untouched services keep their recorded tag so
-        # `docker compose up -d` leaves their containers running as-is.
+        # Rebuilt services get the new immutable tag; untouched services keep
+        # their recorded tag so `docker compose up -d` leaves their containers
+        # running as-is. Persistent tag files are updated only after compose
+        # succeeds so a failed deploy keeps rollback pointers intact.
         for svc in $ALL_SERVICES; do
           TAG_FILE="$SHARED_DIR/current-tags/$svc.txt"
           if is_built "$svc"; then
-            [ -f "$TAG_FILE" ] && cp "$TAG_FILE" "$SHARED_DIR/last-tags/$svc.txt"
-            echo "$IMAGE_TAG" > "$TAG_FILE"
             TAG="$IMAGE_TAG"
+            [ -f "$TAG_FILE" ] && cp "$TAG_FILE" "$TAG_STAGING_DIR/last-$svc.txt"
+            echo "$IMAGE_TAG" > "$TAG_STAGING_DIR/current-$svc.txt"
           else
             TAG=$(cat "$TAG_FILE" 2>/dev/null || echo "$FLOATING_TAG")
           fi
@@ -148,12 +150,15 @@ runs:
 
         # ── Pre-deploy backup of CMS content, accounts, license & plugin data ─
         TS=$(date -u +%Y%m%dT%H%M%SZ)
-        tar -czf "$SHARED_DIR/backups/cms-$TS.tgz" -C "$SHARED_DIR/cms" \
-          content \
-          site/accounts \
-          site/config/.license \
-          site/plugins/kirby-foodlab/data \
-          site/plugins/kirby-menu-du-jour/data
+        (
+          umask 077
+          tar -czf "$SHARED_DIR/backups/cms-$TS.tgz" -C "$SHARED_DIR/cms" \
+            content \
+            site/accounts \
+            site/config/.license \
+            site/plugins/kirby-foodlab/data \
+            site/plugins/kirby-menu-du-jour/data
+        )
         ls -1t "$SHARED_DIR/backups"/cms-*.tgz | tail -n +15 | xargs -r rm --
 
         # ── Ownership fix ────────────────────────────────────────────────────
@@ -192,6 +197,14 @@ runs:
           --env-file "$SHARED_DIR/deploy.env" \
           -f "$CURRENT/compose.prod.yml" \
           up -d --remove-orphans --wait --wait-timeout 180
+
+        # Persist current/last tags only after a successful deploy.
+        for svc in $ALL_SERVICES; do
+          if is_built "$svc"; then
+            [ -f "$TAG_STAGING_DIR/last-$svc.txt" ] && cp "$TAG_STAGING_DIR/last-$svc.txt" "$SHARED_DIR/last-tags/$svc.txt"
+            cp "$TAG_STAGING_DIR/current-$svc.txt" "$SHARED_DIR/current-tags/$svc.txt"
+          fi
+        done
 
         # ── Prune ────────────────────────────────────────────────────────────
         # Keep the 5 most recent immutable (sha-*) images per service so we can
