@@ -1,4 +1,7 @@
 <svelte:head>
+	{#if IS_PREPROD}
+		<meta name="robots" content="noindex, nofollow" />
+	{/if}
 	<title>Foodlab - Imaginé par ForPro</title>
 	<meta
 					name="description"
@@ -18,6 +21,7 @@
 		}
 	})}</script>`}
 
+	{#if !IS_PREPROD}
 	<!-- Matomo -->
 	<script>
 		var _paq = window._paq = window._paq || [];
@@ -33,16 +37,18 @@
 		})();
 	</script>
 	<!-- End Matomo Code -->
+	{/if}
 </svelte:head>
 
 <script lang="ts">
 	import '../style/_main.scss';
 	import {afterNavigate} from "$app/navigation";
+	import { IS_PREPROD } from '$lib/env';
 
 	declare var _paq: unknown
 
 	afterNavigate((navigation) => {
-		if (_paq) {
+		if (typeof _paq !== 'undefined' && _paq) {
 			_paq.push(['setCustomUrl', '/' + window.location.href])
 			_paq.push(['setDocumentTitle', window.location.pathname])
 			_paq.push(['setReferrerUrl', navigation.from])

@@ -15,8 +15,11 @@ COPY . .
 # committed defaults per deployment target (e.g. preprod domains).
 ARG PUBLIC_CMS_BASE_URL=https://api.for-pro.ch
 ARG PUBLIC_MENU_BASE_URL=https://menus.for-pro.ch
+# 'preprod' disables indexing (noindex + robots.txt disallow) and Matomo.
+ARG PUBLIC_ENVIRONMENT=production
 ENV PUBLIC_CMS_BASE_URL=$PUBLIC_CMS_BASE_URL \
-    PUBLIC_MENU_BASE_URL=$PUBLIC_MENU_BASE_URL
+    PUBLIC_MENU_BASE_URL=$PUBLIC_MENU_BASE_URL \
+    PUBLIC_ENVIRONMENT=$PUBLIC_ENVIRONMENT
 
 RUN pnpm run build
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import SiteHeader from '$lib/components/SiteHeader.svelte';
+	import { IS_PREPROD } from '$lib/env';
 	import type { LayoutData } from './$types';
 
 	interface Props {
@@ -16,6 +17,9 @@
 </script>
 
 <svelte:head>
+	{#if IS_PREPROD}
+		<meta name="robots" content="noindex, nofollow" />
+	{/if}
 	{#if favicon}
 		{#if favicon.light.svg}
 			<link

@@ -339,13 +339,16 @@ jobs:
             case "${{ matrix.service }}" in
               website)
                 echo "PUBLIC_CMS_BASE_URL=$CMS_URL"
+                echo "PUBLIC_ENVIRONMENT=$TARGET"
                 ;;
               restaurant)
                 echo "PUBLIC_CMS_BASE_URL=$CMS_URL"
                 echo "PUBLIC_MENU_BASE_URL=$MENU_URL"
+                echo "PUBLIC_ENVIRONMENT=$TARGET"
                 ;;
               menu)
                 echo "NUXT_PUBLIC_CMS_BASE_URL=$CMS_URL"
+                echo "NUXT_PUBLIC_ENVIRONMENT=$TARGET"
                 ;;
             esac
             echo "EOF"

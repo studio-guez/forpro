@@ -2,6 +2,7 @@
 	import Page from '$lib/components/Page.svelte';
 	import Faq from '$lib/components/Faq.svelte';
 	import type { PageData } from './$types';
+	import { IS_PREPROD } from '$lib/env';
 
 	let { data }: { data: PageData } = $props();
 
@@ -16,11 +17,11 @@
 	{#if page.seo.canonicalUrl}
 		<link rel="canonical" href={page.seo.canonicalUrl} />
 	{/if}
-	{#if page.seo.robots}
+	{#if page.seo.robots && !IS_PREPROD}
 		<meta name="robots" content={page.seo.robots} />
 	{/if}
 
-	{#if page.template === 'page' && page.trackWithMatomo}
+	{#if page.template === 'page' && page.trackWithMatomo && !IS_PREPROD}
 		<!-- Matomo -->
 		<script>
 			var _paq = (window._paq = window._paq || []);

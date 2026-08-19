@@ -376,6 +376,12 @@ are built separately with the `PREPROD_CMS_BASE_URL` and
 variables → Actions → Variables). If unset, they fall back to the production
 URLs.
 
+Preprod images are also built with `PUBLIC_ENVIRONMENT=preprod`
+(`NUXT_PUBLIC_ENVIRONMENT` for the menu app), which makes every frontend serve
+a `<meta name="robots" content="noindex, nofollow">` tag and a `robots.txt`
+that disallows everything, and disables Matomo. Production builds default to
+`production` and keep the normal behaviour.
+
 ### Layout on each target server
 
 ```
