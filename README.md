@@ -442,13 +442,14 @@ stack. The CMS won't be fully operational until you fill in real values and
 load real content. SSH in and finish the setup:
 
 ```bash
-ssh deploy@<server>
 export DEPLOY_PATH=<deploy_path>
+ssh deploy@<server>
 
 # 1. Fill in the real CMS environment values.
 #    At minimum: KIRBY_CONTENT_SALT, KIRBY_COOKIE_KEY (openssl rand -hex 32),
 #    KIRBY_FRONTEND_URL and the KIRBY_SMTP_* credentials.
 nano "$DEPLOY_PATH/shared/cms.env"
+exit
 
 # 2. Load the real content — run these from the machine holding the content
 #    (your local clone or the old prod server), not on the target server:
@@ -463,12 +464,16 @@ rsync -avz ./cms/site/config/.license deploy@<server>:$DEPLOY_PATH/shared/cms/si
 # first load — otherwise Kirby rebuilds it on demand:
 rsync -avz --delete ./cms/media/ deploy@<server>:$DEPLOY_PATH/shared/cms/media
 
-# 3. Fix ownership (www-data inside the container) and restart the cms container:
+# 3. SSH back to the target server, then fix ownership and recreate CMS so
+#    cms.env changes are loaded:
+ssh deploy@<server>
+export DEPLOY_PATH=<deploy_path>
 cd "$DEPLOY_PATH/current"
 export SHARED_PATH="$DEPLOY_PATH/shared"
+export CMS_IMAGE_TAG=$(cat "$SHARED_PATH/current-tags/cms.txt")
 docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml \
   exec --user root cms sh -c 'chown -R www-data:www-data /var/www/html/content /var/www/html/media /var/www/html/site && chmod -R g+w /var/www/html/content /var/www/html/media /var/www/html/site'
-docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml restart cms
+docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml up -d --force-recreate --no-deps --wait cms
 ```
 
 ### What happens on `git push`
@@ -510,7 +515,7 @@ cd "$DEPLOY_PATH/current"
 
 # e.g. roll back the website
 export WEBSITE_IMAGE_TAG=$(cat "$SHARED_PATH/last-tags/website.txt")
-docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml up -d website
+docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml up -d --no-deps --wait website
 echo "$WEBSITE_IMAGE_TAG" > "$SHARED_PATH/current-tags/website.txt"
 ```
 
@@ -527,12 +532,11 @@ export DEPLOY_PATH=<deploy_path> SHARED_PATH=<deploy_path>/shared
 cd "$DEPLOY_PATH/current"
 
 # Pick the tag from the GitHub Actions "build & push" step output.
-# Only set the *_IMAGE_TAG vars of the services you want to update; the
-# others default to the floating tag (latest / preprod).
+# Only set the *_IMAGE_TAG vars of the services you want to update.
 export CMS_IMAGE_TAG=sha-<sha7>          # or preprod-sha-<sha7> on preprod
 
 docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml pull cms
-docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml up -d
+docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml up -d --force-recreate --no-deps --wait cms
 echo "$CMS_IMAGE_TAG" > "$SHARED_PATH/current-tags/cms.txt"
 ```
 
@@ -567,7 +571,7 @@ deploy. Each step is a no-op when the target already exists:
 
 | Target on host                                       | Source                                                       |
 | ---------------------------------------------------- | ------------------------------------------------------------ |
-| `$SHARED_PATH/cms.env`                                | `cms/.env.example` — edit with real values, restart `cms`     |
+| `$SHARED_PATH/cms.env`                                | `cms/.env.example` — edit with real values, recreate `cms` with its recorded tag |
 | `$SHARED_PATH/deploy.env`                             | `deploy.env.example` — edit if the default ports collide      |
 | `$SHARED_PATH/cms/…` state directories                | created empty                                                 |
 | `$SHARED_PATH/cms/site/plugins/kirby-foodlab/data/*.json` | seeded as `[]` (overwritten by your rsync of real data)  |
