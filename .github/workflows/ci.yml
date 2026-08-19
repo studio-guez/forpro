@@ -23,6 +23,7 @@ on:
 permissions:
   contents: read
   packages: write
+  actions: read
 
 env:
   IMAGE_BASE: ghcr.io/${{ github.repository }}
@@ -64,15 +65,36 @@ jobs:
             FLOATING_TAG="latest"
           fi
 
+          # Which refs may ship where. Mainly a guard on workflow_dispatch,
+          # which can otherwise pick any target from any branch.
+          if [ "$GITHUB_EVENT_NAME" != "pull_request" ]; then
+            case "$TARGET:$GITHUB_REF" in
+              production:refs/heads/main|production:refs/tags/v*) ;;
+              preprod:refs/heads/preprod|preprod:refs/heads/main)  ;;
+              *)
+                echo "::error::Refusing to deploy $GITHUB_REF to $TARGET. production accepts main or v* tags, preprod accepts preprod or main."
+                exit 1 ;;
+            esac
+          fi
+
+          echo "Target: $TARGET · image tag: $IMAGE_TAG · floating tag: $FLOATING_TAG"
           echo "target=$TARGET"             >> "$GITHUB_OUTPUT"
           echo "image_tag=$IMAGE_TAG"       >> "$GITHUB_OUTPUT"
           echo "floating_tag=$FLOATING_TAG" >> "$GITHUB_OUTPUT"
           echo "release_id=$TS-$SHA7"       >> "$GITHUB_OUTPUT"
 
   # ---------------------------------------------------------------------------
-  # Detect which services changed so we only test/build/deploy those. Any
-  # change to the deployment plumbing itself rebuilds everything, and tag
-  # pushes / workflow_dispatch default to everything.
+  # Detect which services changed so we only test/build/deploy those.
+  #
+  # The comparison base is NOT the default branch: it is the commit of the last
+  # successful run of this workflow on the same branch, i.e. the last commit
+  # that actually reached the servers. Anything else would make preprod rebuild
+  # its whole divergence from main on every push, and a run that failed before
+  # deploying would lose its changes on the next push (its files are still
+  # "changed" relative to the last green deploy, so they get rebuilt again).
+  #
+  # Any change to the deployment plumbing itself rebuilds everything, and so do
+  # tag pushes, workflow_dispatch and the first run on a branch (no known base).
   # ---------------------------------------------------------------------------
   changes:
     name: Detect changed services
@@ -83,31 +105,59 @@ jobs:
       services_csv: ${{ steps.services.outputs.services_csv }}
     steps:
       - uses: actions/checkout@v5
-
-      - uses: dorny/paths-filter@v3
-        id: filter
-        if: github.event_name != 'workflow_dispatch' && !startsWith(github.ref, 'refs/tags/')
         with:
-          filters: |
-            cms: ['cms/**']
-            website: ['website/**']
-            restaurant: ['restaurant/**']
-            menu: ['menu/**']
-            infra:
-              - 'compose.prod.yml'
-              - 'deploy.env.example'
-              - '.github/workflows/ci.yml'
-              - '.github/actions/**'
+          fetch-depth: 0
+
+      - name: Resolve change-detection base
+        id: base
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          BASE=""
+
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            BASE=$(git merge-base "origin/$GITHUB_BASE_REF" HEAD)
+          elif [ "${GITHUB_REF#refs/tags/}" = "$GITHUB_REF" ]; then
+            BRANCH="${GITHUB_REF#refs/heads/}"
+            # Only branch pushes, whose target is a pure function of the branch.
+            # Tag pushes and workflow_dispatch can ship a different environment,
+            # so counting them would let a production release mark preprod as
+            # up to date (and vice versa).
+            CANDIDATES=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs" \
+              -f branch="$BRANCH" -f status=success -f event=push -f per_page=50 \
+              --jq ".workflow_runs[] | select(.head_branch == \"$BRANCH\") | .head_sha" 2>/dev/null || true)
+
+            # Skip SHAs that were rebased/force-pushed away or are not ancestors
+            # of HEAD, otherwise the diff would be meaningless.
+            for sha in $CANDIDATES; do
+              if [ "$sha" != "$GITHUB_SHA" ] \
+                 && git cat-file -e "$sha^{commit}" 2>/dev/null \
+                 && git merge-base --is-ancestor "$sha" HEAD; then
+                BASE="$sha"
+                break
+              fi
+            done
+          fi
+
+          if [ -n "$BASE" ]; then
+            echo "Change detection base: $BASE"
+          else
+            echo "No usable base commit – treating every service as changed."
+          fi
+          echo "sha=$BASE" >> "$GITHUB_OUTPUT"
 
       - name: Compute service list
         id: services
         env:
           REQUESTED: ${{ inputs.services }}
+          BASE_SHA: ${{ steps.base.outputs.sha }}
         run: |
+          set -euo pipefail
           ALL="cms website restaurant menu"
           SELECTED=""
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
             if [ "$REQUESTED" = "all" ]; then
               SELECTED="$ALL"
             else
@@ -119,16 +169,22 @@ jobs:
                 esac
               done
             fi
-          elif [ "${GITHUB_REF#refs/tags/}" != "$GITHUB_REF" ]; then
-            SELECTED="$ALL"
-          elif [ "${{ steps.filter.outputs.infra }}" = "true" ]; then
+          elif [ "${GITHUB_REF#refs/tags/}" != "$GITHUB_REF" ] || [ -z "$BASE_SHA" ]; then
             SELECTED="$ALL"
           else
-            [ "${{ steps.filter.outputs.cms }}" = "true" ]        && SELECTED="$SELECTED cms"
-            [ "${{ steps.filter.outputs.website }}" = "true" ]    && SELECTED="$SELECTED website"
-            [ "${{ steps.filter.outputs.restaurant }}" = "true" ] && SELECTED="$SELECTED restaurant"
-            [ "${{ steps.filter.outputs.menu }}" = "true" ]       && SELECTED="$SELECTED menu"
-            true
+            CHANGED=$(git diff --name-only "$BASE_SHA" "$GITHUB_SHA")
+            echo "Changed files ($(printf '%s\n' "$CHANGED" | grep -c . || true)):"
+            printf '%s\n' "$CHANGED" | sed 's/^/  /'
+
+            changed() { printf '%s\n' "$CHANGED" | grep -qE "$1"; }
+
+            if changed '^(compose\.prod\.yml|deploy\.env\.example|\.github/workflows/ci\.yml|\.github/actions/)'; then
+              SELECTED="$ALL"
+            else
+              for s in $ALL; do
+                if changed "^$s/"; then SELECTED="$SELECTED $s"; fi
+              done
+            fi
           fi
 
           if [ -z "$SELECTED" ]; then
@@ -174,7 +230,7 @@ jobs:
 
       - name: Cache Composer
         if: matrix.service == 'cms'
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/composer
           key: composer-${{ runner.os }}-${{ hashFiles('cms/composer.lock') }}
@@ -196,7 +252,7 @@ jobs:
 
       - name: Setup Node 24
         if: matrix.service != 'cms'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
           cache: pnpm
@@ -232,10 +288,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
 
       - name: Log in to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -248,12 +304,25 @@ jobs:
           PREPROD_CMS_BASE_URL: ${{ vars.PREPROD_CMS_BASE_URL }}
           PREPROD_MENU_BASE_URL: ${{ vars.PREPROD_MENU_BASE_URL }}
         run: |
+          set -euo pipefail
+          PROD_CMS_URL="https://api.for-pro.ch"
+          PROD_MENU_URL="https://menus.for-pro.ch"
+
           if [ "$TARGET" = "preprod" ]; then
-            CMS_URL="${PREPROD_CMS_BASE_URL:-https://api.for-pro.ch}"
-            MENU_URL="${PREPROD_MENU_BASE_URL:-https://menus.for-pro.ch}"
+            CMS_URL="$PREPROD_CMS_BASE_URL"
+            MENU_URL="$PREPROD_MENU_BASE_URL"
+            # No fallback on purpose: these URLs are baked into the image, and a
+            # silent fallback would ship a preprod frontend wired to production.
+            if [ -z "$CMS_URL" ] || [ -z "$MENU_URL" ]; then
+              echo "::error::Set the PREPROD_CMS_BASE_URL and PREPROD_MENU_BASE_URL repository variables before deploying to preprod."
+              exit 1
+            fi
+            if [ "$CMS_URL" = "$PROD_CMS_URL" ] || [ "$MENU_URL" = "$PROD_MENU_URL" ]; then
+              echo "::warning::A preprod image is being built against a production URL ($CMS_URL / $MENU_URL)."
+            fi
           else
-            CMS_URL="https://api.for-pro.ch"
-            MENU_URL="https://menus.for-pro.ch"
+            CMS_URL="$PROD_CMS_URL"
+            MENU_URL="$PROD_MENU_URL"
           fi
 
           {
@@ -274,7 +343,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Build and push image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ./${{ matrix.service }}
           file: ${{ matrix.service }}/Dockerfile.prod
@@ -313,7 +382,7 @@ jobs:
           floating_tag:         ${{ needs.meta.outputs.floating_tag }}
           release_id:           ${{ needs.meta.outputs.release_id }}
           built_services:       ${{ needs.changes.outputs.services_csv }}
-          compose_project_name: ${{ secrets.COMPOSE_PROJECT_NAME || 'forpro' }}
+          compose_project_name: ${{ secrets.COMPOSE_PROJECT_NAME || 'forpro-preprod' }}
 
   # ---------------------------------------------------------------------------
   # Production deploy.
