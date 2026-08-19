@@ -27,6 +27,10 @@ services:
       - "5173:5173"
     environment:
       - NODE_ENV=development
+      - PUBLIC_CMS_BASE_URL=http://cms.localhost
+      - PUBLIC_MENU_BASE_URL=http://menu.localhost
+      # 'preprod' disables indexing (noindex + robots.txt disallow) and analytics.
+      - PUBLIC_ENVIRONMENT=development
     # Make `cms.localhost` resolvable from inside the container so SSR fetches
     # hit Traefik on the Docker host (same URL the browser uses).
     extra_hosts:
@@ -52,6 +56,9 @@ services:
       - "5174:5173"
     environment:
       - NODE_ENV=development
+      - PUBLIC_CMS_BASE_URL=http://cms.localhost
+      # 'preprod' disables indexing (noindex + robots.txt disallow) and analytics.
+      - PUBLIC_ENVIRONMENT=development
     # Make `cms.localhost` resolvable from inside the container so SSR fetches
     # hit Traefik on the Docker host (same URL the browser uses).
     extra_hosts:
@@ -78,6 +85,8 @@ services:
     environment:
       - NODE_ENV=development
       - NUXT_PUBLIC_CMS_BASE_URL=http://cms.localhost
+      # 'preprod' disables indexing (noindex + robots.txt disallow).
+      - NUXT_PUBLIC_ENVIRONMENT=development
     extra_hosts:
       - "cms.localhost:host-gateway"
     restart: unless-stopped
