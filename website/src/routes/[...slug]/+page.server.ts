@@ -1,7 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
-import { variables } from '$lib/utils/constants';
+import { CMS_SERVER_BASE_URL } from '$lib/server/cms';
 import { fetchFromAPI, getHeaders } from '$lib/utils/shared';
-import type { CmsContent } from '$lib/interfaces/cms-content';
+import type { CmsContent } from '$lib/interfaces/content';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	// All pages are flat in Kirby; only the last segment is the real slug.
 	const slug = segments.at(-1) ?? 'home';
 
-	const request = new Request(`${variables.CMS_BASE_URL}/pages/${slug}.json`, {
+	const request = new Request(`${CMS_SERVER_BASE_URL}/pages/${slug}.json`, {
 		headers: getHeaders()
 	});
 
