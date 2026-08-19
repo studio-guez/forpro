@@ -1,0 +1,62 @@
+label:
+  en: CTA
+  fr: CTA
+type: structure
+max: 1
+columns:
+  label:
+    width: 1/5
+  page:
+    width: 1/5
+  url:
+    width: 1/5
+  email:
+    width: 1/5
+  icon:
+    width: 1/5
+fields:
+  label:
+    label: { en: Label, fr: Libellé }
+    type: text
+  type:
+    label: { en: Type, fr: Type }
+    type: select
+    default: page
+    required: true
+    options:
+      - value: page
+        text: { en: Page, fr: Page }
+      - value: url
+        text: { en: External URL, fr: URL externe }
+      - value: mailto
+        text: { en: Email, fr: Email }
+  page:
+    label: { en: Page, fr: Page }
+    type: pages
+    link: false
+    max: 1
+    query: site.index.filterBy('template', 'page')
+    text: "{{ page.breadcrumbTitle }}"
+    when:
+      type: page
+  url:
+    label: { en: URL, fr: URL }
+    type: url
+    when:
+      type: url
+  email:
+    label: { en: Email, fr: Email }
+    type: email
+    when:
+      type: mailto
+  icon:
+    label: { en: Icon, fr: Icône }
+    type: select
+    placeholder: { en: None, fr: Aucun }
+    options:
+      - value: arrow
+        text: { en: "→", fr: "→" }
+      - value: plus
+        text: { en: "+", fr: "+" }
+      - value: email
+        text: { en: Email, fr: Email }

@@ -23,7 +23,6 @@ services:
     user: "1000:1000"
     volumes:
       - ./restaurant:/app
-      - restaurant_node_modules:/app/node_modules
     ports:
       - "5173:5173"
     environment:
@@ -49,7 +48,6 @@ services:
     user: "1000:1000"
     volumes:
       - ./website:/app
-      - website_node_modules:/app/node_modules
     ports:
       - "5174:5173"
     environment:
@@ -75,7 +73,6 @@ services:
     user: "1000:1000"
     volumes:
       - ./menu:/app
-      - menu_node_modules:/app/node_modules
     ports:
       - "3000:3000"
     environment:
@@ -109,24 +106,47 @@ services:
       - ./cms/site/accounts:/var/www/html/site/accounts:rw
       - ./cms/site/blueprints:/var/www/html/site/blueprints:rw
       - ./cms/site/templates:/var/www/html/site/templates:rw
-      - ./cms/site/models:/var/www/html/site/models:rw
       - ./cms/utils:/var/www/html/utils:rw
       - ./cms/index.php:/var/www/html/index.php:rw
       - ./cms/media:/var/www/html/media:rw
+      - ./cms/_custom-panel:/var/www/html/_custom-panel:rw
       - kirby_cache:/var/www/html/site/cache:rw
       - kirby_sessions:/var/www/html/site/sessions:rw
     env_file:
       - ./cms/.env
+    environment:
+      - KIRBY_FRONTEND_URL=http://website.localhost
+      - KIRBY_VUE_COMPILER=true
+      - KIRBY_DEBUG=true
+      - KIRBY_SMTP_HOST=mailpit
+      - KIRBY_SMTP_PORT=1025
+      - KIRBY_SMTP_SECURITY=false
+      - KIRBY_SMTP_AUTH=false
+      - KIRBY_SMTP_USERNAME=
+      - KIRBY_SMTP_PASSWORD=
     ports:
       - "8000:80"
-    environment:
-      - KIRBY_DEBUG=true
     restart: unless-stopped
+    depends_on:
+      - mailpit
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.cms.rule=Host(`cms.localhost`)"
       - "traefik.http.routers.cms.entrypoints=web"
       - "traefik.http.services.cms.loadbalancer.server.port=80"
+
+  # Mailpit — catches all outgoing mail in dev (SMTP on 1025, web UI on 8025)
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mailpit.rule=Host(`mailpit.localhost`)"
+      - "traefik.http.routers.mailpit.entrypoints=web"
+      - "traefik.http.services.mailpit.loadbalancer.server.port=8025"
 
 volumes:
   kirby_cache:

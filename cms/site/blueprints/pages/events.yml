@@ -1,0 +1,21 @@
+title:
+  en: Events
+  fr: Événements
+
+icon: calendar
+
+num: zero
+
+options:
+  changeTemplate: false
+
+sections:
+  events:
+    label:
+      en: Events
+      fr: Événements
+    type: pages
+    image: false
+    templates:
+      - event
+    create: event

@@ -1,0 +1,31 @@
+label:
+  en: Theme
+  fr: Thème
+type: select
+default: default
+required: true
+options:
+  - value: default
+    text: { en: Default, fr: Défaut }
+  - value: campus
+    text: { en: Campus, fr: Campus }
+  - value: entreprendre
+    text: { en: Entreprendre, fr: Entreprendre }
+  - value: projets_jeunes
+    text: { en: Youth Projects, fr: Projets jeunes }
+  - value: tremplin_jobs
+    text: { en: Tremplin Jobs, fr: Tremplin jobs }
+  - value: soutiens
+    text: { en: Support, fr: Soutiens }
+  - value: cekale
+    text: { en: Cékalé, fr: Cékalé }
+  - value: la_ref
+    text: { en: La REF, fr: La REF }
+  - value: learninglab
+    text: { en: LearningLab, fr: LearningLab }
+  - value: foodlab
+    text: { en: FoodLab, fr: FoodLab }
+  - value: grandlab
+    text: { en: GrandLab, fr: GrandLab }
+  - value: makerlab
+    text: { en: MakerLab, fr: MakerLab }

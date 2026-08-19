@@ -1,0 +1,168 @@
+label:
+  en: Navigation
+  fr: Navigation
+icon: menu
+
+columns:
+  - width: 1/1
+    sections:
+      mainMenuSection:
+        type: fields
+        fields:
+          mainMenu:
+            label:
+              en: Main menu
+              fr: Menu principal
+            type: structure
+            help:
+              en: Links shown in the fixed header (1 level, pages or external links).
+              fr: Liens affichés dans l'en-tête fixe (1 niveau, pages ou liens externes).
+            columns:
+              label:
+                width: 1/3
+              page:
+                width: 1/3
+              url:
+                width: 1/3
+            fields:
+              label:
+                label:
+                  en: Label
+                  fr: Libellé
+                type: text
+              type:
+                label: { en: Type, fr: Type }
+                type: select
+                default: page
+                required: true
+                options:
+                  - value: page
+                    text: { en: Page, fr: Page }
+                  - value: url
+                    text: { en: External URL, fr: URL externe }
+              page:
+                label: { en: Page, fr: Page }
+                type: pages
+                link: false
+                max: 1
+                query: site.index.filterBy('template', 'page')
+                text: "{{ page.breadcrumbTitle }}"
+                when:
+                  type: page
+              url:
+                label: { en: URL, fr: URL }
+                type: url
+                when:
+                  type: url
+
+  - width: 1/2
+    sections:
+      secondaryColumn1Section:
+        type: fields
+        fields:
+          secondaryColumn1Title:
+            label:
+              en: "Column 1 — Title"
+              fr: "Colonne 1 — Titre"
+            type: text
+            required: true
+          secondaryColumn1Groups:
+            label:
+              en: "Column 1 — Groups"
+              fr: "Colonne 1 — Groupes"
+            type: blocks
+            fieldsets:
+              - navgroup
+
+  - width: 1/2
+    sections:
+      secondaryColumn2Section:
+        type: fields
+        fields:
+          secondaryColumn2Title:
+            label:
+              en: "Column 2 — Title"
+              fr: "Colonne 2 — Titre"
+            type: text
+            required: true
+          secondaryColumn2Groups:
+            label:
+              en: "Column 2 — Groups"
+              fr: "Colonne 2 — Groupes"
+            type: blocks
+            fieldsets:
+              - navgroup
+
+  - width: 1/2
+    sections:
+      secondaryColumn3Section:
+        type: fields
+        fields:
+          secondaryColumn3Title:
+            label:
+              en: "Column 3 — Title"
+              fr: "Colonne 3 — Titre"
+            type: text
+            required: true
+          secondaryColumn3Groups:
+            label:
+              en: "Column 3 — Groups"
+              fr: "Colonne 3 — Groupes"
+            type: blocks
+            fieldsets:
+              - navgroup
+
+  - width: 1/2
+    sections:
+      secondaryColumn4Section:
+        type: fields
+        fields:
+          secondaryColumn4Title:
+            label:
+              en: "Column 4 — Title"
+              fr: "Colonne 4 — Titre"
+            type: text
+            required: true
+          secondaryColumn4Groups:
+            label:
+              en: "Column 4 — Groups"
+              fr: "Colonne 4 — Groupes"
+            type: blocks
+            fieldsets:
+              - navgroup
+
+  - width: 1/1
+    sections:
+      externalLinksSection:
+        type: fields
+        fields:
+          externalLinksTitle:
+            label:
+              en: "Other external links — Title"
+              fr: "Autres liens externes — Titre"
+            type: text
+            required: true
+          externalLinks:
+            label:
+              en: Other external links
+              fr: Autres liens externes
+            type: structure
+            help:
+              en: Shown in the 5th column of the burger menu.
+              fr: Affichés dans la 5e colonne du menu burger.
+            columns:
+              label:
+                width: 1/2
+              url:
+                width: 1/2
+            fields:
+              label:
+                label:
+                  en: Label
+                  fr: Libellé
+                type: text
+                required: true
+              url:
+                label: { en: URL, fr: URL }
+                type: url
+                required: true

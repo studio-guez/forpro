@@ -1,0 +1,66 @@
+name:
+  en: Link group
+  fr: Groupe de liens
+icon: list-bullet
+preview: fields
+fields:
+  title:
+    label:
+      en: Group title
+      fr: Titre du groupe
+    type: text
+  links:
+    label:
+      en: Links
+      fr: Liens
+    type: structure
+    columns:
+      label:
+        width: 1/4
+      page:
+        width: 1/4
+      url:
+        width: 1/4
+      level:
+        width: 1/4
+    fields:
+      label:
+        label:
+          en: Label
+          fr: Libellé
+        type: text
+      type:
+        label: { en: Type, fr: Type }
+        type: select
+        default: page
+        options:
+          - value: page
+            text: { en: Page, fr: Page }
+          - value: url
+            text: { en: External URL, fr: URL externe }
+      page:
+        label: { en: Page, fr: Page }
+        type: pages
+        link: false
+        max: 1
+        query: site.index.filterBy('template', 'page')
+        text: "{{ page.breadcrumbTitle }}"
+        when:
+          type: page
+      url:
+        label: { en: URL, fr: URL }
+        type: url
+        when:
+          type: url
+      level:
+        label:
+          en: Level
+          fr: Niveau
+        type: select
+        default: "1"
+        required: true
+        options:
+          - value: "1"
+            text: { en: Level 1, fr: Niveau 1 }
+          - value: "2"
+            text: { en: Level 2, fr: Niveau 2 }

@@ -20,38 +20,96 @@ tabs:
       - width: 2/3
 
         sections:
-          global:
-            create: false
-            label: "Global"
-            type: pages
-            templates:
-              - site-info
-              - home
-
-          short_links_list:
-            create: false
-            label: "Liste de liens courts"
-            type: pages
-            templates:
-              - short-links-list
-
           events:
-            create: false
             label: "Événements"
             type: pages
+            image:
+              query: page.cover.toFile
+              cover: true
+            parent: site.find("events")
             templates:
-              - forpro-events
+              - event
+            create: event
 
-          pages:
+          projects:
+            label: "Projets"
             type: pages
             image:
+              query: page.cover.toFile
               cover: true
-            limit: 100
+            parent: site.find("projects")
             templates:
-              - forpro
+              - project
+            create: project
+
+          faq:
+            label: "FAQ"
+            type: pages
+            image: false
+            sortable: false
+            max: 1
+            templates:
+              - faq
+
+          pages:
+            label: "Pages"
+            type: pages
+            image:
+              query: page.cover.toFile
+              cover: true
+            text: "{{ page.breadcrumbTitle }}"
+            sortBy: breadcrumbtitle asc
+            sortable: false
+            parent: site.find("pages")
+            templates:
+              - page
+            create: page
+  taxonomies:
+    label:
+      en: Taxonomies
+      fr: Taxonomies
+    icon: tag
+    columns:
+      - width: 1/2
+        sections:
+          event_types:
+            type: pages
+            image: false
+            label:
+              en: Event types
+              fr: Types d'événement
+            templates:
+              - event-type
+            parent: site.find("taxonomies").find("event-types")
+      - width: 1/2
+        sections:
+          domains:
+            type: pages
+            image: false
+            label:
+              en: Domains
+              fr: Domaines
+            templates:
+              - domain
+            parent: site.find("taxonomies").find("domains")
+      - width: 1/2
+        sections:
+          project_themes:
+            type: pages
+            image: false
+            label:
+              en: Project themes
+              fr: Thématiques de projet
+            templates:
+              - project-theme
+            parent: site.find("taxonomies").find("project-themes")
+
+  navigation: tabs/navigation
+
+  social: tabs/social
+
+  general: tabs/general
+
+  seo: tabs/seo-site
 
   restaurant: tabs/restaurant
-
-  booking: tabs/booking
-
-  seo: seo/site

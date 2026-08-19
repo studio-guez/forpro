@@ -1,0 +1,9 @@
+title: Types d'événement
+
+extends: pages/taxonomy
+
+sections:
+  terms:
+    label: Types d'événement
+    templates:
+      - event-type

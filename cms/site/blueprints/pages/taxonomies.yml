@@ -1,0 +1,26 @@
+title: Taxonomies
+
+icon: tag
+
+num: zero
+
+# Taxonomies are managed by editing content files directly, not from the panel.
+options:
+  changeSlug: false
+  changeStatus: false
+  changeTemplate: false
+  changeTitle: false
+  create: false
+  delete: false
+  duplicate: false
+  move: false
+
+sections:
+  groups:
+    type: pages
+    image: false
+    sortable: false
+    create: false
+    template: 
+      - taxonomy
+    label: Groupes de taxonomies
