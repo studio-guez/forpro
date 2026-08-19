@@ -392,6 +392,10 @@ jobs:
           release_id:           ${{ needs.meta.outputs.release_id }}
           built_services:       ${{ needs.changes.outputs.services_csv }}
           compose_project_name: ${{ secrets.COMPOSE_PROJECT_NAME || 'forpro-preprod' }}
+          cms_http_port:        ${{ vars.CMS_HTTP_PORT }}
+          website_http_port:    ${{ vars.WEBSITE_HTTP_PORT }}
+          restaurant_http_port: ${{ vars.RESTAURANT_HTTP_PORT }}
+          menu_http_port:       ${{ vars.MENU_HTTP_PORT }}
 
   # ---------------------------------------------------------------------------
   # Production deploy.
@@ -420,3 +424,7 @@ jobs:
           release_id:           ${{ needs.meta.outputs.release_id }}
           built_services:       ${{ needs.changes.outputs.services_csv }}
           compose_project_name: ${{ secrets.COMPOSE_PROJECT_NAME || 'forpro' }}
+          cms_http_port:        ${{ vars.CMS_HTTP_PORT }}
+          website_http_port:    ${{ vars.WEBSITE_HTTP_PORT }}
+          restaurant_http_port: ${{ vars.RESTAURANT_HTTP_PORT }}
+          menu_http_port:       ${{ vars.MENU_HTTP_PORT }}

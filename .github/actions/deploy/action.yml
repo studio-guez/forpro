@@ -33,6 +33,22 @@ inputs:
     description: Docker Compose project name (e.g. forpro or forpro-preprod)
     required: false
     default: forpro
+  cms_http_port:
+    description: Loopback port published for cms. Overrides shared/deploy.env when set.
+    required: false
+    default: ""
+  website_http_port:
+    description: Loopback port published for website. Overrides shared/deploy.env when set.
+    required: false
+    default: ""
+  restaurant_http_port:
+    description: Loopback port published for restaurant. Overrides shared/deploy.env when set.
+    required: false
+    default: ""
+  menu_http_port:
+    description: Loopback port published for menu. Overrides shared/deploy.env when set.
+    required: false
+    default: ""
 
 runs:
   using: composite
@@ -49,6 +65,10 @@ runs:
         BUILT_SERVICES:       ${{ inputs.built_services }}
         COMPOSE_PROJECT_NAME: ${{ inputs.compose_project_name }}
         REPO:                 ${{ github.repository }}
+        CMS_HTTP_PORT_IN:        ${{ inputs.cms_http_port }}
+        WEBSITE_HTTP_PORT_IN:    ${{ inputs.website_http_port }}
+        RESTAURANT_HTTP_PORT_IN: ${{ inputs.restaurant_http_port }}
+        MENU_HTTP_PORT_IN:       ${{ inputs.menu_http_port }}
       run: |
         set -euo pipefail
 
@@ -123,6 +143,28 @@ runs:
           echo "[deploy] $SHARED_DIR/deploy.env not found – copying deploy.env.example (edit if the default loopback ports collide)"
           cp "$RELEASE_DIR/deploy.env.example" "$SHARED_DIR/deploy.env"
         fi
+
+        # ── Loopback port overrides ──────────────────────────────────────────
+        # Ports set on the workflow environment win over shared/deploy.env, so
+        # two environments sharing a host can be given non-colliding ports
+        # without editing files on the server. They are written back to
+        # deploy.env to keep manual `docker compose --env-file` runs in sync.
+        for svc in $ALL_SERVICES; do
+          KEY="$(echo "$svc" | tr '[:lower:]' '[:upper:]')_HTTP_PORT"
+          IN_VAR="${KEY}_IN"
+          PORT="${!IN_VAR:-}"
+          [ -n "$PORT" ] || continue
+          case "$PORT" in
+            ''|*[!0-9]*) echo "::error::$KEY must be a port number (got '$PORT')"; exit 1 ;;
+          esac
+          export "$KEY=$PORT"
+          if grep -qE "^${KEY}=" "$SHARED_DIR/deploy.env"; then
+            sed -i -E "s|^${KEY}=.*|${KEY}=${PORT}|" "$SHARED_DIR/deploy.env"
+          else
+            printf '%s=%s\n' "$KEY" "$PORT" >> "$SHARED_DIR/deploy.env"
+          fi
+          echo "[deploy] $svc published on 127.0.0.1:$PORT"
+        done
 
         # Seed the kirby-foodlab data files on first deploy (the plugin expects
         # them to exist; real data is rsynced over them afterwards).
