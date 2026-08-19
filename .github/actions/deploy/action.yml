@@ -58,6 +58,13 @@ runs:
         CURRENT="$DEPLOY_PATH/current"
         ALL_SERVICES="cms website restaurant menu"
 
+        # An unset DEPLOY_PATH secret would silently resolve to /releases,
+        # /shared, ... at the filesystem root.
+        case "$DEPLOY_PATH" in
+          /*/*) ;;
+          *) echo "::error::deploy_path must be an absolute path with at least one level (got '$DEPLOY_PATH')"; exit 1 ;;
+        esac
+
         is_built() {
           case ",$BUILT_SERVICES," in
             *",$1,"*) return 0 ;;
@@ -85,6 +92,20 @@ runs:
           "$SHARED_DIR/cms/site/cache" \
           "$SHARED_DIR/cms/site/plugins/kirby-foodlab/data" \
           "$SHARED_DIR/cms/site/plugins/kirby-menu-du-jour/data"
+
+        # The shared directory holds the content, accounts and backups of one
+        # environment. Stamp it on first deploy and refuse to reuse it from
+        # another compose project, so preprod can never land on production state.
+        STAMP="$SHARED_DIR/.compose-project"
+        if [ -f "$STAMP" ]; then
+          OWNER=$(cat "$STAMP")
+          if [ "$OWNER" != "$COMPOSE_PROJECT_NAME" ]; then
+            echo "::error::$SHARED_DIR belongs to compose project '$OWNER' but this deploy runs as '$COMPOSE_PROJECT_NAME'. Refusing to mix environments."
+            exit 1
+          fi
+        else
+          echo "$COMPOSE_PROJECT_NAME" > "$STAMP"
+        fi
 
         if [ ! -f "$SHARED_DIR/cms.env" ]; then
           echo "[deploy] $SHARED_DIR/cms.env not found – copying cms/.env.example (edit with real values, then restart the cms container)"
