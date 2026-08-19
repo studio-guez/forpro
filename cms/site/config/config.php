@@ -28,14 +28,22 @@ return [
     'favicon' => [
         'resize' => [16, 32, 48, 180, 192, 512],
     ],
-    "tobimori.seo.canonicalBase" => $frontendUrl,
-    "tobimori.seo.lang" => "fr_CH",
-    // /robots.txt: disallow everything when explicitly turned off (e.g. preprod),
-    // editable in cms.env without rebuilding the image.
-    "tobimori.seo.robots.index" => getenv('KIRBY_ROBOTS_INDEX') !== 'false',
-    "tobimori.seo.default.metaTemplate" => fn($page) => $page->site()->title()->isNotEmpty()
-        ? '{{ title }} - {{ site.title }}'
-        : '{{ title }}',
+    'tobimori' => [
+        'seo' => [
+            'canonicalBase' => $frontendUrl,
+            'lang' => 'fr_CH',
+            'robots' => [
+                // disallow everything when explicitly turned off (e.g. preprod),
+                // editable in cms.env without rebuilding the image.
+                'index' => getenv('KIRBY_ROBOTS_INDEX') !== 'false',
+            ],
+            'default' => [
+                'metaTemplate' => fn($page) => $page->site()->title()->isNotEmpty()
+                    ? '{{ title }} - {{ site.title }}'
+                    : '{{ title }}',
+            ],
+        ],
+    ],
     "url_frontend" => $frontendUrl . "/",
     'content' => [
         'salt' => getenv('KIRBY_CONTENT_SALT'),
