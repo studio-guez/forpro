@@ -263,11 +263,19 @@ jobs:
         working-directory: ${{ matrix.service }}
         run: pnpm install --frozen-lockfile
 
+      # This job only checks that the frontends compile and its output is
+      # discarded, so the production values are just a realistic default. The
+      # deployed values are baked in by the build job from the repo variables.
       - name: Build
         if: matrix.service != 'cms'
         working-directory: ${{ matrix.service }}
         env:
           NUXT_TELEMETRY_DISABLED: '1'
+          PUBLIC_CMS_BASE_URL: https://api.for-pro.ch
+          PUBLIC_MENU_BASE_URL: https://menus.for-pro.ch
+          PUBLIC_ENVIRONMENT: production
+          NUXT_PUBLIC_CMS_BASE_URL: https://api.for-pro.ch
+          NUXT_PUBLIC_ENVIRONMENT: production
         run: pnpm run build
 
   # ---------------------------------------------------------------------------
@@ -339,13 +347,16 @@ jobs:
             case "${{ matrix.service }}" in
               website)
                 echo "PUBLIC_CMS_BASE_URL=$CMS_URL"
+                echo "PUBLIC_ENVIRONMENT=$TARGET"
                 ;;
               restaurant)
                 echo "PUBLIC_CMS_BASE_URL=$CMS_URL"
                 echo "PUBLIC_MENU_BASE_URL=$MENU_URL"
+                echo "PUBLIC_ENVIRONMENT=$TARGET"
                 ;;
               menu)
                 echo "NUXT_PUBLIC_CMS_BASE_URL=$CMS_URL"
+                echo "NUXT_PUBLIC_ENVIRONMENT=$TARGET"
                 ;;
             esac
             echo "EOF"
