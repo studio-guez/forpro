@@ -4,17 +4,20 @@
 # (.github/actions/deploy) and started from $DEPLOY_PATH/current/.
 #
 # - Images are pre-built by CI and pulled from GHCR — nothing is built here.
-# - Every service publishes only on 127.0.0.1. TLS termination, hostname
-#   routing and certificates are handled by the reverse proxy (nginx)
-#   installed on the host, outside this project.
+# - Every service publishes on ${BIND_ADDRESS} only (127.0.0.1 by default).
+#   TLS termination, hostname routing and certificates are handled by the
+#   reverse proxy (nginx), outside this project.
 # - All mutable state lives under ${SHARED_PATH} on the host, outside any
 #   release directory, so image rebuilds and rollbacks never touch it.
 #
 # Variables:
 # - SHARED_PATH, *_IMAGE_TAG are exported by the deploy action.
-# - *_HTTP_PORT come from ${SHARED_PATH}/deploy.env (passed via --env-file), and
-#   can be overridden per environment by the {CMS,WEBSITE,RESTAURANT,MENU}_HTTP_PORT
-#   GitHub Actions variables, which the deploy action exports.
+# - BIND_ADDRESS and *_HTTP_PORT come from ${SHARED_PATH}/deploy.env (passed via
+#   --env-file); the ports can be overridden per environment by the
+#   {CMS,WEBSITE,RESTAURANT,MENU}_HTTP_PORT GitHub Actions variables, which the
+#   deploy action exports.
+# - Set BIND_ADDRESS to the server's private IP when the reverse proxy runs on
+#   another machine; keep 127.0.0.1 when it runs on the same host.
 
 services:
 
@@ -22,7 +25,7 @@ services:
   cms:
     image: ghcr.io/studio-guez/forpro/cms:${CMS_IMAGE_TAG:-latest}
     ports:
-      - "127.0.0.1:${CMS_HTTP_PORT:-8080}:80"
+      - "${BIND_ADDRESS:-127.0.0.1}:${CMS_HTTP_PORT:-8080}:80"
     # Ne monter QUE l'état mutable : le code vient de l'image. Bind mounts (et non
     # volumes nommés) pour que le contenu reste rsyncable/sauvegardable depuis l'hôte.
     volumes:
@@ -51,7 +54,7 @@ services:
   website:
     image: ghcr.io/studio-guez/forpro/website:${WEBSITE_IMAGE_TAG:-latest}
     ports:
-      - "127.0.0.1:${WEBSITE_HTTP_PORT:-8081}:3000"
+      - "${BIND_ADDRESS:-127.0.0.1}:${WEBSITE_HTTP_PORT:-8081}:3000"
     # SSR fetches the API over the Docker network instead of hairpinning through
     # the public domain (nginx). Kirby still emits public URLs, see KIRBY_URL.
     environment:
@@ -70,7 +73,7 @@ services:
   restaurant:
     image: ghcr.io/studio-guez/forpro/restaurant:${RESTAURANT_IMAGE_TAG:-latest}
     ports:
-      - "127.0.0.1:${RESTAURANT_HTTP_PORT:-8082}:3000"
+      - "${BIND_ADDRESS:-127.0.0.1}:${RESTAURANT_HTTP_PORT:-8082}:3000"
     # robots.txt as a file bind mount so it's editable on the host without a
     # rebuild (e.g. to lock crawlers out on preprod).
     volumes:
@@ -91,7 +94,7 @@ services:
   menu:
     image: ghcr.io/studio-guez/forpro/menu:${MENU_IMAGE_TAG:-latest}
     ports:
-      - "127.0.0.1:${MENU_HTTP_PORT:-8083}:3000"
+      - "${BIND_ADDRESS:-127.0.0.1}:${MENU_HTTP_PORT:-8083}:3000"
     # robots.txt as a file bind mount so it's editable on the host without a
     # rebuild (e.g. to lock crawlers out on preprod).
     volumes:
