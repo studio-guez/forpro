@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-// Deployment target, baked in at build time (see Dockerfile.prod / CI).
+// Deployment target, baked in at build time (see Dockerfile.prod / CI): the
+// `noindex` meta tag below is part of the static head, so NUXT_PUBLIC_ENVIRONMENT
+// must be set at build time (setting it only at runtime would change
+// `robots.txt` but not the meta tag).
 // Preprod must stay out of search engines.
 const environment = process.env.NUXT_PUBLIC_ENVIRONMENT || 'production'
 const isPreprod = environment === 'preprod'
