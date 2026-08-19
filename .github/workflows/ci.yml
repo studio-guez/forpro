@@ -303,27 +303,36 @@ jobs:
           TARGET: ${{ needs.meta.outputs.target }}
           PREPROD_CMS_BASE_URL: ${{ vars.PREPROD_CMS_BASE_URL }}
           PREPROD_MENU_BASE_URL: ${{ vars.PREPROD_MENU_BASE_URL }}
+          PRODUCTION_CMS_BASE_URL: ${{ vars.PRODUCTION_CMS_BASE_URL }}
+          PRODUCTION_MENU_BASE_URL: ${{ vars.PRODUCTION_MENU_BASE_URL }}
         run: |
           set -euo pipefail
-          PROD_CMS_URL="https://api.for-pro.ch"
-          PROD_MENU_URL="https://menus.for-pro.ch"
 
-          if [ "$TARGET" = "preprod" ]; then
-            CMS_URL="$PREPROD_CMS_BASE_URL"
-            MENU_URL="$PREPROD_MENU_BASE_URL"
-            # No fallback on purpose: these URLs are baked into the image, and a
-            # silent fallback would ship a preprod frontend wired to production.
-            if [ -z "$CMS_URL" ] || [ -z "$MENU_URL" ]; then
-              echo "::error::Set the PREPROD_CMS_BASE_URL and PREPROD_MENU_BASE_URL repository variables before deploying to preprod."
-              exit 1
-            fi
-            if [ "$CMS_URL" = "$PROD_CMS_URL" ] || [ "$MENU_URL" = "$PROD_MENU_URL" ]; then
-              echo "::warning::A preprod image is being built against a production URL ($CMS_URL / $MENU_URL)."
-            fi
-          else
-            CMS_URL="$PROD_CMS_URL"
-            MENU_URL="$PROD_MENU_URL"
+          # Public URLs are baked into the frontend bundles at build time, so a
+          # missing variable must fail rather than fall back to another
+          # environment's URL.
+          CMS_URL=""
+          MENU_URL=""
+          case "$TARGET" in
+            preprod)
+              CMS_URL="$PREPROD_CMS_BASE_URL"
+              MENU_URL="$PREPROD_MENU_BASE_URL" ;;
+            production)
+              CMS_URL="$PRODUCTION_CMS_BASE_URL"
+              MENU_URL="$PRODUCTION_MENU_BASE_URL" ;;
+          esac
+
+          PREFIX=$(echo "$TARGET" | tr '[:lower:]' '[:upper:]')
+          if [ -z "$CMS_URL" ] || [ -z "$MENU_URL" ]; then
+            echo "::error::Set the ${PREFIX}_CMS_BASE_URL and ${PREFIX}_MENU_BASE_URL repository variables before deploying to $TARGET."
+            exit 1
           fi
+          if [ "$TARGET" = "preprod" ] \
+             && { [ "$CMS_URL" = "$PRODUCTION_CMS_BASE_URL" ] || [ "$MENU_URL" = "$PRODUCTION_MENU_BASE_URL" ]; }; then
+            echo "::warning::A preprod image is being built against a production URL ($CMS_URL / $MENU_URL)."
+          fi
+
+          echo "$TARGET → CMS $CMS_URL · MENU $MENU_URL"
 
           {
             echo "list<<EOF"
