@@ -1,9 +1,9 @@
-import { variables } from '$lib/utils/constants';
+import { CMS_SERVER_BASE_URL } from '$lib/server/cms';
 import { error } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
-export const load: PageLoad = async ({ fetch }) => {
-	const res = await fetch(`${variables.CMS_BASE_URL}/api/restaurant`);
+export const load: PageServerLoad = async ({ fetch }) => {
+	const res = await fetch(`${CMS_SERVER_BASE_URL}/api/restaurant`);
 	if (!res.ok) error(502, 'Impossible de charger le contenu du site.');
 
 	let page;
