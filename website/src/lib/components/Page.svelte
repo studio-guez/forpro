@@ -1,0 +1,42 @@
+<script lang="ts">
+	import PageHero from '$lib/components/PageHero.svelte';
+	import PageIntro from '$lib/components/PageIntro.svelte';
+	import BlockModuleTitreTexteImage from '$lib/components/BlockModuleTitreTexteImage.svelte';
+	import BlockModuleCases from '$lib/components/BlockModuleCases.svelte';
+	import BlockModuleInfosPratiques from '$lib/components/BlockModuleInfosPratiques.svelte';
+	import type { Page, ModuleTitreTexteImageContent, ModuleCasesContent, ModuleInfosPratiquesContent } from '$lib/interfaces/page';
+
+	let { page }: { page: Page } = $props();
+</script>
+
+<PageHero title={page.title} overtitle={page.overtitle} theme={page.theme} cover={page.cover} />
+
+<PageIntro
+	title={page.introTitle}
+	text={page.intro}
+	layout={page.introLayout}
+	cta={page.introCta}
+	parentPage={page.parentPage}
+	theme={page.theme}
+	titleImage={page.introTitleImage}
+/>
+
+{#each page.body as block (block.id)}
+	{#if !block.isHidden}
+		{#if block.type === 'module-titre-texte-image'}
+			<BlockModuleTitreTexteImage
+				content={block.content as unknown as ModuleTitreTexteImageContent}
+				theme={page.theme}
+			/>
+		{:else if block.type === 'module-cases'}
+			<BlockModuleCases
+				content={block.content as unknown as ModuleCasesContent}
+				theme={page.theme}
+			/>
+		{:else if block.type === 'module-infos-pratiques'}
+			<BlockModuleInfosPratiques
+				content={block.content as unknown as ModuleInfosPratiquesContent}
+			/>
+		{/if}
+	{/if}
+{/each}

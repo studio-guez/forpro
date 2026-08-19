@@ -1,7 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 import { variables } from '$lib/utils/constants';
 import { fetchFromAPI, getHeaders } from '$lib/utils/shared';
-import type { Page } from '$lib/interfaces/page';
+import type { CmsContent } from '$lib/interfaces/cms-content';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ params }) => {
 		headers: getHeaders()
 	});
 
-	const page = await fetchFromAPI<Page>(request, `Failed to load page "${slug}"`);
+	const page = await fetchFromAPI<CmsContent>(request, `Failed to load page "${slug}"`);
 
 	if (!page) error(404, 'Page introuvable');
 

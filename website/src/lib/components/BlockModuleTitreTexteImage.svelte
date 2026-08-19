@@ -9,7 +9,7 @@
 
 	let { content, theme }: Props = $props();
 
-	type ThemeColors = { bg: string; text: string; accent: string; ctaHoverColor: string };
+	type ThemeColors = { bg: string; text: string; accent: string };
 
 	const themeConfig: Record<Theme, Record<Variant, ThemeColors>> = {
 		default: {
@@ -17,13 +17,11 @@
 				bg: 'var(--color-purple)',
 				text: 'var(--color-white)',        
 				accent: 'var(--color-white)',        
-				ctaHoverColor: 'var(--color-black)'      
 			},
 			inverted: { 
 				bg: 'var(--bg-grey-dark)',                         
 				text: 'var(--bg-grey-dark)',                          
 				accent: 'var(--color-blue)',         
-				ctaHoverColor: 'var(--color-white)'    
 			},
 		},
 		campus: {
@@ -31,13 +29,11 @@
 				bg: 'var(--color-blue)',
 				text: 'var(--color-white)',
 				accent: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-blue)',
 			},
 			inverted: {
 				bg: 'var(--color-white)',
 				text: 'var(--color-blue)',
 				accent: 'var(--color-blue)',
-				ctaHoverColor: 'var(--color-white)',
 			},
 		},
 		entreprendre: {
@@ -45,7 +41,6 @@
 				bg: 'var(--color-purple-light)',
 				text: 'var(--color-white)',
 				accent: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-purple-light)',
 			},
 			inverted: {
 				bg: 'var(--color-white)',
@@ -58,13 +53,11 @@
 				bg: 'var(--color-orange)',
 				text: 'var(--color-white)',
 				accent: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-orange)',
 			},
 			inverted: {
 				bg: 'var(--color-orange-light)',
 				text: 'var(--color-orange)',
 				accent: 'var(--color-orange)',
-				ctaHoverColor: 'var(--color-orange-light)',
 			},
 		},
 		tremplin_jobs: {
@@ -72,13 +65,11 @@
 				bg: 'var(--color-purple-light)',
 				text: 'var(--color-white)',
 				accent: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-purple-light)',
 			},
 			inverted: {
 				bg: 'var(--color-purple)',
 				text: 'var(--color-purple-light)',
 				accent: 'var(--color-purple-light)',
-				ctaHoverColor: 'var(--color-purple)',
 			},
 		},
 		soutiens: {
@@ -86,13 +77,11 @@
 				bg: 'var(--color-pink)',
 				text: 'var(--color-white)',
 				accent: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-pink)',
 			},
 			inverted: {
 				bg: 'var(--color-purple)',
 				text: 'var(--color-pink)',
 				accent: 'var(--color-pink)',
-				ctaHoverColor: 'var(--color-purple)',
 			},
 		},
 		cekale: {
@@ -100,13 +89,11 @@
 				bg: 'var(--color-purple)',
 				text: 'var(--color-white)',
 				accent: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-purple)',
 			},
 			inverted: {
 				bg: 'var(--color-purple-pale)',
 				text: 'var(--color-purple)',
 				accent: 'var(--color-purple)',
-				ctaHoverColor: 'var(--color-purple-pale)',
 			},
 		},
 		la_ref: {
@@ -114,13 +101,11 @@
 				bg: 'var(--color-pink)',
 				text: 'var(--color-white)',
 				accent: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-pink)',
 			},
 			inverted: {
 				bg: 'var(--color-purple)',
 				text: 'var(--color-pink)',
 				accent: 'var(--color-pink)',
-				ctaHoverColor: 'var(--color-purple)',
 			},
 		},
 		learninglab: {
@@ -128,13 +113,11 @@
 				bg: 'var(--color-teal)',
 				text: 'var(--color-white)',
 				accent: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-teal)',
 			},
 			inverted: {
 				bg: 'var(--color-teal-light)',
 				text: 'var(--color-teal)',
 				accent: 'var(--color-teal)',
-				ctaHoverColor: 'var(--color-teal-light)',
 			},
 		},
 		foodlab: {
@@ -142,13 +125,11 @@
 				bg: 'var(--color-orange)',
 				text: 'var(--color-white)',
 				accent: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-orange)',
 			},
 			inverted: {
 				bg: 'var(--color-orange-light)',
 				text: 'var(--color-orange)',
 				accent: 'var(--color-orange)',
-				ctaHoverColor: 'var(--color-orange-light)',
 			},
 		},
 		grandlab: {
@@ -156,13 +137,11 @@
 				bg: 'var(--color-red)',
 				text: 'var(--color-white)',
 				accent: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-red)',
 			},
 			inverted: {
 				bg: 'var(--color-orange-light)',
 				text: 'var(--color-red)',
 				accent: 'var(--color-red)',
-				ctaHoverColor: 'var(--color-orange-light)',
 			},
 		},
 		makerlab: {
@@ -170,13 +149,11 @@
 				bg: 'var(--color-grey-dark)',
 				text: 'var(--color-white)',
 				accent: 'var(--color-white)',
-				ctaHoverColor: 'var(--color-grey-dark)',
 			},
 			inverted: {
 				bg: 'var(--color-grey-light)',
 				text: 'var(--color-grey-dark)',
 				accent: 'var(--color-grey-dark)',
-				ctaHoverColor: 'var(--color-grey-light)',
 			},
 		},
 	};
@@ -184,6 +161,10 @@
 	const colors = $derived(themeConfig[theme][content.variant]);
 	const isImageLeft = $derived(content.imagePosition === 'left');
 	const hasBackground = $derived(!!colors.bg && colors.bg !== 'transparent' && colors.bg !== 'var(--color-white)');
+
+	// A white accent means the block is drawn on a coloured background: the cta is inverted onto it.
+	const ctaInverted = $derived(colors.accent === 'var(--color-white)');
+	const ctaColor = $derived(ctaInverted ? colors.bg : colors.accent);
 
 	const uid = $props.id();
 	const titleId = `module-titre-texte-image-${uid}`;
@@ -216,7 +197,7 @@
 				{@html content.description}
 			</div>
 			{#if content.cta}
-				<CtaLink cta={content.cta} color={colors.accent} hoverColor={colors.ctaHoverColor} />
+				<CtaLink cta={content.cta} color={ctaColor} inverted={ctaInverted} />
 			{/if}
 		</div>
 	</div>

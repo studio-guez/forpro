@@ -1,0 +1,6 @@
+extends: fields/taxonomies/taxonomy
+label:
+  en: FAQ Categories
+  fr: Catégories de FAQ
+options:
+  query: site.find("taxonomies").find("faq-categories").children

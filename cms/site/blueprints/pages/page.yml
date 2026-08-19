@@ -77,3 +77,4 @@ tabs:
                 fieldsets:
                   - module-titre-texte-image
                   - module-cases
+                  - module-infos-pratiques

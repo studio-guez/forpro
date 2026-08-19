@@ -1,3 +1,9 @@
+import type { TaxonomyTerm } from '$lib/interfaces/taxonomy';
+
+// Resolve a taxonomy term to a CSS color, falling back to teal when unset.
+export const termColor = (term: TaxonomyTerm): string =>
+	term.color ? `var(--color-${term.color})` : 'var(--color-teal)';
+
 const headers = new Headers();
 headers.append('Content-Type', 'application/json');
 

@@ -117,7 +117,7 @@
 					aria-label="Rechercher"
 					tabindex={searchOpen ? undefined : -1}
 					onblur={() => (searchOpen = false)}
-					class="text-body-2 font-bold text-blue bg-transparent border-0 min-w-0 w-0 opacity-0 group-has-[#search-button:hover]:w-48 group-has-[#search-button:hover]:opacity-100 group-has-[#search-button:hover]:mr-3 focus:w-48 focus:opacity-100 focus:mr-3 transition-all duration-300 ease-out placeholder:text-blue/50 focus:ring-0 focus:outline-none peer"
+					class="text-body-2 font-bold text-blue bg-transparent border-0 min-w-0 w-0 opacity-0 group-has-[#search-button:hover]:w-48 group-has-[#search-button:hover]:opacity-100 focus:w-48 focus:opacity-100 transition-all duration-300 ease-out placeholder:text-blue/50 focus:ring-0 focus:outline-none peer"
 				/>
 				<button
 					type="button"
@@ -240,3 +240,17 @@
 		</nav>
 	{/if}
 </header>
+
+<style>
+	#search-input::-webkit-search-cancel-button {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 1em;
+		height: 1em;
+		/* currentColor = the input's text color (blue) */
+		background-color: currentColor;
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='3' stroke-linecap='round' d='M5 5l14 14M19 5L5 19'/%3E%3C/svg%3E")
+			no-repeat center / contain;
+		cursor: pointer;
+	}
+</style>
