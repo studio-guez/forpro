@@ -10,13 +10,20 @@ RUN pnpm install
 
 COPY . .
 
-# SvelteKit inlines PUBLIC_* env vars at build time. Real environment
-# variables take precedence over .env.production, so CI can override the
-# committed defaults per deployment target (e.g. preprod domains).
-ARG PUBLIC_CMS_BASE_URL=https://api.for-pro.ch
-ENV PUBLIC_CMS_BASE_URL=$PUBLIC_CMS_BASE_URL
+# SvelteKit inlines PUBLIC_* env vars at build time, so these are deliberately
+# left without defaults: the values come from the PREPROD_*/PRODUCTION_*
+# repository variables in CI, and a missing one must fail rather than silently
+# bake another environment's URL into the bundle.
+# PUBLIC_ENVIRONMENT is 'preprod' or 'production'; 'preprod' disables indexing
+# (noindex + robots.txt disallow) and Matomo.
+ARG PUBLIC_CMS_BASE_URL
+ARG PUBLIC_ENVIRONMENT
+ENV PUBLIC_CMS_BASE_URL=$PUBLIC_CMS_BASE_URL \
+    PUBLIC_ENVIRONMENT=$PUBLIC_ENVIRONMENT
 
-RUN pnpm run build
+RUN [ -n "$PUBLIC_CMS_BASE_URL" ] && [ -n "$PUBLIC_ENVIRONMENT" ] \
+      || { echo "Missing build arg: PUBLIC_CMS_BASE_URL / PUBLIC_ENVIRONMENT" >&2; exit 1; } \
+    && pnpm run build
 
 FROM node:24-alpine
 
