@@ -133,6 +133,13 @@ runs:
           chmod 660 "$SHARED_DIR/cms.env"
         fi
 
+        # The frontends fetch the API over the internal network, so Kirby must
+        # pin its base URL — otherwise it hands out http://cms/media/… links.
+        if ! grep -qE '^KIRBY_URL=.+' "$SHARED_DIR/cms.env"; then
+          echo "::error::$SHARED_DIR/cms.env has no KIRBY_URL. Set it to the public CMS URL (e.g. https://api.for-pro.ch), otherwise media URLs served to browsers point at the internal container host."
+          exit 1
+        fi
+
         # Seed an empty Kirby license file: compose bind-mounts it as a file, so
         # it must exist on the host (Docker would otherwise create a directory).
         # The real license is rsynced/registered manually and persists here.
