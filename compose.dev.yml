@@ -124,9 +124,11 @@ services:
     env_file:
       - ./cms/.env
     environment:
-      - KIRBY_FRONTEND_URL=http://website.localhost
       - KIRBY_VUE_COMPILER=true
+      - KIRBY_ROBOTS_INDEX=false
       - KIRBY_DEBUG=true
+      - KIRBY_URL=http://cms.localhost
+      - KIRBY_FRONTEND_URL=http://website.localhost
       - KIRBY_SMTP_HOST=mailpit
       - KIRBY_SMTP_PORT=1025
       - KIRBY_SMTP_SECURITY=false
