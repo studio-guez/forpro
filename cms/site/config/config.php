@@ -30,6 +30,9 @@ return [
     ],
     "tobimori.seo.canonicalBase" => $frontendUrl,
     "tobimori.seo.lang" => "fr_CH",
+    // /robots.txt: disallow everything when explicitly turned off (e.g. preprod),
+    // editable in cms.env without rebuilding the image.
+    "tobimori.seo.robots.index" => getenv('KIRBY_ROBOTS_INDEX') !== 'false',
     "tobimori.seo.default.metaTemplate" => fn($page) => $page->site()->title()->isNotEmpty()
         ? '{{ title }} - {{ site.title }}'
         : '{{ title }}',
