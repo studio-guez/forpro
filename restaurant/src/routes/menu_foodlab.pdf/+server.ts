@@ -1,9 +1,10 @@
 import type { RequestHandler } from './$types';
+import { CMS_SERVER_BASE_URL, toInternalUrl } from '$lib/server/cms';
 import { PUBLIC_CMS_BASE_URL } from '$env/static/public';
 
 // Kirby's media hash changes on every upload, so resolve the current URL via the API.
 export const GET: RequestHandler = async ({ fetch }) => {
-	const apiRes = await fetch(`${PUBLIC_CMS_BASE_URL}/api/restaurant`);
+	const apiRes = await fetch(`${CMS_SERVER_BASE_URL}/api/restaurant`);
 	if (!apiRes.ok) {
 		return new Response(null, { status: 502 });
 	}
@@ -15,7 +16,7 @@ export const GET: RequestHandler = async ({ fetch }) => {
 		return new Response(null, { status: 404 });
 	}
 
-	const response = await fetch(pdfUrl);
+	const response = await fetch(toInternalUrl(pdfUrl));
 
 	if (!response.ok) {
 		return new Response(null, { status: response.status });
