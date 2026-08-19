@@ -10,10 +10,12 @@ A multi-service platform running Kirby CMS (API), a restaurant frontend, a websi
 ├── website/        SvelteKit 2.0 / Svelte 5 frontend (Node 24, pnpm)
 ├── menu/           Nuxt 4 daily-menus screens app (Node 24, pnpm)
 ├── compose.dev.yml Docker Compose for local development
-└── compose.prod.yml Docker Compose for production
+└── compose.prod.yml Docker Compose for the deployed stack (preprod & production)
 ```
 
-Services are routed through **Traefik** reverse proxy:
+In **development**, services are routed through the **Traefik** reverse proxy.
+In **preprod/production**, each container publishes only on a loopback port and
+the host-level nginx handles domains and TLS (see [Deployment architecture](#deployment-architecture)).
 
 | Service    | Local URL                   | Production URL             |
 | ---------- | --------------------------- | -------------------------- |
@@ -21,6 +23,7 @@ Services are routed through **Traefik** reverse proxy:
 | Restaurant | http://restaurant.localhost | https://foodlab.for-pro.ch |
 | Website    | http://website.localhost    | https://for-pro.ch         |
 | Menu       | http://menu.localhost       | https://menus.for-pro.ch   |
+| Mailpit    | http://mailpit.localhost    | — (dev only)               |
 | Traefik    | http://localhost:8888       | —                          |
 
 ### Menu app (Nuxt)
@@ -32,8 +35,8 @@ client-only SPA (`ssr: false`) that fetches the CMS site routes exposed by the
 The CMS base URL is not hardcoded: it comes from the `cmsBaseUrl` public runtime
 config in `menu/nuxt.config.ts`, overridable with the `NUXT_PUBLIC_CMS_BASE_URL`
 environment variable (set to `http://cms.localhost` in `compose.dev.yml`). Because the
-app is a SPA, the value is baked in at build time in production — `compose.prod.yml`
-passes it as a build arg.
+app is a SPA, the value is baked in at build time in production — the CI build job
+passes it as a Docker build arg.
 
 The restaurant frontend links to this app through `PUBLIC_MENU_BASE_URL`
 (`restaurant/.env.development` / `restaurant/.env.production`).
@@ -43,13 +46,13 @@ The restaurant frontend links to this app through `PUBLIC_MENU_BASE_URL`
 | Plugin             | Notes                                                    |
 | ------------------ | -------------------------------------------------------- |
 | image-guard        | Downscales oversized uploads, converts CMYK JPEGs to RGB |
-| kirby-calendars    | Calendar data (critical)                                 |
 | kirby-foodlab      | Requires Chromium Headless + Puppeteer for PDFs          |
 | kirby-menu-du-jour | Menu management                                          |
 | kirby-seo          | SEO utilities                                            |
 
-ForPro page types, blocks and the `booking` route live directly in `cms/site/`
-(blueprints, models, templates, config) rather than in a plugin.
+The website is served from `cms/site/` (blueprints, templates, config). The
+restaurant and menu stacks live entirely in their plugins
+(`kirby-foodlab`, `kirby-menu-du-jour`).
 
 ## Local Development
 
@@ -65,45 +68,32 @@ git clone https://github.com/studio-guez/forpro.git
 cd forpro/
 ```
 
-### 2. Configure local hostnames
-
-Add the following line to your `/etc/hosts` file:
-
-```
-127.0.0.1 restaurant.localhost website.localhost cms.localhost menu.localhost
-```
-
-### 3. Set up environment variables
+### 2. Set up environment variables
 
 ```bash
 cp cms/.env.example cms/.env
 ```
 
-Then edit `cms/.env` and set unique random values for `KIRBY_CONTENT_SALT` and `KIRBY_COOKIE_KEY` (generate with `openssl rand -hex 32`). Set `KIRBY_VUE_COMPILER` to `true` for local development.
+Then edit `cms/.env` and set unique random values for `KIRBY_CONTENT_SALT` and `KIRBY_COOKIE_KEY` (generate with `openssl rand -hex 32`). Set `KIRBY_VUE_COMPILER` to `true` for local development. The `KIRBY_SMTP_*` values point at the Mailpit container by default, so outgoing mail is caught locally instead of being sent (view it at http://mailpit.localhost).
 
-### 4. Build and start all services
+### 3. Build and start all services
 
 ```bash
 docker compose -f compose.dev.yml up -d --build && docker compose -f compose.dev.yml logs -f restaurant website menu
 ```
 
-### 5. Initialize plugin data OR rsync it from Prod server
+### 4. Initialize plugin data OR rsync it from Prod server
 
-Create the required JSON files for `kirby-calendars` and `kirby-foodlab` (these directories are git-ignored):
+Create the required JSON files for `kirby-foodlab` (this directory is git-ignored):
 
 ```bash
-mkdir -p cms/site/plugins/kirby-calendars/data
-for f in calendars events invitations leaves schedules services; do
-  echo '{}' > cms/site/plugins/kirby-calendars/data/$f.json
-done
-
 mkdir -p cms/site/plugins/kirby-foodlab/data
 for f in beer bubblewine cocktail dessert hotdrink maincourse menu menu-special metadata origin redwine softdrink starter whitewine; do
   echo '[]' > cms/site/plugins/kirby-foodlab/data/$f.json
 done
 ```
 
-### 6. Fix permissions
+### 5. Fix permissions
 
 ```bash
 docker compose -f compose.dev.yml exec cms sh -c 'chown -R www-data:www-data /var/www/html/site/sessions /var/www/html/site/accounts /var/www/html/content /var/www/html/media /var/www/html/site/plugins/*/data /var/www/html/site/cache'
@@ -115,6 +105,7 @@ docker compose -f compose.dev.yml exec cms sh -c 'chown -R www-data:www-data /va
 - **Restaurant**: http://restaurant.localhost
 - **Website**: http://website.localhost
 - **Menu**: http://menu.localhost (FoodLab) and http://menu.localhost/foodcourt
+- **Mailpit** (dev mail catcher): http://mailpit.localhost
 - **Traefik Dashboard**: http://localhost:8888
 
 ### Development workflow
@@ -147,12 +138,19 @@ Both the plugin and the script share the same logic in `cms/site/plugins/image-g
 
 ## Sync content from PROD (local)
 
+On the servers, all mutable CMS state lives under `$DEPLOY_PATH/shared/cms/`
+(see [Layout on each target server](#layout-on-each-target-server)):
+
 ```bash
-rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:/var/www/cms/content/ ./cms/content
-rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:/var/www/cms/site/plugins/kirby-calendars/data/ ./cms/site/plugins/kirby-calendars/data
-rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:/var/www/cms/site/plugins/kirby-foodlab/data/ ./cms/site/plugins/kirby-foodlab/data
-rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:/var/www/cms/site/plugins/kirby-menu-du-jour/data/ ./cms/site/plugins/kirby-menu-du-jour/data
+rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/shared/cms/content/ ./cms/content
+rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/shared/cms/site/plugins/kirby-foodlab/data/ ./cms/site/plugins/kirby-foodlab/data
+rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/shared/cms/site/plugins/kirby-menu-du-jour/data/ ./cms/site/plugins/kirby-menu-du-jour/data
 ```
+
+When rsyncing in the **other direction** (local → server), the transferred
+files end up owned by the SSH user. The next deploy fixes ownership
+automatically; to fix it immediately, run the chown/chmod command from step 3
+of [First deploy](#first-deploy).
 
 ## Upgrading
 
@@ -276,138 +274,304 @@ All `composer` commands run inside the running dev container — no local PHP/Co
 
    Then log into the Panel at http://cms.localhost/panel and check the frontends still receive API data.
 
-5. **Production**: rebuild with `docker compose -f compose.prod.yml up -d --build cms`, or on a non-Docker server re-run `composer install --no-dev --optimize-autoloader` and clear `site/cache/` (see the deployment section below).
+5. **Production**: merge/push to `preprod` or `main` — CI rebuilds the image and deploys it (see [Deployment architecture](#deployment-architecture)).
 
 ## Troubleshooting
 
 - **Permission errors on CMS**: In development, the image maps the `www-data` user to your host user via the `UID` / `GID` build args in `compose.dev.yml` (defaults: `1000` / `1000`). If your host user has a different UID/GID, adjust the args and rebuild with `docker compose -f compose.dev.yml build cms`.
-- **Port conflicts**: Ensure ports `80`, `443` (prod) or `80`, `3000`, `5173`, `5174`, `8000`, `8888` (dev) are not in use.
+- **Port conflicts**: Ensure ports `80`, `3000`, `5173`, `5174`, `8000`, `8888` (dev) or the loopback ports from `deploy.env` (deployed stack, defaults `8080`–`8083`) are not in use.
 
-## Deployment process PROD
+## Deployment architecture
 
-### 1. Sync code from local to server (run locally)
+This repository is **only** responsible for building and shipping the four
+application container images. It is **not** responsible for TLS, virtual-host
+routing, or any other reverse-proxy concern — those are handled by the nginx
+installed directly on each target server, completely outside this project.
 
-Make sure you have the latest code from `main`:
+The deployed stack contains exactly four services (see `compose.prod.yml`):
 
-```bash
-git checkout main && git pull
-```
+- `cms`        — Kirby CMS (PHP 8.4 / Apache)
+- `website`    — SvelteKit frontend (Node)
+- `restaurant` — SvelteKit frontend (Node)
+- `menu`       — Nuxt daily-menus SPA (Node)
 
-#### Website (SvelteKit)
+Each service publishes only on `127.0.0.1:<port>` (defaults `8080`–`8083`,
+configurable in `$DEPLOY_PATH/shared/deploy.env`). The host's nginx must
+forward each public domain to the matching loopback port:
 
-Excludes `node_modules`, build artifacts and env files. We rebuild on the server.
+| Domain                     | Service    | Default loopback port |
+| -------------------------- | ---------- | --------------------- |
+| https://api.for-pro.ch     | cms        | `127.0.0.1:8080`      |
+| https://for-pro.ch         | website    | `127.0.0.1:8081`      |
+| https://foodlab.for-pro.ch | restaurant | `127.0.0.1:8082`      |
+| https://menus.for-pro.ch   | menu       | `127.0.0.1:8083`      |
 
-```bash
-rsync -avz --delete \
-  --exclude='node_modules' \
-  --exclude='build' \
-  --exclude='.svelte-kit' \
-  --exclude='.env' \
-  --exclude='.env.*' \
-  --exclude='.DS_Store' \
-  --exclude='ecosystem.config.cjs' \
-  -e "ssh -i ~/.ssh/<key>" \
-  ./website/ <user>@<server>:/var/www/website
-```
+There is no `composer`, `node` or `pnpm` on the target servers — only Docker,
+the application stack above, and the host-level nginx.
 
-#### Restaurant (SvelteKit)
+### Two environments
 
-```bash
-rsync -avz --delete \
-  --exclude='node_modules' \
-  --exclude='build' \
-  --exclude='.svelte-kit' \
-  --exclude='.env' \
-  --exclude='.env.*' \
-  --exclude='.DS_Store' \
-  --exclude='ecosystem.config.cjs' \
-  -e "ssh -i ~/.ssh/<key>" \
-  ./restaurant/ <user>@<server>:/var/www/restaurant
-```
+| Branch    | GitHub Environment | Image tags pushed               | Where it deploys     |
+| --------- | ------------------ | ------------------------------- | -------------------- |
+| `preprod` | `preprod`          | `preprod-sha-<sha7>`, `preprod` | preproduction server |
+| `main`    | `production`       | `sha-<sha7>`, `latest`          | production server    |
+| tag `v*`  | `production`       | `sha-<sha7>`, `latest`          | production server    |
 
-#### Menu (Nuxt)
+Each environment uses its own GitHub Environment (`preprod` / `production`)
+to store secrets. Production secrets are never visible to the preprod job and
+vice versa. The deploy jobs each run on a self-hosted runner registered on
+the corresponding server.
 
-```bash
-rsync -avz --delete \
-  --exclude='node_modules' \
-  --exclude='.nuxt' \
-  --exclude='.output' \
-  --exclude='.env' \
-  --exclude='.env.*' \
-  --exclude='.DS_Store' \
-  --exclude='ecosystem.config.cjs' \
-  -e "ssh -i ~/.ssh/<key>" \
-  ./menu/ <user>@<server>:/var/www/menu
-```
-
-#### CMS (Kirby)
-
-We exclude every path that contains server-side content or is generated/installed there.
-
-- `content/` — pages and uploads (managed via the Panel)
-- `media/` — generated thumbs cache
-- `site/accounts/`, `site/sessions/`, `site/cache/` — runtime state
-- `site/plugins/kirby-calendars/data/`, `site/plugins/kirby-foodlab/data/`, `site/plugins/kirby-menu-du-jour/data/` — plugin data
-- `kirby/`, `vendor/` — installed via `composer install` on the server
-- `.env*`, `id.env` — server-specific config
+`workflow_dispatch` accepts a `target` input (`preprod` or `production`) and a
+`services` input (`all` by default, or a comma-separated subset) for one-off
+manual deploys:
 
 ```bash
-rsync -avz --delete \
-  --exclude='content' \
-  --exclude='media' \
-  --exclude='site/accounts' \
-  --exclude='site/sessions' \
-  --exclude='site/cache' \
-  --exclude='site/plugins/kirby-calendars/data' \
-  --exclude='site/plugins/kirby-foodlab/data' \
-  --exclude='site/plugins/kirby-menu-du-jour/data' \
-  --exclude='kirby' \
-  --exclude='vendor' \
-  --exclude='.env' \
-  --exclude='.env.*' \
-  --exclude='id.env' \
-  --exclude='.DS_Store' \
-  --exclude='.git' \
-  -e "ssh -i ~/.ssh/<key>" \
-  ./cms/ <user>@<server>:/var/www/cms
+# Trigger a manual deploy of everything to preproduction
+gh workflow run ci.yml --ref preprod -f target=preprod
+
+# Trigger a manual deploy of everything to production
+gh workflow run ci.yml --ref main -f target=production
+
+# Rebuild & redeploy only the cms container on production
+gh workflow run ci.yml --ref main -f target=production -f services=cms
 ```
 
-### 2. Build & restart on the server
+### Selective builds
+
+On every push, the workflow detects which of the four service directories
+changed and only tests, rebuilds and redeploys those containers. Untouched
+services keep their currently running image (the deployed tag of each service
+is recorded in `shared/current-tags/<service>.txt` on the server, with the
+previous tag in `shared/last-tags/<service>.txt` for rollbacks). Changes to
+the deployment plumbing itself (`compose.prod.yml`, `deploy.env.example`, the
+workflow or the deploy action), tag pushes, and `workflow_dispatch` with
+`services=all` rebuild everything.
+
+Because the frontends bake their public URLs at build time, preprod images
+are built separately with the `PREPROD_CMS_BASE_URL` and
+`PREPROD_MENU_BASE_URL` repository **variables** (Settings → Secrets and
+variables → Actions → Variables). If unset, they fall back to the production
+URLs.
+
+### Layout on each target server
+
+```
+$DEPLOY_PATH/                            # e.g. /srv/forpro (preprod and prod are separate hosts)
+├── current -> releases/<ts>-<sha7>      # symlink to active release (compose file + env examples)
+├── releases/<ts>-<sha7>/                # compose.prod.yml, deploy.env.example, cms.env.example
+└── shared/
+    ├── cms.env                          # CMS runtime env (secrets — chmod 660, never in git)
+    ├── deploy.env                       # loopback ports for this server
+    ├── cms/
+    │   ├── content/                     # pages & uploads (Panel-editable)
+    │   ├── media/                       # generated thumbs cache
+    │   └── site/
+    │       ├── accounts/  sessions/  cache/          # runtime state
+    │       ├── config/.license                       # Kirby license (file bind mount)
+    │       └── plugins/kirby-foodlab/data/           # plugin data (JSON)
+    │       └── plugins/kirby-menu-du-jour/data/      # plugin data
+    ├── current-tags/<service>.txt       # image tag currently running per service
+    ├── last-tags/<service>.txt          # previous tag per service, for rollback
+    └── backups/cms-*.tgz                # pre-deploy backups of content + plugin data
+```
+
+Everything under `shared/` lives on the **host filesystem**, outside any
+container and outside any release directory. Image rebuilds and rollbacks
+cannot touch it.
+
+### One-time server setup (per environment)
+
+Do this once on **each** target server (preproduction and production are
+separate hosts). Replace `/srv/forpro` with whatever you set as `DEPLOY_PATH`
+in that environment's secrets.
+
+As root on Ubuntu 24.04:
 
 ```bash
-ssh <user>@<server> -i ~/.ssh/<key>
+apt update && apt install -y ca-certificates curl gnupg rsync
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+  | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+  https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) stable" \
+  > /etc/apt/sources.list.d/docker.list
+apt update && apt install -y docker-ce docker-ce-cli containerd.io \
+                             docker-buildx-plugin docker-compose-plugin
+
+adduser --disabled-password --gecos "" deploy
+usermod -aG docker deploy
+# Membership in www-data lets the deploy user edit/rsync the files under
+# shared/ that the cms container chowns to www-data (they stay group-writable):
+usermod -aG www-data deploy
+
+sudo -u deploy mkdir -p /srv/forpro/{releases,shared}
+
+# Register the GitHub Actions self-hosted runner (repeat for each environment)
+# Download the runner package from: Settings → Actions → Runners → New self-hosted runner
+# Follow the instructions shown there, then install as a service:
+sudo ./svc.sh install deploy   # run as the deploy user
+sudo ./svc.sh start
 ```
 
-Then on the server:
+The runner must be registered with the labels matching the workflow:
 
-Node 24 and pnpm are required for the frontends (see `.nvmrc`) — the lockfiles are `pnpm-lock.yaml` (npm is no longer used).
+- preprod runner: `self-hosted`, `forpro`, `preprod`, `docker`
+- production runner: `self-hosted`, `forpro`, `production`, `docker`
+
+Configure nginx on the host to proxy each domain to its loopback port (see
+the table above), e.g. one `server { listen 443 ssl; … proxy_pass
+http://127.0.0.1:8081; }` block per domain. TLS certificates and DNS are
+managed there, not in this repo.
+
+### First deploy
+
+Trigger the first deploy with everything built (recommended, since no tags
+are recorded on the server yet):
 
 ```bash
-# Website
-cd /var/www/website
-pnpm install
-pnpm run build
-pm2 restart website
-
-# Restaurant
-cd /var/www/restaurant
-pnpm install
-pnpm run build
-pm2 restart restaurant
-
-# Menu
-cd /var/www/menu
-pnpm install
-pnpm run build
-pm2 restart menus
-
-# CMS
-cd /var/www/cms
-# First deploy only: create the env file from the example and fill in production secrets
-# cp .env.example .env && nano .env
-composer install --no-dev --optimize-autoloader
-# Clear Kirby caches so new templates/blueprints are picked up
-rm -rf site/cache/*
-# Make sure the web user can read everything we just synced
-chown -R www-data:www-data /var/www/cms
+gh workflow run ci.yml --ref preprod -f target=preprod -f services=all
+# or for production:
+gh workflow run ci.yml --ref main -f target=production -f services=all
 ```
+
+The pipeline bootstraps `shared/` (directories, `cms.env` from
+`cms/.env.example`, `deploy.env` from `deploy.env.example`, an empty
+`site/config/.license` file, empty `kirby-foodlab` data files) and starts the
+stack. The CMS won't be fully operational until you fill in real values and
+load real content. SSH in and finish the setup:
+
+```bash
+export DEPLOY_PATH=<deploy_path>
+ssh deploy@<server>
+
+# 1. Fill in the real CMS environment values.
+#    At minimum: KIRBY_CONTENT_SALT, KIRBY_COOKIE_KEY (openssl rand -hex 32),
+#    KIRBY_FRONTEND_URL and the KIRBY_SMTP_* credentials.
+nano "$DEPLOY_PATH/shared/cms.env"
+exit
+
+# 2. Load the real content — run these from the machine holding the content
+#    (your local clone or the old prod server), not on the target server:
+rsync -avz --delete ./cms/content/ deploy@<server>:$DEPLOY_PATH/shared/cms/content
+rsync -avz --delete ./cms/site/accounts/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/accounts
+rsync -avz --delete ./cms/site/plugins/kirby-foodlab/data/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/plugins/kirby-foodlab/data
+rsync -avz --delete ./cms/site/plugins/kirby-menu-du-jour/data/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/plugins/kirby-menu-du-jour/data
+# Kirby license — copy the existing .license from the old server (or skip and
+# register the license from the Panel later; it persists in shared/ either way):
+rsync -avz ./cms/site/config/.license deploy@<server>:$DEPLOY_PATH/shared/cms/site/config/.license
+# Optional: rsync media/ too to avoid the thumbnail-regeneration CPU spike on
+# first load — otherwise Kirby rebuilds it on demand:
+rsync -avz --delete ./cms/media/ deploy@<server>:$DEPLOY_PATH/shared/cms/media
+
+# 3. SSH back to the target server, then fix ownership and recreate CMS so
+#    cms.env changes are loaded:
+ssh deploy@<server>
+export DEPLOY_PATH=<deploy_path>
+cd "$DEPLOY_PATH/current"
+export SHARED_PATH="$DEPLOY_PATH/shared"
+export CMS_IMAGE_TAG=$(cat "$SHARED_PATH/current-tags/cms.txt")
+docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml \
+  exec --user root cms sh -c 'chown -R www-data:www-data /var/www/html/content /var/www/html/media /var/www/html/site && chmod -R g+w /var/www/html/content /var/www/html/media /var/www/html/site'
+docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml up -d --force-recreate --no-deps --wait cms
+```
+
+### What happens on `git push`
+
+1. `changes` detects which service directories were touched.
+2. `check` runs the production build for each changed service
+   (`composer install` for the cms, `pnpm run build` for the frontends) —
+   also on pull requests, without deploying.
+3. `build` builds each changed service's `Dockerfile.prod` and pushes it to
+   GHCR (`ghcr.io/studio-guez/forpro/<service>`):
+   - `preprod` branch → tags `preprod-sha-<sha7>` and `preprod`
+   - `main` branch (or `v*` tag) → tags `sha-<sha7>` and `latest`
+4. `deploy-preprod` / `deploy-production` runs on the self-hosted runner of
+   the matching server:
+   - a new release directory is created and `shared/` is bootstrapped
+     (idempotent — every seed step is a no-op when the target exists);
+   - CMS content, accounts, the license file and plugin data are backed up to
+     `shared/backups/` (last 14 kept);
+   - the new images are pulled; unchanged services keep their recorded tag;
+   - ownership under `shared/cms` is fixed (www-data, group-writable) and the
+     Kirby cache is cleared when a new cms image ships — both run as root
+     inside a throwaway container;
+   - the `current` symlink is flipped and `docker compose up -d
+     --remove-orphans --wait` replaces only the containers whose image
+     changed, then blocks until every service passes its healthcheck — an
+     unhealthy container fails the deploy;
+   - old releases (keep 5) and old images (keep the 5 most recent `sha-*`
+     images per service for rollback) are pruned.
+
+### Rollback
+
+The previously deployed tag of each service is kept in
+`shared/last-tags/<service>.txt`. To roll one service back:
+
+```bash
+ssh deploy@<server>
+export DEPLOY_PATH=<deploy_path> SHARED_PATH=<deploy_path>/shared
+cd "$DEPLOY_PATH/current"
+
+# e.g. roll back the website
+export WEBSITE_IMAGE_TAG=$(cat "$SHARED_PATH/last-tags/website.txt")
+docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml up -d --no-deps --wait website
+echo "$WEBSITE_IMAGE_TAG" > "$SHARED_PATH/current-tags/website.txt"
+```
+
+(Or simply re-run the workflow from the last good commit.)
+
+### Manual deploy (when CI/CD is unavailable)
+
+If the runner is offline you can trigger the same sequence manually after the
+images have been pushed to GHCR:
+
+```bash
+ssh deploy@<server>
+export DEPLOY_PATH=<deploy_path> SHARED_PATH=<deploy_path>/shared
+cd "$DEPLOY_PATH/current"
+
+# Pick the tag from the GitHub Actions "build & push" step output.
+# Only set the *_IMAGE_TAG vars of the services you want to update.
+export CMS_IMAGE_TAG=sha-<sha7>          # or preprod-sha-<sha7> on preprod
+
+docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml pull cms
+docker compose --env-file "$SHARED_PATH/deploy.env" -f compose.prod.yml up -d --force-recreate --no-deps --wait cms
+echo "$CMS_IMAGE_TAG" > "$SHARED_PATH/current-tags/cms.txt"
+```
+
+### Required GitHub Actions secrets & variables
+
+Secrets are scoped to **GitHub Environments** so that the preproduction
+deploy job cannot read production secrets and vice versa. Configure each
+environment under **Settings → Environments → `preprod`** and
+**Settings → Environments → `production`** with the same key names but the
+environment-appropriate values:
+
+| Secret                 | Scope                 | Purpose                                                          |
+| ---------------------- | --------------------- | ---------------------------------------------------------------- |
+| `DEPLOY_PATH`          | per environment       | e.g. `/srv/forpro`                                               |
+| `GHCR_PULL_TOKEN`      | per environment       | PAT with `read:packages`, used by the runner to pull from GHCR   |
+| `GHCR_PULL_USER`       | per environment (opt) | GHCR username for the pull token (defaults to actor)             |
+| `COMPOSE_PROJECT_NAME` | per environment (opt) | Docker Compose project name (defaults to `forpro`)               |
+
+| Variable                | Scope                 | Purpose                                                        |
+| ----------------------- | --------------------- | -------------------------------------------------------------- |
+| `PREPROD_CMS_BASE_URL`  | repository (optional) | Public CMS URL baked into preprod frontend builds              |
+| `PREPROD_MENU_BASE_URL` | repository (optional) | Public menu-app URL baked into preprod restaurant builds       |
+
+All CMS secrets (`KIRBY_CONTENT_SALT`, `KIRBY_COOKIE_KEY`, SMTP credentials,
+etc.) live in `$DEPLOY_PATH/shared/cms.env` on each target server — **never**
+in workflow files or git. Use different salts/keys per environment.
+
+### Seeding shared files
+
+The deploy action bootstraps the shared directory automatically on every
+deploy. Each step is a no-op when the target already exists:
+
+| Target on host                                       | Source                                                       |
+| ---------------------------------------------------- | ------------------------------------------------------------ |
+| `$SHARED_PATH/cms.env`                                | `cms/.env.example` — edit with real values, recreate `cms` with its recorded tag |
+| `$SHARED_PATH/deploy.env`                             | `deploy.env.example` — edit if the default ports collide      |
+| `$SHARED_PATH/cms/…` state directories                | created empty                                                 |
+| `$SHARED_PATH/cms/site/plugins/kirby-foodlab/data/*.json` | seeded as `[]` (overwritten by your rsync of real data)  |

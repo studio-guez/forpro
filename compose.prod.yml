@@ -1,101 +1,91 @@
+# Deployment stack (preprod & production).
+#
+# This file is shipped to the target server by the deploy workflow
+# (.github/actions/deploy) and started from $DEPLOY_PATH/current/.
+#
+# - Images are pre-built by CI and pulled from GHCR — nothing is built here.
+# - Every service publishes only on 127.0.0.1. TLS termination, hostname
+#   routing and certificates are handled by the reverse proxy (nginx)
+#   installed on the host, outside this project.
+# - All mutable state lives under ${SHARED_PATH} on the host, outside any
+#   release directory, so image rebuilds and rollbacks never touch it.
+#
+# Variables:
+# - SHARED_PATH, *_IMAGE_TAG are exported by the deploy action.
+# - *_HTTP_PORT come from ${SHARED_PATH}/deploy.env (passed via --env-file).
+
 services:
-
-  traefik:
-    image: traefik:v2.11
-    command:
-      - "--api.insecure=false"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - traefik_certs:/etc/traefik/certs
-      - traefik_config:/etc/traefik/config
-    restart: unless-stopped
-
-  # SvelteKit
-  restaurant:
-    build:
-      context: ./restaurant
-      dockerfile: Dockerfile.prod
-    expose:
-      - "3000"
-    restart: unless-stopped
-    depends_on:
-      - cms
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.restaurant.rule=Host(`foodlab.for-pro.ch`)"
-      - "traefik.http.routers.restaurant.entrypoints=web"
-      - "traefik.http.services.restaurant.loadbalancer.server.port=3000"
-
-  # SvelteKit
-  website:
-    build:
-      context: ./website
-      dockerfile: Dockerfile.prod
-    expose:
-      - "3000"
-    restart: unless-stopped
-    depends_on:
-      - cms
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.website.rule=Host(`www.for-pro.ch`) || Host(`for-pro.ch`)"
-      - "traefik.http.routers.website.entrypoints=web"
-      - "traefik.http.services.website.loadbalancer.server.port=3000"
-
-  # Nuxt
-  menu:
-    build:
-      context: ./menu
-      dockerfile: Dockerfile.prod
-      args:
-        NUXT_PUBLIC_CMS_BASE_URL: https://api.for-pro.ch
-    expose:
-      - "3000"
-    restart: unless-stopped
-    depends_on:
-      - cms
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.menu.rule=Host(`menus.for-pro.ch`)"
-      - "traefik.http.routers.menu.entrypoints=web"
-      - "traefik.http.services.menu.loadbalancer.server.port=3000"
 
   # Kirby CMS
   cms:
-    build:
-      context: ./cms
-      dockerfile: Dockerfile.prod
+    image: ghcr.io/studio-guez/forpro/cms:${CMS_IMAGE_TAG:-latest}
+    ports:
+      - "127.0.0.1:${CMS_HTTP_PORT:-8080}:80"
     # Ne monter QUE l'état mutable : le code vient de l'image. Bind mounts (et non
     # volumes nommés) pour que le contenu reste rsyncable/sauvegardable depuis l'hôte.
     volumes:
-      - ./cms/content:/var/www/html/content
-      - ./cms/media:/var/www/html/media
-      - ./cms/site/accounts:/var/www/html/site/accounts
-      - ./cms/site/sessions:/var/www/html/site/sessions
-      - ./cms/site/cache:/var/www/html/site/cache
-      - ./cms/site/plugins/kirby-calendars/data:/var/www/html/site/plugins/kirby-calendars/data
-      - ./cms/site/plugins/kirby-foodlab/data:/var/www/html/site/plugins/kirby-foodlab/data
-      - ./cms/site/plugins/kirby-menu-du-jour/data:/var/www/html/site/plugins/kirby-menu-du-jour/data
+      - ${SHARED_PATH}/cms/content:/var/www/html/content
+      - ${SHARED_PATH}/cms/media:/var/www/html/media
+      - ${SHARED_PATH}/cms/site/accounts:/var/www/html/site/accounts
+      - ${SHARED_PATH}/cms/site/sessions:/var/www/html/site/sessions
+      - ${SHARED_PATH}/cms/site/cache:/var/www/html/site/cache
+      - ${SHARED_PATH}/cms/site/plugins/kirby-foodlab/data:/var/www/html/site/plugins/kirby-foodlab/data
+      - ${SHARED_PATH}/cms/site/plugins/kirby-menu-du-jour/data:/var/www/html/site/plugins/kirby-menu-du-jour/data
+      # Kirby license file (added manually on first deploy or registered from the
+      # Panel). File bind mount so it survives redeploys — the deploy action seeds
+      # an empty file, otherwise Docker would create a directory in its place.
+      - ${SHARED_PATH}/cms/site/config/.license:/var/www/html/site/config/.license
     env_file:
-      - ./cms/.env
-    expose:
-      - "80"
+      - ${SHARED_PATH}/cms.env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # SvelteKit
+  website:
+    image: ghcr.io/studio-guez/forpro/website:${WEBSITE_IMAGE_TAG:-latest}
+    ports:
+      - "127.0.0.1:${WEBSITE_HTTP_PORT:-8081}:3000"
     restart: unless-stopped
     depends_on:
-      - traefik
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.cms.rule=Host(`api.for-pro.ch`)"
-      - "traefik.http.routers.cms.entrypoints=web"
-      - "traefik.http.services.cms.loadbalancer.server.port=80"
+      - cms
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
-volumes:
-  traefik_certs:
-  traefik_config:
+  # SvelteKit
+  restaurant:
+    image: ghcr.io/studio-guez/forpro/restaurant:${RESTAURANT_IMAGE_TAG:-latest}
+    ports:
+      - "127.0.0.1:${RESTAURANT_HTTP_PORT:-8082}:3000"
+    restart: unless-stopped
+    depends_on:
+      - cms
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  # Nuxt
+  menu:
+    image: ghcr.io/studio-guez/forpro/menu:${MENU_IMAGE_TAG:-latest}
+    ports:
+      - "127.0.0.1:${MENU_HTTP_PORT:-8083}:3000"
+    restart: unless-stopped
+    depends_on:
+      - cms
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s

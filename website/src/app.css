@@ -1,0 +1,114 @@
+@import "./lib/assets/fonts.css" layer(base);
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+
+@theme static {
+    /* FONT FAMILY */
+    --font-sans: 'Jungka-ForPro', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+    /* COLORS */
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-grey-light: #D9D9D9;
+    --color-grey-dark: #525252;
+    --color-blue: #1754FF;
+    --color-blue-light: #007DFF;
+    --color-orange: #FF6917;
+    --color-orange-light: #FFB86D;
+    --color-pink: #FF00FC;
+    --color-purple: #37007D;
+    --color-purple-light: #8C78DC;
+    --color-purple-pale: #BEA5E6;
+    --color-teal: #009185;
+    --color-teal-light: #A5CEBA;
+    --color-red: #F2030D;
+    --color-green: #3DF069;
+
+    /* TRANSITION */
+    --default-transition-duration: 250ms;
+}
+
+@layer base {
+    button:not(:disabled) {
+        @apply cursor-pointer;
+    }
+}
+
+@layer utilities {
+    /* FONT STYLES */
+
+    .text-h0 {
+        @apply text-5xl md:text-8xl font-bold text-balance;
+    }
+
+    .text-h1{
+        @apply text-5xl md:text-6xl font-bold text-balance;
+    }
+
+    .text-h2{
+        @apply text-4xl md:text-5xl font-bold text-balance;
+    }
+
+    .text-h3{
+        @apply text-3xl md:text-4xl font-bold text-balance;
+    }
+
+    .text-h4{
+        @apply text-2xl md:text-3xl font-bold text-balance;
+    }
+
+    .text-highlight{
+        @apply text-2xl md:text-3xl;
+    }
+
+    .text-body-1{
+        @apply text-lg md:text-2xl;
+    }
+
+    .text-body-2{
+        @apply text-lg md:text-xl;
+    }
+
+    .text-label{
+        @apply text-sm md:text-lg;
+    }
+
+    .text-caption{
+        @apply text-xs md:text-base;
+    }
+
+    /* PADDING */
+
+    .px-base {
+        @apply px-5 md:px-9;
+    }
+
+    .px-card {
+        @apply px-8 md:px-30;
+    }
+}
+
+@layer components {
+    /* PROSE */
+    .prose {
+        p:not(:last-child), ul:not(:last-child), ol:not(:last-child) {
+            @apply mb-[.75lh];
+        }
+        ul, ol {
+            @apply list-inside;
+            & > li > p {
+                @apply inline;
+            }
+        }
+        ul {
+            @apply list-disc;
+        }
+        ol {
+            @apply list-decimal;
+        }
+        a {
+            @apply opacity-50 underline hover:opacity-100 transition-opacity;
+        }
+    }
+
+}

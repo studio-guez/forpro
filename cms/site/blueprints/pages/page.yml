@@ -1,0 +1,79 @@
+title:
+  en: Page
+  fr: Page
+
+extends: pages/base
+
+status:
+  draft: true
+  listed: true
+
+num: zero
+
+options:
+  preview: "{{ page.frontendUrl }}"
+
+tabs:
+  content:
+    columns:
+      sidebar:
+        sections:
+          hierarchy:
+            fields:
+              parentPage:
+                label:
+                  en: Parent page
+                  fr: Page parente
+                type: pages
+                query: page.possibleParents
+                text: "{{ page.breadcrumbTitle }}"
+                multiple: false
+                max: 1
+                link: false
+                empty:
+                  en: No parent page
+                  fr: Aucune page parente
+              sepHierarchy:
+                type: line
+          title:
+            fields:
+              overtitle:
+                label:
+                  en: Overtitle
+                  fr: Sur-titre
+                type: text
+              theme:
+                extends: fields/theme
+      main:
+        sections:
+          intro:
+            fields:
+              introCta:
+                label:
+                  en: CTA intro
+                  fr: CTA introduction
+                extends: fields/cta
+              introLayout:
+                label:
+                  en: Layout intro
+                  fr: Mise en page introduction
+                type: toggles
+                default: 1col
+                required: true
+                options:
+                  - value: 1col
+                    text: { en: 1 column, fr: 1 colonne }
+                  - value: 2col
+                    text: { en: 2 columns, fr: 2 colonnes }
+              sepIntro:
+                type: line
+          main:
+            fields:
+              body:
+                type: blocks
+                label:
+                  en: Content
+                  fr: Contenu
+                fieldsets:
+                  - module-titre-texte-image
+                  - module-cases

@@ -1,0 +1,11 @@
+# Generic base for selecting taxonomy terms.
+# Per-taxonomy variants extend this and set `options.query`; pass `max` to limit selection.
+# Stores each term's UUID (e.g. `page://xxx`) rather than its slug, so selections
+# stay valid when a term is renamed. Resolve the UUID back to a slug when consuming
+# the value (see Utils::resolveTaxonomyTerms / Utils::filterStructureByTaxonomy).
+type: tags
+accept: options
+options:
+  type: query
+  text: "{{ page.title }}"
+  value: "{{ page.uuid }}"

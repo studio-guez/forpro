@@ -1,0 +1,9 @@
+title: Thématiques de projet
+
+extends: pages/taxonomy
+
+sections:
+  terms:
+    label: Thématiques de projet
+    templates:
+      - project-theme

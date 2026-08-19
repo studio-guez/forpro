@@ -1,0 +1,47 @@
+title:
+  en: Event
+  fr: Événement
+
+extends: pages/base
+
+tabs:
+  content:
+    columns:
+      main:
+        fields:
+          description:
+            label:
+              en: Description
+              fr: Description
+            type: textarea
+
+          dateStart:
+            label:
+              en: Start date
+              fr: Date de début
+            type: date
+
+          dateEnd:
+            label:
+              en: End date
+              fr: Date de fin
+            type: date
+
+          location:
+            label:
+              en: Location
+              fr: Lieu
+            type: text
+
+          registration:
+            label:
+              en: Registration link
+              fr: Lien d'inscription
+            type: url
+
+          body:
+            type: blocks
+            label:
+              en: Content
+              fr: Contenu
+            fieldsets: []

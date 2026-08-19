@@ -1,0 +1,52 @@
+title: FAQ
+
+icon: question
+
+num: zero
+
+options:
+  changeTemplate: false
+  changeStatus: false
+  changeTitle: false
+  create: false
+  delete: false
+  duplicate: false
+  move: false
+
+status:   
+  listed: true
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    fields:
+      faqs:
+        label:
+          en: Questions
+          fr: Questions
+        type: structure
+        columns:
+          question:
+            width: 1/2
+          domains:
+            width: 1/2
+        fields:
+          question:
+            label:
+              en: Question
+              fr: Question
+            type: text
+            required: true
+          answer:
+            extends: fields/writer
+            label:
+              en: Answer
+              fr: Réponse
+            required: true
+          domains:
+            extends: fields/taxonomies/domains
+
+  seo: tabs/seo

@@ -2,14 +2,33 @@
 
 header("Access-Control-Allow-Origin: *");
 
+$frontendUrl = rtrim(getenv('KIRBY_FRONTEND_URL') ?: 'https://for-pro.ch', '/');
+
 return [
     'debug' => getenv('KIRBY_DEBUG') === 'true',
-    "tobimori.seo.canonicalBase" => "https://for-pro.ch",
+    'home' => 'pages/home',
+    // WebP for every generated thumb (GD driver, installed --with-webp).
+    // `default` is the width ladder used for srcset: it spans small phones
+    // up to 4K / high-DPR displays so the browser can pick per viewport × dpr.
+    'thumbs' => [
+        'driver' => 'gd',
+        'quality' => 80,
+        'format' => 'webp',
+        'srcsets' => [
+            'default' => [480, 768, 1024, 1366, 1600, 1920, 2560, 3840],
+        ],
+    ],
+    // Sizes (px) downscaled from the 512×512 favicon PNG masters to cover every
+    // standard favicon `<link>` (16/32/48 browsers, 180 apple-touch, 192/512 PWA).
+    'favicon' => [
+        'resize' => [16, 32, 48, 180, 192, 512],
+    ],
+    "tobimori.seo.canonicalBase" => $frontendUrl,
     "tobimori.seo.lang" => "fr_CH",
     "tobimori.seo.default.metaTemplate" => fn($page) => $page->site()->title()->isNotEmpty()
         ? '{{ title }} - {{ site.title }}'
         : '{{ title }}',
-    "url_frontend" => "https://for-pro.ch/",
+    "url_frontend" => $frontendUrl . "/",
     'content' => [
         'salt' => getenv('KIRBY_CONTENT_SALT'),
     ],
@@ -30,38 +49,81 @@ return [
             },
         ],
         [
-            "pattern" => "booking",
-            "method" => "GET",
+            "pattern" => "global.json",
             "action" => function () {
-                $site = kirby()->site();
+                require_once 'utils/Utils.php';
 
-                return [
-                    'headline'              => $site->bookingHeadline()->value(),
-                    'bookingIsActive'       => $site->bookingIsActive()->value() == 'true',
-                    'description'           => $site->bookingDescription()->kirbytext()->value(),
-                    'bandeauInfo'           => $site->bookingBandeauInfo()->value(),
-                    'bookingBandeauUrl'     => $site->bookingBandeauUrl()->value(),
-                    'bookingServicesLabel'  => $site->bookingServicesLabel()->value(),
-                    'bookingSlotsLabel'     => $site->bookingSlotsLabel()->value(),
-                    'bookingCalendarLabel'  => $site->bookingCalendarLabel()->value(),
-                    'bookingNoSlotsLabel'   => $site->bookingNoSlotsLabel()->value(),
-                    'bookingSlotConfirmationLabel'        => $site->bookingSlotConfirmationLabel()->value(),
-                    'bookingAppointmentConfirmationLabel' => $site->bookingAppointmentConfirmationLabel()->value(),
-                    'bookingAppointmentSuccessLabel'      => $site->bookingAppointmentSuccessLabel()->value(),
-                    'bookingAppointmentSelect'            => $site->bookingAppointmentSelect()->toStructure()->toArray(),
-                ];
+                $site = site();
+
+                $logoFile = $site->logo()->toFile();
+
+                $mainMenu = $site->mainMenu()->toStructure()->map(fn($item) => [
+                    'label' => Utils::resolvePageOrUrlLabel($item),
+                    'url'   => Utils::resolvePageOrUrlItem($item),
+                ])->values();
+
+                $secondaryMenu = [];
+                // The burger menu has 4 CMS-managed columns (see blueprints/tabs/navigation.yml);
+                // the frontend adds a 5th column with external links and social medias.
+                foreach ([1, 2, 3, 4] as $index) {
+                    $groups = $site->{"secondaryColumn{$index}Groups"}()->toBlocks()->map(fn($block) => [
+                        'title' => $block->title()->isEmpty() ? null : $block->title()->value(),
+                        'links' => $block->links()->toStructure()->map(fn($link) => [
+                            'label' => Utils::resolvePageOrUrlLabel($link),
+                            'url'   => Utils::resolvePageOrUrlItem($link),
+                            'level' => (int)$link->level()->or(1)->value(),
+                        ])->values(),
+                    ])->values();
+
+                    $columnTitle = $site->{"secondaryColumn{$index}Title"}();
+                    $secondaryMenu[] = [
+                        'title'  => $columnTitle->isEmpty() ? null : $columnTitle->value(),
+                        'groups' => $groups,
+                    ];
+                }
+
+                $externalLinksTitle = $site->externalLinksTitle();
+
+                $externalLinks = $site->externalLinks()->toStructure()->map(fn($item) => [
+                    'label' => $item->label()->value(),
+                    'url'   => $item->url()->value(),
+                ])->values();
+
+                $socialLinks = [];
+                foreach (['facebook', 'instagram', 'linkedin', 'youtube', 'tiktok', 'snapchat', 'x'] as $platform) {
+                    $url = $site->{$platform}();
+                    if ($url->isNotEmpty()) {
+                        $socialLinks[] = [
+                            'platform' => $platform,
+                            'url'      => $url->value(),
+                        ];
+                    }
+                }
+
+                return \Kirby\Http\Response::json([
+                    'header' => [
+                        'siteTitle'     => $site->title()->value(),
+                        'logo'          => Utils::getJsonEncodeImageData($logoFile),
+                        'mainMenu'      => $mainMenu,
+                        'secondaryMenu' => $secondaryMenu,
+                        'externalLinksTitle' => $externalLinksTitle->isEmpty() ? null : $externalLinksTitle->value(),
+                        'externalLinks' => $externalLinks,
+                        'socialLinks'   => $socialLinks,
+                    ],
+                    'favicon' => Utils::getFaviconData($site),
+                ]);
             },
         ],
     ],
     "email" => [
         "transport" => [
             "type" => "smtp",
-            "host" => "mail.infomaniak.com",
-            "port" => 465,
-            "security" => true,
-            "auth" => true,
-            "username" => "ne-pas-repondre@for-pro.ch",
-            "password" => "b.PCS#/.b163rf",
+            "host" => getenv('KIRBY_SMTP_HOST') ?: 'localhost',
+            "port" => (int)(getenv('KIRBY_SMTP_PORT') ?: 587),
+            "security" => getenv('KIRBY_SMTP_SECURITY') === 'true',
+            "auth" => getenv('KIRBY_SMTP_AUTH') === 'true',
+            "username" => getenv('KIRBY_SMTP_USERNAME') ?: null,
+            "password" => getenv('KIRBY_SMTP_PASSWORD') ?: null,
         ],
     ],
 ];
