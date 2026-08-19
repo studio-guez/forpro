@@ -393,6 +393,8 @@ $DEPLOY_PATH/                            # e.g. /srv/forpro (preprod and prod ar
     │       ├── config/.license                       # Kirby license (file bind mount)
     │       └── plugins/kirby-foodlab/data/           # plugin data (JSON)
     │       └── plugins/kirby-menu-du-jour/data/      # plugin data
+    ├── restaurant/robots.txt            # editable on the host (file bind mount)
+    ├── menu/robots.txt                  # editable on the host (file bind mount)
     ├── current-tags/<service>.txt       # image tag currently running per service
     ├── last-tags/<service>.txt          # previous tag per service, for rollback
     └── backups/cms-*.tgz                # pre-deploy backups of content + plugin data

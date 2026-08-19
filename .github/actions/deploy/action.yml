@@ -139,6 +139,14 @@ runs:
         mkdir -p "$SHARED_DIR/cms/site/config"
         [ -f "$SHARED_DIR/cms/site/config/.license" ] || touch "$SHARED_DIR/cms/site/config/.license"
 
+        # Seed restaurant/menu robots.txt from the repo's own default: compose
+        # bind-mounts them as files, so they must exist on the host. Editable
+        # directly on the server afterwards (e.g. to lock crawlers out on
+        # preprod) without rebuilding the image.
+        mkdir -p "$SHARED_DIR/restaurant" "$SHARED_DIR/menu"
+        [ -f "$SHARED_DIR/restaurant/robots.txt" ] || cp "$GITHUB_WORKSPACE/restaurant/static/robots.txt" "$SHARED_DIR/restaurant/robots.txt"
+        [ -f "$SHARED_DIR/menu/robots.txt" ] || cp "$GITHUB_WORKSPACE/menu/public/robots.txt" "$SHARED_DIR/menu/robots.txt"
+
         if [ ! -f "$SHARED_DIR/deploy.env" ]; then
           echo "[deploy] $SHARED_DIR/deploy.env not found – copying deploy.env.example (edit if the default loopback ports collide)"
           cp "$RELEASE_DIR/deploy.env.example" "$SHARED_DIR/deploy.env"
