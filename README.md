@@ -39,7 +39,7 @@ app is a SPA, the value is baked in at build time in production — the CI build
 passes it as a Docker build arg.
 
 The restaurant frontend links to this app through `PUBLIC_MENU_BASE_URL`
-(`restaurant/.env.development` locally, the `PREPROD_MENU_BASE_URL` /
+(`compose.dev.yml` locally, the `PREPROD_MENU_BASE_URL` /
 `PRODUCTION_MENU_BASE_URL` repository variables in CI).
 
 ### CMS Plugins
