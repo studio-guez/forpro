@@ -12,7 +12,9 @@
 #
 # Variables:
 # - SHARED_PATH, *_IMAGE_TAG are exported by the deploy action.
-# - *_HTTP_PORT come from ${SHARED_PATH}/deploy.env (passed via --env-file).
+# - *_HTTP_PORT come from ${SHARED_PATH}/deploy.env (passed via --env-file), and
+#   can be overridden per environment by the {CMS,WEBSITE,RESTAURANT,MENU}_HTTP_PORT
+#   GitHub Actions variables, which the deploy action exports.
 
 services:
 

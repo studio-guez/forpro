@@ -296,7 +296,8 @@ The deployed stack contains exactly four services (see `compose.prod.yml`):
 - `menu`       — Nuxt daily-menus SPA (Node)
 
 Each service publishes only on `127.0.0.1:<port>` (defaults `8080`–`8083`,
-configurable in `$DEPLOY_PATH/shared/deploy.env`). The host's nginx must
+configurable in `$DEPLOY_PATH/shared/deploy.env` or via the per-environment
+`*_HTTP_PORT` Actions variables). The host's nginx must
 forward each public domain to the matching loopback port:
 
 | Domain                     | Service    | Default loopback port |
@@ -559,6 +560,16 @@ environment-appropriate values:
 | ----------------------- | --------------------- | -------------------------------------------------------------- |
 | `PREPROD_CMS_BASE_URL`  | repository (optional) | Public CMS URL baked into preprod frontend builds              |
 | `PREPROD_MENU_BASE_URL` | repository (optional) | Public menu-app URL baked into preprod restaurant builds       |
+| `CMS_HTTP_PORT`         | per environment (opt) | Loopback port for `cms`, overrides `shared/deploy.env`         |
+| `WEBSITE_HTTP_PORT`     | per environment (opt) | Loopback port for `website`, overrides `shared/deploy.env`     |
+| `RESTAURANT_HTTP_PORT`  | per environment (opt) | Loopback port for `restaurant`, overrides `shared/deploy.env`  |
+| `MENU_HTTP_PORT`        | per environment (opt) | Loopback port for `menu`, overrides `shared/deploy.env`        |
+
+The `*_HTTP_PORT` variables are what you set when preproduction and
+production share a host: the defaults (`8080`–`8083`) would otherwise collide
+and the second stack fails to start with `port is already allocated`. The
+deploy action writes them back into `$DEPLOY_PATH/shared/deploy.env`, so
+manual `docker compose --env-file` commands keep using the same ports.
 
 All CMS secrets (`KIRBY_CONTENT_SALT`, `KIRBY_COOKIE_KEY`, SMTP credentials,
 etc.) live in `$DEPLOY_PATH/shared/cms.env` on each target server — **never**
@@ -572,6 +583,6 @@ deploy. Each step is a no-op when the target already exists:
 | Target on host                                       | Source                                                       |
 | ---------------------------------------------------- | ------------------------------------------------------------ |
 | `$SHARED_PATH/cms.env`                                | `cms/.env.example` — edit with real values, recreate `cms` with its recorded tag |
-| `$SHARED_PATH/deploy.env`                             | `deploy.env.example` — edit if the default ports collide      |
+| `$SHARED_PATH/deploy.env`                             | `deploy.env.example` — edit if the default ports collide, or set the `*_HTTP_PORT` environment variables |
 | `$SHARED_PATH/cms/…` state directories                | created empty                                                 |
 | `$SHARED_PATH/cms/site/plugins/kirby-foodlab/data/*.json` | seeded as `[]` (overwritten by your rsync of real data)  |
