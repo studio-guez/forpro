@@ -1,0 +1,222 @@
+name: Deploy
+description: |
+  Runs on a self-hosted runner co-located with the Docker host. Publishes a
+  new release directory (compose file + env examples), bootstraps the shared
+  state directory, pulls the freshly built images from GHCR, and brings the
+  stack up. Services that were not rebuilt in this run keep their currently
+  deployed image tag (recorded in shared/current-tags/), so only changed
+  containers are replaced. Environment-specific values (path, GHCR pull
+  token, compose project name) are passed in as inputs so the same action is
+  reused by the preprod and production deploy jobs without leaking secrets
+  between environments.
+
+inputs:
+  deploy_path:
+    description: Base deployment path on the server (e.g. /srv/forpro)
+    required: true
+  ghcr_user:
+    required: true
+  ghcr_token:
+    required: true
+  image_tag:
+    description: Immutable tag of the images built in this run (e.g. sha-abc1234)
+    required: true
+  floating_tag:
+    description: Floating tag for this environment (latest or preprod), used as fallback for services with no recorded tag
+    required: true
+  release_id:
+    required: true
+  built_services:
+    description: Comma-separated list of services built in this run (subset of cms,website,restaurant,menu)
+    required: true
+  compose_project_name:
+    description: Docker Compose project name (e.g. forpro or forpro-preprod)
+    required: false
+    default: forpro
+
+runs:
+  using: composite
+  steps:
+    - name: Deploy
+      shell: bash
+      env:
+        DEPLOY_PATH:          ${{ inputs.deploy_path }}
+        GHCR_USER:            ${{ inputs.ghcr_user }}
+        GHCR_TOKEN:           ${{ inputs.ghcr_token }}
+        IMAGE_TAG:            ${{ inputs.image_tag }}
+        FLOATING_TAG:         ${{ inputs.floating_tag }}
+        RELEASE_ID:           ${{ inputs.release_id }}
+        BUILT_SERVICES:       ${{ inputs.built_services }}
+        COMPOSE_PROJECT_NAME: ${{ inputs.compose_project_name }}
+        REPO:                 ${{ github.repository }}
+      run: |
+        set -euo pipefail
+
+        IMAGE_BASE="ghcr.io/${REPO}"
+        RELEASE_DIR="$DEPLOY_PATH/releases/$RELEASE_ID"
+        SHARED_DIR="$DEPLOY_PATH/shared"
+        CURRENT="$DEPLOY_PATH/current"
+        ALL_SERVICES="cms website restaurant menu"
+
+        is_built() {
+          case ",$BUILT_SERVICES," in
+            *",$1,"*) return 0 ;;
+            *)        return 1 ;;
+          esac
+        }
+
+        # ── Release directory ────────────────────────────────────────────────
+        mkdir -p "$RELEASE_DIR"
+        cp "$GITHUB_WORKSPACE/compose.prod.yml"   "$RELEASE_DIR/"
+        cp "$GITHUB_WORKSPACE/deploy.env.example" "$RELEASE_DIR/"
+        cp "$GITHUB_WORKSPACE/cms/.env.example"   "$RELEASE_DIR/cms.env.example"
+
+        # ── Shared directory bootstrap (idempotent) ──────────────────────────
+        # Creates missing state directories and seeds env files from their
+        # examples — each step is a no-op when the target already exists.
+        mkdir -p \
+          "$SHARED_DIR/backups" \
+          "$SHARED_DIR/current-tags" \
+          "$SHARED_DIR/last-tags" \
+          "$SHARED_DIR/cms/content" \
+          "$SHARED_DIR/cms/media" \
+          "$SHARED_DIR/cms/site/accounts" \
+          "$SHARED_DIR/cms/site/sessions" \
+          "$SHARED_DIR/cms/site/cache" \
+          "$SHARED_DIR/cms/site/plugins/kirby-foodlab/data" \
+          "$SHARED_DIR/cms/site/plugins/kirby-menu-du-jour/data"
+
+        if [ ! -f "$SHARED_DIR/cms.env" ]; then
+          echo "[deploy] $SHARED_DIR/cms.env not found – copying cms/.env.example (edit with real values, then restart the cms container)"
+          cp "$RELEASE_DIR/cms.env.example" "$SHARED_DIR/cms.env"
+          chmod 660 "$SHARED_DIR/cms.env"
+        fi
+
+        # Seed an empty Kirby license file: compose bind-mounts it as a file, so
+        # it must exist on the host (Docker would otherwise create a directory).
+        # The real license is rsynced/registered manually and persists here.
+        mkdir -p "$SHARED_DIR/cms/site/config"
+        [ -f "$SHARED_DIR/cms/site/config/.license" ] || touch "$SHARED_DIR/cms/site/config/.license"
+
+        if [ ! -f "$SHARED_DIR/deploy.env" ]; then
+          echo "[deploy] $SHARED_DIR/deploy.env not found – copying deploy.env.example (edit if the default loopback ports collide)"
+          cp "$RELEASE_DIR/deploy.env.example" "$SHARED_DIR/deploy.env"
+        fi
+
+        # Seed the kirby-foodlab data files on first deploy (the plugin expects
+        # them to exist; real data is rsynced over them afterwards).
+        for f in beer bubblewine cocktail dessert hotdrink maincourse menu menu-special metadata origin redwine softdrink starter whitewine; do
+          DATA_FILE="$SHARED_DIR/cms/site/plugins/kirby-foodlab/data/$f.json"
+          [ -f "$DATA_FILE" ] || echo '[]' > "$DATA_FILE"
+        done
+
+        # ── GHCR login ───────────────────────────────────────────────────────
+        # Use a throw-away Docker config directory so that any host-level
+        # credential helper configured in ~/.docker/config.json does not
+        # intercept the login and ask for an interactive TTY. All subsequent
+        # docker commands in this shell inherit DOCKER_CONFIG; the directory
+        # is cleaned up automatically on exit.
+        export DOCKER_CONFIG
+        DOCKER_CONFIG=$(mktemp -d)
+        TAG_STAGING_DIR=$(mktemp -d)
+        trap 'rm -rf "$DOCKER_CONFIG" "$TAG_STAGING_DIR"' EXIT
+        echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
+
+        # ── Per-service tag resolution ───────────────────────────────────────
+        # Rebuilt services get the new immutable tag; untouched services keep
+        # their recorded tag so `docker compose up -d` leaves their containers
+        # running as-is. Persistent tag files are updated only after compose
+        # succeeds so a failed deploy keeps rollback pointers intact.
+        for svc in $ALL_SERVICES; do
+          TAG_FILE="$SHARED_DIR/current-tags/$svc.txt"
+          if is_built "$svc"; then
+            TAG="$IMAGE_TAG"
+            [ -f "$TAG_FILE" ] && cp "$TAG_FILE" "$TAG_STAGING_DIR/last-$svc.txt"
+            echo "$IMAGE_TAG" > "$TAG_STAGING_DIR/current-$svc.txt"
+          else
+            TAG=$(cat "$TAG_FILE" 2>/dev/null || echo "$FLOATING_TAG")
+          fi
+          VAR_NAME="$(echo "$svc" | tr '[:lower:]' '[:upper:]')_IMAGE_TAG"
+          export "$VAR_NAME=$TAG"
+          echo "[deploy] $svc -> $IMAGE_BASE/$svc:$TAG"
+        done
+
+        # ── Pull the images built in this run ────────────────────────────────
+        for svc in $ALL_SERVICES; do
+          if is_built "$svc"; then
+            docker pull "$IMAGE_BASE/$svc:$IMAGE_TAG"
+          fi
+        done
+
+        # ── Pre-deploy backup of CMS content, accounts, license & plugin data ─
+        TS=$(date -u +%Y%m%dT%H%M%SZ)
+        (
+          umask 077
+          tar -czf "$SHARED_DIR/backups/cms-$TS.tgz" -C "$SHARED_DIR/cms" \
+            content \
+            site/accounts \
+            site/config/.license \
+            site/plugins/kirby-foodlab/data \
+            site/plugins/kirby-menu-du-jour/data
+        )
+        ls -1t "$SHARED_DIR/backups"/cms-*.tgz | tail -n +15 | xargs -r rm --
+
+        # ── Ownership fix ────────────────────────────────────────────────────
+        # www-data inside the cms container must be able to write to content,
+        # media, accounts, sessions, cache, the license file and the plugin data
+        # directories. g+w keeps everything editable/rsyncable by the deploy
+        # user on the host, which is a member of the www-data group.
+        # The Kirby cache is cleared in the same root shell when a new cms image
+        # ships (new templates, blueprints or plugins invalidate it) — done
+        # inside the container because the host user cannot delete files owned
+        # by www-data.
+        CLEAR_CACHE=""
+        if is_built cms; then
+          CLEAR_CACHE="rm -rf /shared/site/cache/* && "
+        fi
+        docker run --rm \
+          -v "$SHARED_DIR/cms:/shared" \
+          --user root \
+          --entrypoint sh \
+          "$IMAGE_BASE/cms:$CMS_IMAGE_TAG" \
+          -c "${CLEAR_CACHE}chown -R www-data:www-data /shared && chmod -R g+w /shared"
+
+        # ── Flip the `current` symlink atomically ────────────────────────────
+        ln -sfn "$RELEASE_DIR" "$DEPLOY_PATH/current.tmp"
+        mv -Tf "$DEPLOY_PATH/current.tmp" "$CURRENT"
+
+        # ── Bring up the stack ───────────────────────────────────────────────
+        # Loopback ports come from shared/deploy.env; image tags and
+        # SHARED_PATH are exported above. Containers whose image ref did not
+        # change are left untouched by compose. --wait blocks until every
+        # service passes its healthcheck, so a broken image fails the deploy
+        # instead of silently serving errors.
+        export SHARED_PATH="$SHARED_DIR"
+        export COMPOSE_PROJECT_NAME
+        docker compose \
+          --env-file "$SHARED_DIR/deploy.env" \
+          -f "$CURRENT/compose.prod.yml" \
+          up -d --remove-orphans --wait --wait-timeout 180
+
+        # Persist current/last tags only after a successful deploy.
+        for svc in $ALL_SERVICES; do
+          if is_built "$svc"; then
+            [ -f "$TAG_STAGING_DIR/last-$svc.txt" ] && cp "$TAG_STAGING_DIR/last-$svc.txt" "$SHARED_DIR/last-tags/$svc.txt"
+            cp "$TAG_STAGING_DIR/current-$svc.txt" "$SHARED_DIR/current-tags/$svc.txt"
+          fi
+        done
+
+        # ── Prune ────────────────────────────────────────────────────────────
+        # Keep the 5 most recent immutable (sha-*) images per service so we can
+        # roll back, delete anything older, then prune what became dangling.
+        for svc in $ALL_SERVICES; do
+          docker image ls --format '{{.Repository}}:{{.Tag}}' "$IMAGE_BASE/$svc" \
+            | grep -E ":(preprod-)?sha-" \
+            | while read -r ref; do
+                printf '%s %s\n' "$(docker image inspect -f '{{.Created}}' "$ref")" "$ref"
+              done \
+            | sort -r | tail -n +6 | awk '{print $2}' \
+            | xargs -r docker image rm -- || true
+        done
+        docker image prune -f --filter "until=168h"
+        ls -1dt "$DEPLOY_PATH/releases"/* | tail -n +6 | xargs -r rm -rf

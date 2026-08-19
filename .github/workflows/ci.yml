@@ -1,0 +1,344 @@
+name: CI / Deploy
+
+on:
+  push:
+    branches: [main, preprod]
+    tags: ['v*']
+  pull_request:
+    branches: [main, preprod]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Deployment target'
+        required: true
+        default: preprod
+        type: choice
+        options: [preprod, production]
+      services:
+        description: 'Services to build (comma-separated: cms,website,restaurant,menu) or "all"'
+        required: true
+        default: all
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE_BASE: ghcr.io/${{ github.repository }}
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Resolve the deployment target and the image tags for this run. A single
+  # job so every matrix leg and the deploy jobs share the same release id.
+  # ---------------------------------------------------------------------------
+  meta:
+    name: Resolve target & tags
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      target: ${{ steps.meta.outputs.target }}
+      image_tag: ${{ steps.meta.outputs.image_tag }}
+      floating_tag: ${{ steps.meta.outputs.floating_tag }}
+      release_id: ${{ steps.meta.outputs.release_id }}
+    steps:
+      - name: Resolve deployment target and tags
+        id: meta
+        run: |
+          SHA7=${GITHUB_SHA::7}
+          TS=$(date -u +%Y%m%dT%H%M%SZ)
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TARGET="${{ inputs.target }}"
+          elif [ "${GITHUB_REF}" = "refs/heads/preprod" ]; then
+            TARGET="preprod"
+          else
+            TARGET="production"
+          fi
+
+          if [ "$TARGET" = "preprod" ]; then
+            IMAGE_TAG="preprod-sha-$SHA7"
+            FLOATING_TAG="preprod"
+          else
+            IMAGE_TAG="sha-$SHA7"
+            FLOATING_TAG="latest"
+          fi
+
+          echo "target=$TARGET"             >> "$GITHUB_OUTPUT"
+          echo "image_tag=$IMAGE_TAG"       >> "$GITHUB_OUTPUT"
+          echo "floating_tag=$FLOATING_TAG" >> "$GITHUB_OUTPUT"
+          echo "release_id=$TS-$SHA7"       >> "$GITHUB_OUTPUT"
+
+  # ---------------------------------------------------------------------------
+  # Detect which services changed so we only test/build/deploy those. Any
+  # change to the deployment plumbing itself rebuilds everything, and tag
+  # pushes / workflow_dispatch default to everything.
+  # ---------------------------------------------------------------------------
+  changes:
+    name: Detect changed services
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      services: ${{ steps.services.outputs.services }}
+      services_csv: ${{ steps.services.outputs.services_csv }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        if: github.event_name != 'workflow_dispatch' && !startsWith(github.ref, 'refs/tags/')
+        with:
+          filters: |
+            cms: ['cms/**']
+            website: ['website/**']
+            restaurant: ['restaurant/**']
+            menu: ['menu/**']
+            infra:
+              - 'compose.prod.yml'
+              - 'deploy.env.example'
+              - '.github/workflows/ci.yml'
+              - '.github/actions/**'
+
+      - name: Compute service list
+        id: services
+        env:
+          REQUESTED: ${{ inputs.services }}
+        run: |
+          ALL="cms website restaurant menu"
+          SELECTED=""
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ "$REQUESTED" = "all" ]; then
+              SELECTED="$ALL"
+            else
+              SELECTED=$(echo "$REQUESTED" | tr ',' ' ')
+              for s in $SELECTED; do
+                case " $ALL " in
+                  *" $s "*) ;;
+                  *) echo "Unknown service: $s"; exit 1 ;;
+                esac
+              done
+            fi
+          elif [ "${GITHUB_REF#refs/tags/}" != "$GITHUB_REF" ]; then
+            SELECTED="$ALL"
+          elif [ "${{ steps.filter.outputs.infra }}" = "true" ]; then
+            SELECTED="$ALL"
+          else
+            [ "${{ steps.filter.outputs.cms }}" = "true" ]        && SELECTED="$SELECTED cms"
+            [ "${{ steps.filter.outputs.website }}" = "true" ]    && SELECTED="$SELECTED website"
+            [ "${{ steps.filter.outputs.restaurant }}" = "true" ] && SELECTED="$SELECTED restaurant"
+            [ "${{ steps.filter.outputs.menu }}" = "true" ]       && SELECTED="$SELECTED menu"
+            true
+          fi
+
+          if [ -z "$SELECTED" ]; then
+            JSON="[]"
+            CSV=""
+          else
+            JSON=$(printf '%s\n' $SELECTED | jq -R . | jq -cs .)
+            CSV=$(echo $SELECTED | tr ' ' ',')
+          fi
+          echo "Services: $JSON"
+          echo "services=$JSON"     >> "$GITHUB_OUTPUT"
+          echo "services_csv=$CSV"  >> "$GITHUB_OUTPUT"
+
+  # ---------------------------------------------------------------------------
+  # Per-service checks (PRs and pushes). Runs the same production build the
+  # Docker images run, so a red job here means a broken image build.
+  # ---------------------------------------------------------------------------
+  check:
+    name: Check ${{ matrix.service }}
+    needs: changes
+    if: needs.changes.outputs.services != '[]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    concurrency:
+      group: ci-${{ github.ref }}-${{ matrix.service }}
+      cancel-in-progress: true
+    strategy:
+      fail-fast: false
+      matrix:
+        service: ${{ fromJSON(needs.changes.outputs.services) }}
+    steps:
+      - uses: actions/checkout@v5
+
+      # ── CMS (Kirby / PHP) ──────────────────────────────────────────────────
+      - name: Setup PHP 8.4
+        if: matrix.service == 'cms'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: zip, gd, intl
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer
+        if: matrix.service == 'cms'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer
+          key: composer-${{ runner.os }}-${{ hashFiles('cms/composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Validate & install composer dependencies
+        if: matrix.service == 'cms'
+        working-directory: cms
+        run: |
+          composer validate --no-check-all --no-check-publish
+          composer install --no-dev --prefer-dist --no-interaction --no-progress
+
+      # ── Frontends (Node / pnpm) ────────────────────────────────────────────
+      - name: Setup pnpm
+        if: matrix.service != 'cms'
+        run: |
+          corepack enable
+          corepack prepare pnpm@10 --activate
+
+      - name: Setup Node 24
+        if: matrix.service != 'cms'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+          cache-dependency-path: ${{ matrix.service }}/pnpm-lock.yaml
+
+      - name: Install dependencies
+        if: matrix.service != 'cms'
+        working-directory: ${{ matrix.service }}
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        if: matrix.service != 'cms'
+        working-directory: ${{ matrix.service }}
+        env:
+          NUXT_TELEMETRY_DISABLED: '1'
+        run: pnpm run build
+
+  # ---------------------------------------------------------------------------
+  # Build & push one image per changed service. Skipped on pull requests.
+  # Frontend images bake their public URLs at build time, so preprod images
+  # are built with the PREPROD_* repository variables.
+  # ---------------------------------------------------------------------------
+  build:
+    name: Build & push ${{ matrix.service }}
+    needs: [meta, changes, check]
+    if: github.event_name != 'pull_request' && needs.changes.outputs.services != '[]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        service: ${{ fromJSON(needs.changes.outputs.services) }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Resolve build args
+        id: args
+        env:
+          TARGET: ${{ needs.meta.outputs.target }}
+          PREPROD_CMS_BASE_URL: ${{ vars.PREPROD_CMS_BASE_URL }}
+          PREPROD_MENU_BASE_URL: ${{ vars.PREPROD_MENU_BASE_URL }}
+        run: |
+          if [ "$TARGET" = "preprod" ]; then
+            CMS_URL="${PREPROD_CMS_BASE_URL:-https://api.for-pro.ch}"
+            MENU_URL="${PREPROD_MENU_BASE_URL:-https://menus.for-pro.ch}"
+          else
+            CMS_URL="https://api.for-pro.ch"
+            MENU_URL="https://menus.for-pro.ch"
+          fi
+
+          {
+            echo "list<<EOF"
+            case "${{ matrix.service }}" in
+              website)
+                echo "PUBLIC_CMS_BASE_URL=$CMS_URL"
+                ;;
+              restaurant)
+                echo "PUBLIC_CMS_BASE_URL=$CMS_URL"
+                echo "PUBLIC_MENU_BASE_URL=$MENU_URL"
+                ;;
+              menu)
+                echo "NUXT_PUBLIC_CMS_BASE_URL=$CMS_URL"
+                ;;
+            esac
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./${{ matrix.service }}
+          file: ${{ matrix.service }}/Dockerfile.prod
+          push: true
+          provenance: false
+          tags: |
+            ${{ env.IMAGE_BASE }}/${{ matrix.service }}:${{ needs.meta.outputs.image_tag }}
+            ${{ env.IMAGE_BASE }}/${{ matrix.service }}:${{ needs.meta.outputs.floating_tag }}
+          cache-from: type=gha,scope=${{ matrix.service }}-${{ needs.meta.outputs.target }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.service }}-${{ needs.meta.outputs.target }}
+          build-args: ${{ steps.args.outputs.list }}
+
+  # ---------------------------------------------------------------------------
+  # Preprod deploy.
+  # ---------------------------------------------------------------------------
+  deploy-preprod:
+    name: Deploy to preproduction
+    needs: [meta, changes, build]
+    if: needs.meta.outputs.target == 'preprod'
+    runs-on: [self-hosted, forpro, preprod, docker]
+    timeout-minutes: 15
+    environment: preprod
+    concurrency:
+      group: deploy-preprod
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Deploy to preproduction
+        uses: ./.github/actions/deploy
+        with:
+          deploy_path:          ${{ secrets.DEPLOY_PATH }}
+          ghcr_user:            ${{ secrets.GHCR_PULL_USER || github.actor }}
+          ghcr_token:           ${{ secrets.GHCR_PULL_TOKEN }}
+          image_tag:            ${{ needs.meta.outputs.image_tag }}
+          floating_tag:         ${{ needs.meta.outputs.floating_tag }}
+          release_id:           ${{ needs.meta.outputs.release_id }}
+          built_services:       ${{ needs.changes.outputs.services_csv }}
+          compose_project_name: ${{ secrets.COMPOSE_PROJECT_NAME || 'forpro' }}
+
+  # ---------------------------------------------------------------------------
+  # Production deploy.
+  # ---------------------------------------------------------------------------
+  deploy-production:
+    name: Deploy to production
+    needs: [meta, changes, build]
+    if: needs.meta.outputs.target == 'production'
+    runs-on: [self-hosted, forpro, production, docker]
+    timeout-minutes: 15
+    environment: production
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Deploy to production
+        uses: ./.github/actions/deploy
+        with:
+          deploy_path:          ${{ secrets.DEPLOY_PATH }}
+          ghcr_user:            ${{ secrets.GHCR_PULL_USER || github.actor }}
+          ghcr_token:           ${{ secrets.GHCR_PULL_TOKEN }}
+          image_tag:            ${{ needs.meta.outputs.image_tag }}
+          floating_tag:         ${{ needs.meta.outputs.floating_tag }}
+          release_id:           ${{ needs.meta.outputs.release_id }}
+          built_services:       ${{ needs.changes.outputs.services_csv }}
+          compose_project_name: ${{ secrets.COMPOSE_PROJECT_NAME || 'forpro' }}
