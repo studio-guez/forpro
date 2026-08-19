@@ -133,13 +133,6 @@ runs:
           chmod 660 "$SHARED_DIR/cms.env"
         fi
 
-        # The frontends fetch the API over the internal network, so Kirby must
-        # pin its base URL — otherwise it hands out http://cms/media/… links.
-        if ! grep -qE '^KIRBY_URL=.+' "$SHARED_DIR/cms.env"; then
-          echo "::error::$SHARED_DIR/cms.env has no KIRBY_URL. Set it to the public CMS URL (e.g. https://api.for-pro.ch), otherwise media URLs served to browsers point at the internal container host."
-          exit 1
-        fi
-
         # Seed an empty Kirby license file: compose bind-mounts it as a file, so
         # it must exist on the host (Docker would otherwise create a directory).
         # The real license is rsynced/registered manually and persists here.
@@ -234,18 +227,21 @@ runs:
         # ── Ownership fix ────────────────────────────────────────────────────
         # www-data inside the cms container must be able to write to content,
         # media, accounts, sessions, cache, the license file and the plugin data
-        # directories. g+w keeps everything editable/rsyncable by the deploy
-        # user on the host, which is a member of the www-data group.
+        # directories. The whole shared/ tree is mounted (not just cms/) so the
+        # runner-created files — cms.env, deploy.env, the tag files and the
+        # backups, which the runner may create as root — end up group-owned by
+        # www-data and group-writable, i.e. editable by the deploy user on the
+        # host (a member of that group) without sudo.
         # The Kirby cache is cleared in the same root shell when a new cms image
         # ships (new templates, blueprints or plugins invalidate it) — done
         # inside the container because the host user cannot delete files owned
         # by www-data.
         CLEAR_CACHE=""
         if is_built cms; then
-          CLEAR_CACHE="rm -rf /shared/site/cache/* && "
+          CLEAR_CACHE="rm -rf /shared/cms/site/cache/* && "
         fi
         docker run --rm \
-          -v "$SHARED_DIR/cms:/shared" \
+          -v "$SHARED_DIR:/shared" \
           --user root \
           --entrypoint sh \
           "$IMAGE_BASE/cms:$CMS_IMAGE_TAG" \
@@ -254,6 +250,15 @@ runs:
         # ── Flip the `current` symlink atomically ────────────────────────────
         ln -sfn "$RELEASE_DIR" "$DEPLOY_PATH/current.tmp"
         mv -Tf "$DEPLOY_PATH/current.tmp" "$CURRENT"
+
+        # The frontends fetch the API over the internal Docker network, so Kirby
+        # must pin its base URL — otherwise it hands out http://cms/media/… links
+        # that browsers cannot resolve. Checked after the ownership fix above, so
+        # a first deploy still leaves cms.env editable by the deploy user.
+        if ! grep -qE '^KIRBY_URL=.+' "$SHARED_DIR/cms.env"; then
+          echo "::error::$SHARED_DIR/cms.env has no KIRBY_URL. Set it to the public CMS URL (e.g. https://api.for-pro.ch), otherwise media URLs served to browsers point at the internal container host."
+          exit 1
+        fi
 
         # ── Bring up the stack ───────────────────────────────────────────────
         # Loopback ports come from shared/deploy.env; image tags and
@@ -268,13 +273,16 @@ runs:
           -f "$CURRENT/compose.prod.yml" \
           up -d --remove-orphans --wait --wait-timeout 180
 
-        # Persist current/last tags only after a successful deploy.
+        # Persist current/last tags only after a successful deploy. They are
+        # written after the ownership fix above, so normalise them here too.
         for svc in $ALL_SERVICES; do
           if is_built "$svc"; then
             [ -f "$TAG_STAGING_DIR/last-$svc.txt" ] && cp "$TAG_STAGING_DIR/last-$svc.txt" "$SHARED_DIR/last-tags/$svc.txt"
             cp "$TAG_STAGING_DIR/current-$svc.txt" "$SHARED_DIR/current-tags/$svc.txt"
           fi
         done
+        chgrp -R www-data "$SHARED_DIR/current-tags" "$SHARED_DIR/last-tags" 2>/dev/null || true
+        chmod -R g+w "$SHARED_DIR/current-tags" "$SHARED_DIR/last-tags" 2>/dev/null || true
 
         # ── Prune ────────────────────────────────────────────────────────────
         # Keep the 5 most recent immutable (sha-*) images per service so we can
