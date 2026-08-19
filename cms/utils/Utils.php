@@ -153,8 +153,26 @@ class Utils
             return [
                 'slug'  => $term->slug(),
                 'title' => $term->title()->value(),
+                'color' => $term->color()->isNotEmpty() ? $term->color()->value() : null,
             ];
         }, $field->split(','))));
+    }
+
+    /**
+     * Returns all terms of a taxonomy in their CMS-defined order (the order of
+     * the term pages under content/taxonomies/<taxonomy>), in the same
+     * `{slug, title, color}` shape as resolveTaxonomyTerms().
+     */
+    static function getTaxonomyTerms(string $taxonomy): array
+    {
+        $parent = page('taxonomies/' . $taxonomy);
+        if (!$parent) return [];
+
+        return $parent->children()->listed()->map(fn($term) => [
+            'slug'  => $term->slug(),
+            'title' => $term->title()->value(),
+            'color' => $term->color()->isNotEmpty() ? $term->color()->value() : null,
+        ])->values();
     }
 
     /**

@@ -1,0 +1,3 @@
+title: Catégorie de FAQ
+
+extends: pages/taxonomy-term
