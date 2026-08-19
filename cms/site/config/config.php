@@ -5,6 +5,8 @@ header("Access-Control-Allow-Origin: *");
 $frontendUrl = rtrim(getenv('KIRBY_FRONTEND_URL') ?: 'https://for-pro.ch', '/');
 $cmsUrl = getenv('KIRBY_URL') ? rtrim(getenv('KIRBY_URL'), '/') : null;
 
+$noIndex = getenv('KIRBY_ROBOTS_INDEX') === 'false';
+
 return [
     'debug' => getenv('KIRBY_DEBUG') === 'true',
     'home' => 'pages/home',
@@ -28,20 +30,29 @@ return [
     'favicon' => [
         'resize' => [16, 32, 48, 180, 192, 512],
     ],
-    'tobimori' => [
-        'seo' => [
-            'canonicalBase' => $frontendUrl,
-            'lang' => 'fr_CH',
-            'robots' => [
-                // disallow everything when explicitly turned off (e.g. preprod),
-                // editable in cms.env without rebuilding the image.
-                'index' => getenv('KIRBY_ROBOTS_INDEX') !== 'false',
-            ],
-            'default' => [
-                'metaTemplate' => fn($page) => $page->site()->title()->isNotEmpty()
-                    ? '{{ title }} - {{ site.title }}'
-                    : '{{ title }}',
-            ],
+    'tobimori.seo' => [
+        // Site-config overrides must sit under this exact literal key: Kirby stores
+        // plugin options at `$plugin->prefix()` ("tobimori.seo", the slash->dot'd
+        // plugin name), so a nested `'tobimori' => ['seo' => [...]]` array lives at
+        // a different, disconnected path and is silently ignored by option().
+        'canonicalBase' => $frontendUrl,
+        'lang' => 'fr_CH',
+        'robots' => [
+            // disallow everything in /robots.txt (and noindex the meta default)
+            // when explicitly turned off (e.g. preprod), editable in cms.env
+            // without rebuilding the image.
+            'index' => !$noIndex,
+        ],
+        // Disabled together with robots: no point exposing a sitemap (and the
+        // plugin's /robots.txt always appends a "Sitemap:" line otherwise, even
+        // when disallowed — this also drops that line).
+        'sitemap' => [
+            'active' => !$noIndex,
+        ],
+        'default' => [
+            'metaTemplate' => fn($page) => $page->site()->title()->isNotEmpty()
+                ? '{{ title }} - {{ site.title }}'
+                : '{{ title }}',
         ],
     ],
     "url_frontend" => $frontendUrl . "/",
