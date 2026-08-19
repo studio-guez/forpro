@@ -39,7 +39,8 @@ app is a SPA, the value is baked in at build time in production — the CI build
 passes it as a Docker build arg.
 
 The restaurant frontend links to this app through `PUBLIC_MENU_BASE_URL`
-(`restaurant/.env.development` / `restaurant/.env.production`).
+(`restaurant/.env.development` locally, the `PREPROD_MENU_BASE_URL` /
+`PRODUCTION_MENU_BASE_URL` repository variables in CI).
 
 ### CMS Plugins
 
@@ -375,6 +376,17 @@ are built separately with the `PREPROD_CMS_BASE_URL` and
 `PREPROD_MENU_BASE_URL` repository **variables** (Settings → Secrets and
 variables → Actions → Variables). If unset, they fall back to the production
 URLs.
+
+Preprod images are also built with `PUBLIC_ENVIRONMENT=preprod`
+(`NUXT_PUBLIC_ENVIRONMENT` for the menu app), which makes every frontend serve
+a `<meta name="robots" content="noindex, nofollow">` tag and disables Matomo.
+Production builds default to `production` and keep the normal behaviour.
+`robots.txt` itself is not driven by this variable: the CMS's (and website's,
+which just proxies it) is controlled by `KIRBY_ROBOTS_INDEX` in `cms.env`
+(set to `false` to disallow everything — no rebuild, just restart the `cms`
+container), and `restaurant/robots.txt` / `menu/robots.txt` are file bind
+mounts under `shared/` (see below) — edit them directly on the server to lock
+crawlers out, no rebuild needed.
 
 ### Layout on each target server
 
