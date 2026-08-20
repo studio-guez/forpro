@@ -251,6 +251,95 @@ class Utils
     }
 
     /**
+     * Extracts the 11-character YouTube video id from any common URL shape
+     * (watch?v=, youtu.be/, /shorts/, /embed/, /v/). Returns null when the URL
+     * is not a recognizable YouTube link.
+     */
+    static function parseYoutubeId(string $url): ?string
+    {
+        if (preg_match('~(?:youtube\.com/(?:watch\?(?:.*&)?v=|shorts/|embed/|v/)|youtu\.be/)([A-Za-z0-9_-]{11})~i', $url, $m) === 1) {
+            return $m[1];
+        }
+        return null;
+    }
+
+    /**
+     * Resolves an `embed_videos` structure (each item exposing a `url` field)
+     * to a JSON-ready list of YouTube embeds. Only YouTube links are kept;
+     * Shorts are flagged with `type => 'short'` (vertical), everything else is
+     * `type => 'video'` (16:9). `embedUrl` is the privacy-friendly nocookie URL.
+     */
+    static function getYoutubeEmbeds(\Kirby\Content\Field $field): array
+    {
+        $embeds = [];
+        foreach ($field->toStructure() as $item) {
+            $url = $item->url()->value();
+            $id  = self::parseYoutubeId((string)$url);
+            if (!$id) continue;
+            $embeds[] = [
+                'id'       => $id,
+                'type'     => stripos((string)$url, '/shorts/') !== false ? 'short' : 'video',
+                'url'      => $url,
+                'embedUrl' => 'https://www.youtube-nocookie.com/embed/' . $id,
+            ];
+        }
+        return $embeds;
+    }
+
+    /**
+     * Resolves the shared event/project content blocks structure
+     * (repeatable `title` + rich-text `description`) to a JSON-ready list.
+     */
+    static function getContentBlocks(\Kirby\Content\Field $field): array
+    {
+        return array_values($field->toStructure()->map(fn($item) => [
+            'title'       => $item->title()->value(),
+            'description' => $item->description()->value(),
+        ])->data());
+    }
+
+    /**
+     * Resolves an external links structure (`title` + `link`) to a JSON-ready
+     * list of `{title, url}` items, skipping entries without a URL.
+     */
+    static function getExternalLinks(\Kirby\Content\Field $field): array
+    {
+        $links = [];
+        foreach ($field->toStructure() as $item) {
+            if ($item->link()->isEmpty()) continue;
+            $links[] = [
+                'title' => $item->title()->value(),
+                'url'   => $item->link()->value(),
+            ];
+        }
+        return $links;
+    }
+
+    /**
+     * Builds the shared payload for event and project pages: the fields defined
+     * by pages/event-project-base.yml plus the standard page metadata used by
+     * the decoupled frontend router (path, seo).
+     */
+    static function getEventProjectBaseData(\Kirby\Cms\Page $page): array
+    {
+        $coverFile = $page->cover()->toFile();
+
+        return [
+            'title'         => $page->title()->value(),
+            'slug'          => $page->slug(),
+            'path'          => $page->virtualPath(),
+            'subtitle'      => $page->subtitle()->value(),
+            'shortDesc'     => $page->short_desc()->value(),
+            'cover'         => $coverFile ? self::getJsonEncodeImageData($coverFile) : null,
+            'medias'        => self::getJsonEncodeMediaArray($page->medias()->toFiles()),
+            'embedVideos'   => self::getYoutubeEmbeds($page->embed_videos()),
+            'blocks'        => self::getContentBlocks($page->blocks()),
+            'externalLinks' => self::getExternalLinks($page->externalLinks()),
+            'seo'           => self::getSeoDataFromPage($page),
+        ];
+    }
+
+    /**
      * Builds the favicon payload for the frontend head.
      * SVGs are served as-is (scalable, one per color scheme); the 512×512 PNG
      * masters are downscaled to every size in `option('favicon.resize')` so the
