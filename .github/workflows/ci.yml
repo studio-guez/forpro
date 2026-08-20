@@ -124,7 +124,8 @@ jobs:
             # Tag pushes and workflow_dispatch can ship a different environment,
             # so counting them would let a production release mark preprod as
             # up to date (and vice versa).
-            CANDIDATES=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs" \
+            # -X GET is required: `gh api` switches to POST as soon as -f is used.
+            CANDIDATES=$(gh api -X GET "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs" \
               -f branch="$BRANCH" -f status=success -f event=push -f per_page=50 \
               --jq ".workflow_runs[] | select(.head_branch == \"$BRANCH\") | .head_sha" 2>/dev/null || true)
 
