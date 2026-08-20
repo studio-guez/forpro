@@ -3,6 +3,7 @@
 	import type { ModuleCasesContent, Theme, Variant } from '$lib/interfaces/page';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import VideoPlayer from '$lib/components/ui/VideoPlayer.svelte';
+	import Img from '$lib/components/ui/Img.svelte';
 	import ShapeCasesDefault1 from '$lib/components/svg/ShapeCasesDefault1.svelte';
 	import ShapeCasesDefault2 from '$lib/components/svg/ShapeCasesDefault2.svelte';
 	import ShapeCasesLearninglab1 from '$lib/components/svg/ShapeCasesLearninglab1.svelte';
@@ -249,15 +250,7 @@
                         {#if media.type === 'video'}
                             <VideoPlayer src={media.url} />
                         {:else}
-                            <img
-                                src={media.url}
-                                srcset={media.srcset}
-                                width={media.width}
-                                height={media.height}
-                                alt={media.alt ?? ''}
-                                style:object-position={media.focus ?? 'center'}
-                                class="w-full h-full object-cover"
-                            />
+                            <Img image={media} class="w-full h-full object-cover" />
                         {/if}
                     </div>
                 {/each}
