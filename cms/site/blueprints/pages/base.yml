@@ -26,14 +26,7 @@ tabs:
               sepCover:
                 type: line
               cover:
-                label:
-                  en: Cover image
-                  fr: Image de couverture
-                type: files
-                max: 1
-                layout: cards
-                required: true
-                uploads: image
+                extends: fields/cover
       main:
         width: 3/4
         sections:
