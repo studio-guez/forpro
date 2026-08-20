@@ -73,15 +73,15 @@ tabs:
     columns:
       - width: 1/2
         sections:
-          event_types:
+          event_themes:
             type: pages
             image: false
             label:
-              en: Event types
-              fr: Types d'événement
+              en: Event themes
+              fr: Thématiques d'événement
             templates:
-              - event-type
-            parent: site.find("taxonomies").find("event-types")
+              - event-theme
+            parent: site.find("taxonomies").find("event-themes")
       - width: 1/2
         sections:
           domains:

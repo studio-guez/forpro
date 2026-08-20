@@ -1,0 +1,5 @@
+title:
+  en: Event theme
+  fr: Thématique d'événement
+
+extends: pages/taxonomy-term
