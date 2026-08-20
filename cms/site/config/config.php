@@ -43,11 +43,8 @@ return [
             // without rebuilding the image.
             'index' => !$noIndex,
         ],
-        // Disabled together with robots: no point exposing a sitemap (and the
-        // plugin's /robots.txt always appends a "Sitemap:" line otherwise, even
-        // when disallowed — this also drops that line).
         'sitemap' => [
-            'active' => !$noIndex,
+            'active' => true,
             // The default generator walks the whole Kirby index and builds URLs
             // from the content structure. Neither matches the decoupled
             // frontend: only `page`/`faq` entries have a route there (the
