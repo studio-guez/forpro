@@ -1,0 +1,23 @@
+title: Projet
+
+extends: pages/base-content
+
+fields:
+  project_themes: fields/taxonomies/project-themes
+
+  project_types: fields/taxonomies/project-types
+
+  collectiveName:
+    label: Nom du collectif
+    type: text
+    width: 1/2
+
+  collectiveMembers:
+    label: Membres du collectif
+    type: structure
+    empty: Aucun membre
+    fields:
+      name:
+        label: Nom
+        type: text
+        required: true

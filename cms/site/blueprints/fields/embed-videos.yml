@@ -1,0 +1,18 @@
+label: Vidéos Youtube
+type: structure
+required: false
+empty: Aucune vidéo
+fields:
+  title:
+    label: Titre
+    type: text
+    width: 1/2
+
+  url:
+    label: Lien Youtube (vidéo ou short)
+    type: url
+    required: true
+    width: 1/2
+    help: "Formats acceptés : https://www.youtube.com/watch?v=…, https://youtu.be/…, https://www.youtube.com/shorts/…"
+    validate:
+      match: "!^https?://(www\\.|m\\.)?(youtube\\.com/(watch\\?v=|shorts/|embed/)[\\w-]{11}|youtu\\.be/[\\w-]{11})!"

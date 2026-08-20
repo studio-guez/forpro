@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../../../utils/ContentApi.php';
+
 Kirby::plugin('mediumsans/forpro', [
     'blueprints' => [
         'pages/forpro'          => __DIR__ . '/blueprints/pages/forpro.yml',
@@ -59,6 +61,63 @@ Kirby::plugin('mediumsans/forpro', [
                     'bookingAppointmentConfirmationLabel' => $kirby->site()->bookingAppointmentConfirmationLabel()->value(),
                     'bookingAppointmentSuccessLabel'      => $kirby->site()->bookingAppointmentSuccessLabel()->value(),
                     'bookingAppointmentSelect'            => $kirby->site()->bookingAppointmentSelect()->toStructure()->toArray()
+                  ];
+              }
+            ],
+            [
+              'pattern' => 'api/events',
+              'method'  => 'GET',
+              'action'  => function () use ($kirby) {
+                  return [
+                    'items' => $kirby->site()->index()->listed()
+                        ->filterBy('intendedTemplate', 'event')
+                        ->sortBy('dateStart', 'asc')
+                        ->map(fn ($page) => ContentApi::event($page))
+                        ->values(),
+                  ];
+              }
+            ],
+            [
+              'pattern' => 'api/event/(:any)',
+              'method'  => 'GET',
+              'action'  => function (string $slug) use ($kirby) {
+                  $page = $kirby->site()->index()->listed()
+                      ->filterBy('intendedTemplate', 'event')
+                      ->findBy('slug', $slug);
+
+                  if (!$page) return false;
+
+                  return [
+                    'pageInfo' => ContentApi::event($page),
+                    'seo'      => ContentApi::seo($page, $kirby->site()),
+                  ];
+              }
+            ],
+            [
+              'pattern' => 'api/projects',
+              'method'  => 'GET',
+              'action'  => function () use ($kirby) {
+                  return [
+                    'items' => $kirby->site()->index()->listed()
+                        ->filterBy('intendedTemplate', 'project')
+                        ->map(fn ($page) => ContentApi::project($page))
+                        ->values(),
+                  ];
+              }
+            ],
+            [
+              'pattern' => 'api/project/(:any)',
+              'method'  => 'GET',
+              'action'  => function (string $slug) use ($kirby) {
+                  $page = $kirby->site()->index()->listed()
+                      ->filterBy('intendedTemplate', 'project')
+                      ->findBy('slug', $slug);
+
+                  if (!$page) return false;
+
+                  return [
+                    'pageInfo' => ContentApi::project($page),
+                    'seo'      => ContentApi::seo($page, $kirby->site()),
                   ];
               }
             ],

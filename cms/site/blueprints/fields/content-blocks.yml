@@ -1,0 +1,21 @@
+label: Blocs de contenu
+type: structure
+required: false
+empty: Aucun bloc
+fields:
+  title:
+    label: Titre
+    type: text
+    required: true
+
+  description:
+    label: Description
+    type: writer
+    marks:
+      - bold
+      - italic
+      - link
+    nodes:
+      - paragraph
+      - bulletList
+      - orderedList

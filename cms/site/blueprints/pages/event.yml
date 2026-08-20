@@ -1,0 +1,28 @@
+title: Événement
+
+extends: pages/base-content
+
+fields:
+  domains: fields/taxonomies/domains
+
+  event_themes: fields/taxonomies/event-themes
+
+  dateStart:
+    label: Date de début
+    type: date
+    required: true
+    width: 1/4
+    time:
+      step:
+        unit: minute
+        size: 5
+
+  dateEnd:
+    label: Date de fin
+    type: date
+    required: false
+    width: 1/4
+    time:
+      step:
+        unit: minute
+        size: 5

@@ -1,0 +1,15 @@
+label: Thématiques du projet
+type: multiselect
+required: false
+min: 0
+options:
+  orientation: Orientation
+  formation: Formation
+  emploi: Emploi
+  entrepreneuriat: Entrepreneuriat
+  alimentation: Alimentation
+  artisanat: Artisanat
+  numerique: Numérique
+  culture: Culture
+  sante-bien-etre: Santé & bien-être
+  transition-ecologique: Transition écologique

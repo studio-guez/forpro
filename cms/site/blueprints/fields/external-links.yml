@@ -1,0 +1,16 @@
+label: Liens externes
+type: structure
+required: false
+empty: Aucun lien
+fields:
+  title:
+    label: Titre
+    type: text
+    required: true
+    width: 1/2
+
+  link:
+    label: Lien
+    type: url
+    required: true
+    width: 1/2

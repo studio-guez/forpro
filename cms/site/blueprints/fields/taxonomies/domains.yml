@@ -1,0 +1,13 @@
+label: Domaines
+type: multiselect
+required: false
+min: 0
+options:
+  s-orienter: S’orienter
+  trouver-du-soutien: Trouver du soutien
+  accompagner: Accompagner
+  former: Former
+  s-emerveiller: S’émerveiller
+  manger: Manger
+  fabriquer: Fabriquer
+  experimenter: Expérimenter

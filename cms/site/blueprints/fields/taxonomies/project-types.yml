@@ -1,0 +1,15 @@
+label: Types de projet
+type: multiselect
+required: false
+min: 0
+options:
+  recherche: Recherche
+  experimentation: Expérimentation
+  atelier: Atelier
+  residence: Résidence
+  formation: Formation
+  exposition: Exposition
+  publication: Publication
+  prototype: Prototype
+  accompagnement: Accompagnement
+  evenement: Événement

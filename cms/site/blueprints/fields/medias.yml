@@ -1,0 +1,9 @@
+label: Médias
+type: files
+required: false
+layout: cards
+size: tiny
+uploads:
+  accept: image/*
+image:
+  cover: true

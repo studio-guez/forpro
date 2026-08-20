@@ -1,0 +1,37 @@
+##
+# Shared base for the `event` and `project` page types.
+# Both blueprints extend this file and only add their own specific fields.
+##
+
+options:
+  changeStatus: true
+  changeTemplate: false
+  changeSlug: true
+
+fields:
+  title:
+    label: Titre
+    type: text
+    required: true
+
+  subtitle:
+    label: Sous-titre
+    type: text
+    required: true
+
+  short_desc:
+    label: Description courte
+    type: textarea
+    required: true
+    maxlength: 300
+    buttons: false
+
+  cover: fields/cover
+
+  medias: fields/medias
+
+  embed_videos: fields/embed-videos
+
+  blocks: fields/content-blocks
+
+  external_links: fields/external-links

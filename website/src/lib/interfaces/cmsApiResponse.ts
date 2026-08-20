@@ -625,3 +625,79 @@ export interface IBlockLinkProgram_content_list {
     program_list_cta_text: string
 }
 
+
+
+/**
+ * SHARED CONTENT BASE (`event` and `project` page types)
+ */
+export interface IContentBlock {
+    title: string
+    description: string
+}
+
+export interface IExternalLink {
+    title: string
+    link: string
+}
+
+export interface IEmbedVideo {
+    id: string
+    title: string | null
+    url: string
+    isShort: boolean
+    embedUrl: string
+    thumbnail: string
+}
+
+export interface IDateTime {
+    iso: string
+    date: string
+    time: string
+}
+
+export interface ICollectiveMember {
+    name: string
+}
+
+export interface IContentBase {
+    id: string
+    uuid: string | null
+    slug: string
+    uri: string
+    url: string
+    template: 'event' | 'project'
+    title: string
+    subtitle: string
+    shortDesc: string
+    cover: IImage | null
+    medias: IImage[]
+    embedVideos: IEmbedVideo[]
+    blocks: IContentBlock[]
+    externalLinks: IExternalLink[]
+}
+
+export interface IEventContent extends IContentBase {
+    template: 'event'
+    domains: string[]
+    eventThemes: string[]
+    dateStart: IDateTime | null
+    dateEnd: IDateTime | null
+}
+
+export interface IProjectContent extends IContentBase {
+    template: 'project'
+    projectThemes: string[]
+    projectTypes: string[]
+    collectiveName: string | null
+    collectiveMembers: ICollectiveMember[]
+}
+
+export interface IEventPage {
+    pageInfo: IEventContent
+    seo: ISeo
+}
+
+export interface IProjectPage {
+    pageInfo: IProjectContent
+    seo: ISeo
+}
