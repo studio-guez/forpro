@@ -13,6 +13,7 @@
 	import IconClose from '$lib/components/svg/IconClose.svelte';
 	import IconSearch from '$lib/components/svg/IconSearch.svelte';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
+	import Img from '$lib/components/ui/Img.svelte';
 
 	interface Props {
 		header: Header;
@@ -78,13 +79,10 @@
 >
 	<div class="max-w-360 mx-auto flex items-center gap-x-3 lg:gap-x-12 px-base py-3 text-blue">
 		<a href="/" onclick={closeMenu} class="shrink-0 {menuOpen ? 'max-lg:hidden' : ''}" aria-label={header.siteTitle}>
-			<img
-				src={header.logo.url}
-				srcset={header.logo.srcset}
-				sizes="10rem"
-				width={header.logo.width}
-				height={header.logo.height}
+			<Img
+				image={header.logo}
 				alt={header.logo.alt ?? header.siteTitle}
+				sizes="10rem"
 				class="h-7.5 w-auto"
 				loading="eager"
 			/>
