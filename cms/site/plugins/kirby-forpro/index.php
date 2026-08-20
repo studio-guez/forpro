@@ -85,7 +85,7 @@ Kirby::plugin('mediumsans/forpro', [
                       ->filterBy('intendedTemplate', 'event')
                       ->findBy('slug', $slug);
 
-                  if (!$page) return false;
+                  if (!$page) return \Kirby\Http\Response::json(['error' => 'Not found'], 404);
 
                   return [
                     'pageInfo' => ContentApi::event($page),
@@ -113,7 +113,7 @@ Kirby::plugin('mediumsans/forpro', [
                       ->filterBy('intendedTemplate', 'project')
                       ->findBy('slug', $slug);
 
-                  if (!$page) return false;
+                  if (!$page) return \Kirby\Http\Response::json(['error' => 'Not found'], 404);
 
                   return [
                     'pageInfo' => ContentApi::project($page),

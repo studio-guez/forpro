@@ -104,7 +104,7 @@ class ContentApi
             if ($youtube === null) return null;
 
             return array_merge($youtube, [
-                'title' => $video->title()->value(),
+                'title' => $video->title()->isNotEmpty() ? $video->title()->value() : null,
                 'url'   => $video->url()->value(),
             ]);
         })->values();
