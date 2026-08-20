@@ -34,7 +34,7 @@ tabs:
                 label:
                   en: Short description
                   fr: Description courte
-                type: textarea
+                extends: fields/writer
                 required: true
               sepCover:
                 type: line
