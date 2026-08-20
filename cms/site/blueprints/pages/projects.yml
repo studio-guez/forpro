@@ -8,14 +8,39 @@ num: zero
 
 options:
   changeTemplate: false
+  changeStatus: false
+  create: false
+  delete: false
+  duplicate: false
+  move: false
+  preview: "{{ page.frontendUrl }}"
 
-sections:
-  projects:
+status:
+  listed: true
+
+tabs:
+  content:
     label:
-      en: Projects
-      fr: Projets
-    type: pages
-    image: false
-    templates:
-      - project
-    create: project
+      en: Content
+      fr: Contenu
+    icon: text
+    sections:
+      meta:
+        type: fields
+        fields:
+          title:
+            label:
+              en: Title
+              fr: Titre
+            type: text
+            required: true
+      projects:
+        extends: sections/child-pages
+        label:
+          en: Projects
+          fr: Projets
+        templates:
+          - project
+        create: project
+
+  seo: tabs/seo
