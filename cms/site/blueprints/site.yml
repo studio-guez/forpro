@@ -73,15 +73,15 @@ tabs:
     columns:
       - width: 1/2
         sections:
-          event_types:
+          event_themes:
             type: pages
             image: false
             label:
-              en: Event types
-              fr: Types d'événement
+              en: Event themes
+              fr: Thématiques d'événement
             templates:
-              - event-type
-            parent: site.find("taxonomies").find("event-types")
+              - event-theme
+            parent: site.find("taxonomies").find("event-themes")
       - width: 1/2
         sections:
           domains:
@@ -104,6 +104,17 @@ tabs:
             templates:
               - project-theme
             parent: site.find("taxonomies").find("project-themes")
+      - width: 1/2
+        sections:
+          project_types:
+            type: pages
+            image: false
+            label:
+              en: Project types
+              fr: Types de projet
+            templates:
+              - project-type
+            parent: site.find("taxonomies").find("project-types")
       - width: 1/2
         sections:
           faq_categories:

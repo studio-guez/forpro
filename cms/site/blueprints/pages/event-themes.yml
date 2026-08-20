@@ -1,0 +1,9 @@
+title: Thématiques d'événement
+
+extends: pages/taxonomy
+
+sections:
+  terms:
+    label: Thématiques d'événement
+    templates:
+      - event-theme
