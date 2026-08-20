@@ -106,6 +106,17 @@ tabs:
             parent: site.find("taxonomies").find("project-themes")
       - width: 1/2
         sections:
+          project_types:
+            type: pages
+            image: false
+            label:
+              en: Project types
+              fr: Types de projet
+            templates:
+              - project-type
+            parent: site.find("taxonomies").find("project-types")
+      - width: 1/2
+        sections:
           faq_categories:
             type: pages
             image: false
