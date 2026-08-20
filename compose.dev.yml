@@ -115,6 +115,7 @@ services:
       - ./cms/site/accounts:/var/www/html/site/accounts:rw
       - ./cms/site/blueprints:/var/www/html/site/blueprints:rw
       - ./cms/site/templates:/var/www/html/site/templates:rw
+      - ./cms/site/snippets:/var/www/html/site/snippets:rw
       - ./cms/utils:/var/www/html/utils:rw
       - ./cms/index.php:/var/www/html/index.php:rw
       - ./cms/media:/var/www/html/media:rw
