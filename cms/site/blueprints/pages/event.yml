@@ -2,46 +2,46 @@ title:
   en: Event
   fr: Événement
 
-extends: pages/base
+extends: pages/event-project-base
+
+status:
+  draft: true
+  listed: true
+
+num: zero
+
+options:
+  preview: "{{ page.frontendUrl }}"
 
 tabs:
   content:
     columns:
-      main:
-        fields:
-          description:
-            label:
-              en: Description
-              fr: Description
-            type: textarea
-
-          dateStart:
-            label:
-              en: Start date
-              fr: Date de début
-            type: date
-
-          dateEnd:
-            label:
-              en: End date
-              fr: Date de fin
-            type: date
-
-          location:
-            label:
-              en: Location
-              fr: Lieu
-            type: text
-
-          registration:
-            label:
-              en: Registration link
-              fr: Lien d'inscription
-            type: url
-
-          body:
-            type: blocks
-            label:
-              en: Content
-              fr: Contenu
-            fieldsets: []
+      sidebar:
+        sections:
+          dates:
+            type: fields
+            fields:
+              sepDates:
+                type: line
+              dateStart:
+                label:
+                  en: Start date
+                  fr: Date de début
+                type: date
+                time: true
+                required: true
+              dateEnd:
+                label:
+                  en: End date
+                  fr: Date de fin
+                type: date
+                time: true
+          taxonomies:
+            type: fields
+            fields:
+              sepTaxonomies:
+                type: line
+              domains:
+                extends: fields/taxonomies/domains
+              eventThemes:
+                extends: fields/taxonomies/event-themes
