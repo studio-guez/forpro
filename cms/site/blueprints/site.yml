@@ -62,10 +62,6 @@ tabs:
             sortBy: breadcrumbtitle asc
             sortable: false
             parent: site.find("pages")
-            templates:
-              - page
-              - events
-              - projects
             create: page
   taxonomies:
     label:
