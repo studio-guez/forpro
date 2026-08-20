@@ -30,7 +30,7 @@
 		<div class="lg:col-span-2">
 			<p class="text-label text-teal">{subtitle}</p>
 			<h1 class="text-h1 text-blue mt-2">{title}</h1>
-			<p class="text-body-1 text-grey-dark mt-6">{shortDesc}</p>
+			<div class="text-body-1 prose">{@html shortDesc}</div>
 		</div>
 
 		{#if meta}
