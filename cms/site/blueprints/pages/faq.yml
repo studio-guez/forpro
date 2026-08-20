@@ -7,7 +7,6 @@ num: zero
 options:
   changeTemplate: false
   changeStatus: false
-  changeTitle: false
   create: false
   delete: false
   duplicate: false
