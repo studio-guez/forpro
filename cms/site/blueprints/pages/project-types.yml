@@ -1,0 +1,9 @@
+title: Types de projet
+
+extends: pages/taxonomy
+
+sections:
+  terms:
+    label: Types de projet
+    templates:
+      - project-type
