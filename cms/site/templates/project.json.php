@@ -6,22 +6,16 @@ require_once 'utils/Utils.php';
 /** @global Kirby\Cms\Site $site */
 /** @global Kirby\Cms\Page $page */
 
-$json = [];
+$json = Utils::getEventProjectBaseData($page);
 
-$json['title'] = $page->title()->value();
-$json['slug'] = $page->slug();
+$json['template'] = 'project';
 
-$coverFile = $page->cover()->toFile();
-$json['cover'] = $coverFile ? Utils::getJsonEncodeImageData($coverFile) : null;
+$json['projectThemes'] = Utils::resolveTaxonomyTerms($page->projectThemes(), 'project-themes');
+$json['projectTypes']  = Utils::resolveTaxonomyTerms($page->projectTypes(), 'project-types');
 
-$json['description'] = $page->description()->value();
-$json['date'] = $page->date()->toDate('Y-m-d');
-$json['tags'] = $page->tags()->split();
-
-$json['gallery'] = Utils::getImageArrayDataInPage($page->gallery()->toFiles());
-
-$json['body'] = $page->body()->toBlocks()->toArray();
-
-$json['seo'] = Utils::getSeoDataFromPage($page);
+$json['collectiveName']    = $page->collectiveName()->value();
+$json['collectiveMembers'] = array_values($page->collectiveMembers()->toStructure()->map(fn($item) => [
+    'name' => $item->name()->value(),
+])->data());
 
 echo json_encode($json);
