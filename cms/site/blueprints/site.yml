@@ -26,7 +26,7 @@ tabs:
             image:
               query: page.cover.toFile
               cover: true
-            parent: site.find("pages").find("events")
+            parent: site.index.template("events").first()
             templates:
               - event
             create: event
@@ -37,7 +37,7 @@ tabs:
             image:
               query: page.cover.toFile
               cover: true
-            parent: site.find("pages").find("projects")
+            parent: site.index.template("projects").first()
             templates:
               - project
             create: project
@@ -48,7 +48,7 @@ tabs:
             image: false
             sortable: false
             max: 1
-            parent: site.find("pages")
+            parent: site.index.template("pages").first()
             templates:
               - faq
 
@@ -61,7 +61,7 @@ tabs:
             text: "{{ page.breadcrumbTitle }}"
             sortBy: breadcrumbtitle asc
             sortable: false
-            parent: site.find("pages")
+            parent: site.index.template("pages").first()
             create: page
   taxonomies:
     label:
