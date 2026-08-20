@@ -37,7 +37,7 @@
 	<h3>
 		<button
 			type="button"
-			class="w-full flex items-center justify-between gap-4 text-left px-6 md:px-9 py-4 md:py-4.5"
+			class="w-full flex items-center justify-between gap-4 text-left px-6 md:px-9 py-3.5 md:py-4.5"
 			aria-expanded={open}
 			aria-controls="{id}-answer"
 			onclick={() => (open = !open)}
