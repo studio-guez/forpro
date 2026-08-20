@@ -92,6 +92,7 @@ tabs:
                       en: Title
                       fr: Titre
                     type: text
+                    default: Infos supplémentaires
                     required: true
                   description:
                     label:
