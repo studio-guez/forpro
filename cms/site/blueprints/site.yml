@@ -26,7 +26,7 @@ tabs:
             image:
               query: page.cover.toFile
               cover: true
-            parent: site.find("events")
+            parent: site.find("pages").find("events")
             templates:
               - event
             create: event
@@ -37,7 +37,7 @@ tabs:
             image:
               query: page.cover.toFile
               cover: true
-            parent: site.find("projects")
+            parent: site.find("pages").find("projects")
             templates:
               - project
             create: project
@@ -64,6 +64,8 @@ tabs:
             parent: site.find("pages")
             templates:
               - page
+              - events
+              - projects
             create: page
   taxonomies:
     label:
