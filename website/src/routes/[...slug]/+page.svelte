@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Page from '$lib/components/Page.svelte';
 	import Faq from '$lib/components/Faq.svelte';
+	import Event from '$lib/components/Event.svelte';
+	import Project from '$lib/components/Project.svelte';
 	import type { PageData } from './$types';
 	import { IS_PROD } from '$lib/env';
 
@@ -56,6 +58,10 @@
 
 {#if page.template === 'faq'}
 	<Faq {page} />
+{:else if page.template === 'event'}
+	<Event {page} />
+{:else if page.template === 'project'}
+	<Project {page} />
 {:else}
 	<Page {page} />
 {/if}
