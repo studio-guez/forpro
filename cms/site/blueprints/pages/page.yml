@@ -2,7 +2,7 @@ title:
   en: Page
   fr: Page
 
-extends: pages/base
+extends: pages/page-base
 
 status:
   draft: true
