@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { YoutubeEmbed } from '$lib/interfaces/eventProject';
+	import type { YoutubeEmbedData } from '$lib/interfaces/eventProject';
 
 	interface Props {
-		embed: YoutubeEmbed;
+		embed: YoutubeEmbedData;
 		title?: string;
 		class?: string;
 	}
@@ -19,6 +19,7 @@
 		{title}
 		loading="lazy"
 		referrerpolicy="strict-origin-when-cross-origin"
+		sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
 		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 		allowfullscreen
 		class="absolute inset-0 w-full h-full"

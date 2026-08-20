@@ -3,11 +3,11 @@
 	import VideoPlayer from '$lib/components/ui/VideoPlayer.svelte';
 	import YoutubeEmbed from '$lib/components/ui/YoutubeEmbed.svelte';
 	import type { CmsMedia } from '$lib/interfaces/page';
-	import type { YoutubeEmbed as YoutubeEmbedType } from '$lib/interfaces/eventProject';
+	import type { YoutubeEmbedData } from '$lib/interfaces/eventProject';
 
 	interface Props {
 		medias?: CmsMedia[];
-		embedVideos?: YoutubeEmbedType[];
+		embedVideos?: YoutubeEmbedData[];
 		title: string;
 		class?: string;
 	}

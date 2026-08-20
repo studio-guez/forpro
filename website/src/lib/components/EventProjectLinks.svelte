@@ -13,8 +13,8 @@
 </script>
 
 {#if links.length > 0}
-	<section class={['px-card', className]} aria-labelledby="external-links-title">
-		<h2 id="external-links-title" class="text-h4 text-teal">{title}</h2>
+	<section class={['px-card', className]} aria-label={title}>
+		<h2 class="text-h4 text-teal">{title}</h2>
 		<ul class="mt-6 space-y-3">
 			{#each links as link, index (index)}
 				<li>
