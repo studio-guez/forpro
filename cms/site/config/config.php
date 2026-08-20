@@ -48,6 +48,29 @@ return [
         // when disallowed — this also drops that line).
         'sitemap' => [
             'active' => !$noIndex,
+            // The default generator walks the whole Kirby index and builds URLs
+            // from the content structure. Neither matches the decoupled
+            // frontend: only `page`/`faq` entries have a route there (the
+            // containers and taxonomies don't), and their canonical path is the
+            // parentPage-based `virtualPath`, not `/pages/<slug>`.
+            'generator' => function (\tobimori\Seo\Sitemap\SitemapIndex $sitemap) {
+                $urls = $sitemap->create('pages');
+
+                $pages = site()->index()->filter(
+                    fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'event', 'project'], true)
+                        && $page->metadata()->robotsIndex()->toBool()
+                );
+
+                foreach ($pages as $page) {
+                    $urls->createUrl($page->frontendUrl())
+                        ->lastmod($page->modified() ?? time())
+                        ->changefreq('weekly')
+                        ->priority(number_format(
+                            $page->isHomePage() ? 1 : max(1 - 0.2 * count($page->parentChain()), 0.2),
+                            1
+                        ));
+                }
+            },
         ],
         'default' => [
             'metaTemplate' => fn($page) => $page->site()->title()->isNotEmpty()
