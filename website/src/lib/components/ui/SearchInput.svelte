@@ -38,17 +38,3 @@
 		/>
 	</label>
 </form>
-
-<style>
-	.search-input::-webkit-search-cancel-button {
-		-webkit-appearance: none;
-		appearance: none;
-		width: 1em;
-		height: 1em;
-		/* currentColor = the color prop */
-		background-color: currentColor;
-		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='3' stroke-linecap='round' d='M5 5l14 14M19 5L5 19'/%3E%3C/svg%3E")
-			no-repeat center / contain;
-		cursor: pointer;
-	}
-</style>
