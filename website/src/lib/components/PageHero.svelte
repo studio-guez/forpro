@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { CmsImage, Theme } from '$lib/interfaces/page';
+	import Img from '$lib/components/ui/Img.svelte';
 
 	interface Props {
 		title: string;
@@ -46,17 +47,12 @@
 	</div>
 
 	{#if cover}
-    <img
-        class="absolute inset-0 h-full w-full object-cover"
-        src={cover.url}
-        srcset={cover.srcset}
-        sizes="100vw"
-        width={cover.width}
-        height={cover.height}
-        alt={cover.alt ?? ''}
-        style:object-position={cover.focus ?? 'center'}
-        loading="eager"
-        fetchpriority="high"
-    />
+		<Img
+			image={cover}
+			sizes="100vw"
+			class="absolute inset-0 h-full w-full object-cover"
+			loading="eager"
+			fetchpriority="high"
+		/>
 	{/if}
 </section>

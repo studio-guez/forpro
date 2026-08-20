@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { CmsImage, PageCta, PageLayout, PageParent, Theme } from '$lib/interfaces/page';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
+	import Img from '$lib/components/ui/Img.svelte';
 
 	interface Props {
 		title: string;
@@ -45,7 +46,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
 			<h2 id="page-intro-title" class="text-h4 max-lg:text-center">
 				{#if titleImage}
-					<img src={titleImage.url} srcset={titleImage.srcset} width={titleImage.width} height={titleImage.height} alt={title} class="max-lg:mx-auto max-w-80 max-h-40 object-contain" />
+					<Img image={titleImage} alt={title} class="max-lg:mx-auto max-w-80 max-h-40 object-contain" />
 				{:else}
 					{title}
 				{/if}
@@ -64,7 +65,7 @@
 	{:else}
 		<h2 id="page-intro-title" class="text-h2 mb-12 text-center">
 			{#if titleImage}
-				<img src={titleImage.url} srcset={titleImage.srcset} width={titleImage.width} height={titleImage.height} alt={title} class="mx-auto max-w-80 max-h-40 object-contain" />
+				<Img image={titleImage} alt={title} class="mx-auto max-w-80 max-h-40 object-contain" />
 			{:else}
 				{title}
 			{/if}

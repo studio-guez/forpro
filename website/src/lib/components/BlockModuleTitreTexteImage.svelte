@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { ModuleTitreTexteImageContent, Theme, Variant } from '$lib/interfaces/page';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
+	import Img from '$lib/components/ui/Img.svelte';
 
 	interface Props {
 		content: ModuleTitreTexteImageContent;
@@ -181,15 +182,7 @@
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 		{#if content.image}
 			<div class="overflow-hidden rounded-2xl [contain:size]" class:lg:order-last={!isImageLeft}>
-				<img
-					src={content.image.url}
-					srcset={content.image.srcset}
-					width={content.image.width}
-					height={content.image.height}
-					alt={content.image.alt ?? ''}
-					style:object-position={content.image.focus ?? 'center'}
-					class="w-full h-full object-cover"
-				/>
+				<Img image={content.image} class="w-full h-full object-cover" />
 			</div>
 		{/if}
 		<div>
