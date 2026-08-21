@@ -67,6 +67,8 @@
 	);
 
 	const hasSearch = $derived(search.trim() !== '');
+	// Past events are listed further down, so they count as results too.
+	const resultCount = $derived(upcoming.length + past.length);
 
 	const clearSearch = (): void => {
 		search = '';
@@ -114,12 +116,17 @@
 		{#if hasSearch}
 			<ResultsHeader
 				query={search.trim()}
-				count={upcoming.length}
+				count={resultCount}
 				nouns={['événement', 'événements']}
 				onClear={clearSearch}
 				{noResultsText}
 				{color}
 			/>
+			{#if upcoming.length === 0 && past.length > 0}
+				<p class="text-body-1 text-grey-dark mt-4">
+					Aucun événement à venir, voir les événements passés ci-dessous.
+				</p>
+			{/if}
 		{:else if upcoming.length === 0}
 			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
 				Aucun événement à venir pour le moment.

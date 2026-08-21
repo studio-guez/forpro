@@ -13,8 +13,9 @@ export const normalizeText = (value: string): string =>
 export const stripTags = (html: string): string => html.replace(/<[^>]*>/g, ' ');
 
 /**
- * True when every part of the (already trimmed) query is found in the given
- * fields. An empty query matches everything, so callers can pass it through.
+ * True when the whole query, trimmed and normalized, is found as a single
+ * phrase in the given fields. An empty query matches everything, so callers
+ * can pass it through.
  */
 export const matchesSearch = (query: string, fields: (string | null | undefined)[]): boolean => {
 	const normalizedQuery = normalizeText(query.trim());
