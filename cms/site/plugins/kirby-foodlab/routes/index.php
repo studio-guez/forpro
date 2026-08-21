@@ -7,7 +7,6 @@ use Eclypsys\Menu;
 use Eclypsys\MenuSpecial;
 use Eclypsys\Restaurant;
 use Eclypsys\Menu\Metadata;
-use Eclypsys\Menu\Utils;
 use Eclypsys\MenuSpecial\DishSpecial;
 use Spatie\Browsershot\Browsershot;
 
@@ -177,7 +176,7 @@ return [
                 "pattern" => "restaurant/update",
                 "method" => "POST",
                 "action" => function () {
-                    Utils::requireAccess();
+                    Restaurant::requireEditPermission();
 
                     Restaurant::save(get());
 
@@ -188,7 +187,7 @@ return [
                 "pattern" => "restaurant/media/upload",
                 "method" => "POST",
                 "action" => function () {
-                    Utils::requireAccess();
+                    Restaurant::requireEditPermission();
 
                     return Restaurant::upload(
                         get("filename") ?? "",

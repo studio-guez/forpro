@@ -5,6 +5,7 @@ namespace Eclypsys;
 use Kirby\Data\Json;
 use Kirby\Exception\Exception;
 use Kirby\Exception\NotFoundException;
+use Kirby\Exception\PermissionException;
 use Kirby\Filesystem\F;
 use Kirby\Http\Response;
 
@@ -48,6 +49,27 @@ class Restaurant
     public static function mediaDir(): string
     {
         return __DIR__ . "/../data/restaurant-media";
+    }
+
+    /**
+     * This content used to be a tab of the site blueprint, so editing it stays
+     * behind the very same permissions the site view requires.
+     */
+    public static function canEdit(): bool
+    {
+        $permissions = kirby()->user()?->role()->permissions();
+
+        return $permissions?->for("access", "site") === true &&
+            $permissions->for("site", "update") === true;
+    }
+
+    public static function requireEditPermission(): void
+    {
+        if (static::canEdit() === false) {
+            throw new PermissionException(
+                message: "You are not allowed to edit the restaurant content"
+            );
+        }
     }
 
     /**
