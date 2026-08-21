@@ -88,6 +88,29 @@ names; renaming a field must not change the JSON output the frontends already co
 Same camelCase rule applies to Svelte/TS/Vue identifiers. Svelte components are
 PascalCase files (`Page.svelte`, `AppHeader.vue`).
 
+## Shared serialization lives in `cms/utils/Utils.php`
+
+`*.json.php` templates are thin: they assemble a payload out of `Utils::` helpers, they do
+not re-implement serialization. Before writing a mapping in a template, grep `Utils.php` —
+a helper very often already exists (`getJsonEncodeImageDataOrNull()`, `getEventDateFields()`,
+`resolveCtaStructure(s)()`, `resolveTaxonomyTerms()`, `getEventCardData()`,
+`getSeoDataFromPage()`, `getEventProjectBaseData()`, ...). Re-inlining one silently forks the
+JSON contract: the two copies drift and only one gets fixed.
+
+- Same shape emitted from two templates -> extract a `Utils::` helper (or reuse the existing
+  one, making it `public` if it was `private`).
+- Same shape emitted twice inside one template (e.g. two block types building the same
+  `cta`/filters payload) -> hoist a local closure, don't copy-paste the array literal.
+- Helpers stay generic: pass the `\Kirby\Content\Field` / `Page` / `Files` in, return a plain
+  array out. No page-specific branching inside `Utils`.
+- Inside `Utils` itself, helpers compose instead of repeating each other: a shared shape gets
+  its own `private static` helper the public ones call (`getTaxonomyTermData()` behind
+  `resolveTaxonomyTerms()`/`getTaxonomyTerms()`, `taxonomyMatcher()` behind
+  `filterStructureByTaxonomy()`/`filterPagesByTaxonomy()`, `getJsonEncodeImageData()` reused by
+  `getJsonEncodeMediaData()`). Never duplicate a field mapping between two `Utils::` methods.
+- Extracting a helper must not change the emitted JSON keys — verify with a real request
+  (`curl http://cms.localhost/pages/<virtualPath>.json`) before and after.
+
 ## Kirby gotchas
 
 - In a route handler, use `kirby()->site()`, **not** `$this->site()`. Since Kirby 5.4 the
