@@ -18,20 +18,19 @@
 		day: 'numeric',
 		month: 'long'
 	});
-	const timeFormat = new Intl.DateTimeFormat('fr-CH', { hour: '2-digit', minute: '2-digit' });
 
-	// Parse the CMS `YYYY-MM-DDTHH:mm` (local) datetime; invalid/empty -> null.
-	const toDate = (value: string | null): Date | null => {
-		if (!value) return null;
-		const date = new Date(value);
-		return Number.isNaN(date.getTime()) ? null : date;
+	// Build a Date from a YYYY-MM-DD date + optional HH:mm time (local).
+	const toDate = (date: string | null, time: string | null): Date | null => {
+		if (!date) return null;
+		const dt = new Date(`${date}T${time ?? '00:00'}`);
+		return Number.isNaN(dt.getTime()) ? null : dt;
 	};
 
-	const start = $derived(toDate(event.dateStart));
-	const end = $derived(toDate(event.dateEnd));
+	const start = $derived(toDate(event.dateStart, event.timeStart));
+	// "14:30 – 17:00" or just "14:30"; null when no time set.
 	const time = $derived(
-		start
-			? [timeFormat.format(start), end ? timeFormat.format(end) : null].filter(Boolean).join(' – ')
+		event.timeStart
+			? [event.timeStart, event.timeEnd].filter(Boolean).join(' – ')
 			: null
 	);
 </script>
