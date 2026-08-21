@@ -118,9 +118,12 @@ foreach ($page->body()->toBlocks() as $block) {
             }
 
             // Upcoming events only (an event stays listed until it is over), soonest first.
-            $today = date('Y-m-d');
+            $now = new \DateTime();
             $children = $children
-                ->filter(fn($event) => ($event->dateEnd()->isNotEmpty() ? $event->dateEnd() : $event->dateStart())->toDate('Y-m-d') >= $today)
+                ->filter(function ($event) use ($now) {
+                    $endDt = Utils::getEventGoingDatetime($event);
+                    return $endDt !== null && $endDt >= $now;
+                })
                 ->sortBy('dateStart', 'asc');
 
             $events = array_values($children->map(fn($event) => Utils::getEventCardData($event))->data());
