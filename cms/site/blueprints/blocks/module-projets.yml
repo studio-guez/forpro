@@ -1,10 +1,10 @@
 extends: blocks/base
 
 name:
-  en: Module - Agenda
-  fr: Module - Agenda
+  en: Module - Projects
+  fr: Module - Projets
 
-icon: calendar
+icon: folder
 
 fields:
   title:
@@ -20,20 +20,20 @@ fields:
       en: Subtitle
       fr: Sous-titre
     type: text
-  domains:
-    extends: fields/taxonomies/domains
+  projectThemes:
+    extends: fields/taxonomies/project-themes
     width: 1/2
     help:
-      en: Filters the events shown in the block and pre-filters the agenda page linked by the CTA.
-      fr: Filtre les événements affichés dans le module et pré-filtre la page agenda liée par le CTA.
-  eventThemes:
-    extends: fields/taxonomies/event-themes
+      en: Filters the projects shown in the block and pre-filters the projects page linked by the CTA.
+      fr: Filtre les projets affichés dans le module et pré-filtre la page projets liée par le CTA.
+  projectTypes:
+    extends: fields/taxonomies/project-types
     width: 1/2
   limit:
     width: 1/2
     label:
-      en: Number of events
-      fr: Nombre d'événements
+      en: Number of projects
+      fr: Nombre de projets
     type: number
     default: 6
     min: 1
@@ -46,7 +46,7 @@ fields:
       en: CTA label
       fr: Libellé du CTA
     type: text
-    default: Tout l'agenda
+    default: Voir tous les projets
     required: true
   variant:
     extends: fields/variant
