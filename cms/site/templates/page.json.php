@@ -92,16 +92,16 @@ foreach ($page->body()->toBlocks() as $block) {
             : null;
 
         $content = [
-            'title'     => $block->title()->value(),
-            'shortDesc' => $block->shortDesc()->value(),
-            'elements'  => $elements,
-            'faqs'      => $faqs,
-            'cta'       => $ctaUrl ? [
+            'title'    => $block->title()->value(),
+            'subtitle' => $block->subtitle()->value(),
+            'elements' => $elements,
+            'faqs'     => $faqs,
+            'cta'      => $ctaUrl ? [
                 'label' => $block->ctaLabel()->or('Plus de réponses')->value(),
                 'url'   => $ctaUrl,
                 'icon'  => 'arrow',
             ] : null,
-            'variant'   => $block->variant()->or('default')->value(),
+            'variant'  => $block->variant()->or('default')->value(),
         ];
     } elseif ($block->type() === 'module-agenda') {
         $filters = [

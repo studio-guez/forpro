@@ -47,7 +47,7 @@
 		>
 			{content.title}
 		</h2>
-		<div class="prose text-body-1 font-bold mt-9" style:color={textColor}>{@html content.shortDesc}</div>
+		<p class="text-body-1 font-bold mt-9" style:color={textColor}>{content.subtitle}</p>
 	</div>
 
 	{#if content.elements.length > 0}

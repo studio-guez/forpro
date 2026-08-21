@@ -14,12 +14,12 @@ fields:
       fr: Titre
     type: text
     required: true
-  shortDesc:
+  subtitle:
     width: 1/2
     label:
-      en: Short description
-      fr: Description courte
-    extends: fields/writer
+      en: Subtitle
+      fr: Sous-titre
+    type: text
     required: true
   elements:
     label:
