@@ -90,21 +90,34 @@ class Restaurant
      */
     public static function save(array $values): array
     {
-        $data = static::get();
+        $lock = fopen(static::file() . '.lock', 'c');
 
-        foreach (static::fields() as $name => $field) {
-            if (in_array($field["type"], ["headline", "line"], true)) {
-                continue;
-            }
-
-            if (array_key_exists($name, $values) === false) {
-                continue;
-            }
-
-            $data[$name] = $values[$name];
+        if ($lock === false || flock($lock, LOCK_EX) === false) {
+            throw new Exception(message: "Failed to acquire write lock.");
         }
 
-        Json::write(static::file(), $data);
+        try {
+            $data = static::get();
+
+            foreach (static::fields() as $name => $field) {
+                if (in_array($field["type"], ["headline", "line"], true)) {
+                    continue;
+                }
+
+                if (array_key_exists($name, $values) === false) {
+                    continue;
+                }
+
+                $data[$name] = $values[$name];
+            }
+
+            if (Json::write(static::file(), $data) === false) {
+                throw new Exception(message: "Failed to write restaurant data.");
+            }
+        } finally {
+            flock($lock, LOCK_UN);
+            fclose($lock);
+        }
 
         return $data;
     }
@@ -140,9 +153,16 @@ class Restaurant
         $name = F::safeName(pathinfo($originalName, PATHINFO_FILENAME));
         $filename =
             $name . "-" . bin2hex(random_bytes(4)) . "." . $extension;
-        $path = static::mediaDir() . "/" . $filename;
+        $dir = static::mediaDir();
+        $path = $dir . "/" . $filename;
 
-        F::write($path, $binary);
+        if (is_dir($dir) === false && mkdir($dir, 0755, true) === false) {
+            throw new Exception(message: "Failed to create media directory.");
+        }
+
+        if (F::write($path, $binary) === false) {
+            throw new Exception(message: "Failed to write media file to disk.");
+        }
 
         // same downscale/CMYK handling the image-guard plugin applies to
         // files uploaded through Kirby
@@ -197,21 +217,52 @@ class Restaurant
             throw new Exception(message: "Failed to write PDF file to disk.");
         }
 
-        $data = static::get();
-        $path = "/" . static::MEDIA_PATH . "/" . $filename;
+        $lock = fopen(static::file() . '.lock', 'c');
 
-        foreach (["btnLab", "btnFooter1"] as $key) {
-            $button = $data[$key] ?? [];
-            $button["link"] = $path;
-            $button["target"] = true;
-            $data[$key] = $button;
+        if ($lock === false || flock($lock, LOCK_EX) === false) {
+            throw new Exception(message: "Failed to acquire write lock.");
         }
 
-        $data["menuPdf"] = $filename;
+        try {
+            $data = static::get();
+            $path = "/" . static::MEDIA_PATH . "/" . $filename;
 
-        Json::write(static::file(), $data);
+            foreach (["btnLab", "btnFooter1"] as $key) {
+                $button = $data[$key] ?? [];
+                $button["link"] = $path;
+                $button["target"] = true;
+                $data[$key] = $button;
+            }
+
+            $data["menuPdf"] = $filename;
+
+            if (Json::write(static::file(), $data) === false) {
+                throw new Exception(message: "Failed to update restaurant data.");
+            }
+        } finally {
+            flock($lock, LOCK_UN);
+            fclose($lock);
+        }
 
         return url(ltrim($path, "/"));
+    }
+
+    /**
+     * Deletes a media file from the plugin data folder
+     */
+    public static function deleteMedia(string $filename): void
+    {
+        $filename = basename($filename);
+
+        if (empty($filename) === true) {
+            return;
+        }
+
+        $path = static::mediaDir() . "/" . $filename;
+
+        if (F::exists($path, static::mediaDir()) === true) {
+            F::remove($path);
+        }
     }
 
     public static function mediaUrl(?string $filename): string

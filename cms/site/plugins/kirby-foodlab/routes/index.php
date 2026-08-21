@@ -197,6 +197,17 @@ return [
                 },
             ],
             [
+                "pattern" => "restaurant/media/delete",
+                "method" => "POST",
+                "action" => function () {
+                    Restaurant::requireEditPermission();
+
+                    Restaurant::deleteMedia(get("filename") ?? "");
+
+                    return ["status" => "ok"];
+                },
+            ],
+            [
                 "pattern" => "restaurant/media/(:any)",
                 "method" => "GET",
                 "auth" => false,

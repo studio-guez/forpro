@@ -75,7 +75,10 @@ $copy = function ($file) use ($mediaDir, $dryRun, &$copied) {
 
     if (isset($copied[$filename]) === false) {
         if ($dryRun === false) {
-            copy($file->root(), $mediaDir . '/' . $filename);
+            if (copy($file->root(), $mediaDir . '/' . $filename) === false) {
+                fwrite(STDERR, "ERROR: failed to copy {$filename} - aborting\n");
+                exit(1);
+            }
         }
 
         $copied[$filename] = true;
@@ -145,7 +148,12 @@ if ($pdf = $site->btnLab()->toObject()->link()->toFile()) {
 }
 
 if ($dryRun === false) {
-    Json::write($dataFile, $data);
+    $result = Json::write($dataFile, $data);
+
+    if ($result === false) {
+        fwrite(STDERR, "ERROR: failed to write {$dataFile} - aborting before cleanup\n");
+        exit(1);
+    }
 }
 
 echo "\n" . count($copied) . " media files -> {$mediaDir}\n";
@@ -186,8 +194,25 @@ foreach (glob($kirby->root('content') . '/site*.txt') as $path) {
     echo "  dropped: " . implode(', ', $drop) . "\n";
 
     if ($dryRun === false) {
-        copy($path, $backup);
-        file_put_contents($path, implode("\n----\n", $keep));
+        if (copy($path, $backup) === false) {
+            fwrite(STDERR, "ERROR: failed to create backup {$backup} - aborting\n");
+            exit(1);
+        }
+
+        $tmp = $path . '.tmp-' . getmypid();
+
+        if (file_put_contents($tmp, implode("\n----\n", $keep)) === false) {
+            unlink($tmp);
+            fwrite(STDERR, "ERROR: failed to write {$tmp} - aborting (backup at {$backup})\n");
+            exit(1);
+        }
+
+        if (rename($tmp, $path) === false) {
+            unlink($tmp);
+            fwrite(STDERR, "ERROR: failed to rename {$tmp} to {$path} - aborting (backup at {$backup})\n");
+            exit(1);
+        }
+
         echo "  backup:  {$backup}\n";
     }
 }
