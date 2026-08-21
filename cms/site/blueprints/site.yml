@@ -7,40 +7,9 @@ tabs:
     icon: text
 
     columns:
-      - width: 1/3
-
-        fields:
-          files:
-            label:
-              en: Files
-              fr: Fichiers
-            type: files
-            layout: small
-
-      - width: 2/3
+      - width: 1/2
 
         sections:
-          events:
-            label: "Événements"
-            type: pages
-            image:
-              query: page.cover.toFile
-              cover: true
-            parent: site.index.template("events").first()
-            templates:
-              - event
-            create: event
-
-          projects:
-            label: "Projets"
-            type: pages
-            image:
-              query: page.cover.toFile
-              cover: true
-            parent: site.index.template("projects").first()
-            templates:
-              - project
-            create: project
 
           faq:
             label: "FAQ"
@@ -63,6 +32,34 @@ tabs:
             sortable: false
             parent: site.index.template("pages").first()
             create: page
+            
+      - width: 1/2
+
+        sections:
+          events:
+            label: "Événements"
+            type: pages
+            image:
+              query: page.cover.toFile
+              cover: true
+            parent: site.index.template("events").first()
+            limit: 10
+            templates:
+              - event
+            create: event
+
+          projects:
+            label: "Projets"
+            type: pages
+            image:
+              query: page.cover.toFile
+              cover: true
+            parent: site.index.template("projects").first()
+            limit: 10
+            templates:
+              - project
+            create: project
+
   taxonomies:
     label:
       en: Taxonomies
