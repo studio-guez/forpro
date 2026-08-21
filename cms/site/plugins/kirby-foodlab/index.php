@@ -4,6 +4,7 @@
 
 load([
     "Eclypsys\BaseClass"                  => __DIR__ . "/classes/BaseClass.php",
+    "Eclypsys\Restaurant"                 => __DIR__ . "/classes/Restaurant.php",
     "Eclypsys\Menu"                       => __DIR__ . "/classes/Menu.php",
     "Eclypsys\Menu\Metadata"              => __DIR__ . "/classes/Metadata.php",
     "Eclypsys\Menu\MainCourse"            => __DIR__ . "/classes/MainCourse.php",
@@ -67,6 +68,16 @@ Kirby::plugin("eclypsys/foodlab", [
         }
     ],
     "areas" => [
+        "restaurant" => function ($kirby) {
+            return [
+                "label" => "Restaurant",
+                "menu" => true,
+                "icon" => "food",
+                "link" => "foodlab/restaurant/content",
+                "view" => "k-restaurant-view",
+                "views" => [require __DIR__ . "/views/restaurant.php"],
+            ];
+        },
         "menu" => function ($kirby) {
             return [
                 "label" => "Menu",
@@ -188,10 +199,6 @@ Kirby::plugin("eclypsys/foodlab", [
         "menu-pdf" => __DIR__ . "/templates/menu-pdf.php",
         "menu-special-pdf" => __DIR__ . "/templates/menu-special-pdf.php",
         "menu-special-preview-pdf" => __DIR__ . "/templates/menu-special-preview-pdf.php",
-    ],
-    "blueprints" => [
-        "tabs/restaurant" => __DIR__ . "/blueprints/tabs/restaurant.yml",
-        "pages/restaurant" => __DIR__ . "/blueprints/pages/restaurant.yml",
     ],
     "api" => require __DIR__ . "/routes/index.php",
 

@@ -2,7 +2,8 @@ import type { RequestHandler } from './$types';
 import { CMS_SERVER_BASE_URL, toInternalUrl } from '$lib/server/cms';
 import { PUBLIC_CMS_BASE_URL } from '$env/static/public';
 
-// Kirby's media hash changes on every upload, so resolve the current URL via the API.
+// The published menu PDF is served by the foodlab plugin, its filename changes
+// on every publication, so resolve the current URL via the API.
 export const GET: RequestHandler = async ({ fetch }) => {
 	const apiRes = await fetch(`${CMS_SERVER_BASE_URL}/api/restaurant`);
 	if (!apiRes.ok) {
@@ -12,7 +13,7 @@ export const GET: RequestHandler = async ({ fetch }) => {
 	const page = await apiRes.json();
 	const pdfUrl: string | undefined = page.lab?.btn?.link;
 
-	if (!pdfUrl || !pdfUrl.startsWith(`${PUBLIC_CMS_BASE_URL}/media/`)) {
+	if (!pdfUrl || !pdfUrl.startsWith(`${PUBLIC_CMS_BASE_URL}/api/restaurant/media/`)) {
 		return new Response(null, { status: 404 });
 	}
 
