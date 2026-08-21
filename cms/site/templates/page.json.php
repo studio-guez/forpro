@@ -47,6 +47,26 @@ foreach ($page->body()->toBlocks() as $block) {
             'variant'         => $block->variant()->or('default')->value(),
             'backgroundImage' => $backgroundFile ? Utils::getJsonEncodeImageData($backgroundFile) : null,
         ];
+    } elseif ($block->type() === 'module-partenaires') {
+        $partners = [];
+        foreach ($block->partners()->toStructure() as $partner) {
+            $logoFile = $partner->logo()->toFile();
+            if (!$logoFile) continue;
+            $partners[] = [
+                'logo'  => Utils::getJsonEncodeImageData($logoFile),
+                'url'   => $partner->url()->isNotEmpty() ? $partner->url()->value() : null,
+                // The logo alt is the accessible name; fall back to the link target.
+                'label' => $logoFile->alt()->isNotEmpty()
+                    ? $logoFile->alt()->value()
+                    : $partner->url()->value(),
+            ];
+        }
+        $content = [
+            'title'    => $block->title()->value(),
+            'subtitle' => $block->subtitle()->isNotEmpty() ? $block->subtitle()->value() : null,
+            'partners' => $partners,
+            'variant'  => $block->variant()->or('default')->value(),
+        ];
     } elseif ($block->type() === 'module-cases') {
         $rows = [];
         foreach ($block->rows()->toStructure() as $row) {
