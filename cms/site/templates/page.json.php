@@ -34,7 +34,7 @@ foreach ($page->body()->toBlocks() as $block) {
             'title'         => $block->title()->value(),
             'description'   => $block->description()->value(),
             'image'         => $imageFile ? Utils::getJsonEncodeImageData($imageFile) : null,
-            'imagePosition' => $block->content()->get('image_position')->or('right')->value(),
+            'imagePosition' => $block->content()->get('imagePosition')->or('right')->value(),
             'variant'       => $block->variant()->or('default')->value(),
             'cta'           => Utils::resolveCtaStructure($block->cta()),
         ];
@@ -43,7 +43,7 @@ foreach ($page->body()->toBlocks() as $block) {
         foreach ($block->rows()->toStructure() as $row) {
             $rows[] = [
                 'title'       => $row->title()->value(),
-                'hideTitle'   => $row->hide_title()->toBool(),
+                'hideTitle'   => $row->hideTitle()->toBool(),
                 'description' => $row->description()->value(),
                 'cta'         => Utils::resolveCtaStructure($row->cta()),
                 'media'       => Utils::getJsonEncodeMediaArray($row->media()->toFiles()),
@@ -51,7 +51,7 @@ foreach ($page->body()->toBlocks() as $block) {
         }
         $content = [
             'title'     => $block->title()->value(),
-            'hideTitle' => $block->hide_title()->toBool(),
+            'hideTitle' => $block->hideTitle()->toBool(),
             'intro'     => $block->intro()->value(),
             'rows'      => $rows,
             'layout'    => $block->layout()->or('alternate')->value(),

@@ -1,7 +1,7 @@
 # Shared base for event and project pages.
 # Provides the fields common to both content types:
-#   - title / subtitle / short_desc / cover (sidebar)
-#   - medias + embed_videos, repeatable content blocks and external links (main)
+#   - title / subtitle / shortDesc / cover (sidebar)
+#   - medias + embedVideos, repeatable content blocks and external links (main)
 # Event- and project-specific fields (dates, taxonomies, collective, ...) are
 # added by pages/event.yml and pages/project.yml, which extend this blueprint.
 tabs:
@@ -30,7 +30,7 @@ tabs:
                   fr: Sous-titre
                 type: text
                 required: true
-              short_desc:
+              shortDesc:
                 label:
                   en: Short description
                   fr: Description courte
@@ -58,7 +58,7 @@ tabs:
                 type: files
                 layout: cards
                 uploads: media
-              embed_videos:
+              embedVideos:
                 label:
                   en: Embedded videos (YouTube)
                   fr: Vidéos intégrées (YouTube)
