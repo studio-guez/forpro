@@ -8,9 +8,10 @@
 		event: AgendaEventCard;
 		/** Accent colour of the arrow badge. */
 		color?: string;
+		headingTag?: string;
 	}
 
-	let { event, color = 'var(--color-blue)' }: Props = $props();
+	let { event, color = 'var(--color-blue)', headingTag = 'h3' }: Props = $props();
 
 	const dayFormat = new Intl.DateTimeFormat('fr-CH', {
 		weekday: 'long',
@@ -51,7 +52,7 @@
 
 	<div class="h-full flex flex-col justify-between gap-8 p-6">
 		<div>
-			<h3 class="text-h4">{event.title}</h3>
+			<svelte:element this={headingTag} class="text-h4">{event.title}</svelte:element>
 			{#if event.shortDesc}
 				<div class="prose text-label mt-5 md:hidden">
 					{@html event.shortDesc}
