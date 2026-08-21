@@ -23,6 +23,17 @@ tabs:
             fields:
               sepTaxonomies:
                 type: line
+              year:
+                label:
+                  en: Year
+                  fr: Année
+                help:
+                  en: Only used to filter projects on the projects page.
+                  fr: Utilisée uniquement pour filtrer les projets sur la page des projets.
+                type: number
+                step: 1
+                min: 1900
+                max: 2200
               projectThemes:
                 extends: fields/taxonomies/project-themes
               projectTypes:
