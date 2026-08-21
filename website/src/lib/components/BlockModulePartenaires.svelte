@@ -10,8 +10,8 @@
 	let { content }: Props = $props();
 
 	const onDark = $derived(content.variant === 'default');
-	const background = $derived(onDark ? 'var(--color-blue)' : 'var(--color-white)');
-	const textColor = $derived(onDark ? 'var(--color-white)' : 'var(--color-blue)');
+	const background = $derived(onDark ? 'var(--color-pink-shocking)' : 'var(--color-white)');
+	const textColor = $derived(onDark ? 'var(--color-white)' : 'var(--color-pink-shocking)');
 	// The logos need a white plate, so on a white section they get an outline instead.
 	const plateClass = $derived(
 		`flex items-center justify-center rounded-xl px-6 py-4 bg-(--color-white) ${
