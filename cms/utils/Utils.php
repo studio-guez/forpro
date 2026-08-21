@@ -252,7 +252,7 @@ class Utils
         return [
             'title'     => $page->title()->value(),
             'url'       => '/' . $page->virtualPath(),
-            'shortDesc' => $page->short_desc()->value(),
+            'shortDesc' => $page->shortDesc()->value(),
             'cover'     => $coverFile ? self::getJsonEncodeImageData($coverFile) : null,
             'dateStart' => $page->dateStart()->isNotEmpty() ? $page->dateStart()->toDate('Y-m-d\TH:i') : null,
             'dateEnd'   => $page->dateEnd()->isNotEmpty() ? $page->dateEnd()->toDate('Y-m-d\TH:i') : null,
@@ -340,7 +340,7 @@ class Utils
     }
 
     /**
-     * Resolves an `embed_videos` structure (each item exposing a `url` field)
+     * Resolves an `embedVideos` structure (each item exposing a `url` field)
      * to a JSON-ready list of YouTube embeds. Only YouTube links are kept;
      * Shorts are flagged with `type => 'short'` (vertical), everything else is
      * `type => 'video'` (16:9). `embedUrl` is the privacy-friendly nocookie URL.
@@ -405,10 +405,10 @@ class Utils
             'slug'          => $page->slug(),
             'path'          => $page->virtualPath(),
             'subtitle'      => $page->subtitle()->value(),
-            'shortDesc'     => $page->short_desc()->value(),
+            'shortDesc'     => $page->shortDesc()->value(),
             'cover'         => $coverFile ? self::getJsonEncodeImageData($coverFile) : null,
             'medias'        => self::getJsonEncodeMediaArray($page->medias()->toFiles()),
-            'embedVideos'   => self::getYoutubeEmbeds($page->embed_videos()),
+            'embedVideos'   => self::getYoutubeEmbeds($page->embedVideos()),
             'blocks'        => self::getContentBlocks($page->blocks()),
             'externalLinks' => self::getExternalLinks($page->externalLinks()),
             'seo'           => self::getSeoDataFromPage($page),

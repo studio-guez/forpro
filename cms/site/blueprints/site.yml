@@ -71,7 +71,7 @@ tabs:
     columns:
       - width: 1/2
         sections:
-          event_themes:
+          eventThemes:
             type: pages
             image: false
             label:
@@ -93,7 +93,7 @@ tabs:
             parent: site.index.template("domains").first()
       - width: 1/2
         sections:
-          project_themes:
+          projectThemes:
             type: pages
             image: false
             label:
@@ -104,7 +104,7 @@ tabs:
             parent: site.index.template("project-themes").first()
       - width: 1/2
         sections:
-          project_types:
+          projectTypes:
             type: pages
             image: false
             label:
@@ -115,7 +115,7 @@ tabs:
             parent: site.index.template("project-types").first()
       - width: 1/2
         sections:
-          faq_categories:
+          faqCategories:
             type: pages
             image: false
             label:
