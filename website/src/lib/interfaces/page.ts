@@ -122,8 +122,11 @@ export interface ModuleAgendaContent {
 export interface ProjetCard {
 	readonly title: string;
 	readonly url: string;
+	readonly shortDesc: string;
 	readonly cover: CmsImage | null;
 	readonly collectiveName: string | null;
+	/** Only used to filter projects on the projects page. */
+	readonly year: number | null;
 	readonly themes: TaxonomyTerm[];
 	readonly types: TaxonomyTerm[];
 }

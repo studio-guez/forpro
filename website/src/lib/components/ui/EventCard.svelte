@@ -2,6 +2,7 @@
 	import Img from '$lib/components/ui/Img.svelte';
 	import IconArrow from '$lib/components/svg/IconArrow.svelte';
 	import { termColor } from '$lib/utils/shared';
+	import { formatEventDay, formatTimeRange, toDate } from '$lib/utils/date';
 	import type { AgendaEventCard } from '$lib/interfaces/page';
 
 	interface Props {
@@ -13,26 +14,9 @@
 
 	let { event, color = 'var(--color-blue)', headingTag = 'h3' }: Props = $props();
 
-	const dayFormat = new Intl.DateTimeFormat('fr-CH', {
-		weekday: 'long',
-		day: 'numeric',
-		month: 'long'
-	});
-
-	// Build a Date from a YYYY-MM-DD date + optional HH:mm time (local).
-	const toDate = (date: string | null, time: string | null): Date | null => {
-		if (!date) return null;
-		const dt = new Date(`${date}T${time ?? '00:00'}`);
-		return Number.isNaN(dt.getTime()) ? null : dt;
-	};
-
 	const start = $derived(toDate(event.dateStart, event.timeStart));
 	// "14:30 – 17:00" or just "14:30"; null when no time set.
-	const time = $derived(
-		event.timeStart
-			? [event.timeStart, event.timeEnd].filter(Boolean).join(' – ')
-			: null
-	);
+	const time = $derived(formatTimeRange(event.timeStart, event.timeEnd));
 </script>
 
 <article class="h-full">
@@ -64,7 +48,7 @@
 			<div class="min-w-0">
 				{#if start}
 					<p class="text-body-2 font-bold capitalize">
-						<time datetime={event.dateStart}>{dayFormat.format(start)}</time>
+						<time datetime={event.dateStart}>{formatEventDay(start)}</time>
 					</p>
 				{/if}
 				<div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">

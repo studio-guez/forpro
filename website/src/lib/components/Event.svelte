@@ -4,19 +4,13 @@
 	import EventProjectBlocks from '$lib/components/EventProjectBlocks.svelte';
 	import EventProjectLinks from '$lib/components/EventProjectLinks.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
+	import { toDate } from '$lib/utils/date';
 	import type { EventPage } from '$lib/interfaces/event';
 
 	let { page }: { page: EventPage } = $props();
 
 	const dateFormat = new Intl.DateTimeFormat('fr-CH', { dateStyle: 'long' });
 	const timeFormat = new Intl.DateTimeFormat('fr-CH', { hour: '2-digit', minute: '2-digit' });
-
-	// Build a Date from a YYYY-MM-DD date + optional HH:mm time (local).
-	const toDate = (date: string | null, time: string | null): Date | null => {
-		if (!date) return null;
-		const dt = new Date(`${date}T${time ?? '00:00'}`);
-		return Number.isNaN(dt.getTime()) ? null : dt;
-	};
 
 	const start = $derived(toDate(page.dateStart, page.timeStart));
 	const end = $derived(toDate(page.dateEnd, page.timeEnd));

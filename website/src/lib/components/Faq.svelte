@@ -1,13 +1,21 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { slide } from 'svelte/transition';
 	import { page as appPage } from '$app/state';
-	import { replaceState } from '$app/navigation';
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
 	import FaqQuestion from '$lib/components/ui/FaqQuestion.svelte';
+	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
-	import { termColor } from '$lib/utils/shared';
+	import TermTags from '$lib/components/ui/TermTags.svelte';
+	import {
+		filterUsedTerms,
+		keepKnownSlugs,
+		matchesSearch,
+		matchesTerms,
+		parseListParam,
+		stripTags,
+		syncQueryString
+	} from '$lib/utils/filters';
 	import type { FaqItem, FaqPage } from '$lib/interfaces/faq';
 
 	let { page }: { page: FaqPage } = $props();
@@ -17,46 +25,25 @@
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
-	let selectedCategories = $state<string[]>(
-		(initialParams.get('faqCategories') ?? '').split(',').filter(Boolean)
-	);
+	let selectedCategories = $state<string[]>(parseListParam(initialParams.get('faqCategories')));
 
 	// Only offer terms that are actually used by at least one question,
 	// kept in the CMS-defined taxonomy order.
-	const usedTerms = $derived.by(() => {
-		const used = new Set<string>();
-		for (const section of page.sections) {
-			for (const faq of section.faqs) {
-				for (const term of faq.faqCategories) used.add(term.slug);
-			}
-		}
-		return page.faqCategories.filter((term) => used.has(term.slug));
-	});
-
-	// Drop stale slugs coming from the URL so counters stay accurate.
-	const activeCategories = $derived(
-		selectedCategories.filter((slug) => usedTerms.some((term) => term.slug === slug))
+	const usedTerms = $derived(
+		filterUsedTerms(
+			page.faqCategories,
+			page.sections.flatMap((section) =>
+				section.faqs.flatMap((faq) => faq.faqCategories.map((term) => term.slug))
+			)
+		)
 	);
 
-	const normalize = (value: string): string =>
-		value
-			.toLowerCase()
-			.normalize('NFD')
-			.replace(/\p{Diacritic}/gu, '');
+	// Drop stale slugs coming from the URL so counters stay accurate.
+	const activeCategories = $derived(keepKnownSlugs(selectedCategories, usedTerms));
 
-	const stripTags = (html: string): string => html.replace(/<[^>]*>/g, ' ');
-
-	const matchesFilters = (faq: FaqItem): boolean => {
-		if (
-			activeCategories.length > 0 &&
-			!faq.faqCategories.some((term) => activeCategories.includes(term.slug))
-		) {
-			return false;
-		}
-		const query = normalize(search.trim());
-		if (query === '') return true;
-		return normalize(`${faq.question} ${stripTags(faq.answer)}`).includes(query);
-	};
+	const matchesFilters = (faq: FaqItem): boolean =>
+		matchesTerms(activeCategories, faq.faqCategories) &&
+		matchesSearch(search, [faq.question, stripTags(faq.answer)]);
 
 	const isFiltering = $derived(search.trim() !== '' || activeCategories.length > 0);
 
@@ -92,15 +79,13 @@
 			: [...openSections, index];
 	};
 
+	const clearSearch = (): void => {
+		search = '';
+	};
+
 	// Mirror search + filters into the query string without triggering navigation.
 	$effect(() => {
-		const parts: string[] = [];
-		if (search.trim() !== '') parts.push(`q=${encodeURIComponent(search.trim())}`);
-		if (activeCategories.length > 0)
-			parts.push(`faqCategories=${encodeURIComponent(activeCategories.join(','))}`);
-		const query = parts.length > 0 ? `?${parts.join('&')}` : '';
-		if (!browser || window.location.search === query) return;
-		replaceState(`${window.location.pathname}${query}`, {});
+		syncQueryString({ q: search, faqCategories: activeCategories });
 	});
 </script>
 
@@ -130,12 +115,15 @@
 <section aria-label="Questions et réponses">
 	<div aria-live="polite">
 		{#if hasSearch}
-			<div class="border-t border-black py-6 md:py-8">
-				<h2 class="text-h2 text-teal">Résultat pour : {search.trim()}</h2>
-				{#if searchResults.length === 0}
-					<p class="text-body-1 text-grey-dark mt-1">{noResultsText}</p>
-				{:else}
-					<p class="text-label mt-1">{@render questionCount(searchResults.length)}</p>
+			<div class="py-6 md:py-8">
+				<ResultsHeader
+					query={search.trim()}
+					count={searchResults.length}
+					nouns={['question', 'questions']}
+					onClear={clearSearch}
+					{noResultsText}
+				/>
+				{#if searchResults.length > 0}
 					<div class="mt-9 space-y-6">
 						{#each searchResults as faq, faqIndex (faqIndex)}
 							<FaqQuestion
@@ -167,17 +155,10 @@
 							/>
 						</button>
 					</h2>
-					<p class="text-label mt-1 flex flex-wrap items-center gap-3">
-						{@render questionCount(section.faqs.length)}
-						{#each section.commonTerms as term (term.slug)}
-							<span
-								style:--term-color={termColor(term)}
-								class="text-caption rounded-full border-2 border-(--term-color) text-(--term-color) px-3 py-0.5 leading-tight"
-							>
-								{term.title}
-							</span>
-						{/each}
-					</p>
+					<div class="mt-1 flex flex-wrap items-center gap-3">
+						<p class="text-label">{@render questionCount(section.faqs.length)}</p>
+						<TermTags terms={section.commonTerms} label="Thématiques" />
+					</div>
 					{#if open}
 						<div
 							id="faq-section-{section.index}"
