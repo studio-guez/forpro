@@ -14,7 +14,7 @@ fields:
       fr: Titre
     type: text
     required: true
-  hide_title:
+  hideTitle:
     width: 1/2
     label:
       en: Hide title (use as aria-label only)
@@ -45,7 +45,7 @@ fields:
           fr: Titre
         type: text
         required: true
-      hide_title:
+      hideTitle:
         width: 1/2
         label:
           en: Hide title (use as aria-label only)

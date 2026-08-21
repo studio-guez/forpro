@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ModuleInfosPratiquesContent } from '$lib/interfaces/page';
+	import Card from '$lib/components/ui/Card.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import FaqQuestion from '$lib/components/ui/FaqQuestion.svelte';
 	import ShapeInfosPratiques1 from '$lib/components/svg/ShapeInfosPratiques1.svelte';
@@ -27,29 +28,16 @@
 	const rotations = [-8, -6, -8];
 
 	const uid = $props.id();
-	const titleId = `module-infos-pratiques-${uid}`;
 </script>
 
-<section
-	class="px-card rounded-3xl relative overflow-hidden"
-	class:pt-12={filled}
-	class:pb-18={filled}
-	style={filled ? `background-color: ${colors.main}; color: var(--color-white)` : `color: ${colors.main}`}
-	aria-labelledby={titleId}
+<Card
+	title={content.title}
+	subtitle={content.subtitle}
+	titleBackground={filled ? 'var(--color-white)' : colors.main}
+	titleColor={filled ? colors.main : 'var(--color-white)'}
+	background={filled ? colors.main : null}
+	color={filled ? 'var(--color-white)' : colors.main}
 >
-	<div class="text-center">
-		<h2
-			id={titleId}
-			class="inline-block text-h3 pt-2 pb-3.5 px-8 rounded-2xl"
-			style={filled
-				? `background-color: var(--color-white); color: ${colors.main}`
-				: `background-color: ${colors.main}; color: var(--color-white)`}
-		>
-			{content.title}
-		</h2>
-		<p class="text-body-1 font-bold mt-9" style:color={textColor}>{content.subtitle}</p>
-	</div>
-
 	{#if content.elements.length > 0}
 		<div class="relative mt-12 md:mt-6 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 items-start">
 			<div class="hidden md:block absolute left-[36%] top-[8%] w-32 lg:w-40" style:color={decoColor}>
@@ -85,7 +73,7 @@
 	{#if content.faqs.length > 0}
 		<div class="mt-12 md:mt-18 space-y-4">
 			{#each content.faqs as faq, i (i)}
-				<FaqQuestion id="{titleId}-faq-{i}" question={faq.question} answer={faq.answer} color={colors.main} inverted={filled} />
+				<FaqQuestion id="{uid}-faq-{i}" question={faq.question} answer={faq.answer} color={colors.main} inverted={filled} />
 			{/each}
 		</div>
 	{/if}
@@ -95,4 +83,4 @@
 			<CtaLink cta={content.cta} color={colors.main} inverted={filled} />
 		</div>
 	{/if}
-</section>
+</Card>

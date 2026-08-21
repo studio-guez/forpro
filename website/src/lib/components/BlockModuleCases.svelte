@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Component } from 'svelte';
 	import type { ModuleCasesContent, Theme, Variant } from '$lib/interfaces/page';
+	import Card from '$lib/components/ui/Card.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import VideoPlayer from '$lib/components/ui/VideoPlayer.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
@@ -196,7 +197,6 @@
 	};
 
 	const colors = $derived(themeConfig[theme][content.variant]);
-	const hasBackground = $derived(!!colors.bg && colors.bg !== 'transparent' && colors.bg !== 'var(--color-white)');
 
 	// White text means the block is drawn on a coloured background: the cta is inverted onto it.
 	const ctaInverted = $derived(colors.text === 'var(--color-white)');
@@ -221,28 +221,19 @@
 	const [ShapeLeft, ShapeRight] = $derived(shapePairs[theme] ?? [ShapeCasesDefault1, ShapeCasesDefault2]);
 </script>
 
-<section
-	class="px-card rounded-3xl relative overflow-hidden"
-	class:pt-12={hasBackground}
-	class:pb-18={hasBackground}
-	style={[colors.bg && `background-color: ${colors.bg}`, colors.text && `color: ${colors.text}`].filter(Boolean).join('; ')}
-	aria-label={content.hideTitle ? content.title : undefined}
-	aria-labelledby={content.hideTitle ? undefined : 'module-cases-title'}
+<Card
+	background={colors.bg}
+	color={colors.text}
+	shapeLeft={ShapeLeft}
+	shapeRight={ShapeRight}
+	shapeColor={colors.bgContrast}
+	title={content.title}
+	hideTitle={content.hideTitle}
+	shortDesc={content.intro}
+	titleBackground="var(--color-white)"
+	titleColor={colors.title}
 >
-	<div class="mb-12 text-center relative z-1">
-		{#if content.hideTitle}
-			<h2 id="module-cases-title" class="sr-only">{content.title}</h2>
-		{:else}
-			<h2 id="module-cases-title" class="inline-block text-h3 pt-2 pb-3.5 px-8 bg-white rounded-2xl" style={colors.title && `color: ${colors.title}`}>{content.title}</h2>
-		{/if}
-		{#if content.intro}
-			<div class="prose font-bold" class:mt-9={!content.hideTitle}>
-				{@html content.intro}
-			</div>
-		{/if}
-	</div>
-
-	<div class="flex flex-col gap-16 relative z-1">
+	<div class="flex flex-col gap-16 mt-12">
 		{#each content.rows as row, i (i)}
 			<article class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch" aria-label={row.hideTitle ? row.title : undefined}>
                 {#each row.media as media, m (m)}
@@ -270,10 +261,4 @@
 			</article>
 		{/each}
 	</div>
-	<div class="absolute top-0 left-0 -translate-1/6 w-2/5" style:color={colors.bgContrast}>
-		<ShapeLeft class="w-full h-auto" />
-	</div>
-	<div class="absolute top-0 right-0 -translate-y-1/6 translate-x-1/6 w-2/5" style:color={colors.bgContrast}>
-		<ShapeRight class="w-full h-auto" />
-	</div>
-</section>
+</Card>

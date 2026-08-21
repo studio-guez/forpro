@@ -1,0 +1,124 @@
+# Shared base for event and project pages.
+# Provides the fields common to both content types:
+#   - title / subtitle / shortDesc / cover (sidebar)
+#   - medias + embedVideos, repeatable content blocks and external links (main)
+# Event- and project-specific fields (dates, taxonomies, collective, ...) are
+# added by pages/event.yml and pages/project.yml, which extend this blueprint.
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    columns:
+      sidebar:
+        width: 1/3
+        sticky: true
+        sections:
+          meta:
+            type: fields
+            fields:
+              title:
+                label:
+                  en: Title
+                  fr: Titre
+                type: text
+                required: true
+              subtitle:
+                label:
+                  en: Subtitle
+                  fr: Sous-titre
+                type: text
+                required: true
+              shortDesc:
+                label:
+                  en: Short description
+                  fr: Description courte
+                extends: fields/writer
+                required: true
+              sepCover:
+                type: line
+              cover:
+                extends: fields/cover
+      main:
+        width: 2/3
+        sections:
+          media:
+            type: fields
+            fields:
+              mediaLabel:
+                label:
+                  en: Media
+                  fr: Médias
+                type: headline
+              medias:
+                label:
+                  en: Medias (images or videos)
+                  fr: Médias (images ou vidéos)
+                type: files
+                layout: cards
+                uploads: media
+              embedVideos:
+                label:
+                  en: Embedded videos (YouTube)
+                  fr: Vidéos intégrées (YouTube)
+                type: structure
+                help:
+                  en: Paste a YouTube URL. Regular videos and Shorts are both supported.
+                  fr: Collez une URL YouTube. Les vidéos classiques et les Shorts sont pris en charge.
+                fields:
+                  url:
+                    label:
+                      en: YouTube URL
+                      fr: URL YouTube
+                    type: url
+                    required: true
+          blocks:
+            type: fields
+            fields:
+              contentLabel:
+                label:
+                  en: Content
+                  fr: Contenu
+                type: headline
+              blocks:
+                label:
+                  en: Content blocks
+                  fr: Blocs de contenu
+                type: structure
+                fields:
+                  title:
+                    label:
+                      en: Title
+                      fr: Titre
+                    type: text
+                    default: Infos supplémentaires
+                    required: true
+                  description:
+                    label:
+                      en: Description
+                      fr: Description
+                    extends: fields/writer
+                    required: true
+          links:
+            type: fields
+            fields:
+              externalLinks:
+                label:
+                  en: External links
+                  fr: Liens externes
+                type: structure
+                fields:
+                  title:
+                    label:
+                      en: Title
+                      fr: Titre
+                    type: text
+                    required: true
+                  link:
+                    label:
+                      en: Link
+                      fr: Lien
+                    type: url
+                    required: true
+  seo: tabs/seo

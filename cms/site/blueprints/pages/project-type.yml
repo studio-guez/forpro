@@ -1,0 +1,5 @@
+title:
+  en: Project type
+  fr: Type de projet
+
+extends: pages/taxonomy-term

@@ -1,0 +1,6 @@
+type: pages
+layout: cards
+size: small
+image:
+  query: page.cover.toFile
+  cover: true

@@ -54,7 +54,7 @@ return [
                 $urls = $sitemap->create('pages');
 
                 $pages = site()->index()->filter(
-                    fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'event', 'project'], true)
+                    fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'events', 'event', 'projects', 'project'], true)
                         && $page->metadata()->robotsIndex()->toBool()
                 );
 
@@ -159,6 +159,29 @@ return [
                     ],
                     'favicon' => Utils::getFaviconData($site),
                 ]);
+            },
+        ],
+        [
+            // The frontend routes on `virtualPath` (real ancestors, minus the
+            // top-level containers, then the `parentPage` chain), which is not
+            // a Kirby page id: `/pages/evenements/evenement-de-test.json` has
+            // to resolve `pages/evenements/evenement-de-test`, while
+            // `/pages/entreprendre/mentorat.json` has to resolve `pages/mentorat`.
+            // Returning null falls through to Kirby's own routing (404 page).
+            "pattern" => "pages/(:all).json",
+            "action" => function (string $path) {
+                $page = site()->index()->filter(
+                    fn($candidate) => $candidate->virtualPath() === $path
+                )->first();
+
+                if ($page === null) {
+                    return null;
+                }
+
+                return new \Kirby\Http\Response(
+                    $page->render([], 'json'),
+                    'application/json'
+                );
             },
         ],
     ],

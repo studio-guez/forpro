@@ -8,14 +8,39 @@ num: zero
 
 options:
   changeTemplate: false
+  changeStatus: false
+  create: false
+  delete: false
+  duplicate: false
+  move: false
+  preview: "{{ page.frontendUrl }}"
 
-sections:
-  events:
+status:
+  listed: true
+
+tabs:
+  content:
     label:
-      en: Events
-      fr: Événements
-    type: pages
-    image: false
-    templates:
-      - event
-    create: event
+      en: Content
+      fr: Contenu
+    icon: text
+    sections:
+      meta:
+        type: fields
+        fields:
+          title:
+            label:
+              en: Title
+              fr: Titre
+            type: text
+            required: true
+      events:
+        extends: sections/child-pages
+        label:
+          en: Events
+          fr: Événements
+        templates:
+          - event
+        create: event
+
+  seo: tabs/seo

@@ -19,5 +19,7 @@ sections:
     templates:
       - page
       - faq
+      - events
+      - projects
     text: "{{ page.breadcrumbTitle }}"
     create: page
