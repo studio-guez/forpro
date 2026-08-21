@@ -44,6 +44,7 @@ tabs:
               cover: true
             parent: site.index.template("events").first()
             limit: 10
+            sortBy: dateStart desc
             templates:
               - event
             create: event
