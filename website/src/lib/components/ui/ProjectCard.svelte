@@ -5,9 +5,10 @@
 
 	interface Props {
 		project: ProjetCard;
+		headingTag?: string;
 	}
 
-	let { project }: Props = $props();
+	let { project, headingTag = 'h3' }: Props = $props();
 
 	const tag = $derived(project.themes[0] ?? project.types[0] ?? null);
 	const meta = $derived(
@@ -33,7 +34,7 @@
 		{/if}
 	</div>
 
-	<h3 class="text-h4 mt-5">{project.title}</h3>
+	<svelte:element this={headingTag} class="text-h4 mt-5">{project.title}</svelte:element>
 	{#if meta}
 		<p class="text-label mt-1">{meta}</p>
 	{/if}
