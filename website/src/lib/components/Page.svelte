@@ -7,7 +7,8 @@
 	import BlockModuleAgenda from '$lib/components/BlockModuleAgenda.svelte';
 	import BlockModuleProjets from '$lib/components/BlockModuleProjets.svelte';
 	import BlockModuleLinks from '$lib/components/BlockModuleLinks.svelte';
-	import type { Page, ModuleTitreTexteImageContent, ModuleCasesContent, ModuleInfosPratiquesContent, ModuleAgendaContent, ModuleProjetsContent, ModuleLinksContent } from '$lib/interfaces/page';
+	import BlockModulePartenaires from '$lib/components/BlockModulePartenaires.svelte';
+	import type { Page, ModuleTitreTexteImageContent, ModuleCasesContent, ModuleInfosPratiquesContent, ModuleAgendaContent, ModuleProjetsContent, ModuleLinksContent, ModulePartenairesContent } from '$lib/interfaces/page';
 
 	let { page }: { page: Page } = $props();
 </script>
@@ -51,6 +52,10 @@
 		{:else if block.type === 'module-links'}
 			<BlockModuleLinks
 				content={block.content as unknown as ModuleLinksContent}
+			/>
+		{:else if block.type === 'module-partenaires'}
+			<BlockModulePartenaires
+				content={block.content as unknown as ModulePartenairesContent}
 			/>
 		{/if}
 	{/if}
