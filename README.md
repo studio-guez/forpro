@@ -140,10 +140,12 @@ Both the plugin and the script share the same logic in `cms/site/plugins/image-g
 ## Sync content from PROD (local)
 
 On the servers, all mutable CMS state lives under `$DEPLOY_PATH/shared/cms/`
-(see [Layout on each target server](#layout-on-each-target-server)):
+(see [Layout on each target server](#layout-on-each-target-server)).
+`cms/content/` is its own git repo, hence `--exclude '.git'`: without it
+`--delete` would wipe the history on the receiving side.
 
 ```bash
-rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/shared/cms/content/ ./cms/content
+rsync -avz --delete --exclude '.git' -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/shared/cms/content/ ./cms/content
 rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/shared/cms/site/plugins/kirby-foodlab/data/ ./cms/site/plugins/kirby-foodlab/data
 rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/shared/cms/site/plugins/kirby-menu-du-jour/data/ ./cms/site/plugins/kirby-menu-du-jour/data
 ```
@@ -507,7 +509,8 @@ exit
 #    (your local clone or the old prod server), not on the target server:
 # --no-perms --omit-dir-times: shared/ is owned by www-data and only the owner
 # may set a directory's mtime or mode, so plain -a exits 23 on every directory.
-rsync -avz --delete --no-perms --omit-dir-times ./cms/content/ deploy@<server>:$DEPLOY_PATH/shared/cms/content
+# --exclude '.git': cms/content/ is its own git repo, don't ship its history.
+rsync -avz --delete --exclude '.git' --no-perms --omit-dir-times ./cms/content/ deploy@<server>:$DEPLOY_PATH/shared/cms/content
 rsync -avz --delete --no-perms --omit-dir-times ./cms/site/accounts/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/accounts
 rsync -avz --delete --no-perms --omit-dir-times ./cms/site/plugins/kirby-foodlab/data/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/plugins/kirby-foodlab/data
 rsync -avz --delete --no-perms --omit-dir-times ./cms/site/plugins/kirby-menu-du-jour/data/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/plugins/kirby-menu-du-jour/data
