@@ -71,7 +71,7 @@ Kirby::plugin("eclypsys/foodlab", [
         "restaurant" => function ($kirby) {
             return [
                 "label" => "Restaurant",
-                "menu" => true,
+                "menu" => fn() => \Eclypsys\Restaurant::canEdit(),
                 "icon" => "food",
                 "link" => "foodlab/restaurant/content",
                 "view" => "k-restaurant-view",

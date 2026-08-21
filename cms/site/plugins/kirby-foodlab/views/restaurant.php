@@ -5,6 +5,8 @@ use Eclypsys\Restaurant;
 return [
     "pattern" => "foodlab/restaurant/content",
     "action" => function () {
+        Restaurant::requireEditPermission();
+
         $fields = Restaurant::fields();
         $data = Restaurant::get();
         $values = [];
