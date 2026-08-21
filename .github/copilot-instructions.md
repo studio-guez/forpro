@@ -123,3 +123,18 @@ PascalCase files (`Page.svelte`, `AppHeader.vue`).
   YouTube regex match or SSR will 500.
 - `menu/` screen routes (`/foodCourt_screen_main`, `/foodCourt_stations_screens`) are
   client-only via `routeRules` + robots.txt; the public routes stay SSR.
+
+---
+
+# Deploy / CI notes
+
+- CI builds GHCR images per service; push to `preprod` deploys preprod, push to `main` or a
+  `v*` tag deploys production. Change detection compares against the last successful run on
+  the *same* branch.
+- `compose.prod.yml` persists only mutable state via bind mounts to `./cms/...`. Never mount
+  anything on `/var/www/html` or `site/plugins` — a named volume is seeded from the image
+  only when empty and would freeze the code at its first-`up` version.
+- `robots.txt`: CMS-side is driven by `KIRBY_ROBOTS_INDEX` in `cms.env` (restart, no
+  rebuild); restaurant and menu bind-mount their `robots.txt` from `shared/` on prod.
+- `.env*` files are gitignored and seeded from `.example` files on first deploy. Never
+  commit secrets, and never print them in terminal output.
