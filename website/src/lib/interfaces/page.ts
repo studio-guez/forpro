@@ -103,9 +103,11 @@ export interface AgendaEventCard {
 	readonly url: string;
 	readonly shortDesc: string;
 	readonly cover: CmsImage | null;
-	/** Local `YYYY-MM-DDTHH:mm` datetimes. */
+	/** ISO date `YYYY-MM-DD`. Times are `HH:mm` strings; all optional. */
 	readonly dateStart: string | null;
 	readonly dateEnd: string | null;
+	readonly timeStart: string | null;
+	readonly timeEnd: string | null;
 	readonly terms: TaxonomyTerm[];
 }
 
