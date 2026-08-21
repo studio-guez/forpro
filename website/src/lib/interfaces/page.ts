@@ -1,3 +1,5 @@
+import type { TaxonomyTerm } from '$lib/interfaces/taxonomy';
+
 export interface CmsImage {
 	readonly focus: string | null;
 	readonly caption: string | null;
@@ -89,9 +91,45 @@ export interface InfosPratiquesFaq {
 
 export interface ModuleInfosPratiquesContent {
 	readonly title: string;
-	readonly subtitle: string;
+	readonly shortDesc: string;
 	readonly elements: InfosPratiquesElement[];
 	readonly faqs: InfosPratiquesFaq[];
+	readonly cta: PageCta | null;
+	readonly variant: Variant;
+}
+
+export interface AgendaEventCard {
+	readonly title: string;
+	readonly url: string;
+	readonly shortDesc: string;
+	readonly cover: CmsImage | null;
+	/** Local `YYYY-MM-DDTHH:mm` datetimes. */
+	readonly dateStart: string | null;
+	readonly dateEnd: string | null;
+	readonly terms: TaxonomyTerm[];
+}
+
+export interface ModuleAgendaContent {
+	readonly title: string;
+	readonly shortDesc: string | null;
+	readonly events: AgendaEventCard[];
+	readonly cta: PageCta | null;
+	readonly variant: Variant;
+}
+
+export interface ProjetCard {
+	readonly title: string;
+	readonly url: string;
+	readonly cover: CmsImage | null;
+	readonly collectiveName: string | null;
+	readonly themes: TaxonomyTerm[];
+	readonly types: TaxonomyTerm[];
+}
+
+export interface ModuleProjetsContent {
+	readonly title: string;
+	readonly shortDesc: string | null;
+	readonly projects: ProjetCard[];
 	readonly cta: PageCta | null;
 	readonly variant: Variant;
 }

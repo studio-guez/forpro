@@ -92,16 +92,83 @@ foreach ($page->body()->toBlocks() as $block) {
             : null;
 
         $content = [
-            'title'    => $block->title()->value(),
-            'subtitle' => $block->subtitle()->value(),
-            'elements' => $elements,
-            'faqs'     => $faqs,
-            'cta'      => $ctaUrl ? [
+            'title'     => $block->title()->value(),
+            'shortDesc' => $block->shortDesc()->value(),
+            'elements'  => $elements,
+            'faqs'      => $faqs,
+            'cta'       => $ctaUrl ? [
                 'label' => $block->ctaLabel()->or('Plus de réponses')->value(),
                 'url'   => $ctaUrl,
                 'icon'  => 'arrow',
             ] : null,
-            'variant'  => $block->variant()->or('default')->value(),
+            'variant'   => $block->variant()->or('default')->value(),
+        ];
+    } elseif ($block->type() === 'module-agenda') {
+        $filters = [
+            'domains'     => array_column(Utils::resolveTaxonomyTerms($block->domains(), 'domains'), 'slug'),
+            'eventThemes' => array_column(Utils::resolveTaxonomyTerms($block->eventThemes(), 'event-themes'), 'slug'),
+        ];
+
+        $eventsPage = $site->index()->template('events')->first();
+        $events = [];
+        if ($eventsPage) {
+            $children = $eventsPage->children()->listed();
+            foreach ($filters as $field => $slugs) {
+                $children = Utils::filterPagesByTaxonomy($children, $field, $slugs);
+            }
+
+            // Upcoming events only (an event stays listed until it is over), soonest first.
+            $today = date('Y-m-d');
+            $children = $children
+                ->filter(fn($event) => ($event->dateEnd()->isNotEmpty() ? $event->dateEnd() : $event->dateStart())->toDate('Y-m-d') >= $today)
+                ->sortBy('dateStart', 'asc');
+
+            $events = array_values($children->map(fn($event) => Utils::getEventCardData($event))->data());
+        }
+
+        // Resolved here so an agenda slug change never breaks the frontend link.
+        $ctaUrl = $eventsPage ? '/' . $eventsPage->virtualPath() . Utils::buildTaxonomyQuery($filters) : null;
+
+        $content = [
+            'title'     => $block->title()->value(),
+            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'events'    => $events,
+            'cta'       => $ctaUrl ? [
+                'label' => $block->ctaLabel()->or("Tout l'agenda")->value(),
+                'url'   => $ctaUrl,
+                'icon'  => 'arrow',
+            ] : null,
+            'variant'   => $block->variant()->or('default')->value(),
+        ];
+    } elseif ($block->type() === 'module-projets') {
+        $filters = [
+            'projectThemes' => array_column(Utils::resolveTaxonomyTerms($block->projectThemes(), 'project-themes'), 'slug'),
+            'projectTypes'  => array_column(Utils::resolveTaxonomyTerms($block->projectTypes(), 'project-types'), 'slug'),
+        ];
+
+        $projectsPage = $site->index()->template('projects')->first();
+        $projects = [];
+        if ($projectsPage) {
+            $children = $projectsPage->children()->listed();
+            foreach ($filters as $field => $slugs) {
+                $children = Utils::filterPagesByTaxonomy($children, $field, $slugs);
+            }
+
+            $projects = array_values($children->map(fn($project) => Utils::getProjectCardData($project))->data());
+        }
+
+        $ctaUrl = $projectsPage ? '/' . $projectsPage->virtualPath() . Utils::buildTaxonomyQuery($filters) : null;
+
+        $content = [
+            'title'     => $block->title()->value(),
+            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'projects'  => $projects,
+            'cta'       => $ctaUrl ? [
+                'label' => $block->ctaLabel()->or('Voir tous les projets')->value(),
+                'url'   => $ctaUrl,
+                'icon'  => 'arrow',
+            ] : null,
+            'variant'   => $block->variant()->or('default')->value(),
         ];
     } else {
         $content = $block->toArray()['content'] ?? [];
