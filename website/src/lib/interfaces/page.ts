@@ -146,6 +146,19 @@ export interface ModuleLinksContent {
 	readonly backgroundImage: CmsImage | null;
 }
 
+export interface PartnerItem {
+	readonly logo: CmsImage;
+	readonly url: string | null;
+	readonly label: string | null;
+}
+
+export interface ModulePartenairesContent {
+	readonly title: string;
+	readonly subtitle: string | null;
+	readonly partners: PartnerItem[];
+	readonly variant: Variant;
+}
+
 export type Theme =
 	| 'default'
 	| 'campus'
