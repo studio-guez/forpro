@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ModuleTitreTexteImageContent, Theme, Variant } from '$lib/interfaces/page';
+	import Card from '$lib/components/ui/Card.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
 
@@ -161,24 +162,19 @@
 
 	const colors = $derived(themeConfig[theme][content.variant]);
 	const isImageLeft = $derived(content.imagePosition === 'left');
-	const hasBackground = $derived(!!colors.bg && colors.bg !== 'transparent' && colors.bg !== 'var(--color-white)');
 
 	// A white accent means the block is drawn on a coloured background: the cta is inverted onto it.
 	const ctaInverted = $derived(colors.accent === 'var(--color-white)');
 	const ctaColor = $derived(ctaInverted ? colors.bg : colors.accent);
-
-	const uid = $props.id();
-	const titleId = `module-titre-texte-image-${uid}`;
 </script>
 
-<section
-	class="px-card rounded-3xl"
-	class:pt-12={hasBackground}
-	class:pb-18={hasBackground}
-	style={[colors.bg && `background-color: ${colors.bg}`, colors.text && `color: ${colors.text}`].filter(Boolean).join('; ')}
-	aria-labelledby={titleId}
+<Card
+	title={content.title}
+	titleVariant="plain"
+	titleColor={colors.accent}
+	background={colors.bg}
+	color={colors.text}
 >
-	<h2 id={titleId} class="text-h2 text-center mb-12" style={colors.accent && `color: ${colors.accent}`}>{content.title}</h2>
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 		{#if content.image}
 			<div class="overflow-hidden rounded-2xl [contain:size]" class:lg:order-last={!isImageLeft}>
@@ -194,4 +190,4 @@
 			{/if}
 		</div>
 	</div>
-</section>
+</Card>
