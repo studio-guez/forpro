@@ -308,7 +308,7 @@ class Utils
     /**
      * Normalized `dateStart/dateEnd/timeStart/timeEnd` of an event, unset fields as null.
      */
-    private static function getEventDateFields(\Kirby\Cms\Page $page): array
+    static function getEventDateFields(\Kirby\Cms\Page $page): array
     {
         return [
             'dateStart' => $page->dateStart()->isNotEmpty() ? $page->dateStart()->toDate('Y-m-d') : null,
