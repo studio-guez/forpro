@@ -136,6 +136,16 @@ export interface ModuleProjetsContent {
 	readonly variant: Variant;
 }
 
+export type LinksVariant = Variant | 'backgroundImage';
+
+export interface ModuleLinksContent {
+	readonly title: string;
+	readonly subtitle: string | null;
+	readonly links: PageCta[];
+	readonly variant: LinksVariant;
+	readonly backgroundImage: CmsImage | null;
+}
+
 export type Theme =
 	| 'default'
 	| 'campus'
@@ -156,7 +166,7 @@ export interface PageParent {
 	readonly path: string;
 }
 
-export type CtaIcon = 'plus' | 'email' | 'arrow';
+export type CtaIcon = 'plus' | 'email' | 'phone' | 'arrow';
 
 export interface PageCta {
 	readonly label: string;

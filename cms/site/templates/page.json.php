@@ -38,6 +38,15 @@ foreach ($page->body()->toBlocks() as $block) {
             'variant'       => $block->variant()->or('default')->value(),
             'cta'           => Utils::resolveCtaStructure($block->cta()),
         ];
+    } elseif ($block->type() === 'module-links') {
+        $backgroundFile = $block->backgroundImage()->toFile();
+        $content = [
+            'title'           => $block->title()->value(),
+            'subtitle'        => $block->subtitle()->isNotEmpty() ? $block->subtitle()->value() : null,
+            'links'           => Utils::resolveCtaStructures($block->links()),
+            'variant'         => $block->variant()->or('default')->value(),
+            'backgroundImage' => $backgroundFile ? Utils::getJsonEncodeImageData($backgroundFile) : null,
+        ];
     } elseif ($block->type() === 'module-cases') {
         $rows = [];
         foreach ($block->rows()->toStructure() as $row) {
