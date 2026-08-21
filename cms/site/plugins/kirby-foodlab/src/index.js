@@ -1,5 +1,7 @@
 import MenuView from "./components/MenuView.vue";
 import MenuSpecialView from "./components/MenuSpecialView.vue";
+import RestaurantView from "./components/RestaurantView.vue";
+import RestaurantImageField from "./components/RestaurantImageField.vue";
 import SectionHeader from "./components/SectionHeader.vue";
 import BeerTable from "./components/BeerTable.vue";
 import CocktailTable from "./components/CocktailTable.vue";
@@ -13,9 +15,13 @@ import BubbleWineTable from "./components/BubbleWineTable.vue";
 import SoftDrinkTable from "./components/SoftDrinkTable.vue";
 
 panel.plugin("eclypsys/foodlab", {
+  fields: {
+    restaurantimage: RestaurantImageField,
+  },
   components: {
     "k-menu-view": MenuView,
     "k-menu-special-view": MenuSpecialView,
+    "k-restaurant-view": RestaurantView,
     "k-section-header": SectionHeader,
     "k-beer-table": BeerTable,
     "k-dessert-table": DessertTable,
