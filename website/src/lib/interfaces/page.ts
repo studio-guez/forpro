@@ -91,7 +91,7 @@ export interface InfosPratiquesFaq {
 
 export interface ModuleInfosPratiquesContent {
 	readonly title: string;
-	readonly shortDesc: string;
+	readonly subtitle: string;
 	readonly elements: InfosPratiquesElement[];
 	readonly faqs: InfosPratiquesFaq[];
 	readonly cta: PageCta | null;
