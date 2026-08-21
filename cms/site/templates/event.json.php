@@ -10,8 +10,10 @@ $json = Utils::getEventProjectBaseData($page);
 
 $json['template'] = 'event';
 
-$json['dateStart'] = $page->dateStart()->isNotEmpty() ? $page->dateStart()->toDate('Y-m-d\TH:i') : null;
-$json['dateEnd']   = $page->dateEnd()->isNotEmpty() ? $page->dateEnd()->toDate('Y-m-d\TH:i') : null;
+$json['dateStart'] = $page->dateStart()->isNotEmpty() ? $page->dateStart()->toDate('Y-m-d') : null;
+$json['dateEnd']   = $page->dateEnd()->isNotEmpty()   ? $page->dateEnd()->toDate('Y-m-d')   : null;
+$json['timeStart'] = $page->timeStart()->isNotEmpty() ? $page->timeStart()->value()          : null;
+$json['timeEnd']   = $page->timeEnd()->isNotEmpty()   ? $page->timeEnd()->value()            : null;
 
 $json['domains']     = Utils::resolveTaxonomyTerms($page->domains(), 'domains');
 $json['eventThemes'] = Utils::resolveTaxonomyTerms($page->eventThemes(), 'event-themes');
