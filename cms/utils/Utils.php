@@ -176,6 +176,27 @@ class Utils
     }
 
     /**
+     * Predicate keeping items tagged with any of the given term slugs on a
+     * tags-based taxonomy field. Stored values are term UUIDs, so they are
+     * resolved to slugs (cached per predicate) before comparison.
+     */
+    private static function taxonomyMatcher(string $fieldName, array $slugs): \Closure
+    {
+        $slugCache = [];
+
+        return function ($item) use ($fieldName, $slugs, &$slugCache): bool {
+            $itemSlugs = array_map(function (string $uuid) use (&$slugCache) {
+                if (!array_key_exists($uuid, $slugCache)) {
+                    $slugCache[$uuid] = page($uuid)?->slug();
+                }
+                return $slugCache[$uuid];
+            }, $item->{$fieldName}()->split(','));
+
+            return array_intersect($slugs, $itemSlugs) !== [];
+        };
+    }
+
+    /**
      * Filters structure items on a tags-based taxonomy field, keeping items
      * tagged with any of the given term slugs. Stored values are term UUIDs,
      * so they are resolved to slugs before comparison. An empty $slugs returns
@@ -190,18 +211,73 @@ class Utils
     {
         if ($slugs === []) return $items;
 
-        $slugCache = [];
-        $resolveSlug = function (string $uuid) use (&$slugCache) {
-            if (!array_key_exists($uuid, $slugCache)) {
-                $slugCache[$uuid] = page($uuid)?->slug();
-            }
-            return $slugCache[$uuid];
-        };
+        return $items->filter(self::taxonomyMatcher($fieldName, $slugs));
+    }
 
-        return $items->filter(function ($item) use ($fieldName, $slugs, $resolveSlug): bool {
-            $itemSlugs = array_map($resolveSlug, $item->{$fieldName}()->split(','));
-            return array_intersect($slugs, $itemSlugs) !== [];
-        });
+    /**
+     * Same as filterStructureByTaxonomy(), for a pages collection (events,
+     * projects, ...). An empty $slugs returns all pages.
+     */
+    static function filterPagesByTaxonomy(\Kirby\Cms\Pages $pages, string $fieldName, array $slugs): \Kirby\Cms\Pages
+    {
+        if ($slugs === []) return $pages;
+
+        return $pages->filter(self::taxonomyMatcher($fieldName, $slugs));
+    }
+
+    /**
+     * Builds the query string carrying an index page's taxonomy pre-filters,
+     * e.g. ['domains' => ['campus'], 'eventThemes' => []] -> "?domains=campus".
+     * Returns an empty string when no filter is set.
+     */
+    static function buildTaxonomyQuery(array $filters): string
+    {
+        $parts = [];
+        foreach ($filters as $field => $slugs) {
+            if ($slugs !== []) {
+                $parts[] = $field . '=' . implode(',', $slugs);
+            }
+        }
+
+        return $parts === [] ? '' : '?' . implode('&', $parts);
+    }
+
+    /**
+     * Card payload for an event listed in the agenda module carousel.
+     */
+    static function getEventCardData(\Kirby\Cms\Page $page): array
+    {
+        $coverFile = $page->cover()->toFile();
+
+        return [
+            'title'     => $page->title()->value(),
+            'url'       => '/' . $page->virtualPath(),
+            'shortDesc' => $page->short_desc()->value(),
+            'cover'     => $coverFile ? self::getJsonEncodeImageData($coverFile) : null,
+            'dateStart' => $page->dateStart()->isNotEmpty() ? $page->dateStart()->toDate('Y-m-d\TH:i') : null,
+            'dateEnd'   => $page->dateEnd()->isNotEmpty() ? $page->dateEnd()->toDate('Y-m-d\TH:i') : null,
+            'terms'     => array_merge(
+                self::resolveTaxonomyTerms($page->domains(), 'domains'),
+                self::resolveTaxonomyTerms($page->eventThemes(), 'event-themes')
+            ),
+        ];
+    }
+
+    /**
+     * Card payload for a project listed in the projects module carousel.
+     */
+    static function getProjectCardData(\Kirby\Cms\Page $page): array
+    {
+        $coverFile = $page->cover()->toFile();
+
+        return [
+            'title'          => $page->title()->value(),
+            'url'            => '/' . $page->virtualPath(),
+            'cover'          => $coverFile ? self::getJsonEncodeImageData($coverFile) : null,
+            'collectiveName' => $page->collectiveName()->isNotEmpty() ? $page->collectiveName()->value() : null,
+            'themes'         => self::resolveTaxonomyTerms($page->projectThemes(), 'project-themes'),
+            'types'          => self::resolveTaxonomyTerms($page->projectTypes(), 'project-types'),
+        ];
     }
 
     /**
