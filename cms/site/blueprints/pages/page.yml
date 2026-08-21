@@ -2,7 +2,7 @@ title:
   en: Page
   fr: Page
 
-extends: pages/base
+extends: pages/page-base
 
 status:
   draft: true
@@ -78,3 +78,7 @@ tabs:
                   - module-titre-texte-image
                   - module-cases
                   - module-infos-pratiques
+                  - module-agenda
+                  - module-projets
+                  - module-links
+                  - module-partenaires

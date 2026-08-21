@@ -1,0 +1,6 @@
+extends: fields/taxonomies/taxonomy
+label:
+  en: Project types
+  fr: Types de projet
+options:
+  query: site.find("taxonomies").find("project-types").children

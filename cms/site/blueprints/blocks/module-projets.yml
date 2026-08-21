@@ -1,0 +1,41 @@
+extends: blocks/base
+
+name:
+  en: Module - Projects
+  fr: Module - Projets
+
+icon: folder
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  shortDesc:
+    width: 1/2
+    label:
+      en: Short description
+      fr: Description courte
+    extends: fields/writer
+  projectThemes:
+    extends: fields/taxonomies/project-themes
+    width: 1/2
+    help:
+      en: Filters the projects shown in the block and pre-filters the projects page linked by the CTA.
+      fr: Filtre les projets affichés dans le module et pré-filtre la page projets liée par le CTA.
+  projectTypes:
+    extends: fields/taxonomies/project-types
+    width: 1/2
+  ctaLabel:
+    width: 1/2
+    label:
+      en: CTA label
+      fr: Libellé du CTA
+    type: text
+    default: Voir tous les projets
+    required: true
+  variant:
+    extends: fields/variant

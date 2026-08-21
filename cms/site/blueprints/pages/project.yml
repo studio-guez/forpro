@@ -2,44 +2,55 @@ title:
   en: Project
   fr: Projet
 
-extends: pages/base
+extends: pages/event-project-base
+
+status:
+  draft: true
+  listed: true
+
+num: zero
+
+options:
+  preview: "{{ page.frontendUrl }}"
 
 tabs:
   content:
     columns:
+      sidebar:
+        sections:
+          taxonomies:
+            type: fields
+            fields:
+              sepTaxonomies:
+                type: line
+              projectThemes:
+                extends: fields/taxonomies/project-themes
+              projectTypes:
+                extends: fields/taxonomies/project-types
       main:
-        fields:
-          description:
-            label:
-              en: Description
-              fr: Description
-            type: textarea
-
-          date:
-            label:
-              en: Date
-              fr: Date
-            type: date
-
-          tags:
-            label:
-              en: Tags
-              fr: Étiquettes
-            type: tags
-
-          gallery:
-            label:
-              en: Gallery
-              fr: Galerie
-            type: files
-            uploads: image
-            layout: cards
-            image:
-              cover: true
-
-          body:
-            type: blocks
-            label:
-              en: Content
-              fr: Contenu
-            fieldsets: []
+        sections:
+          collective:
+            type: fields
+            fields:
+              collectiveLabel:
+                label:
+                  en: Collective
+                  fr: Collectif
+                type: headline
+              collectiveName:
+                label:
+                  en: Collective name
+                  fr: Nom du collectif
+                type: text
+              collectiveMembers:
+                label:
+                  en: Collective members
+                  fr: Membres du collectif
+                type: structure
+                fields:
+                  name:
+                    label:
+                      en: Name
+                      fr: Nom
+                    type: text
+                    required: true

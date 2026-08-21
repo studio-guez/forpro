@@ -32,7 +32,7 @@ fields:
     uploads: image
     max: 1
     required: true
-  image_position:
+  imagePosition:
     width: 1/2
     label:
       en: Image position

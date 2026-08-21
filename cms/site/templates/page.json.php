@@ -34,16 +34,45 @@ foreach ($page->body()->toBlocks() as $block) {
             'title'         => $block->title()->value(),
             'description'   => $block->description()->value(),
             'image'         => $imageFile ? Utils::getJsonEncodeImageData($imageFile) : null,
-            'imagePosition' => $block->content()->get('image_position')->or('right')->value(),
+            'imagePosition' => $block->content()->get('imagePosition')->or('right')->value(),
             'variant'       => $block->variant()->or('default')->value(),
             'cta'           => Utils::resolveCtaStructure($block->cta()),
+        ];
+    } elseif ($block->type() === 'module-links') {
+        $backgroundFile = $block->backgroundImage()->toFile();
+        $content = [
+            'title'           => $block->title()->value(),
+            'subtitle'        => $block->subtitle()->isNotEmpty() ? $block->subtitle()->value() : null,
+            'links'           => Utils::resolveCtaStructures($block->links()),
+            'variant'         => $block->variant()->or('default')->value(),
+            'backgroundImage' => $backgroundFile ? Utils::getJsonEncodeImageData($backgroundFile) : null,
+        ];
+    } elseif ($block->type() === 'module-partenaires') {
+        $partners = [];
+        foreach ($block->partners()->toStructure() as $partner) {
+            $logoFile = $partner->logo()->toFile();
+            if (!$logoFile) continue;
+            $partners[] = [
+                'logo'  => Utils::getJsonEncodeImageData($logoFile),
+                'url'   => $partner->url()->isNotEmpty() ? $partner->url()->value() : null,
+                // The logo alt is the accessible name; fall back to the link target.
+                'label' => $logoFile->alt()->isNotEmpty()
+                    ? $logoFile->alt()->value()
+                    : $partner->url()->value(),
+            ];
+        }
+        $content = [
+            'title'    => $block->title()->value(),
+            'subtitle' => $block->subtitle()->isNotEmpty() ? $block->subtitle()->value() : null,
+            'partners' => $partners,
+            'variant'  => $block->variant()->or('default')->value(),
         ];
     } elseif ($block->type() === 'module-cases') {
         $rows = [];
         foreach ($block->rows()->toStructure() as $row) {
             $rows[] = [
                 'title'       => $row->title()->value(),
-                'hideTitle'   => $row->hide_title()->toBool(),
+                'hideTitle'   => $row->hideTitle()->toBool(),
                 'description' => $row->description()->value(),
                 'cta'         => Utils::resolveCtaStructure($row->cta()),
                 'media'       => Utils::getJsonEncodeMediaArray($row->media()->toFiles()),
@@ -51,7 +80,7 @@ foreach ($page->body()->toBlocks() as $block) {
         }
         $content = [
             'title'     => $block->title()->value(),
-            'hideTitle' => $block->hide_title()->toBool(),
+            'hideTitle' => $block->hideTitle()->toBool(),
             'intro'     => $block->intro()->value(),
             'rows'      => $rows,
             'layout'    => $block->layout()->or('alternate')->value(),
@@ -102,6 +131,76 @@ foreach ($page->body()->toBlocks() as $block) {
                 'icon'  => 'arrow',
             ] : null,
             'variant'  => $block->variant()->or('default')->value(),
+        ];
+    } elseif ($block->type() === 'module-agenda') {
+        $filters = [
+            'domains'     => array_column(Utils::resolveTaxonomyTerms($block->domains(), 'domains'), 'slug'),
+            'eventThemes' => array_column(Utils::resolveTaxonomyTerms($block->eventThemes(), 'event-themes'), 'slug'),
+        ];
+
+        $eventsPage = $site->index()->template('events')->first();
+        $events = [];
+        if ($eventsPage) {
+            $children = $eventsPage->children()->listed();
+            foreach ($filters as $field => $slugs) {
+                $children = Utils::filterPagesByTaxonomy($children, $field, $slugs);
+            }
+
+            // Upcoming events only (an event stays listed until it is over), soonest first.
+            $now = new \DateTime();
+            $children = $children
+                ->filter(function ($event) use ($now) {
+                    $endDt = Utils::getEventGoingDatetime($event);
+                    return $endDt !== null && $endDt >= $now;
+                })
+                ->sortBy('dateStart', 'asc');
+
+            $events = array_values($children->map(fn($event) => Utils::getEventCardData($event))->data());
+        }
+
+        // Resolved here so an agenda slug change never breaks the frontend link.
+        $ctaUrl = $eventsPage ? '/' . $eventsPage->virtualPath() . Utils::buildTaxonomyQuery($filters) : null;
+
+        $content = [
+            'title'     => $block->title()->value(),
+            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'events'    => $events,
+            'cta'       => $ctaUrl ? [
+                'label' => $block->ctaLabel()->or("Tout l'agenda")->value(),
+                'url'   => $ctaUrl,
+                'icon'  => 'arrow',
+            ] : null,
+            'variant'   => $block->variant()->or('default')->value(),
+        ];
+    } elseif ($block->type() === 'module-projets') {
+        $filters = [
+            'projectThemes' => array_column(Utils::resolveTaxonomyTerms($block->projectThemes(), 'project-themes'), 'slug'),
+            'projectTypes'  => array_column(Utils::resolveTaxonomyTerms($block->projectTypes(), 'project-types'), 'slug'),
+        ];
+
+        $projectsPage = $site->index()->template('projects')->first();
+        $projects = [];
+        if ($projectsPage) {
+            $children = $projectsPage->children()->listed();
+            foreach ($filters as $field => $slugs) {
+                $children = Utils::filterPagesByTaxonomy($children, $field, $slugs);
+            }
+
+            $projects = array_values($children->map(fn($project) => Utils::getProjectCardData($project))->data());
+        }
+
+        $ctaUrl = $projectsPage ? '/' . $projectsPage->virtualPath() . Utils::buildTaxonomyQuery($filters) : null;
+
+        $content = [
+            'title'     => $block->title()->value(),
+            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'projects'  => $projects,
+            'cta'       => $ctaUrl ? [
+                'label' => $block->ctaLabel()->or('Voir tous les projets')->value(),
+                'url'   => $ctaUrl,
+                'icon'  => 'arrow',
+            ] : null,
+            'variant'   => $block->variant()->or('default')->value(),
         ];
     } else {
         $content = $block->toArray()['content'] ?? [];

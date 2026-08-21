@@ -1,3 +1,5 @@
+import type { TaxonomyTerm } from '$lib/interfaces/taxonomy';
+
 export interface CmsImage {
 	readonly focus: string | null;
 	readonly caption: string | null;
@@ -96,6 +98,67 @@ export interface ModuleInfosPratiquesContent {
 	readonly variant: Variant;
 }
 
+export interface AgendaEventCard {
+	readonly title: string;
+	readonly url: string;
+	readonly shortDesc: string;
+	readonly cover: CmsImage | null;
+	/** ISO date `YYYY-MM-DD`. Times are `HH:mm` strings; all optional. */
+	readonly dateStart: string | null;
+	readonly dateEnd: string | null;
+	readonly timeStart: string | null;
+	readonly timeEnd: string | null;
+	readonly terms: TaxonomyTerm[];
+}
+
+export interface ModuleAgendaContent {
+	readonly title: string;
+	readonly shortDesc: string | null;
+	readonly events: AgendaEventCard[];
+	readonly cta: PageCta | null;
+	readonly variant: Variant;
+}
+
+export interface ProjetCard {
+	readonly title: string;
+	readonly url: string;
+	readonly cover: CmsImage | null;
+	readonly collectiveName: string | null;
+	readonly themes: TaxonomyTerm[];
+	readonly types: TaxonomyTerm[];
+}
+
+export interface ModuleProjetsContent {
+	readonly title: string;
+	readonly shortDesc: string | null;
+	readonly projects: ProjetCard[];
+	readonly cta: PageCta | null;
+	readonly variant: Variant;
+}
+
+export type LinksVariant = Variant | 'backgroundImage';
+
+export interface ModuleLinksContent {
+	readonly title: string;
+	readonly subtitle: string | null;
+	readonly links: PageCta[];
+	readonly variant: LinksVariant;
+	readonly backgroundImage: CmsImage | null;
+}
+
+export interface PartnerItem {
+	readonly logo: CmsImage;
+	readonly url: string | null;
+	readonly label: string | null;
+}
+
+export interface ModulePartenairesContent {
+	readonly title: string;
+	readonly subtitle: string | null;
+	readonly partners: PartnerItem[];
+	readonly variant: Variant;
+}
+
 export type Theme =
 	| 'default'
 	| 'campus'
@@ -116,7 +179,7 @@ export interface PageParent {
 	readonly path: string;
 }
 
-export type CtaIcon = 'plus' | 'email' | 'arrow';
+export type CtaIcon = 'plus' | 'email' | 'phone' | 'arrow';
 
 export interface PageCta {
 	readonly label: string;

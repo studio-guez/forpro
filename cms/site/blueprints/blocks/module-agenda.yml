@@ -5,3 +5,37 @@ name:
   fr: Module - Agenda
 
 icon: calendar
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  shortDesc:
+    width: 1/2
+    label:
+      en: Short description
+      fr: Description courte
+    extends: fields/writer
+  domains:
+    extends: fields/taxonomies/domains
+    width: 1/2
+    help:
+      en: Filters the events shown in the block and pre-filters the agenda page linked by the CTA.
+      fr: Filtre les événements affichés dans le module et pré-filtre la page agenda liée par le CTA.
+  eventThemes:
+    extends: fields/taxonomies/event-themes
+    width: 1/2
+  ctaLabel:
+    width: 1/2
+    label:
+      en: CTA label
+      fr: Libellé du CTA
+    type: text
+    default: Tout l'agenda
+    required: true
+  variant:
+    extends: fields/variant
