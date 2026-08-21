@@ -70,6 +70,8 @@ export default {
 
             this.isUploading = true;
 
+            const previousFilename = this.value;
+
             const reader = new FileReader();
 
             reader.onload = () => {
@@ -81,6 +83,16 @@ export default {
                     })
                     .then((response) => {
                         this.$emit("input", response.filename);
+
+                        if (previousFilename) {
+                            this.$api
+                                .post("/restaurant/media/delete", {
+                                    filename: previousFilename,
+                                })
+                                .catch(() => {
+                                    // best-effort: ignore errors
+                                });
+                        }
                     })
                     .catch((error) => {
                         this.$panel.notification.error(
@@ -100,7 +112,17 @@ export default {
             reader.readAsDataURL(file);
         },
         remove() {
+            const filename = this.value;
+
             this.$emit("input", "");
+
+            if (filename) {
+                this.$api
+                    .post("/restaurant/media/delete", { filename })
+                    .catch(() => {
+                        // best-effort: ignore errors so the form field clears regardless
+                    });
+            }
         },
     },
 };
