@@ -85,6 +85,14 @@ class Utils
         return array_values($files->map(fn(\Kirby\Cms\File $file) => self::getJsonEncodeMediaData($file))->data());
     }
 
+    /**
+     * Serializes an optional file (e.g. a `cover` that may not be set).
+     */
+    static function getJsonEncodeImageDataOrNull(?\Kirby\Cms\File $file): ?array
+    {
+        return $file ? self::getJsonEncodeImageData($file) : null;
+    }
+
 
     /**
      * Resolves the URL from a structure item using the type/page/url pattern.
@@ -181,15 +189,22 @@ class Utils
      */
     static function resolveTaxonomyTerms(\Kirby\Content\Field $field, string $taxonomy): array
     {
-        return array_values(array_filter(array_map(function (string $uuid): ?array {
-            $term = page($uuid);
-            if (!$term) return null;
-            return [
-                'slug'  => $term->slug(),
-                'title' => $term->title()->value(),
-                'color' => $term->color()->isNotEmpty() ? $term->color()->value() : null,
-            ];
-        }, $field->split(','))));
+        return array_values(array_filter(array_map(
+            fn(string $uuid): ?array => ($term = page($uuid)) ? self::getTaxonomyTermData($term) : null,
+            $field->split(',')
+        )));
+    }
+
+    /**
+     * `{slug, title, color}` shape shared by every taxonomy term payload.
+     */
+    private static function getTaxonomyTermData(\Kirby\Cms\Page $term): array
+    {
+        return [
+            'slug'  => $term->slug(),
+            'title' => $term->title()->value(),
+            'color' => $term->color()->isNotEmpty() ? $term->color()->value() : null,
+        ];
     }
 
     /**
@@ -202,11 +217,7 @@ class Utils
         $parent = page('taxonomies/' . $taxonomy);
         if (!$parent) return [];
 
-        return $parent->children()->listed()->map(fn($term) => [
-            'slug'  => $term->slug(),
-            'title' => $term->title()->value(),
-            'color' => $term->color()->isNotEmpty() ? $term->color()->value() : null,
-        ])->values();
+        return $parent->children()->listed()->map(fn($term) => self::getTaxonomyTermData($term))->values();
     }
 
     /**
@@ -283,12 +294,10 @@ class Utils
      */
     static function getEventGoingDatetime(\Kirby\Cms\Page $page): ?\DateTime
     {
-        $dateStart = $page->dateStart()->isNotEmpty() ? $page->dateStart()->toDate('Y-m-d') : null;
-        if (!$dateStart) return null;
+        ['dateStart' => $dateStart, 'dateEnd' => $dateEnd, 'timeStart' => $timeStart, 'timeEnd' => $timeEnd]
+            = self::getEventDateFields($page);
 
-        $dateEnd   = $page->dateEnd()->isNotEmpty()   ? $page->dateEnd()->toDate('Y-m-d')   : null;
-        $timeStart = $page->timeStart()->isNotEmpty() ? $page->timeStart()->value()          : null;
-        $timeEnd   = $page->timeEnd()->isNotEmpty()   ? $page->timeEnd()->value()            : null;
+        if (!$dateStart) return null;
 
         $baseDate = $dateEnd ?? $dateStart;
         $baseTime = $timeEnd ?? $timeStart ?? '23:59';
@@ -297,21 +306,29 @@ class Utils
     }
 
     /**
+     * Normalized `dateStart/dateEnd/timeStart/timeEnd` of an event, unset fields as null.
+     */
+    static function getEventDateFields(\Kirby\Cms\Page $page): array
+    {
+        return [
+            'dateStart' => $page->dateStart()->isNotEmpty() ? $page->dateStart()->toDate('Y-m-d') : null,
+            'dateEnd'   => $page->dateEnd()->isNotEmpty()   ? $page->dateEnd()->toDate('Y-m-d')   : null,
+            'timeStart' => $page->timeStart()->isNotEmpty() ? $page->timeStart()->value()         : null,
+            'timeEnd'   => $page->timeEnd()->isNotEmpty()   ? $page->timeEnd()->value()           : null,
+        ];
+    }
+
+    /**
      * Card payload for an event listed in the agenda module carousel.
      */
     static function getEventCardData(\Kirby\Cms\Page $page): array
     {
-        $coverFile = $page->cover()->toFile();
-
         return [
             'title'     => $page->title()->value(),
             'url'       => '/' . $page->virtualPath(),
             'shortDesc' => $page->shortDesc()->value(),
-            'cover'     => $coverFile ? self::getJsonEncodeImageData($coverFile) : null,
-            'dateStart' => $page->dateStart()->isNotEmpty() ? $page->dateStart()->toDate('Y-m-d') : null,
-            'dateEnd'   => $page->dateEnd()->isNotEmpty()   ? $page->dateEnd()->toDate('Y-m-d')   : null,
-            'timeStart' => $page->timeStart()->isNotEmpty() ? $page->timeStart()->value()          : null,
-            'timeEnd'   => $page->timeEnd()->isNotEmpty()   ? $page->timeEnd()->value()            : null,
+            'cover'     => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
+            ...self::getEventDateFields($page),
             'terms'     => array_merge(
                 self::resolveTaxonomyTerms($page->domains(), 'domains'),
                 self::resolveTaxonomyTerms($page->eventThemes(), 'event-themes')
@@ -324,12 +341,10 @@ class Utils
      */
     static function getProjectCardData(\Kirby\Cms\Page $page): array
     {
-        $coverFile = $page->cover()->toFile();
-
         return [
             'title'          => $page->title()->value(),
             'url'            => '/' . $page->virtualPath(),
-            'cover'          => $coverFile ? self::getJsonEncodeImageData($coverFile) : null,
+            'cover'          => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             'collectiveName' => $page->collectiveName()->isNotEmpty() ? $page->collectiveName()->value() : null,
             'themes'         => self::resolveTaxonomyTerms($page->projectThemes(), 'project-themes'),
             'types'          => self::resolveTaxonomyTerms($page->projectTypes(), 'project-types'),
@@ -454,15 +469,13 @@ class Utils
      */
     static function getEventProjectBaseData(\Kirby\Cms\Page $page): array
     {
-        $coverFile = $page->cover()->toFile();
-
         return [
             'title'         => $page->title()->value(),
             'slug'          => $page->slug(),
             'path'          => $page->virtualPath(),
             'subtitle'      => $page->subtitle()->value(),
             'shortDesc'     => $page->shortDesc()->value(),
-            'cover'         => $coverFile ? self::getJsonEncodeImageData($coverFile) : null,
+            'cover'         => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             'medias'        => self::getJsonEncodeMediaArray($page->medias()->toFiles()),
             'embedVideos'   => self::getYoutubeEmbeds($page->embedVideos()),
             'blocks'        => self::getContentBlocks($page->blocks()),
