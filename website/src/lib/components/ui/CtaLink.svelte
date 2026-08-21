@@ -2,6 +2,7 @@
 	import type { PageCta } from '$lib/interfaces/page';
 	import IconArrow from '$lib/components/svg/IconArrow.svelte';
 	import IconEmail from '$lib/components/svg/IconEmail.svelte';
+	import IconPhone from '$lib/components/svg/IconPhone.svelte';
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
 
 	interface Props {
@@ -32,6 +33,7 @@
 	{cta.label}
 	{#if cta.icon === 'arrow'}<IconArrow width={iconSize[size].width} height={iconSize[size].height} />
 	{:else if cta.icon === 'email'}<IconEmail width={iconSize[size].width} height={iconSize[size].height} />
+	{:else if cta.icon === 'phone'}<IconPhone width={iconSize[size].width} height={iconSize[size].height} />
 	{:else if cta.icon === 'plus'}<IconPlus width={iconSize[size].width} height={iconSize[size].height} />
 	{/if}
 </a>
