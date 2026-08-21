@@ -51,7 +51,6 @@
 		{:else if block.type === 'module-links'}
 			<BlockModuleLinks
 				content={block.content as unknown as ModuleLinksContent}
-				theme={page.theme}
 			/>
 		{/if}
 	{/if}

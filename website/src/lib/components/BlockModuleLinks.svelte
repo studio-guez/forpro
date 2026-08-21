@@ -1,30 +1,24 @@
 <script lang="ts">
-	import type { ModuleLinksContent, Theme } from '$lib/interfaces/page';
+	import type { ModuleLinksContent } from '$lib/interfaces/page';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
-	import { themeColors } from '$lib/utils/themeColors';
 
 	interface Props {
 		content: ModuleLinksContent;
-		theme: Theme;
 	}
 
-	let { content, theme }: Props = $props();
+	let { content }: Props = $props();
 
 	const hasBackgroundImage = $derived(
 		content.variant === 'backgroundImage' && !!content.backgroundImage
 	);
 
-	// The background-image variant always draws white on top of the photo.
-	const colors = $derived(
-		themeColors[theme][content.variant === 'inverted' ? 'inverted' : 'default']
+	// Both the blue and the photo variants draw white on a dark surface.
+	const onDark = $derived(hasBackgroundImage || content.variant === 'default');
+	const background = $derived(
+		hasBackgroundImage ? null : onDark ? 'var(--color-blue)' : 'var(--color-white)'
 	);
-	const background = $derived(hasBackgroundImage ? null : colors.bg);
-	const textColor = $derived(hasBackgroundImage ? 'var(--color-white)' : colors.text);
-
-	// A white accent means the block sits on a coloured surface: the links are inverted onto it.
-	const ctaInverted = $derived(hasBackgroundImage || colors.accent === 'var(--color-white)');
-	const ctaColor = $derived(ctaInverted ? colors.bg : colors.accent);
+	const textColor = $derived(onDark ? 'var(--color-white)' : 'var(--color-blue)');
 
 	const uid = $props.id();
 	const titleId = `module-links-title-${uid}`;
@@ -59,7 +53,7 @@
 			<ul class="flex flex-wrap gap-4 md:justify-end shrink-0">
 				{#each content.links as link (link.url + link.label)}
 					<li>
-						<CtaLink cta={link} color={ctaColor} inverted={ctaInverted} />
+						<CtaLink cta={link} color="var(--color-blue)" inverted={onDark} />
 					</li>
 				{/each}
 			</ul>
