@@ -4,8 +4,8 @@
 	import Carousel from '$lib/components/ui/Carousel.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import EventCard from '$lib/components/ui/EventCard.svelte';
-	import ShapeCasesDefault1 from '$lib/components/svg/ShapeCasesDefault1.svelte';
-	import ShapeCasesDefault2 from '$lib/components/svg/ShapeCasesDefault2.svelte';
+	import ShapeAgenda1 from '$lib/components/svg/ShapeAgenda1.svelte';
+	import ShapeAgenda2 from '$lib/components/svg/ShapeAgenda2.svelte';
 
 	interface Props {
 		content: ModuleAgendaContent;
@@ -26,8 +26,8 @@
 	titleColor={filled ? colors.main : 'var(--color-white)'}
 	background={filled ? colors.main : null}
 	color={filled ? 'var(--color-white)' : colors.main}
-	shapeLeft={filled ? ShapeCasesDefault1 : null}
-	shapeRight={filled ? ShapeCasesDefault2 : null}
+	shapeLeft={filled ? ShapeAgenda1 : null}
+	shapeRight={filled ? ShapeAgenda2 : null}
 	shapeColor={colors.deco}
 >
 	{#if content.events.length > 0}

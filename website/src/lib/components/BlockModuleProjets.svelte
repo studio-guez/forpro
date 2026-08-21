@@ -4,8 +4,8 @@
 	import Carousel from '$lib/components/ui/Carousel.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import ProjectCard from '$lib/components/ui/ProjectCard.svelte';
-	import ShapeCasesDefault1 from '$lib/components/svg/ShapeCasesDefault1.svelte';
-	import ShapeCasesDefault2 from '$lib/components/svg/ShapeCasesDefault2.svelte';
+	import ShapeProjets1 from '$lib/components/svg/ShapeProjets1.svelte';
+	import ShapeProjets2 from '$lib/components/svg/ShapeProjets2.svelte';
 
 	interface Props {
 		content: ModuleProjetsContent;
@@ -26,8 +26,8 @@
 	titleColor={filled ? colors.main : 'var(--color-white)'}
 	background={filled ? colors.main : null}
 	color={filled ? 'var(--color-white)' : colors.main}
-	shapeLeft={filled ? ShapeCasesDefault1 : null}
-	shapeRight={filled ? ShapeCasesDefault2 : null}
+	shapeLeft={filled ? ShapeProjets1 : null}
+	shapeRight={filled ? ShapeProjets2 : null}
 	shapeRightClasses="absolute bottom-0 right-0 translate-1/6 w-2/5 rotate-180"
 	shapeColor={colors.deco}
 >
