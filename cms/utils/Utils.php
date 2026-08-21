@@ -243,6 +243,26 @@ class Utils
     }
 
     /**
+     * Returns the "going" end DateTime for an event using field priority:
+     * [dateEnd+timeEnd, dateEnd+timeStart, dateStart+timeEnd, dateStart+timeStart, dateStart].
+     * Returns null if dateStart is not set.
+     */
+    static function getEventGoingDatetime(\Kirby\Cms\Page $page): ?\DateTime
+    {
+        $dateStart = $page->dateStart()->isNotEmpty() ? $page->dateStart()->toDate('Y-m-d') : null;
+        if (!$dateStart) return null;
+
+        $dateEnd   = $page->dateEnd()->isNotEmpty()   ? $page->dateEnd()->toDate('Y-m-d')   : null;
+        $timeStart = $page->timeStart()->isNotEmpty() ? $page->timeStart()->value()          : null;
+        $timeEnd   = $page->timeEnd()->isNotEmpty()   ? $page->timeEnd()->value()            : null;
+
+        $baseDate = $dateEnd ?? $dateStart;
+        $baseTime = $timeEnd ?? $timeStart ?? '23:59';
+
+        return new \DateTime("{$baseDate}T{$baseTime}");
+    }
+
+    /**
      * Card payload for an event listed in the agenda module carousel.
      */
     static function getEventCardData(\Kirby\Cms\Page $page): array
@@ -254,8 +274,10 @@ class Utils
             'url'       => '/' . $page->virtualPath(),
             'shortDesc' => $page->shortDesc()->value(),
             'cover'     => $coverFile ? self::getJsonEncodeImageData($coverFile) : null,
-            'dateStart' => $page->dateStart()->isNotEmpty() ? $page->dateStart()->toDate('Y-m-d\TH:i') : null,
-            'dateEnd'   => $page->dateEnd()->isNotEmpty() ? $page->dateEnd()->toDate('Y-m-d\TH:i') : null,
+            'dateStart' => $page->dateStart()->isNotEmpty() ? $page->dateStart()->toDate('Y-m-d') : null,
+            'dateEnd'   => $page->dateEnd()->isNotEmpty()   ? $page->dateEnd()->toDate('Y-m-d')   : null,
+            'timeStart' => $page->timeStart()->isNotEmpty() ? $page->timeStart()->value()          : null,
+            'timeEnd'   => $page->timeEnd()->isNotEmpty()   ? $page->timeEnd()->value()            : null,
             'terms'     => array_merge(
                 self::resolveTaxonomyTerms($page->domains(), 'domains'),
                 self::resolveTaxonomyTerms($page->eventThemes(), 'event-themes')
