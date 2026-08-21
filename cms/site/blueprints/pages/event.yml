@@ -28,14 +28,28 @@ tabs:
                   en: Start date
                   fr: Date de début
                 type: date
-                time: true
                 required: true
+                width: 1/2
               dateEnd:
                 label:
                   en: End date
                   fr: Date de fin
                 type: date
-                time: true
+                width: 1/2
+              timeStart:
+                label:
+                  en: Start time
+                  fr: Heure de début
+                type: text
+                placeholder: HH:mm
+                width: 1/2
+              timeEnd:
+                label:
+                  en: End time
+                  fr: Heure de fin
+                type: text
+                placeholder: HH:mm
+                width: 1/2
           taxonomies:
             type: fields
             fields:
