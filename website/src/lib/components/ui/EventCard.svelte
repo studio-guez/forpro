@@ -36,6 +36,7 @@
 	);
 </script>
 
+<article class="h-full">
 <a
 	href={event.url}
 	class="group block relative h-full rounded-2xl overflow-hidden text-white isolate"
@@ -87,3 +88,4 @@
 		</div>
 	</div>
 </a>
+</article>

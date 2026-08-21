@@ -16,6 +16,7 @@
 	);
 </script>
 
+<article>
 <a href={project.url} class="group block">
 	<div class="relative rounded-2xl overflow-hidden aspect-16/9">
 		{#if project.cover}
@@ -39,3 +40,4 @@
 		<p class="text-label mt-1">{meta}</p>
 	{/if}
 </a>
+</article>
