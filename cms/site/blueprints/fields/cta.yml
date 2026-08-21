@@ -5,15 +5,17 @@ type: structure
 max: 1
 columns:
   label:
-    width: 1/5
+    width: 1/6
   page:
-    width: 1/5
+    width: 1/6
   url:
-    width: 1/5
+    width: 1/6
   email:
-    width: 1/5
+    width: 1/6
+  phone:
+    width: 1/6
   icon:
-    width: 1/5
+    width: 1/6
 fields:
   label:
     label: { en: Label, fr: Libellé }
@@ -30,6 +32,8 @@ fields:
         text: { en: External URL, fr: URL externe }
       - value: mailto
         text: { en: Email, fr: Email }
+      - value: tel
+        text: { en: Phone, fr: Téléphone }
   page:
     extends: fields/pageLink
   url:
@@ -42,6 +46,11 @@ fields:
     type: email
     when:
       type: mailto
+  phone:
+    label: { en: Phone, fr: Téléphone }
+    type: tel
+    when:
+      type: tel
   icon:
     label: { en: Icon, fr: Icône }
     type: select
@@ -53,3 +62,5 @@ fields:
         text: { en: "+", fr: "+" }
       - value: email
         text: { en: Email, fr: Email }
+      - value: phone
+        text: { en: Phone, fr: Téléphone }
