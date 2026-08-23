@@ -40,6 +40,8 @@ trait UtilsBlocks
                 return self::getGrilleImagesBlockData($block);
             case 'module-infos-pratiques':
                 return self::getInfosPratiquesBlockData($block);
+            case 'module-timeline':
+                return self::getTimelineBlockData($block);
             case 'module-agenda':
                 return self::getAgendaBlockData($block);
             case 'module-projets':
@@ -176,6 +178,27 @@ trait UtilsBlocks
             ] : null,
             'variant'  => $block->variant()->or('default')->value(),
         ];
+    }
+
+    private static function getTimelineBlockData(\Kirby\Cms\Block $block): array
+    {
+        return [
+            'title'     => $block->title()->value(),
+            'hideTitle' => $block->hideTitle()->toBool(),
+            'steps'     => self::getTimelineSteps($block->steps()),
+        ];
+    }
+
+    /**
+     * Steps of a timeline. Shared with the `job-offer` template, whose
+     * `recruitingSteps` are rendered by the same module.
+     */
+    static function getTimelineSteps(\Kirby\Content\Field $field): array
+    {
+        return array_values($field->toStructure()->map(fn($step) => [
+            'title'     => $step->title()->value(),
+            'shortDesc' => $step->shortDesc()->value(),
+        ])->data());
     }
 
     private static function getAgendaBlockData(\Kirby\Cms\Block $block): array
