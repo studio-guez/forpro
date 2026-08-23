@@ -87,8 +87,8 @@ tabs:
                 type: url
       ctaModule:
         label:
-          en: CTA module
-          fr: Module CTA
+          en: CTA block
+          fr: Bloc CTA
         type: blocks
         max: 1
         fieldsets:
