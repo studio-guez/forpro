@@ -18,6 +18,7 @@ trait UtilsSearch
         'faq'      => 'Page',
         'event'    => 'Événement',
         'project'  => 'Projet',
+        'team'     => 'Page',
     ];
 
     /** Result groups the frontend tabs filter on; every other template is a page. */
