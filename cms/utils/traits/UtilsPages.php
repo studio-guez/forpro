@@ -107,6 +107,36 @@ trait UtilsPages
     }
 
     /**
+     * Card payload for a job offer listed on the job offers index.
+     */
+    static function getJobOfferCardData(\Kirby\Cms\Page $page): array
+    {
+        return [
+            'title'    => $page->title()->value(),
+            'url'      => '/' . $page->virtualPath(),
+            'location' => $page->location()->value(),
+            'deadline' => $page->deadline()->toDate('Y-m-d'),
+            ...self::getActivityRate($page),
+            'terms'    => array_merge(
+                self::resolveTaxonomyTerms($page->domains(), 'domains'),
+                self::resolveTaxonomyTerms($page->jobOfferCategories(), 'job-offer-categories')
+            ),
+        ];
+    }
+
+    /**
+     * Normalized `activityRateMin/activityRateMax` percentages of a job offer.
+     * Only the maximum is optional (a fixed rate leaves it empty).
+     */
+    static function getActivityRate(\Kirby\Cms\Page $page): array
+    {
+        return [
+            'activityRateMin' => (int)$page->activityRateMin()->value(),
+            'activityRateMax' => $page->activityRateMax()->isNotEmpty() ? (int)$page->activityRateMax()->value() : null,
+        ];
+    }
+
+    /**
      * Standard metadata of a page consumed by the decoupled frontend router,
      * shared by the index templates (faq, events, projects).
      */
