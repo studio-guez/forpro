@@ -1,7 +1,7 @@
 <script lang="ts">
-	import PageHero from '$lib/components/PageHero.svelte';
-	import PageIntro from '$lib/components/PageIntro.svelte';
-	import Blocks from '$lib/components/Blocks.svelte';
+	import PageHero from '$lib/components/blocks/PageHero.svelte';
+	import PageIntro from '$lib/components/blocks/PageIntro.svelte';
+	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import type { Page } from '$lib/interfaces/page';
 
 	let { page }: { page: Page } = $props();

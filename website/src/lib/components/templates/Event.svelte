@@ -1,8 +1,8 @@
 <script lang="ts">
-	import EventProjectHeader from '$lib/components/EventProjectHeader.svelte';
-	import EventProjectMedia from '$lib/components/EventProjectMedia.svelte';
-	import EventProjectBlocks from '$lib/components/EventProjectBlocks.svelte';
-	import EventProjectLinks from '$lib/components/EventProjectLinks.svelte';
+	import EventProjectHeader from '$lib/components/blocks/EventProjectHeader.svelte';
+	import EventProjectMedia from '$lib/components/blocks/EventProjectMedia.svelte';
+	import EventProjectBlocks from '$lib/components/blocks/EventProjectBlocks.svelte';
+	import EventProjectLinks from '$lib/components/blocks/EventProjectLinks.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import { timeAttr, toDate } from '$lib/utils/date';
 	import type { EventPage } from '$lib/interfaces/event';

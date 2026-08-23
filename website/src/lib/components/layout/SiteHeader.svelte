@@ -14,7 +14,7 @@
 	import IconSearch from '$lib/components/svg/IconSearch.svelte';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
-	import SearchModal from '$lib/components/SearchModal.svelte';
+	import SearchModal from '$lib/components/layout/SearchModal.svelte';
 
 	interface Props {
 		header: Header;
