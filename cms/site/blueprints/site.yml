@@ -73,6 +73,16 @@ tabs:
               - job-offer
             create: job-offer
 
+          missions:
+            label: "Missions"
+            type: pages
+            image: false
+            parent: site.index.template("missions").first()
+            limit: 10
+            templates:
+              - mission
+            create: mission
+
   taxonomies:
     label:
       en: Taxonomies
