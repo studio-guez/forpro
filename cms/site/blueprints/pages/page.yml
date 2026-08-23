@@ -2,8 +2,6 @@ title:
   en: Page
   fr: Page
 
-extends: pages/page-base
-
 status:
   draft: true
   listed: true
@@ -15,10 +13,17 @@ options:
 
 tabs:
   content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
     columns:
       sidebar:
+        width: 1/4
+        sticky: true
         sections:
           hierarchy:
+            type: fields
             fields:
               parentPage:
                 label:
@@ -36,7 +41,14 @@ tabs:
               sepHierarchy:
                 type: line
           title:
+            type: fields
             fields:
+              title:
+                label:
+                  en: Title
+                  fr: Titre
+                type: text
+                required: true
               overtitle:
                 label:
                   en: Overtitle
@@ -44,10 +56,46 @@ tabs:
                 type: text
               theme:
                 extends: fields/theme
+          cover:
+            type: fields
+            fields:
+              sepCover:
+                type: line
+              cover:
+                extends: fields/cover
       main:
+        width: 3/4
         sections:
           intro:
+            type: fields
             fields:
+              introLabel:
+                label:
+                  en: Intro
+                  fr: Introduction
+                type: headline
+              introTitle:
+                label:
+                  en: Intro title
+                  fr: Titre introduction
+                type: text
+                required: true
+                width: 2/3
+              introTitleImage:
+                label:
+                  en: Image to display instead of the title
+                  fr: Image à afficher à la place du titre
+                type: files
+                max: 1
+                layout: list
+                uploads: image
+                width: 1/3
+              intro:
+                extends: fields/writer
+                label:
+                  en: Intro
+                  fr: Introduction
+                required: true
               introCta:
                 label:
                   en: CTA intro
@@ -68,7 +116,13 @@ tabs:
               sepIntro:
                 type: line
           main:
+            type: fields
             fields:
+              contentLabel:
+                label:
+                  en: Content
+                  fr: Contenu
+                type: headline
               body:
                 type: blocks
                 label:
@@ -83,3 +137,4 @@ tabs:
                   - module-projets
                   - module-cta
                   - module-partenaires
+  seo: tabs/seo
