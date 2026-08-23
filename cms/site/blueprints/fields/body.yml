@@ -1,15 +1,17 @@
 # Reusable module blockbuilder. Shared by the `page`, `team` and `job-offers`
 # templates so they all expose the same `body` payload to the frontend.
+# Keyed (not a plain list) so an extending blueprint can drop a single module
+# with `<module>: false` instead of restating the whole set.
 label:
   en: Content
   fr: Contenu
 type: blocks
 fieldsets:
-  - module-titre-texte-image
-  - module-cases
-  - module-grille-images
-  - module-infos-pratiques
-  - module-agenda
-  - module-projets
-  - module-cta
-  - module-partenaires
+  module-titre-texte-image: true
+  module-cases: true
+  module-grille-images: true
+  module-infos-pratiques: true
+  module-agenda: true
+  module-projets: true
+  module-cta: true
+  module-partenaires: true
