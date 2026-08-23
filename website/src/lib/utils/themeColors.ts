@@ -76,10 +76,10 @@ export const cardThemeColors: Record<Theme, Record<Variant, ThemeColors>> = {
 	},
 	soutiens: {
 		default: {
-			bg: 'var(--color-pink)',
-			bgContrast: 'var(--color-purple)',
+			bg: 'var(--color-blue-light)',
+			bgContrast: 'var(--color-pink)',
 			text: 'var(--color-white)',
-			title: 'var(--color-white)',
+			title: 'var(--color-pink)',
 		},
 		inverted: {
 			bg: 'var(--color-purple)',
