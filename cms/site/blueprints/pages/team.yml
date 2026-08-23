@@ -90,9 +90,6 @@ tabs:
                   fr: Lien LinkedIn
                 type: url
       body:
-        extends: fields/body
-        label:
-          en: Extra Content
-          fr: Contenu supplémentaire
+        extends: fields/bodyExtra
 
   seo: tabs/seo
