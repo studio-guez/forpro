@@ -55,15 +55,15 @@ trait UtilsLinks
     }
 
     /**
-     * Resolves a single CTA structure item, or null when it has no label or no resolvable URL.
+     * Resolves a single CTA structure item, or null when it has no resolvable URL or label.
      */
     private static function resolveCtaItem(\Kirby\Cms\StructureObject $item): ?array
     {
-        if ($item->label()->isEmpty()) return null;
-        $url = self::resolvePageOrUrlItem($item);
-        if (!$url) return null;
+        $url   = self::resolvePageOrUrlItem($item);
+        $label = self::resolvePageOrUrlLabel($item);
+        if (!$url || !$label) return null;
         return [
-            'label' => $item->label()->value(),
+            'label' => $label,
             'url'   => $url,
             'icon'  => $item->icon()->isNotEmpty() ? $item->icon()->value() : null,
         ];
