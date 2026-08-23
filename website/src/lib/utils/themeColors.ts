@@ -132,24 +132,24 @@ export const cardThemeColors: Record<Theme, Record<Variant, ThemeColors>> = {
 	},
 	foodlab: {
 		default: {
-			bg: 'var(--color-orange)',
+			bg: 'var(--color-orange-pale)',
 			bgContrast: 'var(--color-orange-light)',
-			text: 'var(--color-white)',
-			title: 'var(--color-white)',
+			text: 'var(--color-orange)',
+			title: 'var(--color-orange)',
 		},
 		inverted: {
-			bg: 'var(--color-orange-light)',
-			bgContrast: 'var(--color-orange)',
+			bg: 'var(--color-white)',
+			bgContrast: 'var(--color-white)',
 			text: 'var(--color-orange)',
 			title: 'var(--color-orange)',
 		},
 	},
 	grandlab: {
 		default: {
-			bg: 'var(--color-red)',
-			bgContrast: 'var(--color-orange)',
+			bg: 'var(--color-brown)',
+			bgContrast: 'var(--color-red)',
 			text: 'var(--color-white)',
-			title: 'var(--color-white)',
+			title: 'var(--color-red)',
 		},
 		inverted: {
 			bg: 'var(--color-orange-light)',
@@ -160,10 +160,10 @@ export const cardThemeColors: Record<Theme, Record<Variant, ThemeColors>> = {
 	},
 	makerlab: {
 		default: {
-			bg: 'var(--color-grey-dark)',
-			bgContrast: 'var(--color-grey-light)',
-			text: 'var(--color-white)',
-			title: 'var(--color-white)',
+			bg: 'var(--color-beige-light)',
+			bgContrast: 'var(--color-beige)',
+			text: 'var(--color-grey-dark)',
+			title: 'var(--color-grey-dark)',
 		},
 		inverted: {
 			bg: 'var(--color-grey-light)',

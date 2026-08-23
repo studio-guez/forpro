@@ -129,7 +129,7 @@
 				accent: 'var(--color-white)',
 			},
 			inverted: {
-				bg: 'var(--color-orange-light)',
+				bg: 'var(--color-white)',
 				text: 'var(--color-orange)',
 				accent: 'var(--color-orange)',
 			},
