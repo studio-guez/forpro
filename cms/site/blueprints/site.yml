@@ -122,6 +122,17 @@ tabs:
             templates:
               - faq-category
             parent: site.index.template("faq-categories").first()
+      - width: 1/2
+        sections:
+          jobOfferCategories:
+            type: pages
+            image: false
+            label:
+              en: Job offer categories
+              fr: Catégories d'offre d'emploi
+            templates:
+              - job-offer-category
+            parent: site.index.template("job-offer-categories").first()
 
   navigation: tabs/navigation
 

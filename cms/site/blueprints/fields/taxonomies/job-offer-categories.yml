@@ -1,0 +1,6 @@
+extends: fields/taxonomies/taxonomy
+label:
+  en: Job offer categories
+  fr: Catégories d'offre d'emploi
+options:
+  query: site.find("taxonomies").find("job-offer-categories").children
