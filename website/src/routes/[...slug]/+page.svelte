@@ -6,6 +6,7 @@
 	import Project from '$lib/components/templates/Project.svelte';
 	import Projects from '$lib/components/templates/Projects.svelte';
 	import Team from '$lib/components/templates/Team.svelte';
+	import JobOffer from '$lib/components/templates/JobOffer.svelte';
 	import JobOffers from '$lib/components/templates/JobOffers.svelte';
 	import type { PageData } from './$types';
 	import { IS_PROD } from '$lib/env';
@@ -72,6 +73,8 @@
 	<Projects {page} />
 {:else if page.template === 'team'}
 	<Team {page} />
+{:else if page.template === 'job-offer'}
+	<JobOffer {page} />
 {:else if page.template === 'job-offers'}
 	<JobOffers {page} />
 {:else}
