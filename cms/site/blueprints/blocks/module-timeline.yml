@@ -27,20 +27,4 @@ fields:
         fr: Masqué
     default: false
   steps:
-    label:
-      en: Steps
-      fr: Étapes
-    type: structure
-    min: 1
-    fields:
-      title:
-        label:
-          en: Title
-          fr: Titre
-        type: text
-        required: true
-      shortDesc:
-        label:
-          en: Short description
-          fr: Description courte
-        extends: fields/writer
+    extends: fields/timelineSteps
