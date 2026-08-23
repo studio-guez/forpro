@@ -10,6 +10,7 @@ fieldsets:
   module-titre-texte-image: true
   module-cases: true
   module-grille-images: true
+  module-video: true
   module-infos-pratiques: true
   module-timeline: true
   module-agenda: true
