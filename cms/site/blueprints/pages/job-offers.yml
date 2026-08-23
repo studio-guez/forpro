@@ -31,6 +31,11 @@ tabs:
               en: Short description
               fr: Description courte
             extends: fields/writer
+      extra:
+        type: fields
+        fields:
+          body:
+            extends: fields/bodyExtra
       jobOffers:
         type: pages
         image: false
@@ -40,10 +45,5 @@ tabs:
         templates:
           - job-offer
         create: job-offer
-      extra:
-        type: fields
-        fields:
-          body:
-            extends: fields/bodyExtra
 
   seo: tabs/seo

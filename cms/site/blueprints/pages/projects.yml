@@ -22,14 +22,6 @@ tabs:
               fr: Titre
             type: text
             required: true
-      projects:
-        extends: sections/child-pages
-        label:
-          en: Projects
-          fr: Projets
-        templates:
-          - project
-        create: project
       extra:
         type: fields
         fields:
@@ -38,5 +30,13 @@ tabs:
             # The projects module would just duplicate the listing above.
             fieldsets:
               module-projects: false
+      projects:
+        extends: sections/child-pages
+        label:
+          en: Projects
+          fr: Projets
+        templates:
+          - project
+        create: project
 
   seo: tabs/seo

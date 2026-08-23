@@ -22,14 +22,6 @@ tabs:
               fr: Titre
             type: text
             required: true
-      events:
-        extends: sections/child-pages
-        label:
-          en: Events
-          fr: Événements
-        templates:
-          - event
-        create: event
       extra:
         type: fields
         fields:
@@ -38,5 +30,13 @@ tabs:
             # The agenda module would just duplicate the listing above.
             fieldsets:
               module-agenda: false
+      events:
+        extends: sections/child-pages
+        label:
+          en: Events
+          fr: Événements
+        templates:
+          - event
+        create: event
 
   seo: tabs/seo
