@@ -30,6 +30,8 @@ $json['sections'] = $page->sections()->toStructure()->map(function ($section) us
     ];
 })->values();
 
+$json['body'] = Utils::getBodyBlocks($page->body());
+
 $json['seo'] = Utils::getSeoDataFromPage($page);
 
 echo json_encode($json);

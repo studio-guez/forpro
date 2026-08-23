@@ -17,6 +17,8 @@ $json['eventThemes'] = Utils::getTaxonomyTerms('event-themes');
 $json['upcomingEvents'] = array_values($upcoming->map(fn($event) => Utils::getEventCardData($event))->data());
 $json['pastEvents']     = array_values($past->map(fn($event) => Utils::getEventCardData($event))->data());
 
+$json['body'] = Utils::getBodyBlocks($page->body());
+
 $json['seo'] = Utils::getSeoDataFromPage($page);
 
 echo json_encode($json);
