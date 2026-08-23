@@ -15,6 +15,7 @@
     --color-blue-light: #007DFF;
     --color-orange: #FF6917;
     --color-orange-light: #FFB86D;
+    --color-orange-pale: #FDEBDF;
     --color-pink: #FF00FC;
     --color-hotpink: #F5008C;
     --color-purple: #37007D;
@@ -24,6 +25,9 @@
     --color-teal-light: #A5CEBA;
     --color-red: #F2030D;
     --color-green: #3DF069;
+    --color-beige: #D2C8B4;
+    --color-beige-light: #F2EFE9;
+    --color-brown: #B8B09F;
 
     /* TRANSITION */
     --default-transition-duration: 250ms;
