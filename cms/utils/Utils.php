@@ -12,6 +12,7 @@ require_once __DIR__ . '/traits/UtilsTaxonomies.php';
 require_once __DIR__ . '/traits/UtilsSeo.php';
 require_once __DIR__ . '/traits/UtilsEmbeds.php';
 require_once __DIR__ . '/traits/UtilsPages.php';
+require_once __DIR__ . '/traits/UtilsBlocks.php';
 require_once __DIR__ . '/traits/UtilsSearchText.php';
 require_once __DIR__ . '/traits/UtilsSearch.php';
 
@@ -34,6 +35,9 @@ class Utils
 
     /** Page-level payloads: hero, event dates, cards, event/project base. */
     use UtilsPages;
+
+    /** `body` blockbuilder modules -> JSON payloads. */
+    use UtilsBlocks;
 
     /** Site search: indexing, scoring, excerpts. */
     use UtilsSearch;
