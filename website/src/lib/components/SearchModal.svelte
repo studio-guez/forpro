@@ -4,6 +4,7 @@
 	import IconSearch from '$lib/components/svg/IconSearch.svelte';
 	import IconClose from '$lib/components/svg/IconClose.svelte';
 	import IconSpinner from '$lib/components/svg/IconSpinner.svelte';
+	import Img from '$lib/components/ui/Img.svelte';
 	import type { SearchGroup, SearchResponse, SearchResult } from '$lib/interfaces/search';
 
 	interface Props {
@@ -308,12 +309,10 @@
 							class="flex items-start gap-x-4 py-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue rounded-xl px-2 -mx-2 hover:bg-grey-light/40 transition-colors"
 						>
 							{#if result.cover}
-								<img
-									src={result.cover.url}
-									alt={result.cover.alt ?? ''}
-									width="240"
-									height="240"
-									loading="lazy"
+								<Img
+									image={result.cover}
+									alt=""
+									sizes="(min-width: 768px) 8rem, 4rem"
 									class="shrink-0 w-16 h-16 md:w-32 md:h-32 rounded-xl object-cover bg-grey-light"
 								/>
 							{:else}
