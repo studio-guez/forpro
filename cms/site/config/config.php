@@ -162,6 +162,26 @@ return [
             },
         ],
         [
+            // Site-wide search over every page that has a frontend route.
+            "pattern" => "search.json",
+            "action" => function () {
+                require_once 'utils/Utils.php';
+
+                $query = (string)(get('q') ?? '');
+                $group = (string)(get('group') ?? 'all');
+                $offset = max((int)(get('offset') ?? 0), 0);
+                $limit = min(max((int)(get('limit') ?? 10), 1), 50);
+
+                if (in_array($group, ['all', 'pages', 'events', 'projects'], true) === false) {
+                    $group = 'all';
+                }
+
+                return \Kirby\Http\Response::json(
+                    Utils::searchPages(mb_substr($query, 0, 100), $group, $offset, $limit)
+                );
+            },
+        ],
+        [
             // The frontend routes on `virtualPath` (real ancestors, minus the
             // top-level containers, then the `parentPage` chain), which is not
             // a Kirby page id: `/pages/evenements/evenement-de-test.json` has
