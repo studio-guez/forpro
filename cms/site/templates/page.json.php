@@ -39,14 +39,7 @@ foreach ($page->body()->toBlocks() as $block) {
             'cta'           => Utils::resolveCtaStructure($block->cta()),
         ];
     } elseif ($block->type() === 'module-cta') {
-        $backgroundFile = $block->backgroundImage()->toFile();
-        $content = [
-            'title'           => $block->title()->value(),
-            'subtitle'        => $block->subtitle()->isNotEmpty() ? $block->subtitle()->value() : null,
-            'links'           => Utils::resolveCtaStructures($block->links()),
-            'variant'         => $block->variant()->or('default')->value(),
-            'backgroundImage' => $backgroundFile ? Utils::getJsonEncodeImageData($backgroundFile) : null,
-        ];
+        $content = Utils::getCtaModuleData($block);
     } elseif ($block->type() === 'module-partenaires') {
         $partners = [];
         foreach ($block->partners()->toStructure() as $partner) {
