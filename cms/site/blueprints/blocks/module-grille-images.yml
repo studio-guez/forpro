@@ -1,0 +1,54 @@
+extends: blocks/base
+
+name:
+  en: Module - Image grid
+  fr: Module - Grille Images
+
+icon: image
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  shortDesc:
+    width: 1/2
+    label:
+      en: Short description
+      fr: Description courte
+    extends: fields/writer
+  images:
+    label:
+      en: Images
+      fr: Images
+    type: structure
+    min: 5
+    max: 5
+    required: true
+    columns:
+      image:
+        width: 1/2
+      title:
+        width: 1/2
+    fields:
+      image:
+        label:
+          en: Image
+          fr: Image
+        type: files
+        uploads: image
+        max: 1
+        required: true
+      title:
+        label:
+          en: Title
+          fr: Titre
+        type: text
+        required: true
+  cta:
+    extends: fields/cta
+  variant:
+    extends: fields/variant
