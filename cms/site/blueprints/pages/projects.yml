@@ -30,5 +30,13 @@ tabs:
         templates:
           - project
         create: project
+      extra:
+        type: fields
+        fields:
+          body:
+            extends: fields/bodyExtra
+            # The projects module would just duplicate the listing above.
+            fieldsets:
+              module-projects: false
 
   seo: tabs/seo

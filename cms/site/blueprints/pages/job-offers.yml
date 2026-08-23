@@ -29,9 +29,6 @@ tabs:
           fr: Description courte
         extends: fields/writer
       body:
-        extends: fields/body
-        label:
-          en: Extra Content
-          fr: Contenu supplémentaire
+        extends: fields/bodyExtra
 
   seo: tabs/seo

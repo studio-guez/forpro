@@ -30,5 +30,13 @@ tabs:
         templates:
           - event
         create: event
+      extra:
+        type: fields
+        fields:
+          body:
+            extends: fields/bodyExtra
+            # The agenda module would just duplicate the listing above.
+            fieldsets:
+              module-agenda: false
 
   seo: tabs/seo

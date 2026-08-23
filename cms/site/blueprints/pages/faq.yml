@@ -59,5 +59,10 @@ tabs:
                 required: true
               faqCategories:
                 extends: fields/taxonomies/faq-categories
+      body:
+        extends: fields/bodyExtra
+        # The infos pratiques module would just duplicate the listing above.
+        fieldsets:
+          module-infos-pratiques: false
 
   seo: tabs/seo
