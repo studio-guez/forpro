@@ -62,11 +62,6 @@ tabs:
                   fr: Nom
                 type: text
                 required: true
-              role:
-                label:
-                  en: Role
-                  fr: Fonction
-                type: text
               status:
                 label:
                   en: Status
@@ -77,6 +72,11 @@ tabs:
                     text: { en: Apprentice, fr: Apprenti·e }
                   - value: employe
                     text: { en: Employee, fr: Employé·e }
+              role:
+                label:
+                  en: Role
+                  fr: Fonction
+                type: text
               linkedin:
                 label:
                   en: LinkedIn link
