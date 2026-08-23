@@ -37,10 +37,7 @@ $json['applicationQuestions'] = array_values($page->applicationQuestions()->toSt
     'answer'   => $item->answer()->value(),
 ])->data());
 
-$json['recruitingSteps'] = array_values($page->recruitingSteps()->toStructure()->map(fn($item) => [
-    'title'     => $item->title()->value(),
-    'shortDesc' => $item->shortDesc()->value(),
-])->data());
+$json['recruitingSteps'] = Utils::getTimelineSteps($page->recruitingSteps());
 
 $json['seo'] = Utils::getSeoDataFromPage($page);
 

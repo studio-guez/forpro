@@ -1,4 +1,4 @@
-import type { Block, CmsImage, PageParent, Seo } from './page';
+import type { Block, CmsImage, PageParent, Seo, TimelineStep } from './page';
 import type { TaxonomyTerm } from './taxonomy';
 
 // A downloadable file (the PDF version of an offer). Documents are served as-is
@@ -16,11 +16,6 @@ export interface JobOfferQuestion {
 	/** Short heading shown next to the text, e.g. "Question 1". */
 	readonly question: string;
 	readonly answer: string;
-}
-
-export interface JobOfferStep {
-	readonly title: string;
-	readonly shortDesc: string;
 }
 
 // Card payload of a job offer listed on the job offers index.
@@ -58,7 +53,7 @@ export interface JobOfferPage {
 	readonly pdfOffer: CmsDocument | null;
 	readonly applicationContent: string;
 	readonly applicationQuestions: JobOfferQuestion[];
-	readonly recruitingSteps: JobOfferStep[];
+	readonly recruitingSteps: TimelineStep[];
 	readonly seo: Seo;
 }
 

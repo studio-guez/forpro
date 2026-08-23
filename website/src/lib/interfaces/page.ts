@@ -112,6 +112,17 @@ export interface ModuleInfosPratiquesContent {
 	readonly variant: Variant;
 }
 
+export interface TimelineStep {
+	readonly title: string;
+	readonly shortDesc: string;
+}
+
+export interface ModuleTimelineContent {
+	readonly title: string;
+	readonly hideTitle: boolean;
+	readonly steps: TimelineStep[];
+}
+
 export interface AgendaEventCard {
 	readonly title: string;
 	readonly url: string;
