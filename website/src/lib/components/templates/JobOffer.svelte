@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BackLink from '$lib/components/ui/BackLink.svelte';
 	import IconArrow from '$lib/components/svg/IconArrow.svelte';
 	import BlockModuleTimeline from '$lib/components/blocks/BlockModuleTimeline.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
@@ -29,13 +30,7 @@
 <article class="space-y-16 md:space-y-24">
 	<header class="space-y-6">
 		{#if page.parentPage}
-			<a
-				href="/{page.parentPage.path}"
-				class="text-label text-blue inline-flex items-center gap-2 hover:opacity-70 transition"
-			>
-				<IconArrow width={20} height={20} class="rotate-180" />
-				Retour à {page.parentPage.title}
-			</a>
+			<BackLink parentPage={page.parentPage} />
 		{/if}
 
 		<h1 class="text-h1 text-blue">{page.title}</h1>

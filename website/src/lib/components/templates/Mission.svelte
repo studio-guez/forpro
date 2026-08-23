@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Img from '$lib/components/ui/Img.svelte';
-	import IconArrow from '$lib/components/svg/IconArrow.svelte';
+	import BackLink from '$lib/components/ui/BackLink.svelte';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import { formatShortDate, toDate } from '$lib/utils/date';
@@ -36,20 +36,10 @@
 	};
 </script>
 
-{#snippet backLink()}
-	<a
-		href="/{page.parentPage?.path}"
-		class="text-label text-blue inline-flex items-center gap-2 hover:opacity-70 transition"
-	>
-		<IconArrow width={20} height={20} class="rotate-180" />
-		Retour aux missions
-	</a>
-{/snippet}
-
 <article class="space-y-16 md:space-y-24">
 	<header class="space-y-6">
 		{#if page.parentPage}
-			{@render backLink()}
+			<BackLink parentPage={page.parentPage} />
 		{/if}
 
 		<h1 class="text-h1 text-blue">Mission : {page.title}</h1>
@@ -113,6 +103,8 @@
 	</div>
 
 	{#if page.parentPage}
-		<footer>{@render backLink()}</footer>
+		<footer>
+			<BackLink parentPage={page.parentPage} label="Retour aux missions" />
+		</footer>
 	{/if}
 </article>
