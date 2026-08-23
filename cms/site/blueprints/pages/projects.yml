@@ -2,21 +2,9 @@ title:
   en: Projects
   fr: Projets
 
+extends: pages/core-page
+
 icon: layout
-
-num: zero
-
-options:
-  changeTemplate: false
-  changeStatus: false
-  create: false
-  delete: false
-  duplicate: false
-  move: false
-  preview: "{{ page.frontendUrl }}"
-
-status:
-  listed: true
 
 tabs:
   content:
