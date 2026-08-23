@@ -1,0 +1,37 @@
+title:
+  en: Job offers
+  fr: Offres d'emploi
+
+extends: pages/core-page
+
+icon: briefcase
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    fields:
+      title:
+        width: 1/2
+        label:
+          en: Title
+          fr: Titre
+        type: text
+        required: true
+      cover:
+        width: 1/2
+        extends: fields/cover
+      shortDesc:
+        label:
+          en: Short description
+          fr: Description courte
+        extends: fields/writer
+      body:
+        extends: fields/body
+        label:
+          en: Extra Content
+          fr: Contenu supplémentaire
+
+  seo: tabs/seo
