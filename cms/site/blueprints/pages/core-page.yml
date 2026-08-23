@@ -1,0 +1,15 @@
+# Shared setup for structural pages that must always exist:
+# they can be edited, but never created, deleted, moved or unpublished.
+num: zero
+
+status:
+  listed: true
+
+options:
+  changeTemplate: false
+  changeStatus: false
+  create: false
+  delete: false
+  duplicate: false
+  move: false
+  preview: "{{ page.frontendUrl }}"
