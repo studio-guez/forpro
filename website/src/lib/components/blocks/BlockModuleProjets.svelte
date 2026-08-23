@@ -19,6 +19,7 @@
 	const filled = $derived(content.variant !== 'inverted');
 </script>
 
+{#if content.projects.length > 0}
 <Card
 	title={content.title}
 	shortDesc={content.shortDesc}
@@ -31,20 +32,18 @@
 	shapeRightClasses="absolute bottom-0 right-0 translate-1/6 w-2/5 rotate-180"
 	shapeColor={colors.deco}
 >
-	{#if content.projects.length > 0}
-		<Carousel
-			items={content.projects}
-			label={content.title}
-			color={colors.main}
-			inverted={filled}
-			itemClass="w-4/5 md:w-[calc((100%-1.5rem)/2)]"
-			class="mt-12"
-		>
-			{#snippet item(project)}
-				<ProjectCard {project} />
-			{/snippet}
-		</Carousel>
-	{/if}
+	<Carousel
+		items={content.projects}
+		label={content.title}
+		color={colors.main}
+		inverted={filled}
+		itemClass="w-4/5 md:w-[calc((100%-1.5rem)/2)]"
+		class="mt-12"
+	>
+		{#snippet item(project)}
+			<ProjectCard {project} />
+		{/snippet}
+	</Carousel>
 
 	{#if content.cta}
 		<div class="flex justify-center md:justify-end mt-8">
@@ -52,3 +51,4 @@
 		</div>
 	{/if}
 </Card>
+{/if}

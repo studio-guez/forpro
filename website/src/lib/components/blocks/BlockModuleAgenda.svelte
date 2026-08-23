@@ -19,6 +19,7 @@
 	const filled = $derived(content.variant !== 'inverted');
 </script>
 
+{#if content.events.length > 0}
 <Card
 	title={content.title}
 	shortDesc={content.shortDesc}
@@ -30,20 +31,18 @@
 	shapeRight={filled ? ShapeAgenda2 : null}
 	shapeColor={colors.deco}
 >
-	{#if content.events.length > 0}
-		<Carousel
-			items={content.events}
-			label={content.title}
-			color={colors.main}
-			inverted={filled}
-			itemClass="w-4/5 md:w-[calc((100%-3rem)/3)] aspect-3/4"
-			class="mt-12"
-		>
-			{#snippet item(event)}
-				<EventCard {event} color={colors.main} />
-			{/snippet}
-		</Carousel>
-	{/if}
+	<Carousel
+		items={content.events}
+		label={content.title}
+		color={colors.main}
+		inverted={filled}
+		itemClass="w-4/5 md:w-[calc((100%-3rem)/3)] aspect-3/4"
+		class="mt-12"
+	>
+		{#snippet item(event)}
+			<EventCard {event} color={colors.main} />
+		{/snippet}
+	</Carousel>
 
 	{#if content.cta}
 		<div class="flex justify-center md:justify-end mt-8">
@@ -51,3 +50,4 @@
 		</div>
 	{/if}
 </Card>
+{/if}
