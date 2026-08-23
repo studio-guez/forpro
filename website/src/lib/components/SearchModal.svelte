@@ -232,7 +232,7 @@
 		if (event.target === dialog) close();
 	}}
 	aria-label="Recherche sur le site"
-	class="fixed top-0 left-1/2 mt-4 md:mt-24 -translate-x-1/2 w-[min(64rem,calc(100vw-1.5rem))] max-h-[calc(100dvh-2rem)] md:max-h-[calc(100dvh-12rem)] flex flex-col overflow-hidden rounded-3xl bg-white p-0 text-blue shadow-2xl backdrop:bg-black/40"
+	class="fixed top-0 left-1/2 mt-4 md:mt-24 -translate-x-1/2 w-[min(64rem,calc(100vw-1.5rem))] max-h-[calc(100dvh-2rem)] md:max-h-[calc(100dvh-12rem)] hidden open:flex flex-col overflow-hidden rounded-3xl bg-white p-0 text-blue shadow-2xl backdrop:bg-black/40"
 >
 	<div class="flex items-center gap-x-2 px-5 md:px-8 py-4 border-b-2 border-grey-light shrink-0">
 		<IconSearch class="shrink-0" />
