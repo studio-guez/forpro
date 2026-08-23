@@ -316,6 +316,8 @@
 									loading="lazy"
 									class="shrink-0 w-16 h-16 md:w-32 md:h-32 rounded-xl object-cover bg-grey-light"
 								/>
+							{:else}
+								<div class="shrink-0 w-16 h-16 md:w-32 md:h-32 rounded-xl bg-grey-light" />
 							{/if}
 							<div class="min-w-0">
 								<p class="text-caption text-grey-dark">{result.typeLabel}</p>
