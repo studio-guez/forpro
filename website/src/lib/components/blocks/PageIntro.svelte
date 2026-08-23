@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { CmsImage, PageCta, PageLayout, PageParent, Theme } from '$lib/interfaces/page';
+	import BackLink from '$lib/components/ui/BackLink.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
 
@@ -39,7 +40,7 @@
 <section class="px-card relative" aria-labelledby="page-intro-title">
 	{#if parentPage}
 		<div class="mb-6 mt-[calc(-1.5rem-1lh)]">
-			<a href="/{parentPage.path}" style:color="{themeColor}" class="text-label group"><span class="inline-block group-hover:-translate-x-0.75 transition-transform">&larr;</span> Retour à {parentPage.title}</a>
+			<BackLink {parentPage} color={themeColor} />
 		</div>
 	{/if}
 	{#if isTwoCol}
