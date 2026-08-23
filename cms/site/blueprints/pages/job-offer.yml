@@ -182,21 +182,6 @@ tabs:
                   fr: Étapes du recrutement
                 type: headline
               recruitingSteps:
-                label:
-                  en: Steps
-                  fr: Étapes
-                type: structure
-                fields:
-                  title:
-                    label:
-                      en: Title
-                      fr: Titre
-                    type: text
-                    required: true
-                  shortDesc:
-                    label:
-                      en: Short description
-                      fr: Description courte
-                    extends: fields/writer
+                extends: fields/timelineSteps
 
   seo: tabs/seo
