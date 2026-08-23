@@ -30,8 +30,8 @@ tabs:
         extends: fields/writer
       sections:
         label:
-          en: Sections
-          fr: Sections
+          en: Team members
+          fr: Membres de l'équipe
         type: structure
         columns:
           title:
