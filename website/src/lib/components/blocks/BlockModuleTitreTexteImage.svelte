@@ -21,8 +21,8 @@
 				accent: 'var(--color-white)',        
 			},
 			inverted: { 
-				bg: 'var(--bg-grey-dark)',                         
-				text: 'var(--bg-grey-dark)',                          
+				bg: 'var(--color-white)',                         
+				text: 'var(--color-grey-dark)',                          
 				accent: 'var(--color-blue)',         
 			},
 		},
