@@ -63,7 +63,7 @@ export const cardThemeColors: Record<Theme, Record<Variant, ThemeColors>> = {
 	tremplin_jobs: {
 		default: {
 			bg: 'var(--color-purple-light)',
-			bgContrast: 'var(--color-purple)',
+			bgContrast: 'var(--color-green)',
 			text: 'var(--color-white)',
 			title: 'var(--color-white)',
 		},
@@ -104,10 +104,10 @@ export const cardThemeColors: Record<Theme, Record<Variant, ThemeColors>> = {
 	},
 	la_ref: {
 		default: {
-			bg: 'var(--color-pink)',
-			bgContrast: 'var(--color-purple)',
+			bg: 'var(--color-purple-pale)',
+			bgContrast: 'var(--color-pink)',
 			text: 'var(--color-white)',
-			title: 'var(--color-white)',
+			title: 'var(--color-pink)',
 		},
 		inverted: {
 			bg: 'var(--color-purple)',
