@@ -52,6 +52,7 @@ tabs:
                   en: Place of work
                   fr: Lieu de travail
                 type: text
+                required: true
               activityRateMin:
                 label:
                   en: Minimum activity rate
@@ -62,6 +63,7 @@ tabs:
                 step: 5
                 after: "%"
                 width: 1/2
+                required: true
               activityRateMax:
                 label:
                   en: Maximum activity rate
@@ -77,6 +79,7 @@ tabs:
                   en: Starting date
                   fr: Entrée en fonction
                 type: text
+                required: true
                 help:
                   en: Free text, e.g. "as soon as possible" or "1st September 2026".
                   fr: Texte libre, p. ex. « dès que possible » ou « 1er septembre 2026 ».
@@ -85,11 +88,13 @@ tabs:
                   en: Application deadline
                   fr: Délai de candidature
                 type: date
+                required: true
               applicationEmail:
                 label:
                   en: Send the application to
                   fr: Envoyer le dossier à
                 type: email
+                required: true
               pdfOffer:
                 label:
                   en: PDF version of the offer
@@ -120,11 +125,13 @@ tabs:
                   en: Profile sought
                   fr: Profil recherché
                 extends: fields/writer
+                required: true
               conditions:
                 label:
                   en: Conditions
                   fr: Conditions
                 extends: fields/writer
+                required: true
           application:
             type: fields
             fields:
@@ -138,6 +145,7 @@ tabs:
                   en: Contents of the application
                   fr: Contenu du dossier
                 extends: fields/writer
+                required: true
                 help:
                   en: e.g. "CV, answers to the questions below, certificates."
                   fr: p. ex. « CV, réponse aux questions ci-dessous, certificats. »
