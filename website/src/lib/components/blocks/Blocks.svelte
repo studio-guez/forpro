@@ -1,12 +1,12 @@
 <script lang="ts">
-	import BlockModuleTitreTexteImage from '$lib/components/BlockModuleTitreTexteImage.svelte';
-	import BlockModuleCases from '$lib/components/BlockModuleCases.svelte';
-	import BlockModuleGrilleImages from '$lib/components/BlockModuleGrilleImages.svelte';
-	import BlockModuleInfosPratiques from '$lib/components/BlockModuleInfosPratiques.svelte';
-	import BlockModuleAgenda from '$lib/components/BlockModuleAgenda.svelte';
-	import BlockModuleProjets from '$lib/components/BlockModuleProjets.svelte';
-	import BlockModuleCta from '$lib/components/BlockModuleCta.svelte';
-	import BlockModulePartenaires from '$lib/components/BlockModulePartenaires.svelte';
+	import BlockModuleTitreTexteImage from '$lib/components/blocks/BlockModuleTitreTexteImage.svelte';
+	import BlockModuleCases from '$lib/components/blocks/BlockModuleCases.svelte';
+	import BlockModuleGrilleImages from '$lib/components/blocks/BlockModuleGrilleImages.svelte';
+	import BlockModuleInfosPratiques from '$lib/components/blocks/BlockModuleInfosPratiques.svelte';
+	import BlockModuleAgenda from '$lib/components/blocks/BlockModuleAgenda.svelte';
+	import BlockModuleProjets from '$lib/components/blocks/BlockModuleProjets.svelte';
+	import BlockModuleCta from '$lib/components/blocks/BlockModuleCta.svelte';
+	import BlockModulePartenaires from '$lib/components/blocks/BlockModulePartenaires.svelte';
 	import type {
 		Block,
 		Theme,

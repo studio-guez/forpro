@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Img from '$lib/components/ui/Img.svelte';
-	import Blocks from '$lib/components/Blocks.svelte';
+	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import type { JobOffersPage } from '$lib/interfaces/jobOffers';
 
 	let { page }: { page: JobOffersPage } = $props();

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page as appPage } from '$app/state';
-	import Blocks from '$lib/components/Blocks.svelte';
+	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
 	import LoadMore from '$lib/components/ui/LoadMore.svelte';
 	import ProjectCard from '$lib/components/ui/ProjectCard.svelte';

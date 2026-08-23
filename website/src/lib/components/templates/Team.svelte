@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Img from '$lib/components/ui/Img.svelte';
-	import Blocks from '$lib/components/Blocks.svelte';
+	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import IconApprentice from '$lib/components/svg/IconApprentice.svelte';
 	import IconEmployee from '$lib/components/svg/IconEmployee.svelte';
 	import IconLink from '$lib/components/svg/IconLink.svelte';

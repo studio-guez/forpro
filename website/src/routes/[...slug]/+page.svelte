@@ -1,12 +1,12 @@
 <script lang="ts">
-	import Page from '$lib/components/Page.svelte';
-	import Faq from '$lib/components/Faq.svelte';
-	import Event from '$lib/components/Event.svelte';
-	import Events from '$lib/components/Events.svelte';
-	import Project from '$lib/components/Project.svelte';
-	import Projects from '$lib/components/Projects.svelte';
-	import Team from '$lib/components/Team.svelte';
-	import JobOffers from '$lib/components/JobOffers.svelte';
+	import Page from '$lib/components/templates/Page.svelte';
+	import Faq from '$lib/components/templates/Faq.svelte';
+	import Event from '$lib/components/templates/Event.svelte';
+	import Events from '$lib/components/templates/Events.svelte';
+	import Project from '$lib/components/templates/Project.svelte';
+	import Projects from '$lib/components/templates/Projects.svelte';
+	import Team from '$lib/components/templates/Team.svelte';
+	import JobOffers from '$lib/components/templates/JobOffers.svelte';
 	import type { PageData } from './$types';
 	import { IS_PROD } from '$lib/env';
 

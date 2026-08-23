@@ -2,7 +2,7 @@
 	import { slide } from 'svelte/transition';
 	import { page as appPage } from '$app/state';
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
-	import Blocks from '$lib/components/Blocks.svelte';
+	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import FaqQuestion from '$lib/components/ui/FaqQuestion.svelte';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';

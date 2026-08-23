@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-	import SiteHeader from '$lib/components/SiteHeader.svelte';
+	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
 	import { IS_PROD } from '$lib/env';
 	import type { LayoutData } from './$types';
 
