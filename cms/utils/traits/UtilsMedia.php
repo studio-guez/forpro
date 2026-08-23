@@ -97,6 +97,21 @@ trait UtilsMedia
     }
 
     /**
+     * Serializes an optional downloadable document (PDF, ...). Documents are
+     * served as-is, so they only expose what a download link needs.
+     */
+    static function getJsonEncodeDocumentDataOrNull(?\Kirby\Cms\File $file): ?array
+    {
+        return $file ? [
+            'url'       => $file->url(),
+            'filename'  => $file->filename(),
+            'extension' => $file->extension(),
+            'size'      => $file->niceSize(),
+            'mime'      => $file->mime(),
+        ] : null;
+    }
+
+    /**
      * Builds the favicon payload for the frontend head.
      * SVGs are served as-is (scalable, one per color scheme); the 512×512 PNG
      * masters are downscaled to every size in `option('favicon.resize')` so the
