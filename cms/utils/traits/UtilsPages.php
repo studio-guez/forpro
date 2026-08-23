@@ -49,6 +49,29 @@ trait UtilsPages
     }
 
     /**
+     * Splits an events collection into upcoming and past events, based on the
+     * "going" datetime (an event stays upcoming until it is over). Upcoming
+     * events are sorted soonest first, past events most recent first. Events
+     * without a start date are dropped.
+     *
+     * Returns `['upcoming' => Pages, 'past' => Pages]`.
+     */
+    static function splitEventsByDate(\Kirby\Cms\Pages $events, ?\DateTime $now = null): array
+    {
+        $now ??= new \DateTime();
+
+        $isUpcoming = function ($event) use ($now): ?bool {
+            $endDt = self::getEventGoingDatetime($event);
+            return $endDt === null ? null : $endDt >= $now;
+        };
+
+        return [
+            'upcoming' => $events->filter(fn($event) => $isUpcoming($event) === true)->sortBy('dateStart', 'asc'),
+            'past'     => $events->filter(fn($event) => $isUpcoming($event) === false)->sortBy('dateStart', 'desc'),
+        ];
+    }
+
+    /**
      * Card payload for an event listed in the agenda module carousel.
      */
     static function getEventCardData(\Kirby\Cms\Page $page): array
@@ -74,10 +97,26 @@ trait UtilsPages
         return [
             'title'          => $page->title()->value(),
             'url'            => '/' . $page->virtualPath(),
+            'shortDesc'      => $page->shortDesc()->value(),
             'cover'          => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             'collectiveName' => $page->collectiveName()->isNotEmpty() ? $page->collectiveName()->value() : null,
+            'year'           => (int)$page->year()->value(),
             'themes'         => self::resolveTaxonomyTerms($page->projectThemes(), 'project-themes'),
             'types'          => self::resolveTaxonomyTerms($page->projectTypes(), 'project-types'),
+        ];
+    }
+
+    /**
+     * Standard metadata of a page consumed by the decoupled frontend router,
+     * shared by the index templates (faq, events, projects).
+     */
+    static function getPageBaseData(\Kirby\Cms\Page $page, string $template): array
+    {
+        return [
+            'template' => $template,
+            'title'    => $page->title()->value(),
+            'slug'     => $page->slug(),
+            'path'     => $page->virtualPath(),
         ];
     }
 
