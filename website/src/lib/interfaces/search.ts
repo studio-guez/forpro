@@ -1,9 +1,6 @@
-export type SearchGroup = 'all' | 'pages' | 'events' | 'projects';
+import type { CmsImage } from '$lib/interfaces/page';
 
-export interface SearchCover {
-	readonly url: string;
-	readonly alt: string | null;
-}
+export type SearchGroup = 'all' | 'pages' | 'events' | 'projects';
 
 export interface SearchResult {
 	readonly id: string;
@@ -13,7 +10,7 @@ export interface SearchResult {
 	readonly typeLabel: string;
 	readonly group: Exclude<SearchGroup, 'all'>;
 	readonly excerpt: string;
-	readonly cover: SearchCover | null;
+	readonly cover: CmsImage | null;
 }
 
 export interface SearchResponse {

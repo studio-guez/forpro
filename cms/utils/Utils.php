@@ -38,14 +38,26 @@ class Utils
     }
 
 
-    static function getJsonEncodeImageData(\Kirby\Cms\File $file): array
+    /**
+     * `{focus, caption, alt, link, photoCredit, width, height, url, srcset}` shape
+     * shared by every image payload; `$rendition` supplies the sizing/urls and
+     * can override any metadata key.
+     */
+    private static function getImageData(\Kirby\Cms\File $file, array $rendition): array
     {
         return [
-            'focus' => $file->content()->focus()->value(),
+            'focus'         => $file->content()->focus()->value(),
             'caption'       => $file->caption()->value(),
             'alt'           => $file->alt()->value(),
             'link'          => $file->link()->value(),
             'photoCredit'   => $file->photoCredit()->value(),
+            ...$rendition,
+        ];
+    }
+
+    static function getJsonEncodeImageData(\Kirby\Cms\File $file): array
+    {
+        return self::getImageData($file, [
             // `width`/`height` are the intrinsic dimensions so the frontend can
             // reserve space (avoid CLS). `url` is a mid-size WebP fallback for
             // `src`; `srcset` lets the browser pick per viewport × pixel density.
@@ -53,7 +65,7 @@ class Utils
             'height'        => $file->height(),
             'url'           => $file->resize(1920)->url(),
             'srcset'        => $file->srcset('default'),
-        ];
+        ]);
     }
 
     /**
@@ -683,8 +695,9 @@ class Utils
     }
 
     /**
-     * Square thumbnail of a result's cover. Deliberately lighter than
-     * `getJsonEncodeImageData()`: a result row never needs a full srcset.
+     * Square thumbnail of a result's cover, in the shared image payload shape.
+     * Deliberately lighter than `getJsonEncodeImageData()`: a result row only
+     * needs the crop and its retina variant, never the full srcset.
      */
     private static function getSearchCover(\Kirby\Cms\Page $page): ?array
     {
@@ -694,10 +707,14 @@ class Utils
             return null;
         }
 
-        return [
-            'url' => $file->crop(240, 240)->url(),
-            'alt' => $file->alt()->value(),
-        ];
+        return self::getImageData($file, [
+            // The crop already honours the file's focus point.
+            'focus'       => null,
+            'width'       => 240,
+            'height'      => 240,
+            'url'         => $file->crop(240, 240)->url(),
+            'srcset'      => $file->crop(240, 240)->url() . ' 240w, ' . $file->crop(480, 480)->url() . ' 480w',
+        ]);
     }
 
     /**
