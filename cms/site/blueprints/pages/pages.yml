@@ -23,5 +23,6 @@ sections:
       - projects
       - team
       - job-offers
+      - missions
     text: "{{ page.breadcrumbTitle }}"
     create: page
