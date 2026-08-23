@@ -79,6 +79,20 @@ export interface ModuleCasesContent {
 	readonly variant: Variant;
 }
 
+export interface GrilleImagesItem {
+	readonly image: CmsImage;
+	readonly title: string;
+}
+
+export interface ModuleGrilleImagesContent {
+	readonly title: string;
+	readonly shortDesc: string | null;
+	/** Always 5 entries (enforced by the blueprint). */
+	readonly images: GrilleImagesItem[];
+	readonly cta: PageCta | null;
+	readonly variant: Variant;
+}
+
 export interface InfosPratiquesElement {
 	readonly title: string;
 	readonly description: string;

@@ -86,6 +86,23 @@ foreach ($page->body()->toBlocks() as $block) {
             'layout'    => $block->layout()->or('alternate')->value(),
             'variant'   => $block->variant()->or('default')->value(),
         ];
+    } elseif ($block->type() === 'module-grille-images') {
+        $images = [];
+        foreach ($block->images()->toStructure() as $item) {
+            $imageFile = $item->image()->toFile();
+            if (!$imageFile) continue;
+            $images[] = [
+                'image' => Utils::getJsonEncodeImageData($imageFile),
+                'title' => $item->title()->value(),
+            ];
+        }
+        $content = [
+            'title'     => $block->title()->value(),
+            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'images'    => $images,
+            'cta'       => Utils::resolveCtaStructure($block->cta()),
+            'variant'   => $block->variant()->or('default')->value(),
+        ];
     } elseif ($block->type() === 'module-infos-pratiques') {
         // Either empty or exactly 3 title/description pairs (enforced by the blueprint).
         $elements = [];
