@@ -38,6 +38,8 @@ trait UtilsBlocks
                 return self::getCasesBlockData($block);
             case 'module-grille-images':
                 return self::getGrilleImagesBlockData($block);
+            case 'module-video':
+                return self::getVideoBlockData($block);
             case 'module-infos-pratiques':
                 return self::getInfosPratiquesBlockData($block);
             case 'module-timeline':
@@ -128,6 +130,20 @@ trait UtilsBlocks
             'images'    => $images,
             'cta'       => self::resolveCtaStructure($block->cta()),
             'variant'   => $block->variant()->or('default')->value(),
+        ];
+    }
+
+    private static function getVideoBlockData(\Kirby\Cms\Block $block): array
+    {
+        $video = $block->content()->get('video')->toFile();
+        // Field is named `content`, so it must be read through get() — $block->content() is the Content object.
+        $text  = $block->content()->get('content');
+
+        return [
+            'title'     => $block->title()->value(),
+            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'video'     => $video ? self::getJsonEncodeMediaData($video) : null,
+            'content'   => $text->isNotEmpty() ? $text->value() : null,
         ];
     }
 
