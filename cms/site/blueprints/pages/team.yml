@@ -63,16 +63,19 @@ tabs:
                 type: text
                 required: true
               status:
+                required: true
                 label:
                   en: Status
                   fr: Statut
                 type: select
+                default: employe
                 options:
                   - value: apprenti
                     text: { en: Apprentice, fr: Apprenti·e }
                   - value: employe
                     text: { en: Employee, fr: Employé·e }
               role:
+                required: true
                 label:
                   en: Role
                   fr: Fonction
