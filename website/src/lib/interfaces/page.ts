@@ -101,9 +101,17 @@ export interface ModuleVideoContent {
 	readonly content: string | null;
 }
 
-export interface InfosPratiquesElement {
+/** One of the 3 pairs emitted by the shared `fields/threeElements` structure. */
+export interface ThreeElementsItem {
 	readonly title: string;
 	readonly description: string;
+}
+
+export interface Module3ElementsContent {
+	readonly title: string;
+	readonly shortDesc: string | null;
+	/** Empty or exactly 3 entries (enforced by the blueprint). */
+	readonly elements: ThreeElementsItem[];
 }
 
 export interface InfosPratiquesFaq {
@@ -114,7 +122,7 @@ export interface InfosPratiquesFaq {
 export interface ModuleInfosPratiquesContent {
 	readonly title: string;
 	readonly subtitle: string;
-	readonly elements: InfosPratiquesElement[];
+	readonly elements: ThreeElementsItem[];
 	readonly faqs: InfosPratiquesFaq[];
 	readonly cta: PageCta | null;
 	readonly variant: Variant;
