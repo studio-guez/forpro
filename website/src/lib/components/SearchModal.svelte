@@ -3,6 +3,7 @@
 	import { tick } from 'svelte';
 	import IconSearch from '$lib/components/svg/IconSearch.svelte';
 	import IconClose from '$lib/components/svg/IconClose.svelte';
+	import IconSpinner from '$lib/components/svg/IconSpinner.svelte';
 	import type { SearchGroup, SearchResponse, SearchResult } from '$lib/interfaces/search';
 
 	interface Props {
@@ -341,7 +342,10 @@
 			</ul>
 			<div bind:this={sentinel} class="h-px" aria-hidden="true"></div>
 			{#if hasMore}
-				<p class="text-label text-grey-dark text-center py-4">Chargement…</p>
+				<p class="flex justify-center py-4 text-grey-dark">
+					<IconSpinner class="motion-safe:animate-spin" width={32} height={32} />
+					<span class="sr-only">Chargement…</span>
+				</p>
 			{/if}
 		{/if}
 	</div>
