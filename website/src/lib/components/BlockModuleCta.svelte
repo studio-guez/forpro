@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { ModuleLinksContent } from '$lib/interfaces/page';
+	import type { ModuleCtaContent } from '$lib/interfaces/page';
 	import CardSmall from '$lib/components/ui/CardSmall.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 
 	interface Props {
-		content: ModuleLinksContent;
+		content: ModuleCtaContent;
 	}
 
 	let { content }: Props = $props();
