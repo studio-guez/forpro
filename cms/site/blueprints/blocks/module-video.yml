@@ -1,0 +1,40 @@
+extends: blocks/base
+
+name:
+  en: Module - Video
+  fr: Module - Vidéo
+
+icon: video
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  shortDesc:
+    width: 1/2
+    label:
+      en: Short description
+      fr: Description courte
+    help:
+      en: Displayed above the video
+      fr: Affichée au-dessus de la vidéo
+    extends: fields/writer
+  video:
+    label:
+      en: Video
+      fr: Vidéo
+    type: files
+    uploads: video
+    max: 1
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    help:
+      en: Displayed below the video
+      fr: Affiché sous la vidéo
+    extends: fields/writer
