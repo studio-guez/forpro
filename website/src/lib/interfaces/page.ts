@@ -75,6 +75,7 @@ export interface ModuleCasesContent {
 	readonly hideTitle: boolean;
 	readonly intro: string;
 	readonly rows: ModuleCasesRow[];
+	readonly cta: PageCta | null;
 	readonly layout: CasesLayout;
 	readonly variant: Variant;
 }
