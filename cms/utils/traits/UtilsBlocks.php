@@ -162,9 +162,7 @@ trait UtilsBlocks
         }
 
         // The CTA URL is resolved here so a FAQ slug change never breaks the frontend link.
-        $ctaUrl = $faqPage
-            ? '/' . $faqPage->virtualPath() . ($categorySlugs !== [] ? '?faqCategories=' . implode(',', $categorySlugs) : '')
-            : null;
+        $ctaUrl = $faqPage ? '/' . $faqPage->virtualPath() : null;
 
         return [
             'title'    => $block->title()->value(),
@@ -223,7 +221,7 @@ trait UtilsBlocks
         }
 
         // Resolved here so an agenda slug change never breaks the frontend link.
-        $ctaUrl = $eventsPage ? '/' . $eventsPage->virtualPath() . self::buildTaxonomyQuery($filters) : null;
+        $ctaUrl = $eventsPage ? '/' . $eventsPage->virtualPath() : null;
 
         return [
             'title'     => $block->title()->value(),
@@ -256,7 +254,7 @@ trait UtilsBlocks
             $projects = array_values($children->map(fn($project) => self::getProjectCardData($project))->data());
         }
 
-        $ctaUrl = $projectsPage ? '/' . $projectsPage->virtualPath() . self::buildTaxonomyQuery($filters) : null;
+        $ctaUrl = $projectsPage ? '/' . $projectsPage->virtualPath() : null;
 
         return [
             'title'     => $block->title()->value(),

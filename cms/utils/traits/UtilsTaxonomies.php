@@ -94,21 +94,4 @@ trait UtilsTaxonomies
 
         return $pages->filter(self::taxonomyMatcher($fieldName, $slugs));
     }
-
-    /**
-     * Builds the query string carrying an index page's taxonomy pre-filters,
-     * e.g. ['domains' => ['campus'], 'eventThemes' => []] -> "?domains=campus".
-     * Returns an empty string when no filter is set.
-     */
-    static function buildTaxonomyQuery(array $filters): string
-    {
-        $parts = [];
-        foreach ($filters as $field => $slugs) {
-            if ($slugs !== []) {
-                $parts[] = $field . '=' . implode(',', $slugs);
-            }
-        }
-
-        return $parts === [] ? '' : '?' . implode('&', $parts);
-    }
 }

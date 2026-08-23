@@ -82,8 +82,8 @@ fields:
     extends: fields/taxonomies/faq-categories
     width: 1/2
     help:
-      en: Filters the questions shown in the block and pre-filters the FAQ page linked by the CTA.
-      fr: Filtre les questions affichées dans le module et pré-filtre la page FAQ liée par le CTA.
+      en: Filters the questions shown in the block.
+      fr: Filtre les questions affichées dans le module.
   ctaLabel:
     width: 1/2
     label:
