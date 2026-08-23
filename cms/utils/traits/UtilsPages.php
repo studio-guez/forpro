@@ -121,6 +121,21 @@ trait UtilsPages
     }
 
     /**
+     * Payload of a `module-cta` block, used both inside a body blocks field and
+     * as a standalone single-block field (team page).
+     */
+    static function getCtaModuleData(\Kirby\Cms\Block $block): array
+    {
+        return [
+            'title'           => $block->title()->value(),
+            'subtitle'        => $block->subtitle()->isNotEmpty() ? $block->subtitle()->value() : null,
+            'links'           => self::resolveCtaStructures($block->links()),
+            'variant'         => $block->variant()->or('default')->value(),
+            'backgroundImage' => self::getJsonEncodeImageDataOrNull($block->backgroundImage()->toFile()),
+        ];
+    }
+
+    /**
      * Resolves the shared event/project content blocks structure
      * (repeatable `title` + rich-text `description`) to a JSON-ready list.
      */
