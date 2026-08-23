@@ -93,6 +93,13 @@ export interface ModuleGrilleImagesContent {
 	readonly variant: Variant;
 }
 
+export interface ModuleVideoContent {
+	readonly title: string;
+	readonly shortDesc: string | null;
+	readonly video: CmsVideo | null;
+	readonly content: string | null;
+}
+
 export interface InfosPratiquesElement {
 	readonly title: string;
 	readonly description: string;
