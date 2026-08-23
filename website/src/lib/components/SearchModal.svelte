@@ -145,15 +145,21 @@
 	$effect(() => {
 		if (!scroller || !sentinel || !hasMore) return;
 
+		let timer: ReturnType<typeof setTimeout> | undefined;
 		const observer = new IntersectionObserver(
 			(entries) => {
-				if (entries[0].isIntersecting) loadMore();
+				clearTimeout(timer);
+				// Debounced: a fast flick past the sentinel must not queue a fetch per page.
+				if (entries[0].isIntersecting) timer = setTimeout(loadMore, 200);
 			},
 			{ root: scroller, rootMargin: '200px' }
 		);
 		observer.observe(sentinel);
 
-		return () => observer.disconnect();
+		return () => {
+			clearTimeout(timer);
+			observer.disconnect();
+		};
 	});
 
 	// The FAQ page filters its questions on `?q=`, so a FAQ hit can land the
@@ -224,7 +230,7 @@
 		if (event.target === dialog) close();
 	}}
 	aria-label="Recherche sur le site"
-	class="fixed top-0 left-1/2 mt-4 md:mt-24 -translate-x-1/2 w-[min(48rem,calc(100vw-1.5rem))] max-h-[calc(100dvh-2rem)] md:max-h-[calc(100dvh-12rem)] flex flex-col overflow-hidden rounded-3xl bg-white p-0 text-blue shadow-2xl backdrop:bg-black/40"
+	class="fixed top-0 left-1/2 mt-4 md:mt-24 -translate-x-1/2 w-[min(64rem,calc(100vw-1.5rem))] max-h-[calc(100dvh-2rem)] md:max-h-[calc(100dvh-12rem)] flex flex-col overflow-hidden rounded-3xl bg-white p-0 text-blue shadow-2xl backdrop:bg-black/40"
 >
 	<div class="flex items-center gap-x-2 px-5 md:px-8 py-4 border-b-2 border-grey-light shrink-0">
 		<IconSearch class="shrink-0" />
@@ -307,7 +313,7 @@
 									width="240"
 									height="240"
 									loading="lazy"
-									class="shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-xl object-cover bg-grey-light"
+									class="shrink-0 w-16 h-16 md:w-32 md:h-32 rounded-xl object-cover bg-grey-light"
 								/>
 							{/if}
 							<div class="min-w-0">
