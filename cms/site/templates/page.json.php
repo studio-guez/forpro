@@ -38,7 +38,7 @@ foreach ($page->body()->toBlocks() as $block) {
             'variant'       => $block->variant()->or('default')->value(),
             'cta'           => Utils::resolveCtaStructure($block->cta()),
         ];
-    } elseif ($block->type() === 'module-links') {
+    } elseif ($block->type() === 'module-cta') {
         $backgroundFile = $block->backgroundImage()->toFile();
         $content = [
             'title'           => $block->title()->value(),

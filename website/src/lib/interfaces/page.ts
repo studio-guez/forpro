@@ -139,13 +139,13 @@ export interface ModuleProjetsContent {
 	readonly variant: Variant;
 }
 
-export type LinksVariant = Variant | 'backgroundImage';
+export type CtaVariant = Variant | 'backgroundImage';
 
-export interface ModuleLinksContent {
+export interface ModuleCtaContent {
 	readonly title: string;
 	readonly subtitle: string | null;
 	readonly links: PageCta[];
-	readonly variant: LinksVariant;
+	readonly variant: CtaVariant;
 	readonly backgroundImage: CmsImage | null;
 }
 
