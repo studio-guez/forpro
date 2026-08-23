@@ -1,0 +1,9 @@
+title: Catégories d'offre d'emploi
+
+extends: pages/taxonomy
+
+sections:
+  terms:
+    label: Catégories d'offre d'emploi
+    templates:
+      - job-offer-category
