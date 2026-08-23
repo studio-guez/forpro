@@ -90,10 +90,10 @@ export const cardThemeColors: Record<Theme, Record<Variant, ThemeColors>> = {
 	},
 	cekale: {
 		default: {
-			bg: 'var(--color-purple)',
-			bgContrast: 'var(--color-purple-light)',
+			bg: 'var(--color-purple-pale)',
+			bgContrast: 'var(--color-purple)',
 			text: 'var(--color-white)',
-			title: 'var(--color-white)',
+			title: 'var(--color-purple)',
 		},
 		inverted: {
 			bg: 'var(--color-purple-pale)',
