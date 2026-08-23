@@ -30,6 +30,7 @@ fields:
     type: files
     uploads: video
     max: 1
+    required: true
   content:
     label:
       en: Content
