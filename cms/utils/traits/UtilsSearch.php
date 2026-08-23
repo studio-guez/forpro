@@ -20,6 +20,7 @@ trait UtilsSearch
         'project'    => 'Projet',
         'team'       => 'Page',
         'job-offer'  => "Offre d'emploi",
+        'mission'    => 'Mission',
     ];
 
     /** Result groups the frontend tabs filter on; every other template is a page. */
