@@ -30,6 +30,7 @@
 	const uid = $props.id();
 </script>
 
+{#if content.elements.length > 0 || content.faqs.length > 0}
 <Card
 	title={content.title}
 	subtitle={content.subtitle}
@@ -84,3 +85,4 @@
 		</div>
 	{/if}
 </Card>
+{/if}
