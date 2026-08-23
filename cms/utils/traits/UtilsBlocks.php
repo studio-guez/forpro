@@ -107,6 +107,7 @@ trait UtilsBlocks
             'hideTitle' => $block->hideTitle()->toBool(),
             'intro'     => $block->intro()->value(),
             'rows'      => $rows,
+            'cta'       => self::resolveCtaStructure($block->cta()),
             'layout'    => $block->layout()->or('alternate')->value(),
             'variant'   => $block->variant()->or('default')->value(),
         ];
