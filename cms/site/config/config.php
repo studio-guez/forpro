@@ -54,7 +54,7 @@ return [
                 $urls = $sitemap->create('pages');
 
                 $pages = site()->index()->filter(
-                    fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'events', 'event', 'projects', 'project'], true)
+                    fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'events', 'event', 'projects', 'project', 'team', 'missions', 'mission', 'job-offers', 'job-offer'], true)
                         && $page->metadata()->robotsIndex()->toBool()
                 );
 
@@ -159,6 +159,26 @@ return [
                     ],
                     'favicon' => Utils::getFaviconData($site),
                 ]);
+            },
+        ],
+        [
+            // Site-wide search over every page that has a frontend route.
+            "pattern" => "search.json",
+            "action" => function () {
+                require_once 'utils/Utils.php';
+
+                $query = (string)(get('q') ?? '');
+                $group = (string)(get('group') ?? 'all');
+                $offset = max((int)(get('offset') ?? 0), 0);
+                $limit = min(max((int)(get('limit') ?? 10), 1), 50);
+
+                if (in_array($group, ['all', 'pages', 'events', 'projects', 'team', 'missions', 'job-offers'], true) === false) {
+                    $group = 'all';
+                }
+
+                return \Kirby\Http\Response::json(
+                    Utils::searchPages(mb_substr($query, 0, 100), $group, $offset, $limit)
+                );
             },
         ],
         [

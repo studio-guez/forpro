@@ -2,21 +2,9 @@ title:
   en: Events
   fr: Événements
 
+extends: pages/core-page
+
 icon: calendar
-
-num: zero
-
-options:
-  changeTemplate: false
-  changeStatus: false
-  create: false
-  delete: false
-  duplicate: false
-  move: false
-  preview: "{{ page.frontendUrl }}"
-
-status:
-  listed: true
 
 tabs:
   content:
@@ -34,6 +22,14 @@ tabs:
               fr: Titre
             type: text
             required: true
+      extra:
+        type: fields
+        fields:
+          body:
+            extends: fields/bodyExtra
+            # The agenda module would just duplicate the listing above.
+            fieldsets:
+              module-agenda: false
       events:
         extends: sections/child-pages
         label:

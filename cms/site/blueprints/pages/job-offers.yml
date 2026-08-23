@@ -1,0 +1,49 @@
+title:
+  en: Job offers
+  fr: Offres d'emploi
+
+extends: pages/core-page
+
+icon: briefcase
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    sections:
+      meta:
+        type: fields
+        fields:
+          title:
+            width: 1/2
+            label:
+              en: Title
+              fr: Titre
+            type: text
+            required: true
+          cover:
+            width: 1/2
+            extends: fields/cover
+          shortDesc:
+            label:
+              en: Short description
+              fr: Description courte
+            extends: fields/writer
+      extra:
+        type: fields
+        fields:
+          body:
+            extends: fields/bodyExtra
+      jobOffers:
+        type: pages
+        image: false
+        label:
+          en: Job offers
+          fr: Offres d'emploi
+        templates:
+          - job-offer
+        create: job-offer
+
+  seo: tabs/seo

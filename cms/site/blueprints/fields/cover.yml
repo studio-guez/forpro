@@ -5,6 +5,6 @@ label:
   fr: Image de couverture
 type: files
 max: 1
-layout: cards
+layout: list
 required: true
 uploads: image

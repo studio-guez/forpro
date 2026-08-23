@@ -73,6 +73,8 @@ fields:
         min: 1
         required: true
         uploads: media
+  cta:
+    extends: fields/cta
   layout:
     label:
       en: Layout

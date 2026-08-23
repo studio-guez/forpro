@@ -1,0 +1,5 @@
+title:
+  en: Job offer category
+  fr: Catégorie d'offre d'emploi
+
+extends: pages/taxonomy-term

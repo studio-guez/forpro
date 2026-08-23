@@ -1,4 +1,4 @@
-import type { Seo } from './page';
+import type { Block, Seo } from './page';
 import type { TaxonomyTerm } from './taxonomy';
 
 export type { TaxonomyTerm };
@@ -21,5 +21,6 @@ export interface FaqPage {
 	readonly path: string;
 	readonly faqCategories: TaxonomyTerm[];
 	readonly sections: FaqSection[];
+	readonly body: Block[];
 	readonly seo: Seo;
 }

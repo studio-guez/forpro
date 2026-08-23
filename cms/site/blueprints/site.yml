@@ -7,7 +7,7 @@ tabs:
     icon: text
 
     columns:
-      - width: 1/2
+      - width: 1/3
 
         sections:
 
@@ -33,7 +33,7 @@ tabs:
             parent: site.index.template("pages").first()
             create: page
             
-      - width: 1/2
+      - width: 1/3
 
         sections:
           events:
@@ -60,6 +60,28 @@ tabs:
             templates:
               - project
             create: project
+
+      - width: 1/3
+        sections:
+          jobOffers:
+            label: "Offres d'emploi"
+            type: pages
+            image: false
+            parent: site.index.template("job-offers").first()
+            limit: 10
+            templates:
+              - job-offer
+            create: job-offer
+
+          missions:
+            label: "Missions"
+            type: pages
+            image: false
+            parent: site.index.template("missions").first()
+            limit: 10
+            templates:
+              - mission
+            create: mission
 
   taxonomies:
     label:
@@ -122,6 +144,17 @@ tabs:
             templates:
               - faq-category
             parent: site.index.template("faq-categories").first()
+      - width: 1/2
+        sections:
+          jobOfferCategories:
+            type: pages
+            image: false
+            label:
+              en: Job offer categories
+              fr: Catégories d'offre d'emploi
+            templates:
+              - job-offer-category
+            parent: site.index.template("job-offer-categories").first()
 
   navigation: tabs/navigation
 

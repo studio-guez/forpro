@@ -1,0 +1,30 @@
+title:
+  en: Video
+  fr: Vidéo
+
+accept:
+  mime:
+    - video/mp4
+    - video/webm
+
+fields:
+  alt:
+    label:
+      en: Alternative text
+      fr: Texte alternatif
+    type: text
+  caption:
+    label:
+      en: Caption
+      fr: Légende
+    type: text
+  photoCredit:
+    label:
+      en: Video credit
+      fr: Crédit vidéo
+    type: text
+  link:
+    label:
+      en: Link
+      fr: Lien
+    type: url

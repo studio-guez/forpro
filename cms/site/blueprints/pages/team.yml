@@ -1,0 +1,95 @@
+title:
+  en: Team
+  fr: Équipe
+
+extends: pages/core-page
+
+icon: users
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    fields:
+      title:
+        width: 1/2
+        label:
+          en: Title
+          fr: Titre
+        type: text
+        required: true
+      cover:
+        width: 1/2
+        extends: fields/cover
+      shortDesc:
+        label:
+          en: Short description
+          fr: Description courte
+        extends: fields/writer
+      sections:
+        label:
+          en: Team members
+          fr: Membres de l'équipe
+        type: structure
+        columns:
+          title:
+            width: 1/2
+          members:
+            width: 1/2
+        fields:
+          title:
+            label:
+              en: Section title
+              fr: Titre de la section
+            type: text
+            required: true
+          members:
+            label:
+              en: Members
+              fr: Membres
+            type: structure
+            columns:
+              name:
+                width: 1/4
+              role:
+                width: 1/4
+              status:
+                width: 1/4
+              linkedin:
+                width: 1/4
+            fields:
+              name:
+                label:
+                  en: Name
+                  fr: Nom
+                type: text
+                required: true
+              status:
+                required: true
+                label:
+                  en: Status
+                  fr: Statut
+                type: select
+                default: employe
+                options:
+                  - value: apprenti
+                    text: { en: Apprentice, fr: Apprenti·e }
+                  - value: employe
+                    text: { en: Employee, fr: Employé·e }
+              role:
+                required: true
+                label:
+                  en: Role
+                  fr: Fonction
+                type: text
+              linkedin:
+                label:
+                  en: LinkedIn link
+                  fr: Lien LinkedIn
+                type: url
+      body:
+        extends: fields/bodyExtra
+
+  seo: tabs/seo

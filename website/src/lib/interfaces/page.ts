@@ -75,13 +75,43 @@ export interface ModuleCasesContent {
 	readonly hideTitle: boolean;
 	readonly intro: string;
 	readonly rows: ModuleCasesRow[];
+	readonly cta: PageCta | null;
 	readonly layout: CasesLayout;
 	readonly variant: Variant;
 }
 
-export interface InfosPratiquesElement {
+export interface GrilleImagesItem {
+	readonly image: CmsImage;
+	readonly title: string;
+}
+
+export interface ModuleGrilleImagesContent {
+	readonly title: string;
+	readonly shortDesc: string | null;
+	/** Always 5 entries (enforced by the blueprint). */
+	readonly images: GrilleImagesItem[];
+	readonly cta: PageCta | null;
+	readonly variant: Variant;
+}
+
+export interface ModuleVideoContent {
+	readonly title: string;
+	readonly shortDesc: string | null;
+	readonly video: CmsVideo | null;
+	readonly content: string | null;
+}
+
+/** One of the 3 pairs emitted by the shared `fields/threeElements` structure. */
+export interface ThreeElementsItem {
 	readonly title: string;
 	readonly description: string;
+}
+
+export interface Module3ElementsContent {
+	readonly title: string;
+	readonly shortDesc: string | null;
+	/** Empty or exactly 3 entries (enforced by the blueprint). */
+	readonly elements: ThreeElementsItem[];
 }
 
 export interface InfosPratiquesFaq {
@@ -92,10 +122,21 @@ export interface InfosPratiquesFaq {
 export interface ModuleInfosPratiquesContent {
 	readonly title: string;
 	readonly subtitle: string;
-	readonly elements: InfosPratiquesElement[];
+	readonly elements: ThreeElementsItem[];
 	readonly faqs: InfosPratiquesFaq[];
 	readonly cta: PageCta | null;
 	readonly variant: Variant;
+}
+
+export interface TimelineStep {
+	readonly title: string;
+	readonly shortDesc: string;
+}
+
+export interface ModuleTimelineContent {
+	readonly title: string;
+	readonly hideTitle: boolean;
+	readonly steps: TimelineStep[];
 }
 
 export interface AgendaEventCard {
@@ -122,8 +163,11 @@ export interface ModuleAgendaContent {
 export interface ProjetCard {
 	readonly title: string;
 	readonly url: string;
+	readonly shortDesc: string;
 	readonly cover: CmsImage | null;
 	readonly collectiveName: string | null;
+	/** Only used to filter projects on the projects page. */
+	readonly year: number;
 	readonly themes: TaxonomyTerm[];
 	readonly types: TaxonomyTerm[];
 }
@@ -136,13 +180,13 @@ export interface ModuleProjetsContent {
 	readonly variant: Variant;
 }
 
-export type LinksVariant = Variant | 'backgroundImage';
+export type CtaVariant = Variant | 'backgroundImage';
 
-export interface ModuleLinksContent {
+export interface ModuleCtaContent {
 	readonly title: string;
 	readonly subtitle: string | null;
 	readonly links: PageCta[];
-	readonly variant: LinksVariant;
+	readonly variant: CtaVariant;
 	readonly backgroundImage: CmsImage | null;
 }
 
