@@ -1,4 +1,4 @@
-import type { ProjetCard, Seo } from './page';
+import type { Block, ProjetCard, Seo } from './page';
 import type { EventProjectBase } from './eventProject';
 import type { TaxonomyTerm } from './taxonomy';
 
@@ -25,5 +25,6 @@ export interface ProjectsPage {
 	/** Years used by at least one project, most recent first. Filter only. */
 	readonly years: number[];
 	readonly projects: ProjetCard[];
+	readonly body: Block[];
 	readonly seo: Seo;
 }

@@ -1,4 +1,4 @@
-import type { AgendaEventCard, Seo } from './page';
+import type { AgendaEventCard, Block, Seo } from './page';
 import type { EventProjectBase } from './eventProject';
 import type { TaxonomyTerm } from './taxonomy';
 
@@ -23,5 +23,6 @@ export interface EventsPage {
 	readonly eventThemes: TaxonomyTerm[];
 	readonly upcomingEvents: AgendaEventCard[];
 	readonly pastEvents: AgendaEventCard[];
+	readonly body: Block[];
 	readonly seo: Seo;
 }

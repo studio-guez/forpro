@@ -21,6 +21,8 @@ $years = array_values(array_unique(array_column($json['projects'], 'year')));
 rsort($years);
 $json['years'] = $years;
 
+$json['body'] = Utils::getBodyBlocks($page->body());
+
 $json['seo'] = Utils::getSeoDataFromPage($page);
 
 echo json_encode($json);
