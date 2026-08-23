@@ -14,11 +14,15 @@ tabs:
     icon: text
     fields:
       title:
+        width: 1/2
         label:
           en: Title
           fr: Titre
         type: text
         required: true
+      cover:
+        width: 1/2
+        extends: fields/cover
       shortDesc:
         label:
           en: Short description
