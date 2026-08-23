@@ -89,13 +89,10 @@ tabs:
                   en: LinkedIn link
                   fr: Lien LinkedIn
                 type: url
-      ctaModule:
+      body:
+        extends: fields/body
         label:
-          en: CTA block
-          fr: Bloc CTA
-        type: blocks
-        max: 1
-        fieldsets:
-          - module-cta
+          en: Extra Content
+          fr: Contenu supplémentaire
 
   seo: tabs/seo

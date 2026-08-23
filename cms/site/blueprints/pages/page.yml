@@ -124,17 +124,5 @@ tabs:
                   fr: Contenu
                 type: headline
               body:
-                type: blocks
-                label:
-                  en: Content
-                  fr: Contenu
-                fieldsets:
-                  - module-titre-texte-image
-                  - module-cases
-                  - module-grille-images
-                  - module-infos-pratiques
-                  - module-agenda
-                  - module-projets
-                  - module-cta
-                  - module-partenaires
+                extends: fields/body
   seo: tabs/seo
