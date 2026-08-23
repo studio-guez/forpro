@@ -96,7 +96,6 @@ tabs:
                 type: headline
               cover:
                 extends: fields/cover
-                required: false
               introTitle:
                 label:
                   en: Intro title
