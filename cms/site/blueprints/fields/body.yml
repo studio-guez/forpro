@@ -12,6 +12,7 @@ fieldsets:
   module-grille-images: true
   module-video: true
   module-infos-pratiques: true
+  module-3-elements: true
   module-timeline: true
   module-agenda: true
   module-projets: true

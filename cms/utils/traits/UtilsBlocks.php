@@ -42,6 +42,8 @@ trait UtilsBlocks
                 return self::getVideoBlockData($block);
             case 'module-infos-pratiques':
                 return self::getInfosPratiquesBlockData($block);
+            case 'module-3-elements':
+                return self::getThreeElementsBlockData($block);
             case 'module-timeline':
                 return self::getTimelineBlockData($block);
             case 'module-agenda':
@@ -148,11 +150,15 @@ trait UtilsBlocks
         ];
     }
 
-    private static function getInfosPratiquesBlockData(\Kirby\Cms\Block $block): array
+    /**
+     * The `fields/threeElements` structure, shared by the `module-infos-pratiques`
+     * and `module-3-elements` blocks. Either empty or exactly 3 title/description
+     * pairs (enforced by the blueprint).
+     */
+    static function getThreeElements(\Kirby\Content\Field $field): array
     {
-        // Either empty or exactly 3 title/description pairs (enforced by the blueprint).
         $elements = [];
-        $row = $block->elements()->toStructure()->first();
+        $row = $field->toStructure()->first();
         if ($row) {
             foreach ([1, 2, 3] as $i) {
                 $elements[] = [
@@ -161,6 +167,22 @@ trait UtilsBlocks
                 ];
             }
         }
+
+        return $elements;
+    }
+
+    private static function getThreeElementsBlockData(\Kirby\Cms\Block $block): array
+    {
+        return [
+            'title'     => $block->title()->value(),
+            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'elements'  => self::getThreeElements($block->elements()),
+        ];
+    }
+
+    private static function getInfosPratiquesBlockData(\Kirby\Cms\Block $block): array
+    {
+        $elements = self::getThreeElements($block->elements());
 
         $categorySlugs = array_column(self::resolveTaxonomyTerms($block->faqCategories(), 'faq-categories'), 'slug');
 
