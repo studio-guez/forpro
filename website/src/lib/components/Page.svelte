@@ -3,12 +3,13 @@
 	import PageIntro from '$lib/components/PageIntro.svelte';
 	import BlockModuleTitreTexteImage from '$lib/components/BlockModuleTitreTexteImage.svelte';
 	import BlockModuleCases from '$lib/components/BlockModuleCases.svelte';
+	import BlockModuleGrilleImages from '$lib/components/BlockModuleGrilleImages.svelte';
 	import BlockModuleInfosPratiques from '$lib/components/BlockModuleInfosPratiques.svelte';
 	import BlockModuleAgenda from '$lib/components/BlockModuleAgenda.svelte';
 	import BlockModuleProjets from '$lib/components/BlockModuleProjets.svelte';
 	import BlockModuleCta from '$lib/components/BlockModuleCta.svelte';
 	import BlockModulePartenaires from '$lib/components/BlockModulePartenaires.svelte';
-	import type { Page, ModuleTitreTexteImageContent, ModuleCasesContent, ModuleInfosPratiquesContent, ModuleAgendaContent, ModuleProjetsContent, ModuleCtaContent, ModulePartenairesContent } from '$lib/interfaces/page';
+	import type { Page, ModuleTitreTexteImageContent, ModuleCasesContent, ModuleGrilleImagesContent,ModuleInfosPratiquesContent, ModuleAgendaContent, ModuleProjetsContent, ModuleCtaContent, ModulePartenairesContent } from '$lib/interfaces/page';
 
 	let { page }: { page: Page } = $props();
 </script>
@@ -35,6 +36,11 @@
 		{:else if block.type === 'module-cases'}
 			<BlockModuleCases
 				content={block.content as unknown as ModuleCasesContent}
+				theme={page.theme}
+			/>
+		{:else if block.type === 'module-grille-images'}
+			<BlockModuleGrilleImages
+				content={block.content as unknown as ModuleGrilleImagesContent}
 				theme={page.theme}
 			/>
 		{:else if block.type === 'module-infos-pratiques'}
