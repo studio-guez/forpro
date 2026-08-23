@@ -16,7 +16,7 @@
 	const themeConfig: Record<Theme, Record<Variant, ThemeColors>> = {
 		default: {
 			default: { 
-				bg: 'var(--color-purple)',
+				bg: 'var(--color-blue)',
 				text: 'var(--color-white)',        
 				accent: 'var(--color-white)',        
 			},
