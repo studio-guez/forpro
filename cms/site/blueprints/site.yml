@@ -7,7 +7,7 @@ tabs:
     icon: text
 
     columns:
-      - width: 1/2
+      - width: 1/3
 
         sections:
 
@@ -33,7 +33,7 @@ tabs:
             parent: site.index.template("pages").first()
             create: page
             
-      - width: 1/2
+      - width: 1/3
 
         sections:
           events:
@@ -60,6 +60,18 @@ tabs:
             templates:
               - project
             create: project
+
+      - width: 1/3
+        sections:
+          jobOffers:
+            label: "Offres d'emploi"
+            type: pages
+            image: false
+            parent: site.index.template("job-offers").first()
+            limit: 10
+            templates:
+              - job-offer
+            create: job-offer
 
   taxonomies:
     label:
