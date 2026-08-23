@@ -1,0 +1,15 @@
+# Reusable module blockbuilder. Shared by the `page`, `team` and `job-offers`
+# templates so they all expose the same `body` payload to the frontend.
+label:
+  en: Content
+  fr: Contenu
+type: blocks
+fieldsets:
+  - module-titre-texte-image
+  - module-cases
+  - module-grille-images
+  - module-infos-pratiques
+  - module-agenda
+  - module-projets
+  - module-cta
+  - module-partenaires
