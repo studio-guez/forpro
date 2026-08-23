@@ -125,6 +125,21 @@ trait UtilsPages
     }
 
     /**
+     * Card payload for a mission listed on the missions index.
+     */
+    static function getMissionCardData(\Kirby\Cms\Page $page): array
+    {
+        return [
+            'title'     => $page->title()->value(),
+            'url'       => '/' . $page->virtualPath(),
+            'date'      => $page->date()->toDate('Y-m-d'),
+            'location'  => $page->location()->value(),
+            'shortDesc' => $page->shortDesc()->value(),
+            'terms'     => self::resolveTaxonomyTerms($page->domains(), 'domains'),
+        ];
+    }
+
+    /**
      * Normalized `activityRateMin/activityRateMax` percentages of a job offer.
      * Only the maximum is optional (a fixed rate leaves it empty).
      */
