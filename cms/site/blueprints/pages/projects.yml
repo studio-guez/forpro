@@ -4,7 +4,7 @@ title:
 
 extends: pages/core-page
 
-icon: layout
+icon: folder
 
 tabs:
   content:
