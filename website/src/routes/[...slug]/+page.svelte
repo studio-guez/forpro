@@ -2,7 +2,9 @@
 	import Page from '$lib/components/Page.svelte';
 	import Faq from '$lib/components/Faq.svelte';
 	import Event from '$lib/components/Event.svelte';
+	import Events from '$lib/components/Events.svelte';
 	import Project from '$lib/components/Project.svelte';
+	import Projects from '$lib/components/Projects.svelte';
 	import type { PageData } from './$types';
 	import { IS_PROD } from '$lib/env';
 
@@ -60,8 +62,12 @@
 	<Faq {page} />
 {:else if page.template === 'event'}
 	<Event {page} />
+{:else if page.template === 'events'}
+	<Events {page} />
 {:else if page.template === 'project'}
 	<Project {page} />
+{:else if page.template === 'projects'}
+	<Projects {page} />
 {:else}
 	<Page {page} />
 {/if}
