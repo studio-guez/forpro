@@ -1,0 +1,26 @@
+extends: blocks/base
+
+name:
+  en: Module - 3 elements
+  fr: Module - 3 éléments
+
+icon: grid
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  shortDesc:
+    width: 1/2
+    label:
+      en: Short description
+      fr: Description courte
+    extends: fields/writer
+  elements:
+    extends: fields/threeElements
+    min: 1
+    required: true

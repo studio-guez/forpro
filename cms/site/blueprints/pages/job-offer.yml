@@ -1,0 +1,187 @@
+title:
+  en: Job offer
+  fr: Offre d'emploi
+
+icon: briefcase
+
+status:
+  draft: true
+  listed: true
+
+num: zero
+
+options:
+  preview: "{{ page.frontendUrl }}"
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    columns:
+      sidebar:
+        width: 1/3
+        sticky: true
+        sections:
+          meta:
+            type: fields
+            fields:
+              title:
+                label:
+                  en: Title
+                  fr: Titre
+                type: text
+                required: true
+              sepTaxonomies:
+                type: line
+              domains:
+                extends: fields/taxonomies/domains
+              jobOfferCategories:
+                extends: fields/taxonomies/job-offer-categories
+          infos:
+            type: fields
+            fields:
+              infosLabel:
+                label:
+                  en: Practical information
+                  fr: Informations pratiques
+                type: headline
+              location:
+                label:
+                  en: Place of work
+                  fr: Lieu de travail
+                type: text
+                required: true
+              activityRateMin:
+                label:
+                  en: Minimum activity rate
+                  fr: Taux d'activité minimum
+                type: number
+                min: 0
+                max: 100
+                step: 5
+                after: "%"
+                width: 1/2
+                required: true
+              activityRateMax:
+                label:
+                  en: Maximum activity rate
+                  fr: Taux d'activité maximum
+                type: number
+                min: 0
+                max: 100
+                step: 5
+                after: "%"
+                width: 1/2
+              startDate:
+                label:
+                  en: Starting date
+                  fr: Entrée en fonction
+                type: text
+                required: true
+                help:
+                  en: Free text, e.g. "as soon as possible" or "1st September 2026".
+                  fr: Texte libre, p. ex. « dès que possible » ou « 1er septembre 2026 ».
+              deadline:
+                label:
+                  en: Application deadline
+                  fr: Délai de candidature
+                type: date
+                required: true
+              applicationEmail:
+                label:
+                  en: Send the application to
+                  fr: Envoyer le dossier à
+                type: email
+                required: true
+              pdfOffer:
+                label:
+                  en: PDF version of the offer
+                  fr: Version PDF de l'offre
+                type: files
+                max: 1
+                layout: list
+                uploads: document
+      main:
+        width: 2/3
+        sections:
+          offer:
+            type: fields
+            fields:
+              offerLabel:
+                label:
+                  en: The offer
+                  fr: L'offre
+                type: headline
+              description:
+                label:
+                  en: Description
+                  fr: Description
+                extends: fields/writer
+                required: true
+              profile:
+                label:
+                  en: Profile sought
+                  fr: Profil recherché
+                extends: fields/writer
+                required: true
+              conditions:
+                label:
+                  en: Conditions
+                  fr: Conditions
+                extends: fields/writer
+                required: true
+          application:
+            type: fields
+            fields:
+              applicationLabel:
+                label:
+                  en: How to apply
+                  fr: Comment postuler
+                type: headline
+              applicationContent:
+                label:
+                  en: Contents of the application
+                  fr: Contenu du dossier
+                extends: fields/writer
+                required: true
+                help:
+                  en: e.g. "CV, answers to the questions below, certificates."
+                  fr: p. ex. « CV, réponse aux questions ci-dessous, certificats. »
+              applicationQuestions:
+                label:
+                  en: Application questions
+                  fr: Questions du dossier
+                type: structure
+                fields:
+                  question:
+                    label:
+                      en: Heading
+                      fr: Titre
+                    type: text
+                    required: true
+                    help:
+                      en: Short heading shown next to the text, e.g. "Question 1".
+                      fr: Titre court affiché à côté du texte, p. ex. « Question 1 ».
+                  answer:
+                    label:
+                      en: Text
+                      fr: Texte
+                    extends: fields/writer
+                    required: true
+                    help:
+                      en: The question the candidate has to answer.
+                      fr: La question à laquelle la personne candidate doit répondre.
+          recruiting:
+            type: fields
+            fields:
+              recruitingLabel:
+                label:
+                  en: Recruiting steps
+                  fr: Étapes du recrutement
+                type: headline
+              recruitingSteps:
+                extends: fields/timelineSteps
+
+  seo: tabs/seo

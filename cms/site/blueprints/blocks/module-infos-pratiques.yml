@@ -22,68 +22,16 @@ fields:
     type: text
     required: true
   elements:
-    label:
-      en: Elements
-      fr: Éléments
+    extends: fields/threeElements
     help:
       en: Optional. If added, all 3 elements must be filled in.
       fr: Optionnel. Si ajouté, les 3 éléments doivent être remplis.
-    type: structure
-    max: 1
-    columns:
-      title1:
-        width: 1/3
-      title2:
-        width: 1/3
-      title3:
-        width: 1/3
-    fields:
-      title1:
-        label:
-          en: Title element 1
-          fr: Titre élément 1
-        type: text
-        required: true
-      description1:
-        label:
-          en: Description element 1
-          fr: Description élément 1
-        extends: fields/writer
-        required: true
-      description1separator:
-        type: line
-      title2:
-        label:
-          en: Title element 2
-          fr: Titre élément 2
-        type: text
-        required: true
-      description2:
-        label:
-          en: Description element 2
-          fr: Description élément 2
-        extends: fields/writer
-        required: true
-      description2separator:
-        type: line
-      title3:
-        label:
-          en: Title element 3
-          fr: Titre élément 3
-        type: text
-        required: true
-      description3:
-        label:
-          en: Description element 3
-          fr: Description élément 3
-        extends: fields/writer
-        required: true
   faqCategories:
     extends: fields/taxonomies/faq-categories
     width: 1/2
     help:
-      en: Filters the questions shown in the block and pre-filters the FAQ page linked by the CTA.
-      fr: Filtre les questions affichées dans le module et pré-filtre la page FAQ liée par le CTA.
+      en: Filters the questions shown in the block.
+      fr: Filtre les questions affichées dans le module.
   ctaLabel:
     width: 1/2
     label:

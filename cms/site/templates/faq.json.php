@@ -6,12 +6,7 @@ require_once 'utils/Utils.php';
 /** @global Kirby\Cms\Site $site */
 /** @global Kirby\Cms\Page $page */
 
-$json = [];
-
-$json['template'] = 'faq';
-$json['title'] = $page->title()->value();
-$json['slug'] = $page->slug();
-$json['path'] = $page->virtualPath();
+$json = Utils::getPageBaseData($page, 'faq');
 
 // All FAQ categories in their CMS-defined order, so the frontend can order filters accordingly.
 $json['faqCategories'] = Utils::getTaxonomyTerms('faq-categories');
@@ -34,6 +29,8 @@ $json['sections'] = $page->sections()->toStructure()->map(function ($section) us
         ])->values(),
     ];
 })->values();
+
+$json['body'] = Utils::getBodyBlocks($page->body());
 
 $json['seo'] = Utils::getSeoDataFromPage($page);
 

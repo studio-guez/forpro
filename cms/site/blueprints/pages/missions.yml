@@ -1,0 +1,101 @@
+title:
+  en: Missions
+  fr: Missions
+
+extends: pages/core-page
+
+icon: star
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    columns:
+      sidebar:
+        width: 1/4
+        sticky: true
+        sections:
+          hierarchy:
+            type: fields
+            fields:
+              parentPage:
+                label:
+                  en: Parent page
+                  fr: Page parente
+                type: pages
+                query: page.possibleParents
+                text: "{{ page.breadcrumbTitle }}"
+                multiple: false
+                max: 1
+                link: false
+                empty:
+                  en: No parent page
+                  fr: Aucune page parente
+              sepHierarchy:
+                type: line
+          title:
+            type: fields
+            fields:
+              title:
+                label:
+                  en: Title
+                  fr: Titre
+                type: text
+                required: true
+              overtitle:
+                label:
+                  en: Overtitle
+                  fr: Sur-titre
+                type: text
+              theme:
+                extends: fields/theme
+          cover:
+            type: fields
+            fields:
+              sepCover:
+                type: line
+              cover:
+                extends: fields/cover
+      main:
+        width: 3/4
+        sections:
+          intro:
+            type: fields
+            fields:
+              introLabel:
+                label:
+                  en: Intro
+                  fr: Introduction
+                type: headline
+              introTitle:
+                label:
+                  en: Intro title
+                  fr: Titre introduction
+                type: text
+                required: true
+              intro:
+                extends: fields/writer
+                label:
+                  en: Intro
+                  fr: Introduction
+                required: true
+              sepIntro:
+                type: line
+          extra:
+            type: fields
+            fields:
+              body:
+                extends: fields/bodyExtra
+          missions:
+            type: pages
+            image: false
+            label:
+              en: Missions
+              fr: Missions
+            templates:
+              - mission
+            create: mission
+
+  seo: tabs/seo

@@ -1,8 +1,15 @@
 <script lang="ts">
-	import Page from '$lib/components/Page.svelte';
-	import Faq from '$lib/components/Faq.svelte';
-	import Event from '$lib/components/Event.svelte';
-	import Project from '$lib/components/Project.svelte';
+	import Page from '$lib/components/templates/Page.svelte';
+	import Faq from '$lib/components/templates/Faq.svelte';
+	import Event from '$lib/components/templates/Event.svelte';
+	import Events from '$lib/components/templates/Events.svelte';
+	import Project from '$lib/components/templates/Project.svelte';
+	import Projects from '$lib/components/templates/Projects.svelte';
+	import Team from '$lib/components/templates/Team.svelte';
+	import JobOffer from '$lib/components/templates/JobOffer.svelte';
+	import JobOffers from '$lib/components/templates/JobOffers.svelte';
+	import Mission from '$lib/components/templates/Mission.svelte';
+	import Missions from '$lib/components/templates/Missions.svelte';
 	import type { PageData } from './$types';
 	import { IS_PROD } from '$lib/env';
 
@@ -60,8 +67,22 @@
 	<Faq {page} />
 {:else if page.template === 'event'}
 	<Event {page} />
+{:else if page.template === 'events'}
+	<Events {page} />
 {:else if page.template === 'project'}
 	<Project {page} />
+{:else if page.template === 'projects'}
+	<Projects {page} />
+{:else if page.template === 'team'}
+	<Team {page} />
+{:else if page.template === 'job-offer'}
+	<JobOffer {page} />
+{:else if page.template === 'job-offers'}
+	<JobOffers {page} />
+{:else if page.template === 'mission'}
+	<Mission {page} />
+{:else if page.template === 'missions'}
+	<Missions {page} />
 {:else}
 	<Page {page} />
 {/if}

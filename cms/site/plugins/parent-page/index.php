@@ -59,9 +59,11 @@ Kirby::plugin('forpro/parent-page', [
          * structural only and never appear in the URL.
          */
         'virtualPath' => function (): string {
+            // Each ancestor contributes its own parentPage chain, so a child
+            // inherits the full virtual path of its parent, not just its slug.
             $ancestors = $this->parents()->flip()
                 ->filter(fn($p) => $p->parent() !== null)
-                ->values(fn($p) => $p->slug());
+                ->values(fn($p) => implode('/', array_map(fn($a) => $a->slug(), $p->parentChain())));
 
             $chain = array_map(fn($p) => $p->slug(), $this->parentChain());
 

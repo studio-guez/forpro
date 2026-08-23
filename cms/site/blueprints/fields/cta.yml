@@ -55,6 +55,7 @@ fields:
     label: { en: Icon, fr: Icône }
     type: select
     placeholder: { en: None, fr: Aucun }
+    default: arrow
     options:
       - value: arrow
         text: { en: "→", fr: "→" }

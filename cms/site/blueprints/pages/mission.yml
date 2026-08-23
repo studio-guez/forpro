@@ -1,0 +1,141 @@
+title:
+  en: Mission
+  fr: Mission
+
+icon: star
+
+status:
+  draft: true
+  listed: true
+
+num: zero
+
+options:
+  preview: "{{ page.frontendUrl }}"
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    columns:
+      sidebar:
+        width: 1/3
+        sticky: true
+        sections:
+          meta:
+            type: fields
+            fields:
+              title:
+                label:
+                  en: Title
+                  fr: Titre
+                type: text
+                required: true
+                help:
+                  en: 'Shown as "Mission : <title>" on the mission page.'
+                  fr: 'Affiché sous la forme « Mission : <titre> » sur la page de la mission.'
+              sepTaxonomies:
+                type: line
+              domains:
+                extends: fields/taxonomies/domains
+          infos:
+            type: fields
+            fields:
+              infosLabel:
+                label:
+                  en: Practical information
+                  fr: Informations pratiques
+                type: headline
+              announcer:
+                label:
+                  en: Announcer
+                  fr: Annonceur
+                type: text
+                required: true
+              publishedDate:
+                label:
+                  en: Publication date
+                  fr: Date de publication
+                type: date
+                required: true
+                default: today
+                width: 1/2
+              date:
+                label:
+                  en: Mission date
+                  fr: Date de la mission
+                type: date
+                required: true
+                width: 1/2
+              location:
+                label:
+                  en: Place
+                  fr: Lieu
+                type: text
+                required: true
+              applyCta:
+                extends: fields/cta
+                label:
+                  en: Apply button
+                  fr: Bouton de candidature
+                help:
+                  en: e.g. "I apply!" pointing to a form, a page or an email address.
+                  fr: p. ex. « Je postule ! » pointant vers un formulaire, une page ou une adresse email.
+      main:
+        width: 2/3
+        sections:
+          presentation:
+            type: fields
+            fields:
+              presentationLabel:
+                label:
+                  en: Presentation
+                  fr: Présentation
+                type: headline
+              cover:
+                extends: fields/cover
+              introTitle:
+                label:
+                  en: Intro title
+                  fr: Titre introduction
+                type: text
+                required: true
+              shortDesc:
+                label:
+                  en: Short description
+                  fr: Description courte
+                extends: fields/writer
+                required: true
+                help:
+                  en: Also used as the excerpt on the missions index.
+                  fr: Également utilisée comme extrait sur l'index des missions.
+          mission:
+            type: fields
+            fields:
+              missionLabel:
+                label:
+                  en: The mission
+                  fr: La mission
+                type: headline
+              profile:
+                label:
+                  en: Profile sought
+                  fr: Ton profil
+                extends: fields/writer
+                required: true
+              tasks:
+                label:
+                  en: Tasks
+                  fr: Tes missions
+                extends: fields/writer
+                required: true
+              planning:
+                label:
+                  en: Planning
+                  fr: Ton planning
+                extends: fields/writer
+                required: true
+
+  seo: tabs/seo
