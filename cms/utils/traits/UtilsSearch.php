@@ -14,11 +14,12 @@ trait UtilsSearch
      * Taxonomy terms and the `pages` container are structural only.
      */
     private const SEARCHABLE_TEMPLATES = [
-        'page'     => 'Page',
-        'faq'      => 'Page',
-        'event'    => 'Événement',
-        'project'  => 'Projet',
-        'team'     => 'Page',
+        'page'       => 'Page',
+        'faq'        => 'Page',
+        'event'      => 'Événement',
+        'project'    => 'Projet',
+        'team'       => 'Page',
+        'job-offer'  => "Offre d'emploi",
     ];
 
     /** Result groups the frontend tabs filter on; every other template is a page. */
