@@ -2,7 +2,7 @@ label: { en: Page, fr: Page }
 type: pages
 link: false
 max: 1
-query: site.index.listed.filterBy('template', 'in', ['page', 'faq', 'events', 'projects', 'team']).sortBy('breadcrumbtitle', 'asc')
+query: site.index.listed.filterBy('template', 'in', ['page', 'faq', 'events', 'projects', 'team', 'job-offers']).sortBy('breadcrumbtitle', 'asc')
 text: "{{ page.breadcrumbTitle }}"
 when:
   type: page
