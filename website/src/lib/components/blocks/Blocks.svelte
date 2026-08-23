@@ -3,6 +3,7 @@
 	import BlockModuleCases from '$lib/components/blocks/BlockModuleCases.svelte';
 	import BlockModuleGrilleImages from '$lib/components/blocks/BlockModuleGrilleImages.svelte';
 	import BlockModuleInfosPratiques from '$lib/components/blocks/BlockModuleInfosPratiques.svelte';
+	import BlockModuleTimeline from '$lib/components/blocks/BlockModuleTimeline.svelte';
 	import BlockModuleAgenda from '$lib/components/blocks/BlockModuleAgenda.svelte';
 	import BlockModuleProjets from '$lib/components/blocks/BlockModuleProjets.svelte';
 	import BlockModuleCta from '$lib/components/blocks/BlockModuleCta.svelte';
@@ -14,6 +15,7 @@
 		ModuleCasesContent,
 		ModuleGrilleImagesContent,
 		ModuleInfosPratiquesContent,
+		ModuleTimelineContent,
 		ModuleAgendaContent,
 		ModuleProjetsContent,
 		ModuleCtaContent,
@@ -39,6 +41,8 @@
 			/>
 		{:else if block.type === 'module-infos-pratiques'}
 			<BlockModuleInfosPratiques content={block.content as unknown as ModuleInfosPratiquesContent} />
+		{:else if block.type === 'module-timeline'}
+			<BlockModuleTimeline content={block.content as unknown as ModuleTimelineContent} />
 		{:else if block.type === 'module-agenda'}
 			<BlockModuleAgenda content={block.content as unknown as ModuleAgendaContent} />
 		{:else if block.type === 'module-projets'}
