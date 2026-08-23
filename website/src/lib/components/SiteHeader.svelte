@@ -14,6 +14,7 @@
 	import IconSearch from '$lib/components/svg/IconSearch.svelte';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
+	import SearchModal from '$lib/components/SearchModal.svelte';
 
 	interface Props {
 		header: Header;
@@ -43,13 +44,19 @@
 
 	let menuOpen = $state(false);
 	let headerEl = $state<HTMLElement>();
-	let searchInput = $state<HTMLInputElement>();
-	let searchOpen = $state(false);
+	let searchQuery = $state('');
+	let searchModalOpen = $state(false);
 
+	// The header control is only the entry point: the query lives in the modal,
+	// which focuses its own field on open.
 	const openSearch = () => {
-		searchOpen = true;
-		searchInput?.focus();
+		searchModalOpen = true;
+		closeMenu();
 	};
+
+	$effect(() => {
+		if (!searchModalOpen) searchQuery = '';
+	});
 
 	const toggleMenu = () => {
 		menuOpen = !menuOpen;
@@ -106,29 +113,35 @@
 		</nav>
 
 		<div class="w-60 flex justify-end max-lg:ml-auto">
-			<div role="search" class="group flex items-center has-[#search-button:hover]:bg-grey-light has-[#search-input:focus]:bg-grey-light transition-colors p-1 rounded-full focus-within:ring-2 focus-within:ring-blue shrink">
-				<input
-					bind:this={searchInput}
-					id="search-input"
-					type="search"
-					placeholder="Rechercher..."
-					aria-label="Rechercher"
-					tabindex={searchOpen ? undefined : -1}
-					onblur={() => (searchOpen = false)}
-					class="text-body-2 font-bold text-blue bg-transparent border-0 min-w-0 w-0 opacity-0 group-has-[#search-button:hover]:w-48 group-has-[#search-button:hover]:opacity-100 focus:w-48 focus:opacity-100 transition-all duration-300 ease-out placeholder:text-blue/50 focus:ring-0 focus:outline-none peer"
-				/>
-				<button
-					type="button"
-					id="search-button"
-					onclick={openSearch}
-					aria-controls="search-input"
-					aria-expanded={searchOpen}
-					class="shrink-0 p-2 rounded-full hover:bg-blue hover:text-white transition-colors peer-focus:bg-white"
-					aria-label="Rechercher"
+			<button
+				type="button"
+				id="search-button"
+				onclick={openSearch}
+				aria-haspopup="dialog"
+				aria-expanded={searchModalOpen}
+				aria-label="Rechercher"
+				class="group flex items-center p-1 rounded-full transition-colors shrink hover:bg-grey-light focus-visible:ring-2 focus-visible:ring-blue focus:outline-none {searchModalOpen
+					? 'bg-grey-light'
+					: ''}"
+			>
+				<span
+					aria-hidden="true"
+					class="text-body-2 font-bold text-left truncate min-w-0 transition-all duration-300 ease-out {searchModalOpen
+						? 'w-48 opacity-100 pl-3'
+						: 'w-0 opacity-0 group-hover:w-48 group-hover:opacity-100 group-hover:pl-3'} {searchQuery
+						? 'text-blue'
+						: 'text-blue/50'}"
+				>
+					{searchQuery || 'Rechercher...'}
+				</span>
+				<span
+					class="shrink-0 p-2 rounded-full transition-colors group-hover:bg-blue group-hover:text-white {searchModalOpen
+						? 'bg-blue text-white'
+						: ''}"
 				>
 					<IconSearch class="shrink-0" />
-				</button>
-			</div>
+				</span>
+			</button>
 		</div>
 
 		<button
@@ -238,3 +251,5 @@
 		</nav>
 	{/if}
 </header>
+
+<SearchModal bind:open={searchModalOpen} bind:value={searchQuery} />
