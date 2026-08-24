@@ -31,6 +31,8 @@ tabs:
             sortBy: breadcrumbtitle asc
             sortable: false
             parent: site.index.template("pages").first()
+            templatesIgnore:
+              - faq
             create: page
             
       - width: 1/3
