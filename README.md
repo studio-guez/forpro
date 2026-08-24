@@ -137,6 +137,25 @@ docker compose -f compose.dev.yml exec cms sh -c 'rm -rf media/pages media/site'
 
 Both the plugin and the script share the same logic in `cms/site/plugins/image-guard/ImageGuard.php`, so the plugin is fully self-contained.
 
+## Maintenance: pre-generate thumbnails
+
+Kirby writes a rendition (`resize()`, `crop()`, `srcset()`) the first time it is requested, so right after clearing `media/` — or after a content rsync onto a fresh environment — the first visitor pays for generating every WebP of the `[480 … 3840]` srcset ladder. There is no built-in command for this; `cms/utils/warm-thumbs.php` walks every page (drafts included) plus the site files and calls the same renditions the JSON templates emit (`Utils::getJsonEncodeImageData()`, `getFaviconData()`, the search covers).
+
+```bash
+# List the files that would be processed:
+docker compose -f compose.dev.yml exec --user www-data cms php utils/warm-thumbs.php --dry-run
+
+# Generate the missing thumbs (existing ones are skipped by Kirby):
+docker compose -f compose.dev.yml exec --user www-data cms php utils/warm-thumbs.php
+
+# Wipe media/pages + media/site first, then regenerate everything:
+docker compose -f compose.dev.yml exec --user www-data cms php utils/warm-thumbs.php --force
+```
+
+Run it as `www-data`, otherwise the generated files end up owned by root and Apache can't overwrite them later. Each file is printed **before** it is processed: an oversized or CMYK original can exhaust PHP's memory limit, which kills the process without a catchable error, so the last line printed names the culprit — fix it with `fix-large-images.php` above, then re-run.
+
+Whenever a rendition is added or changed in `cms/utils/traits/`, mirror it in the script — a size warmed here but never requested is wasted disk, and a size requested but not warmed is generated on the visitor's request.
+
 ## Sync content from PROD (local)
 
 On the servers, all mutable CMS state lives under `$DEPLOY_PATH/shared/cms/`
