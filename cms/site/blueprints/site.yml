@@ -11,6 +11,18 @@ tabs:
 
         sections:
 
+          home:
+            label: "Page d'accueil"
+            type: pages
+            image:
+              query: page.cover.toFile
+              cover: true
+            sortable: false
+            max: 1
+            parent: site.index.template("pages").first()
+            query: page.childrenAndDrafts.filterBy("slug", "home")
+            create: false
+
           faq:
             label: "FAQ"
             type: pages
@@ -31,6 +43,7 @@ tabs:
             sortBy: breadcrumbtitle asc
             sortable: false
             parent: site.index.template("pages").first()
+            query: page.childrenAndDrafts.filterBy("slug", "!=", "home")
             templatesIgnore:
               - faq
             create: page
