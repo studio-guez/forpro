@@ -34,8 +34,17 @@
 	{/if}
 
 	{#if content.content}
-		<div class="prose text-body-2 mt-8 text-center mx-auto max-w-3xl">
-			{@html content.content}
-		</div>
+		{#if content.contentTitle}
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 mt-8">
+				<h3 class="text-h4 max-lg:text-center">{content.contentTitle}</h3>
+				<div class="prose text-body-2 lg:col-span-2 max-lg:text-center">
+					{@html content.content}
+				</div>
+			</div>
+		{:else}
+			<div class="prose text-body-2 mt-8 text-center mx-auto max-w-3xl">
+				{@html content.content}
+			</div>
+		{/if}
 	{/if}
 </Card>

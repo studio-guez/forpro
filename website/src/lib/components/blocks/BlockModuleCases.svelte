@@ -63,7 +63,7 @@
 >
 	<div class="flex flex-col gap-16 mt-12">
 		{#each content.rows as row, i (i)}
-			<article class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch" aria-label={row.hideTitle ? row.title : undefined}>
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
                 {#each row.media as media, m (m)}
                     <div class="overflow-hidden rounded-2xl min-h-75" class:[contain:size]={media.type !== 'video'} class:lg:col-span-2={singleMediaSpan(m) === 2}>
                         {#if media.type === 'video'}
@@ -74,9 +74,7 @@
                     </div>
                 {/each}
 				<div class="min-h-75 flex flex-col justify-center" class:lg:order-first={!isMediaLeft(i)}>
-					{#if row.hideTitle}
-						<h3 class="sr-only">{row.title}</h3>
-					{:else}
+					{#if row.title}
 						<h3 class="text-h4 mb-6">{row.title}</h3>
 					{/if}
 					<div class="prose text-body-2">
@@ -86,7 +84,7 @@
 						<CtaLink cta={row.cta} color={ctaColor} inverted={ctaInverted} class="mt-8" />
 					{/if}
 				</div>
-			</article>
+			</div>
 		{/each}
 	</div>
 
