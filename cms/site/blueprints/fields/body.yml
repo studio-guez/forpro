@@ -8,6 +8,7 @@ label:
 type: blocks
 fieldsets:
   module-titre-texte-image: true
+  module-text: true
   module-cases: true
   module-grille-images: true
   module-video: true
