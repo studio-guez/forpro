@@ -227,9 +227,10 @@ trait UtilsBlocks
             'elements' => $elements,
             'faqs'     => $faqs,
             'cta'      => $ctaUrl ? [
-                'label' => $block->ctaLabel()->or('Plus de réponses')->value(),
-                'url'   => $ctaUrl,
-                'icon'  => 'arrow',
+                'label'  => $block->ctaLabel()->or('Plus de réponses')->value(),
+                'url'    => $ctaUrl,
+                'icon'   => 'arrow',
+                'target' => null,
             ] : null,
             'variant'  => $block->variant()->or('default')->value(),
         ];
@@ -285,9 +286,10 @@ trait UtilsBlocks
             'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
             'events'    => $events,
             'cta'       => $ctaUrl ? [
-                'label' => $block->ctaLabel()->or("Tout l'agenda")->value(),
-                'url'   => $ctaUrl,
-                'icon'  => 'arrow',
+                'label'  => $block->ctaLabel()->or("Tout l'agenda")->value(),
+                'url'    => $ctaUrl,
+                'icon'   => 'arrow',
+                'target' => null,
             ] : null,
             'variant'   => $block->variant()->or('default')->value(),
         ];
@@ -318,9 +320,10 @@ trait UtilsBlocks
             'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
             'projects'  => $projects,
             'cta'       => $ctaUrl ? [
-                'label' => $block->ctaLabel()->or('Voir tous les projets')->value(),
-                'url'   => $ctaUrl,
-                'icon'  => 'arrow',
+                'label'  => $block->ctaLabel()->or('Voir tous les projets')->value(),
+                'url'    => $ctaUrl,
+                'icon'   => 'arrow',
+                'target' => null,
             ] : null,
             'variant'   => $block->variant()->or('default')->value(),
         ];
