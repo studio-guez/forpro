@@ -170,13 +170,10 @@ return [
                 require_once 'utils/Utils.php';
 
                 $query = (string)(get('q') ?? '');
+                // `searchPages()` owns the group vocabulary and rejects unknown values.
                 $group = (string)(get('group') ?? 'all');
                 $offset = max((int)(get('offset') ?? 0), 0);
                 $limit = min(max((int)(get('limit') ?? 10), 1), 50);
-
-                if (in_array($group, ['all', 'pages', 'events', 'projects', 'team', 'missions', 'job-offers', 'impressum', 'basic-page', 'factory-lab'], true) === false) {
-                    $group = 'all';
-                }
 
                 return \Kirby\Http\Response::json(
                     Utils::searchPages(mb_substr($query, 0, 100), $group, $offset, $limit)
