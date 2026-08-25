@@ -11,6 +11,7 @@
 	import Mission from '$lib/components/templates/Mission.svelte';
 	import Missions from '$lib/components/templates/Missions.svelte';
 	import Impressum from '$lib/components/templates/Impressum.svelte';
+	import Press from '$lib/components/templates/Press.svelte';
 	import FactoryLab from '$lib/components/templates/FactoryLab.svelte';
 	import type { PageData } from './$types';
 	import { IS_PROD } from '$lib/env';
@@ -87,6 +88,8 @@
 	<Missions {page} />
 {:else if page.template === 'impressum'}
 	<Impressum {page} />
+{:else if page.template === 'press'}
+	<Press {page} />
 {:else if page.template === 'factory-lab'}
 	<FactoryLab {page} />
 {:else}

@@ -9,11 +9,22 @@
 
 	let { page }: { page: FactoryLabPage } = $props();
 
-	const module = $derived(page.companiesModule);
-	const colors = $derived(cardThemeColors[page.theme][module.variant]);
+	const companiesModule = $derived(page.companiesModule);
+	const colors = $derived(cardThemeColors[page.theme][companiesModule.variant]);
 
-	// The two badge lists are told apart by their shape (filled / outlined) rather
-	// than by a hue, so they stay legible on every theme palette.
+	// The module is drawn on the page background by default (as designed) and only
+	// gets the filled card treatment on the inverted variant.
+	const onColor = $derived(companiesModule.variant === 'inverted');
+
+	const badgeClass =
+		'text-caption inline-flex items-center gap-1.5 rounded-full px-3 py-1 leading-tight';
+
+	const trainingBadge = $derived({ bg: colors.bgContrast, text: 'var(--color-white)' });
+	const availabilityBadge = $derived(
+		onColor
+			? { bg: 'var(--color-white)', text: colors.bg }
+			: { bg: colors.bg, text: 'var(--color-white)' }
+	);
 </script>
 
 <PageHeader {page} />
@@ -25,28 +36,27 @@
 	{badge.label}
 {/snippet}
 
-{#snippet badgeList(label: string, badges: CompanyBadge[], filled: boolean)}
+{#snippet badgeList(label: string, badges: CompanyBadge[], badgeColors: { bg: string; text: string })}
 	{#if badges.length > 0}
 		<p class="text-label font-bold mt-5">{label}</p>
 		<ul class="flex flex-wrap items-center gap-2 mt-2">
 			{#each badges as badge, badgeIndex (badgeIndex)}
-				{@const badgeClass = [
-					'text-caption inline-flex items-center gap-1.5 rounded-full px-3 py-1 leading-tight',
-					filled ? '' : 'border-2 border-current'
-				].join(' ')}
-				<li>
+				<li
+					style:background-color={badgeColors.bg}
+					style:color={badgeColors.text}
+					class="rounded-full"
+				>
 					{#if badge.url}
 						<a
 							href={badge.url}
 							target="_blank"
 							rel="noopener noreferrer"
 							class="{badgeClass} hover:opacity-50 transition-opacity"
-							style:background-color={filled ? colors.bgContrast : undefined}
 						>
 							{@render badgeContent(badge)}
 						</a>
 					{:else}
-						<span class={badgeClass} style:background-color={filled ? colors.bgContrast : undefined}>
+						<span class={badgeClass}>
 							{@render badgeContent(badge)}
 						</span>
 					{/if}
@@ -56,17 +66,17 @@
 	{/if}
 {/snippet}
 
-{#if module.companies.length > 0}
+{#if companiesModule.companies.length > 0}
 	<Card
-		background={colors.bg}
-		color={colors.text}
-		title={module.title}
-		shortDesc={module.intro}
-		titleBackground="var(--color-white)"
-		titleColor={colors.title}
+		background={onColor ? colors.bg : null}
+		color={onColor ? colors.text : null}
+		title={companiesModule.title}
+		shortDesc={companiesModule.intro}
+		titleBackground={onColor ? 'var(--color-white)' : colors.bg}
+		titleColor={onColor ? colors.bg : 'var(--color-white)'}
 	>
 		<ul class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-16 mt-12">
-			{#each module.companies as company, companyIndex (companyIndex)}
+			{#each companiesModule.companies as company, companyIndex (companyIndex)}
 				<li>
 					<div class="rounded-2xl overflow-hidden aspect-16/10 bg-grey-light">
 						{#if company.image}
@@ -79,7 +89,7 @@
 						{/if}
 					</div>
 
-					<h3 class="text-h4 mt-6">
+					<h3 class="text-h4 mt-6" style:color={onColor ? undefined : colors.bg}>
 						{#if company.url}
 							<a
 								href={company.url}
@@ -101,11 +111,15 @@
 						</div>
 					{/if}
 
-					{@render badgeList(module.labels.trainings, company.trainings, true)}
-					{@render badgeList(module.labels.availability, company.availability, false)}
+					{@render badgeList(companiesModule.labels.trainings, company.trainings, trainingBadge)}
+					{@render badgeList(
+						companiesModule.labels.availability,
+						company.availability,
+						availabilityBadge
+					)}
 
 					{#if company.followUps.length > 0}
-						<p class="text-label font-bold mt-5">{module.labels.followUp}</p>
+						<p class="text-label font-bold mt-5">{companiesModule.labels.followUp}</p>
 						<ul class="text-label list-disc list-inside mt-2">
 							{#each company.followUps as followUp, followUpIndex (followUpIndex)}
 								<li>{followUp}</li>

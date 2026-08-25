@@ -1,16 +1,13 @@
-import type { Block, CmsImage, HeaderType, PageParent, Seo, TimelineStep } from './page';
+import type {
+	Block,
+	CmsDocument,
+	CmsImage,
+	HeaderType,
+	PageParent,
+	Seo,
+	TimelineStep
+} from './page';
 import type { TaxonomyTerm } from './taxonomy';
-
-// A downloadable file (the PDF version of an offer). Documents are served as-is
-// by the CMS, so they only expose what a download link needs.
-export interface CmsDocument {
-	readonly url: string;
-	readonly filename: string;
-	readonly extension: string;
-	/** Human readable file size, e.g. "1.2 MB". */
-	readonly size: string;
-	readonly mime: string;
-}
 
 export interface JobOfferQuestion {
 	/** Short heading shown next to the text, e.g. "Question 1". */
