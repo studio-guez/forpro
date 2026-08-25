@@ -106,11 +106,14 @@ tabs:
                 label:
                   en: Names
                   fr: Noms
-                help:
-                  en: One name per line.
-                  fr: Un nom par ligne.
-                type: textarea
-                buttons: false
+                type: structure
+                fields:
+                  name:
+                    label:
+                      en: Name
+                      fr: Nom
+                    type: text
+                    required: true
               linkLabel:
                 label:
                   en: Link label
