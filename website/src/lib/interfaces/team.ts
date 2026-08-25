@@ -1,4 +1,4 @@
-import type { Block, CmsImage, Seo } from './page';
+import type { Block, CmsImage, HeaderType, Seo } from './page';
 
 export type TeamMemberStatus = 'apprenti' | 'employe';
 
@@ -20,7 +20,10 @@ export interface TeamPage {
 	readonly slug: string;
 	readonly path: string;
 	readonly cover: CmsImage | null;
-	readonly shortDesc: string;
+	readonly headerType: HeaderType;
+	readonly overtitle: string | null;
+	readonly introTitle: string;
+	readonly intro: string;
 	readonly sections: TeamSection[];
 	readonly body: Block[];
 	readonly seo: Seo;
