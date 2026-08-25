@@ -60,7 +60,7 @@
 		{:else if block.type === 'module-agenda'}
 			<BlockModuleAgenda content={block.content as unknown as ModuleAgendaContent} />
 		{:else if block.type === 'module-projets'}
-			<BlockModuleProjets content={block.content as unknown as ModuleProjetsContent} {theme} />
+			<BlockModuleProjets content={block.content as unknown as ModuleProjetsContent} />
 		{:else if block.type === 'module-resources'}
 			<BlockModuleResources content={block.content as unknown as ModuleResourcesContent} />
 		{:else if block.type === 'module-cta'}
