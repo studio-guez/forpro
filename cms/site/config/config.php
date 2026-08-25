@@ -54,7 +54,7 @@ return [
                 $urls = $sitemap->create('pages');
 
                 $pages = site()->index()->filter(
-                    fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'events', 'event', 'projects', 'project', 'team', 'missions', 'mission', 'job-offers', 'job-offer', 'impressum', 'basic-page', 'factory-lab'], true)
+                    fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'events', 'event', 'projects', 'project', 'team', 'missions', 'mission', 'job-offers', 'job-offer', 'impressum', 'press', 'basic-page', 'factory-lab'], true)
                         && $page->metadata()->robotsIndex()->toBool()
                 );
 
