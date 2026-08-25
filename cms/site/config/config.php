@@ -54,7 +54,7 @@ return [
                 $urls = $sitemap->create('pages');
 
                 $pages = site()->index()->filter(
-                    fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'events', 'event', 'projects', 'project', 'team', 'missions', 'mission', 'job-offers', 'job-offer'], true)
+                    fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'events', 'event', 'projects', 'project', 'team', 'missions', 'mission', 'job-offers', 'job-offer', 'impressum', 'basic-page'], true)
                         && $page->metadata()->robotsIndex()->toBool()
                 );
 
@@ -174,7 +174,7 @@ return [
                 $offset = max((int)(get('offset') ?? 0), 0);
                 $limit = min(max((int)(get('limit') ?? 10), 1), 50);
 
-                if (in_array($group, ['all', 'pages', 'events', 'projects', 'team', 'missions', 'job-offers'], true) === false) {
+                if (in_array($group, ['all', 'pages', 'events', 'projects', 'team', 'missions', 'job-offers', 'impressum', 'basic-page'], true) === false) {
                     $group = 'all';
                 }
 
