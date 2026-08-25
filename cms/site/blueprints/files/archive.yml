@@ -1,0 +1,9 @@
+title:
+  en: Archive
+  fr: Archive
+
+accept:
+  extension: zip
+  mime:
+    - application/zip
+    - application/x-zip-compressed
