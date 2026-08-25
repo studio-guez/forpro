@@ -23,6 +23,18 @@ tabs:
             query: page.childrenAndDrafts.filterBy("slug", "home")
             create: false
 
+          resources:
+            label: "Ressources"
+            type: pages
+            image:
+              query: page.cover.toFile
+              cover: true
+            sortable: false
+            max: 1
+            parent: site.index.template("pages").first()
+            templates:
+              - resources
+
           faq:
             label: "FAQ"
             type: pages
@@ -48,6 +60,7 @@ tabs:
             query: page.childrenAndDrafts.filterBy("slug", "!=", "home")
             templatesIgnore:
               - faq
+              - resources
             create: page
             
       - width: 1/3
