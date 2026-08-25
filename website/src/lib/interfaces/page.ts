@@ -48,6 +48,14 @@ export interface ModuleTitreTexteImageContent {
 	readonly cta: PageCta | null;
 }
 
+export interface ModuleTextContent {
+	readonly title: string;
+	readonly hideTitle: boolean;
+	readonly content: string | null;
+	readonly ctas: PageCta[];
+	readonly variant: Variant;
+}
+
 export interface CmsVideo {
 	readonly type: 'video';
 	readonly alt: string | null;
