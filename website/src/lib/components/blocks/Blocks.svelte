@@ -8,6 +8,7 @@
 	import BlockModuleTimeline from '$lib/components/blocks/BlockModuleTimeline.svelte';
 	import BlockModuleAgenda from '$lib/components/blocks/BlockModuleAgenda.svelte';
 	import BlockModuleProjets from '$lib/components/blocks/BlockModuleProjets.svelte';
+	import BlockModuleResources from '$lib/components/blocks/BlockModuleResources.svelte';
 	import BlockModuleCta from '$lib/components/blocks/BlockModuleCta.svelte';
 	import BlockModulePartenaires from '$lib/components/blocks/BlockModulePartenaires.svelte';
 	import type {
@@ -22,6 +23,7 @@
 		ModuleTimelineContent,
 		ModuleAgendaContent,
 		ModuleProjetsContent,
+		ModuleResourcesContent,
 		ModuleCtaContent,
 		ModulePartenairesContent
 	} from '$lib/interfaces/page';
@@ -55,6 +57,8 @@
 			<BlockModuleAgenda content={block.content as unknown as ModuleAgendaContent} />
 		{:else if block.type === 'module-projets'}
 			<BlockModuleProjets content={block.content as unknown as ModuleProjetsContent} />
+		{:else if block.type === 'module-resources'}
+			<BlockModuleResources content={block.content as unknown as ModuleResourcesContent} />
 		{:else if block.type === 'module-cta'}
 			<BlockModuleCta content={block.content as unknown as ModuleCtaContent} />
 		{:else if block.type === 'module-partenaires'}
