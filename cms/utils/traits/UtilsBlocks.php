@@ -50,6 +50,8 @@ trait UtilsBlocks
                 return self::getAgendaBlockData($block);
             case 'module-projets':
                 return self::getProjetsBlockData($block);
+            case 'module-resources':
+                return self::getResourcesBlockData($block);
             default:
                 return $block->toArray()['content'] ?? [];
         }
@@ -304,6 +306,31 @@ trait UtilsBlocks
                 'url'   => $ctaUrl,
                 'icon'  => 'arrow',
             ] : null,
+            'variant'   => $block->variant()->or('default')->value(),
+        ];
+    }
+
+    private static function getResourcesBlockData(\Kirby\Cms\Block $block): array
+    {
+        $slugs = array_column(self::resolveTaxonomyTerms($block->domains(), 'domains'), 'slug');
+
+        // The resources page has no frontend route: it is only a content library for this block.
+        $resourcesPage = site()->index()->template('resources')->first();
+        $resources = [];
+        if ($resourcesPage) {
+            $items = self::filterStructureByTaxonomy($resourcesPage->resources()->toStructure(), 'domains', $slugs);
+
+            $resources = array_values($items->map(fn($item) => [
+                'title'     => $item->title()->value(),
+                'shortDesc' => $item->shortDesc()->value(),
+                'image'     => self::getJsonEncodeImageDataOrNull($item->image()->toFile()),
+            ])->data());
+        }
+
+        return [
+            'title'     => $block->title()->value(),
+            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'resources' => $resources,
             'variant'   => $block->variant()->or('default')->value(),
         ];
     }
