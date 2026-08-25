@@ -25,6 +25,7 @@ sections:
       - team
       - job-offers
       - missions
+      - impressum
     text: "{{ page.breadcrumbTitle }}"
     create: 
       - page
