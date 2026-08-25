@@ -96,8 +96,7 @@ trait UtilsBlocks
         $rows = [];
         foreach ($block->rows()->toStructure() as $row) {
             $rows[] = [
-                'title'       => $row->title()->value(),
-                'hideTitle'   => $row->hideTitle()->toBool(),
+                'title'       => $row->title()->isNotEmpty() ? $row->title()->value() : null,
                 'description' => $row->description()->value(),
                 'cta'         => self::resolveCtaStructure($row->cta()),
                 'media'       => self::getJsonEncodeMediaArray($row->media()->toFiles()),
@@ -143,10 +142,11 @@ trait UtilsBlocks
         $text  = $block->content()->get('content');
 
         return [
-            'title'     => $block->title()->value(),
-            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
-            'video'     => $video ? self::getJsonEncodeMediaData($video) : null,
-            'content'   => $text->isNotEmpty() ? $text->value() : null,
+            'title'        => $block->title()->value(),
+            'shortDesc'    => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'video'        => $video ? self::getJsonEncodeMediaData($video) : null,
+            'contentTitle' => $block->contentTitle()->isNotEmpty() ? $block->contentTitle()->value() : null,
+            'content'      => $text->isNotEmpty() ? $text->value() : null,
         ];
     }
 
