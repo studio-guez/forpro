@@ -106,9 +106,7 @@
     .px-card {
         @apply px-8 md:px-30;
     }
-
-    /* Cancels `px-card` so a child (e.g. a carousel track) can bleed to the
-       viewport edges while its own content stays aligned on the card padding. */
+    
     .-mx-card {
         @apply -mx-8 md:-mx-30;
     }
