@@ -96,8 +96,7 @@ trait UtilsBlocks
         $rows = [];
         foreach ($block->rows()->toStructure() as $row) {
             $rows[] = [
-                'title'       => $row->title()->value(),
-                'hideTitle'   => $row->hideTitle()->toBool(),
+                'title'       => $row->title()->isNotEmpty() ? $row->title()->value() : null,
                 'description' => $row->description()->value(),
                 'cta'         => self::resolveCtaStructure($row->cta()),
                 'media'       => self::getJsonEncodeMediaArray($row->media()->toFiles()),

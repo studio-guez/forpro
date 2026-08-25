@@ -39,24 +39,10 @@ fields:
     min: 1
     fields:
       title:
-        width: 1/2
         label:
           en: Title
           fr: Titre
         type: text
-        required: true
-      hideTitle:
-        width: 1/2
-        label:
-          en: Hide title (use as aria-label only)
-          fr: Masquer le titre (utilisé comme aria-label uniquement)
-        type: toggle
-        text: 
-          - en: Visible
-            fr: Visible
-          - en: Hidden
-            fr: Masqué
-        default: false
       description:
         label:
           en: Description
