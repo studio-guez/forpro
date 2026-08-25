@@ -2,6 +2,9 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/forms";
 
+/* SvelteKit error/layout routes are not in Vite's module graph until hit; scan them explicitly */
+@source "../routes";
+
 @theme static {
     /* FONT FAMILY */
     --font-sans: 'Jungka-ForPro', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
