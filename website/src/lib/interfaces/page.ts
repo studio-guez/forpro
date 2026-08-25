@@ -180,6 +180,19 @@ export interface ModuleProjetsContent {
 	readonly variant: Variant;
 }
 
+export interface ResourceCard {
+	readonly title: string;
+	readonly shortDesc: string;
+	readonly image: CmsImage | null;
+}
+
+export interface ModuleResourcesContent {
+	readonly title: string;
+	readonly shortDesc: string | null;
+	readonly resources: ResourceCard[];
+	readonly variant: Variant;
+}
+
 export type CtaVariant = Variant | 'backgroundImage';
 
 export interface ModuleCtaContent {
