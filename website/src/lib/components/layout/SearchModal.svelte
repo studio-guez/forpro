@@ -17,11 +17,20 @@
 	const TABS: { value: SearchGroup; label: string }[] = [
 		{ value: 'all', label: 'Tout' },
 		{ value: 'pages', label: 'Pages' },
-		{ value: 'events', label: 'Événements' },
-		{ value: 'projects', label: 'Projets' }
+		{ value: 'evenements', label: 'Événements' },
+		{ value: 'projets', label: 'Projets' },
+		{ value: 'offres-emploi', label: "Offres d'emploi" },
+		{ value: 'missions', label: 'Missions' }
 	];
 
-	const NO_COUNTS: Record<SearchGroup, number> = { all: 0, pages: 0, events: 0, projects: 0 };
+	const NO_COUNTS: Record<SearchGroup, number> = {
+		all: 0,
+		pages: 0,
+		evenements: 0,
+		projets: 0,
+		'offres-emploi': 0,
+		missions: 0
+	};
 
 	let dialog = $state<HTMLDialogElement>();
 	let input = $state<HTMLInputElement>();

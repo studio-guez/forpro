@@ -4,14 +4,21 @@ import { fetchFromAPI, getHeaders } from '$lib/utils/shared';
 import type { SearchGroup, SearchResponse } from '$lib/interfaces/search';
 import type { RequestHandler } from './$types';
 
-const GROUPS: SearchGroup[] = ['all', 'pages', 'events', 'projects'];
+const GROUPS: SearchGroup[] = ['all', 'pages', 'evenements', 'projets', 'offres-emploi', 'missions'];
 const PAGE_SIZE = 10;
 
 const empty = (query: string, group: SearchGroup): SearchResponse => ({
 	query,
 	group,
 	offset: 0,
-	counts: { all: 0, pages: 0, events: 0, projects: 0 },
+	counts: {
+		all: 0,
+		pages: 0,
+		evenements: 0,
+		projets: 0,
+		'offres-emploi': 0,
+		missions: 0
+	},
 	total: 0,
 	hasMore: false,
 	results: []

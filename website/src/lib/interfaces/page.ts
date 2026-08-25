@@ -236,7 +236,8 @@ export type Theme =
 	| 'learninglab'
 	| 'foodlab'
 	| 'grandlab'
-	| 'makerlab';
+	| 'makerlab'
+	| 'factorylab';
 
 export interface PageParent {
 	readonly title: string;
@@ -250,6 +251,8 @@ export interface PageCta {
 	readonly label: string;
 	readonly url: string;
 	readonly icon: CtaIcon | null;
+	/** Set by the CMS from the link type the editor picked; never inferred from the URL. */
+	readonly target: '_blank' | null;
 }
 
 export type PageLayout = '1col' | '2col';

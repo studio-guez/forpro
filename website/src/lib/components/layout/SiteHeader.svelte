@@ -76,8 +76,6 @@
 		document.addEventListener('pointerdown', handlePointerDown);
 		return () => document.removeEventListener('pointerdown', handlePointerDown);
 	});
-
-	const isExternal = (url: string | null): boolean => !!url && /^https?:\/\//.test(url);
 </script>
 
 <header
@@ -101,8 +99,8 @@
 						<a
 							href={item.url}
 							onclick={closeMenu}
-							target={isExternal(item.url) ? '_blank' : undefined}
-							rel={isExternal(item.url) ? 'noopener noreferrer' : undefined}
+							target={item.target ?? undefined}
+							rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
 							class="text-body-2 font-bold underline decoration-transparent hover:decoration-current transition-colors"
 						>
 							{item.label}
@@ -165,7 +163,7 @@
 	{#if menuOpen}
 		<nav
 			id="burger-menu"
-			class="max-w-360 mx-auto px-base py-12 grid grid-cols-1 lg:grid-cols-5 gap-x-8 gap-y-10"
+			class="max-w-360 mx-auto px-base py-12 grid grid-cols-1 lg:grid-cols-5 lg:items-start gap-x-8 gap-y-10"
 			transition:slide={{ duration: 300 }}
 			aria-label="Menu secondaire"
 		>
@@ -187,8 +185,8 @@
 											<a
 												href={link.url}
 												onclick={closeMenu}
-												target={isExternal(link.url) ? '_blank' : undefined}
-												rel={isExternal(link.url) ? 'noopener noreferrer' : undefined}
+												target={link.target ?? undefined}
+												rel={link.target === '_blank' ? 'noopener noreferrer' : undefined}
 												class="text-body-2 leading-none {link.level === 2
 													? 'text-grey-dark'
 													: hasLevel2

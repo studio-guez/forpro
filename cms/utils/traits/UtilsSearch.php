@@ -14,20 +14,28 @@ trait UtilsSearch
      * Taxonomy terms and the `pages` container are structural only.
      */
     private const SEARCHABLE_TEMPLATES = [
-        'page'       => 'Page',
-        'faq'        => 'Page',
-        'event'      => 'Événement',
-        'project'    => 'Projet',
-        'team'       => 'Page',
-        'job-offer'  => "Offre d'emploi",
-        'mission'    => 'Mission',
+        'page'        => 'Page',
+        'faq'         => 'Page',
+        'event'       => 'Événement',
+        'project'     => 'Projet',
+        'team'        => 'Page',
+        'job-offer'   => "Offre d'emploi",
+        'mission'     => 'Mission',
+        'impressum'   => 'Page',
+        'basic-page'  => 'Page',
+        'factory-lab' => 'Page',
     ];
 
     /** Result groups the frontend tabs filter on; every other template is a page. */
     private const SEARCH_GROUPS = [
-        'event'   => 'events',
-        'project' => 'projects',
+        'event'     => 'evenements',
+        'project'   => 'projets',
+        'job-offer' => 'offres-emploi',
+        'mission'   => 'missions',
     ];
+
+    /** Accepted `?group=` values, and the keys of the `counts` payload. */
+    private const SEARCH_GROUP_VALUES = ['all', 'pages', 'evenements', 'projets', 'offres-emploi', 'missions'];
 
     /**
      * Every page the frontend can link to, i.e. a potential search result.
@@ -45,10 +53,16 @@ trait UtilsSearch
      * which outrank matches in the body. `counts` always covers every group so
      * the frontend tabs keep their totals while a single group is displayed.
      *
+     * An unknown `$group` degrades to `all` rather than filtering to nothing.
+     *
      * @return array{query: string, group: string, offset: int, counts: array<string, int>, total: int, hasMore: bool, results: array<int, array>}
      */
     static function searchPages(string $query, string $group = 'all', int $offset = 0, int $limit = 10): array
     {
+        if (in_array($group, self::SEARCH_GROUP_VALUES, true) === false) {
+            $group = 'all';
+        }
+
         $query = trim(preg_replace('/\s+/u', ' ', $query) ?? '');
         $normalizedQuery = self::normalizeForSearch($query);
         $words = array_values(array_unique(array_filter(
@@ -56,7 +70,7 @@ trait UtilsSearch
             fn(string $word) => mb_strlen($word) >= 2
         )));
 
-        $counts = ['all' => 0, 'pages' => 0, 'events' => 0, 'projects' => 0];
+        $counts = array_fill_keys(self::SEARCH_GROUP_VALUES, 0);
 
         if ($words === []) {
             return [

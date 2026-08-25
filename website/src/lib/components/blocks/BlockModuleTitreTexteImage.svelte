@@ -158,6 +158,18 @@
 				accent: 'var(--color-grey-dark)',
 			},
 		},
+		factorylab: {
+			default: {
+				bg: 'var(--color-teal)',
+				text: 'var(--color-white)',
+				accent: 'var(--color-pink)',
+			},
+			inverted: {
+				bg: 'var(--color-teal-light)',
+				text: 'var(--color-teal)',
+				accent: 'var(--color-pink)',
+			},
+		},
 	};
 
 	const colors = $derived(themeConfig[theme][content.variant]);
