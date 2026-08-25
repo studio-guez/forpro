@@ -21,6 +21,8 @@ trait UtilsSearch
         'team'       => 'Page',
         'job-offer'  => "Offre d'emploi",
         'mission'    => 'Mission',
+        'impressum'  => 'Page',
+        'basic-page' => 'Page',
     ];
 
     /** Result groups the frontend tabs filter on; every other template is a page. */
