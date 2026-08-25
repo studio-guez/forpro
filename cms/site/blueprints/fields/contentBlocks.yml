@@ -1,0 +1,18 @@
+# Repeatable title + rich-text block, serialized by Utils::getContentBlocks().
+label:
+  en: Content blocks
+  fr: Blocs de contenu
+type: structure
+fields:
+  title:
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  description:
+    label:
+      en: Description
+      fr: Description
+    extends: fields/writer
+    required: true
