@@ -29,6 +29,7 @@
 		foodlab:        'var(--color-orange)',
 		grandlab:       'var(--color-red)',
 		makerlab:       'var(--color-grey-dark)',
+		factorylab:     'var(--color-teal)',
 	};
 
 	const themeColor = $derived(colorByTheme[theme] ?? 'var(--color-blue)');

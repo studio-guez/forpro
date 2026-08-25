@@ -24,6 +24,7 @@
 		foodlab:        'fill-orange',
 		grandlab:       'fill-red',
 		makerlab:       'fill-white',
+		factorylab:     'fill-teal',
 	};
 
 	const arrowFill = $derived(arrowFillByTheme[theme] ?? 'fill-white');
