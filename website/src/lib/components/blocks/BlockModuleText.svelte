@@ -23,7 +23,8 @@
 	color={colors.text}
 	title={content.title}
 	hideTitle={content.hideTitle}
-	titleVariant="plain"
+	titleVariant="pill"
+	titleBackground="var(--color-white)"
 	titleColor={colors.title}
 >
 	{#if content.content}
@@ -34,7 +35,8 @@
 
 	{#if content.ctas?.length}
 		<div class="flex flex-wrap gap-4 justify-center md:justify-end mt-8">
-			{#each content.ctas as cta (cta.url)}
+			<!-- Keyed by index: several ctas can share the same url. -->
+			{#each content.ctas as cta, i (i)}
 				<CtaLink {cta} color={ctaColor} inverted={ctaInverted} />
 			{/each}
 		</div>
