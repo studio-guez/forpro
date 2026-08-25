@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BlockModuleTitreTexteImage from '$lib/components/blocks/BlockModuleTitreTexteImage.svelte';
+	import BlockModuleText from '$lib/components/blocks/BlockModuleText.svelte';
 	import BlockModuleCases from '$lib/components/blocks/BlockModuleCases.svelte';
 	import BlockModuleGrilleImages from '$lib/components/blocks/BlockModuleGrilleImages.svelte';
 	import BlockModuleVideo from '$lib/components/blocks/BlockModuleVideo.svelte';
@@ -15,6 +16,7 @@
 		Block,
 		Theme,
 		ModuleTitreTexteImageContent,
+		ModuleTextContent,
 		ModuleCasesContent,
 		ModuleGrilleImagesContent,
 		ModuleVideoContent,
@@ -38,6 +40,8 @@
 				content={block.content as unknown as ModuleTitreTexteImageContent}
 				{theme}
 			/>
+		{:else if block.type === 'module-text'}
+			<BlockModuleText content={block.content as unknown as ModuleTextContent} {theme} />
 		{:else if block.type === 'module-cases'}
 			<BlockModuleCases content={block.content as unknown as ModuleCasesContent} {theme} />
 		{:else if block.type === 'module-grille-images'}
