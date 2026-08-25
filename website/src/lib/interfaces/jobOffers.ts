@@ -1,4 +1,4 @@
-import type { Block, CmsImage, PageParent, Seo, TimelineStep } from './page';
+import type { Block, CmsImage, HeaderType, PageParent, Seo, TimelineStep } from './page';
 import type { TaxonomyTerm } from './taxonomy';
 
 // A downloadable file (the PDF version of an offer). Documents are served as-is
@@ -64,7 +64,10 @@ export interface JobOffersPage {
 	readonly slug: string;
 	readonly path: string;
 	readonly cover: CmsImage | null;
-	readonly shortDesc: string;
+	readonly headerType: HeaderType;
+	readonly overtitle: string | null;
+	readonly introTitle: string;
+	readonly intro: string;
 	readonly domains: TaxonomyTerm[];
 	readonly jobOfferCategories: TaxonomyTerm[];
 	readonly jobOffers: JobOfferCard[];
