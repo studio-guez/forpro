@@ -18,6 +18,7 @@ sections:
     image: false
     templates:
       - page
+      - basic-page
       - faq
       - events
       - projects
@@ -25,4 +26,7 @@ sections:
       - job-offers
       - missions
     text: "{{ page.breadcrumbTitle }}"
-    create: page
+    create: 
+      - page
+      - basic-page
+
