@@ -1,6 +1,6 @@
 import type { CmsImage } from '$lib/interfaces/page';
 
-export type SearchGroup = 'all' | 'pages' | 'events' | 'projects';
+export type SearchGroup = 'all' | 'pages' | 'evenements' | 'projets' | 'offres-emploi' | 'missions';
 
 export interface SearchResult {
 	readonly id: string;
