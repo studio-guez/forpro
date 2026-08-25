@@ -30,7 +30,12 @@
 			{#each content.partners as partner (partner.logo.url)}
 				<li>
 					{#if partner.url}
-						<a href={partner.url} class="{plateClass} transition-opacity hover:opacity-70">
+						<a
+							href={partner.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="{plateClass} transition-opacity hover:opacity-70"
+						>
 							{@render logo(partner)}
 						</a>
 					{:else}

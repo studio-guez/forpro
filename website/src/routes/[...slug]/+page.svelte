@@ -10,6 +10,8 @@
 	import JobOffers from '$lib/components/templates/JobOffers.svelte';
 	import Mission from '$lib/components/templates/Mission.svelte';
 	import Missions from '$lib/components/templates/Missions.svelte';
+	import Impressum from '$lib/components/templates/Impressum.svelte';
+	import FactoryLab from '$lib/components/templates/FactoryLab.svelte';
 	import type { PageData } from './$types';
 	import { IS_PROD } from '$lib/env';
 
@@ -30,7 +32,7 @@
 		<meta name="robots" content={page.seo.robots} />
 	{/if}
 
-	{#if page.template === 'page' && page.trackWithMatomo && IS_PROD}
+	{#if (page.template === 'page' || page.template === 'factory-lab') && page.trackWithMatomo && IS_PROD}
 		<!-- Matomo -->
 		<script>
 			var _paq = (window._paq = window._paq || []);
@@ -83,6 +85,10 @@
 	<Mission {page} />
 {:else if page.template === 'missions'}
 	<Missions {page} />
+{:else if page.template === 'impressum'}
+	<Impressum {page} />
+{:else if page.template === 'factory-lab'}
+	<FactoryLab {page} />
 {:else}
 	<Page {page} />
 {/if}

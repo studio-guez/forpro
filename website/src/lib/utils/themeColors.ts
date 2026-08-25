@@ -172,4 +172,18 @@ export const cardThemeColors: Record<Theme, Record<Variant, ThemeColors>> = {
 			title: 'var(--color-grey-dark)',
 		},
 	},
+	factorylab: {
+		default: {
+			bg: 'var(--color-teal)',
+			bgContrast: 'var(--color-pink)',
+			text: 'var(--color-white)',
+			title: 'var(--color-pink)',
+		},
+		inverted: {
+			bg: 'var(--color-teal-light)',
+			bgContrast: 'var(--color-pink)',
+			text: 'var(--color-teal)',
+			title: 'var(--color-teal)',
+		},
+	},
 };

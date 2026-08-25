@@ -82,24 +82,10 @@ tabs:
                   fr: Contenu
                 type: headline
               blocks:
-                label:
-                  en: Content blocks
-                  fr: Blocs de contenu
-                type: structure
+                extends: fields/contentBlocks
                 fields:
                   title:
-                    label:
-                      en: Title
-                      fr: Titre
-                    type: text
                     default: Infos supplémentaires
-                    required: true
-                  description:
-                    label:
-                      en: Description
-                      fr: Description
-                    extends: fields/writer
-                    required: true
           links:
             type: fields
             fields:

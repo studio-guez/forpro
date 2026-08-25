@@ -54,7 +54,7 @@ return [
                 $urls = $sitemap->create('pages');
 
                 $pages = site()->index()->filter(
-                    fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'events', 'event', 'projects', 'project', 'team', 'missions', 'mission', 'job-offers', 'job-offer'], true)
+                    fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'events', 'event', 'projects', 'project', 'team', 'missions', 'mission', 'job-offers', 'job-offer', 'impressum', 'basic-page', 'factory-lab'], true)
                         && $page->metadata()->robotsIndex()->toBool()
                 );
 
@@ -105,8 +105,9 @@ return [
                 $logoFile = $site->logo()->toFile();
 
                 $mainMenu = $site->mainMenu()->toStructure()->map(fn($item) => [
-                    'label' => Utils::resolvePageOrUrlLabel($item),
-                    'url'   => Utils::resolvePageOrUrlItem($item),
+                    'label'  => Utils::resolvePageOrUrlLabel($item),
+                    'url'    => Utils::resolvePageOrUrlItem($item),
+                    'target' => Utils::resolvePageOrUrlTarget($item),
                 ])->values();
 
                 $secondaryMenu = [];
@@ -116,9 +117,10 @@ return [
                     $groups = $site->{"secondaryColumn{$index}Groups"}()->toBlocks()->map(fn($block) => [
                         'title' => $block->title()->isEmpty() ? null : $block->title()->value(),
                         'links' => $block->links()->toStructure()->map(fn($link) => [
-                            'label' => Utils::resolvePageOrUrlLabel($link),
-                            'url'   => Utils::resolvePageOrUrlItem($link),
-                            'level' => (int)$link->level()->or(1)->value(),
+                            'label'  => Utils::resolvePageOrUrlLabel($link),
+                            'url'    => Utils::resolvePageOrUrlItem($link),
+                            'target' => Utils::resolvePageOrUrlTarget($link),
+                            'level'  => (int)$link->level()->or(1)->value(),
                         ])->values(),
                     ])->values();
 
@@ -168,13 +170,10 @@ return [
                 require_once 'utils/Utils.php';
 
                 $query = (string)(get('q') ?? '');
+                // `searchPages()` owns the group vocabulary and rejects unknown values.
                 $group = (string)(get('group') ?? 'all');
                 $offset = max((int)(get('offset') ?? 0), 0);
                 $limit = min(max((int)(get('limit') ?? 10), 1), 50);
-
-                if (in_array($group, ['all', 'pages', 'events', 'projects', 'team', 'missions', 'job-offers'], true) === false) {
-                    $group = 'all';
-                }
 
                 return \Kirby\Http\Response::json(
                     Utils::searchPages(mb_substr($query, 0, 100), $group, $offset, $limit)
