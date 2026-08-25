@@ -28,6 +28,7 @@ trait UtilsSearchText
         'answer',
         'label',
         'text',
+        'content',
         'caption',
         'collectivename',
     ];
