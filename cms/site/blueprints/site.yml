@@ -61,7 +61,9 @@ tabs:
             templatesIgnore:
               - faq
               - resources
-            create: page
+            create: 
+              - page
+              - basic-page
             
       - width: 1/3
 
