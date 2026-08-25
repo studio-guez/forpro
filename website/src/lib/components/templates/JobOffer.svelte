@@ -3,6 +3,7 @@
 	import IconArrow from '$lib/components/svg/IconArrow.svelte';
 	import BlockModuleTimeline from '$lib/components/blocks/BlockModuleTimeline.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
+	import CardSmall2Cols from '$lib/components/ui/CardSmall2Cols.svelte';
 	import { toDate } from '$lib/utils/date';
 	import type { JobOfferPage } from '$lib/interfaces/jobOffers';
 
@@ -47,12 +48,8 @@
 		{/each}
 	</div>
 
-	<section
-		aria-labelledby="job-offer-infos"
-		class="bg-blue text-white rounded-3xl px-6 py-10 md:px-12 md:py-14 grid md:grid-cols-2 gap-10 md:gap-16"
-	>
-		<div>
-			<h2 id="job-offer-infos" class="text-h4">Informations :</h2>
+	<CardSmall2Cols title="Informations :">
+		{#snippet first()}
 			<dl class="mt-6 space-y-4 text-body-2">
 				<div>
 					<dt class="text-label">Lieu de travail</dt>
@@ -68,12 +65,16 @@
 				</div>
 				<div>
 					<dt class="text-label">Délai de candidature</dt>
-					<dd><time datetime={page.deadline}>{deadline ? dateFormat.format(deadline) : page.deadline}</time></dd>
+					<dd>
+						<time datetime={page.deadline}
+							>{deadline ? dateFormat.format(deadline) : page.deadline}</time
+						>
+					</dd>
 				</div>
 			</dl>
-		</div>
+		{/snippet}
 
-		<div class="flex flex-col items-start gap-6">
+		{#snippet second()}
 			<div>
 				<h2 class="text-h4">Le dossier complet doit être adressé à :</h2>
 				<a
@@ -95,8 +96,8 @@
 					<span class="sr-only">({page.pdfOffer.extension.toUpperCase()}, {page.pdfOffer.size})</span>
 				</a>
 			{/if}
-		</div>
-	</section>
+		{/snippet}
+	</CardSmall2Cols>
 
 	<section aria-labelledby="job-offer-apply" class="space-y-10">
 		<h2 id="job-offer-apply" class="text-h3 text-center">
