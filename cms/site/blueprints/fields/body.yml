@@ -16,5 +16,6 @@ fieldsets:
   module-timeline: true
   module-agenda: true
   module-projets: true
+  module-resources: true
   module-cta: true
   module-partenaires: true
