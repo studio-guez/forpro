@@ -165,7 +165,7 @@
 	{#if menuOpen}
 		<nav
 			id="burger-menu"
-			class="max-w-360 mx-auto px-base py-12 grid grid-cols-1 lg:grid-cols-5 gap-x-8 gap-y-10"
+			class="max-w-360 mx-auto px-base py-12 grid grid-cols-1 lg:grid-cols-5 lg:items-start gap-x-8 gap-y-10"
 			transition:slide={{ duration: 300 }}
 			aria-label="Menu secondaire"
 		>
