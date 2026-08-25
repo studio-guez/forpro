@@ -1,22 +1,11 @@
 <script lang="ts">
-	import PageHero from '$lib/components/blocks/PageHero.svelte';
-	import PageIntro from '$lib/components/blocks/PageIntro.svelte';
+	import PageHeader from '$lib/components/blocks/PageHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import type { Page } from '$lib/interfaces/page';
 
 	let { page }: { page: Page } = $props();
 </script>
 
-<PageHero title={page.title} overtitle={page.overtitle} theme={page.theme} cover={page.cover} />
-
-<PageIntro
-	title={page.introTitle}
-	text={page.intro}
-	layout={page.introLayout}
-	cta={page.introCta}
-	parentPage={page.parentPage}
-	theme={page.theme}
-	titleImage={page.introTitleImage}
-/>
+<PageHeader {page} />
 
 <Blocks blocks={page.body} theme={page.theme} />
