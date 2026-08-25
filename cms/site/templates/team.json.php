@@ -10,7 +10,10 @@ $json = Utils::getPageBaseData($page, 'team');
 
 $json['cover'] = Utils::getJsonEncodeImageDataOrNull($page->cover()->toFile());
 
-$json['shortDesc'] = $page->shortDesc()->value();
+$json['headerType'] = $page->headerType()->or('compact')->value();
+$json['overtitle'] = $page->overtitle()->value();
+$json['introTitle'] = $page->introTitle()->value();
+$json['intro'] = $page->intro()->value();
 
 $json['sections'] = $page->sections()->toStructure()->map(fn($section) => [
     'title'   => $section->title()->value(),
