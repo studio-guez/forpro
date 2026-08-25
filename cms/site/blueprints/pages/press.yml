@@ -1,0 +1,95 @@
+title:
+  en: Press
+  fr: Presse
+
+extends: pages/core-page
+
+icon: megaphone
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    fields:
+      title:
+        label:
+          en: Title
+          fr: Titre
+        type: text
+        required: true
+      contactLabel:
+        label:
+          en: Contact
+          fr: Contact
+        type: headline
+      contactTitle:
+        label:
+          en: Contact section title
+          fr: Titre de la section contact
+        type: text
+      contactPersons:
+        label:
+          en: Contact persons
+          fr: Personnes de contact
+        type: structure
+        columns:
+          name:
+            width: 1/4
+          role:
+            width: 1/4
+          email:
+            width: 1/4
+          phone:
+            width: 1/4
+        fields:
+          name:
+            label:
+              en: Name
+              fr: Nom
+            type: text
+            required: true
+          role:
+            label:
+              en: Role
+              fr: Fonction
+            type: text
+          email:
+            label:
+              en: Email
+              fr: Adresse mail
+            type: email
+          phone:
+            label:
+              en: Phone
+              fr: Téléphone
+            type: tel
+      resourcesLabel:
+        label:
+          en: Resources
+          fr: Ressources
+        type: headline
+      resourcesTitle:
+        label:
+          en: Resources section title
+          fr: Titre de la section ressources
+        type: text
+      resourcesCtaTitle:
+        label:
+          en: Download button label
+          fr: Libellé du bouton de téléchargement
+        type: text
+      resources:
+        label:
+          en: Resources archive
+          fr: Archive des ressources
+        type: files
+        max: 1
+        layout: list
+        uploads: archive
+        help:
+          en: A single ZIP archive gathering the press resources.
+          fr: Une seule archive ZIP regroupant les ressources presse.
+
+  seo: tabs/seo

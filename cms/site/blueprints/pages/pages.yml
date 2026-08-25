@@ -26,6 +26,7 @@ sections:
       - job-offers
       - missions
       - impressum
+      - press
       - factory-lab
     text: "{{ page.breadcrumbTitle }}"
     create: 
