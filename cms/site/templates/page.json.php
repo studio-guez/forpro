@@ -14,6 +14,7 @@ $json['slug'] = $page->slug();
 
 $json['overtitle'] = $page->overtitle()->value();
 $json['theme'] = $page->theme()->or('default')->value();
+$json['headerType'] = $page->headerType()->or('full')->value();
 
 $json['introTitle'] = $page->introTitle()->value();
 $json['intro'] = $page->intro()->value();

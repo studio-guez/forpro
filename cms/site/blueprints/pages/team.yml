@@ -13,6 +13,9 @@ tabs:
       fr: Contenu
     icon: text
     fields:
+      headerType:
+        extends: fields/headerType
+        default: compact
       title:
         width: 1/2
         label:
@@ -23,10 +26,25 @@ tabs:
       cover:
         width: 1/2
         extends: fields/cover
-      shortDesc:
+      overtitle:
         label:
-          en: Short description
-          fr: Description courte
+          en: Overtitle
+          fr: Sur-titre
+        type: text
+        when:
+          headerType: full
+      introTitle:
+        label:
+          en: Intro title
+          fr: Titre introduction
+        type: text
+        required: true
+        when:
+          headerType: full
+      intro:
+        label:
+          en: Introduction
+          fr: Introduction
         extends: fields/writer
       sections:
         label:

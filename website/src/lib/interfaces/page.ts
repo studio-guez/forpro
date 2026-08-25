@@ -254,12 +254,31 @@ export interface PageCta {
 
 export type PageLayout = '1col' | '2col';
 
+/** `full`: hero + intro section. `compact`: single self-contained header. */
+export type HeaderType = 'full' | 'compact';
+
+/** Everything `PageHeader` may need; every page type with a header satisfies it. */
+export interface PageHeaderData {
+	readonly headerType: HeaderType;
+	readonly title: string;
+	readonly intro: string;
+	readonly cover: CmsImage | null;
+	readonly overtitle?: string | null;
+	readonly introTitle?: string;
+	readonly introTitleImage?: CmsImage | null;
+	readonly introLayout?: PageLayout;
+	readonly introCta?: PageCta | null;
+	readonly parentPage?: PageParent | null;
+	readonly theme?: Theme;
+}
+
 export interface Page {
 	readonly template: 'page';
 	readonly title: string;
 	readonly slug: string;
 	readonly overtitle: string | null;
 	readonly theme: Theme;
+	readonly headerType: HeaderType;
 	readonly cover: CmsImage | null;
 	readonly introTitle: string;
 	readonly intro: string;
