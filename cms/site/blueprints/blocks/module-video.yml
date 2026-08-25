@@ -31,11 +31,16 @@ fields:
     uploads: video
     max: 1
     required: true
+  contentTitle:
+    label:
+      en: Below the video — Title
+      fr: Sous la vidéo — Titre
+    help:
+      en: Optional. When filled, the title is displayed on the left and the text on the right.
+      fr: Facultatif. Si rempli, le titre est affiché à gauche et le texte à droite.
+    type: text
   content:
     label:
-      en: Content
-      fr: Contenu
-    help:
-      en: Displayed below the video
-      fr: Affiché sous la vidéo
+      en: Below the video — Text
+      fr: Sous la vidéo — Texte
     extends: fields/writer

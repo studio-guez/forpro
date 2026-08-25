@@ -97,6 +97,7 @@ export interface ModuleVideoContent {
 	readonly title: string;
 	readonly shortDesc: string | null;
 	readonly video: CmsVideo | null;
+	readonly contentTitle: string | null;
 	readonly content: string | null;
 }
 
