@@ -10,6 +10,7 @@
 	import JobOffers from '$lib/components/templates/JobOffers.svelte';
 	import Mission from '$lib/components/templates/Mission.svelte';
 	import Missions from '$lib/components/templates/Missions.svelte';
+	import Impressum from '$lib/components/templates/Impressum.svelte';
 	import type { PageData } from './$types';
 	import { IS_PROD } from '$lib/env';
 
@@ -83,6 +84,8 @@
 	<Mission {page} />
 {:else if page.template === 'missions'}
 	<Missions {page} />
+{:else if page.template === 'impressum'}
+	<Impressum {page} />
 {:else}
 	<Page {page} />
 {/if}
