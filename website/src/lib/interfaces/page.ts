@@ -19,6 +19,17 @@ export interface Block {
 	readonly content: Record<string, unknown>;
 }
 
+// A downloadable file (PDF offer, ZIP of press resources). Documents are served
+// as-is by the CMS, so they only expose what a download link needs.
+export interface CmsDocument {
+	readonly url: string;
+	readonly filename: string;
+	readonly extension: string;
+	/** Human readable file size, e.g. "1.2 MB". */
+	readonly size: string;
+	readonly mime: string;
+}
+
 export interface Seo {
 	readonly title: string;
 	readonly description: string;
