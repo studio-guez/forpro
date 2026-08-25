@@ -236,7 +236,8 @@ export type Theme =
 	| 'learninglab'
 	| 'foodlab'
 	| 'grandlab'
-	| 'makerlab';
+	| 'makerlab'
+	| 'factorylab';
 
 export interface PageParent {
 	readonly title: string;
