@@ -22,6 +22,7 @@ trait UtilsSearch
         'job-offer'   => "Offre d'emploi",
         'mission'     => 'Mission',
         'impressum'   => 'Page',
+        'press'       => 'Page',
         'basic-page'  => 'Page',
         'factory-lab' => 'Page',
     ];
