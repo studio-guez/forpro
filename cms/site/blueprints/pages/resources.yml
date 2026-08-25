@@ -1,0 +1,55 @@
+title:
+  en: Resources
+  fr: Ressources
+
+extends: pages/core-page
+
+icon: box
+
+# Content library only: the page has no frontend route, its entries are pulled
+# by the `module-resources` block.
+options:
+  preview: false
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    fields:
+      resources:
+        label:
+          en: Resources
+          fr: Ressources
+        type: structure
+        columns:
+          image:
+            width: 1/6
+          title:
+            width: 1/3
+          domains:
+            width: 1/2
+        fields:
+          title:
+            label:
+              en: Title
+              fr: Titre
+            type: text
+            required: true
+          shortDesc:
+            label:
+              en: Short description
+              fr: Description courte
+            extends: fields/writer
+            required: true
+          image:
+            label:
+              en: Image
+              fr: Image
+            type: files
+            uploads: image
+            max: 1
+            required: true
+          domains:
+            extends: fields/taxonomies/domains
