@@ -105,8 +105,9 @@ return [
                 $logoFile = $site->logo()->toFile();
 
                 $mainMenu = $site->mainMenu()->toStructure()->map(fn($item) => [
-                    'label' => Utils::resolvePageOrUrlLabel($item),
-                    'url'   => Utils::resolvePageOrUrlItem($item),
+                    'label'  => Utils::resolvePageOrUrlLabel($item),
+                    'url'    => Utils::resolvePageOrUrlItem($item),
+                    'target' => Utils::resolvePageOrUrlTarget($item),
                 ])->values();
 
                 $secondaryMenu = [];
@@ -116,9 +117,10 @@ return [
                     $groups = $site->{"secondaryColumn{$index}Groups"}()->toBlocks()->map(fn($block) => [
                         'title' => $block->title()->isEmpty() ? null : $block->title()->value(),
                         'links' => $block->links()->toStructure()->map(fn($link) => [
-                            'label' => Utils::resolvePageOrUrlLabel($link),
-                            'url'   => Utils::resolvePageOrUrlItem($link),
-                            'level' => (int)$link->level()->or(1)->value(),
+                            'label'  => Utils::resolvePageOrUrlLabel($link),
+                            'url'    => Utils::resolvePageOrUrlItem($link),
+                            'target' => Utils::resolvePageOrUrlTarget($link),
+                            'level'  => (int)$link->level()->or(1)->value(),
                         ])->values(),
                     ])->values();
 

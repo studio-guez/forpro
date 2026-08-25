@@ -3,6 +3,8 @@ import type { CmsImage } from '$lib/interfaces/page';
 export interface MenuLink {
 	readonly label: string;
 	readonly url: string | null;
+	/** Set by the CMS from the link type the editor picked; never inferred from the URL. */
+	readonly target: '_blank' | null;
 }
 
 export interface SecondaryMenuLink extends MenuLink {

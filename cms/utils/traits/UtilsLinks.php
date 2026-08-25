@@ -55,6 +55,17 @@ trait UtilsLinks
     }
 
     /**
+     * Link target for a structure item. Only the `url` type leaves the site, so it is the
+     * only one opened in a new tab — `page` stays internal, `mailto`/`tel` hand off to the OS.
+     * Derived from the editor's choice rather than sniffed from the URL on the frontend, so a
+     * self-referencing absolute URL is still treated as internal.
+     */
+    static function resolvePageOrUrlTarget(\Kirby\Cms\StructureObject $item): ?string
+    {
+        return in_array($item->type()->value(), ['page', 'mailto', 'tel'], true) ? null : '_blank';
+    }
+
+    /**
      * Resolves a single CTA structure item, or null when it has no resolvable URL or label.
      */
     private static function resolveCtaItem(\Kirby\Cms\StructureObject $item): ?array
@@ -63,9 +74,10 @@ trait UtilsLinks
         $label = self::resolvePageOrUrlLabel($item);
         if (!$url || !$label) return null;
         return [
-            'label' => $label,
-            'url'   => $url,
-            'icon'  => $item->icon()->isNotEmpty() ? $item->icon()->value() : null,
+            'label'  => $label,
+            'url'    => $url,
+            'icon'   => $item->icon()->isNotEmpty() ? $item->icon()->value() : null,
+            'target' => self::resolvePageOrUrlTarget($item),
         ];
     }
 
