@@ -63,8 +63,7 @@ export type CmsMedia = (CmsImage & { readonly type: 'image' }) | CmsVideo;
 export type CasesLayout = 'alternate' | 'images-right' | 'images-left';
 
 export interface ModuleCasesRow {
-	readonly title: string;
-	readonly hideTitle: boolean;
+	readonly title: string | null;
 	readonly description: string;
 	readonly cta: PageCta | null;
 	readonly media: CmsMedia[];
