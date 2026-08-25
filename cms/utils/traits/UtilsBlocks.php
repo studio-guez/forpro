@@ -30,6 +30,8 @@ trait UtilsBlocks
         switch ($block->type()) {
             case 'module-titre-texte-image':
                 return self::getTitreTexteImageBlockData($block);
+            case 'module-text':
+                return self::getTextBlockData($block);
             case 'module-cta':
                 return self::getCtaModuleData($block);
             case 'module-partenaires':
@@ -66,6 +68,20 @@ trait UtilsBlocks
             'imagePosition' => $block->content()->get('imagePosition')->or('right')->value(),
             'variant'       => $block->variant()->or('default')->value(),
             'cta'           => self::resolveCtaStructure($block->cta()),
+        ];
+    }
+
+    private static function getTextBlockData(\Kirby\Cms\Block $block): array
+    {
+        // Field is named `content`, so it must be read through get() — $block->content() is the Content object.
+        $text = $block->content()->get('content');
+
+        return [
+            'title'     => $block->title()->value(),
+            'hideTitle' => $block->hideTitle()->toBool(),
+            'content'   => $text->isNotEmpty() ? $text->value() : null,
+            'ctas'      => self::resolveCtaStructures($block->ctas()),
+            'variant'   => $block->variant()->or('default')->value(),
         ];
     }
 
