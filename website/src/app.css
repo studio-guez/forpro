@@ -106,7 +106,7 @@
     .px-card {
         @apply px-8 md:px-30;
     }
-    
+
     .-mx-card {
         @apply -mx-8 md:-mx-30;
     }
@@ -133,6 +133,9 @@
         }
         ol {
             @apply list-decimal;
+            ol {
+                @apply list-[lower-alpha];
+            }
         }
         a {
             @apply opacity-50 underline hover:opacity-100 transition-opacity;
