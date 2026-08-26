@@ -1,6 +1,6 @@
 import type { Block, ProjetCard, Seo } from './page';
 import type { EventProjectBase } from './eventProject';
-import type { TaxonomyTerm } from './taxonomy';
+import type { TaxonomyFilterTerm, TaxonomyTerm } from './taxonomy';
 
 export interface CollectiveMember {
 	readonly name: string;
@@ -20,8 +20,8 @@ export interface ProjectsPage {
 	readonly title: string;
 	readonly slug: string;
 	readonly path: string;
-	readonly programs: TaxonomyTerm[];
-	readonly categories: TaxonomyTerm[];
+	readonly programs: TaxonomyFilterTerm[];
+	readonly categories: TaxonomyFilterTerm[];
 	/** Years used by at least one project, most recent first. Filter only. */
 	readonly years: number[];
 	readonly projects: ProjetCard[];

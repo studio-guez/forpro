@@ -7,7 +7,7 @@ import type {
 	Seo,
 	TimelineStep
 } from './page';
-import type { TaxonomyTerm } from './taxonomy';
+import type { TaxonomyFilterTerm, TaxonomyTerm } from './taxonomy';
 
 export interface JobOfferQuestion {
 	/** Short heading shown next to the text, e.g. "Question 1". */
@@ -64,7 +64,7 @@ export interface JobOffersPage {
 	readonly overtitle: string | null;
 	readonly introTitle: string;
 	readonly intro: string;
-	readonly sectors: TaxonomyTerm[];
+	readonly sectors: TaxonomyFilterTerm[];
 	readonly jobOffers: JobOfferCard[];
 	readonly body: Block[];
 	readonly seo: Seo;

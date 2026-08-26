@@ -9,6 +9,7 @@
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import {
+		expandSelection,
 		filterUsedTerms,
 		keepKnownSlugs,
 		matchesSearch,
@@ -58,10 +59,15 @@
 	const activePrograms = $derived(keepKnownSlugs(selectedPrograms, programTerms));
 	const activePublics = $derived(keepKnownSlugs(selectedPublics, publicTerms));
 
+	// Selecting a parent term also matches questions tagged with one of its sub-terms.
+	const sectorFilter = $derived(expandSelection(activeSectors, sectorTerms));
+	const programFilter = $derived(expandSelection(activePrograms, programTerms));
+	const publicFilter = $derived(expandSelection(activePublics, publicTerms));
+
 	const matchesFilters = (faq: FaqItem): boolean =>
-		matchesTerms(activeSectors, faq.sectors) &&
-		matchesTerms(activePrograms, faq.programs) &&
-		matchesTerms(activePublics, faq.publics) &&
+		matchesTerms(sectorFilter, faq.sectors) &&
+		matchesTerms(programFilter, faq.programs) &&
+		matchesTerms(publicFilter, faq.publics) &&
 		matchesSearch(search, [faq.question, stripTags(faq.answer)]);
 
 	const isFiltering = $derived(

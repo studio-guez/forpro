@@ -8,6 +8,7 @@
 	import MissionCard from '$lib/components/ui/MissionCard.svelte';
 	import SelectDropdown from '$lib/components/ui/SelectDropdown.svelte';
 	import {
+		expandSelection,
 		filterUsedTerms,
 		keepKnownSlugs,
 		matchesTerms,
@@ -49,8 +50,11 @@
 	// Drop stale slugs coming from the URL so counters stay accurate.
 	const activeCategories = $derived(keepKnownSlugs(selectedCategories, categoryTerms));
 
+	// Selecting a parent term also matches missions tagged with one of its sub-terms.
+	const categoryFilter = $derived(expandSelection(activeCategories, categoryTerms));
+
 	const filteredMissions = $derived(
-		page.missions.filter((mission) => matchesTerms(activeCategories, mission.terms))
+		page.missions.filter((mission) => matchesTerms(categoryFilter, mission.terms))
 	);
 
 	// An unset sort keeps the order defined in the CMS.

@@ -7,6 +7,7 @@
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import {
+		expandSelection,
 		filterUsedTerms,
 		keepKnownSlugs,
 		matchesSearch,
@@ -17,7 +18,7 @@
 	} from '$lib/utils/filters';
 	import type { ProjetCard } from '$lib/interfaces/page';
 	import type { ProjectsPage } from '$lib/interfaces/project';
-	import type { TaxonomyTerm } from '$lib/interfaces/taxonomy';
+	import type { TaxonomyFilterTerm } from '$lib/interfaces/taxonomy';
 
 	let { page }: { page: ProjectsPage } = $props();
 
@@ -44,8 +45,13 @@
 	const programTerms = $derived(filterUsedTerms(page.programs, usedSlugs));
 	const categoryTerms = $derived(filterUsedTerms(page.categories, usedSlugs));
 	// Years are not a taxonomy, but they are filtered with the same tag UI.
-	const yearTerms = $derived<TaxonomyTerm[]>(
-		page.years.map((year) => ({ slug: String(year), title: String(year), color: 'orange' }))
+	const yearTerms = $derived<TaxonomyFilterTerm[]>(
+		page.years.map((year) => ({
+			slug: String(year),
+			title: String(year),
+			color: 'orange',
+			children: []
+		}))
 	);
 
 	// Drop stale slugs coming from the URL so counters stay accurate.
@@ -53,9 +59,13 @@
 	const activeCategories = $derived(keepKnownSlugs(selectedCategories, categoryTerms));
 	const activeYears = $derived(keepKnownSlugs(selectedYears, yearTerms));
 
+	// Selecting a parent term also matches projects tagged with one of its sub-terms.
+	const programFilter = $derived(expandSelection(activePrograms, programTerms));
+	const categoryFilter = $derived(expandSelection(activeCategories, categoryTerms));
+
 	const matchesFilters = (project: ProjetCard): boolean =>
-		matchesTerms(activePrograms, project.programs) &&
-		matchesTerms(activeCategories, project.categories) &&
+		matchesTerms(programFilter, project.programs) &&
+		matchesTerms(categoryFilter, project.categories) &&
 		(activeYears.length === 0 || activeYears.includes(String(project.year))) &&
 		matchesSearch(search, [
 			project.title,
