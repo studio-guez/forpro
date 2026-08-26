@@ -165,6 +165,7 @@ trait UtilsBlocks
             'video'        => $video ? self::getJsonEncodeMediaData($video) : null,
             'contentTitle' => $block->contentTitle()->isNotEmpty() ? $block->contentTitle()->value() : null,
             'content'      => $text->isNotEmpty() ? $text->value() : null,
+            'variant'      => $block->variant()->or('default')->value(),
         ];
     }
 
@@ -195,6 +196,7 @@ trait UtilsBlocks
             'title'     => $block->title()->value(),
             'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
             'elements'  => self::getThreeElements($block->elements()),
+            'variant'   => $block->variant()->or('default')->value(),
         ];
     }
 

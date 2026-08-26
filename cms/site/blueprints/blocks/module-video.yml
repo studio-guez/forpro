@@ -44,3 +44,5 @@ fields:
       en: Below the video — Text
       fr: Sous la vidéo — Texte
     extends: fields/writer
+  variant:
+    extends: fields/variant
