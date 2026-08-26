@@ -142,7 +142,14 @@ tabs:
               fr: Publics
             templates:
               - public
-            parent: site.index.template("publics").first()
+              - subpublic
+            # `query` rather than `parent` so sub-publics show up too, marked
+            # with a prefix since the section cannot indent them. The query
+            # language has no `==`, so nesting is detected by depth: only a
+            # sub-public still has a parent three levels up.
+            query: site.find("taxonomies").find("publics").index.listed
+            text: "{{ page.parent.parent.parent ? '↳ ' : '' }}{{ page.title }}"
+            info: "{{ page.hasListedChildren ? page.children.listed.count : '' }}{{ page.hasListedChildren ? ' sous-publics' : '' }}"
       - width: 1/2
         sections:
           sectors:

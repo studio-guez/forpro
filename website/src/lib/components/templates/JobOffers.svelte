@@ -7,6 +7,7 @@
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import {
+		expandSelection,
 		filterUsedTerms,
 		keepKnownSlugs,
 		matchesSearch,
@@ -35,8 +36,11 @@
 	// Drop stale slugs coming from the URL so counters stay accurate.
 	const activeSectors = $derived(keepKnownSlugs(selectedSectors, sectorTerms));
 
+	// Selecting a parent term also matches offers tagged with one of its sub-terms.
+	const sectorFilter = $derived(expandSelection(activeSectors, sectorTerms));
+
 	const matchesFilters = (offer: JobOffer): boolean =>
-		matchesTerms(activeSectors, offer.terms) &&
+		matchesTerms(sectorFilter, offer.terms) &&
 		matchesSearch(search, [offer.title, offer.location, ...offer.terms.map((term) => term.title)]);
 
 	const filteredOffers = $derived(page.jobOffers.filter(matchesFilters));

@@ -1,6 +1,6 @@
 import type { AgendaEventCard, Block, Seo } from './page';
 import type { EventProjectBase } from './eventProject';
-import type { TaxonomyTerm } from './taxonomy';
+import type { TaxonomyFilterTerm, TaxonomyTerm } from './taxonomy';
 
 export interface EventPage extends EventProjectBase {
 	readonly template: 'event';
@@ -19,8 +19,8 @@ export interface EventsPage {
 	readonly title: string;
 	readonly slug: string;
 	readonly path: string;
-	readonly programs: TaxonomyTerm[];
-	readonly publics: TaxonomyTerm[];
+	readonly programs: TaxonomyFilterTerm[];
+	readonly publics: TaxonomyFilterTerm[];
 	readonly upcomingEvents: AgendaEventCard[];
 	readonly pastEvents: AgendaEventCard[];
 	readonly body: Block[];

@@ -8,6 +8,7 @@
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import SelectDropdown from '$lib/components/ui/SelectDropdown.svelte';
 	import {
+		expandSelection,
 		filterUsedTerms,
 		keepKnownSlugs,
 		matchesSearch,
@@ -43,9 +44,13 @@
 	const activePrograms = $derived(keepKnownSlugs(selectedPrograms, programTerms));
 	const activePublics = $derived(keepKnownSlugs(selectedPublics, publicTerms));
 
+	// Selecting a parent term also matches events tagged with one of its sub-terms.
+	const programFilter = $derived(expandSelection(activePrograms, programTerms));
+	const publicFilter = $derived(expandSelection(activePublics, publicTerms));
+
 	const matchesFilters = (event: AgendaEventCard): boolean =>
-		matchesTerms(activePrograms, event.terms) &&
-		matchesTerms(activePublics, event.terms) &&
+		matchesTerms(programFilter, event.terms) &&
+		matchesTerms(publicFilter, event.terms) &&
 		matchesSearch(search, [event.title, stripTags(event.shortDesc), ...event.terms.map((t) => t.title)]);
 
 	const upcoming = $derived(page.upcomingEvents.filter(matchesFilters));
