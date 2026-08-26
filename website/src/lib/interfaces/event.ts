@@ -1,6 +1,6 @@
 import type { AgendaEventCard, Block, Seo } from './page';
 import type { EventProjectBase } from './eventProject';
-import type { TaxonomyTerm } from './taxonomy';
+import type { TaxonomyFilterTerm, TaxonomyTerm } from './taxonomy';
 
 export interface EventPage extends EventProjectBase {
 	readonly template: 'event';
@@ -9,8 +9,8 @@ export interface EventPage extends EventProjectBase {
 	readonly dateEnd: string | null;
 	readonly timeStart: string | null;
 	readonly timeEnd: string | null;
-	readonly domains: TaxonomyTerm[];
-	readonly eventThemes: TaxonomyTerm[];
+	readonly programs: TaxonomyTerm[];
+	readonly publics: TaxonomyTerm[];
 }
 
 // The events index page (events.json.php): every event, split by date.
@@ -19,8 +19,8 @@ export interface EventsPage {
 	readonly title: string;
 	readonly slug: string;
 	readonly path: string;
-	readonly domains: TaxonomyTerm[];
-	readonly eventThemes: TaxonomyTerm[];
+	readonly programs: TaxonomyFilterTerm[];
+	readonly publics: TaxonomyFilterTerm[];
 	readonly upcomingEvents: AgendaEventCard[];
 	readonly pastEvents: AgendaEventCard[];
 	readonly body: Block[];

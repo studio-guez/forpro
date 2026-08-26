@@ -35,14 +35,36 @@ trait UtilsTaxonomies
     /**
      * Returns all terms of a taxonomy in their CMS-defined order (the order of
      * the term pages under content/taxonomies/<taxonomy>), in the same
-     * `{slug, title, color}` shape as resolveTaxonomyTerms().
+     * `{slug, title, color}` shape as resolveTaxonomyTerms(), each with its
+     * sub-terms under `children` (empty for single-level taxonomies).
      */
     static function getTaxonomyTerms(string $taxonomy): array
     {
         $parent = page('taxonomies/' . $taxonomy);
         if (!$parent) return [];
 
-        return $parent->children()->listed()->map(fn($term) => self::getTaxonomyTermData($term))->values();
+        return $parent->children()->listed()->map(fn($term) => [
+            ...self::getTaxonomyTermData($term),
+            'children' => $term->children()->listed()->values(fn($child) => self::getTaxonomyTermData($child)),
+        ])->values();
+    }
+
+    /**
+     * Adds the sub-terms of every selected parent term, so an item tagged only
+     * with a sub-term still matches a filter on its parent.
+     */
+    private static function expandTaxonomySlugs(string $taxonomy, array $slugs): array
+    {
+        $parent = page('taxonomies/' . $taxonomy);
+        if (!$parent) return $slugs;
+
+        foreach ($slugs as $slug) {
+            if ($term = $parent->children()->listed()->findBy('slug', $slug)) {
+                $slugs = array_merge($slugs, $term->children()->listed()->values(fn($child) => $child->slug()));
+            }
+        }
+
+        return array_values(array_unique($slugs));
     }
 
     /**
@@ -52,6 +74,8 @@ trait UtilsTaxonomies
      */
     private static function taxonomyMatcher(string $fieldName, array $slugs): \Closure
     {
+        // On every call site the field name is also the taxonomy name.
+        $slugs = self::expandTaxonomySlugs($fieldName, $slugs);
         $slugCache = [];
 
         return function ($item) use ($fieldName, $slugs, &$slugCache): bool {
@@ -74,8 +98,8 @@ trait UtilsTaxonomies
      *
      * Usage:
      *   $faqs = page('faq')->faqs()->toStructure();                                     // all FAQs
-     *   $faqs = Utils::filterStructureByTaxonomy($faqs, 'domains', ['architecture']);   // one domain
-     *   $faqs = Utils::filterStructureByTaxonomy($faqs, 'domains', ['a', 'b']);         // any of multiple domains
+     *   $faqs = Utils::filterStructureByTaxonomy($faqs, 'programs', ['explore']);       // one program
+     *   $faqs = Utils::filterStructureByTaxonomy($faqs, 'programs', ['a', 'b']);        // any of multiple programs
      */
     static function filterStructureByTaxonomy(\Kirby\Cms\Structure $items, string $fieldName, array $slugs): \Kirby\Cms\Structure
     {

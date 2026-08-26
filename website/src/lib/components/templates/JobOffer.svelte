@@ -11,7 +11,7 @@
 
 	const dateFormat = new Intl.DateTimeFormat('fr-CH', { dateStyle: 'long' });
 
-	const terms = $derived([...page.domains, ...page.jobOfferCategories]);
+	const terms = $derived(page.sectors);
 	const deadline = $derived(toDate(page.deadline));
 
 	// The maximum is only set when the rate is a range.

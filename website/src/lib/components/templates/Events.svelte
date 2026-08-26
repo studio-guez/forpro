@@ -8,6 +8,7 @@
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import SelectDropdown from '$lib/components/ui/SelectDropdown.svelte';
 	import {
+		expandSelection,
 		filterUsedTerms,
 		keepKnownSlugs,
 		matchesSearch,
@@ -28,24 +29,28 @@
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
-	let selectedDomains = $state<string[]>(parseListParam(initialParams.get('domains')));
-	let selectedThemes = $state<string[]>(parseListParam(initialParams.get('eventThemes')));
+	let selectedPrograms = $state<string[]>(parseListParam(initialParams.get('programs')));
+	let selectedPublics = $state<string[]>(parseListParam(initialParams.get('publics')));
 	let selectedMonth = $state(initialParams.get('month') ?? '');
 
 	const allEvents = $derived([...page.upcomingEvents, ...page.pastEvents]);
 
 	// Only offer terms actually used by at least one event, in CMS order.
 	const usedSlugs = $derived(new Set(allEvents.flatMap((event) => event.terms.map((t) => t.slug))));
-	const domainTerms = $derived(filterUsedTerms(page.domains, usedSlugs));
-	const themeTerms = $derived(filterUsedTerms(page.eventThemes, usedSlugs));
+	const programTerms = $derived(filterUsedTerms(page.programs, usedSlugs));
+	const publicTerms = $derived(filterUsedTerms(page.publics, usedSlugs));
 
 	// Drop stale slugs coming from the URL so counters stay accurate.
-	const activeDomains = $derived(keepKnownSlugs(selectedDomains, domainTerms));
-	const activeThemes = $derived(keepKnownSlugs(selectedThemes, themeTerms));
+	const activePrograms = $derived(keepKnownSlugs(selectedPrograms, programTerms));
+	const activePublics = $derived(keepKnownSlugs(selectedPublics, publicTerms));
+
+	// Selecting a parent term also matches events tagged with one of its sub-terms.
+	const programFilter = $derived(expandSelection(activePrograms, programTerms));
+	const publicFilter = $derived(expandSelection(activePublics, publicTerms));
 
 	const matchesFilters = (event: AgendaEventCard): boolean =>
-		matchesTerms(activeDomains, event.terms) &&
-		matchesTerms(activeThemes, event.terms) &&
+		matchesTerms(programFilter, event.terms) &&
+		matchesTerms(publicFilter, event.terms) &&
 		matchesSearch(search, [event.title, stripTags(event.shortDesc), ...event.terms.map((t) => t.title)]);
 
 	const upcoming = $derived(page.upcomingEvents.filter(matchesFilters));
@@ -79,8 +84,8 @@
 	$effect(() => {
 		syncQueryString({
 			q: search,
-			domains: activeDomains,
-			eventThemes: activeThemes,
+			programs: activePrograms,
+			publics: activePublics,
 			month: activeMonth
 		});
 	});
@@ -98,16 +103,16 @@
 	/>
 
 	<FilterTags
-		terms={domainTerms}
-		bind:selected={selectedDomains}
+		terms={programTerms}
+		bind:selected={selectedPrograms}
 		legend="Événements concernant :"
 		class="mt-12 md:mt-18"
 	/>
 
 	<FilterTags
-		terms={themeTerms}
-		bind:selected={selectedThemes}
-		legend="Thématiques :"
+		terms={publicTerms}
+		bind:selected={selectedPublics}
+		legend="Publics :"
 		class="mt-9 md:mt-12"
 	/>
 </section>

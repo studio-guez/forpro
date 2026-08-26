@@ -4,26 +4,22 @@
 	import Card from '$lib/components/ui/Card.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
-	import { cardThemeColors } from '$lib/utils/themeColors';
+	import { getThemeColors } from '$lib/utils/themeColors';
 	import type { CompanyBadge, FactoryLabPage } from '$lib/interfaces/factoryLab';
 
 	let { page }: { page: FactoryLabPage } = $props();
 
 	const companiesModule = $derived(page.companiesModule);
-	const colors = $derived(cardThemeColors[page.theme][companiesModule.variant]);
-
-	// The module is drawn on the page background by default (as designed) and only
-	// gets the filled card treatment on the inverted variant.
-	const onColor = $derived(companiesModule.variant === 'inverted');
+	const colors = $derived(getThemeColors(page.theme, companiesModule.variant));
 
 	const badgeClass =
 		'text-caption inline-flex items-center gap-1.5 rounded-full px-3 py-1 leading-tight';
 
 	const trainingBadge = $derived({ bg: colors.bgContrast, text: 'var(--color-white)' });
 	const availabilityBadge = $derived(
-		onColor
-			? { bg: 'var(--color-white)', text: colors.bg }
-			: { bg: colors.bg, text: 'var(--color-white)' }
+		colors.onDark
+			? { bg: 'var(--color-white)', text: colors.surface }
+			: { bg: colors.surface, text: colors.surfaceText }
 	);
 </script>
 
@@ -68,12 +64,12 @@
 
 {#if companiesModule.companies.length > 0}
 	<Card
-		background={onColor ? colors.bg : null}
-		color={onColor ? colors.text : null}
+		background={colors.bg}
+		color={colors.text}
 		title={companiesModule.title}
 		shortDesc={companiesModule.intro}
-		titleBackground={onColor ? 'var(--color-white)' : colors.bg}
-		titleColor={onColor ? colors.bg : 'var(--color-white)'}
+		titleBackground={colors.titleBackground}
+		titleColor={colors.title}
 	>
 		<ul class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-16 mt-12">
 			{#each companiesModule.companies as company, companyIndex (companyIndex)}
@@ -89,7 +85,7 @@
 						{/if}
 					</div>
 
-					<h3 class="text-h4 mt-6" style:color={onColor ? undefined : colors.bg}>
+					<h3 class="text-h4 mt-6">
 						{#if company.url}
 							<a
 								href={company.url}

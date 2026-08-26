@@ -20,15 +20,18 @@ fields:
       en: Short description
       fr: Description courte
     extends: fields/writer
-  domains:
-    extends: fields/taxonomies/domains
+  programs:
+    extends: fields/taxonomies/programs
     width: 1/2
     help:
       en: Filters the events shown in the block.
       fr: Filtre les événements affichés dans le module.
-  eventThemes:
-    extends: fields/taxonomies/event-themes
+  publics:
+    extends: fields/taxonomies/publics
     width: 1/2
+    help:
+      en: Filters the events shown in the block.
+      fr: Filtre les événements affichés dans le module.
   ctaLabel:
     width: 1/2
     label:

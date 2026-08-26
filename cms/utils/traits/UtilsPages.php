@@ -83,8 +83,8 @@ trait UtilsPages
             'cover'     => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             ...self::getEventDateFields($page),
             'terms'     => array_merge(
-                self::resolveTaxonomyTerms($page->domains(), 'domains'),
-                self::resolveTaxonomyTerms($page->eventThemes(), 'event-themes')
+                self::resolveTaxonomyTerms($page->programs(), 'programs'),
+                self::resolveTaxonomyTerms($page->publics(), 'publics')
             ),
         ];
     }
@@ -101,8 +101,8 @@ trait UtilsPages
             'cover'          => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             'collectiveName' => $page->collectiveName()->isNotEmpty() ? $page->collectiveName()->value() : null,
             'year'           => (int)$page->year()->value(),
-            'themes'         => self::resolveTaxonomyTerms($page->projectThemes(), 'project-themes'),
-            'types'          => self::resolveTaxonomyTerms($page->projectTypes(), 'project-types'),
+            'programs'       => self::resolveTaxonomyTerms($page->programs(), 'programs'),
+            'categories'     => self::resolveTaxonomyTerms($page->categories(), 'categories'),
         ];
     }
 
@@ -117,10 +117,7 @@ trait UtilsPages
             'location' => $page->location()->value(),
             'deadline' => $page->deadline()->toDate('Y-m-d'),
             ...self::getActivityRate($page),
-            'terms'    => array_merge(
-                self::resolveTaxonomyTerms($page->domains(), 'domains'),
-                self::resolveTaxonomyTerms($page->jobOfferCategories(), 'job-offer-categories')
-            ),
+            'terms'    => self::resolveTaxonomyTerms($page->sectors(), 'sectors'),
         ];
     }
 
@@ -135,7 +132,7 @@ trait UtilsPages
             'date'      => $page->date()->toDate('Y-m-d'),
             'location'  => $page->location()->value(),
             'shortDesc' => $page->shortDesc()->value(),
-            'terms'     => self::resolveTaxonomyTerms($page->domains(), 'domains'),
+            'terms'     => self::resolveTaxonomyTerms($page->categories(), 'categories'),
         ];
     }
 

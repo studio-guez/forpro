@@ -9,6 +9,7 @@
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import {
+		expandSelection,
 		filterUsedTerms,
 		keepKnownSlugs,
 		matchesSearch,
@@ -26,27 +27,55 @@
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
-	let selectedCategories = $state<string[]>(parseListParam(initialParams.get('faqCategories')));
+	let selectedSectors = $state<string[]>(parseListParam(initialParams.get('sectors')));
+	let selectedPrograms = $state<string[]>(parseListParam(initialParams.get('programs')));
+	let selectedPublics = $state<string[]>(parseListParam(initialParams.get('publics')));
+
+	const allFaqs = $derived(page.sections.flatMap((section) => section.faqs));
 
 	// Only offer terms that are actually used by at least one question,
 	// kept in the CMS-defined taxonomy order.
-	const usedTerms = $derived(
+	const sectorTerms = $derived(
 		filterUsedTerms(
-			page.faqCategories,
-			page.sections.flatMap((section) =>
-				section.faqs.flatMap((faq) => faq.faqCategories.map((term) => term.slug))
-			)
+			page.sectors,
+			allFaqs.flatMap((faq) => faq.sectors.map((term) => term.slug))
+		)
+	);
+	const programTerms = $derived(
+		filterUsedTerms(
+			page.programs,
+			allFaqs.flatMap((faq) => faq.programs.map((term) => term.slug))
+		)
+	);
+	const publicTerms = $derived(
+		filterUsedTerms(
+			page.publics,
+			allFaqs.flatMap((faq) => faq.publics.map((term) => term.slug))
 		)
 	);
 
 	// Drop stale slugs coming from the URL so counters stay accurate.
-	const activeCategories = $derived(keepKnownSlugs(selectedCategories, usedTerms));
+	const activeSectors = $derived(keepKnownSlugs(selectedSectors, sectorTerms));
+	const activePrograms = $derived(keepKnownSlugs(selectedPrograms, programTerms));
+	const activePublics = $derived(keepKnownSlugs(selectedPublics, publicTerms));
+
+	// Selecting a parent term also matches questions tagged with one of its sub-terms.
+	const sectorFilter = $derived(expandSelection(activeSectors, sectorTerms));
+	const programFilter = $derived(expandSelection(activePrograms, programTerms));
+	const publicFilter = $derived(expandSelection(activePublics, publicTerms));
 
 	const matchesFilters = (faq: FaqItem): boolean =>
-		matchesTerms(activeCategories, faq.faqCategories) &&
+		matchesTerms(sectorFilter, faq.sectors) &&
+		matchesTerms(programFilter, faq.programs) &&
+		matchesTerms(publicFilter, faq.publics) &&
 		matchesSearch(search, [faq.question, stripTags(faq.answer)]);
 
-	const isFiltering = $derived(search.trim() !== '' || activeCategories.length > 0);
+	const isFiltering = $derived(
+		search.trim() !== '' ||
+			activeSectors.length > 0 ||
+			activePrograms.length > 0 ||
+			activePublics.length > 0
+	);
 
 	const filteredSections = $derived(
 		page.sections
@@ -56,8 +85,8 @@
 				faqs: section.faqs.filter(matchesFilters),
 				// Terms shared by every question of the section (shown next to the counter).
 				commonTerms: section.faqs.length
-					? section.faqs[0].faqCategories.filter((term) =>
-							section.faqs.every((faq) => faq.faqCategories.some((t) => t.slug === term.slug))
+					? section.faqs[0].sectors.filter((term) =>
+							section.faqs.every((faq) => faq.sectors.some((t) => t.slug === term.slug))
 						)
 					: []
 			}))
@@ -86,7 +115,12 @@
 
 	// Mirror search + filters into the query string without triggering navigation.
 	$effect(() => {
-		syncQueryString({ q: search, faqCategories: activeCategories });
+		syncQueryString({
+			q: search,
+			sectors: activeSectors,
+			programs: activePrograms,
+			publics: activePublics
+		});
 	});
 </script>
 
@@ -106,10 +140,24 @@
 	/>
 
 	<FilterTags
-		terms={usedTerms}
-		bind:selected={selectedCategories}
+		terms={sectorTerms}
+		bind:selected={selectedSectors}
 		legend="Questions concernant :"
 		class="mt-12 md:mt-18"
+	/>
+
+	<FilterTags
+		terms={programTerms}
+		bind:selected={selectedPrograms}
+		legend="Programmes :"
+		class="mt-9 md:mt-12"
+	/>
+
+	<FilterTags
+		terms={publicTerms}
+		bind:selected={selectedPublics}
+		legend="Publics :"
+		class="mt-9 md:mt-12"
 	/>
 </section>
 
@@ -158,7 +206,7 @@
 					</h2>
 					<div class="mt-1 flex flex-wrap items-center gap-3">
 						<p class="text-label">{@render questionCount(section.faqs.length)}</p>
-						<TermTags terms={section.commonTerms} label="Thématiques" />
+						<TermTags terms={section.commonTerms} label="Secteurs" />
 					</div>
 					{#if open}
 						<div

@@ -189,8 +189,8 @@ export interface ProjetCard {
 	readonly collectiveName: string | null;
 	/** Only used to filter projects on the projects page. */
 	readonly year: number;
-	readonly themes: TaxonomyTerm[];
-	readonly types: TaxonomyTerm[];
+	readonly programs: TaxonomyTerm[];
+	readonly categories: TaxonomyTerm[];
 }
 
 export interface ModuleProjetsContent {

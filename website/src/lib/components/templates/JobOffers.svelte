@@ -7,6 +7,7 @@
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import {
+		expandSelection,
 		filterUsedTerms,
 		keepKnownSlugs,
 		matchesSearch,
@@ -24,23 +25,22 @@
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
-	let selectedDomains = $state<string[]>(parseListParam(initialParams.get('domains')));
-	let selectedCategories = $state<string[]>(parseListParam(initialParams.get('categories')));
+	let selectedSectors = $state<string[]>(parseListParam(initialParams.get('sectors')));
 
 	// Only offer terms actually used by at least one job offer, in CMS order.
 	const usedSlugs = $derived(
 		new Set(page.jobOffers.flatMap((offer) => offer.terms.map((term) => term.slug)))
 	);
-	const domainTerms = $derived(filterUsedTerms(page.domains, usedSlugs));
-	const categoryTerms = $derived(filterUsedTerms(page.jobOfferCategories, usedSlugs));
+	const sectorTerms = $derived(filterUsedTerms(page.sectors, usedSlugs));
 
 	// Drop stale slugs coming from the URL so counters stay accurate.
-	const activeDomains = $derived(keepKnownSlugs(selectedDomains, domainTerms));
-	const activeCategories = $derived(keepKnownSlugs(selectedCategories, categoryTerms));
+	const activeSectors = $derived(keepKnownSlugs(selectedSectors, sectorTerms));
+
+	// Selecting a parent term also matches offers tagged with one of its sub-terms.
+	const sectorFilter = $derived(expandSelection(activeSectors, sectorTerms));
 
 	const matchesFilters = (offer: JobOffer): boolean =>
-		matchesTerms(activeDomains, offer.terms) &&
-		matchesTerms(activeCategories, offer.terms) &&
+		matchesTerms(sectorFilter, offer.terms) &&
 		matchesSearch(search, [offer.title, offer.location, ...offer.terms.map((term) => term.title)]);
 
 	const filteredOffers = $derived(page.jobOffers.filter(matchesFilters));
@@ -53,7 +53,7 @@
 
 	// Mirror search + filters into the query string without triggering navigation.
 	$effect(() => {
-		syncQueryString({ q: search, domains: activeDomains, categories: activeCategories });
+		syncQueryString({ q: search, sectors: activeSectors });
 	});
 </script>
 
@@ -68,17 +68,10 @@
 	/>
 
 	<FilterTags
-		terms={domainTerms}
-		bind:selected={selectedDomains}
-		legend="Domaines :"
+		terms={sectorTerms}
+		bind:selected={selectedSectors}
+		legend="Secteurs :"
 		class="mt-12 md:mt-18"
-	/>
-
-	<FilterTags
-		terms={categoryTerms}
-		bind:selected={selectedCategories}
-		legend="Catégories :"
-		class="mt-9 md:mt-12"
 	/>
 </section>
 

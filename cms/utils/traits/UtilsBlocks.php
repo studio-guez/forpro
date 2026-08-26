@@ -204,14 +204,23 @@ trait UtilsBlocks
     {
         $elements = self::getThreeElements($block->elements());
 
-        $categorySlugs = array_column(self::resolveTaxonomyTerms($block->faqCategories(), 'faq-categories'), 'slug');
+        $filters = [
+            'sectors'  => array_column(self::resolveTaxonomyTerms($block->sectors(), 'sectors'), 'slug'),
+            'programs' => array_column(self::resolveTaxonomyTerms($block->programs(), 'programs'), 'slug'),
+            'publics'  => array_column(self::resolveTaxonomyTerms($block->publics(), 'publics'), 'slug'),
+        ];
 
         // All matching FAQ questions, pulled from the FAQ page.
         $faqPage = site()->index()->template('faq')->first();
         $faqs = [];
         if ($faqPage) {
             foreach ($faqPage->sections()->toStructure() as $faqSection) {
-                foreach (self::filterStructureByTaxonomy($faqSection->faqs()->toStructure(), 'faqCategories', $categorySlugs) as $faq) {
+                $items = $faqSection->faqs()->toStructure();
+                foreach ($filters as $field => $slugs) {
+                    $items = self::filterStructureByTaxonomy($items, $field, $slugs);
+                }
+
+                foreach ($items as $faq) {
                     $faqs[] = [
                         'question' => $faq->question()->value(),
                         'answer'   => $faq->answer()->value(),
@@ -262,8 +271,8 @@ trait UtilsBlocks
     private static function getAgendaBlockData(\Kirby\Cms\Block $block): array
     {
         $filters = [
-            'domains'     => array_column(self::resolveTaxonomyTerms($block->domains(), 'domains'), 'slug'),
-            'eventThemes' => array_column(self::resolveTaxonomyTerms($block->eventThemes(), 'event-themes'), 'slug'),
+            'programs' => array_column(self::resolveTaxonomyTerms($block->programs(), 'programs'), 'slug'),
+            'publics'  => array_column(self::resolveTaxonomyTerms($block->publics(), 'publics'), 'slug'),
         ];
 
         $eventsPage = site()->index()->template('events')->first();
@@ -300,8 +309,8 @@ trait UtilsBlocks
     private static function getProjetsBlockData(\Kirby\Cms\Block $block): array
     {
         $filters = [
-            'projectThemes' => array_column(self::resolveTaxonomyTerms($block->projectThemes(), 'project-themes'), 'slug'),
-            'projectTypes'  => array_column(self::resolveTaxonomyTerms($block->projectTypes(), 'project-types'), 'slug'),
+            'programs'   => array_column(self::resolveTaxonomyTerms($block->programs(), 'programs'), 'slug'),
+            'categories' => array_column(self::resolveTaxonomyTerms($block->categories(), 'categories'), 'slug'),
         ];
 
         $projectsPage = site()->index()->template('projects')->first();
@@ -333,13 +342,13 @@ trait UtilsBlocks
 
     private static function getResourcesBlockData(\Kirby\Cms\Block $block): array
     {
-        $slugs = array_column(self::resolveTaxonomyTerms($block->domains(), 'domains'), 'slug');
+        $slugs = array_column(self::resolveTaxonomyTerms($block->programs(), 'programs'), 'slug');
 
         // The resources page has no frontend route: it is only a content library for this block.
         $resourcesPage = site()->index()->template('resources')->first();
         $resources = [];
         if ($resourcesPage) {
-            $items = self::filterStructureByTaxonomy($resourcesPage->resources()->toStructure(), 'domains', $slugs);
+            $items = self::filterStructureByTaxonomy($resourcesPage->resources()->toStructure(), 'programs', $slugs);
 
             $resources = array_values($items->map(fn($item) => [
                 'title'     => $item->title()->value(),

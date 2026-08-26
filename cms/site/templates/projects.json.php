@@ -9,8 +9,8 @@ require_once 'utils/Utils.php';
 $json = Utils::getPageBaseData($page, 'projects');
 
 // All terms in their CMS-defined order, so the frontend can order filters accordingly.
-$json['projectThemes'] = Utils::getTaxonomyTerms('project-themes');
-$json['projectTypes']  = Utils::getTaxonomyTerms('project-types');
+$json['programs']   = Utils::getTaxonomyTerms('programs');
+$json['categories'] = Utils::getTaxonomyTerms('categories');
 
 $json['projects'] = array_values($page->children()->listed()
     ->map(fn($project) => Utils::getProjectCardData($project))

@@ -123,70 +123,55 @@ tabs:
     columns:
       - width: 1/2
         sections:
-          eventThemes:
+          programs:
             type: pages
             image: false
             label:
-              en: Event themes
-              fr: Thématiques d'événement
+              en: Programs
+              fr: Programmes
             templates:
-              - event-theme
-            parent: site.index.template("event-themes").first()
+              - program
+            parent: site.index.template("programs").first()
       - width: 1/2
         sections:
-          domains:
+          publics:
             type: pages
             image: false
             label:
-              en: Domains
-              fr: Domaines
+              en: Publics
+              fr: Publics
             templates:
-              - domain
-            parent: site.index.template("domains").first()
+              - public
+              - subpublic
+            # `query` rather than `parent` so sub-publics show up too, marked
+            # with a prefix since the section cannot indent them. The query
+            # language has no `==`, so nesting is detected by depth: only a
+            # sub-public still has a parent three levels up.
+            query: site.find("taxonomies").find("publics").index.listed
+            text: "{{ page.parent.parent.parent ? '↳ ' : '' }}{{ page.title }}"
+            info: "{{ page.hasListedChildren ? page.children.listed.count : '' }}{{ page.hasListedChildren ? ' sous-publics' : '' }}"
       - width: 1/2
         sections:
-          projectThemes:
+          sectors:
             type: pages
             image: false
             label:
-              en: Project themes
-              fr: Thématiques de projet
+              en: Sectors
+              fr: Secteurs
             templates:
-              - project-theme
-            parent: site.index.template("project-themes").first()
+              - sector
+            parent: site.index.template("sectors").first()
       - width: 1/2
         sections:
-          projectTypes:
+          categories:
             type: pages
             image: false
             label:
-              en: Project types
-              fr: Types de projet
+              en: Categories
+              fr: Catégories
             templates:
-              - project-type
-            parent: site.index.template("project-types").first()
-      - width: 1/2
-        sections:
-          faqCategories:
-            type: pages
-            image: false
-            label:
-              en: FAQ Categories
-              fr: Catégories de FAQ
-            templates:
-              - faq-category
-            parent: site.index.template("faq-categories").first()
-      - width: 1/2
-        sections:
-          jobOfferCategories:
-            type: pages
-            image: false
-            label:
-              en: Job offer categories
-              fr: Catégories d'offre d'emploi
-            templates:
-              - job-offer-category
-            parent: site.index.template("job-offer-categories").first()
+              - category
+            parent: site.index.template("categories").first()
 
   navigation: tabs/navigation
 
