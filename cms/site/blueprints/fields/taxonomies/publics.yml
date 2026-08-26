@@ -1,0 +1,6 @@
+extends: fields/taxonomies/taxonomy
+label:
+  en: Publics
+  fr: Publics
+options:
+  query: site.find("taxonomies").find("publics").children

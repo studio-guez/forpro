@@ -1,0 +1,9 @@
+title: Secteurs
+
+extends: pages/taxonomy
+
+sections:
+  terms:
+    label: Secteurs
+    templates:
+      - sector

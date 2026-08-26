@@ -74,8 +74,8 @@ trait UtilsTaxonomies
      *
      * Usage:
      *   $faqs = page('faq')->faqs()->toStructure();                                     // all FAQs
-     *   $faqs = Utils::filterStructureByTaxonomy($faqs, 'domains', ['architecture']);   // one domain
-     *   $faqs = Utils::filterStructureByTaxonomy($faqs, 'domains', ['a', 'b']);         // any of multiple domains
+     *   $faqs = Utils::filterStructureByTaxonomy($faqs, 'programs', ['explore']);       // one program
+     *   $faqs = Utils::filterStructureByTaxonomy($faqs, 'programs', ['a', 'b']);        // any of multiple programs
      */
     static function filterStructureByTaxonomy(\Kirby\Cms\Structure $items, string $fieldName, array $slugs): \Kirby\Cms\Structure
     {

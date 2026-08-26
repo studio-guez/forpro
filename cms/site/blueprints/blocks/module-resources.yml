@@ -20,8 +20,8 @@ fields:
       en: Short description
       fr: Description courte
     extends: fields/writer
-  domains:
-    extends: fields/taxonomies/domains
+  programs:
+    extends: fields/taxonomies/programs
     width: 1/2
     help:
       en: Filters the resources shown in the block.

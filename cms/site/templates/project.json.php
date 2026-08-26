@@ -10,8 +10,8 @@ $json = Utils::getEventProjectBaseData($page);
 
 $json['template'] = 'project';
 
-$json['projectThemes'] = Utils::resolveTaxonomyTerms($page->projectThemes(), 'project-themes');
-$json['projectTypes']  = Utils::resolveTaxonomyTerms($page->projectTypes(), 'project-types');
+$json['programs']   = Utils::resolveTaxonomyTerms($page->programs(), 'programs');
+$json['categories'] = Utils::resolveTaxonomyTerms($page->categories(), 'categories');
 
 $json['collectiveName']    = $page->collectiveName()->value();
 $json['collectiveMembers'] = array_values($page->collectiveMembers()->toStructure()->map(fn($item) => [

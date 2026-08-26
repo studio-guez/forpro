@@ -9,8 +9,8 @@ require_once 'utils/Utils.php';
 $json = Utils::getPageBaseData($page, 'events');
 
 // All terms in their CMS-defined order, so the frontend can order filters accordingly.
-$json['domains']     = Utils::getTaxonomyTerms('domains');
-$json['eventThemes'] = Utils::getTaxonomyTerms('event-themes');
+$json['programs'] = Utils::getTaxonomyTerms('programs');
+$json['publics']  = Utils::getTaxonomyTerms('publics');
 
 ['upcoming' => $upcoming, 'past' => $past] = Utils::splitEventsByDate($page->children()->listed());
 

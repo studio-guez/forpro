@@ -35,10 +35,8 @@ tabs:
                 required: true
               sepTaxonomies:
                 type: line
-              domains:
-                extends: fields/taxonomies/domains
-              jobOfferCategories:
-                extends: fields/taxonomies/job-offer-categories
+              sectors:
+                extends: fields/taxonomies/sectors
           infos:
             type: fields
             fields:

@@ -41,17 +41,17 @@
 				</div>
 			{/if}
 
-			{#if page.domains.length > 0}
+			{#if page.programs.length > 0}
 				<div>
-					<h2 class="text-label text-teal">Domaines</h2>
-					<TermTags terms={page.domains} label="Domaines" class="mt-2" />
+					<h2 class="text-label text-teal">Programmes</h2>
+					<TermTags terms={page.programs} label="Programmes" class="mt-2" />
 				</div>
 			{/if}
 
-			{#if page.eventThemes.length > 0}
+			{#if page.publics.length > 0}
 				<div>
-					<h2 class="text-label text-teal">Thématiques</h2>
-					<TermTags terms={page.eventThemes} label="Thématiques" class="mt-2" />
+					<h2 class="text-label text-teal">Publics</h2>
+					<TermTags terms={page.publics} label="Publics" class="mt-2" />
 				</div>
 			{/if}
 		{/snippet}

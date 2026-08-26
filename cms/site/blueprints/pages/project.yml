@@ -35,10 +35,10 @@ tabs:
                 step: 1
                 min: 1990
                 max: 2100
-              projectThemes:
-                extends: fields/taxonomies/project-themes
-              projectTypes:
-                extends: fields/taxonomies/project-types
+              programs:
+                extends: fields/taxonomies/programs
+              categories:
+                extends: fields/taxonomies/categories
       main:
         sections:
           collective:

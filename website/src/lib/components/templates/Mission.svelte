@@ -54,7 +54,7 @@
 			<span>Annonceur : {page.announcer}</span>
 		</p>
 
-		<TermTags terms={page.domains} label="Domaines" />
+		<TermTags terms={page.categories} label="Catégories" />
 	</header>
 
 	<section aria-labelledby="mission-intro" class="grid md:grid-cols-2 gap-8 md:gap-16 items-start">

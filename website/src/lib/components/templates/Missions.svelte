@@ -37,20 +37,20 @@
 
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
-	let selectedDomains = $state<string[]>(parseListParam(initialParams.get('domains')));
+	let selectedCategories = $state<string[]>(parseListParam(initialParams.get('categories')));
 	let sort = $state(initialParams.get('sort') ?? '');
 
 	// Only offer terms actually used by at least one mission, in CMS order.
 	const usedSlugs = $derived(
 		new Set(page.missions.flatMap((mission) => mission.terms.map((term) => term.slug)))
 	);
-	const domainTerms = $derived(filterUsedTerms(page.domains, usedSlugs));
+	const categoryTerms = $derived(filterUsedTerms(page.categories, usedSlugs));
 
 	// Drop stale slugs coming from the URL so counters stay accurate.
-	const activeDomains = $derived(keepKnownSlugs(selectedDomains, domainTerms));
+	const activeCategories = $derived(keepKnownSlugs(selectedCategories, categoryTerms));
 
 	const filteredMissions = $derived(
-		page.missions.filter((mission) => matchesTerms(activeDomains, mission.terms))
+		page.missions.filter((mission) => matchesTerms(activeCategories, mission.terms))
 	);
 
 	// An unset sort keeps the order defined in the CMS.
@@ -75,7 +75,7 @@
 
 	// Mirror filters + sorting into the query string without triggering navigation.
 	$effect(() => {
-		syncQueryString({ domains: activeDomains, sort });
+		syncQueryString({ categories: activeCategories, sort });
 	});
 </script>
 
@@ -89,7 +89,11 @@
 />
 
 <section aria-label="Filtres" class="py-12 md:py-16">
-	<FilterTags terms={domainTerms} bind:selected={selectedDomains} legend="Missions concernant :" />
+	<FilterTags
+		terms={categoryTerms}
+		bind:selected={selectedCategories}
+		legend="Missions concernant :"
+	/>
 
 	<SelectDropdown
 		bind:value={sort}
