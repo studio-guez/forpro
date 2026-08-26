@@ -13,7 +13,7 @@
 
 	let { content, theme }: Props = $props();
 
-	const colors = $derived(cardThemeColors[theme].default);
+	const colors = $derived(cardThemeColors[theme][content.variant]);
 </script>
 
 <Card

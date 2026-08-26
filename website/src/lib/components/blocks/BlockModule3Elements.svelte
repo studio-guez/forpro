@@ -11,8 +11,7 @@
 
 	let { content, theme }: Props = $props();
 
-	// The block has no variant of its own, it always uses the theme's default palette.
-	const colors = $derived(cardThemeColors[theme].default);
+	const colors = $derived(cardThemeColors[theme][content.variant]);
 </script>
 
 {#if content.elements.length > 0}
