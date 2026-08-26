@@ -35,9 +35,15 @@ fields:
   programs:
     extends: fields/taxonomies/programs
     width: 1/2
+    help:
+      en: Filters the questions shown in the block.
+      fr: Filtre les questions affichées dans le module.
   publics:
     extends: fields/taxonomies/publics
     width: 1/2
+    help:
+      en: Filters the questions shown in the block.
+      fr: Filtre les questions affichées dans le module.
   ctaLabel:
     width: 1/2
     label:
