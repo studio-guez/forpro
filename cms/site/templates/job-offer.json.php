@@ -16,8 +16,7 @@ $json['parentPage'] = $parent ? [
     'path'  => $parent->virtualPath(),
 ] : null;
 
-$json['domains']            = Utils::resolveTaxonomyTerms($page->domains(), 'domains');
-$json['jobOfferCategories'] = Utils::resolveTaxonomyTerms($page->jobOfferCategories(), 'job-offer-categories');
+$json['sectors'] = Utils::resolveTaxonomyTerms($page->sectors(), 'sectors');
 
 $json['description'] = $page->description()->value();
 $json['profile']     = $page->profile()->value();

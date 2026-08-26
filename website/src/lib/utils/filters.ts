@@ -42,7 +42,7 @@ export const filterUsedTerms = (terms: TaxonomyTerm[], used: Iterable<string>): 
 export const keepKnownSlugs = (selected: string[], terms: TaxonomyTerm[]): string[] =>
 	selected.filter((slug) => terms.some((term) => term.slug === slug));
 
-// A comma-separated URL parameter (`?domains=a,b`) as a list of slugs.
+// A comma-separated URL parameter (`?programs=a,b`) as a list of slugs.
 export const parseListParam = (value: string | null): string[] =>
 	(value ?? '').split(',').filter(Boolean);
 

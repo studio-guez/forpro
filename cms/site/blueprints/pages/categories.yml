@@ -1,9 +1,9 @@
-title: Domaines
+title: Catégories
 
 extends: pages/taxonomy
 
 sections:
   terms:
-    label: Domaines
+    label: Catégories
     templates:
-      - domain
+      - category

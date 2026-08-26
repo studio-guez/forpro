@@ -18,7 +18,7 @@ export interface MissionPage {
 	readonly slug: string;
 	readonly path: string;
 	readonly parentPage: PageParent | null;
-	readonly domains: TaxonomyTerm[];
+	readonly categories: TaxonomyTerm[];
 	readonly announcer: string;
 	/** ISO date `YYYY-MM-DD`. */
 	readonly publishedDate: string;
@@ -47,7 +47,7 @@ export interface MissionsPage {
 	readonly introTitle: string;
 	readonly intro: string;
 	readonly parentPage: PageParent | null;
-	readonly domains: TaxonomyTerm[];
+	readonly categories: TaxonomyTerm[];
 	readonly missions: MissionCard[];
 	readonly body: Block[];
 	readonly seo: Seo;

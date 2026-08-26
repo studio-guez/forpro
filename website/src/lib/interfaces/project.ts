@@ -8,8 +8,8 @@ export interface CollectiveMember {
 
 export interface ProjectPage extends EventProjectBase {
 	readonly template: 'project';
-	readonly projectThemes: TaxonomyTerm[];
-	readonly projectTypes: TaxonomyTerm[];
+	readonly programs: TaxonomyTerm[];
+	readonly categories: TaxonomyTerm[];
 	readonly collectiveName: string | null;
 	readonly collectiveMembers: CollectiveMember[];
 }
@@ -20,8 +20,8 @@ export interface ProjectsPage {
 	readonly title: string;
 	readonly slug: string;
 	readonly path: string;
-	readonly projectThemes: TaxonomyTerm[];
-	readonly projectTypes: TaxonomyTerm[];
+	readonly programs: TaxonomyTerm[];
+	readonly categories: TaxonomyTerm[];
 	/** Years used by at least one project, most recent first. Filter only. */
 	readonly years: number[];
 	readonly projects: ProjetCard[];

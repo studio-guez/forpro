@@ -1,0 +1,6 @@
+extends: fields/taxonomies/taxonomy
+label:
+  en: Sectors
+  fr: Secteurs
+options:
+  query: site.find("taxonomies").find("sectors").children

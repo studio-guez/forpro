@@ -23,7 +23,7 @@ $json['parentPage'] = $parentPage ? [
 ] : null;
 
 // All terms in their CMS-defined order, so the frontend can order filters accordingly.
-$json['domains'] = Utils::getTaxonomyTerms('domains');
+$json['categories'] = Utils::getTaxonomyTerms('categories');
 
 $json['missions'] = array_values($page->children()->listed()
     ->map(fn($mission) => Utils::getMissionCardData($mission))->data());

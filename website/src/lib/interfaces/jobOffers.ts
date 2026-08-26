@@ -34,8 +34,7 @@ export interface JobOfferPage {
 	readonly slug: string;
 	readonly path: string;
 	readonly parentPage: PageParent | null;
-	readonly domains: TaxonomyTerm[];
-	readonly jobOfferCategories: TaxonomyTerm[];
+	readonly sectors: TaxonomyTerm[];
 	readonly description: string;
 	readonly profile: string;
 	readonly conditions: string;
@@ -65,8 +64,7 @@ export interface JobOffersPage {
 	readonly overtitle: string | null;
 	readonly introTitle: string;
 	readonly intro: string;
-	readonly domains: TaxonomyTerm[];
-	readonly jobOfferCategories: TaxonomyTerm[];
+	readonly sectors: TaxonomyTerm[];
 	readonly jobOffers: JobOfferCard[];
 	readonly body: Block[];
 	readonly seo: Seo;

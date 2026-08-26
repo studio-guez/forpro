@@ -1,0 +1,5 @@
+title:
+  en: Public
+  fr: Public
+
+extends: pages/taxonomy-term

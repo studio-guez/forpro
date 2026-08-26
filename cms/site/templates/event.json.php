@@ -12,7 +12,7 @@ $json['template'] = 'event';
 
 $json += Utils::getEventDateFields($page);
 
-$json['domains']     = Utils::resolveTaxonomyTerms($page->domains(), 'domains');
-$json['eventThemes'] = Utils::resolveTaxonomyTerms($page->eventThemes(), 'event-themes');
+$json['programs'] = Utils::resolveTaxonomyTerms($page->programs(), 'programs');
+$json['publics']  = Utils::resolveTaxonomyTerms($page->publics(), 'publics');
 
 echo json_encode($json);
