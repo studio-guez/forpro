@@ -17,7 +17,14 @@ Use `-T` when the command is non-interactive (which is always the case for agent
 | pnpm in `website/` | `docker compose -f compose.dev.yml exec -T website pnpm <args>` |
 | pnpm in `restaurant/` | `docker compose -f compose.dev.yml exec -T restaurant pnpm <args>` |
 | pnpm in `menu/` | `docker compose -f compose.dev.yml exec -T menu pnpm <args>` |
-| php / composer / Kirby CLI | `docker compose -f compose.dev.yml exec -T cms php <args>` |
+| php / composer / Kirby CLI | `docker compose -f compose.dev.yml exec -T --user www-data cms php <args>` |
+
+**Always pass `--user www-data` to `exec ... cms`.** `exec` defaults to root inside the
+container, while Apache/PHP runs as `www-data`. Any script that boots Kirby writes to
+`site/cache/` (UUID index, `changes/pages.cache`), and a root-owned file there makes the
+Panel fail to save with a 500 — `The file "{site}/cache/.../pages.cache" is not writable`.
+Repair with `docker compose -f compose.dev.yml exec -T cms chown -R www-data:www-data /var/www/html/site/cache`
+(or just restart the service — `entrypoint.sh` chowns the runtime dirs on every start).
 
 Working directories inside the containers: `/app` for the three frontends,
 `/var/www/html` for the CMS (so repo path `cms/utils/Utils.php` is `utils/Utils.php` there).
@@ -28,8 +35,8 @@ Examples:
 docker compose -f compose.dev.yml exec -T website pnpm run check
 docker compose -f compose.dev.yml exec -T restaurant pnpm run lint
 docker compose -f compose.dev.yml exec -T menu pnpm run build
-docker compose -f compose.dev.yml exec -T cms composer install
-docker compose -f compose.dev.yml exec -T cms php -r 'echo PHP_VERSION;'
+docker compose -f compose.dev.yml exec -T --user www-data cms composer install
+docker compose -f compose.dev.yml exec -T --user www-data cms php -r 'echo PHP_VERSION;'
 ```
 
 ## If the container is not running
@@ -122,8 +129,8 @@ JSON contract: the two copies drift and only one gets fixed.
 - `compose.dev.yml` bind-mounts individual paths under `cms/`, not the whole directory.
   A scratch script dropped in `cms/` is invisible inside the container — put it in
   `cms/utils/` (which is `/var/www/html/utils/` there).
-- To verify a change, boot Kirby headlessly in the container:
-  `docker compose -f compose.dev.yml exec -T cms php -r '... new Kirby\Cms\App(["roots" => ["index" => "/var/www/html"]]) ...'`
+- To verify a change, boot Kirby headlessly in the container (as `www-data`, see above):
+  `docker compose -f compose.dev.yml exec -T --user www-data cms php -r '... new Kirby\Cms\App(["roots" => ["index" => "/var/www/html"]]) ...'`
 - Always verify option/config behaviour with a real request (`curl`), not code reading —
   several of these failure modes look correct in one environment and break in another.
 
