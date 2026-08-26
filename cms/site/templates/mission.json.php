@@ -16,7 +16,7 @@ $json['parentPage'] = $parent ? [
     'path'  => $parent->virtualPath(),
 ] : null;
 
-$json['domains'] = Utils::resolveTaxonomyTerms($page->domains(), 'domains');
+$json['categories'] = Utils::resolveTaxonomyTerms($page->categories(), 'categories');
 
 $json['announcer']     = $page->announcer()->value();
 $json['publishedDate'] = $page->publishedDate()->toDate('Y-m-d');

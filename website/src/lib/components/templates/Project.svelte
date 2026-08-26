@@ -17,17 +17,17 @@
 		cover={page.cover}
 	>
 		{#snippet meta()}
-			{#if page.projectThemes.length > 0}
+			{#if page.programs.length > 0}
 				<div>
-					<h2 class="text-label text-teal">Thématiques</h2>
-					<TermTags terms={page.projectThemes} label="Thématiques" class="mt-2" />
+					<h2 class="text-label text-teal">Programmes</h2>
+					<TermTags terms={page.programs} label="Programmes" class="mt-2" />
 				</div>
 			{/if}
 
-			{#if page.projectTypes.length > 0}
+			{#if page.categories.length > 0}
 				<div>
-					<h2 class="text-label text-teal">Types</h2>
-					<TermTags terms={page.projectTypes} label="Types" class="mt-2" />
+					<h2 class="text-label text-teal">Catégories</h2>
+					<TermTags terms={page.categories} label="Catégories" class="mt-2" />
 				</div>
 			{/if}
 

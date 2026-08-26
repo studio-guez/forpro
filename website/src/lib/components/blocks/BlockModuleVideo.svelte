@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ModuleVideoContent, Theme } from '$lib/interfaces/page';
-	import { cardThemeColors } from '$lib/utils/themeColors';
+	import { getThemeColors } from '$lib/utils/themeColors';
 	import Card from '$lib/components/ui/Card.svelte';
 	import VideoPlayer from '$lib/components/ui/VideoPlayer.svelte';
 	import ShapeCasesDefault1 from '$lib/components/svg/ShapeCasesDefault1.svelte';
@@ -13,18 +13,18 @@
 
 	let { content, theme }: Props = $props();
 
-	const colors = $derived(cardThemeColors[theme][content.variant]);
+	const colors = $derived(getThemeColors(theme, content.variant));
 </script>
 
 <Card
 	background={colors.bg}
 	color={colors.text}
-	shapeLeft={ShapeCasesDefault1}
-	shapeRight={ShapeCasesDefault2}
+	shapeLeft={colors.showShapes ? ShapeCasesDefault1 : null}
+	shapeRight={colors.showShapes ? ShapeCasesDefault2 : null}
 	shapeColor={colors.bgContrast}
 	title={content.title}
 	shortDesc={content.shortDesc}
-	titleBackground="var(--color-white)"
+	titleBackground={colors.titleBackground}
 	titleColor={colors.title}
 >
 	{#if content.video}

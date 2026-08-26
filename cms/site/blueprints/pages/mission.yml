@@ -38,8 +38,8 @@ tabs:
                   fr: 'Affiché sous la forme « Mission : <titre> » sur la page de la mission.'
               sepTaxonomies:
                 type: line
-              domains:
-                extends: fields/taxonomies/domains
+              categories:
+                extends: fields/taxonomies/categories
           infos:
             type: fields
             fields:

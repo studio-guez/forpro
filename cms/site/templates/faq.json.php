@@ -8,24 +8,37 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'faq');
 
-// All FAQ categories in their CMS-defined order, so the frontend can order filters accordingly.
-$json['faqCategories'] = Utils::getTaxonomyTerms('faq-categories');
+// All terms in their CMS-defined order, so the frontend can order filters accordingly.
+$json['sectors']  = Utils::getTaxonomyTerms('sectors');
+$json['programs'] = Utils::getTaxonomyTerms('programs');
+$json['publics']  = Utils::getTaxonomyTerms('publics');
 
-// Optional pre-filtering by category: /faq.json?faqCategories=slug-a,slug-b
-$faqCategories = array_values(array_filter(
-    array_slice(explode(',', (string)get('faqCategories')), 0, 20),
+// Optional pre-filtering: /faq.json?sectors=slug-a,slug-b&programs=…&publics=…
+$readSlugs = fn(string $param): array => array_values(array_filter(
+    array_slice(explode(',', (string)get($param)), 0, 20),
     fn(string $slug) => preg_match('/^[a-z0-9-]+$/', $slug) === 1
 ));
 
-$json['sections'] = $page->sections()->toStructure()->map(function ($section) use ($faqCategories) {
-    $faqs = Utils::filterStructureByTaxonomy($section->faqs()->toStructure(), 'faqCategories', $faqCategories);
+$filters = [
+    'sectors'  => $readSlugs('sectors'),
+    'programs' => $readSlugs('programs'),
+    'publics'  => $readSlugs('publics'),
+];
+
+$json['sections'] = $page->sections()->toStructure()->map(function ($section) use ($filters) {
+    $faqs = $section->faqs()->toStructure();
+    foreach ($filters as $field => $slugs) {
+        $faqs = Utils::filterStructureByTaxonomy($faqs, $field, $slugs);
+    }
 
     return [
         'title' => $section->title()->value(),
         'faqs'  => $faqs->map(fn($item) => [
-            'question'      => $item->question()->value(),
-            'answer'        => $item->answer()->value(),
-            'faqCategories' => Utils::resolveTaxonomyTerms($item->faqCategories(), 'faq-categories'),
+            'question' => $item->question()->value(),
+            'answer'   => $item->answer()->value(),
+            'sectors'  => Utils::resolveTaxonomyTerms($item->sectors(), 'sectors'),
+            'programs' => Utils::resolveTaxonomyTerms($item->programs(), 'programs'),
+            'publics'  => Utils::resolveTaxonomyTerms($item->publics(), 'publics'),
         ])->values(),
     ];
 })->values();

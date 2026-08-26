@@ -20,15 +20,18 @@ fields:
       en: Short description
       fr: Description courte
     extends: fields/writer
-  projectThemes:
-    extends: fields/taxonomies/project-themes
+  programs:
+    extends: fields/taxonomies/programs
     width: 1/2
     help:
       en: Filters the projects shown in the block.
       fr: Filtre les projets affichés dans le module.
-  projectTypes:
-    extends: fields/taxonomies/project-types
+  categories:
+    extends: fields/taxonomies/categories
     width: 1/2
+    help:
+      en: Filters the projects shown in the block.
+      fr: Filtre les projets affichés dans le module.
   ctaLabel:
     width: 1/2
     label:

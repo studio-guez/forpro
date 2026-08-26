@@ -10,9 +10,11 @@
 
 	let { project, headingTag = 'h3' }: Props = $props();
 
-	const tag = $derived(project.themes[0] ?? project.types[0] ?? null);
+	const tag = $derived(project.programs[0] ?? project.categories[0] ?? null);
 	const meta = $derived(
-		[project.collectiveName, ...project.types.map((type) => type.title)].filter(Boolean).join(' · ')
+		[project.collectiveName, ...project.categories.map((category) => category.title)]
+			.filter(Boolean)
+			.join(' · ')
 	);
 </script>
 

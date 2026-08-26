@@ -7,6 +7,7 @@
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import {
+		expandSelection,
 		filterUsedTerms,
 		keepKnownSlugs,
 		matchesSearch,
@@ -17,7 +18,7 @@
 	} from '$lib/utils/filters';
 	import type { ProjetCard } from '$lib/interfaces/page';
 	import type { ProjectsPage } from '$lib/interfaces/project';
-	import type { TaxonomyTerm } from '$lib/interfaces/taxonomy';
+	import type { TaxonomyFilterTerm } from '$lib/interfaces/taxonomy';
 
 	let { page }: { page: ProjectsPage } = $props();
 
@@ -29,35 +30,48 @@
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
-	let selectedThemes = $state<string[]>(parseListParam(initialParams.get('projectThemes')));
-	let selectedTypes = $state<string[]>(parseListParam(initialParams.get('projectTypes')));
+	let selectedPrograms = $state<string[]>(parseListParam(initialParams.get('programs')));
+	let selectedCategories = $state<string[]>(parseListParam(initialParams.get('categories')));
 	let selectedYears = $state<string[]>(parseListParam(initialParams.get('years')));
 
 	// Only offer terms actually used by at least one project, in CMS order.
 	const usedSlugs = $derived(
-		new Set(page.projects.flatMap((project) => [...project.themes, ...project.types].map((t) => t.slug)))
+		new Set(
+			page.projects.flatMap((project) =>
+				[...project.programs, ...project.categories].map((t) => t.slug)
+			)
+		)
 	);
-	const themeTerms = $derived(filterUsedTerms(page.projectThemes, usedSlugs));
-	const typeTerms = $derived(filterUsedTerms(page.projectTypes, usedSlugs));
+	const programTerms = $derived(filterUsedTerms(page.programs, usedSlugs));
+	const categoryTerms = $derived(filterUsedTerms(page.categories, usedSlugs));
 	// Years are not a taxonomy, but they are filtered with the same tag UI.
-	const yearTerms = $derived<TaxonomyTerm[]>(
-		page.years.map((year) => ({ slug: String(year), title: String(year), color: 'orange' }))
+	const yearTerms = $derived<TaxonomyFilterTerm[]>(
+		page.years.map((year) => ({
+			slug: String(year),
+			title: String(year),
+			color: 'orange',
+			children: []
+		}))
 	);
 
 	// Drop stale slugs coming from the URL so counters stay accurate.
-	const activeThemes = $derived(keepKnownSlugs(selectedThemes, themeTerms));
-	const activeTypes = $derived(keepKnownSlugs(selectedTypes, typeTerms));
+	const activePrograms = $derived(keepKnownSlugs(selectedPrograms, programTerms));
+	const activeCategories = $derived(keepKnownSlugs(selectedCategories, categoryTerms));
 	const activeYears = $derived(keepKnownSlugs(selectedYears, yearTerms));
 
+	// Selecting a parent term also matches projects tagged with one of its sub-terms.
+	const programFilter = $derived(expandSelection(activePrograms, programTerms));
+	const categoryFilter = $derived(expandSelection(activeCategories, categoryTerms));
+
 	const matchesFilters = (project: ProjetCard): boolean =>
-		matchesTerms(activeThemes, project.themes) &&
-		matchesTerms(activeTypes, project.types) &&
+		matchesTerms(programFilter, project.programs) &&
+		matchesTerms(categoryFilter, project.categories) &&
 		(activeYears.length === 0 || activeYears.includes(String(project.year))) &&
 		matchesSearch(search, [
 			project.title,
 			stripTags(project.shortDesc),
 			project.collectiveName,
-			...[...project.themes, ...project.types].map((term) => term.title)
+			...[...project.programs, ...project.categories].map((term) => term.title)
 		]);
 
 	const filteredProjects = $derived(page.projects.filter(matchesFilters));
@@ -87,8 +101,8 @@
 	$effect(() => {
 		syncQueryString({
 			q: search,
-			projectThemes: activeThemes,
-			projectTypes: activeTypes,
+			programs: activePrograms,
+			categories: activeCategories,
 			years: activeYears
 		});
 	});
@@ -106,16 +120,16 @@
 	/>
 
 	<FilterTags
-		terms={themeTerms}
-		bind:selected={selectedThemes}
+		terms={programTerms}
+		bind:selected={selectedPrograms}
 		legend="Projets concernant :"
 		class="mt-12 md:mt-18"
 	/>
 
 	<FilterTags
-		terms={typeTerms}
-		bind:selected={selectedTypes}
-		legend="Types de projet :"
+		terms={categoryTerms}
+		bind:selected={selectedCategories}
+		legend="Catégories :"
 		class="mt-9 md:mt-12"
 	/>
 

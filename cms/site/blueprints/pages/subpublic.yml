@@ -1,0 +1,6 @@
+title:
+  en: Sub-public
+  fr: Sous-public
+
+# Deliberately without a children section: publics is a two-level taxonomy.
+extends: pages/taxonomy-term

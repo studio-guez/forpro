@@ -16,8 +16,7 @@ $json['introTitle'] = $page->introTitle()->value();
 $json['intro'] = $page->intro()->value();
 
 // All terms in their CMS-defined order, so the frontend can order filters accordingly.
-$json['domains']            = Utils::getTaxonomyTerms('domains');
-$json['jobOfferCategories'] = Utils::getTaxonomyTerms('job-offer-categories');
+$json['sectors'] = Utils::getTaxonomyTerms('sectors');
 
 $json['jobOffers'] = array_values($page->children()->listed()
     ->map(fn($offer) => Utils::getJobOfferCardData($offer))->data());

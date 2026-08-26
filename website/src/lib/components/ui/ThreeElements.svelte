@@ -15,7 +15,8 @@
 		/** Fill of the organic shape behind each element. */
 		blobColor: string;
 		textColor: string;
-		decoColor: string;
+		/** Fill of the background decorations; `null` hides them. */
+		decoColor: string | null;
 		/** One organic shape per element. */
 		shapes?: Shape[];
 		/** Background decorations, in the order of the 3 fixed positions. */
@@ -43,11 +44,13 @@
 </script>
 
 <div class="relative grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 items-start {className}">
-	{#each decoShapes as DecoShape, i (i)}
-		<div class="hidden md:block absolute {decoPositions[i]}" style:color={decoColor}>
-			<DecoShape class="w-full h-auto" />
-		</div>
-	{/each}
+	{#if decoColor}
+		{#each decoShapes as DecoShape, i (i)}
+			<div class="hidden md:block absolute {decoPositions[i]}" style:color={decoColor}>
+				<DecoShape class="w-full h-auto" />
+			</div>
+		{/each}
+	{/if}
 	{#each elements as element, i (i)}
 		{@const Shape = shapes[i % shapes.length]}
 		<div class="relative aspect-15/13 w-full max-w-90 mx-auto" class:md:mt-24={i === 1}>

@@ -55,7 +55,7 @@ tabs:
             fields:
               sepTaxonomies:
                 type: line
-              domains:
-                extends: fields/taxonomies/domains
-              eventThemes:
-                extends: fields/taxonomies/event-themes
+              programs:
+                extends: fields/taxonomies/programs
+              publics:
+                extends: fields/taxonomies/publics

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ModuleGrilleImagesContent, Theme } from '$lib/interfaces/page';
-	import { cardThemeColors } from '$lib/utils/themeColors';
+	import { getThemeColors } from '$lib/utils/themeColors';
 	import Card from '$lib/components/ui/Card.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
@@ -14,11 +14,7 @@
 
 	let { content, theme }: Props = $props();
 
-	const colors = $derived(cardThemeColors[theme][content.variant]);
-
-	// White text means the block is drawn on a coloured background: the cta is inverted onto it.
-	const ctaInverted = $derived(colors.text === 'var(--color-white)');
-	const ctaColor = $derived(ctaInverted ? colors.bg : colors.text);
+	const colors = $derived(getThemeColors(theme, content.variant));
 
 	// 5 images on a 6-column grid: 2 on the first row, 3 on the second.
 	const span = (index: number) => (index < 2 ? 'lg:col-span-3' : 'lg:col-span-2');
@@ -27,12 +23,12 @@
 <Card
 	background={colors.bg}
 	color={colors.text}
-	shapeLeft={ShapeCasesDefault1}
-	shapeRight={ShapeCasesDefault2}
+	shapeLeft={colors.showShapes ? ShapeCasesDefault1 : null}
+	shapeRight={colors.showShapes ? ShapeCasesDefault2 : null}
 	shapeColor={colors.bgContrast}
 	title={content.title}
 	shortDesc={content.shortDesc}
-	titleBackground="var(--color-white)"
+	titleBackground={colors.titleBackground}
 	titleColor={colors.title}
 >
 	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 mt-12">
@@ -48,7 +44,7 @@
 
 	{#if content.cta}
 		<div class="flex justify-center md:justify-end mt-8">
-			<CtaLink cta={content.cta} color={ctaColor} inverted={ctaInverted} />
+			<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} />
 		</div>
 	{/if}
 </Card>

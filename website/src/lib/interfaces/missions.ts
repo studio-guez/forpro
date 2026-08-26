@@ -1,5 +1,5 @@
 import type { Block, CmsImage, PageCta, PageParent, Seo, Theme } from './page';
-import type { TaxonomyTerm } from './taxonomy';
+import type { TaxonomyFilterTerm, TaxonomyTerm } from './taxonomy';
 
 // Card payload of a mission listed on the missions index.
 export interface MissionCard {
@@ -18,7 +18,7 @@ export interface MissionPage {
 	readonly slug: string;
 	readonly path: string;
 	readonly parentPage: PageParent | null;
-	readonly domains: TaxonomyTerm[];
+	readonly categories: TaxonomyTerm[];
 	readonly announcer: string;
 	/** ISO date `YYYY-MM-DD`. */
 	readonly publishedDate: string;
@@ -47,7 +47,7 @@ export interface MissionsPage {
 	readonly introTitle: string;
 	readonly intro: string;
 	readonly parentPage: PageParent | null;
-	readonly domains: TaxonomyTerm[];
+	readonly categories: TaxonomyFilterTerm[];
 	readonly missions: MissionCard[];
 	readonly body: Block[];
 	readonly seo: Seo;

@@ -42,7 +42,7 @@ tabs:
             columns:
               question:
                 width: 1/2
-              faqCategories:
+              sectors:
                 width: 1/2
             fields:
               question:
@@ -57,8 +57,12 @@ tabs:
                   en: Answer
                   fr: Réponse
                 required: true
-              faqCategories:
-                extends: fields/taxonomies/faq-categories
+              sectors:
+                extends: fields/taxonomies/sectors
+              programs:
+                extends: fields/taxonomies/programs
+              publics:
+                extends: fields/taxonomies/publics
       body:
         extends: fields/bodyExtra
         # The infos pratiques module would just duplicate the listing above.
