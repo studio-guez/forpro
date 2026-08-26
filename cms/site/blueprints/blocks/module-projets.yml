@@ -29,6 +29,9 @@ fields:
   categories:
     extends: fields/taxonomies/categories
     width: 1/2
+    help:
+      en: Filters the projects shown in the block.
+      fr: Filtre les projets affichés dans le module.
   ctaLabel:
     width: 1/2
     label:
