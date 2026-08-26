@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Component } from 'svelte';
 	import type { ModuleCasesContent, Theme } from '$lib/interfaces/page';
-	import { cardThemeColors } from '$lib/utils/themeColors';
+	import { getThemeColors } from '$lib/utils/themeColors';
 	import Card from '$lib/components/ui/Card.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import VideoPlayer from '$lib/components/ui/VideoPlayer.svelte';
@@ -24,11 +24,7 @@
 
 	let { content, theme }: Props = $props();
 
-	const colors = $derived(cardThemeColors[theme][content.variant]);
-
-	// White text means the block is drawn on a coloured background: the cta is inverted onto it.
-	const ctaInverted = $derived(colors.text === 'var(--color-white)');
-	const ctaColor = $derived(ctaInverted ? colors.bg : colors.text);
+	const colors = $derived(getThemeColors(theme, content.variant));
 
 	const isMediaLeft = (index: number) => {
 		if (content.layout === 'images-left') return true;
@@ -52,13 +48,13 @@
 <Card
 	background={colors.bg}
 	color={colors.text}
-	shapeLeft={ShapeLeft}
-	shapeRight={ShapeRight}
+	shapeLeft={colors.showShapes ? ShapeLeft : null}
+	shapeRight={colors.showShapes ? ShapeRight : null}
 	shapeColor={colors.bgContrast}
 	title={content.title}
 	hideTitle={content.hideTitle}
 	shortDesc={content.intro}
-	titleBackground="var(--color-white)"
+	titleBackground={colors.titleBackground}
 	titleColor={colors.title}
 >
 	<div class="flex flex-col gap-16 mt-12">
@@ -81,7 +77,7 @@
 						{@html row.description}
 					</div>
 					{#if row.cta}
-						<CtaLink cta={row.cta} color={ctaColor} inverted={ctaInverted} class="mt-8" />
+						<CtaLink cta={row.cta} color={colors.accent} inverted={colors.onDark} class="mt-8" />
 					{/if}
 				</div>
 			</div>
@@ -90,7 +86,7 @@
 
 	{#if content.cta}
 		<div class="flex justify-center md:justify-end mt-8">
-			<CtaLink cta={content.cta} color={ctaColor} inverted={ctaInverted} />
+			<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} />
 		</div>
 	{/if}
 </Card>
