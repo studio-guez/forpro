@@ -118,6 +118,7 @@ export interface ModuleVideoContent {
 	readonly video: CmsVideo | null;
 	readonly contentTitle: string | null;
 	readonly content: string | null;
+	readonly variant: Variant;
 }
 
 /** One of the 3 pairs emitted by the shared `fields/threeElements` structure. */
@@ -131,6 +132,7 @@ export interface Module3ElementsContent {
 	readonly shortDesc: string | null;
 	/** Empty or exactly 3 entries (enforced by the blueprint). */
 	readonly elements: ThreeElementsItem[];
+	readonly variant: Variant;
 }
 
 export interface InfosPratiquesFaq {
