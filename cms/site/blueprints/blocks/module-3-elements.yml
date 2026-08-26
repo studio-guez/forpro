@@ -24,3 +24,5 @@ fields:
     extends: fields/threeElements
     min: 1
     required: true
+  variant:
+    extends: fields/variant
