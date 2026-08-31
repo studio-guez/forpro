@@ -36,12 +36,13 @@
     --default-transition-duration: 250ms;
 
     /* ANIMATION */
-    /* Duration is set per instance so the scroll speed stays constant whatever the text length */
+    /* Duration and shift are set per instance: the scroll speed stays constant whatever the
+       text length, and the shift equals exactly one copy of the repeated track */
     --animate-marquee: marquee 30s linear infinite;
 
     @keyframes marquee {
         to {
-            transform: translateX(-50%);
+            transform: translateX(calc(-1 * var(--marquee-shift, 50%)));
         }
     }
 }
