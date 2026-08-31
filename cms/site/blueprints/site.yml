@@ -175,6 +175,8 @@ tabs:
 
   navigation: tabs/navigation
 
+  banner: tabs/banner
+
   social: tabs/social
 
   general: tabs/general
