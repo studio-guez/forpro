@@ -78,7 +78,7 @@
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
-<section class="max-w-360 mx-auto px-base pt-20 lg:pt-50 lg:grid lg:grid-cols-2 gap-x-8 gap-y-10">
+<section class="max-w-360 mx-auto px-5 md:px-9 pt-20 lg:pt-50 lg:grid lg:grid-cols-2 gap-x-8 gap-y-10">
     <div class="grid items-center lg:justify-center max-lg:mb-6">
         <svg xmlns="http://www.w3.org/2000/svg" width="403" height="340" viewBox="0 0 403 340" fill="none" class="col-start-1 row-start-1 max-w-1/2 lg:max-w-full h-auto">
             <path d="M354.73 239.299L402.275 63.3279L167.892 0.000679354L77.1154 164.292L54.3692 158.146C38.0363 153.733 21.2168 163.397 16.8038 179.73L-0.000335384 241.924L359.556 339.072L376.36 276.877C380.773 260.544 371.109 243.725 354.776 239.312" class="fill-pink"/>
