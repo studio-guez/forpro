@@ -62,48 +62,52 @@
 </script>
 
 <section
-	class="px-card rounded-3xl relative overflow-hidden {className}"
-	class:pt-12={padded}
-	class:pb-18={padded}
-	{style}
+	class="md:px-9"
 	aria-labelledby={titleId}
 >
-	{#if ShapeLeft}
-		<div class={shapeLeftClasses} style:color={shapeColor}>
-			<ShapeLeft class="w-full h-auto" />
-		</div>
-	{/if}
-	{#if ShapeRight}
-		<div class={shapeRightClasses} style:color={shapeColor}>
-			<ShapeRight class="w-full h-auto" />
-		</div>
-	{/if}
+	<div 
+		class="px-card rounded-3xl relative overflow-hidden {className}"
+		class:pt-12={padded}
+		class:pb-18={padded}
+		{style}
+	>
+		{#if ShapeLeft}
+			<div class={shapeLeftClasses} style:color={shapeColor}>
+				<ShapeLeft class="w-full h-auto" />
+			</div>
+		{/if}
+		{#if ShapeRight}
+			<div class={shapeRightClasses} style:color={shapeColor}>
+				<ShapeRight class="w-full h-auto" />
+			</div>
+		{/if}
 
-	<div class="relative z-1">
-		<div class="text-center">
-			{#if hideTitle}
-				<h2 id={titleId} class="sr-only">{title}</h2>
-			{:else if titleVariant === 'plain'}
-				<h2 id={titleId} class="text-h2 mb-12" style={titleStyle}>{title}</h2>
-			{:else}
-				<h2
-					id={titleId}
-					class="inline-block text-h3 pt-2 pb-3.5 px-8 rounded-2xl"
-					style={titleStyle}
-				>
-					{title}
-				</h2>
-			{/if}
-			{#if subtitle}
-				<p class="text-body-1 font-bold mt-9">{subtitle}</p>
-			{/if}
-			{#if shortDesc}
-				<div class="prose text-body-1 font-bold" class:mt-9={!hideTitle}>
-					{@html shortDesc}
-				</div>
-			{/if}
-		</div>
+		<div class="relative z-1">
+			<div class="text-center">
+				{#if hideTitle}
+					<h2 id={titleId} class="sr-only">{title}</h2>
+				{:else if titleVariant === 'plain'}
+					<h2 id={titleId} class="text-h2 mb-12" style={titleStyle}>{title}</h2>
+				{:else}
+					<h2
+						id={titleId}
+						class="inline-block text-h3 pt-2 pb-3.5 px-8 rounded-2xl"
+						style={titleStyle}
+					>
+						{title}
+					</h2>
+				{/if}
+				{#if subtitle}
+					<p class="text-body-1 font-bold mt-9">{subtitle}</p>
+				{/if}
+				{#if shortDesc}
+					<div class="prose text-body-1 font-bold" class:mt-9={!hideTitle}>
+						{@html shortDesc}
+					</div>
+				{/if}
+			</div>
 
-		{@render children()}
+			{@render children()}
+		</div>
 	</div>
 </section>
