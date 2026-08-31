@@ -9,14 +9,19 @@ columns:
       mainMenuSection:
         type: fields
         fields:
+          mainMenuHeadline:
+            label:
+              en: Main menu
+              fr: Menu principal
+            type: headline
+            help:
+              en: Links shown in the fixed header
+              fr: Liens affichés dans l'en-tête fixe
           mainMenu:
             label:
               en: Main menu
               fr: Menu principal
             type: structure
-            help:
-              en: Links shown in the fixed header (1 level, pages or external links).
-              fr: Liens affichés dans l'en-tête fixe (1 niveau, pages ou liens externes).
             columns:
               label:
                 width: 1/3
@@ -47,6 +52,16 @@ columns:
                 type: url
                 when:
                   type: url
+          mainMenuLine:
+            type: line
+          secondaryMenuHeadline:
+            label:
+              en: Secondary menu
+              fr: Menu secondaire
+            type: headline
+            help:
+              en: Links shown in the hamburger menu
+              fr: Liens affichés dans le menu hamburger
 
   - width: 1/2
     sections:
@@ -159,3 +174,76 @@ columns:
                 label: { en: URL, fr: URL }
                 type: url
                 required: true
+          externalLinksLine:
+            type: line
+
+  - width: 1/1
+    sections:
+      footerNavSection:
+        type: fields
+        fields:
+          footerNavHeadline:
+            label:
+              en: Footer navigation
+              fr: Navigation du pied de page
+            type: headline
+
+  - width: 1/2
+    sections:
+      footerSocialsSection:
+        type: fields
+        fields:
+          footerSocialsTitle:
+            label:
+              en: "Socials — Title"
+              fr: "Réseaux sociaux — Titre"
+            type: text
+            help:
+              en: The links themselves are managed in the Social networks tab.
+              fr: Les liens eux-mêmes sont gérés dans l'onglet Réseaux sociaux.
+
+  - width: 1/2
+    sections:
+      footerMenuSection:
+        type: fields
+        fields:
+          footerMenuTitle:
+            label:
+              en: "Menu — Title"
+              fr: "Menu — Titre"
+            type: text
+          footerMenuLinks:
+            label:
+              en: "Menu — Links"
+              fr: "Menu — Liens"
+            type: structure
+            columns:
+              label:
+                width: 1/3
+              page:
+                width: 1/3
+              url:
+                width: 1/3
+            fields:
+              label:
+                label:
+                  en: Label
+                  fr: Libellé
+                type: text
+              type:
+                label: { en: Type, fr: Type }
+                type: select
+                default: page
+                required: true
+                options:
+                  - value: page
+                    text: { en: Page, fr: Page }
+                  - value: url
+                    text: { en: External URL, fr: URL externe }
+              page:
+                extends: fields/pageLink
+              url:
+                label: { en: URL, fr: URL }
+                type: url
+                when:
+                  type: url
