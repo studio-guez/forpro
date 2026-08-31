@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
-	import SiteBanner from '$lib/components/layout/SiteBanner.svelte';
+	import SiteMarquee from '$lib/components/layout/SiteMarquee.svelte';
 	import { IS_PROD } from '$lib/env';
 	import type { LayoutData } from './$types';
 
@@ -71,5 +71,5 @@
 </main>
 
 {#if data.banner.length > 0}
-	<SiteBanner announcements={data.banner} />
+	<SiteMarquee announcements={data.banner} />
 {/if}
