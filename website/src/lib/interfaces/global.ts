@@ -50,6 +50,13 @@ export interface Header {
 	readonly socialLinks: SocialLink[];
 }
 
+export interface BannerAnnouncement {
+	readonly title: string;
+	readonly description: string | null;
+	readonly url: string | null;
+	readonly target: '_blank' | null;
+}
+
 export interface FaviconPng {
 	readonly size: number;
 	readonly url: string;
@@ -67,5 +74,6 @@ export interface Favicon {
 
 export interface Global {
 	readonly header: Header;
+	readonly banner: BannerAnnouncement[];
 	readonly favicon: Favicon | null;
 }

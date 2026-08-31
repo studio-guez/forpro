@@ -131,6 +131,21 @@ return [
                     ];
                 }
 
+                $bannerAnnouncements = [];
+                foreach ($site->bannerAnnouncements()->toStructure() as $item) {
+                    $title = $item->title();
+                    if ($title->isEmpty()) {
+                        continue;
+                    }
+                    $description = $item->description();
+                    $bannerAnnouncements[] = [
+                        'title'       => $title->value(),
+                        'description' => $description->isEmpty() ? null : $description->value(),
+                        'url'         => Utils::resolvePageOrUrlItem($item),
+                        'target'      => Utils::resolvePageOrUrlTarget($item),
+                    ];
+                }
+
                 $externalLinksTitle = $site->externalLinksTitle();
 
                 $externalLinks = $site->externalLinks()->toStructure()->map(fn($item) => [
@@ -159,6 +174,7 @@ return [
                         'externalLinks' => $externalLinks,
                         'socialLinks'   => $socialLinks,
                     ],
+                    'banner'  => $bannerAnnouncements,
                     'favicon' => Utils::getFaviconData($site),
                 ]);
             },

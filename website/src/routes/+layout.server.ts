@@ -12,6 +12,7 @@ export const load: LayoutServerLoad = async () => {
 
 	return {
 		header: global?.header ?? null,
+		banner: global?.banner ?? [],
 		favicon: global?.favicon ?? null
 	};
 };
