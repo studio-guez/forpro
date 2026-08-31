@@ -69,7 +69,7 @@
                         {/if}
                     </div>
                 {/each}
-				<div class="min-h-75 flex flex-col justify-center" class:lg:order-first={!isMediaLeft(i)}>
+				<div class="min-h-75 flex flex-col justify-center items-start" class:lg:order-first={!isMediaLeft(i)}>
 					{#if row.title}
 						<h3 class="text-h4 mb-6">{row.title}</h3>
 					{/if}
@@ -85,7 +85,7 @@
 	</div>
 
 	{#if content.cta}
-		<div class="flex justify-center md:justify-end mt-8">
+		<div class="flex justify-center mt-8">
 			<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} />
 		</div>
 	{/if}
