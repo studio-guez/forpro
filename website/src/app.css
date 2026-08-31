@@ -34,6 +34,16 @@
 
     /* TRANSITION */
     --default-transition-duration: 250ms;
+
+    /* ANIMATION */
+    /* Duration is set per instance so the scroll speed stays constant whatever the text length */
+    --animate-marquee: marquee 30s linear infinite;
+
+    @keyframes marquee {
+        to {
+            transform: translateX(-50%);
+        }
+    }
 }
 
 @layer base {
