@@ -34,7 +34,7 @@
 </script>
 
 <section
-	class="px-card py-12 md:py-16 rounded-3xl relative overflow-hidden {className}"
+	class="p-8 rounded-3xl relative overflow-hidden {className}"
 	{style}
 	aria-labelledby={titleId}
 >
