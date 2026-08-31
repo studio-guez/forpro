@@ -103,15 +103,15 @@
     /* PADDING */
 
     .px-card {
-        @apply px-8 md:px-30;
+        @apply px-5 md:px-30;
     }
 
     .-mx-card {
-        @apply -mx-8 md:-mx-30;
+        @apply -mx-5 md:-mx-30;
     }
 
     .scroll-px-card {
-        @apply scroll-px-8 md:scroll-px-30;
+        @apply scroll-px-5 md:scroll-px-30;
     }
 }
 
