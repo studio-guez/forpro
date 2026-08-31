@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
+	import SiteBanner from '$lib/components/layout/SiteBanner.svelte';
 	import { IS_PROD } from '$lib/env';
 	import type { LayoutData } from './$types';
 
@@ -68,3 +69,7 @@
 <main class="max-w-360 mx-auto pt-27 space-y-18">
 	{@render children?.()}
 </main>
+
+{#if data.banner.length > 0}
+	<SiteBanner announcements={data.banner} />
+{/if}
