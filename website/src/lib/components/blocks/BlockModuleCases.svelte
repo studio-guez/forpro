@@ -35,14 +35,38 @@
 	// For single-media rows, alternate the media column span in a 2/1/1/2 pattern.
 	const singleMediaSpan = (index: number) => [2, 2 ,1, 1][index % 4];
 
-	// Decorative background shapes (left, right) per theme.
-	const shapePairs: Partial<Record<Theme, [Component, Component]>> = {
-		learninglab: [ShapeCasesLearninglab1, ShapeCasesLearninglab2],
-		foodlab: [ShapeCasesFoodlab1, ShapeCasesFoodlab2],
-		grandlab: [ShapeCasesGrandlab1, ShapeCasesGrandlab2],
-		makerlab: [ShapeCasesMakerlab1, ShapeCasesMakerlab2],
+	// Decorative background shapes (left, right) per theme. Each shape carries its own
+	// positioning classes: the SVGs range from 0.52 to 1.56 in aspect ratio, so a single
+	// width would make the tall ones overflow and the wide ones look undersized.
+	type ShapeSpec = [component: Component<{ class?: string }>, classes: string];
+
+	const defaultShapes: [ShapeSpec, ShapeSpec] = [
+		[ShapeCasesDefault1, 'absolute top-0 left-0 -translate-1/6 w-2/5'],
+		[ShapeCasesDefault2, 'absolute top-0 right-0 -translate-y-1/6 translate-x-1/6 w-2/5'],
+	];
+
+	const shapePairs: Partial<Record<Theme, [ShapeSpec, ShapeSpec]>> = {
+		learninglab: [
+			[ShapeCasesLearninglab1, 'absolute top-0 left-0 -translate-x-1/6 -translate-y-1/8 w-1/3'],
+			[ShapeCasesLearninglab2, 'absolute top-0 right-0 translate-x-1/6 -translate-y-1/4 w-1/2'],
+		],
+		foodlab: [
+			[ShapeCasesFoodlab1, 'absolute top-0 left-0 -translate-x-1/5 -translate-y-1/12 w-1/3'],
+			[ShapeCasesFoodlab2, 'absolute top-0 right-0 translate-x-1/6 -translate-y-1/5 w-2/5'],
+		],
+		grandlab: [
+			[ShapeCasesGrandlab1, 'absolute top-0 left-0 -translate-x-1/5 -translate-y-1/12 w-1/4'],
+			[ShapeCasesGrandlab2, 'absolute top-0 right-0 translate-x-1/6 -translate-y-1/6 w-2/5'],
+		],
+		makerlab: [
+			[ShapeCasesMakerlab1, 'absolute top-0 left-0 -translate-x-1/6 -translate-y-1/10 w-1/3'],
+			[ShapeCasesMakerlab2, 'absolute top-0 right-0 translate-x-1/6 -translate-y-1/6 w-2/5'],
+		],
 	};
-	const [ShapeLeft, ShapeRight] = $derived(shapePairs[theme] ?? [ShapeCasesDefault1, ShapeCasesDefault2]);
+
+	const [[ShapeLeft, shapeLeftClasses], [ShapeRight, shapeRightClasses]] = $derived(
+		shapePairs[theme] ?? defaultShapes
+	);
 </script>
 
 <Card
@@ -50,6 +74,8 @@
 	color={colors.text}
 	shapeLeft={colors.showShapes ? ShapeLeft : null}
 	shapeRight={colors.showShapes ? ShapeRight : null}
+	{shapeLeftClasses}
+	{shapeRightClasses}
 	shapeColor={colors.bgContrast}
 	title={content.title}
 	hideTitle={content.hideTitle}
