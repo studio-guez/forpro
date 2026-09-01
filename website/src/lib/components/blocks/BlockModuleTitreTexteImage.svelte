@@ -35,7 +35,7 @@
 			</div>
 			{#if content.cta}
 			<div class="max-xl:text-right mt-6 lg:mt-12">
-				<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} />
+				<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} size="lg" />
 			</div>
 			{/if}
 		</div>
