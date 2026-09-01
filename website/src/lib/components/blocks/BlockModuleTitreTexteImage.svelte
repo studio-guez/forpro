@@ -23,18 +23,20 @@
 	background={colors.bg}
 	color={colors.text}
 >
-	<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+	<div class="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-y-12">
 		{#if content.image}
-			<div class="overflow-hidden rounded-2xl [contain:size]" class:lg:order-last={!isImageLeft}>
+			<div class="overflow-hidden rounded-2xl [contain:size] min-h-75" class:xl:order-last={!isImageLeft}>
 				<Img image={content.image} class="w-full h-full object-cover" />
 			</div>
 		{/if}
 		<div>
-			<div class="prose text-body-2 mb-12">
+			<div class="prose text-body-2">
 				{@html content.description}
 			</div>
 			{#if content.cta}
+			<div class="max-xl:text-right mt-6 lg:mt-12">
 				<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} />
+			</div>
 			{/if}
 		</div>
 	</div>
