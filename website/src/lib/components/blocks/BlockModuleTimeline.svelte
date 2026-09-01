@@ -60,6 +60,12 @@
 		ArrowStepMobile4,
 		ArrowStepMobile5
 	];
+	/**
+	 * Which way each mobile connector is drawn. A step on the left needs one pointing
+	 * right and vice versa, so the ones that come out of the cycle facing the wrong way
+	 * are mirrored rather than duplicated as extra assets.
+	 */
+	const mobileArrowPointsLeft = [true, false, true, false, true];
 
 	/** Scroll runway: as tall as the horizontal distance the steps have to travel. */
 	let spacer: HTMLDivElement | undefined = $state();
@@ -112,37 +118,27 @@
 <svelte:window onscroll={sync} onresize={measure} />
 
 {#snippet title()}
-	<h2 class={['text-h3 text-center px-card', content.hideTitle && 'sr-only']}>
+	<h2 class={['text-h3 text-center px-card relative z-1', content.hideTitle && 'sr-only']}>
 		<span class="inline-block rounded-2xl px-8 pt-2 pb-3.5 {colors.pill}">{content.title}</span>
 	</h2>
 {/snippet}
 
-{#snippet stepContent(step: TimelineStep, index: number, scaled = false)}
+{#snippet stepContent(step: TimelineStep, index: number)}
 	{@const Shape = shapes[index % shapes.length]}
-	<div class="relative aspect-square w-full {colors.shape}">
+	<!--
+		The step is a container and its type is sized in `cqw`, i.e. as a share of the
+		step itself: the copy keeps the `text-h4` / `text-body-1` proportions of the
+		design at full size and still sits inside the blob once the step shrinks.
+	-->
+	<div class="@container relative aspect-square w-full {colors.shape}">
 		<!-- The blob is drawn wider than the text box so the copy sits well inside it. -->
-		<div class="absolute -inset-1/8">
-			<Shape class="w-full h-full object-contain" />
+		<div class="absolute -inset-2/25 lg:-inset-1/8">
+			<Shape class="w-full h-full" />
 		</div>
 		<div class="absolute inset-0 flex flex-col justify-center px-[15%] {colors.step}">
-			<!--
-				Pinned, the desktop steps shrink with the viewport, so their type is a
-				fraction of `--step` instead of a fixed size: it lands on the `text-h4` /
-				`text-body-1` scale at full size and keeps the copy inside the blob below it.
-			-->
-			<p
-				class={scaled ? 'font-bold' : 'text-h4'}
-				style={scaled ? 'font-size: calc(var(--step) * 0.09); line-height: 1.05' : ''}
-			>
-				{step.title}
-			</p>
+			<p class="text-[9cqw]/[1.05] font-bold">{step.title}</p>
 			{#if step.shortDesc}
-				<p
-					class={['font-bold whitespace-pre-line', !scaled && 'text-body-1 mt-3 lg:mt-6']}
-					style={scaled
-						? 'font-size: calc(var(--step) * 0.066); line-height: 1.2; margin-top: calc(var(--step) * 0.05)'
-						: ''}
-				>
+				<p class="text-[6.6cqw]/[1.2] font-bold mt-[5cqw] whitespace-pre-line">
 					{step.shortDesc}
 				</p>
 			{/if}
@@ -152,22 +148,35 @@
 
 {#if steps.length > 0}
 	<section aria-label={content.title} class="max-w-none">
-		<!-- Mobile: a 3-column grid the steps zigzag through, two columns wide each. -->
-		<div class="lg:hidden">
+		<!--
+			Mobile: one step per row, alternating sides. Narrow screens give each step two
+			of three columns, from `md` the grid halves so the steps stay a sensible size.
+			The wrapper clips because the blobs are drawn past their box, and that overhang
+			must not turn into a horizontal page scroll.
+		-->
+		<div class="lg:hidden overflow-x-clip">
 			{@render title()}
-			<ol class="px-card mt-12 grid grid-cols-3 gap-y-14">
+			<ol class="px-card mt-12 grid grid-cols-3 md:grid-cols-2 gap-y-16 md:gap-y-24">
 				{#each steps as step, i (i)}
 					{@const isLeft = i % 2 === 0}
-					{@const Arrow = mobileArrows[i % mobileArrows.length]}
-					<li class="relative col-span-2 {isLeft ? 'col-start-1' : 'col-start-2'}">
+					{@const arrowIndex = i % mobileArrows.length}
+					{@const Arrow = mobileArrows[arrowIndex]}
+					{@const mirrored = mobileArrowPointsLeft[arrowIndex] === isLeft}
+					<li
+						class="relative col-span-2 md:col-span-1 {isLeft
+							? 'col-start-1'
+							: 'col-start-2 md:col-start-2'}"
+						style="grid-row: {i + 1}"
+					>
 						{@render stepContent(step, i)}
 						{#if i < steps.length - 1}
+							<!-- The connector hangs off the corner that faces the next step. -->
 							<div
-								class="absolute top-[85%] w-[38%] {colors.arrow} {isLeft
-									? 'left-[80%]'
-									: 'right-[80%] -scale-x-100'}"
+								class="absolute top-[78%] h-[48%] z-10 {colors.arrow} {isLeft
+									? 'left-[62%]'
+									: 'right-[62%]'} {mirrored ? '-scale-x-100' : ''}"
 							>
-								<Arrow class="w-full h-auto" />
+								<Arrow class="h-full w-auto" />
 							</div>
 						{/if}
 					</li>
@@ -207,7 +216,7 @@
 							class="relative {isTop ? 'row-start-1' : 'row-start-2'}"
 							style="grid-column: {i + 1}"
 						>
-							{@render stepContent(step, i, true)}
+							{@render stepContent(step, i)}
 							{#if i < steps.length - 1}
 								<!-- The connector is drawn in the empty cell the zigzag leaves free. -->
 								<div
