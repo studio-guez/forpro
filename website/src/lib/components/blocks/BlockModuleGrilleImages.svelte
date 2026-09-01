@@ -31,20 +31,20 @@
 	titleBackground={colors.titleBackground}
 	titleColor={colors.title}
 >
-	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 mt-12">
+	<div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-6 max-lg:gap-y-9 gap-6 mt-12">
 		{#each content.images as item, i (i)}
 			<figure class={span(i)}>
-				<div class="overflow-hidden rounded-2xl aspect-4/3">
+				<div class="overflow-hidden rounded-2xl aspect-16/9 lg:aspect-4/3">
 					<Img image={item.image} class="w-full h-full object-cover" />
 				</div>
-				<figcaption class="text-h4 mt-4">{item.title}</figcaption>
+				<figcaption class="text-h4 mt-3 max-lg:text-center">{item.title}</figcaption>
 			</figure>
 		{/each}
 	</div>
 
 	{#if content.cta}
 		<div class="flex justify-center lg:justify-end mt-8">
-			<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} />
+			<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} size="lg" />
 		</div>
 	{/if}
 </Card>
