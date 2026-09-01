@@ -85,7 +85,7 @@
 		{/if}
 
 		<div class="relative z-1">
-			<div class="text-center">
+			<div class="text-center relative z-1">
 				{#if hideTitle}
 					<h2 id={titleId} class="sr-only">{title}</h2>
 				{:else if titleVariant === 'plain'}
