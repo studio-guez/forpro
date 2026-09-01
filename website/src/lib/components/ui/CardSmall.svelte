@@ -33,9 +33,9 @@
 	const titleId = `card-small-title-${uid}`;
 </script>
 
-<section class="md:px-9" aria-labelledby={titleId}>
+<section class="lg:px-9" aria-labelledby={titleId}>
 	<div
-		class="px-5 pt-5 pb-6 md:p-8 rounded-3xl relative overflow-hidden {className}"
+		class="px-5 pt-5 pb-6 lg:p-8 rounded-3xl relative overflow-hidden {className}"
 		{style}
 	>
 		{#if backgroundImage}
@@ -46,7 +46,7 @@
 		<div
 			class="relative z-1"
 		>
-			<div class="md:max-w-2xl">
+			<div class="lg:max-w-2xl">
 				<h2 id={titleId} class="text-h2">{title}</h2>
 				{#if subtitle}
 					<p class="text-body-1 mt-4">{subtitle}</p>

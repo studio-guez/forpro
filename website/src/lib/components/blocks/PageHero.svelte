@@ -31,7 +31,7 @@
 	const arrowFill = $derived(arrowFillByTheme[theme] ?? 'fill-white');
 </script>
 
-<section class="px-5 md:px-9" aria-labelledby="page-title">
+<section class="px-5 lg:px-9" aria-labelledby="page-title">
 	<div class="min-h-138 relative text-white bg-grey-light rounded-3xl overflow-hidden flex">
 		<div class="w-full bg-linear-to-t from-black/20 relative z-1 flex flex-col justify-end py-6 px-8">
 			{#if overtitle}

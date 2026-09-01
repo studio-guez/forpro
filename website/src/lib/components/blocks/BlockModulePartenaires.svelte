@@ -21,12 +21,12 @@
 </script>
 
 {#snippet logo(partner: PartnerItem)}
-	<Img image={partner.logo} alt={partner.label} class="h-12 md:h-16 w-auto max-w-40 object-contain" />
+	<Img image={partner.logo} alt={partner.label} class="h-12 lg:h-16 w-auto max-w-40 object-contain" />
 {/snippet}
 
 <CardSmall title={content.title} subtitle={content.subtitle} {background} color={textColor}>
 	{#if content.partners.length > 0}
-		<ul class="flex flex-wrap gap-2 md:justify-end shrink-0">
+		<ul class="flex flex-wrap gap-2 lg:justify-end shrink-0">
 			{#each content.partners as partner (partner.logo.url)}
 				<li>
 					{#if partner.url}

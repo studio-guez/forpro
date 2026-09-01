@@ -241,9 +241,9 @@
 		if (event.target === dialog) close();
 	}}
 	aria-label="Recherche sur le site"
-	class="fixed top-0 left-1/2 mt-4 md:mt-24 -translate-x-1/2 w-[min(64rem,calc(100vw-1.5rem))] max-h-[calc(100dvh-2rem)] md:max-h-[calc(100dvh-12rem)] hidden open:flex flex-col overflow-hidden rounded-3xl bg-white p-0 text-blue shadow-2xl backdrop:bg-black/40"
+	class="fixed top-0 left-1/2 mt-4 lg:mt-24 -translate-x-1/2 w-[min(64rem,calc(100vw-1.5rem))] max-h-[calc(100dvh-2rem)] lg:max-h-[calc(100dvh-12rem)] hidden open:flex flex-col overflow-hidden rounded-3xl bg-white p-0 text-blue shadow-2xl backdrop:bg-black/40"
 >
-	<div class="flex items-center gap-x-2 px-5 md:px-8 py-4 border-b-2 border-grey-light shrink-0">
+	<div class="flex items-center gap-x-2 px-5 lg:px-8 py-4 border-b-2 border-grey-light shrink-0">
 		<IconSearch class="shrink-0" />
 		<input
 			bind:this={input}
@@ -268,7 +268,7 @@
 		<div
 			role="group"
 			aria-label="Filtrer par type de contenu"
-			class="flex flex-wrap gap-2 px-5 md:px-8 py-3 border-b-2 border-grey-light shrink-0 overflow-x-auto"
+			class="flex flex-wrap gap-2 px-5 lg:px-8 py-3 border-b-2 border-grey-light shrink-0 overflow-x-auto"
 		>
 			{#each TABS as tab (tab.value)}
 				<button
@@ -288,7 +288,7 @@
 		</div>
 	{/if}
 
-	<div bind:this={scroller} class="overflow-y-auto px-5 md:px-8 py-4">
+	<div bind:this={scroller} class="overflow-y-auto px-5 lg:px-8 py-4">
 		<p class="sr-only" aria-live="polite">
 			{#if loading}
 				Recherche en cours
@@ -322,10 +322,10 @@
 									image={result.cover}
 									alt=""
 									sizes="(min-width: 768px) 8rem, 4rem"
-									class="shrink-0 w-16 h-16 md:w-32 md:h-32 rounded-xl object-cover bg-grey-light"
+									class="shrink-0 w-16 h-16 lg:w-32 lg:h-32 rounded-xl object-cover bg-grey-light"
 								/>
 							{:else}
-								<div class="shrink-0 w-16 h-16 md:w-32 md:h-32 rounded-xl bg-grey-light" />
+								<div class="shrink-0 w-16 h-16 lg:w-32 lg:h-32 rounded-xl bg-grey-light" />
 							{/if}
 							<div class="min-w-0">
 								<p class="text-caption text-grey-dark">{result.typeLabel}</p>

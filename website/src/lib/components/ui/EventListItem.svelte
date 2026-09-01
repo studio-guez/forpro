@@ -24,7 +24,7 @@
 
 <article
 	style:--row-color={color}
-	class="border-t border-(--row-color) py-4 md:py-6 flex flex-wrap items-center justify-between gap-4"
+	class="border-t border-(--row-color) py-4 lg:py-6 flex flex-wrap items-center justify-between gap-4"
 >
 	<div class="min-w-0">
 		<svelte:element this={headingTag} class="text-h4 text-(--row-color)">

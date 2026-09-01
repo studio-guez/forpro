@@ -43,7 +43,7 @@
 	</div>
 
 	{#if content.cta}
-		<div class="flex justify-center md:justify-end mt-8">
+		<div class="flex justify-center lg:justify-end mt-8">
 			<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} />
 		</div>
 	{/if}

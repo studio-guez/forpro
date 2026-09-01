@@ -82,7 +82,7 @@
 	bind:this={headerEl}
 	class="fixed top-0 inset-x-0 z-10 rounded-b-4xl bg-white transition-shadow has-[#burger-menu-button:hover]:shadow {menuOpen ? 'shadow' : ''}"
 >
-	<div class="max-w-360 mx-auto flex items-center gap-x-3 lg:gap-x-12 px-5 md:px-9 py-3 text-blue">
+	<div class="max-w-360 mx-auto flex items-center gap-x-3 lg:gap-x-12 px-5 lg:px-9 py-3 text-blue">
 		<a href="/" onclick={closeMenu} class="shrink-0 {menuOpen ? 'max-lg:hidden' : ''}" aria-label={header.siteTitle}>
 			<Img
 				image={header.logo}
@@ -163,7 +163,7 @@
 	{#if menuOpen}
 		<nav
 			id="burger-menu"
-			class="max-w-360 mx-auto px-5 md:px-9 py-12 grid grid-cols-1 lg:grid-cols-5 lg:items-start gap-x-8 gap-y-10"
+			class="max-w-360 mx-auto px-5 lg:px-9 py-12 grid grid-cols-1 lg:grid-cols-5 lg:items-start gap-x-8 gap-y-10"
 			transition:slide={{ duration: 300 }}
 			aria-label="Menu secondaire"
 		>

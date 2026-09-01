@@ -91,7 +91,7 @@
 	});
 </script>
 
-<section aria-labelledby="events-title" class="py-12 md:py-16">
+<section aria-labelledby="events-title" class="py-12 lg:py-16">
 	<h1 id="events-title" class="text-h1 text-blue text-center">{page.title}</h1>
 
 	<SearchInput
@@ -99,25 +99,25 @@
 		label="Rechercher un événement"
 		placeholder="Rechercher un événement..."
 		color="blue"
-		class="mt-12 md:mt-18"
+		class="mt-12 lg:mt-18"
 	/>
 
 	<FilterTags
 		terms={programTerms}
 		bind:selected={selectedPrograms}
 		legend="Événements concernant :"
-		class="mt-12 md:mt-18"
+		class="mt-12 lg:mt-18"
 	/>
 
 	<FilterTags
 		terms={publicTerms}
 		bind:selected={selectedPublics}
 		legend="Publics :"
-		class="mt-9 md:mt-12"
+		class="mt-9 lg:mt-12"
 	/>
 </section>
 
-<section aria-label="Événements à venir" class="pb-12 md:pb-16">
+<section aria-label="Événements à venir" class="pb-12 lg:pb-16">
 	<div aria-live="polite">
 		{#if hasSearch}
 			<ResultsHeader
@@ -152,7 +152,7 @@
 </section>
 
 {#if past.length > 0}
-	<section aria-labelledby="past-events-title" class="pb-12 md:pb-16">
+	<section aria-labelledby="past-events-title" class="pb-12 lg:pb-16">
 		<h2 id="past-events-title" class="text-h2 text-center">
 			<span class="inline-block bg-blue text-white rounded-full px-8 py-3">
 				Les événements passés :
@@ -165,7 +165,7 @@
 			label="Mois"
 			allLabel="Tous les mois"
 			{color}
-			class="mt-12 md:mt-18"
+			class="mt-12 lg:mt-18"
 		/>
 
 		<div aria-live="polite" class="mt-6">

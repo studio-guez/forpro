@@ -43,17 +43,17 @@
 	];
 </script>
 
-<div class="relative grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 items-start {className}">
+<div class="relative grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-6 items-start {className}">
 	{#if decoColor}
 		{#each decoShapes as DecoShape, i (i)}
-			<div class="hidden md:block absolute {decoPositions[i]}" style:color={decoColor}>
+			<div class="hidden lg:block absolute {decoPositions[i]}" style:color={decoColor}>
 				<DecoShape class="w-full h-auto" />
 			</div>
 		{/each}
 	{/if}
 	{#each elements as element, i (i)}
 		{@const Shape = shapes[i % shapes.length]}
-		<div class="relative aspect-15/13 w-full max-w-90 mx-auto" class:md:mt-24={i === 1}>
+		<div class="relative aspect-15/13 w-full max-w-90 mx-auto" class:lg:mt-24={i === 1}>
 			<div class="absolute inset-0" style:color={blobColor}>
 				<Shape class="w-full h-full" />
 			</div>

@@ -62,7 +62,7 @@
 </script>
 
 <section
-	class="md:px-9"
+	class="lg:px-9"
 	aria-labelledby={titleId}
 >
 	<div 
