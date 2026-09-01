@@ -10,6 +10,12 @@ import ShapeCasesGrandlab1 from '$lib/components/svg/ShapeCasesGrandlab1.svelte'
 import ShapeCasesGrandlab2 from '$lib/components/svg/ShapeCasesGrandlab2.svelte';
 import ShapeCasesMakerlab1 from '$lib/components/svg/ShapeCasesMakerlab1.svelte';
 import ShapeCasesMakerlab2 from '$lib/components/svg/ShapeCasesMakerlab2.svelte';
+import ShapeInfosPratiques1 from '$lib/components/svg/ShapeInfosPratiques1.svelte';
+import ShapeInfosPratiques2 from '$lib/components/svg/ShapeInfosPratiques2.svelte';
+import ShapeInfosPratiques3 from '$lib/components/svg/ShapeInfosPratiques3.svelte';
+import ShapeInfosPratiquesFoodlab1 from '$lib/components/svg/ShapeInfosPratiquesFoodlab1.svelte';
+import ShapeInfosPratiquesFoodlab2 from '$lib/components/svg/ShapeInfosPratiquesFoodlab2.svelte';
+import ShapeInfosPratiquesFoodlab3 from '$lib/components/svg/ShapeInfosPratiquesFoodlab3.svelte';
 
 /**
  * Decorative background shapes (left, right) per theme. Each shape carries its own
@@ -45,4 +51,26 @@ const shapePairs: Partial<Record<Theme, [ShapeSpec, ShapeSpec]>> = {
 /** Resolve the shape pair a card should draw, falling back to the default pair. */
 export function getThemeShapes(theme: Theme): [ShapeSpec, ShapeSpec] {
 	return shapePairs[theme] ?? defaultShapes;
+}
+
+/** The three organic blobs drawn behind the elements of a `3elements` block. */
+export type ElementShapes = [
+	Component<{ class?: string }>,
+	Component<{ class?: string }>,
+	Component<{ class?: string }>
+];
+
+const defaultElementShapes: ElementShapes = [
+	ShapeInfosPratiques1,
+	ShapeInfosPratiques2,
+	ShapeInfosPratiques3
+];
+
+const elementShapes: Partial<Record<Theme, ElementShapes>> = {
+	foodlab: [ShapeInfosPratiquesFoodlab1, ShapeInfosPratiquesFoodlab2, ShapeInfosPratiquesFoodlab3]
+};
+
+/** Resolve the element blobs a `3elements` block should draw, falling back to the default trio. */
+export function getThemeElementShapes(theme: Theme): ElementShapes {
+	return elementShapes[theme] ?? defaultElementShapes;
 }
