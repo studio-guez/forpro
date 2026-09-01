@@ -16,8 +16,8 @@
 	let { cta, color = 'var(--color-blue)', inverted = false, size = 'md', class: className = '' }: Props = $props();
 
 	const sizeClasses = {
-		md: 'text-lg gap-2.5 px-5.5 py-3.5 border-3',
-		lg: 'text-2xl gap-3 px-7.5 py-4.5 border-4',
+		md: 'text-lg gap-2.5 px-5.5 h-12.5 border-3',
+		lg: 'text-2xl gap-3 px-7.5 h-17 border-4',
 	};
 
 	const colorClasses = $derived(
