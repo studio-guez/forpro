@@ -24,7 +24,10 @@ fields:
     label:
       en: Description element 1
       fr: Description élément 1
-    extends: fields/writer
+    # Plain text, no formatting at all: the text sits in a fixed-size shape.
+    type: textarea
+    buttons: false
+    size: small
     required: true
     maxlength: 70
   description1separator:
@@ -40,7 +43,10 @@ fields:
     label:
       en: Description element 2
       fr: Description élément 2
-    extends: fields/writer
+    # Plain text, no formatting at all: the text sits in a fixed-size shape.
+    type: textarea
+    buttons: false
+    size: small
     required: true
     maxlength: 70
   description2separator:
@@ -56,6 +62,9 @@ fields:
     label:
       en: Description element 3
       fr: Description élément 3
-    extends: fields/writer
+    # Plain text, no formatting at all: the text sits in a fixed-size shape.
+    type: textarea
+    buttons: false
+    size: small
     required: true
     maxlength: 70
