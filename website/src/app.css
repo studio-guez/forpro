@@ -143,6 +143,19 @@
         @apply -mx-5 lg:-mx-15 xl:-mx-30;
     }
 
+    /* Gutter of a full-bleed section: the page gutter plus the margin the centred
+       content column leaves beside it, so its first item still lines up. */
+    .px-card-bleed {
+        --bleed: max(0px, calc((100% - var(--content-max)) / 2));
+        padding-inline: calc(var(--bleed) + 1.25rem);
+        @media (width >= 64rem) {
+            padding-inline: calc(var(--bleed) + 3.75rem);
+        }
+        @media (width >= 80rem) {
+            padding-inline: calc(var(--bleed) + 7.5rem);
+        }
+    }
+
     .scroll-px-card {
         @apply scroll-px-5 lg:scroll-px-15 xl:scroll-px-30;
     }
