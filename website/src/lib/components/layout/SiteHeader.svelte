@@ -153,9 +153,9 @@
 		>
 				<span class="max-lg:hidden text-trim">Menu</span>
 			{#if menuOpen}
-				<IconClose class="shrink-0 w-7 h-auto" width="28" height="29" />
+				<IconClose class="shrink-0 w-7 h-7.25" />
 			{:else}
-				<IconHamburger class="shrink-0" width="28" height="29" />
+				<IconHamburger class="shrink-0 w-7 h-7.25" />
 			{/if}
 		</button>
 	</div>
@@ -237,7 +237,7 @@
 									class="flex items-center gap-x-2 text-body-2 leading-none hover:text-blue transition-colors"
 								>
 									<span class="flex items-center justify-center h-8 w-8 rounded-full bg-white text-blue shrink-0">
-										<Icon height="24" width="24" class="h-6 w-6" />
+										<Icon class="h-6 w-6" />
 									</span>
 									<span>{socialLabels[social.platform]}</span>
 								</a>

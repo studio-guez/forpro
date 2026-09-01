@@ -44,9 +44,9 @@
 		>
 			<span class="text-body-2 font-bold">{question}</span>
 			{#if open}
-				<IconClose width={31} height={32} class="shrink-0" />
+				<IconClose class="shrink-0 w-7.75 h-8" />
 			{:else}
-				<IconPlus width={31} height={32} class="shrink-0" />
+				<IconPlus class="shrink-0 w-7.75 h-8" />
 			{/if}
 		</button>
 	</h3>

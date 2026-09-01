@@ -89,7 +89,7 @@
 			onclick={share}
 		>
 			{shared ? 'Lien copié !' : 'Partager'}
-			<IconLink width={22} height={22} />
+			<IconLink class="w-5.5 h-5.5" />
 		</button>
 
 		{#if page.applyCta}

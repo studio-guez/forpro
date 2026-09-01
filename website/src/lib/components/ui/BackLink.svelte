@@ -20,6 +20,6 @@
 	style:color
 	class="text-label group inline-flex items-center gap-0.5 {className}"
 >
-	<IconChevron class="rotate-90 group-hover:-translate-x-0.75 transition-transform" height="16" width="16" />
+	<IconChevron class="rotate-90 group-hover:-translate-x-0.75 transition-transform w-4 h-4" />
 	{text}
 </a>
