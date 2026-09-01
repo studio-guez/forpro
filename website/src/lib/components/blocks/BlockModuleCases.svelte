@@ -57,9 +57,9 @@
 	titleBackground={colors.titleBackground}
 	titleColor={colors.title}
 >
-	<div class="flex flex-col gap-16 mt-12">
+	<div class="flex flex-col gap-y-9 lg:gap-y-16 mt-12">
 		{#each content.rows as row, i (i)}
-			<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-y-3 gap-x-6 items-stretch group">
                 {#each row.media as media, m (m)}
                     <div class="overflow-hidden rounded-2xl min-h-75" class:[contain:size]={media.type !== 'video'} class:lg:col-span-2={singleMediaSpan(m) === 2}>
                         {#if media.type === 'video'}
@@ -69,15 +69,15 @@
                         {/if}
                     </div>
                 {/each}
-				<div class="min-h-75 flex flex-col justify-center items-start" class:lg:order-first={!isMediaLeft(i)}>
+				<div class="flex flex-col justify-center lg:items-start max-lg:group-even:text-right max-lg:text-balance" class:lg:order-first={!isMediaLeft(i)}>
 					{#if row.title}
-						<h3 class="text-h4 mb-6">{row.title}</h3>
+						<h3 class="text-h4 mb-3 lg:mb-6">{row.title}</h3>
 					{/if}
 					<div class="prose text-body-2">
 						{@html row.description}
 					</div>
 					{#if row.cta}
-						<CtaLink cta={row.cta} color={colors.accent} inverted={colors.onDark} class="mt-8" />
+						<CtaLink cta={row.cta} color={colors.accent} inverted={colors.onDark} class="mt-4 lg:mt-8 max-lg:self-start max-lg:group-even:self-end" />
 					{/if}
 				</div>
 			</div>
@@ -85,8 +85,8 @@
 	</div>
 
 	{#if content.cta}
-		<div class="flex justify-center mt-8">
-			<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} />
+		<div class="flex justify-center mt-12">
+			<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} size="lg" />
 		</div>
 	{/if}
 </Card>
