@@ -118,7 +118,7 @@
 <svelte:window onscroll={sync} onresize={measure} />
 
 {#snippet title()}
-	<h2 class={['text-h3 text-center px-card relative z-1', content.hideTitle && 'sr-only']}>
+	<h2 class={['text-h3 text-center px-card relative z-2', content.hideTitle && 'sr-only']}>
 		<span class="inline-block rounded-2xl px-8 pt-2 pb-3.5 {colors.pill}">{content.title}</span>
 	</h2>
 {/snippet}
@@ -156,12 +156,12 @@
 		-->
 		<div class="lg:hidden overflow-x-clip">
 			{@render title()}
-			<ol class="px-card mt-12 grid grid-cols-3 md:grid-cols-2 gap-y-16 md:gap-y-24">
+			<ol class="px-card mt-12 grid grid-cols-3 md:grid-cols-2 gap-y-16 md:gap-y-8 lg:gap-y-24">
 				{#each steps as step, i (i)}
 					{@const isLeft = i % 2 === 0}
 					{@const arrowIndex = i % mobileArrows.length}
 					{@const Arrow = mobileArrows[arrowIndex]}
-					{@const mirrored = mobileArrowPointsLeft[arrowIndex] === isLeft}
+					{@const mirrored = mobileArrowPointsLeft[arrowIndex] !== isLeft}
 					<li
 						class="relative col-span-2 md:col-span-1 {isLeft
 							? 'col-start-1'
@@ -172,11 +172,11 @@
 						{#if i < steps.length - 1}
 							<!-- The connector hangs off the corner that faces the next step. -->
 							<div
-								class="absolute top-[78%] h-[48%] z-10 {colors.arrow} {isLeft
-									? 'left-[62%]'
-									: 'right-[62%]'} {mirrored ? '-scale-x-100' : ''}"
+								class="absolute top-[28%] max-w-200 z-1 {colors.arrow} {isLeft
+									? 'left-[112%]'
+									: 'right-[112%]'} {mirrored ? '-scale-x-100' : ''}"
 							>
-								<Arrow class="h-full w-auto" />
+								<Arrow class="max-md:max-w-25" />
 							</div>
 						{/if}
 					</li>
