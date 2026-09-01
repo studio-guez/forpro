@@ -1,17 +1,15 @@
 <script lang="ts">
 	interface Props {
 		class?: string;
-		width?: number | string;
-		height?: number | string;
 	}
 
-	let { class: className = '', width = 23, height = 23 }: Props = $props();
+	let { class: className = '' }: Props = $props();
 </script>
 
 <svg
 	xmlns="http://www.w3.org/2000/svg"
-	{width}
-	{height}
+	width="23"
+	height="23"
 	viewBox="0 0 23 23"
 	fill="none"
 	aria-hidden="true"
