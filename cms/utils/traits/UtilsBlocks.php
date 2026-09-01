@@ -200,6 +200,9 @@ trait UtilsBlocks
         ];
     }
 
+    /** Questions shown inside the block; the CTA leads to the full, filtered list. */
+    private const INFOS_PRATIQUES_FAQ_LIMIT = 3;
+
     private static function getInfosPratiquesBlockData(\Kirby\Cms\Block $block): array
     {
         $elements = self::getThreeElements($block->elements());
@@ -210,7 +213,7 @@ trait UtilsBlocks
             'publics'  => array_column(self::resolveTaxonomyTerms($block->publics(), 'publics'), 'slug'),
         ];
 
-        // All matching FAQ questions, pulled from the FAQ page.
+        // The first matching FAQ questions, pulled from the FAQ page.
         $faqPage = site()->index()->template('faq')->first();
         $faqs = [];
         if ($faqPage) {
@@ -225,6 +228,8 @@ trait UtilsBlocks
                         'question' => $faq->question()->value(),
                         'answer'   => $faq->answer()->value(),
                     ];
+
+                    if (count($faqs) === self::INFOS_PRATIQUES_FAQ_LIMIT) break 2;
                 }
             }
         }
