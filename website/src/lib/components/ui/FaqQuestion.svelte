@@ -33,26 +33,26 @@
 	);
 </script>
 
-<div style:--faq-color={color} class="border-4 {borderClass} rounded-[1.3125rem] lg:rounded-[2.125rem] overflow-hidden {className} transition-colors">
+<div style:--faq-color={color} class="border-3 lg:border-4 {borderClass} rounded-[1.3125rem] lg:rounded-[2.125rem] overflow-hidden {className} transition-colors">
 	<h3>
 		<button
 			type="button"
-			class="w-full flex items-center justify-between gap-2 text-left px-6 lg:px-9 h-9.5 lg:h-16"
+			class="w-full flex items-center justify-between gap-2 lg:gap-3 text-left px-2.25 lg:px-7.5 h-9 lg:h-15"
 			aria-expanded={open}
 			aria-controls="{id}-answer"
 			onclick={() => (open = !open)}
 		>
 			<span class="text-base lg:text-2xl font-bold">{question}</span>
 			{#if open}
-				<IconClose class="shrink-0 w-8 h-8" />
+				<IconClose class="shrink-0 w-6 lg:w-9.5 h-6 lg:h-9.5" />
 			{:else}
-				<IconPlus class="shrink-0 w-8 h-8" />
+				<IconPlus class="shrink-0 w-6 lg:w-9.5 h-6 lg:h-9.5" />
 			{/if}
 		</button>
 	</h3>
 	{#if open}
 		<div id="{id}-answer" role="region" aria-label={question} transition:slide={{ duration: 300 }}>
-			<div class="prose px-6 lg:px-9 pb-6 lg:pb-8">
+			<div class="prose px-2.25 lg:px-7.5 pb-6 lg:pb-8">
 				{@html answer}
 			</div>
 		</div>
