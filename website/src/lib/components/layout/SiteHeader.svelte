@@ -101,7 +101,7 @@
 							onclick={closeMenu}
 							target={item.target ?? undefined}
 							rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
-							class="text-body-2 font-bold underline decoration-transparent hover:decoration-current transition-colors"
+							class="text-body-2 font-bold underline decoration-transparent hover:decoration-current transition-colors text-trim"
 						>
 							{item.label}
 						</a>
@@ -124,7 +124,7 @@
 			>
 				<span
 					aria-hidden="true"
-					class="text-body-2 font-bold text-left truncate min-w-0 transition-all duration-300 ease-out {searchModalOpen
+					class="text-body-2 font-bold text-left truncate min-w-0 transition-all duration-300 ease-out text-trim {searchModalOpen
 						? 'w-48 opacity-100 pl-3'
 						: 'w-0 opacity-0 group-hover:w-48 group-hover:opacity-100 group-hover:pl-3'} {searchQuery
 						? 'text-blue'
@@ -151,7 +151,7 @@
 			class="text-body-2 font-bold px-3 py-2 flex items-center gap-x-3 shrink-0 justify-end rounded-full hover:bg-blue hover:text-white transition-colors"
 			aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
 		>
-				<span class="max-lg:hidden">Menu</span>
+				<span class="max-lg:hidden text-trim">Menu</span>
 			{#if menuOpen}
 				<IconClose class="shrink-0 w-7 h-auto" width="28" height="29" />
 			{:else}
