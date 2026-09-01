@@ -32,20 +32,19 @@
 </script>
 
 <section class="px-5 lg:px-9" aria-labelledby="page-title">
-	<div class="min-h-138 relative text-white bg-grey-light rounded-3xl overflow-hidden flex">
+	<div class="max-lg:aspect-video lg:min-h-138 relative text-white bg-grey-light rounded-3xl overflow-hidden flex">
 		<div class="w-full bg-linear-to-t from-black/20 relative z-1 flex flex-col justify-end py-6 px-8">
 			{#if overtitle}
 			<div>
-				<p class="inline-block text-h4 -mb-2">{overtitle}</p>
-				<ArrowOvertitle fill={arrowFill} class="inline-block absolute -translate-y-1/2 ml-1 w-32.5 h-16" />
+				<p class="inline-block text-lg lg:text-3xl font-bold -mb-2">{overtitle}</p>
+				<ArrowOvertitle fill={arrowFill} class="max-lg:hidden inline-block absolute -translate-y-1/2 ml-1 w-32.5 h-16" />
 			</div>
 			{/if}
-			<h1 id="page-title" class="text-h0">
+			<h1 id="page-title" class="text-4xl lg:text-8xl font-bold">
 				{title}
 			</h1>
 		</div>
-
-	{#if cover}
+		{#if cover}
 		<Img
 			image={cover}
 			sizes="100vw"
@@ -53,5 +52,6 @@
 			loading="eager"
 			fetchpriority="high"
 		/>
-	{/if}
+		{/if}
+	</div>
 </section>
