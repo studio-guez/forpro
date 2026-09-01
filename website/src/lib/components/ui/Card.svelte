@@ -100,7 +100,7 @@
 					</h2>
 				{/if}
 				{#if subtitle}
-					<p class="text-body-1 font-bold mt-6 lg:mt-9">{subtitle}</p>
+					<p class="text-h4 mt-6 lg:mt-9">{subtitle}</p>
 				{/if}
 				{#if shortDesc}
 					<div class="prose text-body-1 font-bold" class:mt-6={!hideTitle} class:lg:mt-9={!hideTitle}>
