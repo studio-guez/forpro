@@ -188,7 +188,7 @@
 												target={link.target ?? undefined}
 												rel={link.target === '_blank' ? 'noopener noreferrer' : undefined}
 												class="text-body-2 leading-none {link.level === 2
-													? 'text-grey-dark'
+													? ''
 													: hasLevel2
 														? 'font-bold'
 														: ''} hover:text-blue transition-colors"
