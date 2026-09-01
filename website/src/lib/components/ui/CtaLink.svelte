@@ -29,7 +29,7 @@
 	const iconSizeClasses = { md: 'w-6 lg:w-7 h-6 lg:h-7', lg: 'w-6 lg:w-9.5 h-6 lg:h-9.5' };
 </script>
 
-<a href={cta.url} target={cta.target ?? undefined} rel={cta.target === '_blank' ? 'noopener noreferrer' : undefined} style:--color-cta={color} class="font-bold leading-none inline-flex items-center rounded-full bg-transparent {colorClasses} transition-colors {sizeClasses[size]} {className}">
+<a href={cta.url} target={cta.target ?? undefined} rel={cta.target === '_blank' ? 'noopener noreferrer' : undefined} style:--color-cta={color} class="font-bold leading-none inline-flex items-center rounded-full bg-transparent backdrop-blur-xs {colorClasses} transition-colors {sizeClasses[size]} {className}">
 	<span class="text-trim">{cta.label}</span>
 	{#if cta.icon === 'arrow'}<IconArrow class={iconSizeClasses[size]} />
 	{:else if cta.icon === 'email'}<IconEmail class={iconSizeClasses[size]} />
