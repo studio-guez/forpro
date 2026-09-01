@@ -70,16 +70,22 @@
 	let overflow = $state(0);
 	let stageHeight = $state(0);
 
+	/** Page scroll swallowed per pixel of horizontal travel: above 1 the steps drift by slower. */
+	const PACE = 2;
+
+	/** Length of the runway, i.e. how long the block stays pinned. */
+	const runway = $derived(overflow * PACE);
+
 	/**
 	 * While the stage is stuck, the distance it has travelled inside the spacer is
 	 * exactly the page scroll it has swallowed — the browser clamps it to
-	 * `spacer height - stage height`, i.e. to `overflow`. Feeding it back as
+	 * `spacer height - stage height`, i.e. to `runway`. Feeding it back as
 	 * `scrollLeft` turns that vertical scroll into a horizontal one.
 	 */
 	const sync = (): void => {
 		if (!spacer || !stage || !track || overflow <= 0) return;
 		const scrolled = stage.getBoundingClientRect().top - spacer.getBoundingClientRect().top;
-		track.scrollLeft = Math.min(Math.max(scrolled, 0), overflow);
+		track.scrollLeft = Math.min(Math.max(scrolled, 0), runway) / PACE;
 	};
 
 	const measure = (): void => {
@@ -111,14 +117,32 @@
 	</h2>
 {/snippet}
 
-{#snippet stepContent(step: TimelineStep, index: number)}
+{#snippet stepContent(step: TimelineStep, index: number, scaled = false)}
 	{@const Shape = shapes[index % shapes.length]}
 	<div class="relative aspect-square w-full {colors.shape}">
-		<Shape class="absolute inset-0 w-full h-full" />
+		<!-- The blob is drawn wider than the text box so the copy sits well inside it. -->
+		<div class="absolute -inset-1/8">
+			<Shape class="w-full h-full object-contain" />
+		</div>
 		<div class="absolute inset-0 flex flex-col justify-center px-[15%] {colors.step}">
-			<p class="text-lg lg:text-3xl font-bold">{step.title}</p>
+			<!--
+				Pinned, the desktop steps shrink with the viewport, so their type is a
+				fraction of `--step` instead of a fixed size: it lands on the `text-h4` /
+				`text-body-1` scale at full size and keeps the copy inside the blob below it.
+			-->
+			<p
+				class={scaled ? 'font-bold' : 'text-h4'}
+				style={scaled ? 'font-size: calc(var(--step) * 0.09); line-height: 1.05' : ''}
+			>
+				{step.title}
+			</p>
 			{#if step.shortDesc}
-				<p class="text-base lg:text-2xl lg:font-bold mt-2 lg:mt-4 whitespace-pre-line">
+				<p
+					class={['font-bold whitespace-pre-line', !scaled && 'text-body-1 mt-3 lg:mt-6']}
+					style={scaled
+						? 'font-size: calc(var(--step) * 0.066); line-height: 1.2; margin-top: calc(var(--step) * 0.05)'
+						: ''}
+				>
 					{step.shortDesc}
 				</p>
 			{/if}
@@ -127,7 +151,7 @@
 {/snippet}
 
 {#if steps.length > 0}
-	<section aria-label={content.title}>
+	<section aria-label={content.title} class="max-w-none">
 		<!-- Mobile: a 3-column grid the steps zigzag through, two columns wide each. -->
 		<div class="lg:hidden">
 			{@render title()}
@@ -159,16 +183,21 @@
 		<div
 			bind:this={spacer}
 			class="max-lg:hidden"
-			style={overflow > 0 ? `height: ${stageHeight + overflow}px` : ''}
+			style={overflow > 0 ? `height: ${stageHeight + runway}px` : ''}
 		>
 			<div
 				bind:this={stage}
-				class="sticky top-32 flex min-h-[calc(100vh-8rem)] flex-col justify-center gap-8"
+				class="sticky top-27 flex min-h-[calc(100vh-12rem)] flex-col justify-start gap-6"
 			>
 				{@render title()}
+				<!--
+					Every distance is a fraction of `--step`, so the zigzag and the arrows
+					drawn in its empty cells keep their proportions whatever the step size.
+				-->
 				<ol
 					bind:this={track}
-					class="grid grid-rows-2 auto-cols-[min(22.5rem,32vh)] gap-x-8 gap-y-16 pl-15 xl:pl-30 pr-15 xl:pr-30 overflow-x-auto scrollbar-none"
+					style="--step: min(22.5rem, calc(40vh - 120px))"
+					class="grid grid-rows-2 auto-cols-[var(--step)] gap-x-[calc(var(--step)*0.16)] gap-y-[calc(var(--step)*0.18)] py-[calc(var(--step)*0.12)] px-card-bleed overflow-x-auto overflow-y-clip scrollbar-none"
 				>
 					{#each steps as step, i (i)}
 						{@const isTop = i % 2 === 0}
@@ -178,12 +207,13 @@
 							class="relative {isTop ? 'row-start-1' : 'row-start-2'}"
 							style="grid-column: {i + 1}"
 						>
-							{@render stepContent(step, i)}
+							{@render stepContent(step, i, true)}
 							{#if i < steps.length - 1}
+								<!-- The connector is drawn in the empty cell the zigzag leaves free. -->
 								<div
-									class="absolute left-[72%] w-[52%] pointer-events-none {colors.arrow} {isTop
-										? 'top-[62%]'
-										: 'bottom-[62%]'}"
+									class="absolute pointer-events-none {colors.arrow} {isTop
+										? 'left-[18%] w-[70%] top-[110%]'
+										: 'left-[10%] w-[65%] bottom-[120%]'}"
 								>
 									<Arrow class="w-full h-auto" />
 								</div>
