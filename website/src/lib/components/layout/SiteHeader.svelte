@@ -153,9 +153,9 @@
 		>
 				<span class="max-lg:hidden text-trim">Menu</span>
 			{#if menuOpen}
-				<IconClose class="shrink-0 w-7 h-7.25" />
+				<IconClose class="shrink-0 w-7.25 h-7.25" />
 			{:else}
-				<IconHamburger class="shrink-0 w-7 h-7.25" />
+				<IconHamburger class="shrink-0 w-7.25 h-7.25" />
 			{/if}
 		</button>
 	</div>

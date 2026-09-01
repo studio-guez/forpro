@@ -26,7 +26,7 @@
 			: 'text-(--color-cta) border-(--color-cta) hover:bg-(--color-cta) hover:text-white'
 	);
 
-	const iconSizeClasses = { md: 'w-5.75 lg:w-6.75 h-6 lg: h-7', lg: 'w-5.75 lg:w-9.25 h-6 lg:h-9.5' };
+	const iconSizeClasses = { md: 'w-6 lg:w-7 h-6 lg:h-7', lg: 'w-6 lg:w-9.5 h-6 lg:h-9.5' };
 </script>
 
 <a href={cta.url} target={cta.target ?? undefined} rel={cta.target === '_blank' ? 'noopener noreferrer' : undefined} style:--color-cta={color} class="font-bold leading-none inline-flex items-center rounded-full bg-transparent {colorClasses} transition-colors {sizeClasses[size]} {className}">

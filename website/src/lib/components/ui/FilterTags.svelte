@@ -71,7 +71,7 @@
 				tabindex={selected.length > 0 ? 0 : -1}
 				onclick={() => (selected = [])}
 			>
-				<IconClose class="w-6 h-6.25" />
+				<IconClose class="w-6.25 h-6.25" />
 			</button>
 		</div>
 
