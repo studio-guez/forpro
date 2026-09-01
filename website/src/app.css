@@ -111,7 +111,7 @@
         @apply text-xs md:text-base;
     }
 
-    /* PADDING */
+    /* SPACING */
 
     .px-card {
         @apply px-5 md:px-30;
@@ -123,6 +123,12 @@
 
     .scroll-px-card {
         @apply scroll-px-5 md:scroll-px-30;
+    }
+
+    /* UTILITIES */
+    .text-trim {
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
     }
 }
 
