@@ -60,6 +60,16 @@
 }
 
 @layer base {
+    :root {
+        /* Width of the content column. Sections are capped one by one rather than
+           through `main`, so a block can opt out with `max-w-none` and run edge to
+           edge (see `BlockModuleTimeline`). */
+        --content-max: 90rem;
+    }
+    main > * {
+        max-width: var(--content-max);
+        margin-inline: auto;
+    }
     html {
         scrollbar-width: thin;
         scrollbar-gutter: stable;
