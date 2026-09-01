@@ -44,7 +44,7 @@
 			onclick={onClear}
 		>
 			Effacer la recherche
-			<IconClose class="w-4.5 h-4.75" />
+			<IconClose class="w-4.75 h-4.75" />
 		</button>
 	</div>
 

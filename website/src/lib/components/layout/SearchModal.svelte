@@ -260,7 +260,7 @@
 			class="shrink-0 p-2 rounded-full hover:bg-blue hover:text-white transition-colors"
 			aria-label="Fermer la recherche"
 		>
-			<IconClose class="shrink-0 w-6 h-6.25" />
+			<IconClose class="shrink-0 w-6.25 h-6.25" />
 		</button>
 	</div>
 

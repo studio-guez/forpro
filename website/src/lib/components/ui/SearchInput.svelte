@@ -31,6 +31,6 @@
 			{placeholder}
 			class="search-input w-full rounded-full border-2 border-current bg-transparent text-current placeholder-current font-bold text-lg px-5 py-3 pr-13 focus:border-current focus:ring-current"
 		/>
-		<IconSearch class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none w-7 h-7.25" />
+		<IconSearch class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none w-7.25 h-7.25" />
 	</label>
 </form>
