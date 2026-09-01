@@ -114,15 +114,15 @@
     /* SPACING */
 
     .px-card {
-        @apply px-5 lg:px-30;
+        @apply px-5 lg:px-15 xl:px-30;
     }
 
     .-mx-card {
-        @apply -mx-5 lg:-mx-30;
+        @apply -mx-5 lg:-mx-15 xl:-mx-30;
     }
 
     .scroll-px-card {
-        @apply scroll-px-5 lg:scroll-px-30;
+        @apply scroll-px-5 lg:scroll-px-15 xl:scroll-px-30;
     }
 
     /* UTILITIES */

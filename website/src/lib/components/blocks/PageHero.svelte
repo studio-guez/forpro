@@ -33,7 +33,7 @@
 
 <section class="px-5 lg:px-9" aria-labelledby="page-title">
 	<div class="min-h-69 lg:min-h-138 relative text-white bg-grey-light rounded-3xl overflow-hidden flex">
-		<div class="w-full bg-linear-to-t from-black/20 relative z-1 flex flex-col justify-end p-3 lg:py-6 lg:px-8">
+		<div class="w-full bg-linear-to-t from-black/20 relative z-1 flex flex-col justify-end p-3 lg:py-6 lg:px-5 xl:px-8">
 			{#if overtitle}
 			<div>
 				<p class="inline-block text-lg lg:text-3xl font-bold -mb-2">{overtitle}</p>
