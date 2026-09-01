@@ -52,7 +52,7 @@
 					<p class="text-body-1 mt-4">{subtitle}</p>
 				{/if}
 			</div>
-			<div class="flex justify-end">
+			<div class="flex justify-end mt-15 lg:mt-8">
 				{@render children()}
 			</div>
 		</div>
