@@ -45,7 +45,7 @@
 		</div>
 	{/if}
 	{#if isTwoCol}
-		<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+		<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
 			<h2 id="page-intro-title" class="text-h4 max-lg:text-center">
 				{#if titleImage}
 					<Img image={titleImage} alt={title} class="max-lg:mx-auto max-w-80 max-h-40 object-contain" />
@@ -58,14 +58,14 @@
 					{@html text}
 				</div>
 				{#if hasCta}
-					<div class="max-lg:text-right mt-12">
+					<div class="max-lg:text-right mt-6 lg:mt-12">
 						<CtaLink cta={cta!} color={themeColor} size="lg" />
 					</div>
 				{/if}
 			</div>
 		</div>
 	{:else}
-		<h2 id="page-intro-title" class="text-h2 mb-12 text-center">
+		<h2 id="page-intro-title" class="text-h2 mb-6 lg:mb-12 text-center">
 			{#if titleImage}
 				<Img image={titleImage} alt={title} class="mx-auto max-w-80 max-h-40 object-contain" />
 			{:else}
@@ -76,7 +76,7 @@
 			{@html text}
 		</div>
 		{#if hasCta}
-			<div class="text-right mt-12">
+			<div class="text-right mt-6 lg:mt-12">
 				<CtaLink cta={cta!} color={themeColor} size="lg" />
 			</div>
 		{/if}
