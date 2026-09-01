@@ -35,17 +35,17 @@
 		decoColor,
 		shapes = [ShapeInfosPratiques1, ShapeInfosPratiques2, ShapeInfosPratiques3],
 		decoShapes = [ShapeInfosPratiquesDeco2, ShapeInfosPratiquesDeco1, ShapeInfosPratiquesDeco3],
-		rotations = [-4, 6, -4],
+		rotations = [-6, 12, -6],
 		decoPositions = [
-			'left-[36%] top-[8%] w-32 lg:w-40',
-			'left-[4%] bottom-[-6%] w-44 lg:w-56',
-			'right-[4%] bottom-[-4%] w-28 lg:w-36',
+			'left-[44%] top-[8%] w-32 lg:w-50',
+			'left-[12%] bottom-[-8%] w-44 lg:w-60',
+			'right-[6%] bottom-[-10%] w-28 lg:w-44',
 		],
 		class: className = '',
 	}: Props = $props();
 </script>
 
-<div class="relative grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-6 items-start {className}">
+<div class="relative grid grid-cols-1 lg:grid-cols-3 gap-10 items-start {className}">
 	{#if decoColor}
 		{#each decoShapes as DecoShape, i (i)}
 			<div class="hidden lg:block absolute {decoPositions[i]}" style:color={decoColor}>
@@ -55,8 +55,8 @@
 	{/if}
 	{#each elements as element, i (i)}
 		{@const Shape = shapes[i % shapes.length]}
-		<div class="relative aspect-15/13 w-full max-w-90 mx-auto" class:lg:mt-24={i === 1}>
-			<div class="absolute inset-0" style:color={blobColor}>
+		<div class="relative aspect-15/13 w-full max-w-90 mx-auto" class:lg:mt-48={i === 1}>
+			<div class="absolute -inset-1/8" style:color={blobColor}>
 				<Shape class="w-full h-full" />
 			</div>
 			<div
@@ -65,9 +65,7 @@
 				style:color={textColor}
 			>
 				<h3 class="text-h4 font-bold">{element.title}</h3>
-				<div class="prose text-body-1 font-bold mt-6">
-					{@html element.description}
-				</div>
+				<p class="text-body-1 font-bold mt-6 whitespace-pre-line">{element.description}</p>
 			</div>
 		</div>
 	{/each}
