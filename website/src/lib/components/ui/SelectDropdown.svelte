@@ -41,10 +41,6 @@
 				<option value={option.value}>{option.label}</option>
 			{/each}
 		</select>
-		<IconChevron
-			width={20}
-			height={21}
-			class="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none"
-		/>
+		<IconChevron class="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none w-5 h-5.25" />
 	</div>
 </div>

@@ -38,7 +38,7 @@
 							rel="noopener noreferrer"
 							class="text-label flex items-center gap-2 mt-1 underline hover:opacity-50 transition-opacity"
 						>
-							<IconLink width={18} height={18} class="shrink-0" />
+							<IconLink class="shrink-0 w-4.5 h-4.5" />
 							{partner.link.label}
 						</a>
 					{/if}
@@ -72,7 +72,7 @@
 								rel="noopener noreferrer"
 								class="text-label flex items-center gap-2 underline hover:opacity-50 transition-opacity"
 							>
-								<IconLink width={18} height={18} class="shrink-0" />
+								<IconLink class="shrink-0 w-4.5 h-4.5" />
 								{credit.link.label}
 							</a>
 						</dd>

@@ -27,7 +27,7 @@
 
 {#snippet badgeContent(badge: CompanyBadge)}
 	{#if badge.url}
-		<IconLink width={16} height={16} class="shrink-0" />
+		<IconLink class="shrink-0 w-4 h-4" />
 	{/if}
 	{badge.label}
 {/snippet}
@@ -93,7 +93,7 @@
 								rel="noopener noreferrer"
 								class="flex items-center gap-2 hover:opacity-50 transition-opacity"
 							>
-								<IconLink width={24} height={24} class="shrink-0" />
+								<IconLink class="shrink-0 w-6 h-6" />
 								{company.title}
 							</a>
 						{:else}

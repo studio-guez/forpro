@@ -260,7 +260,7 @@
 			class="shrink-0 p-2 rounded-full hover:bg-blue hover:text-white transition-colors"
 			aria-label="Fermer la recherche"
 		>
-			<IconClose class="shrink-0 w-6 h-auto" width="24" height="25" />
+			<IconClose class="shrink-0 w-6 h-6.25" />
 		</button>
 	</div>
 
@@ -353,7 +353,7 @@
 			<div bind:this={sentinel} class="h-px" aria-hidden="true"></div>
 			{#if hasMore}
 				<p class="flex justify-center py-4 text-grey-dark">
-					<IconSpinner class="motion-safe:animate-spin" width={32} height={32} />
+					<IconSpinner class="motion-safe:animate-spin w-8 h-8" />
 					<span class="sr-only">Chargement…</span>
 				</p>
 			{/if}

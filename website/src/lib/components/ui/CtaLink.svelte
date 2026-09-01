@@ -26,14 +26,14 @@
 			: 'text-(--color-cta) border-(--color-cta) hover:bg-(--color-cta) hover:text-white'
 	);
 
-	const iconSize = { md: { width: 27, height: 28 }, lg: { width: 37, height: 38 } };
+	const iconSizeClasses = { md: 'w-5.75 lg:w-6.75 h-6 lg: h-7', lg: 'w-5.75 lg:w-9.25 h-6 lg:h-9.5' };
 </script>
 
 <a href={cta.url} target={cta.target ?? undefined} rel={cta.target === '_blank' ? 'noopener noreferrer' : undefined} style:--color-cta={color} class="font-bold leading-none inline-flex items-center rounded-full bg-transparent {colorClasses} transition-colors {sizeClasses[size]} {className}">
 	<span class="text-trim">{cta.label}</span>
-	{#if cta.icon === 'arrow'}<IconArrow width={iconSize[size].width} height={iconSize[size].height} />
-	{:else if cta.icon === 'email'}<IconEmail width={iconSize[size].width} height={iconSize[size].height} />
-	{:else if cta.icon === 'phone'}<IconPhone width={iconSize[size].width} height={iconSize[size].height} />
-	{:else if cta.icon === 'plus'}<IconPlus width={iconSize[size].width} height={iconSize[size].height} />
+	{#if cta.icon === 'arrow'}<IconArrow class={iconSizeClasses[size]} />
+	{:else if cta.icon === 'email'}<IconEmail class={iconSizeClasses[size]} />
+	{:else if cta.icon === 'phone'}<IconPhone class={iconSizeClasses[size]} />
+	{:else if cta.icon === 'plus'}<IconPlus class={iconSizeClasses[size]} />
 	{/if}
 </a>

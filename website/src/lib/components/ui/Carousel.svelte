@@ -69,11 +69,7 @@
 		aria-label={direction === 'prev' ? 'Précédent' : 'Suivant'}
 		class="w-11 h-11 lg:w-13 lg:h-13 shrink-0 rounded-full flex items-center justify-center transition disabled:opacity-40 {circleClass} {extraClass}"
 	>
-		<IconChevron
-			width={28}
-			height={28}
-			class={direction === 'prev' ? 'rotate-90' : '-rotate-90'}
-		/>
+		<IconChevron class="w-7 h-7 {direction === 'prev' ? 'rotate-90' : '-rotate-90'}" />
 	</button>
 {/snippet}
 

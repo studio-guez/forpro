@@ -131,7 +131,7 @@
 						disabled={atStart}
 						aria-label="Étapes précédentes"						class="w-11 h-11 shrink-0 rounded-full flex items-center justify-center bg-blue text-white transition hover:opacity-80 disabled:opacity-40"
 					>
-						<IconChevron width={28} height={28} class="rotate-90" />
+						<IconChevron class="rotate-90 w-7 h-7" />
 					</button>
 					<button
 						type="button"
@@ -140,7 +140,7 @@
 						aria-label="Étapes suivantes"
 						class="w-11 h-11 shrink-0 rounded-full flex items-center justify-center bg-blue text-white transition hover:opacity-80 disabled:opacity-40"
 					>
-						<IconChevron width={28} height={28} class="-rotate-90" />
+						<IconChevron class="-rotate-90 w-7 h-7" />
 					</button>
 				</div>
 			{/if}
