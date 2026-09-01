@@ -67,8 +67,10 @@
 >
 	<div 
 		class="px-card rounded-3xl relative overflow-hidden {className}"
-		class:pt-12={padded}
-		class:pb-18={padded}
+		class:pt-6={padded}
+		class:pb-9={padded}
+		class:lg:pt-12={padded}
+		class:lg:pb-18={padded}
 		{style}
 	>
 		{#if ShapeLeft}
@@ -87,7 +89,7 @@
 				{#if hideTitle}
 					<h2 id={titleId} class="sr-only">{title}</h2>
 				{:else if titleVariant === 'plain'}
-					<h2 id={titleId} class="text-h2 mb-12" style={titleStyle}>{title}</h2>
+					<h2 id={titleId} class="text-h2 mb-6 lg:mb-12" style={titleStyle}>{title}</h2>
 				{:else}
 					<h2
 						id={titleId}
