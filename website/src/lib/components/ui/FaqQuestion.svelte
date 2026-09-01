@@ -33,16 +33,16 @@
 	);
 </script>
 
-<div style:--faq-color={color} class="border-4 {borderClass} rounded-4xl overflow-hidden {className} transition-colors">
+<div style:--faq-color={color} class="border-4 {borderClass} rounded-[1.3125rem] lg:rounded-[2.125rem] overflow-hidden {className} transition-colors">
 	<h3>
 		<button
 			type="button"
-			class="w-full flex items-center justify-between gap-4 text-left px-6 lg:px-9 py-3.5 lg:py-4.5"
+			class="w-full flex items-center justify-between gap-2 text-left px-6 lg:px-9 h-9.5 lg:h-16"
 			aria-expanded={open}
 			aria-controls="{id}-answer"
 			onclick={() => (open = !open)}
 		>
-			<span class="text-body-2 font-bold">{question}</span>
+			<span class="text-base lg:text-2xl font-bold">{question}</span>
 			{#if open}
 				<IconClose class="shrink-0 w-8 h-8" />
 			{:else}
