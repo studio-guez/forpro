@@ -19,12 +19,14 @@ fields:
       fr: Titre élément 1
     type: text
     required: true
+    maxlength: 40
   description1:
     label:
       en: Description element 1
       fr: Description élément 1
     extends: fields/writer
     required: true
+    maxlength: 70
   description1separator:
     type: line
   title2:
@@ -33,12 +35,14 @@ fields:
       fr: Titre élément 2
     type: text
     required: true
+    maxlength: 40
   description2:
     label:
       en: Description element 2
       fr: Description élément 2
     extends: fields/writer
     required: true
+    maxlength: 70
   description2separator:
     type: line
   title3:
@@ -47,9 +51,11 @@ fields:
       fr: Titre élément 3
     type: text
     required: true
+    maxlength: 40
   description3:
     label:
       en: Description element 3
       fr: Description élément 3
     extends: fields/writer
     required: true
+    maxlength: 70
