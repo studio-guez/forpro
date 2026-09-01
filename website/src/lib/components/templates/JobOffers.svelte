@@ -71,7 +71,7 @@
 		terms={sectorTerms}
 		bind:selected={selectedSectors}
 		legend="Secteurs :"
-		class="mt-12 md:mt-18"
+		class="mt-12 lg:mt-18"
 	/>
 </section>
 

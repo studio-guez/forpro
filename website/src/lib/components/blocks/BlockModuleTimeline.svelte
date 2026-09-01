@@ -62,9 +62,9 @@
 	<div class="relative aspect-square w-full text-green">
 		<Shape class="absolute inset-0 w-full h-full" />
 		<div class="absolute inset-0 flex flex-col justify-center text-blue px-[18%]">
-			<p class="text-body-1 md:text-h4">{step.title}</p>
+			<p class="text-body-1 lg:text-h4">{step.title}</p>
 			{#if step.shortDesc}
-				<div class="prose text-caption md:text-label font-bold mt-1 md:mt-2">
+				<div class="prose text-caption lg:text-label font-bold mt-1 lg:mt-2">
 					{@html step.shortDesc}
 				</div>
 			{/if}
@@ -79,7 +79,7 @@
 		</h2>
 
 		<!-- Mobile: a 3-column grid the steps zigzag through, two columns wide each. -->
-		<ol class="md:hidden mt-12 grid grid-cols-3 gap-y-14">
+		<ol class="lg:hidden mt-12 grid grid-cols-3 gap-y-14">
 			{#each steps as step, i (i)}
 				{@const isLeft = i % 2 === 0}
 				{@const Arrow = mobileArrows[i % mobileArrows.length]}
@@ -99,7 +99,7 @@
 		</ol>
 
 		<!-- Desktop: two rows, odd steps on top, even ones below, scrolling sideways. -->
-		<div class="max-md:hidden relative mt-16">
+		<div class="max-lg:hidden relative mt-16">
 			<ol
 				bind:this={track}
 				onscroll={onScroll}

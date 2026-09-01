@@ -28,7 +28,7 @@
 	]);
 </script>
 
-<article class="space-y-16 md:space-y-24">
+<article class="space-y-16 lg:space-y-24">
 	<header class="space-y-6">
 		{#if page.parentPage}
 			<BackLink parentPage={page.parentPage} />
@@ -41,9 +41,9 @@
 
 	<div class="space-y-10">
 		{#each sections as section (section.label)}
-			<section class="grid md:grid-cols-3 gap-4 md:gap-8">
+			<section class="grid lg:grid-cols-3 gap-4 lg:gap-8">
 				<h2 class="text-h4 text-blue">{section.label}</h2>
-				<div class="prose text-body-2 md:col-span-2">{@html section.html}</div>
+				<div class="prose text-body-2 lg:col-span-2">{@html section.html}</div>
 			</section>
 		{/each}
 	</div>
@@ -114,10 +114,10 @@
 			<ul class="space-y-6">
 				{#each page.applicationQuestions as item, i (i)}
 					<li
-						class="bg-blue text-white rounded-3xl px-6 py-8 md:px-12 md:py-10 grid md:grid-cols-3 gap-4 md:gap-8"
+						class="bg-blue text-white rounded-3xl px-6 py-8 lg:px-12 lg:py-10 grid lg:grid-cols-3 gap-4 lg:gap-8"
 					>
 						<h3 class="text-h4">{item.question}</h3>
-						<div class="prose text-body-2 md:col-span-2">{@html item.answer}</div>
+						<div class="prose text-body-2 lg:col-span-2">{@html item.answer}</div>
 					</li>
 				{/each}
 			</ul>

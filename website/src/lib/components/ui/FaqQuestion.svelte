@@ -37,7 +37,7 @@
 	<h3>
 		<button
 			type="button"
-			class="w-full flex items-center justify-between gap-4 text-left px-6 md:px-9 py-3.5 md:py-4.5"
+			class="w-full flex items-center justify-between gap-4 text-left px-6 lg:px-9 py-3.5 lg:py-4.5"
 			aria-expanded={open}
 			aria-controls="{id}-answer"
 			onclick={() => (open = !open)}
@@ -52,7 +52,7 @@
 	</h3>
 	{#if open}
 		<div id="{id}-answer" role="region" aria-label={question} transition:slide={{ duration: 300 }}>
-			<div class="prose px-6 md:px-9 pb-6 md:pb-8">
+			<div class="prose px-6 lg:px-9 pb-6 lg:pb-8">
 				{@html answer}
 			</div>
 		</div>

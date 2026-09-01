@@ -17,9 +17,9 @@
 	const titleId = `card-small-2cols-title-${uid}`;
 </script>
 
-<section class="md:px-9" aria-labelledby={titleId}>
+<section class="lg:px-9" aria-labelledby={titleId}>
 	<div
-		class="bg-blue text-white rounded-3xl px-5 pt-5 pb-6 md:p-8 grid md:grid-cols-2 gap-10 md:gap-16 {className}"
+		class="bg-blue text-white rounded-3xl px-5 pt-5 pb-6 lg:p-8 grid lg:grid-cols-2 gap-10 lg:gap-16 {className}"
 	>
 		<div>
 			<h2 id={titleId} class="text-h4">{title}</h2>

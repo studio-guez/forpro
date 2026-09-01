@@ -28,7 +28,7 @@
 			blobColor={colors.surface}
 			textColor={colors.surfaceText}
 			decoColor={colors.showShapes ? colors.bgContrast : null}
-			class="mt-12 md:mt-6"
+			class="mt-12 lg:mt-6"
 		/>
 	</Card>
 {/if}

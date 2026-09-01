@@ -36,7 +36,7 @@
 	};
 </script>
 
-<article class="space-y-16 md:space-y-24">
+<article class="space-y-16 lg:space-y-24">
 	<header class="space-y-6">
 		{#if page.parentPage}
 			<BackLink parentPage={page.parentPage} />
@@ -57,7 +57,7 @@
 		<TermTags terms={page.categories} label="Catégories" />
 	</header>
 
-	<section aria-labelledby="mission-intro" class="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
+	<section aria-labelledby="mission-intro" class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
 		<div class="space-y-6">
 			<h2 id="mission-intro" class="text-h3 text-black">{page.introTitle}</h2>
 			<div class="prose text-body-2 text-grey-dark">{@html page.shortDesc}</div>
@@ -75,9 +75,9 @@
 
 	<div class="space-y-10">
 		{#each sections as section (section.label)}
-			<section class="grid md:grid-cols-3 gap-4 md:gap-8">
+			<section class="grid lg:grid-cols-3 gap-4 lg:gap-8">
 				<h2 class="text-h4 text-black">{section.label}</h2>
-				<div class="prose text-body-2 md:col-span-2">{@html section.html}</div>
+				<div class="prose text-body-2 lg:col-span-2">{@html section.html}</div>
 			</section>
 		{/each}
 	</div>

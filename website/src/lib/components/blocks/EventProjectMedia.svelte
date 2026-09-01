@@ -19,7 +19,7 @@
 
 {#if hasMedia}
 	<section class={['px-card', className]} aria-label="Médias — {title}">
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-9">
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-9">
 			{#each medias as media, index (index)}
 				<figure class="m-0">
 					{#if media.type === 'video'}

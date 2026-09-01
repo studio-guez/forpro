@@ -19,7 +19,7 @@
 			sizes="100vw"
 			loading="eager"
 			fetchpriority="high"
-			class="w-full aspect-video md:aspect-3/1 object-cover rounded-3xl mb-18"
+			class="w-full aspect-video lg:aspect-3/1 object-cover rounded-3xl mb-18"
 		/>
 	{/if}
 

@@ -36,7 +36,7 @@
 		<div>
 			<svelte:element this={headingTag} class="text-h4">{event.title}</svelte:element>
 			{#if event.shortDesc}
-				<div class="prose text-label mt-5 md:hidden">
+				<div class="prose text-label mt-5 lg:hidden">
 					{@html event.shortDesc}
 				</div>
 			{/if}

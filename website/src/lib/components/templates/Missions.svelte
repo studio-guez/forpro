@@ -92,7 +92,7 @@
 	theme={page.theme}
 />
 
-<section aria-label="Filtres" class="py-12 md:py-16">
+<section aria-label="Filtres" class="py-12 lg:py-16">
 	<FilterTags
 		terms={categoryTerms}
 		bind:selected={selectedCategories}
@@ -105,11 +105,11 @@
 		label="Trier par..."
 		allLabel="Ordre par défaut"
 		{color}
-		class="mt-12 md:mt-18"
+		class="mt-12 lg:mt-18"
 	/>
 </section>
 
-<section aria-label="Missions" class="pb-12 md:pb-16">
+<section aria-label="Missions" class="pb-12 lg:pb-16">
 	<div aria-live="polite">
 		{#if visibleMissions.length > 0}
 			<ul class="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
