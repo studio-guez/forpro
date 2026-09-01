@@ -12,34 +12,34 @@
 	const onDark = $derived(content.variant === 'default');
 	const background = $derived(onDark ? 'var(--color-hotpink)' : 'var(--color-white)');
 	const textColor = $derived(onDark ? 'var(--color-white)' : 'var(--color-hotpink)');
-	// The logos need a white plate, so on a white section they get an outline instead.
+	// Each logo sits on its own plate: white on the pink section, beige on the white one,
+	// so the plates never blend into the card background.
 	const plateClass = $derived(
-		`flex items-center justify-center rounded-xl px-6 py-4 bg-(--color-white) ${
-			onDark ? '' : 'border border-(--color-grey-light)'
+		`flex h-full items-center justify-center rounded-xl p-3 ${
+			onDark ? 'bg-(--color-white)' : ''
 		}`
 	);
 </script>
 
 {#snippet logo(partner: PartnerItem)}
-	<Img image={partner.logo} alt={partner.label} class="h-12 lg:h-16 w-auto max-w-40 object-contain" />
+	<Img image={partner.logo} alt={partner.label} class="h-15 lg:h-25 w-auto max-w-40 object-contain" />
 {/snippet}
 
 <CardSmall title={content.title} subtitle={content.subtitle} {background} color={textColor}>
 	{#if content.partners.length > 0}
-		<ul class="flex flex-wrap gap-2 lg:justify-end shrink-0">
+		<ul class="flex flex-wrap justify-end gap-4 lg:gap-6 {plateClass}">
 			{#each content.partners as partner (partner.logo.url)}
-				<li>
+				<li class="hover:scale-102 transition-transform">
 					{#if partner.url}
 						<a
 							href={partner.url}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="{plateClass} transition-opacity hover:opacity-70"
 						>
 							{@render logo(partner)}
 						</a>
 					{:else}
-						<div class={plateClass}>
+						<div>
 							{@render logo(partner)}
 						</div>
 					{/if}
