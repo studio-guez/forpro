@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Module3ElementsContent, Theme } from '$lib/interfaces/page';
 	import { getThemeColors } from '$lib/utils/themeColors';
-	import { getThemeElementShapes } from '$lib/utils/themeShapes';
+	import { getThemeElementBlobs } from '$lib/utils/themeShapes';
 	import Card from '$lib/components/ui/Card.svelte';
 	import ThreeElements from '$lib/components/ui/ThreeElements.svelte';
 
@@ -14,7 +14,7 @@
 
 	const colors = $derived(getThemeColors(theme, content.variant));
 	const inverted = $derived(content.variant === 'inverted');
-	const shapes = $derived(getThemeElementShapes(theme));
+	const blobs = $derived(getThemeElementBlobs(theme));
 </script>
 
 {#if content.elements.length > 0}
@@ -29,7 +29,8 @@
 		<div class:lg:pb-18={inverted}>
 			<ThreeElements
 				elements={content.elements}
-				{shapes}
+				shapes={blobs.shapes}
+				rotations={blobs.rotations}
 				blobColor={inverted ? colors.invertedElementsBlobColor : colors.bgContrast}
 				textColor={inverted ? colors.invertedElementsTextColor : colors.surfaceText}
 				decoColor={inverted ? colors.invertedElementsTextColor : colors.bgContrast}
