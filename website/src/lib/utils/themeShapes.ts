@@ -53,24 +53,33 @@ export function getThemeShapes(theme: Theme): [ShapeSpec, ShapeSpec] {
 	return shapePairs[theme] ?? defaultShapes;
 }
 
-/** The three organic blobs drawn behind the elements of a `3elements` block. */
-export type ElementShapes = [
-	Component<{ class?: string }>,
-	Component<{ class?: string }>,
-	Component<{ class?: string }>
-];
+/**
+ * The three organic blobs drawn behind the elements of a `3elements` block, with the
+ * rotation of the text sitting on each one — the tilt only reads well against the shape
+ * it is paired with, so both travel together.
+ */
+export interface ElementBlobs {
+	shapes: [Component<{ class?: string }>, Component<{ class?: string }>, Component<{ class?: string }>];
+	rotations: [number, number, number];
+}
 
-const defaultElementShapes: ElementShapes = [
-	ShapeInfosPratiques1,
-	ShapeInfosPratiques2,
-	ShapeInfosPratiques3
-];
+const defaultElementBlobs: ElementBlobs = {
+	shapes: [ShapeInfosPratiques1, ShapeInfosPratiques2, ShapeInfosPratiques3],
+	rotations: [-6, 12, -6]
+};
 
-const elementShapes: Partial<Record<Theme, ElementShapes>> = {
-	foodlab: [ShapeInfosPratiquesFoodlab1, ShapeInfosPratiquesFoodlab2, ShapeInfosPratiquesFoodlab3]
+const elementBlobs: Partial<Record<Theme, ElementBlobs>> = {
+	foodlab: {
+		shapes: [
+			ShapeInfosPratiquesFoodlab1,
+			ShapeInfosPratiquesFoodlab2,
+			ShapeInfosPratiquesFoodlab3
+		],
+		rotations: [10, -10, -10]
+	}
 };
 
 /** Resolve the element blobs a `3elements` block should draw, falling back to the default trio. */
-export function getThemeElementShapes(theme: Theme): ElementShapes {
-	return elementShapes[theme] ?? defaultElementShapes;
+export function getThemeElementBlobs(theme: Theme): ElementBlobs {
+	return elementBlobs[theme] ?? defaultElementBlobs;
 }
