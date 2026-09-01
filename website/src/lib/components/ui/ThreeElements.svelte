@@ -56,7 +56,7 @@
 	{#each elements as element, i (i)}
 		{@const Shape = shapes[i % shapes.length]}
 		<div class="relative aspect-15/13 w-full max-w-90 mx-auto" class:xl:mt-48={i === 1} class:max-xl:col-start-2={i === 0 || i === 2} class:max-xl:row-start-2={i === 1} class:max-xl:row-start-3={i === 2}>
-			<div class="absolute -inset-1/8" style:color={blobColor}>
+			<div class="absolute -inset-1/8 object-contain" style:color={blobColor}>
 				<Shape class="w-full h-full" />
 			</div>
 			<div
