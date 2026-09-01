@@ -12,6 +12,7 @@
 	let { content, theme }: Props = $props();
 
 	const colors = $derived(getThemeColors(theme, content.variant));
+	const inverted = $derived(content.variant === 'inverted');
 </script>
 
 {#if content.elements.length > 0}
@@ -25,9 +26,9 @@
 	>
 		<ThreeElements
 			elements={content.elements}
-			blobColor={colors.surface}
-			textColor={colors.surfaceText}
-			decoColor={colors.bgContrast}
+			blobColor={inverted ? colors.invertedElementsBlobColor : colors.bgContrast}
+			textColor={inverted ? colors.invertedElementsTextColor : colors.surfaceText}
+			decoColor={inverted ? colors.invertedElementsTextColor : colors.bgContrast}
 			class="mt-12 lg:mt-6"
 		/>
 	</Card>
