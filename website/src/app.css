@@ -38,11 +38,11 @@
     --text-base--line-height: 1.2;
     --text-lg--line-height: 1.2;
     --text-xl--line-height: 1.2;
-    --text-2xl--line-height: 1.25;
-    --text-3xl--line-height: 1.2;
-    --text-4xl--line-height: 1.15;
-    --text-5xl--line-height: 1.1;
-    --text-6xl--line-height: 1.05;
+    --text-2xl--line-height: 1.2;
+    --text-3xl--line-height: 1.05;
+    --text-4xl--line-height: 1.05;
+    --text-5xl--line-height: 1;
+    --text-6xl--line-height: 1;
 
     /* TRANSITION */
     --default-transition-duration: 250ms;
