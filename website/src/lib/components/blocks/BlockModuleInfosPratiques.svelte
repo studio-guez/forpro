@@ -41,7 +41,7 @@
 	{/if}
 
 	{#if content.faqs.length > 0}
-		<div class="mt-12 md:mt-18 space-y-4">
+		<div class="mt-12 md:mt-24 space-y-4">
 			{#each content.faqs as faq, i (i)}
 				<FaqQuestion id="{uid}-faq-{i}" question={faq.question} answer={faq.answer} color={colors.main} inverted={filled} />
 			{/each}
@@ -50,7 +50,7 @@
 
 	{#if content.cta}
 		<div class="flex justify-end mt-8">
-			<CtaLink cta={content.cta} color={colors.main} inverted={filled} />
+			<CtaLink cta={content.cta} color={colors.main} inverted={filled} size="lg" />
 		</div>
 	{/if}
 </Card>
