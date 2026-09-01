@@ -66,7 +66,7 @@
 	<SiteHeader header={data.header} />
 {/if}
 
-<main class="max-w-360 mx-auto pt-27 space-y-18">
+<main class="max-w-360 mx-auto pt-27 space-y-9 lg:space-y-18">
 	{@render children?.()}
 </main>
 
