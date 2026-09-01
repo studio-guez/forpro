@@ -19,8 +19,12 @@
 		decoColor: string | null;
 		/** One organic shape per element. */
 		shapes?: Shape[];
-		/** Background decorations, in the order of the 3 fixed positions. */
+		/** Background decorations, in the order of `decoPositions`. */
 		decoShapes?: Shape[];
+		/** Rotation in degrees of each element's text, cycled over the elements. */
+		rotations?: number[];
+		/** Absolute positioning classes, one per background decoration. */
+		decoPositions?: string[];
 		class?: string;
 	}
 
@@ -31,16 +35,14 @@
 		decoColor,
 		shapes = [ShapeInfosPratiques1, ShapeInfosPratiques2, ShapeInfosPratiques3],
 		decoShapes = [ShapeInfosPratiquesDeco2, ShapeInfosPratiquesDeco1, ShapeInfosPratiquesDeco3],
+		rotations = [-4, 6, -4],
+		decoPositions = [
+			'left-[36%] top-[8%] w-32 lg:w-40',
+			'left-[4%] bottom-[-6%] w-44 lg:w-56',
+			'right-[4%] bottom-[-4%] w-28 lg:w-36',
+		],
 		class: className = '',
 	}: Props = $props();
-
-	const rotations = [-8, -6, -8];
-
-	const decoPositions = [
-		'left-[36%] top-[8%] w-32 lg:w-40',
-		'left-[4%] bottom-[-6%] w-44 lg:w-56',
-		'right-[4%] bottom-[-4%] w-28 lg:w-36',
-	];
 </script>
 
 <div class="relative grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-6 items-start {className}">
@@ -58,12 +60,12 @@
 				<Shape class="w-full h-full" />
 			</div>
 			<div
-				class="absolute inset-0 flex flex-col items-center justify-center text-center px-[16%]"
-				style:transform="rotate({rotations[i % 3]}deg)"
+				class="absolute inset-0 flex flex-col items-center justify-center text-center px-[5%]"
+				style:transform="rotate({rotations[i % rotations.length]}deg)"
 				style:color={textColor}
 			>
-				<h3 class="text-body-2 font-bold">{element.title}</h3>
-				<div class="prose text-label font-bold mt-3">
+				<h3 class="text-h4 font-bold">{element.title}</h3>
+				<div class="prose text-body-1 font-bold mt-6">
 					{@html element.description}
 				</div>
 			</div>
