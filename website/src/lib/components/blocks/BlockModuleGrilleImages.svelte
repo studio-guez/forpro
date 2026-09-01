@@ -1,11 +1,10 @@
 <script lang="ts">
 	import type { ModuleGrilleImagesContent, Theme } from '$lib/interfaces/page';
 	import { getThemeColors } from '$lib/utils/themeColors';
+	import { getThemeShapes } from '$lib/utils/themeShapes';
 	import Card from '$lib/components/ui/Card.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
-	import ShapeCasesDefault1 from '$lib/components/svg/ShapeCasesDefault1.svelte';
-	import ShapeCasesDefault2 from '$lib/components/svg/ShapeCasesDefault2.svelte';
 
 	interface Props {
 		content: ModuleGrilleImagesContent;
@@ -18,13 +17,19 @@
 
 	// 5 images on a 6-column grid: 2 on the first row, 3 on the second.
 	const span = (index: number) => (index < 2 ? 'lg:col-span-3' : 'lg:col-span-2');
+
+	const [[ShapeLeft, shapeLeftClasses], [ShapeRight, shapeRightClasses]] = $derived(
+		getThemeShapes(theme)
+	);
 </script>
 
 <Card
 	background={colors.bg}
 	color={colors.text}
-	shapeLeft={colors.showShapes ? ShapeCasesDefault1 : null}
-	shapeRight={colors.showShapes ? ShapeCasesDefault2 : null}
+	shapeLeft={colors.showShapes ? ShapeLeft : null}
+	shapeRight={colors.showShapes ? ShapeRight : null}
+	{shapeLeftClasses}
+	{shapeRightClasses}
 	shapeColor={colors.bgContrast}
 	title={content.title}
 	shortDesc={content.shortDesc}
