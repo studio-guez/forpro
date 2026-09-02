@@ -12,7 +12,7 @@
 	let { title, cover = null, intro = null }: Props = $props();
 </script>
 
-<section aria-labelledby="page-title">
+<section aria-labelledby="page-title" class="px-base">
 	{#if cover}
 		<Img
 			image={cover}
