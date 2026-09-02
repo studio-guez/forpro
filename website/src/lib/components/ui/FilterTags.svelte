@@ -92,7 +92,7 @@
 			<button
 				type="button"
 				style:--reset-color={color}
-				class="text-(--reset-color) p-1 -mr-8.75 {selected.length > 0 ? '' : 'invisible'}"
+				class="text-(--reset-color) p-1 -mr-11.25 {selected.length > 0 ? '' : 'invisible'}"
 				aria-label={resetLabel}
 				inert={selected.length === 0}
 				onclick={() => (selected = [])}
