@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Page from '$lib/components/templates/Page.svelte';
+	import BasicPage from '$lib/components/templates/BasicPage.svelte';
 	import Faq from '$lib/components/templates/Faq.svelte';
 	import Event from '$lib/components/templates/Event.svelte';
 	import Events from '$lib/components/templates/Events.svelte';
@@ -66,7 +67,9 @@
 	{/if}
 </svelte:head>
 
-{#if page.template === 'faq'}
+{#if page.template === 'basic-page'}
+	<BasicPage {page} />
+{:else if page.template === 'faq'}
 	<Faq {page} />
 {:else if page.template === 'event'}
 	<Event {page} />
