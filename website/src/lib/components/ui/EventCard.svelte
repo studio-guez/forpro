@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Img from '$lib/components/ui/Img.svelte';
 	import IconArrow from '$lib/components/svg/IconArrow.svelte';
-	import { termColor } from '$lib/utils/shared';
+	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import {
 		formatEventDate,
 		formatEventDateRange,
@@ -68,12 +68,7 @@
 						</p>
 					{/if}
 					<div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
-						{#each event.programs as term (term.slug)}
-							<span
-								class="text-caption rounded-full px-2.5 py-0.5 leading-tight"
-								style="background-color: {termColor(term)}">{term.title}</span
-							>
-						{/each}
+						<TermTags terms={event.programs} label="Programmes" size="sm" />
 						{#if timeStart}
 							<span class="text-label inline-flex items-center gap-1.5">
 								<time datetime={timeAttr(event.timeStart)}>{timeStart}</time>
