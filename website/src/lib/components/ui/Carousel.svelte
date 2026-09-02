@@ -34,7 +34,10 @@
 	const goTo = (i: number) => {
 		const target = slides()[Math.min(Math.max(i, 0), items.length - 1)];
 		if (!target || !track) return;
-		track.scrollTo({ left: target.offsetLeft - slides()[0].offsetLeft, behavior: 'smooth' });
+		const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+			? 'auto'
+			: 'smooth';
+		track.scrollTo({ left: target.offsetLeft - slides()[0].offsetLeft, behavior });
 	};
 
 	// The scroll position is the source of truth: it also covers swipes and keyboard scrolling.

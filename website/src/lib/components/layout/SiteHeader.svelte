@@ -18,6 +18,7 @@
 
 	let menuOpen = $state(false);
 	let headerEl = $state<HTMLElement>();
+	let burgerButtonEl = $state<HTMLButtonElement>();
 	let searchQuery = $state('');
 	let searchModalOpen = $state(false);
 
@@ -55,6 +56,19 @@
 		};
 		document.addEventListener('pointerdown', handlePointerDown);
 		return () => document.removeEventListener('pointerdown', handlePointerDown);
+	});
+
+	// Clicking outside is the pointer way out; Escape is the keyboard one. Focus goes back to
+	// the toggle, otherwise it would be left on a panel that no longer exists.
+	$effect(() => {
+		if (!menuOpen) return;
+		const handleKeydown = (event: KeyboardEvent) => {
+			if (event.key !== 'Escape') return;
+			closeMenu();
+			burgerButtonEl?.focus();
+		};
+		document.addEventListener('keydown', handleKeydown);
+		return () => document.removeEventListener('keydown', handleKeydown);
 	});
 </script>
 
@@ -125,6 +139,7 @@
 		<button
 			type="button"
 			id="burger-menu-button"
+			bind:this={burgerButtonEl}
 			onclick={toggleMenu}
 			aria-expanded={menuOpen}
 			aria-controls="burger-menu-desktop burger-menu-mobile"

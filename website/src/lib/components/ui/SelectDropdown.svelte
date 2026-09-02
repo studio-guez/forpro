@@ -34,7 +34,7 @@
 		<select
 			id="select-{uid}"
 			bind:value
-			class="text-label appearance-none bg-transparent border-0 border-b-2 border-current text-current pl-0 pr-9 py-1 focus:border-current focus:ring-0"
+			class="text-label appearance-none bg-transparent border-0 border-b-2 border-current text-current pl-0 pr-9 py-1 focus:border-current focus:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
 		>
 			<option value="">{value === '' ? label : allLabel}</option>
 			{#each options as option (option.value)}

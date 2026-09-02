@@ -67,8 +67,7 @@
 				type="button"
 				class="text-teal p-1 {selected.length > 0 ? '' : 'invisible'}"
 				aria-label={resetLabel}
-				aria-hidden={selected.length === 0}
-				tabindex={selected.length > 0 ? 0 : -1}
+				inert={selected.length === 0}
 				onclick={() => (selected = [])}
 			>
 				<IconClose class="w-6.25 h-6.25" />
