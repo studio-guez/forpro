@@ -6,6 +6,7 @@
 	import IconSearch from '$lib/components/svg/IconSearch.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
 	import SearchModal from '$lib/components/layout/SearchModal.svelte';
+	import { lockPageScroll } from '$lib/utils/smoothScroll';
 	import SiteSecondaryMenuDesktop from '$lib/components/layout/SiteSecondaryMenuDesktop.svelte';
 	import SiteSecondaryMenuMobile from '$lib/components/layout/SiteSecondaryMenuMobile.svelte';
 
@@ -39,6 +40,12 @@
 		menuOpen = false;
 	};
 
+	// The panels scroll inside the header instead, so the page underneath stays put.
+	$effect(() => {
+		if (!menuOpen) return;
+		return lockPageScroll();
+	});
+
 	$effect(() => {
 		if (!menuOpen) return;
 		const handlePointerDown = (event: PointerEvent) => {
@@ -53,9 +60,9 @@
 
 <header
 	bind:this={headerEl}
-	class="fixed top-0 inset-x-0 z-10 rounded-b-4xl bg-white transition-shadow has-[#burger-menu-button:hover]:shadow {menuOpen ? 'shadow' : ''}"
+	class="fixed top-0 inset-x-0 z-10 flex flex-col max-h-dvh rounded-b-4xl bg-white transition-shadow has-[#burger-menu-button:hover]:shadow {menuOpen ? 'shadow' : ''}"
 >
-	<div class="max-w-360 mx-auto flex items-center gap-x-3 lg:gap-x-12 px-5 lg:px-9 py-3 text-blue">
+	<div class="w-full max-w-360 mx-auto shrink-0 flex items-center gap-x-3 lg:gap-x-12 px-5 lg:px-9 py-3 text-blue">
 		<a href="/" onclick={closeMenu} class="shrink-0 {menuOpen ? 'max-lg:hidden' : ''}" aria-label={header.siteTitle}>
 			<Img
 				image={header.logo}
