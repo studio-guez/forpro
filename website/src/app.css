@@ -50,6 +50,10 @@
     /* TRANSITION */
     --default-transition-duration: 250ms;
 
+    /* SPACING */
+    --spacing-lh: 1em;
+    --spacing-lh: 1lh;
+
     /* ANIMATION */
     /* Duration and shift are set per instance: the scroll speed stays constant whatever the
        text length, and the shift equals exactly one copy of the repeated track */
