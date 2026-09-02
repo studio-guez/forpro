@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { page as appPage } from '$app/state';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
-	import PageHero from '$lib/components/blocks/PageHero.svelte';
-	import PageIntro from '$lib/components/blocks/PageIntro.svelte';
+	import PageHeader from '$lib/components/blocks/PageHeader.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
 	import LoadMore from '$lib/components/ui/LoadMore.svelte';
 	import MissionCard from '$lib/components/ui/MissionCard.svelte';
@@ -83,14 +82,7 @@
 	});
 </script>
 
-<PageHero title={page.title} overtitle={page.overtitle} theme={page.theme} cover={page.cover} />
-
-<PageIntro
-	title={page.introTitle}
-	text={page.intro}
-	parentPage={page.parentPage}
-	theme={page.theme}
-/>
+<PageHeader {page} />
 
 <section aria-label="Filtres" class="px-base py-12 lg:py-16">
 	<FilterTags

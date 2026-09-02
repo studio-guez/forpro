@@ -1,4 +1,4 @@
-import type { Block, CmsImage, PageCta, PageParent, Seo, Theme } from './page';
+import type { Block, CmsImage, HeaderType, PageCta, PageParent, Seo, Theme } from './page';
 import type { TaxonomyFilterTerm, TaxonomyTerm } from './taxonomy';
 
 // Card payload of a mission listed on the missions index.
@@ -43,6 +43,7 @@ export interface MissionsPage {
 	readonly path: string;
 	readonly overtitle: string | null;
 	readonly theme: Theme;
+	readonly headerType: HeaderType;
 	readonly cover: CmsImage | null;
 	readonly introTitle: string;
 	readonly intro: string;
