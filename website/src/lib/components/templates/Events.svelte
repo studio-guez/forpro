@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { page as appPage } from '$app/state';
+	import { fly } from 'svelte/transition';
+	import { prefersReducedMotion } from 'svelte/motion';
 	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import EventCard from '$lib/components/ui/EventCard.svelte';
@@ -93,9 +95,26 @@
 		upcoming.filter((event) => monthKey(event.dateStart) === upcomingMonth?.value)
 	);
 
+	// Direction of the last month change. Both labels travel a full box width in
+	// lockstep, so the leaving month looks pushed out by the arriving one. Motion
+	// is dropped entirely when the visitor asked for it.
+	let slideDirection = $state(1);
+	const monthSlideDuration = $derived(prefersReducedMotion.current ? 0 : 400);
+	const monthEnter = $derived({
+		duration: monthSlideDuration,
+		x: `${100 * slideDirection}%`
+	});
+	const monthLeave = $derived({
+		duration: monthSlideDuration,
+		x: `${-100 * slideDirection}%`
+	});
+
 	const goToMonth = (offset: number): void => {
 		const month = upcomingMonths[upcomingIndex + offset];
-		if (month) selectedUpcomingMonth = month.value;
+		if (!month) return;
+
+		slideDirection = offset;
+		selectedUpcomingMonth = month.value;
 	};
 
 	// Past events are browsed month by month, most recent month first.
@@ -195,7 +214,29 @@
 					>
 						<IconChevron class="w-6.25 h-6.25 rotate-90" />
 					</button>
-					<h2 class="text-h3 text-(--events-color)">{upcomingMonth.label}</h2>
+					<!-- Every month is laid out in the same cell, so the box keeps the width of the
+					     longest label, the arrows never move and each label stays centred whatever
+					     its length. The two labels in flight travel a full box width in lockstep,
+					     which is what makes the leaving one look pushed out by the arriving one. -->
+					<div class="grid overflow-hidden">
+						{#each upcomingMonths as month (month.value)}
+							<span
+								class="text-h2 invisible col-start-1 row-start-1 text-center"
+								aria-hidden="true"
+							>
+								{month.label}
+							</span>
+						{/each}
+						{#key upcomingMonth.value}
+							<h2
+								class="text-h2 text-(--events-color) col-start-1 row-start-1 text-center"
+								in:fly={monthEnter}
+								out:fly={monthLeave}
+							>
+								{upcomingMonth.label}
+							</h2>
+						{/key}
+					</div>
 					<button
 						type="button"
 						class="text-(--events-color) p-1 disabled:opacity-30"
