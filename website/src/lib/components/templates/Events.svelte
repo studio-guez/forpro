@@ -124,7 +124,7 @@
 	/>
 </BasicHeader>
 
-<section aria-label="Événements à venir" class="pb-12 lg:pb-16">
+<section aria-label="Événements à venir" class="px-base pb-12 lg:pb-16">
 	<div aria-live="polite">
 		{#if hasSearch}
 			<ResultsHeader
@@ -159,7 +159,7 @@
 </section>
 
 {#if past.length > 0}
-	<section aria-labelledby="past-events-title" class="pb-12 lg:pb-16">
+	<section aria-labelledby="past-events-title" class="px-base pb-12 lg:pb-16">
 		<h2 id="past-events-title" class="text-h2 text-center">
 			<span class="inline-block bg-blue text-white rounded-full px-8 py-3">
 				Les événements passés :

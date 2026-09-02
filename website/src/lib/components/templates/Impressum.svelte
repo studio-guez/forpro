@@ -18,7 +18,7 @@
 {#if page.partners.length > 0}
 	<section
 		aria-labelledby="impressum-partners"
-		class="grid grid-cols-1 lg:grid-cols-4 gap-x-6 gap-y-9"
+		class="px-base grid grid-cols-1 lg:grid-cols-4 gap-x-6 gap-y-9"
 	>
 		<h2 id="impressum-partners" class="text-label font-bold">{page.partnersTitle}</h2>
 

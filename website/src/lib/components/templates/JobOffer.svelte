@@ -29,7 +29,7 @@
 </script>
 
 <article class="space-y-16 lg:space-y-24">
-	<header class="space-y-6">
+	<div class="px-base space-y-6">
 		{#if page.parentPage}
 			<BackLink parentPage={page.parentPage} />
 		{/if}
@@ -37,9 +37,9 @@
 		<h1 class="text-h1 text-blue">{page.title}</h1>
 
 		<TermTags {terms} label="Catégories" />
-	</header>
+	</div>
 
-	<div class="space-y-10">
+	<div class="px-base space-y-10">
 		{#each sections as section (section.label)}
 			<section class="grid lg:grid-cols-3 gap-4 lg:gap-8">
 				<h2 class="text-h4 text-blue">{section.label}</h2>
@@ -101,7 +101,7 @@
 		{/snippet}
 	</CardSmall2Cols>
 
-	<section aria-labelledby="job-offer-apply" class="space-y-10">
+	<section aria-labelledby="job-offer-apply" class="px-base space-y-10">
 		<h2 id="job-offer-apply" class="text-h3 text-center">
 			<span class="inline-block bg-blue text-white rounded-2xl px-8 pt-2 pb-3.5"
 				>Comment postuler ?</span
