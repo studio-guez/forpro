@@ -68,7 +68,7 @@
 						</p>
 					{/if}
 					<div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
-						{#each event.terms as term (term.slug)}
+						{#each event.programs as term (term.slug)}
 							<span
 								class="text-caption rounded-full px-2.5 py-0.5 leading-tight"
 								style="background-color: {termColor(term)}">{term.title}</span
