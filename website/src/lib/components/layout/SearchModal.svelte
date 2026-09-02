@@ -5,7 +5,7 @@
 	import IconClose from '$lib/components/svg/IconClose.svelte';
 	import IconSpinner from '$lib/components/svg/IconSpinner.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
-	import { pauseSmoothScroll, resumeSmoothScroll } from '$lib/utils/smoothScroll';
+	import { lockPageScroll } from '$lib/utils/smoothScroll';
 	import type { SearchGroup, SearchResponse, SearchResult } from '$lib/interfaces/search';
 
 	interface Props {
@@ -81,11 +81,14 @@
 	};
 
 	$effect(() => {
+		if (!open) return;
+		return lockPageScroll();
+	});
+
+	$effect(() => {
 		if (!dialog) return;
 		if (open && !dialog.open) {
 			dialog.showModal();
-			document.body.style.overflow = 'hidden';
-			pauseSmoothScroll();
 			tick().then(() => {
 				input?.focus();
 				input?.setSelectionRange(value.length, value.length);
@@ -93,11 +96,6 @@
 		} else if (!open && dialog.open) {
 			dialog.close();
 		}
-	});
-
-	$effect(() => () => {
-		document.body.style.overflow = '';
-		resumeSmoothScroll();
 	});
 
 	$effect(() => {
@@ -238,8 +236,6 @@
 	onclose={() => {
 		open = false;
 		group = 'all';
-		document.body.style.overflow = '';
-		resumeSmoothScroll();
 	}}
 	onclick={(event) => {
 		if (event.target === dialog) close();

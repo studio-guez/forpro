@@ -16,7 +16,8 @@
 
 <nav
 	id="burger-menu-desktop"
-	class="hidden lg:grid max-w-360 mx-auto px-9 py-12 grid-cols-5 items-start gap-x-8 gap-y-10"
+	data-lenis-prevent
+	class="hidden lg:grid w-full max-w-360 mx-auto min-h-0 overflow-y-auto overscroll-contain px-9 py-12 grid-cols-5 items-start gap-x-8 gap-y-10"
 	transition:slide={{ duration: 300 }}
 	aria-label="Menu secondaire"
 >

@@ -13,9 +13,7 @@ export function initSmoothScroll(): () => void {
 	lenis?.destroy();
 	lenis = new Lenis({
 		autoRaf: true,
-		// CMS rich text can link to an in-page `#id`: let Lenis animate those too
 		anchors: { offset: -HEADER_OFFSET },
-		// nested scrollers (search results, carousels) keep their native scroll
 		allowNestedScroll: true
 	});
 
@@ -25,12 +23,22 @@ export function initSmoothScroll(): () => void {
 	};
 }
 
-/** Pauses the scroller while something else owns the page scroll (e.g. an open modal). */
-export function pauseSmoothScroll(): void {
-	lenis?.stop();
-}
+let locks = 0;
 
-/** Resumes the scroller after a `pauseSmoothScroll()`. */
-export function resumeSmoothScroll(): void {
-	lenis?.start();
+export function lockPageScroll(): () => void {
+	if (++locks === 1) {
+		document.body.style.overflow = 'hidden';
+		lenis?.stop();
+	}
+
+	let released = false;
+
+	return () => {
+		if (released) return;
+		released = true;
+		if (--locks === 0) {
+			document.body.style.overflow = '';
+			lenis?.start();
+		}
+	};
 }

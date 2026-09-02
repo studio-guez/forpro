@@ -28,7 +28,8 @@
 
 <nav
 	id="burger-menu-mobile"
-	class="lg:hidden max-w-360 mx-auto px-5 pt-4 pb-10"
+	data-lenis-prevent
+	class="lg:hidden w-full max-w-360 mx-auto min-h-0 overflow-y-auto overscroll-contain px-5 pt-4 pb-10"
 	transition:slide={{ duration: 300 }}
 	aria-label="Menu secondaire"
 >
