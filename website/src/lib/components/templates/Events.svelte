@@ -185,6 +185,7 @@
 	<FilterTags
 		terms={publicTerms}
 		bind:selected={selectedPublics}
+		{color}
 		legend="Événements concernant :"
 		class="mt-12 lg:mt-18"
 	/>

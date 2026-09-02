@@ -70,6 +70,7 @@
 	<FilterTags
 		terms={sectorTerms}
 		bind:selected={selectedSectors}
+		{color}
 		legend="Secteurs :"
 		class="mt-12 lg:mt-18"
 	/>

@@ -88,6 +88,7 @@
 	<FilterTags
 		terms={categoryTerms}
 		bind:selected={selectedCategories}
+		{color}
 		legend="Missions concernant :"
 	/>
 

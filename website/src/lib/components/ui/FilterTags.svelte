@@ -9,6 +9,7 @@
 		legend: string;
 		subLegend?: string;
 		resetLabel?: string;
+		color?: string;
 		class?: string;
 	}
 
@@ -18,6 +19,7 @@
 		legend,
 		subLegend = 'Préciser :',
 		resetLabel = 'Réinitialiser les filtres',
+		color = 'var(--color-blue)',
 		class: className = ''
 	}: Props = $props();
 
@@ -65,7 +67,8 @@
 			{/each}
 			<button
 				type="button"
-				class="text-teal p-1 -mr-8.75 {selected.length > 0 ? '' : 'invisible'}"
+				style:--reset-color={color}
+				class="text-(--reset-color) p-1 -mr-8.75 {selected.length > 0 ? '' : 'invisible'}"
 				aria-label={resetLabel}
 				inert={selected.length === 0}
 				onclick={() => (selected = [])}
