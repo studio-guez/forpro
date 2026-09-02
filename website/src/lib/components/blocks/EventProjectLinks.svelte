@@ -25,7 +25,7 @@
 						class="text-body-2 inline-flex items-center gap-2 text-blue underline-offset-4 hover:underline"
 					>
 						{link.title || link.url}
-						<IconArrow width={20} height={20} class="shrink-0" />
+						<IconArrow class="shrink-0 w-5 h-5" />
 					</a>
 				</li>
 			{/each}

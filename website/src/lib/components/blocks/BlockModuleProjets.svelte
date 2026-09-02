@@ -4,6 +4,7 @@
 	import Carousel from '$lib/components/ui/Carousel.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import ProjectCard from '$lib/components/ui/ProjectCard.svelte';
+	import { CARD, cell, toSizes } from '$lib/utils/imgSizes';
 	import ShapeProjets1 from '$lib/components/svg/ShapeProjets1.svelte';
 	import ShapeProjets2 from '$lib/components/svg/ShapeProjets2.svelte';
 
@@ -17,6 +18,8 @@
 	const colors = { main: 'var(--color-orange)', deco: 'var(--color-orange-light)' };
 
 	const filled = $derived(content.variant !== 'inverted');
+
+	const cardSizes = toSizes(cell(CARD, { 0: 1.25, 768: 2 }, 1.5));
 </script>
 
 {#if content.projects.length > 0}
@@ -41,13 +44,13 @@
 		class="mt-12"
 	>
 		{#snippet item(project)}
-			<ProjectCard {project} />
+			<ProjectCard {project} sizes={cardSizes} />
 		{/snippet}
 	</Carousel>
 
 	{#if content.cta}
 		<div class="flex justify-center md:justify-end mt-8">
-			<CtaLink cta={content.cta} color={colors.main} inverted={filled} />
+			<CtaLink cta={content.cta} color={colors.main} inverted={filled} size="lg" />
 		</div>
 	{/if}
 </Card>

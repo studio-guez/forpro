@@ -50,6 +50,40 @@ export interface Header {
 	readonly socialLinks: SocialLink[];
 }
 
+export interface FooterAddress {
+	readonly name: string | null;
+	readonly street: string | null;
+	readonly postalCode: string | null;
+	readonly locality: string | null;
+	readonly region: string | null;
+	readonly country: string | null;
+	readonly mapUrl: string | null;
+}
+
+export interface Footer {
+	/** The same file as `Header.logo`; the CMS serialises it into both payloads. */
+	readonly logo: CmsImage;
+	readonly logoEntrepriseFormatrice: CmsImage | null;
+	readonly address: FooterAddress;
+	readonly email: string | null;
+	/** Human-readable phone number, as typed in the Panel. */
+	readonly phone: string | null;
+	/** The same number normalised into a `tel:` URI by the CMS. */
+	readonly phoneUrl: string | null;
+	readonly socialsTitle: string | null;
+	readonly socialLinks: SocialLink[];
+	readonly menuTitle: string | null;
+	readonly menuLinks: MenuLink[];
+	readonly newsletterTitle: string | null;
+}
+
+export interface BannerAnnouncement {
+	readonly title: string;
+	readonly description: string | null;
+	readonly url: string | null;
+	readonly target: '_blank' | null;
+}
+
 export interface FaviconPng {
 	readonly size: number;
 	readonly url: string;
@@ -67,5 +101,7 @@ export interface Favicon {
 
 export interface Global {
 	readonly header: Header;
+	readonly footer: Footer;
+	readonly banner: BannerAnnouncement[];
 	readonly favicon: Favicon | null;
 }

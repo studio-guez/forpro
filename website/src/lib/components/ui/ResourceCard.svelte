@@ -5,9 +5,11 @@
 	interface Props {
 		resource: ResourceCard;
 		headingTag?: string;
+		/** Rendered slot width — the card is laid out by its parent, which owns the geometry. */
+		sizes?: string;
 	}
 
-	let { resource, headingTag = 'h3' }: Props = $props();
+	let { resource, headingTag = 'h3', sizes }: Props = $props();
 </script>
 
 <article>
@@ -16,7 +18,7 @@
 			<Img
 				image={resource.image}
 				alt={resource.image.alt ?? resource.title}
-				sizes="(min-width: 768px) 33vw, 80vw"
+				{sizes}
 				class="w-full h-full object-cover"
 			/>
 		{/if}

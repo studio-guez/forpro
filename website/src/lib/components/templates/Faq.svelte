@@ -136,35 +136,35 @@
 		bind:value={search}
 		label="Rechercher une question"
 		placeholder="Rechercher une question..."
-		class="mt-12 md:mt-18"
+		class="mt-12 lg:mt-18"
 	/>
 
 	<FilterTags
 		terms={sectorTerms}
 		bind:selected={selectedSectors}
 		legend="Questions concernant :"
-		class="mt-12 md:mt-18"
+		class="mt-12 lg:mt-18"
 	/>
 
 	<FilterTags
 		terms={programTerms}
 		bind:selected={selectedPrograms}
 		legend="Programmes :"
-		class="mt-9 md:mt-12"
+		class="mt-9 lg:mt-12"
 	/>
 
 	<FilterTags
 		terms={publicTerms}
 		bind:selected={selectedPublics}
 		legend="Publics :"
-		class="mt-9 md:mt-12"
+		class="mt-9 lg:mt-12"
 	/>
 </section>
 
 <section aria-label="Questions et réponses">
 	<div aria-live="polite">
 		{#if hasSearch}
-			<div class="py-6 md:py-8">
+			<div class="py-6 lg:py-8">
 				<ResultsHeader
 					query={search.trim()}
 					count={searchResults.length}
@@ -189,7 +189,7 @@
 		{:else}
 			{#each filteredSections as section (section.index)}
 				{@const open = isSectionOpen(section.index)}
-				<div class="border-t border-black py-6 md:py-8">
+				<div class="border-t border-black py-6 lg:py-8">
 					<h2 class="text-h2 text-teal">
 						<button
 							type="button"

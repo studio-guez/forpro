@@ -3,6 +3,7 @@
 	import Card from '$lib/components/ui/Card.svelte';
 	import Carousel from '$lib/components/ui/Carousel.svelte';
 	import ResourceCard from '$lib/components/ui/ResourceCard.svelte';
+	import { CARD, cell, toSizes } from '$lib/utils/imgSizes';
 	import ShapeAgenda1 from '$lib/components/svg/ShapeAgenda1.svelte';
 	import ShapeAgenda2 from '$lib/components/svg/ShapeAgenda2.svelte';
 
@@ -16,6 +17,8 @@
 	const colors = { main: 'var(--color-purple-light)', deco: 'var(--color-purple-pale)' };
 
 	const filled = $derived(content.variant !== 'inverted');
+
+	const cardSizes = toSizes(cell(CARD, { 0: 1.25, 768: 3 }, 1.5));
 </script>
 
 {#if content.resources.length > 0}
@@ -39,7 +42,7 @@
 			class="mt-12"
 		>
 			{#snippet item(resource)}
-				<ResourceCard {resource} />
+				<ResourceCard {resource} sizes={cardSizes} />
 			{/snippet}
 		</Carousel>
 	</Card>

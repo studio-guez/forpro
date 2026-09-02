@@ -2,6 +2,7 @@
 	import { page as appPage } from '$app/state';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import EventCard from '$lib/components/ui/EventCard.svelte';
+	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import EventListItem from '$lib/components/ui/EventListItem.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
@@ -22,6 +23,9 @@
 	import type { EventsPage } from '$lib/interfaces/event';
 
 	let { page }: { page: EventsPage } = $props();
+
+	// Card grid: full-width section, 1 / sm:2 / lg:3 columns with a 1.5rem gutter.
+	const cardSizes = toSizes(cell(PAGE, { 0: 1, 640: 2, 1024: 3 }, 1.5));
 
 	const color = 'var(--color-blue)';
 	const noResultsText = 'Aucun événement ne correspond à votre recherche.';
@@ -91,7 +95,7 @@
 	});
 </script>
 
-<section aria-labelledby="events-title" class="py-12 md:py-16">
+<section aria-labelledby="events-title" class="py-12 lg:py-16">
 	<h1 id="events-title" class="text-h1 text-blue text-center">{page.title}</h1>
 
 	<SearchInput
@@ -99,25 +103,25 @@
 		label="Rechercher un événement"
 		placeholder="Rechercher un événement..."
 		color="blue"
-		class="mt-12 md:mt-18"
+		class="mt-12 lg:mt-18"
 	/>
 
 	<FilterTags
 		terms={programTerms}
 		bind:selected={selectedPrograms}
 		legend="Événements concernant :"
-		class="mt-12 md:mt-18"
+		class="mt-12 lg:mt-18"
 	/>
 
 	<FilterTags
 		terms={publicTerms}
 		bind:selected={selectedPublics}
 		legend="Publics :"
-		class="mt-9 md:mt-12"
+		class="mt-9 lg:mt-12"
 	/>
 </section>
 
-<section aria-label="Événements à venir" class="pb-12 md:pb-16">
+<section aria-label="Événements à venir" class="pb-12 lg:pb-16">
 	<div aria-live="polite">
 		{#if hasSearch}
 			<ResultsHeader
@@ -143,7 +147,7 @@
 			<ul class="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 				{#each upcoming as event (event.url)}
 					<li class="aspect-3/4">
-						<EventCard {event} {color} headingTag="h2" />
+						<EventCard {event} {color} headingTag="h2" sizes={cardSizes} />
 					</li>
 				{/each}
 			</ul>
@@ -152,7 +156,7 @@
 </section>
 
 {#if past.length > 0}
-	<section aria-labelledby="past-events-title" class="pb-12 md:pb-16">
+	<section aria-labelledby="past-events-title" class="pb-12 lg:pb-16">
 		<h2 id="past-events-title" class="text-h2 text-center">
 			<span class="inline-block bg-blue text-white rounded-full px-8 py-3">
 				Les événements passés :
@@ -165,7 +169,7 @@
 			label="Mois"
 			allLabel="Tous les mois"
 			{color}
-			class="mt-12 md:mt-18"
+			class="mt-12 lg:mt-18"
 		/>
 
 		<div aria-live="polite" class="mt-6">

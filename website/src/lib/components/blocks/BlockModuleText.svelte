@@ -24,16 +24,16 @@
 	titleColor={colors.title}
 >
 	{#if content.content}
-		<div class="prose text-body-2 text-center mx-auto max-w-3xl">
+		<div class="prose text-body-2 text-center mx-auto max-w-3xl mt-6 lg:mt-12">
 			{@html content.content}
 		</div>
 	{/if}
 
 	{#if content.ctas?.length}
-		<div class="flex flex-wrap gap-4 justify-center md:justify-end mt-8">
+		<div class="flex flex-wrap gap-4 justify-center md:justify-end mt-6 lg:mt-12">
 			<!-- Keyed by index: several ctas can share the same url. -->
 			{#each content.ctas as cta, i (i)}
-				<CtaLink {cta} color={colors.accent} inverted={colors.onDark} />
+				<CtaLink {cta} color={colors.accent} inverted={colors.onDark} size="lg" />
 			{/each}
 		</div>
 	{/if}

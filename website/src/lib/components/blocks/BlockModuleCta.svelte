@@ -29,10 +29,10 @@
 	backgroundImage={hasBackgroundImage ? content.backgroundImage : null}
 >
 	{#if content.links.length > 0}
-		<ul class="flex flex-wrap gap-4 md:justify-end shrink-0">
+		<ul class="flex flex-wrap gap-3 justify-end shrink-0 max-w-full">
 			{#each content.links as link (link.url + link.label)}
 				<li>
-					<CtaLink cta={link} color="var(--color-blue)" inverted={onDark} />
+					<CtaLink cta={link} color="var(--color-blue)" inverted={onDark} size="lg" />
 				</li>
 			{/each}
 		</ul>

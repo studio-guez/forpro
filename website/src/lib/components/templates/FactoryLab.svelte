@@ -3,6 +3,7 @@
 	import PageHeader from '$lib/components/blocks/PageHeader.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
+	import { CARD, cell, toSizes } from '$lib/utils/imgSizes';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
 	import { getThemeColors } from '$lib/utils/themeColors';
 	import type { CompanyBadge, FactoryLabPage } from '$lib/interfaces/factoryLab';
@@ -11,6 +12,8 @@
 
 	const companiesModule = $derived(page.companiesModule);
 	const colors = $derived(getThemeColors(page.theme, companiesModule.variant));
+
+	const companySizes = toSizes(cell(CARD, { 0: 1, 1024: 2 }, 1.5));
 
 	const badgeClass =
 		'text-caption inline-flex items-center gap-1.5 rounded-full px-3 py-1 leading-tight';
@@ -27,7 +30,7 @@
 
 {#snippet badgeContent(badge: CompanyBadge)}
 	{#if badge.url}
-		<IconLink width={16} height={16} class="shrink-0" />
+		<IconLink class="shrink-0 w-4 h-4" />
 	{/if}
 	{badge.label}
 {/snippet}
@@ -71,7 +74,7 @@
 		titleBackground={colors.titleBackground}
 		titleColor={colors.title}
 	>
-		<ul class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-16 mt-12">
+		<ul class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-16 mt-12">
 			{#each companiesModule.companies as company, companyIndex (companyIndex)}
 				<li>
 					<div class="rounded-2xl overflow-hidden aspect-16/10 bg-grey-light">
@@ -79,7 +82,7 @@
 							<Img
 								image={company.image}
 								alt={company.image.alt ?? company.title}
-								sizes="(min-width: 768px) 50vw, 100vw"
+								sizes={companySizes}
 								class="w-full h-full object-cover"
 							/>
 						{/if}
@@ -93,7 +96,7 @@
 								rel="noopener noreferrer"
 								class="flex items-center gap-2 hover:opacity-50 transition-opacity"
 							>
-								<IconLink width={24} height={24} class="shrink-0" />
+								<IconLink class="shrink-0 w-6 h-6" />
 								{company.title}
 							</a>
 						{:else}

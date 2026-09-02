@@ -24,7 +24,7 @@
 
 <article
 	style:--row-color={color}
-	class="border-t border-(--row-color) py-4 md:py-6 flex flex-wrap items-center justify-between gap-4"
+	class="border-t border-(--row-color) py-4 lg:py-6 flex flex-wrap items-center justify-between gap-4"
 >
 	<div class="min-w-0">
 		<svelte:element this={headingTag} class="text-h4 text-(--row-color)">
@@ -48,6 +48,6 @@
 		class="text-label group shrink-0 flex items-center gap-2 rounded-full border-2 border-(--row-color) text-(--row-color) px-4 py-1.5 leading-tight transition-colors hover:bg-(--row-color) hover:text-white"
 	>
 		<span>{detailsLabel}<span class="sr-only"> : {event.title}</span></span>
-		<IconArrow width={20} height={20} class="transition-transform group-hover:translate-x-1" />
+		<IconArrow class="transition-transform group-hover:translate-x-1 w-5 h-5" />
 	</a>
 </article>

@@ -31,10 +31,6 @@ return [
         'resize' => [16, 32, 48, 180, 192, 512],
     ],
     'tobimori.seo' => [
-        // Site-config overrides must sit under this exact literal key: Kirby stores
-        // plugin options at `$plugin->prefix()` ("tobimori.seo", the slash->dot'd
-        // plugin name), so a nested `'tobimori' => ['seo' => [...]]` array lives at
-        // a different, disconnected path and is silently ignored by option().
         'canonicalBase' => $frontendUrl,
         'lang' => 'fr_CH',
         'robots' => [
@@ -103,6 +99,7 @@ return [
                 $site = site();
 
                 $logoFile = $site->logo()->toFile();
+                $logoEntrepriseFormatriceFile = $site->logoEntrepriseFormatrice()->toFile();
 
                 $mainMenu = $site->mainMenu()->toStructure()->map(fn($item) => [
                     'label'  => Utils::resolvePageOrUrlLabel($item),
@@ -131,6 +128,21 @@ return [
                     ];
                 }
 
+                $bannerAnnouncements = [];
+                foreach ($site->bannerAnnouncements()->toStructure() as $item) {
+                    $title = $item->title();
+                    if ($title->isEmpty()) {
+                        continue;
+                    }
+                    $description = $item->description();
+                    $bannerAnnouncements[] = [
+                        'title'       => $title->value(),
+                        'description' => $description->isEmpty() ? null : $description->value(),
+                        'url'         => Utils::resolvePageOrUrlItem($item),
+                        'target'      => Utils::resolvePageOrUrlTarget($item),
+                    ];
+                }
+
                 $externalLinksTitle = $site->externalLinksTitle();
 
                 $externalLinks = $site->externalLinks()->toStructure()->map(fn($item) => [
@@ -138,16 +150,32 @@ return [
                     'url'   => $item->url()->value(),
                 ])->values();
 
+                $knownPlatforms = ['facebook', 'instagram', 'linkedin', 'youtube', 'tiktok', 'snapchat', 'x'];
+
                 $socialLinks = [];
-                foreach (['facebook', 'instagram', 'linkedin', 'youtube', 'tiktok', 'snapchat', 'x'] as $platform) {
-                    $url = $site->{$platform}();
-                    if ($url->isNotEmpty()) {
-                        $socialLinks[] = [
-                            'platform' => $platform,
-                            'url'      => $url->value(),
-                        ];
+                foreach ($site->socialLinks()->toStructure() as $item) {
+                    $platform = $item->platform()->value();
+                    $url      = $item->url();
+
+                    if (in_array($platform, $knownPlatforms, true) === false || $url->isEmpty()) {
+                        continue;
                     }
+
+                    $socialLinks[] = [
+                        'platform' => $platform,
+                        'url'      => $url->value(),
+                    ];
                 }
+
+                $footerMenuLinks = $site->footerMenuLinks()->toStructure()->map(fn($item) => [
+                    'label'  => Utils::resolvePageOrUrlLabel($item),
+                    'url'    => Utils::resolvePageOrUrlItem($item),
+                    'target' => Utils::resolvePageOrUrlTarget($item),
+                ])->values();
+
+                // `null` rather than `""` for every optional footer string, so the frontend
+                // can drop the whole line/column instead of rendering an empty node.
+                $orNull = fn(\Kirby\Content\Field $field) => $field->isEmpty() ? null : $field->value();
 
                 return \Kirby\Http\Response::json([
                     'header' => [
@@ -159,6 +187,31 @@ return [
                         'externalLinks' => $externalLinks,
                         'socialLinks'   => $socialLinks,
                     ],
+                    'footer' => [
+                        // Same file as the header logo: it is managed once, in the Website tab.
+                        'logo'                     => Utils::getJsonEncodeImageData($logoFile),
+                        'logoEntrepriseFormatrice' => Utils::getJsonEncodeImageDataOrNull($logoEntrepriseFormatriceFile),
+                        'address' => [
+                            'name'       => $orNull($site->addressName()),
+                            'street'     => $orNull($site->addressStreet()),
+                            'postalCode' => $orNull($site->addressPostalCode()),
+                            'locality'   => $orNull($site->addressLocality()),
+                            'region'     => $orNull($site->addressRegion()),
+                            'country'    => $orNull($site->addressCountry()),
+                            'mapUrl'     => $orNull($site->addressMapUrl()),
+                        ],
+                        'email'           => $orNull($site->contactEmail()),
+                        'phone'           => $orNull($site->contactPhone()),
+                        'phoneUrl'        => Utils::telHref($site->contactPhone()),
+                        'socialsTitle'    => $orNull($site->footerSocialsTitle()),
+                        // Same list as the burger menu's 5th column: the links themselves
+                        // are managed once, in the Social networks tab.
+                        'socialLinks'     => $socialLinks,
+                        'menuTitle'       => $orNull($site->footerMenuTitle()),
+                        'menuLinks'       => $footerMenuLinks,
+                        'newsletterTitle' => $orNull($site->footerNewsletterTitle()),
+                    ],
+                    'banner'  => $bannerAnnouncements,
                     'favicon' => Utils::getFaviconData($site),
                 ]);
             },

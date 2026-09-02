@@ -26,9 +26,9 @@
 					{#if member.role}
 						<p class="text-label flex items-center gap-2 mt-1">
 							{#if member.status === 'apprenti'}
-								<IconApprentice width={18} height={18} class="shrink-0" />
+								<IconApprentice class="shrink-0 w-4.5 h-4.5" />
 							{:else}
-								<IconEmployee width={18} height={18} class="shrink-0" />
+								<IconEmployee class="shrink-0 w-4.5 h-4.5" />
 							{/if}
 							{member.role}
 						</p>
@@ -41,7 +41,7 @@
 							rel="noopener noreferrer"
 							class="text-label flex items-center gap-2 mt-1 underline hover:opacity-50 transition-opacity"
 						>
-							<IconLink width={18} height={18} class="shrink-0" />
+							<IconLink class="shrink-0 w-4.5 h-4.5" />
 							LinkedIn
 						</a>
 					{/if}

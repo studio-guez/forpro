@@ -16,8 +16,8 @@
 	let { cta, color = 'var(--color-blue)', inverted = false, size = 'md', class: className = '' }: Props = $props();
 
 	const sizeClasses = {
-		md: 'text-lg gap-2.5 px-5.5 py-3.5 border-3',
-		lg: 'text-2xl gap-3 px-7.5 py-4.5 border-4',
+		md: 'text-base lg:text-lg gap-2 lg:gap-2.5 px-2.25 lg:px-5.5 h-10.5 lg:h-12.5 border-3',
+		lg: 'text-base lg:text-2xl gap-2 lg:gap-3 px-2.25 lg:px-7.5 h-10.5 lg:h-17 border-3 lg:border-4',
 	};
 
 	const colorClasses = $derived(
@@ -26,14 +26,14 @@
 			: 'text-(--color-cta) border-(--color-cta) hover:bg-(--color-cta) hover:text-white'
 	);
 
-	const iconSize = { md: { width: 27, height: 28 }, lg: { width: 37, height: 38 } };
+	const iconSizeClasses = { md: 'w-6 lg:w-7 h-6 lg:h-7', lg: 'w-6 lg:w-9.5 h-6 lg:h-9.5' };
 </script>
 
-<a href={cta.url} target={cta.target ?? undefined} rel={cta.target === '_blank' ? 'noopener noreferrer' : undefined} style:--color-cta={color} class="font-bold leading-none inline-flex items-center rounded-full bg-transparent {colorClasses} transition-colors {sizeClasses[size]} {className}">
-	{cta.label}
-	{#if cta.icon === 'arrow'}<IconArrow width={iconSize[size].width} height={iconSize[size].height} />
-	{:else if cta.icon === 'email'}<IconEmail width={iconSize[size].width} height={iconSize[size].height} />
-	{:else if cta.icon === 'phone'}<IconPhone width={iconSize[size].width} height={iconSize[size].height} />
-	{:else if cta.icon === 'plus'}<IconPlus width={iconSize[size].width} height={iconSize[size].height} />
+<a href={cta.url} target={cta.target ?? undefined} rel={cta.target === '_blank' ? 'noopener noreferrer' : undefined} style:--color-cta={color} class="font-bold leading-none inline-flex items-center rounded-full bg-transparent backdrop-blur-xs {colorClasses} transition-colors {sizeClasses[size]} {className}">
+	<span class="text-trim">{cta.label}</span>
+	{#if cta.icon === 'arrow'}<IconArrow class={iconSizeClasses[size]} />
+	{:else if cta.icon === 'email'}<IconEmail class={iconSizeClasses[size]} />
+	{:else if cta.icon === 'phone'}<IconPhone class={iconSizeClasses[size]} />
+	{:else if cta.icon === 'plus'}<IconPlus class={iconSizeClasses[size]} />
 	{/if}
 </a>

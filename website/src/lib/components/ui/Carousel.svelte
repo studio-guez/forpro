@@ -7,7 +7,7 @@
 		/** Rendered for each slide. */
 		item: Snippet<[T, number]>;
 		label: string;
-		/** Tailwind classes sizing a single slide, e.g. `w-3/4 md:w-1/3`. */
+		/** Tailwind classes sizing a single slide, e.g. `w-3/4 lg:w-1/3`. */
 		itemClass?: string;
 		/** Accent colour of the controls. */
 		color?: string;
@@ -34,7 +34,10 @@
 	const goTo = (i: number) => {
 		const target = slides()[Math.min(Math.max(i, 0), items.length - 1)];
 		if (!target || !track) return;
-		track.scrollTo({ left: target.offsetLeft - slides()[0].offsetLeft, behavior: 'smooth' });
+		const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+			? 'auto'
+			: 'smooth';
+		track.scrollTo({ left: target.offsetLeft - slides()[0].offsetLeft, behavior });
 	};
 
 	// The scroll position is the source of truth: it also covers swipes and keyboard scrolling.
@@ -67,13 +70,9 @@
 		onclick={() => goTo(direction === 'prev' ? index - 1 : index + 1)}
 		disabled={direction === 'prev' ? index === 0 : index >= items.length - 1}
 		aria-label={direction === 'prev' ? 'Précédent' : 'Suivant'}
-		class="w-11 h-11 md:w-13 md:h-13 shrink-0 rounded-full flex items-center justify-center transition disabled:opacity-40 {circleClass} {extraClass}"
+		class="w-11 h-11 lg:w-13 lg:h-13 shrink-0 rounded-full flex items-center justify-center transition disabled:opacity-40 {circleClass} {extraClass}"
 	>
-		<IconChevron
-			width={28}
-			height={28}
-			class={direction === 'prev' ? 'rotate-90' : '-rotate-90'}
-		/>
+		<IconChevron class="w-7 h-7 {direction === 'prev' ? 'rotate-90' : '-rotate-90'}" />
 	</button>
 {/snippet}
 
@@ -83,7 +82,7 @@
 			bind:this={track}
 			onscroll={onScroll}
 			aria-label={label}
-			class="flex gap-4 md:gap-6 px-card scroll-px-card overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+			class="flex gap-4 lg:gap-6 px-card scroll-px-card overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
 		>
 			{#each items as entry, i (i)}
 				<li class="snap-start shrink-0 {itemClass}">
@@ -92,12 +91,12 @@
 			{/each}
 		</ul>
 
-		{@render arrow('prev', 'hidden md:flex absolute left-8 top-1/2 -translate-y-1/2')}
-		{@render arrow('next', 'hidden md:flex absolute right-8 top-1/2 -translate-y-1/2')}
+		{@render arrow('prev', 'hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2')}
+		{@render arrow('next', 'hidden lg:flex absolute right-8 top-1/2 -translate-y-1/2')}
 	</div>
 
-	<div class="mt-6 flex items-center justify-between md:justify-center gap-4">
-		{@render arrow('prev', 'md:hidden')}
+	<div class="mt-6 flex items-center justify-between lg:justify-center gap-4">
+		{@render arrow('prev', 'lg:hidden')}
 
 		<ol class="flex items-center gap-2.5">
 			{#each items as _, i (i)}
@@ -114,6 +113,6 @@
 			{/each}
 		</ol>
 
-		{@render arrow('next', 'md:hidden')}
+		{@render arrow('next', 'lg:hidden')}
 	</div>
 </div>

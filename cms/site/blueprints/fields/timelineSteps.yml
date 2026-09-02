@@ -12,8 +12,13 @@ fields:
       fr: Titre
     type: text
     required: true
+    maxlength: 40
   shortDesc:
     label:
       en: Short description
       fr: Description courte
-    extends: fields/writer
+    # Plain text, no formatting at all: the text sits in a fixed-size shape.
+    type: textarea
+    buttons: false
+    size: small
+    maxlength: 70
