@@ -13,14 +13,15 @@
 	// WCAG 2.2.2: the banner scrolls on its own for longer than 5s, so it needs a control that
 	// is not hover-only — hovering is unavailable to keyboard and touch users.
 	let paused = $state(false);
-
-	let bannerHeight = $state(0);
+	
+	let bannerBox = $state<ResizeObserverSize[]>();
+	const bannerHeight = $derived(bannerBox?.[0]?.blockSize ?? 0);
 	let copyWidth = $state(0);
 	let viewportWidth = $state(0);
 
 	// The banner is fixed, so the page has to reserve its height or it would cover the footer.
 	$effect(() => {
-		document.body.style.paddingBottom = `${bannerHeight}px`;
+		document.body.style.paddingBottom = `${Math.floor(bannerHeight)}px`;
 		return () => {
 			document.body.style.paddingBottom = '';
 		};
@@ -78,7 +79,7 @@
 {/snippet}
 
 <aside
-	bind:clientHeight={bannerHeight}
+	bind:borderBoxSize={bannerBox}
 	aria-label="Annonces"
 	class="fixed bottom-0 inset-x-0 z-20 bg-green text-black overflow-hidden group"
 >
