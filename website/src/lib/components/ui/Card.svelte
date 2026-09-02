@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Component, Snippet } from 'svelte';
+	import CardTitle from '$lib/components/ui/CardTitle.svelte';
 
 	interface Props {
 		children: Snippet;
@@ -51,12 +52,6 @@
 			.join('; ')
 	);
 
-	const titleStyle = $derived(
-		[titleBackground && `background-color: ${titleBackground}`, titleColor && `color: ${titleColor}`]
-			.filter(Boolean)
-			.join('; ')
-	);
-
 	const uid = $props.id();
 	const titleId = `card-title-${uid}`;
 </script>
@@ -86,19 +81,15 @@
 
 		<div class="relative z-1">
 			<div class="text-center relative z-1">
-				{#if hideTitle}
-					<h2 id={titleId} class="sr-only">{title}</h2>
-				{:else if titleVariant === 'plain'}
-					<h2 id={titleId} class="text-h2 mb-6 lg:mb-12" style={titleStyle}>{title}</h2>
-				{:else}
-					<h2
-						id={titleId}
-						class="inline-block text-h3 pt-2 pb-3.5 px-8 rounded-2xl"
-						style={titleStyle}
-					>
-						{title}
-					</h2>
-				{/if}
+				<CardTitle
+					id={titleId}
+					{title}
+					{hideTitle}
+					variant={titleVariant}
+					class={titleVariant === 'plain' ? 'mb-6 lg:mb-12' : ''}
+					background={titleBackground}
+					color={titleColor}
+				/>
 				{#if subtitle}
 					<p class="text-h4 mt-6 lg:mt-9">{subtitle}</p>
 				{/if}
