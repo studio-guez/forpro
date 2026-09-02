@@ -32,5 +32,8 @@
 		"typescript-eslint": "^8.65.0",
 		"vite": "^7.3.6"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"lenis": "^1.3.26"
+	}
 }
