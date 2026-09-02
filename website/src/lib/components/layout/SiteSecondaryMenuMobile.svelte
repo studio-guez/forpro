@@ -28,69 +28,73 @@
 
 <nav
 	id="burger-menu-mobile"
-	data-lenis-prevent
-	class="lg:hidden w-full max-w-360 mx-auto min-h-0 overflow-y-auto overscroll-contain px-5 pt-4 pb-10"
+	class="lg:hidden w-full max-w-360 mx-auto flex flex-col min-h-0 px-5 pt-4 pb-10"
 	transition:slide={{ duration: 300 }}
 	aria-label="Menu secondaire"
 >
-	{#each header.secondaryMenu as column, i (i)}
-		{@const expanded = !column.title || openColumns.includes(i)}
-		<div class={i === 0 ? 'border-t-2 border-blue' : ''}>
-			{#if column.title}
-				<button
-					type="button"
-					class="w-full flex items-center justify-between gap-x-4 py-4 text-left text-2xl font-bold text-blue"
-					aria-expanded={openColumns.includes(i)}
-					aria-controls="burger-menu-column-{i}"
-					onclick={() => toggleColumn(i)}
-				>
-					<span class="text-trim">{column.title}</span>
-					{#if openColumns.includes(i)}
-						<IconClose class="shrink-0 w-7 h-7" />
-					{:else}
-						<IconPlus class="shrink-0 w-7 h-7" />
-					{/if}
-				</button>
-			{/if}
-			{#if expanded}
-				<div
-					id="burger-menu-column-{i}"
-					class="flex flex-col gap-y-6 pb-6"
-					transition:slide={{ duration: 300 }}
-				>
-					{#each column.groups as group, j (j)}
-						{@const hasLevel2 = group.links.some((link) => link.level === 2)}
-						<div>
-							{#if group.title}
-								<p class="text-label leading-none text-blue mb-0.75">{group.title}</p>
-							{/if}
-							<ul class="flex flex-col">
-								{#each group.links as link (link)}
-									<li class="leading-none {hasLevel2 && link.level !== 2 ? 'mb-0.75' : ''} {link.level === 2 ? 'pl-8' : ''}">
-										<a
-											href={link.url}
-											onclick={onNavigate}
-											target={link.target ?? undefined}
-											rel={link.target === '_blank' ? 'noopener noreferrer' : undefined}
-											class="text-body-2 leading-none {link.level === 2
-												? ''
-												: hasLevel2
-													? 'font-bold'
-													: ''} hover:text-blue transition-colors"
-										>
-											{link.label}
-										</a>
-									</li>
-								{/each}
-							</ul>
-						</div>
-					{/each}
-				</div>
-			{/if}
-		</div>
-	{/each}
+	<div
+		data-lenis-prevent
+		class="min-h-0 overflow-y-auto overscroll-contain border-t-2 border-blue"
+	>
+		{#each header.secondaryMenu as column, i (i)}
+			{@const expanded = !column.title || openColumns.includes(i)}
+			<div>
+				{#if column.title}
+					<button
+						type="button"
+						class="w-full flex items-center justify-between gap-x-4 py-4 text-left text-2xl font-bold text-blue"
+						aria-expanded={openColumns.includes(i)}
+						aria-controls="burger-menu-column-{i}"
+						onclick={() => toggleColumn(i)}
+					>
+						<span class="text-trim">{column.title}</span>
+						{#if openColumns.includes(i)}
+							<IconClose class="shrink-0 w-7 h-7" />
+						{:else}
+							<IconPlus class="shrink-0 w-7 h-7" />
+						{/if}
+					</button>
+				{/if}
+				{#if expanded}
+					<div
+						id="burger-menu-column-{i}"
+						class="flex flex-col gap-y-6 pb-6"
+						transition:slide={{ duration: 300 }}
+					>
+						{#each column.groups as group, j (j)}
+							{@const hasLevel2 = group.links.some((link) => link.level === 2)}
+							<div>
+								{#if group.title}
+									<p class="text-label leading-none text-blue mb-0.75">{group.title}</p>
+								{/if}
+								<ul class="flex flex-col">
+									{#each group.links as link (link)}
+										<li class="leading-none {hasLevel2 && link.level !== 2 ? 'mb-0.75' : ''} {link.level === 2 ? 'pl-8' : ''}">
+											<a
+												href={link.url}
+												onclick={onNavigate}
+												target={link.target ?? undefined}
+												rel={link.target === '_blank' ? 'noopener noreferrer' : undefined}
+												class="text-body-2 leading-none {link.level === 2
+													? ''
+													: hasLevel2
+														? 'font-bold'
+														: ''} hover:text-blue transition-colors"
+											>
+												{link.label}
+											</a>
+										</li>
+									{/each}
+								</ul>
+							</div>
+						{/each}
+					</div>
+				{/if}
+			</div>
+		{/each}
+	</div>
 
-	<div class="flex flex-col items-center border-t-2 border-blue pt-6">
+	<div class="shrink-0 flex flex-col items-center border-t-2 border-blue pt-6">
 		{#if header.externalLinks.length > 0}
 			<ul class="flex flex-wrap justify-center gap-3 mb-6">
 				{#each header.externalLinks as link (link)}
