@@ -31,10 +31,6 @@ return [
         'resize' => [16, 32, 48, 180, 192, 512],
     ],
     'tobimori.seo' => [
-        // Site-config overrides must sit under this exact literal key: Kirby stores
-        // plugin options at `$plugin->prefix()` ("tobimori.seo", the slash->dot'd
-        // plugin name), so a nested `'tobimori' => ['seo' => [...]]` array lives at
-        // a different, disconnected path and is silently ignored by option().
         'canonicalBase' => $frontendUrl,
         'lang' => 'fr_CH',
         'robots' => [
@@ -153,15 +149,21 @@ return [
                     'url'   => $item->url()->value(),
                 ])->values();
 
+                $knownPlatforms = ['facebook', 'instagram', 'linkedin', 'youtube', 'tiktok', 'snapchat', 'x'];
+
                 $socialLinks = [];
-                foreach (['facebook', 'instagram', 'linkedin', 'youtube', 'tiktok', 'snapchat', 'x'] as $platform) {
-                    $url = $site->{$platform}();
-                    if ($url->isNotEmpty()) {
-                        $socialLinks[] = [
-                            'platform' => $platform,
-                            'url'      => $url->value(),
-                        ];
+                foreach ($site->socialLinks()->toStructure() as $item) {
+                    $platform = $item->platform()->value();
+                    $url      = $item->url();
+
+                    if (in_array($platform, $knownPlatforms, true) === false || $url->isEmpty()) {
+                        continue;
                     }
+
+                    $socialLinks[] = [
+                        'platform' => $platform,
+                        'url'      => $url->value(),
+                    ];
                 }
 
                 return \Kirby\Http\Response::json([
