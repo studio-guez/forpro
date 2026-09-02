@@ -23,7 +23,7 @@
 		stripTags,
 		syncQueryString
 	} from '$lib/utils/filters';
-	import { formatMonth, monthKey, toDate } from '$lib/utils/date';
+	import { monthKey, monthKeyLabel, monthKeyOf, monthKeysBetween } from '$lib/utils/date';
 	import type { AgendaEventCard } from '$lib/interfaces/page';
 	import type { EventsPage } from '$lib/interfaces/event';
 
@@ -69,21 +69,35 @@
 	const upcoming = $derived(page.upcomingEvents.filter(matchesFilters));
 	const past = $derived(page.pastEvents.filter(matchesFilters));
 
-	/** The months covered by a list of events, in the order the events come in. */
-	const monthsOf = (events: AgendaEventCard[]): { value: string; label: string }[] => {
-		const seen = new Map<string, string>();
-		for (const event of events) {
-			const key = monthKey(event.dateStart);
-			const date = toDate(event.dateStart);
-			if (key && date && !seen.has(key)) seen.set(key, formatMonth(date));
-		}
-		return [...seen].map(([value, label]) => ({ value, label }));
+	/** The months a list of events starts in, in the order the events come in. */
+	const monthsOf = (events: AgendaEventCard[]): { value: string; label: string }[] =>
+		[...new Set(events.flatMap((event) => monthKey(event.dateStart) ?? []))].map((value) => ({
+			value,
+			label: monthKeyLabel(value)
+		}));
+
+	// Months already over are never offered, so an event that started in February
+	// and runs until October is only listed from the current month on.
+	const currentMonth = monthKeyOf(new Date());
+
+	/** Every month an upcoming event runs in, from the current one at the earliest. */
+	const eventMonths = (event: AgendaEventCard): string[] => {
+		const start = monthKey(event.dateStart);
+		if (!start) return [];
+
+		const end = monthKey(event.dateEnd) ?? start;
+		return monthKeysBetween(start < currentMonth ? currentMonth : start, end < start ? start : end);
 	};
 
-	// Upcoming events are paginated one month at a time, soonest month first. The
-	// selection falls back to the first month, so a filter change that drops the
-	// current month lands on a non-empty page.
-	const upcomingMonths = $derived(monthsOf(upcoming));
+	// Upcoming events are paginated one month at a time, soonest month first; an
+	// event spanning several months shows up under each of them. The selection
+	// falls back to the first month, so a filter change that drops the current
+	// month lands on a non-empty page.
+	const upcomingMonths = $derived(
+		[...new Set(upcoming.flatMap(eventMonths))]
+			.sort()
+			.map((value) => ({ value, label: monthKeyLabel(value) }))
+	);
 	let selectedUpcomingMonth = $state('');
 	const upcomingMonth = $derived(
 		upcomingMonths.find((month) => month.value === selectedUpcomingMonth) ?? upcomingMonths[0]
@@ -92,7 +106,7 @@
 		upcomingMonths.findIndex((month) => month.value === upcomingMonth?.value)
 	);
 	const upcomingForMonth = $derived(
-		upcoming.filter((event) => monthKey(event.dateStart) === upcomingMonth?.value)
+		upcoming.filter((event) => eventMonths(event).includes(upcomingMonth?.value ?? ''))
 	);
 
 	// Direction of the last month change. Both labels travel a full box width in
