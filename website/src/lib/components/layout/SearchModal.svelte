@@ -244,7 +244,7 @@
 	class="fixed top-0 left-1/2 mt-4 lg:mt-24 -translate-x-1/2 w-[min(64rem,calc(100vw-1.5rem))] max-h-[calc(100dvh-2rem)] lg:max-h-[calc(100dvh-12rem)] hidden open:flex flex-col overflow-hidden rounded-3xl bg-white p-0 text-blue shadow-2xl backdrop:bg-black/40"
 >
 	<div class="flex items-center gap-x-2 px-5 lg:px-8 py-4 border-b-2 border-grey-light shrink-0">
-		<IconSearch class="shrink-0" />
+		<IconSearch class="shrink-0 mr-2" />
 		<input
 			bind:this={input}
 			bind:value
@@ -252,7 +252,7 @@
 			type="text"
 			placeholder="Rechercher..."
 			aria-label="Rechercher sur le site"
-			class="text-body-2 font-bold text-blue bg-transparent border-0 grow min-w-0 placeholder:text-blue/50 focus:ring-0 focus:outline-none"
+			class="text-body-2 font-bold text-blue bg-transparent border-0 grow min-w-0 placeholder:text-blue/50 focus:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue rounded-full"
 		/>
 		<button
 			type="button"
@@ -325,7 +325,7 @@
 									class="shrink-0 w-16 h-16 lg:w-32 lg:h-32 rounded-xl object-cover bg-grey-light"
 								/>
 							{:else}
-								<div class="shrink-0 w-16 h-16 lg:w-32 lg:h-32 rounded-xl bg-grey-light" />
+								<div class="shrink-0 w-16 h-16 lg:w-32 lg:h-32 rounded-xl bg-grey-light"></div>
 							{/if}
 							<div class="min-w-0">
 								<p class="text-caption text-grey-dark">{result.typeLabel}</p>

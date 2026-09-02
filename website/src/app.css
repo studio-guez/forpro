@@ -80,6 +80,7 @@
     html {
         scrollbar-width: thin;
         scrollbar-gutter: stable;
+        scroll-padding-top: 6.75rem;
     }
     button:not(:disabled) {
         @apply cursor-pointer;

@@ -88,6 +88,6 @@
 	<div class="text-pink">
 		<h1 class="text-body-1 mb-3">{copy.title}</h1>
 		<p class="text-h2 mb-3 lg:mb-24">{description}</p>
-		<BackLink parentPage={{ path: '', title: "l'accueil" }} color="var(--color-pink)" />
+		<BackLink parentPage={{ path: '', slug: '', title: "l'accueil" }} color="var(--color-pink)" />
 	</div>
 </section>
