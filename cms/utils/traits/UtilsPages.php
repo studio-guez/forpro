@@ -82,10 +82,8 @@ trait UtilsPages
             'shortDesc' => $page->shortDesc()->value(),
             'cover'     => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             ...self::getEventDateFields($page),
-            'terms'     => array_merge(
-                self::resolveTaxonomyTerms($page->programs(), 'programs'),
-                self::resolveTaxonomyTerms($page->publics(), 'publics')
-            ),
+            'programs'  => self::resolveTaxonomyTerms($page->programs(), 'programs'),
+            'publics'   => self::resolveTaxonomyTerms($page->publics(), 'publics'),
         ];
     }
 
