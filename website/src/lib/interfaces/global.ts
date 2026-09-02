@@ -61,6 +61,9 @@ export interface FooterAddress {
 }
 
 export interface Footer {
+	/** The same file as `Header.logo`; the CMS serialises it into both payloads. */
+	readonly logo: CmsImage;
+	readonly logoEntrepriseFormatrice: CmsImage | null;
 	readonly address: FooterAddress;
 	readonly email: string | null;
 	/** Human-readable phone number, as typed in the Panel. */
