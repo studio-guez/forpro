@@ -83,8 +83,8 @@ export const formatEventTime = (time: string | null): string | null => {
 export const formatShortDate = (date: Date): string =>
 	shortDateFormat.format(date).replace(/\//g, '.');
 
-/** "août 2026" */
-export const formatMonth = (date: Date): string => monthFormat.format(date);
+/** "Août 2026" */
+export const formatMonth = (date: Date): string => dateLabel(monthFormat, date);
 
 /** Sortable month key of a `YYYY-MM-DD` date, e.g. "2026-07". */
 export const monthKey = (date: string | null): string | null => (date ? date.slice(0, 7) : null);
