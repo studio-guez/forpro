@@ -160,7 +160,7 @@
 	/>
 </BasicHeader>
 
-<section aria-label="Questions et réponses">
+<section aria-label="Questions et réponses" class="px-base">
 	<div aria-live="polite">
 		{#if hasSearch}
 			<div class="py-6 lg:py-8">

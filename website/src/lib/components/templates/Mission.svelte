@@ -21,7 +21,7 @@
 	]);
 </script>
 
-<article class="space-y-16 lg:space-y-24">
+<article class="px-base space-y-16 lg:space-y-24">
 	<header class="space-y-6">
 		{#if page.parentPage}
 			<BackLink parentPage={page.parentPage} />

@@ -59,7 +59,7 @@
 
 <PageHeader {page} />
 
-<section aria-label="Recherche et filtres">
+<section aria-label="Recherche et filtres" class="px-base">
 	<SearchInput
 		bind:value={search}
 		label="Rechercher une offre"
@@ -75,7 +75,7 @@
 	/>
 </section>
 
-<section aria-label="Offres d'emploi">
+<section aria-label="Offres d'emploi" class="px-base">
 	<div aria-live="polite">
 		{#if hasSearch}
 			<ResultsHeader

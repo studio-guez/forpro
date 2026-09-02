@@ -144,7 +144,7 @@
 	/>
 </BasicHeader>
 
-<section aria-label="Projets" class="pb-12 lg:pb-16">
+<section aria-label="Projets" class="px-base pb-12 lg:pb-16">
 	<div aria-live="polite">
 		{#if hasSearch}
 			<ResultsHeader
