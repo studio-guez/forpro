@@ -21,16 +21,24 @@ trait UtilsLinks
             return $item->email()->isNotEmpty() ? 'mailto:' . $item->email()->value() : null;
         }
         if ($item->type()->value() === 'tel') {
-            // "+41 (0) 21 ..." — the parenthesised trunk prefix is only for national
-            // dialling and must be dropped, not just stripped of its parentheses.
-            // Only after a country code: without one the 0 is part of the number.
-            $raw   = preg_replace('/(\+\s*\d[\d\s.-]*)\(\s*0\s*\)/', '$1', (string)$item->phone()->value());
-            $phone = preg_replace('/[^0-9+]/', '', $raw);
-            // tel: URIs allow a single leading "+" only
-            $phone = preg_replace('/(?<!^)\+/', '', $phone);
-            return preg_match('/\d/', $phone) === 1 ? 'tel:' . $phone : null;
+            return self::telHref($item->phone());
         }
         return $item->url()->isNotEmpty() ? $item->url()->value() : null;
+    }
+
+    /**
+     * Builds a `tel:` URI from a free-form phone field, or null when it holds no digits.
+     */
+    static function telHref(\Kirby\Content\Field $field): ?string
+    {
+        // "+41 (0) 21 ..." — the parenthesised trunk prefix is only for national
+        // dialling and must be dropped, not just stripped of its parentheses.
+        // Only after a country code: without one the 0 is part of the number.
+        $raw   = preg_replace('/(\+\s*\d[\d\s.-]*)\(\s*0\s*\)/', '$1', (string)$field->value());
+        $phone = preg_replace('/[^0-9+]/', '', $raw);
+        // tel: URIs allow a single leading "+" only
+        $phone = preg_replace('/(?<!^)\+/', '', $phone);
+        return preg_match('/\d/', $phone) === 1 ? 'tel:' . $phone : null;
     }
 
     /**
