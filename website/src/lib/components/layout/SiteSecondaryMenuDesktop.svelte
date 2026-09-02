@@ -17,7 +17,7 @@
 <nav
 	id="burger-menu-desktop"
 	data-lenis-prevent
-	class="hidden lg:grid w-full max-w-360 mx-auto min-h-0 overflow-y-auto overscroll-contain px-9 py-12 grid-cols-5 items-start gap-x-8 gap-y-10"
+	class="hidden lg:grid w-full max-w-360 mx-auto min-h-0 overflow-y-auto overscroll-contain px-9 py-12 grid-cols-5 items-start gap-x-6 gap-y-10"
 	transition:slide={{ duration: 300 }}
 	aria-label="Menu secondaire"
 >
@@ -58,7 +58,7 @@
 		</div>
 	{/each}
 
-	<div class="flex flex-col bg-green rounded-2xl p-4 -m-4">
+	<div class="flex flex-col bg-green rounded-2xl p-6 -my-6">
 		{#if header.externalLinksTitle}
 			<p class="text-body-2 font-bold pb-3 mb-6 border-b-2">{header.externalLinksTitle}</p>
 		{/if}
