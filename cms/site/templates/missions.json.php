@@ -10,6 +10,7 @@ $json = Utils::getPageBaseData($page, 'missions');
 
 $json['overtitle'] = $page->overtitle()->value();
 $json['theme']     = $page->theme()->or('default')->value();
+$json['headerType'] = $page->headerType()->or('full')->value();
 $json['cover']     = Utils::getJsonEncodeImageDataOrNull($page->cover()->toFile());
 
 $json['introTitle'] = $page->introTitle()->value();
