@@ -17,6 +17,8 @@
 		color?: string;
 		inverted?: boolean;
 		size?: CtaSize;
+		/** Accessible name, when the label alone is ambiguous (a repeated "Détails" in a list). */
+		ariaLabel?: string;
 		class?: string;
 	}
 
@@ -25,6 +27,7 @@
 		color = 'var(--color-blue)',
 		inverted = false,
 		size = 'md',
+		ariaLabel,
 		class: className = ''
 	}: Props = $props();
 
@@ -35,6 +38,7 @@
 	href={cta.url}
 	target={cta.target ?? undefined}
 	rel={cta.target === '_blank' ? 'noopener noreferrer' : undefined}
+	aria-label={ariaLabel}
 	style:--color-cta={color}
 	class="{CTA_BASE} {colorClasses} {ctaSizeClasses[size]} {className}"
 >
