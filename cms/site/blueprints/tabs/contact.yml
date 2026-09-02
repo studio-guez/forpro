@@ -18,6 +18,7 @@ columns:
         type: tel
         icon: phone
         placeholder: +41 21 000 00 00
+        required: true
       contactEmail:
         label:
           en: Email
@@ -25,6 +26,7 @@ columns:
         type: email
         icon: email
         placeholder: info@example.com
+        required: true
 
   - width: 1/2
     fields:
@@ -38,38 +40,45 @@ columns:
           en: Place name
           fr: Nom du lieu
         type: text
+        required: true
       addressStreet:
         label:
           en: Street
           fr: Rue
         type: text
+        required: true
       addressPostalCode:
         label:
           en: Postal code
           fr: Code postal
         type: text
         width: 1/3
+        required: true
       addressLocality:
         label:
           en: City
           fr: Ville
         type: text
         width: 2/3
+        required: true
       addressRegion:
         label:
           en: Region
           fr: Région
         type: text
         width: 1/2
+        required: true
       addressCountry:
         label:
           en: Country
           fr: Pays
         type: text
         width: 1/2
+        required: true
       addressMapUrl:
         label:
           en: Map link
           fr: Lien vers la carte
         type: url
         icon: url
+        required: true
