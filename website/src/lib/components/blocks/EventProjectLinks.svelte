@@ -14,9 +14,9 @@
 
 {#if links.length > 0}
 	<section class={['px-card', className]} aria-label={title}>
-		<div class="grid grid-cols-1 lg:grid-cols-4 gap-y-3 gap-x-6">
+		<div class="grid grid-cols-1 lg:grid-cols-3 gap-y-3 gap-x-6">
 			<h2 class="text-body-3 font-bold">{title}</h2>
-			<ul>
+			<ul class="lg:col-span-2">
 				{#each links as link, index (index)}
 					<li>
 						<a
