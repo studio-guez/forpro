@@ -28,10 +28,10 @@
 </script>
 
 {#snippet columnTitle(title: string)}
-	<p class="text-body-2 font-bold pb-3 mb-6 border-b-2">{title}</p>
+	<p class="font-bold mb-[1em]">{title}</p>
 {/snippet}
 
-<footer class="relative isolate bg-beige text-blue">
+<footer class="text-body-2 relative isolate bg-beige">
 	<!-- The artwork is capped to the content column; past it the two shapes running off its
 		 left and right edges continue as flat bands to the viewport edges. -->
 	<div
@@ -56,7 +56,7 @@
 					<span class="block">{address.street}</span>
 					{#if cityLine}<span class="block">{cityLine}</span>{/if}
 				{/snippet}
-				<address class="not-italic text-body-2 mb-6">
+				<address class="not-italic mb-[1em]">
 					{#if address.mapUrl}
 						<a
 							href={address.mapUrl}
@@ -73,14 +73,13 @@
 			{/if}
 
 			{#if footer.email || footer.phoneUrl}
-				<ul class="flex flex-col gap-y-3">
+				<ul class="flex flex-col">
 					{#if footer.email}
 						<li>
 							<a
 								href="mailto:{footer.email}"
-								class="flex items-center gap-x-2 text-body-2 leading-none group"
+								class="leading-none group"
 							>
-								<IconEmail class="shrink-0 w-6 h-6" />
 								<span class="underline decoration-transparent group-hover:decoration-current transition-colors"
 									>{footer.email}</span
 								>
@@ -91,9 +90,8 @@
 						<li>
 							<a
 								href={footer.phoneUrl}
-								class="flex items-center gap-x-2 text-body-2 leading-none group"
+								class="leading-none group"
 							>
-								<IconPhone class="shrink-0 w-6 h-6" />
 								<span class="underline decoration-transparent group-hover:decoration-current transition-colors"
 									>{footer.phone}</span
 								>
@@ -140,7 +138,7 @@
 								href={link.url}
 								target={link.target ?? undefined}
 								rel={link.target === '_blank' ? 'noopener noreferrer' : undefined}
-								class="text-body-2 leading-none underline decoration-transparent hover:decoration-current transition-colors"
+								class="leading-none underline decoration-transparent hover:decoration-current transition-colors"
 							>
 								{link.label}
 							</a>
@@ -167,7 +165,7 @@
 					autocomplete="email"
 					bind:value={newsletterEmail}
 					placeholder="Votre e-mail..."
-					class="min-w-0 flex-1 border-0 bg-transparent pl-3 py-1 text-body-2 font-bold text-blue placeholder-blue/50 focus:border-0 focus:ring-0 focus:outline-none"
+					class="min-w-0 flex-1 border-0 bg-transparent pl-3 py-1 font-bold text-blue placeholder-blue/50 focus:border-0 focus:ring-0 focus:outline-none"
 				/>
 				<button
 					type="submit"
