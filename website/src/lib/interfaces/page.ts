@@ -170,7 +170,8 @@ export interface AgendaEventCard {
 	readonly dateEnd: string | null;
 	readonly timeStart: string | null;
 	readonly timeEnd: string | null;
-	readonly terms: TaxonomyTerm[];
+	readonly programs: TaxonomyTerm[];
+	readonly publics: TaxonomyTerm[];
 }
 
 export interface ModuleAgendaContent {
