@@ -65,7 +65,7 @@
 			{/each}
 			<button
 				type="button"
-				class="text-teal p-1 {selected.length > 0 ? '' : 'invisible'}"
+				class="text-teal p-1 -mr-8.75 {selected.length > 0 ? '' : 'invisible'}"
 				aria-label={resetLabel}
 				inert={selected.length === 0}
 				onclick={() => (selected = [])}
