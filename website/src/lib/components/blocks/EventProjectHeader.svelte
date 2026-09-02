@@ -40,7 +40,7 @@
 				loading="eager"
 				fetchpriority="high"
 				sizes={toSizes(PAGE_CARD)}
-				class="w-full h-50 lg:h-100 object-cover rounded-2xl lg:col-span-2 max-lg:order-first"
+				class="w-full h-50 md:h-70 lg:h-100 object-cover rounded-2xl lg:col-span-2 max-lg:order-first"
 			/>
 		{/if}
 	</div>
