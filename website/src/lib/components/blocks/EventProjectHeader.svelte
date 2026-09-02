@@ -18,7 +18,7 @@
 	const textColor = $derived(variant === 'project' ? 'text-orange' : 'text-blue');
 </script>
 
-<section class="px-card">
+<section class="px-base">
 	<div class={textColor}>
 		<h1 class="text-h1 mt-2">{title}</h1>
 		{#if meta}

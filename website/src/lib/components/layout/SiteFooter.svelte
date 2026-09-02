@@ -47,7 +47,7 @@
 	</div>
 
 	<div
-		class="w-full max-w-360 mx-auto px-5 lg:px-9 pt-6 lg:pt-9 grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 lg:gap-x-8 gap-y-10"
+		class="w-full max-w-360 mx-auto px-base pt-6 lg:pt-9 grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 lg:gap-x-8 gap-y-10"
 	>
 		<div>
 			{#if address.name}
@@ -183,7 +183,7 @@
 		</div>
 	</div>
 	<div
-		class="w-full max-w-360 mx-auto flex items-center justify-center lg:justify-between gap-x-4 px-5 lg:px-9 pb-12.5 lg:pb-9 max-lg:mt-12.5"
+		class="w-full max-w-360 mx-auto flex items-center justify-center lg:justify-between gap-x-4 px-base pb-12.5 lg:pb-9 max-lg:mt-12.5"
 	>
 		<div class="bg-white rounded-full py-2.5 lg:py-5 px-5 lg:px-10">
 			<Img image={footer.logo} sizes="10rem" class="h-6 lg:h-12 w-auto max-w-full" />

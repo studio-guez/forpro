@@ -10,7 +10,7 @@
 </script>
 
 {#if blocks.length > 0}
-	<section class={['px-card space-y-12 lg:space-y-16', className]}>
+	<section class={['px-base space-y-12 lg:space-y-16', className]}>
 		{#each blocks as block, index (index)}
 			<article class="grid grid-cols-1 lg:grid-cols-3 gap-y-3 gap-x-6">
 				<h2 class="text-body-2 font-bold">{block.title}</h2>
