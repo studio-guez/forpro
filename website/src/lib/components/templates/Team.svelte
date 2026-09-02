@@ -14,7 +14,7 @@
 {#each page.sections as section, sectionIndex (sectionIndex)}
 	<section
 		aria-labelledby="team-section-{sectionIndex}"
-		class="grid grid-cols-1 lg:grid-cols-4 gap-x-6 gap-y-9"
+		class="px-base grid grid-cols-1 lg:grid-cols-4 gap-x-6 gap-y-9"
 	>
 		<h2 id="team-section-{sectionIndex}" class="text-label font-bold">{section.title}</h2>
 
