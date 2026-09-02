@@ -4,6 +4,7 @@
 	import { prefersReducedMotion } from 'svelte/motion';
 	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
+	import CardTitle from '$lib/components/ui/CardTitle.svelte';
 	import EventCard from '$lib/components/ui/EventCard.svelte';
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import EventListItem from '$lib/components/ui/EventListItem.svelte';
@@ -281,11 +282,12 @@
 
 {#if past.length > 0}
 	<section aria-labelledby="past-events-title" class="px-base pb-12 lg:pb-16">
-		<h2 id="past-events-title" class="text-h2 text-center">
-			<span class="inline-block bg-blue text-white rounded-full px-8 py-3">
-				Les événements passés :
-			</span>
-		</h2>
+		<CardTitle
+			id="past-events-title"
+			title="Les événements passés"
+			class="text-center"
+			pillClass="bg-blue text-white"
+		/>
 
 		<SelectDropdown
 			bind:value={selectedMonth}
