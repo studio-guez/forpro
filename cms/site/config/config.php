@@ -166,6 +166,16 @@ return [
                     ];
                 }
 
+                $footerMenuLinks = $site->footerMenuLinks()->toStructure()->map(fn($item) => [
+                    'label'  => Utils::resolvePageOrUrlLabel($item),
+                    'url'    => Utils::resolvePageOrUrlItem($item),
+                    'target' => Utils::resolvePageOrUrlTarget($item),
+                ])->values();
+
+                // `null` rather than `""` for every optional footer string, so the frontend
+                // can drop the whole line/column instead of rendering an empty node.
+                $orNull = fn(\Kirby\Content\Field $field) => $field->isEmpty() ? null : $field->value();
+
                 return \Kirby\Http\Response::json([
                     'header' => [
                         'siteTitle'     => $site->title()->value(),
@@ -175,6 +185,27 @@ return [
                         'externalLinksTitle' => $externalLinksTitle->isEmpty() ? null : $externalLinksTitle->value(),
                         'externalLinks' => $externalLinks,
                         'socialLinks'   => $socialLinks,
+                    ],
+                    'footer' => [
+                        'address' => [
+                            'name'       => $orNull($site->addressName()),
+                            'street'     => $orNull($site->addressStreet()),
+                            'postalCode' => $orNull($site->addressPostalCode()),
+                            'locality'   => $orNull($site->addressLocality()),
+                            'region'     => $orNull($site->addressRegion()),
+                            'country'    => $orNull($site->addressCountry()),
+                            'mapUrl'     => $orNull($site->addressMapUrl()),
+                        ],
+                        'email'           => $orNull($site->contactEmail()),
+                        'phone'           => $orNull($site->contactPhone()),
+                        'phoneUrl'        => Utils::telHref($site->contactPhone()),
+                        'socialsTitle'    => $orNull($site->footerSocialsTitle()),
+                        // Same list as the burger menu's 5th column: the links themselves
+                        // are managed once, in the Social networks tab.
+                        'socialLinks'     => $socialLinks,
+                        'menuTitle'       => $orNull($site->footerMenuTitle()),
+                        'menuLinks'       => $footerMenuLinks,
+                        'newsletterTitle' => $orNull($site->footerNewsletterTitle()),
                     ],
                     'banner'  => $bannerAnnouncements,
                     'favicon' => Utils::getFaviconData($site),
