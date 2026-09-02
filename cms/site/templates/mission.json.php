@@ -9,12 +9,7 @@ require_once 'utils/Utils.php';
 $json = Utils::getPageBaseData($page, 'mission');
 
 // The index the "back" link points to, i.e. the real Kirby parent (missions).
-$parent = $page->parent();
-$json['parentPage'] = $parent ? [
-    'title' => $parent->title()->value(),
-    'slug'  => $parent->slug(),
-    'path'  => $parent->virtualPath(),
-] : null;
+$json['parentPage'] = Utils::getParentPageData($page);
 
 $json['categories'] = Utils::resolveTaxonomyTerms($page->categories(), 'categories');
 
