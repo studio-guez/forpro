@@ -98,7 +98,7 @@
 				aria-haspopup="dialog"
 				aria-expanded={searchModalOpen}
 				aria-label="Rechercher"
-				class="group flex items-center p-1 rounded-full transition-colors shrink hover:bg-grey-light focus-visible:ring-2 focus-visible:ring-blue focus:outline-none {searchModalOpen
+				class="group flex items-center p-1 rounded-full transition-colors shrink hover:lg:bg-grey-light focus-visible:ring-2 focus-visible:ring-blue focus:outline-none {searchModalOpen
 					? 'bg-grey-light'
 					: ''}"
 			>
