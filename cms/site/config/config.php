@@ -99,6 +99,7 @@ return [
                 $site = site();
 
                 $logoFile = $site->logo()->toFile();
+                $logoEntrepriseFormatriceFile = $site->logoEntrepriseFormatrice()->toFile();
 
                 $mainMenu = $site->mainMenu()->toStructure()->map(fn($item) => [
                     'label'  => Utils::resolvePageOrUrlLabel($item),
@@ -187,6 +188,9 @@ return [
                         'socialLinks'   => $socialLinks,
                     ],
                     'footer' => [
+                        // Same file as the header logo: it is managed once, in the Website tab.
+                        'logo'                     => Utils::getJsonEncodeImageData($logoFile),
+                        'logoEntrepriseFormatrice' => Utils::getJsonEncodeImageDataOrNull($logoEntrepriseFormatriceFile),
                         'address' => [
                             'name'       => $orNull($site->addressName()),
                             'street'     => $orNull($site->addressStreet()),
