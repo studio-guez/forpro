@@ -99,7 +99,7 @@
 	// lockstep, so the leaving month looks pushed out by the arriving one. Motion
 	// is dropped entirely when the visitor asked for it.
 	let slideDirection = $state(1);
-	const monthSlideDuration = $derived(prefersReducedMotion.current ? 0 : 400);
+	const monthSlideDuration = $derived(prefersReducedMotion.current ? 0 : 500);
 	const monthEnter = $derived({
 		duration: monthSlideDuration,
 		x: `${100 * slideDirection}%`
