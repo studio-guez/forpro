@@ -74,10 +74,19 @@
 
 <header
 	bind:this={headerEl}
-	class="fixed top-0 inset-x-0 z-10 flex flex-col max-h-dvh rounded-b-4xl bg-white transition-shadow has-[#burger-menu-button:hover]:shadow {menuOpen ? 'shadow' : ''}"
+	class="fixed top-0 inset-x-0 z-10 flex flex-col max-h-dvh rounded-b-4xl bg-white transition-shadow has-[#burger-menu-button:hover]:shadow {menuOpen
+		? 'shadow'
+		: ''}"
 >
-	<div class="w-full max-w-360 mx-auto shrink-0 flex items-center gap-x-3 lg:gap-x-12 px-5 lg:px-9 py-3 text-blue">
-		<a href="/" onclick={closeMenu} class="shrink-0 {menuOpen ? 'max-lg:hidden' : ''}" aria-label={header.siteTitle}>
+	<div
+		class="w-full max-w-360 mx-auto shrink-0 flex items-center gap-x-3 lg:gap-x-12 px-5 lg:px-9 py-3 text-blue"
+	>
+		<a
+			href="/"
+			onclick={closeMenu}
+			class="shrink-0 {menuOpen ? 'max-lg:hidden' : ''}"
+			aria-label={header.siteTitle}
+		>
 			<Img
 				image={header.logo}
 				alt={header.logo.alt ?? header.siteTitle}
@@ -86,7 +95,10 @@
 				loading="eager"
 			/>
 		</a>
-		<nav aria-label="Menu principal" class="max-lg:hidden lg:ml-auto {menuOpen ? 'max-lg:block!' : ''}">
+		<nav
+			aria-label="Menu principal"
+			class="max-lg:hidden lg:ml-auto {menuOpen ? 'max-lg:block!' : ''}"
+		>
 			<ul class="flex items-center gap-x-6 lg:gap-x-12">
 				{#each header.mainMenu as item (item)}
 					<li class="flex items-center">
@@ -146,7 +158,7 @@
 			class="text-body-2 font-bold px-3 py-2 flex items-center gap-x-3 shrink-0 justify-end rounded-full hover:bg-blue hover:text-white transition-colors"
 			aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
 		>
-				<span class="max-lg:hidden text-trim">Menu</span>
+			<span class="max-lg:hidden text-trim">Menu</span>
 			{#if menuOpen}
 				<IconClose class="shrink-0 w-7.25 h-7.25" />
 			{:else}

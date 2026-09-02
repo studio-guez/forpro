@@ -59,7 +59,11 @@ export function getThemeShapes(theme: Theme): [ShapeSpec, ShapeSpec] {
  * it is paired with, so both travel together.
  */
 export interface ElementBlobs {
-	shapes: [Component<{ class?: string }>, Component<{ class?: string }>, Component<{ class?: string }>];
+	shapes: [
+		Component<{ class?: string }>,
+		Component<{ class?: string }>,
+		Component<{ class?: string }>
+	];
 	rotations: [number, number, number];
 }
 
@@ -70,11 +74,7 @@ const defaultElementBlobs: ElementBlobs = {
 
 const elementBlobs: Partial<Record<Theme, ElementBlobs>> = {
 	foodlab: {
-		shapes: [
-			ShapeInfosPratiquesFoodlab1,
-			ShapeInfosPratiquesFoodlab2,
-			ShapeInfosPratiquesFoodlab3
-		],
+		shapes: [ShapeInfosPratiquesFoodlab1, ShapeInfosPratiquesFoodlab2, ShapeInfosPratiquesFoodlab3],
 		rotations: [10, -10, -10]
 	}
 };

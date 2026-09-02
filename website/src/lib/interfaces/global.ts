@@ -22,13 +22,7 @@ export interface SecondaryMenuColumn {
 }
 
 export type SocialPlatform =
-	| 'facebook'
-	| 'instagram'
-	| 'linkedin'
-	| 'youtube'
-	| 'tiktok'
-	| 'snapchat'
-	| 'x';
+	'facebook' | 'instagram' | 'linkedin' | 'youtube' | 'tiktok' | 'snapchat' | 'x';
 
 export interface SocialLink {
 	readonly platform: SocialPlatform;

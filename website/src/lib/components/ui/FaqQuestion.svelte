@@ -33,7 +33,10 @@
 	);
 </script>
 
-<div style:--faq-color={color} class="border-3 lg:border-4 {borderClass} rounded-[1.3125rem] lg:rounded-[2.125rem] overflow-hidden {className} transition-colors">
+<div
+	style:--faq-color={color}
+	class="border-3 lg:border-4 {borderClass} rounded-[1.3125rem] lg:rounded-[2.125rem] overflow-hidden {className} transition-colors"
+>
 	<h3>
 		<button
 			type="button"

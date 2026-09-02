@@ -14,48 +14,58 @@
 	let { title, overtitle = null, theme = 'default', cover = null }: Props = $props();
 
 	const arrowFillByTheme: Record<Theme, string> = {
-		default:        'fill-blue',
-		campus:         'fill-blue',
-		entreprendre:   'fill-purple-light',
+		default: 'fill-blue',
+		campus: 'fill-blue',
+		entreprendre: 'fill-purple-light',
 		projets_jeunes: 'fill-orange',
-		tremplin_jobs:  'fill-purple-light',
-		soutiens:        'fill-pink',
-		cekale:         'fill-purple',
-		la_ref:         'fill-pink',
-		learninglab:    'fill-teal',
-		foodlab:        'fill-orange',
-		grandlab:       'fill-red',
-		makerlab:       'fill-white',
-		factorylab:     'fill-teal',
+		tremplin_jobs: 'fill-purple-light',
+		soutiens: 'fill-pink',
+		cekale: 'fill-purple',
+		la_ref: 'fill-pink',
+		learninglab: 'fill-teal',
+		foodlab: 'fill-orange',
+		grandlab: 'fill-red',
+		makerlab: 'fill-white',
+		factorylab: 'fill-teal'
 	};
 
 	const arrowFill = $derived(arrowFillByTheme[theme] ?? 'fill-white');
 
 	// The hero plate fills the section, minus its px-5 / lg:px-9 gutter.
-	const coverSizes = toSizes({ 0: 'calc(100vw - 2.5rem)', 1024: 'calc(min(100vw, 90rem) - 4.5rem)' });
+	const coverSizes = toSizes({
+		0: 'calc(100vw - 2.5rem)',
+		1024: 'calc(min(100vw, 90rem) - 4.5rem)'
+	});
 </script>
 
 <section class="px-5 lg:px-9" aria-labelledby="page-title">
-	<div class="min-h-69 lg:min-h-138 relative text-white bg-grey-light rounded-3xl overflow-hidden flex">
-		<div class="w-full bg-linear-to-t from-black/20 relative z-1 flex flex-col justify-end p-3 lg:py-6 lg:px-5 xl:px-8">
+	<div
+		class="min-h-69 lg:min-h-138 relative text-white bg-grey-light rounded-3xl overflow-hidden flex"
+	>
+		<div
+			class="w-full bg-linear-to-t from-black/20 relative z-1 flex flex-col justify-end p-3 lg:py-6 lg:px-5 xl:px-8"
+		>
 			{#if overtitle}
-			<div>
-				<p class="inline-block text-lg lg:text-3xl font-bold -mb-2">{overtitle}</p>
-				<ArrowOvertitle fill={arrowFill} class="max-lg:hidden inline-block absolute -translate-y-1/2 ml-1 w-32.5 h-16" />
-			</div>
+				<div>
+					<p class="inline-block text-lg lg:text-3xl font-bold -mb-2">{overtitle}</p>
+					<ArrowOvertitle
+						fill={arrowFill}
+						class="max-lg:hidden inline-block absolute -translate-y-1/2 ml-1 w-32.5 h-16"
+					/>
+				</div>
 			{/if}
 			<h1 id="page-title" class="text-4xl lg:text-8xl font-bold">
 				{title}
 			</h1>
 		</div>
 		{#if cover}
-		<Img
-			image={cover}
-			sizes={coverSizes}
-			class="absolute inset-0 h-full w-full object-cover"
-			loading="eager"
-			fetchpriority="high"
-		/>
+			<Img
+				image={cover}
+				sizes={coverSizes}
+				class="absolute inset-0 h-full w-full object-cover"
+				loading="eager"
+				fetchpriority="high"
+			/>
 		{/if}
 	</div>
 </section>

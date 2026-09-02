@@ -13,6 +13,7 @@
 	import ArrowStepMobile3 from '$lib/components/svg/ArrowStepMobile3.svelte';
 	import ArrowStepMobile4 from '$lib/components/svg/ArrowStepMobile4.svelte';
 	import ArrowStepMobile5 from '$lib/components/svg/ArrowStepMobile5.svelte';
+	import CardTitle from '$lib/components/ui/CardTitle.svelte';
 	import type { ModuleTimelineContent, Theme, TimelineStep } from '$lib/interfaces/page';
 
 	interface Props {
@@ -118,9 +119,12 @@
 <svelte:window onscroll={sync} onresize={measure} />
 
 {#snippet title()}
-	<h2 class={['text-h3 text-center px-card relative z-2', content.hideTitle && 'sr-only']}>
-		<span class="inline-block rounded-2xl px-8 pt-2 pb-3.5 {colors.pill}">{content.title}</span>
-	</h2>
+	<CardTitle
+		title={content.title}
+		hideTitle={content.hideTitle}
+		class="text-center px-card relative z-2"
+		pillClass={colors.pill}
+	/>
 {/snippet}
 
 {#snippet stepContent(step: TimelineStep, index: number)}

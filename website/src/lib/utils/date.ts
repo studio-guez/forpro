@@ -1,9 +1,23 @@
 // Date helpers shared by the event pages, cards and listings.
 
-const dayFormat = new Intl.DateTimeFormat('fr-CH', {
+const longDateFormat = new Intl.DateTimeFormat('fr-CH', {
 	weekday: 'long',
 	day: 'numeric',
+	month: 'long',
+	year: 'numeric'
+});
+
+const rangeDateFormat = new Intl.DateTimeFormat('fr-CH', {
+	weekday: 'short',
+	day: 'numeric',
 	month: 'long'
+});
+
+const rangeDateWithYearFormat = new Intl.DateTimeFormat('fr-CH', {
+	weekday: 'short',
+	day: 'numeric',
+	month: 'long',
+	year: 'numeric'
 });
 
 const shortDateFormat = new Intl.DateTimeFormat('fr-CH', {
@@ -33,11 +47,41 @@ export const timeAttr = (time: string | null): string | undefined => {
 	return `${hours.padStart(2, '0')}:${minutes}`;
 };
 
-/** "mercredi 12 août" */
-export const formatEventDay = (date: Date): string => dayFormat.format(date);
+/**
+ * Intl emits French dates lowercase, and separates the weekday with a comma as soon as the
+ * year is asked for ("lundi, 26 juillet 2027"). The design wants neither.
+ */
+const dateLabel = (format: Intl.DateTimeFormat, date: Date): string =>
+	format
+		.format(date)
+		.replace(/,/g, '')
+		.replace(
+			/(^|\s)(\p{L})/gu,
+			(_, separator: string, letter: string) => separator + letter.toUpperCase()
+		);
+
+/** "Jeudi 26 Juillet 2027" */
+export const formatEventDate = (date: Date): string => dateLabel(longDateFormat, date);
+
+/**
+ * The two ends of a date range, e.g. `["Mer. 12 Août", "Ven. 14 Septembre"]`, to render as
+ * "Du … au …". The year is dropped unless the range straddles two of them.
+ */
+export const formatEventDateRange = (start: Date, end: Date): [string, string] => {
+	const format =
+		start.getFullYear() === end.getFullYear() ? rangeDateFormat : rangeDateWithYearFormat;
+	return [dateLabel(format, start), dateLabel(format, end)];
+};
+
+/** "13h00". The CMS field is free text, so anything that is not `H:mm` is passed through. */
+export const formatEventTime = (time: string | null): string | null => {
+	if (!time) return null;
+	return timeAttr(time)?.replace(':', 'h') ?? time;
+};
 
 /** "26.07.2026" */
-export const formatShortDate = (date: Date): string => shortDateFormat.format(date).replace(/\//g, '.');
+export const formatShortDate = (date: Date): string =>
+	shortDateFormat.format(date).replace(/\//g, '.');
 
 /** "août 2026" */
 export const formatMonth = (date: Date): string => monthFormat.format(date);

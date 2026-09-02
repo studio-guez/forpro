@@ -3,6 +3,7 @@
 	import EventProjectMedia from '$lib/components/blocks/EventProjectMedia.svelte';
 	import EventProjectBlocks from '$lib/components/blocks/EventProjectBlocks.svelte';
 	import EventProjectLinks from '$lib/components/blocks/EventProjectLinks.svelte';
+	import EventProjectFooter from '$lib/components/blocks/EventProjectFooter.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import type { ProjectPage } from '$lib/interfaces/project';
 
@@ -15,35 +16,40 @@
 		subtitle={page.subtitle}
 		shortDesc={page.shortDesc}
 		cover={page.cover}
+		variant="project"
 	>
 		{#snippet meta()}
-			{#if page.programs.length > 0}
-				<div>
-					<h2 class="text-label text-teal">Programmes</h2>
-					<TermTags terms={page.programs} label="Programmes" class="mt-2" />
+			{#if page.collectiveName || page.collectiveMembers.length > 0}
+				<div class="flex gap-3 mt-4.5 lg:mt-3">
+					{#if page.collectiveName}
+						<strong>{page.collectiveName}</strong>
+						<span>·</span>
+					{/if}
+					{#if page.collectiveMembers.length > 0}
+						<ul class="flex gap-3">
+							{#each page.collectiveMembers as member, index (index)}
+								<li class="inline">
+									{member.name}{index < page.collectiveMembers.length - 1 ? ', ' : ''}
+								</li>
+							{/each}
+						</ul>
+					{/if}
 				</div>
 			{/if}
 
 			{#if page.categories.length > 0}
-				<div>
-					<h2 class="text-label text-teal">Catégories</h2>
-					<TermTags terms={page.categories} label="Catégories" class="mt-2" />
+				<div class="mt-4.5 lg:mt-3">
+					{#each page.categories as category, index (index)}
+						<li class="inline font-bold">
+							{category.title}{index < page.categories.length - 1 ? ', ' : ''}
+						</li>
+					{/each}
 				</div>
 			{/if}
 
-			{#if page.collectiveName || page.collectiveMembers.length > 0}
-				<div>
-					<h2 class="text-label text-teal">Collectif</h2>
-					{#if page.collectiveName}
-						<p class="text-body-2 mt-1">{page.collectiveName}</p>
-					{/if}
-					{#if page.collectiveMembers.length > 0}
-						<ul class="text-body-2 text-grey-dark mt-1">
-							{#each page.collectiveMembers as member, index (index)}
-								<li>{member.name}</li>
-							{/each}
-						</ul>
-					{/if}
+			{#if page.programs.length > 0}
+				<div class="mt-4.5">
+					<TermTags terms={page.programs} label="Programmes" class="mt-2" />
 				</div>
 			{/if}
 		{/snippet}
@@ -54,4 +60,6 @@
 	<EventProjectBlocks blocks={page.blocks} />
 
 	<EventProjectLinks links={page.externalLinks} />
+
+	<EventProjectFooter parentPage={page.parentPage} title={page.title} variant="project" />
 </article>

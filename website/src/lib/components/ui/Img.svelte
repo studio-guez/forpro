@@ -22,7 +22,7 @@
 		sizes = DEFAULT_SIZES,
 		class: className = '',
 		loading = 'lazy',
-		fetchpriority = 'auto',
+		fetchpriority = 'auto'
 	}: Props = $props();
 </script>
 

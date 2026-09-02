@@ -1,204 +1,209 @@
-@import "./lib/assets/fonts.css" layer(base);
-@import "tailwindcss";
+@import './lib/assets/fonts.css' layer(base);
+@import 'tailwindcss';
 @plugin "@tailwindcss/forms";
 
 /* SvelteKit error/layout routes are not in Vite's module graph until hit; scan them explicitly */
 @source "../routes";
 
 @theme static {
-    /* FONT FAMILY */
-    --font-sans: 'Jungka-ForPro', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	/* FONT FAMILY */
+	--font-sans:
+		'Jungka-ForPro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+		'Segoe UI Symbol', 'Noto Color Emoji';
 
-    /* COLORS */
-    --color-white: #FFFFFF;
-    --color-black: #000000;
-    --color-grey-light: #D9D9D9;
-    --color-grey-dark: #525252;
-    --color-blue: #1754FF;
-    --color-blue-light: #007DFF;
-    --color-blue-pale: #DDE7FF;
-    --color-orange: #FF6917;
-    --color-orange-light: #FFB86D;
-    --color-orange-pale: #FDEBDF;
-    --color-pink: #FF00FC;
-    --color-hotpink: #F5008C;
-    --color-purple: #37007D;
-    --color-purple-light: #8C78DC;
-    --color-purple-pale: #BEA5E6;
-    --color-teal: #009185;
-    --color-teal-light: #A5CEBA;
-    --color-teal-pale: #DFF0EA;
-    --color-red: #F2030D;
-    --color-yellow: #FFF800;
-    --color-green: #3DF069;
-    --color-beige: #D2C8B4;
-    --color-beige-light: #F2EFE9;
-    --color-brown: #B8B09F;
+	/* COLORS */
+	--color-white: #ffffff;
+	--color-black: #000000;
+	--color-grey-light: #d9d9d9;
+	--color-grey-dark: #525252;
+	--color-blue: #1754ff;
+	--color-blue-light: #007dff;
+	--color-blue-pale: #dde7ff;
+	--color-orange: #ff6917;
+	--color-orange-light: #ffb86d;
+	--color-orange-pale: #fdebdf;
+	--color-pink: #ff00fc;
+	--color-hotpink: #f5008c;
+	--color-purple: #37007d;
+	--color-purple-light: #8c78dc;
+	--color-purple-pale: #bea5e6;
+	--color-teal: #009185;
+	--color-teal-light: #a5ceba;
+	--color-teal-pale: #dff0ea;
+	--color-red: #f2030d;
+	--color-yellow: #fff800;
+	--color-green: #3df069;
+	--color-beige: #d2c8b4;
+	--color-beige-light: #f2efe9;
+	--color-brown: #b8b09f;
 
-    /* LINE HEIGHTS */
-    --text-xs--line-height: 1.1;
-    --text-sm--line-height: 1.15;
-    --text-base--line-height: 1.2;
-    --text-lg--line-height: 1.2;
-    --text-xl--line-height: 1.2;
-    --text-2xl--line-height: 1.2;
-    --text-3xl--line-height: 1.05;
-    --text-4xl--line-height: 1.05;
-    --text-5xl--line-height: 1;
-    --text-6xl--line-height: 1;
+	/* LINE HEIGHTS */
+	--text-xs--line-height: 1.1;
+	--text-sm--line-height: 1.15;
+	--text-base--line-height: 1.2;
+	--text-lg--line-height: 1.2;
+	--text-xl--line-height: 1.2;
+	--text-2xl--line-height: 1.2;
+	--text-3xl--line-height: 1.05;
+	--text-4xl--line-height: 1.05;
+	--text-5xl--line-height: 1;
+	--text-6xl--line-height: 1;
 
-    /* TRANSITION */
-    --default-transition-duration: 250ms;
+	/* TRANSITION */
+	--default-transition-duration: 250ms;
 
-    /* SPACING */
-    --spacing-lh: 1em;
-    --spacing-lh: 1lh;
+	/* SPACING */
+	--spacing-lh: 1em;
+	--spacing-lh: 1lh;
 
-    /* ANIMATION */
-    /* Duration and shift are set per instance: the scroll speed stays constant whatever the
+	/* ANIMATION */
+	/* Duration and shift are set per instance: the scroll speed stays constant whatever the
        text length, and the shift equals exactly one copy of the repeated track */
-    --animate-marquee: marquee 30s linear infinite;
+	--animate-marquee: marquee 30s linear infinite;
 
-    @keyframes marquee {
-        to {
-            transform: translateX(calc(-1 * var(--marquee-shift, 50%)));
-        }
-    }
+	@keyframes marquee {
+		to {
+			transform: translateX(calc(-1 * var(--marquee-shift, 50%)));
+		}
+	}
 }
 
 @layer base {
-    :root {
-        /* Width of the content column. Sections are capped one by one rather than
+	:root {
+		/* Width of the content column. Sections are capped one by one rather than
            through `main`, so a block can opt out with `max-w-none` and run edge to
            edge (see `BlockModuleTimeline`). */
-        --content-max: 90rem;
-    }
-    main > * {
-        max-width: var(--content-max);
-        margin-inline: auto;
-    }
-    html {
-        scrollbar-width: thin;
-        scrollbar-gutter: stable;
-        scroll-padding-top: 6.75rem;
-    }
-    button:not(:disabled) {
-        @apply cursor-pointer;
-    }
-    input[type="search"]::-webkit-search-cancel-button {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 1em;
-        height: 1em;
-        /* currentColor = the input's text color */
-        background-color: currentColor;
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='3' stroke-linecap='round' d='M5 5l14 14M19 5L5 19'/%3E%3C/svg%3E")
-            no-repeat center / contain;
-        cursor: pointer;
-    }
+		--content-max: 90rem;
+	}
+	main > * {
+		max-width: var(--content-max);
+		margin-inline: auto;
+	}
+	html {
+		scrollbar-width: thin;
+		scrollbar-gutter: stable;
+		scroll-padding-top: 6.75rem;
+	}
+	button:not(:disabled) {
+		@apply cursor-pointer;
+	}
+	input[type='search']::-webkit-search-cancel-button {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 1em;
+		height: 1em;
+		/* currentColor = the input's text color */
+		background-color: currentColor;
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='3' stroke-linecap='round' d='M5 5l14 14M19 5L5 19'/%3E%3C/svg%3E")
+			no-repeat center / contain;
+		cursor: pointer;
+	}
 }
 
 @layer utilities {
-    /* FONT STYLES */
+	/* FONT STYLES */
 
-    .text-h0 {
-        @apply text-5xl lg:text-8xl font-bold text-balance;
-    }
+	.text-h0 {
+		@apply text-5xl lg:text-8xl font-bold text-balance;
+	}
 
-    .text-h1{
-        @apply text-5xl lg:text-6xl font-bold text-balance;
-    }
+	.text-h1 {
+		@apply text-5xl lg:text-6xl font-bold text-balance;
+	}
 
-    .text-h2{
-        @apply text-4xl lg:text-5xl font-bold text-balance;
-    }
+	.text-h2 {
+		@apply text-4xl lg:text-5xl font-bold text-balance;
+	}
 
-    .text-h3{
-        @apply text-3xl lg:text-4xl font-bold text-balance;
-    }
+	.text-h3 {
+		@apply text-3xl lg:text-4xl font-bold text-balance;
+	}
 
-    .text-h4{
-        @apply text-2xl lg:text-3xl font-bold text-balance;
-    }
+	.text-h4 {
+		@apply text-2xl lg:text-3xl font-bold text-balance;
+	}
 
-    .text-highlight{
-        @apply text-2xl lg:text-3xl;
-    }
+	.text-highlight {
+		@apply text-2xl lg:text-3xl;
+	}
 
-    .text-body-1{
-        @apply text-lg lg:text-2xl;
-    }
+	.text-body-1 {
+		@apply text-lg lg:text-2xl;
+	}
 
-    .text-body-2{
-        @apply text-lg lg:text-xl;
-    }
+	.text-body-2 {
+		@apply text-lg lg:text-xl;
+	}
 
-    .text-label{
-        @apply text-sm lg:text-lg;
-    }
+	.text-label {
+		@apply text-sm lg:text-lg;
+	}
 
-    .text-caption{
-        @apply text-xs lg:text-base;
-    }
+	.text-caption {
+		@apply text-xs lg:text-base;
+	}
 
-    /* SPACING */
+	/* SPACING */
 
-    .px-card {
-        @apply px-5 lg:px-15 xl:px-30;
-    }
+	.px-card {
+		@apply px-5 lg:px-15 xl:px-30;
+	}
 
-    .-mx-card {
-        @apply -mx-5 lg:-mx-15 xl:-mx-30;
-    }
+	.-mx-card {
+		@apply -mx-5 lg:-mx-15 xl:-mx-30;
+	}
 
-    /* Gutter of a full-bleed section: the page gutter plus the margin the centred
+	/* Gutter of a full-bleed section: the page gutter plus the margin the centred
        content column leaves beside it, so its first item still lines up. */
-    .px-card-bleed {
-        --bleed: max(0px, calc((100% - var(--content-max)) / 2));
-        padding-inline: calc(var(--bleed) + 1.25rem);
-        @media (width >= 64rem) {
-            padding-inline: calc(var(--bleed) + 3.75rem);
-        }
-        @media (width >= 80rem) {
-            padding-inline: calc(var(--bleed) + 7.5rem);
-        }
-    }
+	.px-card-bleed {
+		--bleed: max(0px, calc((100% - var(--content-max)) / 2));
+		padding-inline: calc(var(--bleed) + 1.25rem);
+		@media (width >= 64rem) {
+			padding-inline: calc(var(--bleed) + 3.75rem);
+		}
+		@media (width >= 80rem) {
+			padding-inline: calc(var(--bleed) + 7.5rem);
+		}
+	}
 
-    .scroll-px-card {
-        @apply scroll-px-5 lg:scroll-px-15 xl:scroll-px-30;
-    }
+	.scroll-px-card {
+		@apply scroll-px-5 lg:scroll-px-15 xl:scroll-px-30;
+	}
 
-    /* UTILITIES */
-    .text-trim {
-        text-box-trim: trim-both;
-        text-box-edge: cap alphabetic;
-    }
+	/* UTILITIES */
+	.text-trim {
+		text-box-trim: trim-both;
+		text-box-edge: cap alphabetic;
+	}
 }
 
 @layer components {
-    /* PROSE */
-    .prose {
-        p:not(:last-child), ul:not(:last-child), ol:not(:last-child) {
-            @apply mb-[.75lh];
-        }
-        ul, ol {
-            @apply list-outside pl-[1.25em];
-            & > li > p {
-                @apply inline;
-            }
-        }
-        ul {
-            @apply list-disc;
-        }
-        ol {
-            @apply list-decimal;
-            ol {
-                @apply list-[lower-alpha];
-            }
-        }
-        a {
-            @apply opacity-50 underline hover:opacity-100 transition-opacity;
-        }
-    }
-
+	/* PROSE */
+	.prose {
+		p:not(:last-child),
+		ul:not(:last-child),
+		ol:not(:last-child) {
+			@apply mb-[.75lh];
+		}
+		ul,
+		ol {
+			@apply list-outside pl-[1.25em];
+			& > li > p {
+				@apply inline;
+			}
+		}
+		ul {
+			@apply list-disc;
+		}
+		ol {
+			@apply list-decimal;
+			ol {
+				@apply list-[lower-alpha];
+			}
+		}
+		a {
+			@apply opacity-50 underline hover:opacity-100 transition-opacity;
+		}
+	}
 }
