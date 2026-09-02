@@ -4,12 +4,19 @@
 	import IconEmail from '$lib/components/svg/IconEmail.svelte';
 	import IconPhone from '$lib/components/svg/IconPhone.svelte';
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
+	import {
+		CTA_BASE,
+		ctaColorClasses,
+		ctaIconSizeClasses,
+		ctaSizeClasses,
+		type CtaSize
+	} from '$lib/utils/ctaStyles';
 
 	interface Props {
 		cta: PageCta;
 		color?: string;
 		inverted?: boolean;
-		size?: 'md' | 'lg';
+		size?: CtaSize;
 		class?: string;
 	}
 
@@ -21,18 +28,7 @@
 		class: className = ''
 	}: Props = $props();
 
-	const sizeClasses = {
-		md: 'text-base lg:text-lg gap-2 lg:gap-2.5 px-2.25 lg:px-5.5 h-10.5 lg:h-12.5 border-3',
-		lg: 'text-base lg:text-2xl gap-2 lg:gap-3 px-2.25 lg:px-7.5 h-10.5 lg:h-17 border-3 lg:border-4'
-	};
-
-	const colorClasses = $derived(
-		inverted
-			? 'text-white border-white hover:bg-white hover:text-(--color-cta)'
-			: 'text-(--color-cta) border-(--color-cta) hover:bg-(--color-cta) hover:text-white'
-	);
-
-	const iconSizeClasses = { md: 'w-6 lg:w-7 h-6 lg:h-7', lg: 'w-6 lg:w-9.5 h-6 lg:h-9.5' };
+	const colorClasses = $derived(ctaColorClasses(inverted));
 </script>
 
 <a
@@ -40,14 +36,12 @@
 	target={cta.target ?? undefined}
 	rel={cta.target === '_blank' ? 'noopener noreferrer' : undefined}
 	style:--color-cta={color}
-	class="font-bold leading-none inline-flex items-center rounded-full bg-transparent backdrop-blur-xs {colorClasses} transition-colors {sizeClasses[
-		size
-	]} {className}"
+	class="{CTA_BASE} {colorClasses} {ctaSizeClasses[size]} {className}"
 >
 	<span class="text-trim">{cta.label}</span>
-	{#if cta.icon === 'arrow'}<IconArrow class={iconSizeClasses[size]} />
-	{:else if cta.icon === 'email'}<IconEmail class={iconSizeClasses[size]} />
-	{:else if cta.icon === 'phone'}<IconPhone class={iconSizeClasses[size]} />
-	{:else if cta.icon === 'plus'}<IconPlus class={iconSizeClasses[size]} />
+	{#if cta.icon === 'arrow'}<IconArrow class={ctaIconSizeClasses[size]} />
+	{:else if cta.icon === 'email'}<IconEmail class={ctaIconSizeClasses[size]} />
+	{:else if cta.icon === 'phone'}<IconPhone class={ctaIconSizeClasses[size]} />
+	{:else if cta.icon === 'plus'}<IconPlus class={ctaIconSizeClasses[size]} />
 	{/if}
 </a>
