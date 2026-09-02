@@ -227,7 +227,7 @@
 
 				{#if header.socialLinks.length > 0}
 					<ul class="flex flex-col gap-y-3">
-						{#each header.socialLinks as social (social.platform)}
+						{#each header.socialLinks as social, i (`${social.platform}-${i}`)}
 							{@const Icon = socialIcons[social.platform]}
 							<li>
 								<a
