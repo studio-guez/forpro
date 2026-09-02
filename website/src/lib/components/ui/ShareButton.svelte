@@ -1,13 +1,22 @@
 <script lang="ts">
-	import IconLink from '$lib/components/svg/IconLink.svelte';
+	import IconShare from '$lib/components/svg/IconShare.svelte';
+	import {
+		CTA_BASE,
+		ctaColorClasses,
+		ctaIconSizeClasses,
+		ctaSizeClasses,
+		type CtaSize
+	} from '$lib/utils/ctaStyles';
 
 	interface Props {
 		/** Title passed to the native share sheet. Falls back to the document title. */
 		title?: string;
 		label?: string;
 		copiedLabel?: string;
-		/** Any CSS colour: drives the border, the label and the hover fill. */
+		/** Any CSS colour: drives the outline, the label and the hover fill. */
 		color?: string;
+		inverted?: boolean;
+		size?: CtaSize;
 		class?: string;
 	}
 
@@ -16,8 +25,12 @@
 		label = 'Partager',
 		copiedLabel = 'Lien copié !',
 		color = 'var(--color-blue)',
+		inverted = false,
+		size = 'md',
 		class: className = ''
 	}: Props = $props();
+
+	const colorClasses = $derived(ctaColorClasses(inverted));
 
 	let shared = $state(false);
 
@@ -40,26 +53,10 @@
 
 <button
 	type="button"
-	style:--share-color={color}
-	class={[
-		'share-button text-label inline-flex items-center gap-2.5 rounded-full border-3 px-5.5 py-3 leading-none transition-colors',
-		className
-	]}
+	style:--color-cta={color}
+	class="{CTA_BASE} {colorClasses} {ctaSizeClasses[size]} {className}"
 	onclick={share}
 >
-	<span aria-live="polite">{shared ? copiedLabel : label}</span>
-	<IconLink class="w-5.5 h-5.5" />
+	<span class="text-trim" aria-live="polite">{shared ? copiedLabel : label}</span>
+	<IconShare class={ctaIconSizeClasses[size]} />
 </button>
-
-<style>
-	/* The colour is a prop, so it cannot be a Tailwind class. */
-	.share-button {
-		border-color: var(--share-color);
-		color: var(--share-color);
-	}
-
-	.share-button:hover {
-		background-color: var(--share-color);
-		color: var(--color-white);
-	}
-</style>

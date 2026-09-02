@@ -21,8 +21,8 @@
 		<ShareButton {title} {color} class="ms-auto" />
 	</div>
 	{#if parentPage}
-	<div class="mt-12 lg:mt-18">
-		<BackLink {parentPage} {color} />
-	</div>
+		<div class="mt-12 lg:mt-18">
+			<BackLink {parentPage} {color} />
+		</div>
 	{/if}
 </div>
