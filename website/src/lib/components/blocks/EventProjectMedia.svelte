@@ -17,23 +17,28 @@
 
 	const hasMedia = $derived(medias.length > 0 || embedVideos.length > 0);
 
-	const mediaSizes = toSizes(cell(PAGE_CARD, { 0: 1, 1024: 2 }, 2.25));
+	// Alternate the media column span in a 2/2/1/1 pattern, like `BlockModuleCases`.
+	const mediaSpan = (index: number) => [2, 1, 1, 2][index % 4];
+
+	const mediaSizes = (index: number) =>
+		toSizes(cell(PAGE_CARD, { 0: 1, 1024: 3 }, 1.5, mediaSpan(index)));
 </script>
 
 {#if hasMedia}
 	<section class={['px-card', className]} aria-label="Médias — {title}">
-		<div class="grid grid-cols-1 lg:grid-cols-3 max-lg:gap-y-2.5 gap-6">
+		<div class="grid grid-cols-1 lg:grid-cols-3 max-lg:gap-y-2.5 gap-6 items-stretch">
 			{#each medias as media, index (index)}
-				<figure class="m-0">
-					{#if media.type === 'video'}
-						<VideoPlayer src={media.url} class="rounded-2xl" />
-					{:else}
-						<Img
-							image={media}
-							sizes={mediaSizes}
-							class="w-full h-50 lg:h-100 object-cover rounded-2xl"
-						/>
-					{/if}
+				<figure class="m-0 flex flex-col" class:lg:col-span-2={mediaSpan(index) === 2}>
+					<div
+						class="grow overflow-hidden rounded-2xl min-h-50 md:min-h-80 lg:min-h-100"
+						class:[contain:size]={media.type !== 'video'}
+					>
+						{#if media.type === 'video'}
+							<VideoPlayer src={media.url} />
+						{:else}
+							<Img image={media} sizes={mediaSizes(index)} class="w-full h-full object-cover" />
+						{/if}
+					</div>
 					{#if media.caption}
 						<figcaption class="text-caption text-grey-dark mt-2">{media.caption}</figcaption>
 					{/if}
