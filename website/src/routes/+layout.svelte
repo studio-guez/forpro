@@ -1,5 +1,8 @@
 <script lang="ts">
 	import '../app.css';
+	import 'lenis/dist/lenis.css';
+	import { onMount } from 'svelte';
+	import { initSmoothScroll } from '$lib/utils/smoothScroll';
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
 	import SiteMarquee from '$lib/components/layout/SiteMarquee.svelte';
 	import { IS_PROD } from '$lib/env';
@@ -11,6 +14,8 @@
 	}
 
 	let { data, children }: Props = $props();
+
+	onMount(initSmoothScroll);
 
 	const favicon = $derived(data.favicon);
 	// Apple touch icons ignore prefers-color-scheme, so pick the light 180×180 master.
