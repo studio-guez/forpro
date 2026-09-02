@@ -6,9 +6,11 @@
 	interface Props {
 		project: ProjetCard;
 		headingTag?: string;
+		/** Rendered slot width — the card is laid out by its parent, which owns the geometry. */
+		sizes?: string;
 	}
 
-	let { project, headingTag = 'h3' }: Props = $props();
+	let { project, headingTag = 'h3', sizes }: Props = $props();
 
 	const tag = $derived(project.programs[0] ?? project.categories[0] ?? null);
 	const meta = $derived(
@@ -25,7 +27,7 @@
 			<Img
 				image={project.cover}
 				alt={project.cover.alt ?? project.title}
-				sizes="(min-width: 768px) 50vw, 80vw"
+				{sizes}
 				class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
 			/>
 		{/if}

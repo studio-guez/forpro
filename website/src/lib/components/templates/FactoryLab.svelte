@@ -3,6 +3,7 @@
 	import PageHeader from '$lib/components/blocks/PageHeader.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
+	import { CARD, cell, toSizes } from '$lib/utils/imgSizes';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
 	import { getThemeColors } from '$lib/utils/themeColors';
 	import type { CompanyBadge, FactoryLabPage } from '$lib/interfaces/factoryLab';
@@ -11,6 +12,8 @@
 
 	const companiesModule = $derived(page.companiesModule);
 	const colors = $derived(getThemeColors(page.theme, companiesModule.variant));
+
+	const companySizes = toSizes(cell(CARD, { 0: 1, 1024: 2 }, 1.5));
 
 	const badgeClass =
 		'text-caption inline-flex items-center gap-1.5 rounded-full px-3 py-1 leading-tight';
@@ -79,7 +82,7 @@
 							<Img
 								image={company.image}
 								alt={company.image.alt ?? company.title}
-								sizes="(min-width: 768px) 50vw, 100vw"
+								sizes={companySizes}
 								class="w-full h-full object-cover"
 							/>
 						{/if}

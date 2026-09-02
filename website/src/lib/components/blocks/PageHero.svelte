@@ -2,6 +2,7 @@
 	import type { CmsImage, Theme } from '$lib/interfaces/page';
 	import Img from '$lib/components/ui/Img.svelte';
 	import ArrowOvertitle from '$lib/components/svg/ArrowOvertitle.svelte';
+	import { toSizes } from '$lib/utils/imgSizes';
 
 	interface Props {
 		title: string;
@@ -29,6 +30,9 @@
 	};
 
 	const arrowFill = $derived(arrowFillByTheme[theme] ?? 'fill-white');
+
+	// The hero plate fills the section, minus its px-5 / lg:px-9 gutter.
+	const coverSizes = toSizes({ 0: 'calc(100vw - 2.5rem)', 1024: 'calc(min(100vw, 90rem) - 4.5rem)' });
 </script>
 
 <section class="px-5 lg:px-9" aria-labelledby="page-title">
@@ -47,7 +51,7 @@
 		{#if cover}
 		<Img
 			image={cover}
-			sizes="100vw"
+			sizes={coverSizes}
 			class="absolute inset-0 h-full w-full object-cover"
 			loading="eager"
 			fetchpriority="high"

@@ -4,6 +4,7 @@
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
 	import LoadMore from '$lib/components/ui/LoadMore.svelte';
 	import ProjectCard from '$lib/components/ui/ProjectCard.svelte';
+	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import {
@@ -21,6 +22,9 @@
 	import type { TaxonomyFilterTerm } from '$lib/interfaces/taxonomy';
 
 	let { page }: { page: ProjectsPage } = $props();
+
+	// Card grid: full-width section, 1 / sm:2 / lg:3 columns with a 1.5rem gutter.
+	const cardSizes = toSizes(cell(PAGE, { 0: 1, 640: 2, 1024: 3 }, 1.5));
 
 	const color = 'var(--color-orange)';
 	const noResultsText = 'Aucun projet ne correspond à votre recherche.';
@@ -157,7 +161,7 @@
 			<ul class="mt-9 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
 				{#each visibleProjects as project (project.url)}
 					<li>
-						<ProjectCard {project} headingTag="h2" />
+						<ProjectCard {project} headingTag="h2" sizes={cardSizes} />
 					</li>
 				{/each}
 			</ul>

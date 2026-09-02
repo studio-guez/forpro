@@ -2,6 +2,7 @@
 	import { page as appPage } from '$app/state';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import EventCard from '$lib/components/ui/EventCard.svelte';
+	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import EventListItem from '$lib/components/ui/EventListItem.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
@@ -22,6 +23,9 @@
 	import type { EventsPage } from '$lib/interfaces/event';
 
 	let { page }: { page: EventsPage } = $props();
+
+	// Card grid: full-width section, 1 / sm:2 / lg:3 columns with a 1.5rem gutter.
+	const cardSizes = toSizes(cell(PAGE, { 0: 1, 640: 2, 1024: 3 }, 1.5));
 
 	const color = 'var(--color-blue)';
 	const noResultsText = 'Aucun événement ne correspond à votre recherche.';
@@ -143,7 +147,7 @@
 			<ul class="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 				{#each upcoming as event (event.url)}
 					<li class="aspect-3/4">
-						<EventCard {event} {color} headingTag="h2" />
+						<EventCard {event} {color} headingTag="h2" sizes={cardSizes} />
 					</li>
 				{/each}
 			</ul>

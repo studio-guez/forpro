@@ -4,6 +4,7 @@
 	import Card from '$lib/components/ui/Card.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
+	import { CARD, cell, toSizes } from '$lib/utils/imgSizes';
 
 	interface Props {
 		content: ModuleTitreTexteImageContent;
@@ -14,6 +15,8 @@
 
 	const colors = $derived(getThemeColors(theme, content.variant));
 	const isImageLeft = $derived(content.imagePosition === 'left');
+
+	const imageSizes = toSizes(cell(CARD, { 0: 1, 1280: 2 }, 1.5));
 </script>
 
 <Card
@@ -26,7 +29,7 @@
 	<div class="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-y-12">
 		{#if content.image}
 			<div class="overflow-hidden rounded-2xl [contain:size] min-h-75" class:xl:order-last={!isImageLeft}>
-				<Img image={content.image} class="w-full h-full object-cover" />
+				<Img image={content.image} sizes={imageSizes} class="w-full h-full object-cover" />
 			</div>
 		{/if}
 		<div>

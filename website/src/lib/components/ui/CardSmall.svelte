@@ -2,6 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import type { CmsImage } from '$lib/interfaces/page';
 	import Img from '$lib/components/ui/Img.svelte';
+	import { CARD_SMALL, toSizes } from '$lib/utils/imgSizes';
 
 	interface Props {
 		children: Snippet;
@@ -39,7 +40,12 @@
 		{style}
 	>
 		{#if backgroundImage}
-			<Img image={backgroundImage} alt="" class="absolute inset-0 w-full h-full object-cover" />
+			<Img
+				image={backgroundImage}
+				alt=""
+				sizes={toSizes(CARD_SMALL)}
+				class="absolute inset-0 w-full h-full object-cover"
+			/>
 			<div class="absolute inset-0 bg-black/30"></div>
 		{/if}
 

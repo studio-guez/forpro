@@ -48,7 +48,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
 			<h2 id="page-intro-title" class="text-h4 max-lg:text-center">
 				{#if titleImage}
-					<Img image={titleImage} alt={title} class="max-lg:mx-auto max-w-80 max-h-40 object-contain" />
+					<Img image={titleImage} alt={title} sizes="20rem" class="max-lg:mx-auto max-w-80 max-h-40 object-contain" />
 				{:else}
 					{title}
 				{/if}
@@ -67,7 +67,7 @@
 	{:else}
 		<h2 id="page-intro-title" class="text-h2 mb-6 lg:mb-12 text-center">
 			{#if titleImage}
-				<Img image={titleImage} alt={title} class="mx-auto max-w-80 max-h-40 object-contain" />
+				<Img image={titleImage} alt={title} sizes="20rem" class="mx-auto max-w-80 max-h-40 object-contain" />
 			{:else}
 				{title}
 			{/if}

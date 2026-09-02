@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import Img from '$lib/components/ui/Img.svelte';
+	import { PAGE_CARD, toSizes } from '$lib/utils/imgSizes';
 	import type { CmsImage } from '$lib/interfaces/page';
 
 	interface Props {
@@ -21,7 +22,7 @@
 			alt={cover.alt ?? title}
 			loading="eager"
 			fetchpriority="high"
-			sizes="100vw"
+			sizes={toSizes(PAGE_CARD)}
 			class="w-full h-auto max-h-[60vh] object-cover rounded-2xl"
 		/>
 	{/if}

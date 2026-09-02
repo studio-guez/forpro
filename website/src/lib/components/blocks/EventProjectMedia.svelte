@@ -2,6 +2,7 @@
 	import Img from '$lib/components/ui/Img.svelte';
 	import VideoPlayer from '$lib/components/ui/VideoPlayer.svelte';
 	import YoutubeEmbed from '$lib/components/ui/YoutubeEmbed.svelte';
+	import { PAGE_CARD, cell, toSizes } from '$lib/utils/imgSizes';
 	import type { CmsMedia } from '$lib/interfaces/page';
 	import type { YoutubeEmbedData } from '$lib/interfaces/eventProject';
 
@@ -15,6 +16,8 @@
 	let { medias = [], embedVideos = [], title, class: className = '' }: Props = $props();
 
 	const hasMedia = $derived(medias.length > 0 || embedVideos.length > 0);
+
+	const mediaSizes = toSizes(cell(PAGE_CARD, { 0: 1, 1024: 2 }, 2.25));
 </script>
 
 {#if hasMedia}
@@ -27,7 +30,7 @@
 					{:else}
 						<Img
 							image={media}
-							sizes="(min-width: 768px) 50vw, 100vw"
+							sizes={mediaSizes}
 							class="w-full h-auto rounded-2xl"
 						/>
 					{/if}
