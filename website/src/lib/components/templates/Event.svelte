@@ -3,6 +3,7 @@
 	import EventProjectMedia from '$lib/components/blocks/EventProjectMedia.svelte';
 	import EventProjectBlocks from '$lib/components/blocks/EventProjectBlocks.svelte';
 	import EventProjectLinks from '$lib/components/blocks/EventProjectLinks.svelte';
+	import EventProjectFooter from '$lib/components/blocks/EventProjectFooter.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import {
 		formatEventDate,
@@ -67,4 +68,6 @@
 	<EventProjectBlocks blocks={page.blocks} />
 
 	<EventProjectLinks links={page.externalLinks} />
+
+	<EventProjectFooter parentPage={page.parentPage} title={page.title} variant="event" />
 </article>
