@@ -9,12 +9,7 @@ require_once 'utils/Utils.php';
 $json = Utils::getPageBaseData($page, 'job-offer');
 
 // The index the "back" link points to, i.e. the real Kirby parent (job-offers).
-$parent = $page->parent();
-$json['parentPage'] = $parent ? [
-    'title' => $parent->title()->value(),
-    'slug'  => $parent->slug(),
-    'path'  => $parent->virtualPath(),
-] : null;
+$json['parentPage'] = Utils::getParentPageData($page);
 
 $json['sectors'] = Utils::resolveTaxonomyTerms($page->sectors(), 'sectors');
 

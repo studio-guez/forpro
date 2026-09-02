@@ -163,6 +163,21 @@ trait UtilsPages
     }
 
     /**
+     * The page a "back" link points to: the real Kirby parent, resolved to the
+     * public frontend path. Null on a top-level page.
+     */
+    static function getParentPageData(\Kirby\Cms\Page $page): ?array
+    {
+        $parent = $page->parent();
+
+        return $parent ? [
+            'title' => $parent->title()->value(),
+            'slug'  => $parent->slug(),
+            'path'  => $parent->virtualPath(),
+        ] : null;
+    }
+
+    /**
      * Payload of a `module-cta` block, used both inside a body blocks field and
      * as a standalone single-block field (team page).
      */
@@ -207,6 +222,7 @@ trait UtilsPages
             'embedVideos'   => self::getYoutubeEmbeds($page->embedVideos()),
             'blocks'        => self::getContentBlocks($page->blocks()),
             'externalLinks' => self::getExternalLinks($page->externalLinks()),
+            'parentPage'    => self::getParentPageData($page),
             'seo'           => self::getSeoDataFromPage($page),
         ];
     }

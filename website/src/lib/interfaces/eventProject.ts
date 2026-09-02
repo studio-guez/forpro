@@ -1,4 +1,4 @@
-import type { CmsImage, CmsMedia, Seo } from './page';
+import type { CmsImage, CmsMedia, PageParent, Seo } from './page';
 
 // A YouTube embed resolved by the CMS. `type` distinguishes a regular 16:9
 // video from a vertical Short; `embedUrl` is the privacy-friendly nocookie URL.
@@ -33,5 +33,7 @@ export interface EventProjectBase {
 	readonly embedVideos: YoutubeEmbedData[];
 	readonly blocks: ContentBlock[];
 	readonly externalLinks: ContentExternalLink[];
+	/** The index the "back" link points to (agenda / projets). */
+	readonly parentPage: PageParent | null;
 	readonly seo: Seo;
 }
