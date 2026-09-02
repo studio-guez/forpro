@@ -4,6 +4,7 @@
 	import Carousel from '$lib/components/ui/Carousel.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import EventCard from '$lib/components/ui/EventCard.svelte';
+	import { CARD, cell, toSizes } from '$lib/utils/imgSizes';
 	import ShapeAgenda1 from '$lib/components/svg/ShapeAgenda1.svelte';
 	import ShapeAgenda2 from '$lib/components/svg/ShapeAgenda2.svelte';
 
@@ -17,6 +18,8 @@
 	const colors = { main: 'var(--color-blue)', deco: 'var(--color-blue-light)' };
 
 	const filled = $derived(content.variant !== 'inverted');
+
+	const cardSizes = toSizes(cell(CARD, { 0: 1.25, 768: 3 }, 1.5));
 </script>
 
 {#if content.events.length > 0}
@@ -40,13 +43,13 @@
 		class="mt-12"
 	>
 		{#snippet item(event)}
-			<EventCard {event} color={colors.main} />
+			<EventCard {event} color={colors.main} sizes={cardSizes} />
 		{/snippet}
 	</Carousel>
 
 	{#if content.cta}
 		<div class="flex justify-center md:justify-end mt-8">
-			<CtaLink cta={content.cta} color={colors.main} inverted={filled} />
+			<CtaLink cta={content.cta} color={colors.main} inverted={filled} size="lg" />
 		</div>
 	{/if}
 </Card>

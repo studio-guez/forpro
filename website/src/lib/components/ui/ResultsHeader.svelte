@@ -24,7 +24,7 @@
 	}: Props = $props();
 </script>
 
-<div style:--results-color={color} class="border-t border-black pt-6 md:pt-8 {className}">
+<div style:--results-color={color} class="border-t border-black pt-6 lg:pt-8 {className}">
 	<div class="flex flex-wrap items-start justify-between gap-4">
 		<div>
 			<h2 class="text-h2 text-(--results-color)">
@@ -44,7 +44,7 @@
 			onclick={onClear}
 		>
 			Effacer la recherche
-			<IconClose width={18} height={19} />
+			<IconClose class="w-4.75 h-4.75" />
 		</button>
 	</div>
 

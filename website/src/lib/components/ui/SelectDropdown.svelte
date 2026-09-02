@@ -34,17 +34,13 @@
 		<select
 			id="select-{uid}"
 			bind:value
-			class="text-label appearance-none bg-transparent border-0 border-b-2 border-current text-current pl-0 pr-9 py-1 focus:border-current focus:ring-0"
+			class="text-label appearance-none bg-transparent border-0 border-b-2 border-current text-current pl-0 pr-9 py-1 focus:border-current focus:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
 		>
 			<option value="">{value === '' ? label : allLabel}</option>
 			{#each options as option (option.value)}
 				<option value={option.value}>{option.label}</option>
 			{/each}
 		</select>
-		<IconChevron
-			width={20}
-			height={21}
-			class="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none"
-		/>
+		<IconChevron class="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none w-5.25 h-5.25" />
 	</div>
 </div>

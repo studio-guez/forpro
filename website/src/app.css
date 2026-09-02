@@ -16,6 +16,7 @@
     --color-grey-dark: #525252;
     --color-blue: #1754FF;
     --color-blue-light: #007DFF;
+    --color-blue-pale: #DDE7FF;
     --color-orange: #FF6917;
     --color-orange-light: #FFB86D;
     --color-orange-pale: #FDEBDF;
@@ -26,20 +27,60 @@
     --color-purple-pale: #BEA5E6;
     --color-teal: #009185;
     --color-teal-light: #A5CEBA;
+    --color-teal-pale: #DFF0EA;
     --color-red: #F2030D;
+    --color-yellow: #FFF800;
     --color-green: #3DF069;
     --color-beige: #D2C8B4;
     --color-beige-light: #F2EFE9;
     --color-brown: #B8B09F;
 
+    /* LINE HEIGHTS */
+    --text-xs--line-height: 1.1;
+    --text-sm--line-height: 1.15;
+    --text-base--line-height: 1.2;
+    --text-lg--line-height: 1.2;
+    --text-xl--line-height: 1.2;
+    --text-2xl--line-height: 1.2;
+    --text-3xl--line-height: 1.05;
+    --text-4xl--line-height: 1.05;
+    --text-5xl--line-height: 1;
+    --text-6xl--line-height: 1;
+
     /* TRANSITION */
     --default-transition-duration: 250ms;
+
+    /* SPACING */
+    --spacing-lh: 1em;
+    --spacing-lh: 1lh;
+
+    /* ANIMATION */
+    /* Duration and shift are set per instance: the scroll speed stays constant whatever the
+       text length, and the shift equals exactly one copy of the repeated track */
+    --animate-marquee: marquee 30s linear infinite;
+
+    @keyframes marquee {
+        to {
+            transform: translateX(calc(-1 * var(--marquee-shift, 50%)));
+        }
+    }
 }
 
 @layer base {
+    :root {
+        /* Width of the content column. Sections are capped one by one rather than
+           through `main`, so a block can opt out with `max-w-none` and run edge to
+           edge (see `BlockModuleTimeline`). */
+        --content-max: 90rem;
+    }
+    main > * {
+        max-width: var(--content-max);
+        margin-inline: auto;
+    }
     html {
         scrollbar-width: thin;
         scrollbar-gutter: stable;
+        scroll-padding-top: 6.75rem;
     }
     button:not(:disabled) {
         @apply cursor-pointer;
@@ -61,61 +102,76 @@
     /* FONT STYLES */
 
     .text-h0 {
-        @apply text-5xl md:text-8xl font-bold text-balance;
+        @apply text-5xl lg:text-8xl font-bold text-balance;
     }
 
     .text-h1{
-        @apply text-5xl md:text-6xl font-bold text-balance;
+        @apply text-5xl lg:text-6xl font-bold text-balance;
     }
 
     .text-h2{
-        @apply text-4xl md:text-5xl font-bold text-balance;
+        @apply text-4xl lg:text-5xl font-bold text-balance;
     }
 
     .text-h3{
-        @apply text-3xl md:text-4xl font-bold text-balance;
+        @apply text-3xl lg:text-4xl font-bold text-balance;
     }
 
     .text-h4{
-        @apply text-2xl md:text-3xl font-bold text-balance;
+        @apply text-2xl lg:text-3xl font-bold text-balance;
     }
 
     .text-highlight{
-        @apply text-2xl md:text-3xl;
+        @apply text-2xl lg:text-3xl;
     }
 
     .text-body-1{
-        @apply text-lg md:text-2xl;
+        @apply text-lg lg:text-2xl;
     }
 
     .text-body-2{
-        @apply text-lg md:text-xl;
+        @apply text-lg lg:text-xl;
     }
 
     .text-label{
-        @apply text-sm md:text-lg;
+        @apply text-sm lg:text-lg;
     }
 
     .text-caption{
-        @apply text-xs md:text-base;
+        @apply text-xs lg:text-base;
     }
 
-    /* PADDING */
-
-    .px-base {
-        @apply px-5 md:px-9;
-    }
+    /* SPACING */
 
     .px-card {
-        @apply px-8 md:px-30;
+        @apply px-5 lg:px-15 xl:px-30;
     }
 
     .-mx-card {
-        @apply -mx-8 md:-mx-30;
+        @apply -mx-5 lg:-mx-15 xl:-mx-30;
+    }
+
+    /* Gutter of a full-bleed section: the page gutter plus the margin the centred
+       content column leaves beside it, so its first item still lines up. */
+    .px-card-bleed {
+        --bleed: max(0px, calc((100% - var(--content-max)) / 2));
+        padding-inline: calc(var(--bleed) + 1.25rem);
+        @media (width >= 64rem) {
+            padding-inline: calc(var(--bleed) + 3.75rem);
+        }
+        @media (width >= 80rem) {
+            padding-inline: calc(var(--bleed) + 7.5rem);
+        }
     }
 
     .scroll-px-card {
-        @apply scroll-px-8 md:scroll-px-30;
+        @apply scroll-px-5 lg:scroll-px-15 xl:scroll-px-30;
+    }
+
+    /* UTILITIES */
+    .text-trim {
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
     }
 }
 

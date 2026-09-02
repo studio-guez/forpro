@@ -18,6 +18,21 @@ columns:
         layout: cards
         image:
           back: pattern
+      logoEntrepriseFormatrice:
+        label:
+          en: Certified training company logo
+          fr: Logo entreprise formatrice
+        help:
+          en: Shown next to the main logo at the bottom of the footer.
+          fr: Affiché à côté du logo principal en bas du pied de page.
+        type: files
+        uploads: image
+        multiple: false
+        required: true
+        max: 1
+        layout: cards
+        image:
+          back: pattern
 
   - width: 1/2
     fields:

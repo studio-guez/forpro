@@ -23,7 +23,7 @@
 </script>
 
 <article
-	class="relative h-full flex flex-col gap-4 rounded-3xl border-2 border-blue text-blue p-6 md:p-8"
+	class="relative h-full flex flex-col gap-4 rounded-3xl border-2 border-blue text-blue p-6 lg:p-8"
 >
 	<svelte:element this={headingTag} class="text-h4">
 		<a href={offer.url} class="hover:opacity-70 transition after:absolute after:inset-0">

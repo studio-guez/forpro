@@ -5,6 +5,7 @@
 	import IconClose from '$lib/components/svg/IconClose.svelte';
 	import IconSpinner from '$lib/components/svg/IconSpinner.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
+	import { lockPageScroll } from '$lib/utils/smoothScroll';
 	import type { SearchGroup, SearchResponse, SearchResult } from '$lib/interfaces/search';
 
 	interface Props {
@@ -80,10 +81,14 @@
 	};
 
 	$effect(() => {
+		if (!open) return;
+		return lockPageScroll();
+	});
+
+	$effect(() => {
 		if (!dialog) return;
 		if (open && !dialog.open) {
 			dialog.showModal();
-			document.body.style.overflow = 'hidden';
 			tick().then(() => {
 				input?.focus();
 				input?.setSelectionRange(value.length, value.length);
@@ -91,10 +96,6 @@
 		} else if (!open && dialog.open) {
 			dialog.close();
 		}
-	});
-
-	$effect(() => () => {
-		document.body.style.overflow = '';
 	});
 
 	$effect(() => {
@@ -235,16 +236,15 @@
 	onclose={() => {
 		open = false;
 		group = 'all';
-		document.body.style.overflow = '';
 	}}
 	onclick={(event) => {
 		if (event.target === dialog) close();
 	}}
 	aria-label="Recherche sur le site"
-	class="fixed top-0 left-1/2 mt-4 md:mt-24 -translate-x-1/2 w-[min(64rem,calc(100vw-1.5rem))] max-h-[calc(100dvh-2rem)] md:max-h-[calc(100dvh-12rem)] hidden open:flex flex-col overflow-hidden rounded-3xl bg-white p-0 text-blue shadow-2xl backdrop:bg-black/40"
+	class="fixed top-0 left-1/2 mt-4 lg:mt-24 -translate-x-1/2 w-[min(64rem,calc(100vw-1.5rem))] max-h-[calc(100dvh-2rem)] lg:max-h-[calc(100dvh-12rem)] hidden open:flex flex-col overflow-hidden rounded-3xl bg-white p-0 text-blue shadow-2xl backdrop:bg-black/40"
 >
-	<div class="flex items-center gap-x-2 px-5 md:px-8 py-4 border-b-2 border-grey-light shrink-0">
-		<IconSearch class="shrink-0" />
+	<div class="flex items-center gap-x-2 px-5 lg:px-8 py-4 border-b-2 border-grey-light shrink-0">
+		<IconSearch class="shrink-0 mr-2" />
 		<input
 			bind:this={input}
 			bind:value
@@ -252,7 +252,7 @@
 			type="text"
 			placeholder="Rechercher..."
 			aria-label="Rechercher sur le site"
-			class="text-body-2 font-bold text-blue bg-transparent border-0 grow min-w-0 placeholder:text-blue/50 focus:ring-0 focus:outline-none"
+			class="text-body-2 font-bold text-blue bg-transparent border-0 grow min-w-0 placeholder:text-blue/50 focus:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue rounded-full"
 		/>
 		<button
 			type="button"
@@ -260,7 +260,7 @@
 			class="shrink-0 p-2 rounded-full hover:bg-blue hover:text-white transition-colors"
 			aria-label="Fermer la recherche"
 		>
-			<IconClose class="shrink-0 w-6 h-auto" width="24" height="25" />
+			<IconClose class="shrink-0 w-6.25 h-6.25" />
 		</button>
 	</div>
 
@@ -268,7 +268,7 @@
 		<div
 			role="group"
 			aria-label="Filtrer par type de contenu"
-			class="flex flex-wrap gap-2 px-5 md:px-8 py-3 border-b-2 border-grey-light shrink-0 overflow-x-auto"
+			class="flex flex-wrap gap-2 px-5 lg:px-8 py-3 border-b-2 border-grey-light shrink-0 overflow-x-auto"
 		>
 			{#each TABS as tab (tab.value)}
 				<button
@@ -288,7 +288,7 @@
 		</div>
 	{/if}
 
-	<div bind:this={scroller} class="overflow-y-auto px-5 md:px-8 py-4">
+	<div bind:this={scroller} class="overflow-y-auto px-5 lg:px-8 py-4">
 		<p class="sr-only" aria-live="polite">
 			{#if loading}
 				Recherche en cours
@@ -321,11 +321,11 @@
 								<Img
 									image={result.cover}
 									alt=""
-									sizes="(min-width: 768px) 8rem, 4rem"
-									class="shrink-0 w-16 h-16 md:w-32 md:h-32 rounded-xl object-cover bg-grey-light"
+									sizes="(min-width: 1024px) 8rem, 4rem"
+									class="shrink-0 w-16 h-16 lg:w-32 lg:h-32 rounded-xl object-cover bg-grey-light"
 								/>
 							{:else}
-								<div class="shrink-0 w-16 h-16 md:w-32 md:h-32 rounded-xl bg-grey-light" />
+								<div class="shrink-0 w-16 h-16 lg:w-32 lg:h-32 rounded-xl bg-grey-light"></div>
 							{/if}
 							<div class="min-w-0">
 								<p class="text-caption text-grey-dark">{result.typeLabel}</p>
@@ -353,7 +353,7 @@
 			<div bind:this={sentinel} class="h-px" aria-hidden="true"></div>
 			{#if hasMore}
 				<p class="flex justify-center py-4 text-grey-dark">
-					<IconSpinner class="motion-safe:animate-spin" width={32} height={32} />
+					<IconSpinner class="motion-safe:animate-spin w-8 h-8" />
 					<span class="sr-only">Chargement…</span>
 				</p>
 			{/if}

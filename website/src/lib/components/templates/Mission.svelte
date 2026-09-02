@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Img from '$lib/components/ui/Img.svelte';
+	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import BackLink from '$lib/components/ui/BackLink.svelte';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
@@ -7,6 +8,8 @@
 	import type { MissionPage } from '$lib/interfaces/missions';
 
 	let { page }: { page: MissionPage } = $props();
+
+	const coverSizes = toSizes(cell(PAGE, { 0: 1, 1024: 2 }, 4));
 
 	const publishedDate = $derived(toDate(page.publishedDate));
 	const missionDate = $derived(toDate(page.date));
@@ -36,7 +39,7 @@
 	};
 </script>
 
-<article class="space-y-16 md:space-y-24">
+<article class="space-y-16 lg:space-y-24">
 	<header class="space-y-6">
 		{#if page.parentPage}
 			<BackLink parentPage={page.parentPage} />
@@ -57,7 +60,7 @@
 		<TermTags terms={page.categories} label="Catégories" />
 	</header>
 
-	<section aria-labelledby="mission-intro" class="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
+	<section aria-labelledby="mission-intro" class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
 		<div class="space-y-6">
 			<h2 id="mission-intro" class="text-h3 text-black">{page.introTitle}</h2>
 			<div class="prose text-body-2 text-grey-dark">{@html page.shortDesc}</div>
@@ -67,7 +70,7 @@
 			<Img
 				image={page.cover}
 				alt={page.cover.alt ?? page.title}
-				sizes="(min-width: 768px) 50vw, 100vw"
+				sizes={coverSizes}
 				class="w-full aspect-4/3 object-cover rounded-3xl"
 			/>
 		{/if}
@@ -75,9 +78,9 @@
 
 	<div class="space-y-10">
 		{#each sections as section (section.label)}
-			<section class="grid md:grid-cols-3 gap-4 md:gap-8">
+			<section class="grid lg:grid-cols-3 gap-4 lg:gap-8">
 				<h2 class="text-h4 text-black">{section.label}</h2>
-				<div class="prose text-body-2 md:col-span-2">{@html section.html}</div>
+				<div class="prose text-body-2 lg:col-span-2">{@html section.html}</div>
 			</section>
 		{/each}
 	</div>
@@ -89,7 +92,7 @@
 			onclick={share}
 		>
 			{shared ? 'Lien copié !' : 'Partager'}
-			<IconLink width={22} height={22} />
+			<IconLink class="w-5.5 h-5.5" />
 		</button>
 
 		{#if page.applyCta}

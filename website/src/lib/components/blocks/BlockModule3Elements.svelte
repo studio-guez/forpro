@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Module3ElementsContent, Theme } from '$lib/interfaces/page';
 	import { getThemeColors } from '$lib/utils/themeColors';
+	import { getThemeElementBlobs } from '$lib/utils/themeShapes';
 	import Card from '$lib/components/ui/Card.svelte';
 	import ThreeElements from '$lib/components/ui/ThreeElements.svelte';
 
@@ -12,6 +13,8 @@
 	let { content, theme }: Props = $props();
 
 	const colors = $derived(getThemeColors(theme, content.variant));
+	const inverted = $derived(content.variant === 'inverted');
+	const blobs = $derived(getThemeElementBlobs(theme));
 </script>
 
 {#if content.elements.length > 0}
@@ -23,12 +26,16 @@
 		titleBackground={colors.titleBackground}
 		titleColor={colors.title}
 	>
-		<ThreeElements
-			elements={content.elements}
-			blobColor={colors.surface}
-			textColor={colors.surfaceText}
-			decoColor={colors.showShapes ? colors.bgContrast : null}
-			class="mt-12 md:mt-6"
-		/>
+		<div class:lg:pb-18={inverted}>
+			<ThreeElements
+				elements={content.elements}
+				shapes={blobs.shapes}
+				rotations={blobs.rotations}
+				blobColor={inverted ? colors.invertedElementsBlobColor : colors.bgContrast}
+				textColor={inverted ? colors.invertedElementsTextColor : colors.surfaceText}
+				decoColor={inverted ? colors.invertedElementsTextColor : colors.bgContrast}
+				class="mt-12 lg:mt-6"
+			/>
+		</div>
 	</Card>
 {/if}

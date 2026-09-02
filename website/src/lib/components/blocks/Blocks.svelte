@@ -56,7 +56,7 @@
 		{:else if block.type === 'module-3-elements'}
 			<BlockModule3Elements content={block.content as unknown as Module3ElementsContent} {theme} />
 		{:else if block.type === 'module-timeline'}
-			<BlockModuleTimeline content={block.content as unknown as ModuleTimelineContent} />
+			<BlockModuleTimeline content={block.content as unknown as ModuleTimelineContent} {theme} />
 		{:else if block.type === 'module-agenda'}
 			<BlockModuleAgenda content={block.content as unknown as ModuleAgendaContent} />
 		{:else if block.type === 'module-projets'}

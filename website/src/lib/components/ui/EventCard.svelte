@@ -10,9 +10,11 @@
 		/** Accent colour of the arrow badge. */
 		color?: string;
 		headingTag?: string;
+		/** Rendered slot width — the card is laid out by its parent, which owns the geometry. */
+		sizes?: string;
 	}
 
-	let { event, color = 'var(--color-blue)', headingTag = 'h3' }: Props = $props();
+	let { event, color = 'var(--color-blue)', headingTag = 'h3', sizes }: Props = $props();
 
 	const start = $derived(toDate(event.dateStart, event.timeStart));
 </script>
@@ -26,7 +28,7 @@
 		<Img
 			image={event.cover}
 			alt={event.cover.alt ?? event.title}
-			sizes="(min-width: 768px) 33vw, 80vw"
+			{sizes}
 			class="absolute inset-0 -z-1 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
 		/>
 	{/if}
@@ -36,7 +38,7 @@
 		<div>
 			<svelte:element this={headingTag} class="text-h4">{event.title}</svelte:element>
 			{#if event.shortDesc}
-				<div class="prose text-label mt-5 md:hidden">
+				<div class="prose text-label mt-5 lg:hidden">
 					{@html event.shortDesc}
 				</div>
 			{/if}
@@ -72,7 +74,7 @@
 				class="shrink-0 w-12 h-12 rounded-full bg-white flex items-center justify-center transition-transform group-hover:translate-x-1"
 				style="color: {color}"
 			>
-				<IconArrow width={26} height={26} />
+				<IconArrow class="w-6.5 h-6.5" />
 			</span>
 		</div>
 	</div>

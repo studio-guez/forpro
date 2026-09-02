@@ -4,6 +4,7 @@
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
 	import LoadMore from '$lib/components/ui/LoadMore.svelte';
 	import ProjectCard from '$lib/components/ui/ProjectCard.svelte';
+	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import {
@@ -21,6 +22,9 @@
 	import type { TaxonomyFilterTerm } from '$lib/interfaces/taxonomy';
 
 	let { page }: { page: ProjectsPage } = $props();
+
+	// Card grid: full-width section, 1 / sm:2 / lg:3 columns with a 1.5rem gutter.
+	const cardSizes = toSizes(cell(PAGE, { 0: 1, 640: 2, 1024: 3 }, 1.5));
 
 	const color = 'var(--color-orange)';
 	const noResultsText = 'Aucun projet ne correspond à votre recherche.';
@@ -108,7 +112,7 @@
 	});
 </script>
 
-<section aria-labelledby="projects-title" class="py-12 md:py-16">
+<section aria-labelledby="projects-title" class="py-12 lg:py-16">
 	<h1 id="projects-title" class="text-h1 text-orange text-center">{page.title}</h1>
 
 	<SearchInput
@@ -116,27 +120,27 @@
 		label="Rechercher un projet"
 		placeholder="Rechercher un projet..."
 		color="orange"
-		class="mt-12 md:mt-18"
+		class="mt-12 lg:mt-18"
 	/>
 
 	<FilterTags
 		terms={programTerms}
 		bind:selected={selectedPrograms}
 		legend="Projets concernant :"
-		class="mt-12 md:mt-18"
+		class="mt-12 lg:mt-18"
 	/>
 
 	<FilterTags
 		terms={categoryTerms}
 		bind:selected={selectedCategories}
 		legend="Catégories :"
-		class="mt-9 md:mt-12"
+		class="mt-9 lg:mt-12"
 	/>
 
-	<FilterTags terms={yearTerms} bind:selected={selectedYears} legend="Années :" class="mt-9 md:mt-12" />
+	<FilterTags terms={yearTerms} bind:selected={selectedYears} legend="Années :" class="mt-9 lg:mt-12" />
 </section>
 
-<section aria-label="Projets" class="pb-12 md:pb-16">
+<section aria-label="Projets" class="pb-12 lg:pb-16">
 	<div aria-live="polite">
 		{#if hasSearch}
 			<ResultsHeader
@@ -157,7 +161,7 @@
 			<ul class="mt-9 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
 				{#each visibleProjects as project (project.url)}
 					<li>
-						<ProjectCard {project} headingTag="h2" />
+						<ProjectCard {project} headingTag="h2" sizes={cardSizes} />
 					</li>
 				{/each}
 			</ul>

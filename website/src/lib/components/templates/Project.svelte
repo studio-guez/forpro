@@ -9,7 +9,7 @@
 	let { page }: { page: ProjectPage } = $props();
 </script>
 
-<article class="py-12 md:py-16 space-y-12 md:space-y-16">
+<article class="py-12 lg:py-16 space-y-12 lg:space-y-16">
 	<EventProjectHeader
 		title={page.title}
 		subtitle={page.subtitle}

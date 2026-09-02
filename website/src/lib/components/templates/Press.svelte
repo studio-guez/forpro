@@ -49,7 +49,7 @@
 				class="text-label inline-flex items-center gap-3 rounded-full border-2 border-white px-6 py-2 hover:bg-white hover:text-blue transition"
 			>
 				{page.resourcesCtaTitle ?? 'Télécharger les ressources'}
-				<IconArrow width={20} height={20} class="rotate-90" />
+				<IconArrow class="rotate-90 w-5 h-5" />
 				<span class="sr-only">({page.resources.extension.toUpperCase()}, {page.resources.size})</span>
 			</a>
 		{/if}

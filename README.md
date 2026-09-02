@@ -100,6 +100,13 @@ done
 docker compose -f compose.dev.yml exec cms sh -c 'chown -R www-data:www-data /var/www/html/site/sessions /var/www/html/site/accounts /var/www/html/content /var/www/html/media /var/www/html/site/plugins/*/data /var/www/html/site/cache'
 ```
 
+> `docker compose exec` runs as **root** by default, but Apache/PHP runs as `www-data`. Any
+> command that boots Kirby (`php ...`, `composer ...`) writes into `site/cache/` and leaves
+> root-owned files there, after which the Panel returns a 500 on save
+> (`The file "{site}/cache/.../changes/pages.cache" is not writable`). Always run those with
+> `exec --user www-data cms ...`; if it already happened, re-run the chown above or restart
+> the service — `cms/entrypoint.sh` chowns the runtime directories on every start.
+
 ### Access the services
 
 - **CMS Panel**: http://cms.localhost/panel
@@ -123,10 +130,10 @@ For images that are already in `content/`, run the one-off cleanup script `cms/s
 
 ```bash
 # List what would change, without writing anything:
-docker compose -f compose.dev.yml exec cms php site/plugins/image-guard/fix-large-images.php --dry-run
+docker compose -f compose.dev.yml exec --user www-data cms php site/plugins/image-guard/fix-large-images.php --dry-run
 
 # Actually fix the files in place:
-docker compose -f compose.dev.yml exec cms php site/plugins/image-guard/fix-large-images.php
+docker compose -f compose.dev.yml exec --user www-data cms php site/plugins/image-guard/fix-large-images.php
 ```
 
 Afterwards, clear the media cache so Kirby regenerates thumbnails from the fixed originals:
