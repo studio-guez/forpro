@@ -35,7 +35,11 @@
 						{/if}
 						<ul class="flex flex-col">
 							{#each group.links as link (link)}
-								<li class="leading-none {hasLevel2 && link.level !== 2 ? 'mb-0.75' : ''} {link.level === 2 ? 'pl-8' : ''}">
+								<li
+									class="leading-none {hasLevel2 && link.level !== 2
+										? 'mb-0.75'
+										: ''} {link.level === 2 ? 'pl-8' : ''}"
+								>
 									<a
 										href={link.url}
 										onclick={onNavigate}
@@ -90,7 +94,9 @@
 							rel="noopener noreferrer"
 							class="flex items-center gap-x-2 text-body-2 leading-none hover:text-blue transition-colors"
 						>
-							<span class="flex items-center justify-center h-8 w-8 rounded-full bg-white text-blue shrink-0">
+							<span
+								class="flex items-center justify-center h-8 w-8 rounded-full bg-white text-blue shrink-0"
+							>
 								<Icon class="h-6 w-6" />
 							</span>
 							<span>{socialLabels[social.platform]}</span>

@@ -52,7 +52,7 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: WHITE,
 		title: 'var(--color-blue)',
 		invertedElementsBlobColor: 'var(--color-blue-pale)',
-		invertedElementsTextColor: 'var(--color-blue)',
+		invertedElementsTextColor: 'var(--color-blue)'
 	},
 	campus: {
 		bg: 'var(--color-blue)',
@@ -60,7 +60,7 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: WHITE,
 		title: 'var(--color-blue)',
 		invertedElementsBlobColor: 'var(--color-blue-pale)',
-		invertedElementsTextColor: 'var(--color-blue)',
+		invertedElementsTextColor: 'var(--color-blue)'
 	},
 	entreprendre: {
 		bg: 'var(--color-purple-light)',
@@ -68,7 +68,7 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: WHITE,
 		title: 'var(--color-purple-light)',
 		invertedElementsBlobColor: 'var(--color-purple-pale)',
-		invertedElementsTextColor: 'var(--color-purple)',
+		invertedElementsTextColor: 'var(--color-purple)'
 	},
 	projets_jeunes: {
 		bg: 'var(--color-orange)',
@@ -76,7 +76,7 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: WHITE,
 		title: 'var(--color-orange)',
 		invertedElementsBlobColor: 'var(--color-orange-pale)',
-		invertedElementsTextColor: 'var(--color-orange)',
+		invertedElementsTextColor: 'var(--color-orange)'
 	},
 	tremplin_jobs: {
 		bg: 'var(--color-purple-light)',
@@ -84,7 +84,7 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: WHITE,
 		title: 'var(--color-purple-light)',
 		invertedElementsBlobColor: 'var(--color-purple-pale)',
-		invertedElementsTextColor: 'var(--color-purple)',
+		invertedElementsTextColor: 'var(--color-purple)'
 	},
 	soutiens: {
 		bg: 'var(--color-blue-light)',
@@ -92,7 +92,7 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: WHITE,
 		title: 'var(--color-pink)',
 		invertedElementsBlobColor: 'var(--color-blue-pale)',
-		invertedElementsTextColor: 'var(--color-blue)',
+		invertedElementsTextColor: 'var(--color-blue)'
 	},
 	cekale: {
 		bg: 'var(--color-purple-pale)',
@@ -100,7 +100,7 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: WHITE,
 		title: 'var(--color-purple)',
 		invertedElementsBlobColor: 'var(--color-purple-pale)',
-		invertedElementsTextColor: 'var(--color-purple)',
+		invertedElementsTextColor: 'var(--color-purple)'
 	},
 	la_ref: {
 		bg: 'var(--color-purple-pale)',
@@ -108,7 +108,7 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: WHITE,
 		title: 'var(--color-pink)',
 		invertedElementsBlobColor: 'var(--color-purple-pale)',
-		invertedElementsTextColor: 'var(--color-purple)',
+		invertedElementsTextColor: 'var(--color-purple)'
 	},
 	learninglab: {
 		bg: 'var(--color-teal)',
@@ -116,7 +116,7 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: WHITE,
 		title: 'var(--color-teal)',
 		invertedElementsBlobColor: 'var(--color-teal-pale)',
-		invertedElementsTextColor: 'var(--color-teal)',
+		invertedElementsTextColor: 'var(--color-teal)'
 	},
 	foodlab: {
 		bg: 'var(--color-orange-pale)',
@@ -124,7 +124,7 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: 'var(--color-orange)',
 		title: 'var(--color-orange)',
 		invertedElementsBlobColor: 'var(--color-orange-pale)',
-		invertedElementsTextColor: 'var(--color-orange)',
+		invertedElementsTextColor: 'var(--color-orange)'
 	},
 	grandlab: {
 		bg: 'var(--color-brown)',
@@ -132,7 +132,7 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: WHITE,
 		title: 'var(--color-red)',
 		invertedElementsBlobColor: 'var(--color-beige-light)',
-		invertedElementsTextColor: 'var(--color-red)',
+		invertedElementsTextColor: 'var(--color-red)'
 	},
 	makerlab: {
 		bg: 'var(--color-beige-light)',
@@ -140,7 +140,7 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: 'var(--color-grey-dark)',
 		title: 'var(--color-grey-dark)',
 		invertedElementsBlobColor: 'var(--color-beige)',
-		invertedElementsTextColor: 'var(--color-grey-dark)',
+		invertedElementsTextColor: 'var(--color-grey-dark)'
 	},
 	factorylab: {
 		bg: 'var(--color-teal)',
@@ -148,8 +148,8 @@ export const themePalettes: Record<Theme, ThemePalette> = {
 		text: WHITE,
 		title: 'var(--color-pink)',
 		invertedElementsBlobColor: 'var(--color-teal-pale)',
-		invertedElementsTextColor: 'var(--color-teal)',
-	},
+		invertedElementsTextColor: 'var(--color-teal)'
+	}
 };
 
 /**
@@ -179,7 +179,7 @@ export function getThemeColors(theme: Theme, variant: Variant): ThemeColors {
 			invertedElementsBlobColor: palette.invertedElementsBlobColor,
 			invertedElementsTextColor: palette.invertedElementsTextColor,
 			accent: palette.title,
-			onDark: false,
+			onDark: false
 		};
 	}
 
@@ -197,6 +197,6 @@ export function getThemeColors(theme: Theme, variant: Variant): ThemeColors {
 		invertedElementsBlobColor: palette.invertedElementsBlobColor,
 		invertedElementsTextColor: palette.invertedElementsTextColor,
 		accent: onDark ? palette.bg : palette.text,
-		onDark,
+		onDark
 	};
 }

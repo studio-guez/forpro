@@ -27,7 +27,9 @@
 					{#if page.collectiveMembers.length > 0}
 						<ul class="flex gap-3">
 							{#each page.collectiveMembers as member, index (index)}
-								<li class="inline">{member.name}{index < page.collectiveMembers.length - 1 ? ', ' : ''}</li>
+								<li class="inline">
+									{member.name}{index < page.collectiveMembers.length - 1 ? ', ' : ''}
+								</li>
 							{/each}
 						</ul>
 					{/if}
@@ -37,7 +39,9 @@
 			{#if page.categories.length > 0}
 				<div class="mt-4.5 lg:mt-3">
 					{#each page.categories as category, index (index)}
-						<li class="inline font-bold">{category.title}{index < page.categories.length - 1 ? ', ' : ''}</li>
+						<li class="inline font-bold">
+							{category.title}{index < page.categories.length - 1 ? ', ' : ''}
+						</li>
 					{/each}
 				</div>
 			{/if}

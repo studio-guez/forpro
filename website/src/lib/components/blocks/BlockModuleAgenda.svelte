@@ -23,34 +23,34 @@
 </script>
 
 {#if content.events.length > 0}
-<Card
-	title={content.title}
-	shortDesc={content.shortDesc}
-	titleBackground={filled ? 'var(--color-white)' : colors.main}
-	titleColor={filled ? colors.main : 'var(--color-white)'}
-	background={filled ? colors.main : null}
-	color={filled ? 'var(--color-white)' : colors.main}
-	shapeLeft={filled ? ShapeAgenda1 : null}
-	shapeRight={filled ? ShapeAgenda2 : null}
-	shapeColor={colors.deco}
->
-	<Carousel
-		items={content.events}
-		label={content.title}
-		color={colors.main}
-		inverted={filled}
-		itemClass="w-4/5 md:w-[calc((100%-3rem)/3)] aspect-3/4"
-		class="mt-12"
+	<Card
+		title={content.title}
+		shortDesc={content.shortDesc}
+		titleBackground={filled ? 'var(--color-white)' : colors.main}
+		titleColor={filled ? colors.main : 'var(--color-white)'}
+		background={filled ? colors.main : null}
+		color={filled ? 'var(--color-white)' : colors.main}
+		shapeLeft={filled ? ShapeAgenda1 : null}
+		shapeRight={filled ? ShapeAgenda2 : null}
+		shapeColor={colors.deco}
 	>
-		{#snippet item(event)}
-			<EventCard {event} color={colors.main} sizes={cardSizes} />
-		{/snippet}
-	</Carousel>
+		<Carousel
+			items={content.events}
+			label={content.title}
+			color={colors.main}
+			inverted={filled}
+			itemClass="w-4/5 md:w-[calc((100%-3rem)/3)] aspect-3/4"
+			class="mt-12"
+		>
+			{#snippet item(event)}
+				<EventCard {event} color={colors.main} sizes={cardSizes} />
+			{/snippet}
+		</Carousel>
 
-	{#if content.cta}
-		<div class="flex justify-center md:justify-end mt-8">
-			<CtaLink cta={content.cta} color={colors.main} inverted={filled} size="lg" />
-		</div>
-	{/if}
-</Card>
+		{#if content.cta}
+			<div class="flex justify-center md:justify-end mt-8">
+				<CtaLink cta={content.cta} color={colors.main} inverted={filled} size="lg" />
+			</div>
+		{/if}
+	</Card>
 {/if}

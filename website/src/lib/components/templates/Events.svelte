@@ -55,7 +55,11 @@
 	const matchesFilters = (event: AgendaEventCard): boolean =>
 		matchesTerms(programFilter, event.terms) &&
 		matchesTerms(publicFilter, event.terms) &&
-		matchesSearch(search, [event.title, stripTags(event.shortDesc), ...event.terms.map((t) => t.title)]);
+		matchesSearch(search, [
+			event.title,
+			stripTags(event.shortDesc),
+			...event.terms.map((t) => t.title)
+		]);
 
 	const upcoming = $derived(page.upcomingEvents.filter(matchesFilters));
 	const past = $derived(page.pastEvents.filter(matchesFilters));

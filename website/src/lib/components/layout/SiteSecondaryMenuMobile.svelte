@@ -32,10 +32,7 @@
 	transition:slide={{ duration: 300 }}
 	aria-label="Menu secondaire"
 >
-	<div
-		data-lenis-prevent
-		class="min-h-0 overflow-y-auto overscroll-contain border-t-2 border-blue"
-	>
+	<div data-lenis-prevent class="min-h-0 overflow-y-auto overscroll-contain border-t-2 border-blue">
 		{#each header.secondaryMenu as column, i (i)}
 			{@const expanded = !column.title || openColumns.includes(i)}
 			<div>
@@ -69,7 +66,11 @@
 								{/if}
 								<ul class="flex flex-col">
 									{#each group.links as link (link)}
-										<li class="leading-none {hasLevel2 && link.level !== 2 ? 'mb-0.75' : ''} {link.level === 2 ? 'pl-8' : ''}">
+										<li
+											class="leading-none {hasLevel2 && link.level !== 2
+												? 'mb-0.75'
+												: ''} {link.level === 2 ? 'pl-8' : ''}"
+										>
 											<a
 												href={link.url}
 												onclick={onNavigate}
@@ -118,7 +119,9 @@
 					{@const Icon = socialIcons[social.platform]}
 					<li>
 						<a href={social.url} target="_blank" rel="noopener noreferrer" class="block">
-							<span class="flex items-center justify-center h-10 w-10 rounded-full bg-blue text-white shrink-0">
+							<span
+								class="flex items-center justify-center h-10 w-10 rounded-full bg-blue text-white shrink-0"
+							>
 								<Icon class="h-6 w-6" />
 							</span>
 							<span class="sr-only">{socialLabels[social.platform]}</span>

@@ -175,17 +175,15 @@
 				{#if searchResults.length > 0}
 					<div class="mt-9 space-y-6">
 						{#each searchResults as faq, faqIndex (faqIndex)}
-							<FaqQuestion
-								id="faq-search-{faqIndex}"
-								question={faq.question}
-								answer={faq.answer}
-							/>
+							<FaqQuestion id="faq-search-{faqIndex}" question={faq.question} answer={faq.answer} />
 						{/each}
 					</div>
 				{/if}
 			</div>
 		{:else if filteredSections.length === 0}
-			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">{noResultsText}</p>
+			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
+				{noResultsText}
+			</p>
 		{:else}
 			{#each filteredSections as section (section.index)}
 				{@const open = isSectionOpen(section.index)}

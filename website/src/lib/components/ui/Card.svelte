@@ -38,7 +38,7 @@
 		shapeColor = 'currentColor',
 		background = null,
 		color = null,
-		class: className = '',
+		class: className = ''
 	}: Props = $props();
 
 	// Vertical padding is only needed when the card sits on its own coloured background.
@@ -56,11 +56,8 @@
 	const titleId = `card-title-${uid}`;
 </script>
 
-<section
-	class="lg:px-9"
-	aria-labelledby={titleId}
->
-	<div 
+<section class="lg:px-9" aria-labelledby={titleId}>
+	<div
 		class="px-card rounded-3xl relative overflow-hidden {className}"
 		class:pt-6={padded}
 		class:pb-9={padded}
@@ -94,7 +91,11 @@
 					<p class="text-h4 mt-6 lg:mt-9">{subtitle}</p>
 				{/if}
 				{#if shortDesc}
-					<div class="prose text-body-1 font-bold" class:mt-6={!hideTitle} class:lg:mt-9={!hideTitle}>
+					<div
+						class="prose text-body-1 font-bold"
+						class:mt-6={!hideTitle}
+						class:lg:mt-9={!hideTitle}
+					>
 						{@html shortDesc}
 					</div>
 				{/if}
