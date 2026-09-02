@@ -52,7 +52,9 @@
 		{:else if block.type === 'module-video'}
 			<BlockModuleVideo content={block.content as unknown as ModuleVideoContent} {theme} />
 		{:else if block.type === 'module-infos-pratiques'}
-			<BlockModuleInfosPratiques content={block.content as unknown as ModuleInfosPratiquesContent} />
+			<BlockModuleInfosPratiques
+				content={block.content as unknown as ModuleInfosPratiquesContent}
+			/>
 		{:else if block.type === 'module-3-elements'}
 			<BlockModule3Elements content={block.content as unknown as Module3ElementsContent} {theme} />
 		{:else if block.type === 'module-timeline'}

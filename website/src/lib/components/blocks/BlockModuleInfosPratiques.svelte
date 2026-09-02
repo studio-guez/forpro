@@ -22,36 +22,42 @@
 </script>
 
 {#if content.elements.length > 0 || content.faqs.length > 0}
-<Card
-	title={content.title}
-	subtitle={content.subtitle}
-	titleBackground={filled ? 'var(--color-white)' : colors.main}
-	titleColor={filled ? colors.main : 'var(--color-white)'}
-	background={filled ? colors.main : null}
-	color={filled ? 'var(--color-white)' : colors.main}
->
-	{#if content.elements.length > 0}
-		<ThreeElements
-			elements={content.elements}
-			blobColor={colors.blob}
-			{textColor}
-			{decoColor}
-			class="mt-12 md:mt-6"
-		/>
-	{/if}
+	<Card
+		title={content.title}
+		subtitle={content.subtitle}
+		titleBackground={filled ? 'var(--color-white)' : colors.main}
+		titleColor={filled ? colors.main : 'var(--color-white)'}
+		background={filled ? colors.main : null}
+		color={filled ? 'var(--color-white)' : colors.main}
+	>
+		{#if content.elements.length > 0}
+			<ThreeElements
+				elements={content.elements}
+				blobColor={colors.blob}
+				{textColor}
+				{decoColor}
+				class="mt-12 md:mt-6"
+			/>
+		{/if}
 
-	{#if content.faqs.length > 0}
-		<div class="mt-12 md:mt-24 space-y-4">
-			{#each content.faqs as faq, i (i)}
-				<FaqQuestion id="{uid}-faq-{i}" question={faq.question} answer={faq.answer} color={colors.main} inverted={filled} />
-			{/each}
-		</div>
-	{/if}
+		{#if content.faqs.length > 0}
+			<div class="mt-12 md:mt-24 space-y-4">
+				{#each content.faqs as faq, i (i)}
+					<FaqQuestion
+						id="{uid}-faq-{i}"
+						question={faq.question}
+						answer={faq.answer}
+						color={colors.main}
+						inverted={filled}
+					/>
+				{/each}
+			</div>
+		{/if}
 
-	{#if content.cta}
-		<div class="flex justify-end mt-8">
-			<CtaLink cta={content.cta} color={colors.main} inverted={filled} size="lg" />
-		</div>
-	{/if}
-</Card>
+		{#if content.cta}
+			<div class="flex justify-end mt-8">
+				<CtaLink cta={content.cta} color={colors.main} inverted={filled} size="lg" />
+			</div>
+		{/if}
+	</Card>
 {/if}

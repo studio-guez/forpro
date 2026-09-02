@@ -2,7 +2,7 @@
 	import Img from '$lib/components/ui/Img.svelte';
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import BackLink from '$lib/components/ui/BackLink.svelte';
-	import IconLink from '$lib/components/svg/IconLink.svelte';
+	import ShareButton from '$lib/components/ui/ShareButton.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import { formatShortDate, toDate } from '$lib/utils/date';
 	import type { MissionPage } from '$lib/interfaces/missions';
@@ -19,24 +19,6 @@
 		{ label: 'Tes missions :', html: page.tasks },
 		{ label: 'Ton planning :', html: page.planning }
 	]);
-
-	let shared = $state(false);
-
-	// Native share sheet when available (mobile), clipboard fallback otherwise.
-	const share = async (): Promise<void> => {
-		const url = window.location.href;
-		try {
-			if (navigator.share) {
-				await navigator.share({ title: `Mission : ${page.title}`, url });
-				return;
-			}
-			await navigator.clipboard.writeText(url);
-			shared = true;
-			setTimeout(() => (shared = false), 3000);
-		} catch {
-			// The user dismissed the share sheet, or the clipboard is unavailable.
-		}
-	};
 </script>
 
 <article class="space-y-16 lg:space-y-24">
@@ -86,14 +68,7 @@
 	</div>
 
 	<div class="flex flex-wrap items-center justify-end gap-4">
-		<button
-			type="button"
-			class="text-label inline-flex items-center gap-2.5 rounded-full border-3 border-blue text-blue px-5.5 py-3 leading-none transition-colors hover:bg-blue hover:text-white"
-			onclick={share}
-		>
-			{shared ? 'Lien copié !' : 'Partager'}
-			<IconLink class="w-5.5 h-5.5" />
-		</button>
+		<ShareButton title="Mission : {page.title}" />
 
 		{#if page.applyCta}
 			<a

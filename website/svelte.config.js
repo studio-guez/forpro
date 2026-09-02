@@ -15,7 +15,7 @@ const config = {
 		paths: {
 			base: ''
 		}
-	},
+	}
 };
 
 export default config;

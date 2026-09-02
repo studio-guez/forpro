@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Component, Snippet } from 'svelte';
+	import CardTitle from '$lib/components/ui/CardTitle.svelte';
 
 	interface Props {
 		children: Snippet;
@@ -37,7 +38,7 @@
 		shapeColor = 'currentColor',
 		background = null,
 		color = null,
-		class: className = '',
+		class: className = ''
 	}: Props = $props();
 
 	// Vertical padding is only needed when the card sits on its own coloured background.
@@ -51,21 +52,12 @@
 			.join('; ')
 	);
 
-	const titleStyle = $derived(
-		[titleBackground && `background-color: ${titleBackground}`, titleColor && `color: ${titleColor}`]
-			.filter(Boolean)
-			.join('; ')
-	);
-
 	const uid = $props.id();
 	const titleId = `card-title-${uid}`;
 </script>
 
-<section
-	class="lg:px-9"
-	aria-labelledby={titleId}
->
-	<div 
+<section class="lg:px-9" aria-labelledby={titleId}>
+	<div
 		class="px-card rounded-3xl relative overflow-hidden {className}"
 		class:pt-6={padded}
 		class:pb-9={padded}
@@ -86,24 +78,24 @@
 
 		<div class="relative z-1">
 			<div class="text-center relative z-1">
-				{#if hideTitle}
-					<h2 id={titleId} class="sr-only">{title}</h2>
-				{:else if titleVariant === 'plain'}
-					<h2 id={titleId} class="text-h2 mb-6 lg:mb-12" style={titleStyle}>{title}</h2>
-				{:else}
-					<h2
-						id={titleId}
-						class="inline-block text-h3 pt-2 pb-3.5 px-8 rounded-2xl"
-						style={titleStyle}
-					>
-						{title}
-					</h2>
-				{/if}
+				<CardTitle
+					id={titleId}
+					{title}
+					{hideTitle}
+					variant={titleVariant}
+					class={titleVariant === 'plain' ? 'mb-6 lg:mb-12' : ''}
+					background={titleBackground}
+					color={titleColor}
+				/>
 				{#if subtitle}
 					<p class="text-h4 mt-6 lg:mt-9">{subtitle}</p>
 				{/if}
 				{#if shortDesc}
-					<div class="prose text-body-1 font-bold" class:mt-6={!hideTitle} class:lg:mt-9={!hideTitle}>
+					<div
+						class="prose text-body-1 font-bold"
+						class:mt-6={!hideTitle}
+						class:lg:mt-9={!hideTitle}
+					>
 						{@html shortDesc}
 					</div>
 				{/if}

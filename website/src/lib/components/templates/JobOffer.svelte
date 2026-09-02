@@ -93,7 +93,9 @@
 				>
 					Télécharger le PDF de l'offre
 					<IconArrow class="rotate-90 w-5 h-5" />
-					<span class="sr-only">({page.pdfOffer.extension.toUpperCase()}, {page.pdfOffer.size})</span>
+					<span class="sr-only"
+						>({page.pdfOffer.extension.toUpperCase()}, {page.pdfOffer.size})</span
+					>
 				</a>
 			{/if}
 		{/snippet}

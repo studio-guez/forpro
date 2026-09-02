@@ -15,9 +15,7 @@
 	// Each logo sits on its own plate: white on the pink section, beige on the white one,
 	// so the plates never blend into the card background.
 	const plateClass = $derived(
-		`flex h-full items-center justify-center rounded-xl p-3 ${
-			onDark ? 'bg-(--color-white)' : ''
-		}`
+		`flex h-full items-center justify-center rounded-xl p-3 ${onDark ? 'bg-(--color-white)' : ''}`
 	);
 </script>
 
@@ -36,11 +34,7 @@
 			{#each content.partners as partner (partner.logo.url)}
 				<li class="hover:scale-102 transition-transform">
 					{#if partner.url}
-						<a
-							href={partner.url}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
+						<a href={partner.url} target="_blank" rel="noopener noreferrer">
 							{@render logo(partner)}
 						</a>
 					{:else}

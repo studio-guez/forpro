@@ -137,7 +137,12 @@
 		class="mt-9 lg:mt-12"
 	/>
 
-	<FilterTags terms={yearTerms} bind:selected={selectedYears} legend="Années :" class="mt-9 lg:mt-12" />
+	<FilterTags
+		terms={yearTerms}
+		bind:selected={selectedYears}
+		legend="Années :"
+		class="mt-9 lg:mt-12"
+	/>
 </section>
 
 <section aria-label="Projets" class="pb-12 lg:pb-16">

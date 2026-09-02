@@ -23,35 +23,35 @@
 </script>
 
 {#if content.projects.length > 0}
-<Card
-	title={content.title}
-	shortDesc={content.shortDesc}
-	titleBackground={filled ? 'var(--color-white)' : colors.main}
-	titleColor={filled ? colors.main : 'var(--color-white)'}
-	background={filled ? colors.main : null}
-	color={filled ? 'var(--color-white)' : colors.main}
-	shapeLeft={filled ? ShapeProjets1 : null}
-	shapeRight={filled ? ShapeProjets2 : null}
-	shapeRightClasses="absolute bottom-0 right-0 translate-1/6 w-2/5 rotate-180"
-	shapeColor={colors.deco}
->
-	<Carousel
-		items={content.projects}
-		label={content.title}
-		color={colors.main}
-		inverted={filled}
-		itemClass="w-4/5 md:w-[calc((100%-1.5rem)/2)]"
-		class="mt-12"
+	<Card
+		title={content.title}
+		shortDesc={content.shortDesc}
+		titleBackground={filled ? 'var(--color-white)' : colors.main}
+		titleColor={filled ? colors.main : 'var(--color-white)'}
+		background={filled ? colors.main : null}
+		color={filled ? 'var(--color-white)' : colors.main}
+		shapeLeft={filled ? ShapeProjets1 : null}
+		shapeRight={filled ? ShapeProjets2 : null}
+		shapeRightClasses="absolute bottom-0 right-0 translate-1/6 w-2/5 rotate-180"
+		shapeColor={colors.deco}
 	>
-		{#snippet item(project)}
-			<ProjectCard {project} sizes={cardSizes} />
-		{/snippet}
-	</Carousel>
+		<Carousel
+			items={content.projects}
+			label={content.title}
+			color={colors.main}
+			inverted={filled}
+			itemClass="w-4/5 md:w-[calc((100%-1.5rem)/2)]"
+			class="mt-12"
+		>
+			{#snippet item(project)}
+				<ProjectCard {project} sizes={cardSizes} />
+			{/snippet}
+		</Carousel>
 
-	{#if content.cta}
-		<div class="flex justify-center md:justify-end mt-8">
-			<CtaLink cta={content.cta} color={colors.main} inverted={filled} size="lg" />
-		</div>
-	{/if}
-</Card>
+		{#if content.cta}
+			<div class="flex justify-center md:justify-end mt-8">
+				<CtaLink cta={content.cta} color={colors.main} inverted={filled} size="lg" />
+			</div>
+		{/if}
+	</Card>
 {/if}

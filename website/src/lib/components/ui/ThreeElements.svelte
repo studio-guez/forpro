@@ -39,9 +39,9 @@
 		decoPositions = [
 			'left-[24%] top-[12%] max-xl:-rotate-30 xl:left-[44%] xl:top-[8%] w-1/4 xl:w-1/6',
 			'left-[18%] bottom-[4%] max-xl:rotate-10 xl:left-[12%] xl:bottom-[-8%] w-1/3 xl:w-2/9',
-			'right-[8%] max-xl:top-[42%] max-xl:-rotate-15 xl:right-[6%] xl:bottom-[-10%] w-1/5 xl:w-1/6',
+			'right-[8%] max-xl:top-[42%] max-xl:-rotate-15 xl:right-[6%] xl:bottom-[-10%] w-1/5 xl:w-1/6'
 		],
-		class: className = '',
+		class: className = ''
 	}: Props = $props();
 </script>
 
@@ -55,7 +55,13 @@
 	{/if}
 	{#each elements as element, i (i)}
 		{@const Shape = shapes[i % shapes.length]}
-		<div class="relative aspect-15/13 w-full max-w-90 mx-auto" class:xl:mt-48={i === 1} class:max-xl:col-start-2={i === 0 || i === 2} class:max-xl:row-start-2={i === 1} class:max-xl:row-start-3={i === 2}>
+		<div
+			class="relative aspect-15/13 w-full max-w-90 mx-auto"
+			class:xl:mt-48={i === 1}
+			class:max-xl:col-start-2={i === 0 || i === 2}
+			class:max-xl:row-start-2={i === 1}
+			class:max-xl:row-start-3={i === 2}
+		>
 			<div class="absolute -inset-1/8 object-contain" style:color={blobColor}>
 				<Shape class="w-full h-full" />
 			</div>
@@ -65,7 +71,9 @@
 				style:color={textColor}
 			>
 				<h3 class="text-lg lg:text-3xl font-bold">{element.title}</h3>
-				<p class="text-base lg:text-2xl lg:font-bold mt-3 lg:mt-6 whitespace-pre-line">{element.description}</p>
+				<p class="text-base lg:text-2xl lg:font-bold mt-3 lg:mt-6 whitespace-pre-line">
+					{element.description}
+				</p>
 			</div>
 		</div>
 	{/each}

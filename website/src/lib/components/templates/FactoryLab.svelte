@@ -35,7 +35,11 @@
 	{badge.label}
 {/snippet}
 
-{#snippet badgeList(label: string, badges: CompanyBadge[], badgeColors: { bg: string; text: string })}
+{#snippet badgeList(
+	label: string,
+	badges: CompanyBadge[],
+	badgeColors: { bg: string; text: string }
+)}
 	{#if badges.length > 0}
 		<p class="text-label font-bold mt-5">{label}</p>
 		<ul class="flex flex-wrap items-center gap-2 mt-2">

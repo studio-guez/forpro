@@ -44,7 +44,11 @@
 		</div>
 		<div class="flex gap-2">
 			<dt class="text-label">Délai :</dt>
-			<dd><time datetime={offer.deadline}>{deadline ? dateFormat.format(deadline) : offer.deadline}</time></dd>
+			<dd>
+				<time datetime={offer.deadline}
+					>{deadline ? dateFormat.format(deadline) : offer.deadline}</time
+				>
+			</dd>
 		</div>
 	</dl>
 </article>

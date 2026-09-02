@@ -79,11 +79,9 @@
 				<ul class="flex flex-col">
 					{#if footer.email}
 						<li>
-							<a
-								href="mailto:{footer.email}"
-								class="group"
-							>
-								<span class="underline decoration-transparent group-hover:decoration-current transition-colors"
+							<a href="mailto:{footer.email}" class="group">
+								<span
+									class="underline decoration-transparent group-hover:decoration-current transition-colors"
 									>{footer.email}</span
 								>
 							</a>
@@ -91,11 +89,9 @@
 					{/if}
 					{#if footer.phoneUrl}
 						<li>
-							<a
-								href={footer.phoneUrl}
-								class="group"
-							>
-								<span class="underline decoration-transparent group-hover:decoration-current transition-colors"
+							<a href={footer.phoneUrl} class="group">
+								<span
+									class="underline decoration-transparent group-hover:decoration-current transition-colors"
 									>{footer.phone}</span
 								>
 							</a>
@@ -190,11 +186,7 @@
 		class="w-full max-w-360 mx-auto flex items-center justify-center lg:justify-between gap-x-4 px-5 lg:px-9 pb-12.5 lg:pb-9 max-lg:mt-12.5"
 	>
 		<div class="bg-white rounded-full py-2.5 lg:py-5 px-5 lg:px-10">
-			<Img
-				image={footer.logo}
-				sizes="10rem"
-				class="h-6 lg:h-12 w-auto max-w-full"
-			/>
+			<Img image={footer.logo} sizes="10rem" class="h-6 lg:h-12 w-auto max-w-full" />
 		</div>
 		{#if footer.logoEntrepriseFormatrice}
 			<Img

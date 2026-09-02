@@ -21,7 +21,7 @@
 		background = null,
 		color = null,
 		backgroundImage = null,
-		class: className = '',
+		class: className = ''
 	}: Props = $props();
 
 	const style = $derived(
@@ -35,10 +35,7 @@
 </script>
 
 <section class="lg:px-9" aria-labelledby={titleId}>
-	<div
-		class="px-5 pt-5 pb-6 lg:p-8 rounded-3xl relative overflow-hidden {className}"
-		{style}
-	>
+	<div class="px-5 pt-5 pb-6 lg:p-8 rounded-3xl relative overflow-hidden {className}" {style}>
 		{#if backgroundImage}
 			<Img
 				image={backgroundImage}
@@ -49,9 +46,7 @@
 			<div class="absolute inset-0 bg-black/30"></div>
 		{/if}
 
-		<div
-			class="relative z-1"
-		>
+		<div class="relative z-1">
 			<div class="lg:max-w-2xl">
 				<h2 id={titleId} class="text-h2">{title}</h2>
 				{#if subtitle}
