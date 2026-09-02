@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PageHeaderCompact from '$lib/components/blocks/PageHeaderCompact.svelte';
+	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import CardSmall2Cols from '$lib/components/ui/CardSmall2Cols.svelte';
 	import IconArrow from '$lib/components/svg/IconArrow.svelte';
 	import type { PressPage } from '$lib/interfaces/press';
@@ -7,7 +7,7 @@
 	let { page }: { page: PressPage } = $props();
 </script>
 
-<PageHeaderCompact title={page.title} />
+<BasicHeader title={page.title} />
 
 <CardSmall2Cols title={page.contactTitle ?? 'Contact :'} secondTitle={page.resourcesTitle}>
 	{#snippet first()}

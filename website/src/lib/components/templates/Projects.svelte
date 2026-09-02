@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page as appPage } from '$app/state';
+	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
 	import LoadMore from '$lib/components/ui/LoadMore.svelte';
@@ -112,9 +113,7 @@
 	});
 </script>
 
-<section aria-labelledby="projects-title" class="py-12 lg:py-16">
-	<h1 id="projects-title" class="text-h1 text-orange text-center">{page.title}</h1>
-
+<BasicHeader title={page.title} {color} id="projects-title">
 	<SearchInput
 		bind:value={search}
 		label="Rechercher un projet"
@@ -143,7 +142,7 @@
 		legend="Années :"
 		class="mt-9 lg:mt-12"
 	/>
-</section>
+</BasicHeader>
 
 <section aria-label="Projets" class="pb-12 lg:pb-16">
 	<div aria-live="polite">
