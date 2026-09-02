@@ -14,22 +14,30 @@
 		titleImage?: CmsImage | null;
 	}
 
-	let { title, text, layout = '1col', cta = null, parentPage = null, theme = 'default', titleImage = null }: Props = $props();
+	let {
+		title,
+		text,
+		layout = '1col',
+		cta = null,
+		parentPage = null,
+		theme = 'default',
+		titleImage = null
+	}: Props = $props();
 
 	const colorByTheme: Record<Theme, string> = {
-		default:        'var(--color-blue)',
-		campus:         'var(--color-blue)',
-		entreprendre:   'var(--color-purple-light)',
+		default: 'var(--color-blue)',
+		campus: 'var(--color-blue)',
+		entreprendre: 'var(--color-purple-light)',
 		projets_jeunes: 'var(--color-orange)',
-		tremplin_jobs:  'var(--color-purple-light)',
-		soutiens:       'var(--color-pink)',
-		cekale:         'var(--color-purple)',
-		la_ref:         'var(--color-pink)',
-		learninglab:    'var(--color-teal)',
-		foodlab:        'var(--color-orange)',
-		grandlab:       'var(--color-red)',
-		makerlab:       'var(--color-grey-dark)',
-		factorylab:     'var(--color-teal)',
+		tremplin_jobs: 'var(--color-purple-light)',
+		soutiens: 'var(--color-pink)',
+		cekale: 'var(--color-purple)',
+		la_ref: 'var(--color-pink)',
+		learninglab: 'var(--color-teal)',
+		foodlab: 'var(--color-orange)',
+		grandlab: 'var(--color-red)',
+		makerlab: 'var(--color-grey-dark)',
+		factorylab: 'var(--color-teal)'
 	};
 
 	const themeColor = $derived(colorByTheme[theme] ?? 'var(--color-blue)');
@@ -48,7 +56,12 @@
 		<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
 			<h2 id="page-intro-title" class="text-h4 max-lg:text-center">
 				{#if titleImage}
-					<Img image={titleImage} alt={title} sizes="20rem" class="max-lg:mx-auto max-w-80 max-h-40 object-contain" />
+					<Img
+						image={titleImage}
+						alt={title}
+						sizes="20rem"
+						class="max-lg:mx-auto max-w-80 max-h-40 object-contain"
+					/>
 				{:else}
 					{title}
 				{/if}
@@ -67,7 +80,12 @@
 	{:else}
 		<h2 id="page-intro-title" class="text-h2 mb-6 lg:mb-12 text-center">
 			{#if titleImage}
-				<Img image={titleImage} alt={title} sizes="20rem" class="mx-auto max-w-80 max-h-40 object-contain" />
+				<Img
+					image={titleImage}
+					alt={title}
+					sizes="20rem"
+					class="mx-auto max-w-80 max-h-40 object-contain"
+				/>
 			{:else}
 				{title}
 			{/if}

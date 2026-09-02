@@ -22,17 +22,13 @@
 
 {#if hasMedia}
 	<section class={['px-card', className]} aria-label="Médias — {title}">
-		<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-9">
+		<div class="grid grid-cols-1 lg:grid-cols-3 max-lg:gap-y-2.5 gap-6 ">
 			{#each medias as media, index (index)}
 				<figure class="m-0">
 					{#if media.type === 'video'}
 						<VideoPlayer src={media.url} class="rounded-2xl" />
 					{:else}
-						<Img
-							image={media}
-							sizes={mediaSizes}
-							class="w-full h-auto rounded-2xl"
-						/>
+						<Img image={media} sizes={mediaSizes} class="w-full h-50 lg:h-100 object-cover rounded-2xl" />
 					{/if}
 					{#if media.caption}
 						<figcaption class="text-caption text-grey-dark mt-2">{media.caption}</figcaption>

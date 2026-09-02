@@ -24,7 +24,7 @@
 	};
 
 	// For single-media rows, alternate the media column span in a 2/1/1/2 pattern.
-	const singleMediaSpan = (index: number) => [2, 2 ,1, 1][index % 4];
+	const singleMediaSpan = (index: number) => [2, 2, 1, 1][index % 4];
 
 	const mediaSizes = (index: number) =>
 		toSizes(cell(CARD, { 0: 1, 1024: 3 }, 1.5, singleMediaSpan(index)));
@@ -51,16 +51,23 @@
 	<div class="flex flex-col gap-y-9 lg:gap-y-16 mt-12">
 		{#each content.rows as row, i (i)}
 			<div class="grid grid-cols-1 lg:grid-cols-3 gap-y-3 gap-x-6 items-stretch group">
-                {#each row.media as media, m (m)}
-                    <div class="overflow-hidden rounded-2xl min-h-75" class:[contain:size]={media.type !== 'video'} class:lg:col-span-2={singleMediaSpan(m) === 2}>
-                        {#if media.type === 'video'}
-                            <VideoPlayer src={media.url} />
-                        {:else}
-                            <Img image={media} sizes={mediaSizes(m)} class="w-full h-full object-cover" />
-                        {/if}
-                    </div>
-                {/each}
-				<div class="flex flex-col justify-center lg:items-start max-lg:group-even:text-right max-lg:text-balance" class:lg:order-first={!isMediaLeft(i)}>
+				{#each row.media as media, m (m)}
+					<div
+						class="overflow-hidden rounded-2xl min-h-75"
+						class:[contain:size]={media.type !== 'video'}
+						class:lg:col-span-2={singleMediaSpan(m) === 2}
+					>
+						{#if media.type === 'video'}
+							<VideoPlayer src={media.url} />
+						{:else}
+							<Img image={media} sizes={mediaSizes(m)} class="w-full h-full object-cover" />
+						{/if}
+					</div>
+				{/each}
+				<div
+					class="flex flex-col justify-center lg:items-start max-lg:group-even:text-right max-lg:text-balance"
+					class:lg:order-first={!isMediaLeft(i)}
+				>
 					{#if row.title}
 						<h3 class="text-h4 mb-3 lg:mb-6">{row.title}</h3>
 					{/if}
@@ -68,7 +75,12 @@
 						{@html row.description}
 					</div>
 					{#if row.cta}
-						<CtaLink cta={row.cta} color={colors.accent} inverted={colors.onDark} class="mt-4 lg:mt-8 max-lg:self-start max-lg:group-even:self-end" />
+						<CtaLink
+							cta={row.cta}
+							color={colors.accent}
+							inverted={colors.onDark}
+							class="mt-4 lg:mt-8 max-lg:self-start max-lg:group-even:self-end"
+						/>
 					{/if}
 				</div>
 			</div>

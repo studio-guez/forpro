@@ -13,11 +13,17 @@
 		class?: string;
 	}
 
-	let { cta, color = 'var(--color-blue)', inverted = false, size = 'md', class: className = '' }: Props = $props();
+	let {
+		cta,
+		color = 'var(--color-blue)',
+		inverted = false,
+		size = 'md',
+		class: className = ''
+	}: Props = $props();
 
 	const sizeClasses = {
 		md: 'text-base lg:text-lg gap-2 lg:gap-2.5 px-2.25 lg:px-5.5 h-10.5 lg:h-12.5 border-3',
-		lg: 'text-base lg:text-2xl gap-2 lg:gap-3 px-2.25 lg:px-7.5 h-10.5 lg:h-17 border-3 lg:border-4',
+		lg: 'text-base lg:text-2xl gap-2 lg:gap-3 px-2.25 lg:px-7.5 h-10.5 lg:h-17 border-3 lg:border-4'
 	};
 
 	const colorClasses = $derived(
@@ -29,7 +35,15 @@
 	const iconSizeClasses = { md: 'w-6 lg:w-7 h-6 lg:h-7', lg: 'w-6 lg:w-9.5 h-6 lg:h-9.5' };
 </script>
 
-<a href={cta.url} target={cta.target ?? undefined} rel={cta.target === '_blank' ? 'noopener noreferrer' : undefined} style:--color-cta={color} class="font-bold leading-none inline-flex items-center rounded-full bg-transparent backdrop-blur-xs {colorClasses} transition-colors {sizeClasses[size]} {className}">
+<a
+	href={cta.url}
+	target={cta.target ?? undefined}
+	rel={cta.target === '_blank' ? 'noopener noreferrer' : undefined}
+	style:--color-cta={color}
+	class="font-bold leading-none inline-flex items-center rounded-full bg-transparent backdrop-blur-xs {colorClasses} transition-colors {sizeClasses[
+		size
+	]} {className}"
+>
 	<span class="text-trim">{cta.label}</span>
 	{#if cta.icon === 'arrow'}<IconArrow class={iconSizeClasses[size]} />
 	{:else if cta.icon === 'email'}<IconEmail class={iconSizeClasses[size]} />

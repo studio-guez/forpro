@@ -50,7 +50,9 @@
 			>
 				{page.resourcesCtaTitle ?? 'Télécharger les ressources'}
 				<IconArrow class="rotate-90 w-5 h-5" />
-				<span class="sr-only">({page.resources.extension.toUpperCase()}, {page.resources.size})</span>
+				<span class="sr-only"
+					>({page.resources.extension.toUpperCase()}, {page.resources.size})</span
+				>
 			</a>
 		{/if}
 	{/snippet}

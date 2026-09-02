@@ -28,7 +28,10 @@
 >
 	<div class="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-y-12">
 		{#if content.image}
-			<div class="overflow-hidden rounded-2xl [contain:size] min-h-75" class:xl:order-last={!isImageLeft}>
+			<div
+				class="overflow-hidden rounded-2xl [contain:size] min-h-75"
+				class:xl:order-last={!isImageLeft}
+			>
 				<Img image={content.image} sizes={imageSizes} class="w-full h-full object-cover" />
 			</div>
 		{/if}
@@ -37,9 +40,9 @@
 				{@html content.description}
 			</div>
 			{#if content.cta}
-			<div class="max-xl:text-right mt-6 lg:mt-12">
-				<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} size="lg" />
-			</div>
+				<div class="max-xl:text-right mt-6 lg:mt-12">
+					<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} size="lg" />
+				</div>
 			{/if}
 		</div>
 	</div>
