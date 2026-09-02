@@ -22,7 +22,12 @@
 </script>
 
 {#snippet logo(partner: PartnerItem)}
-	<Img image={partner.logo} alt={partner.label} class="h-15 lg:h-25 w-auto max-w-40 object-contain" />
+	<Img
+		image={partner.logo}
+		alt={partner.label}
+		sizes="10rem"
+		class="h-15 lg:h-25 w-auto max-w-40 object-contain"
+	/>
 {/snippet}
 
 <CardSmall title={content.title} subtitle={content.subtitle} {background} color={textColor}>

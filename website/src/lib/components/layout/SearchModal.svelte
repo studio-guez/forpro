@@ -325,7 +325,7 @@
 								<Img
 									image={result.cover}
 									alt=""
-									sizes="(min-width: 768px) 8rem, 4rem"
+									sizes="(min-width: 1024px) 8rem, 4rem"
 									class="shrink-0 w-16 h-16 lg:w-32 lg:h-32 rounded-xl object-cover bg-grey-light"
 								/>
 							{:else}

@@ -6,6 +6,7 @@
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import VideoPlayer from '$lib/components/ui/VideoPlayer.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
+	import { CARD, cell, toSizes } from '$lib/utils/imgSizes';
 
 	interface Props {
 		content: ModuleCasesContent;
@@ -24,6 +25,9 @@
 
 	// For single-media rows, alternate the media column span in a 2/1/1/2 pattern.
 	const singleMediaSpan = (index: number) => [2, 2 ,1, 1][index % 4];
+
+	const mediaSizes = (index: number) =>
+		toSizes(cell(CARD, { 0: 1, 1024: 3 }, 1.5, singleMediaSpan(index)));
 
 	const [[ShapeLeft, shapeLeftClasses], [ShapeRight, shapeRightClasses]] = $derived(
 		getThemeShapes(theme)
@@ -52,7 +56,7 @@
                         {#if media.type === 'video'}
                             <VideoPlayer src={media.url} />
                         {:else}
-                            <Img image={media} class="w-full h-full object-cover" />
+                            <Img image={media} sizes={mediaSizes(m)} class="w-full h-full object-cover" />
                         {/if}
                     </div>
                 {/each}

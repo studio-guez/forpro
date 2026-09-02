@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Img from '$lib/components/ui/Img.svelte';
+	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import BackLink from '$lib/components/ui/BackLink.svelte';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
@@ -7,6 +8,8 @@
 	import type { MissionPage } from '$lib/interfaces/missions';
 
 	let { page }: { page: MissionPage } = $props();
+
+	const coverSizes = toSizes(cell(PAGE, { 0: 1, 1024: 2 }, 4));
 
 	const publishedDate = $derived(toDate(page.publishedDate));
 	const missionDate = $derived(toDate(page.date));
@@ -67,7 +70,7 @@
 			<Img
 				image={page.cover}
 				alt={page.cover.alt ?? page.title}
-				sizes="(min-width: 768px) 50vw, 100vw"
+				sizes={coverSizes}
 				class="w-full aspect-4/3 object-cover rounded-3xl"
 			/>
 		{/if}

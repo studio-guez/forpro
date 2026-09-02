@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { CmsImage } from '$lib/interfaces/page';
 	import Img from '$lib/components/ui/Img.svelte';
+	import { PAGE, toSizes } from '$lib/utils/imgSizes';
 
 	interface Props {
 		title: string;
@@ -16,7 +17,7 @@
 		<Img
 			image={cover}
 			alt={cover.alt ?? title}
-			sizes="100vw"
+			sizes={toSizes(PAGE)}
 			loading="eager"
 			fetchpriority="high"
 			class="w-full aspect-video lg:aspect-3/1 object-cover rounded-3xl mb-12 lg:mb-18"

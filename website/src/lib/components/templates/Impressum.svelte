@@ -2,10 +2,15 @@
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import PageHeaderCompact from '$lib/components/blocks/PageHeaderCompact.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
+	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
 	import type { ImpressumPage } from '$lib/interfaces/impressum';
 
 	let { page }: { page: ImpressumPage } = $props();
+
+	const partnerSizes = toSizes(
+		cell(cell(PAGE, { 0: 1, 1024: 4 }, 1.5, 3), { 0: 1, 640: 2, 1024: 3 }, 1.5)
+	);
 </script>
 
 <PageHeaderCompact title={page.title} />
@@ -24,7 +29,7 @@
 						<Img
 							image={partner.image}
 							alt={partner.image.alt ?? partner.title}
-							sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+							sizes={partnerSizes}
 							class="w-full aspect-4/3 object-cover rounded-lg bg-grey-light mb-3"
 						/>
 					{/if}

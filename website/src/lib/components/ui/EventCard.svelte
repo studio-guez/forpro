@@ -10,9 +10,11 @@
 		/** Accent colour of the arrow badge. */
 		color?: string;
 		headingTag?: string;
+		/** Rendered slot width — the card is laid out by its parent, which owns the geometry. */
+		sizes?: string;
 	}
 
-	let { event, color = 'var(--color-blue)', headingTag = 'h3' }: Props = $props();
+	let { event, color = 'var(--color-blue)', headingTag = 'h3', sizes }: Props = $props();
 
 	const start = $derived(toDate(event.dateStart, event.timeStart));
 </script>
@@ -26,7 +28,7 @@
 		<Img
 			image={event.cover}
 			alt={event.cover.alt ?? event.title}
-			sizes="(min-width: 768px) 33vw, 80vw"
+			{sizes}
 			class="absolute inset-0 -z-1 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
 		/>
 	{/if}
