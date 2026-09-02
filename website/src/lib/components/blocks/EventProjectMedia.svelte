@@ -25,7 +25,7 @@
 </script>
 
 {#if hasMedia}
-	<section class={['px-card', className]} aria-label="Médias — {title}">
+	<section class={['px-base', className]} aria-label="Médias — {title}">
 		<div class="grid grid-cols-1 lg:grid-cols-3 max-lg:gap-y-2.5 gap-6 items-stretch">
 			{#each medias as media, index (index)}
 				<figure class="m-0 flex flex-col" class:lg:col-span-2={mediaSpan(index) === 2}>
