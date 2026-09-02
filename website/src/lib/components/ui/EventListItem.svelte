@@ -48,7 +48,7 @@
 					<span class="text-label text-(--row-color)" aria-hidden="true">·</span>
 				{/if}
 			{/if}
-			<TermTags {terms} label="Thématiques" />
+			<TermTags {terms} label="Thématiques" size="md" />
 		</div>
 	</div>
 
