@@ -2,6 +2,7 @@
 	import { slide } from 'svelte/transition';
 	import { page as appPage } from '$app/state';
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
+	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import FaqQuestion from '$lib/components/ui/FaqQuestion.svelte';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
@@ -129,9 +130,7 @@
 	{count > 1 ? 'questions' : 'question'}
 {/snippet}
 
-<section aria-labelledby="faq-title">
-	<h1 id="faq-title" class="text-h1 text-teal text-center">{page.title}</h1>
-
+<BasicHeader title={page.title} color="var(--color-teal)" id="faq-title">
 	<SearchInput
 		bind:value={search}
 		label="Rechercher une question"
@@ -159,7 +158,7 @@
 		legend="Publics :"
 		class="mt-9 lg:mt-12"
 	/>
-</section>
+</BasicHeader>
 
 <section aria-label="Questions et réponses">
 	<div aria-live="polite">

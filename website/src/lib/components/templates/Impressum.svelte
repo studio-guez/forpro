@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
-	import PageHeaderCompact from '$lib/components/blocks/PageHeaderCompact.svelte';
+	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
@@ -13,7 +13,7 @@
 	);
 </script>
 
-<PageHeaderCompact title={page.title} />
+<BasicHeader title={page.title} />
 
 {#if page.partners.length > 0}
 	<section

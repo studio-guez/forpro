@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page as appPage } from '$app/state';
+	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import EventCard from '$lib/components/ui/EventCard.svelte';
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
@@ -99,9 +100,7 @@
 	});
 </script>
 
-<section aria-labelledby="events-title" class="py-12 lg:py-16">
-	<h1 id="events-title" class="text-h1 text-blue text-center">{page.title}</h1>
-
+<BasicHeader title={page.title} {color} id="events-title">
 	<SearchInput
 		bind:value={search}
 		label="Rechercher un événement"
@@ -123,7 +122,7 @@
 		legend="Publics :"
 		class="mt-9 lg:mt-12"
 	/>
-</section>
+</BasicHeader>
 
 <section aria-label="Événements à venir" class="pb-12 lg:pb-16">
 	<div aria-live="polite">
