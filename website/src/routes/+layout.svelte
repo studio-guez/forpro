@@ -5,6 +5,7 @@
 	import { initSmoothScroll } from '$lib/utils/smoothScroll';
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
 	import SiteMarquee from '$lib/components/layout/SiteMarquee.svelte';
+	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import { IS_PROD } from '$lib/env';
 	import type { LayoutData } from './$types';
 
@@ -74,6 +75,10 @@
 <main class="pt-27 space-y-9 lg:space-y-18 pb-18">
 	{@render children?.()}
 </main>
+
+{#if data.footer}
+	<SiteFooter footer={data.footer} />
+{/if}
 
 {#if data.banner.length > 0}
 	<SiteMarquee announcements={data.banner} />
