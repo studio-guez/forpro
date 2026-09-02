@@ -125,6 +125,7 @@
 	<FilterTags
 		terms={programTerms}
 		bind:selected={selectedPrograms}
+		{color}
 		legend="Projets concernant :"
 		class="mt-12 lg:mt-18"
 	/>
@@ -132,6 +133,7 @@
 	<FilterTags
 		terms={categoryTerms}
 		bind:selected={selectedCategories}
+		{color}
 		legend="Catégories :"
 		class="mt-9 lg:mt-12"
 	/>
@@ -139,6 +141,7 @@
 	<FilterTags
 		terms={yearTerms}
 		bind:selected={selectedYears}
+		{color}
 		legend="Années :"
 		class="mt-9 lg:mt-12"
 	/>
