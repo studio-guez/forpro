@@ -2,6 +2,7 @@
 	import IconClose from '$lib/components/svg/IconClose.svelte';
 	import type { TaxonomyFilterTerm, TaxonomyTerm } from '$lib/interfaces/taxonomy';
 	import { termColor } from '$lib/utils/shared';
+	import { TAG_BASE, tagColorClasses, tagSizeClasses } from '$lib/utils/tagStyles';
 
 	interface Props {
 		terms: TaxonomyFilterTerm[];
@@ -72,9 +73,7 @@
 	<button
 		type="button"
 		style:--term-color={termColor(term)}
-		class="text-label rounded-full border-2 border-(--term-color) px-4 py-1.5 leading-tight transition-colors {isSelected
-			? 'bg-(--term-color) text-white'
-			: 'bg-transparent text-(--term-color)'}"
+		class={[TAG_BASE, tagSizeClasses.lg, tagColorClasses('lg', isSelected)]}
 		aria-pressed={isSelected}
 		{onclick}
 	>
