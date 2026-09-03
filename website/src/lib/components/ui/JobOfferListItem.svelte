@@ -1,0 +1,59 @@
+<script lang="ts">
+	import CtaLink from '$lib/components/ui/CtaLink.svelte';
+	import { formatShortDate, toDate } from '$lib/utils/date';
+	import type { JobOfferCard } from '$lib/interfaces/jobOffers';
+
+	interface Props {
+		offer: JobOfferCard;
+		/** Accent colour of the row. */
+		color?: string;
+		applyLabel?: string;
+		headingTag?: string;
+	}
+
+	let {
+		offer,
+		color = 'var(--color-blue)',
+		applyLabel = 'Postuler',
+		headingTag = 'h3'
+	}: Props = $props();
+
+	const posted = $derived(toDate(offer.datePosted));
+
+	// Sectors read as plain text here, not as tags: the row already carries its colour.
+	const sectors = $derived(offer.terms.map((term) => term.title).join(', '));
+
+	// The row links to the offer, so it is a CTA like any other pill button.
+	const cta = $derived({
+		label: applyLabel,
+		url: offer.url,
+		icon: 'arrow',
+		target: null
+	} as const);
+</script>
+
+<article style:--row-color={color} class="border-t-2 border-(--row-color) py-3 lg:pt-4 lg:pb-6">
+	<svelte:element this={headingTag} class="text-h4 text-(--row-color)">
+		{offer.title}
+	</svelte:element>
+
+	{#if sectors || posted}
+		<div class="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-body-2 text-(--row-color)">
+			{#if sectors}
+				<p>{sectors}</p>
+				{#if posted}
+					<span aria-hidden="true">·</span>
+				{/if}
+			{/if}
+			{#if posted}
+				<p>
+					Posté le <time datetime={offer.datePosted ?? undefined}>{formatShortDate(posted)}</time>
+				</p>
+			{/if}
+		</div>
+	{/if}
+
+	<div class="mt-3 flex justify-end">
+		<CtaLink {cta} {color} ariaLabel="{applyLabel} : {offer.title}" />
+	</div>
+</article>
