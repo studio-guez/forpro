@@ -4,8 +4,8 @@
 	import Carousel from '$lib/components/ui/Carousel.svelte';
 	import ResourceCard from '$lib/components/ui/ResourceCard.svelte';
 	import { CARD, cell, toSizes } from '$lib/utils/imgSizes';
-	import ShapeAgenda1 from '$lib/components/svg/ShapeAgenda1.svelte';
-	import ShapeAgenda2 from '$lib/components/svg/ShapeAgenda2.svelte';
+	import ShapeCasesDefault1 from '$lib/components/svg/ShapeCasesDefault1.svelte';
+	import ShapeCasesDefault2 from '$lib/components/svg/ShapeCasesDefault2.svelte';
 
 	interface Props {
 		content: ModuleResourcesContent;
@@ -29,8 +29,9 @@
 		titleColor={filled ? colors.main : 'var(--color-white)'}
 		background={filled ? colors.main : null}
 		color={filled ? 'var(--color-white)' : colors.main}
-		shapeLeft={filled ? ShapeAgenda1 : null}
-		shapeRight={filled ? ShapeAgenda2 : null}
+		shapeLeft={filled ? ShapeCasesDefault1 : null}
+		shapeRight={filled ? ShapeCasesDefault2 : null}
+		shapeRightClasses="absolute max-lg:bottom-0 lg:top-0 right-0 translate-x-1/6 translate-y-1/10 lg:-translate-y-1/10 w-2/5 max-lg:rotate-180 max-lg:-scale-x-100"
 		shapeColor={colors.deco}
 	>
 		<Carousel
