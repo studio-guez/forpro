@@ -373,13 +373,13 @@ trait UtilsPages
     static function getJobOfferCardData(\Kirby\Cms\Page $page): array
     {
         return [
-            'title'      => $page->title()->value(),
-            'url'        => '/' . $page->virtualPath(),
-            'datePosted' => $page->datePosted()->toDate('Y-m-d'),
-            'location'   => $page->location()->value(),
-            'deadline'   => $page->deadline()->toDate('Y-m-d'),
+            'title'         => $page->title()->value(),
+            'url'           => '/' . $page->virtualPath(),
+            'publishedDate' => $page->publishedDate()->toDate('Y-m-d'),
+            'location'      => $page->location()->value(),
+            'deadline'      => $page->deadline()->toDate('Y-m-d'),
             ...self::getActivityRate($page),
-            'terms'      => self::resolveTaxonomyTerms($page->sectors(), 'sectors'),
+            'terms'         => self::resolveTaxonomyTerms($page->sectors(), 'sectors'),
         ];
     }
 

@@ -57,12 +57,7 @@ tabs:
                 type: text
                 required: true
               publishedDate:
-                label:
-                  en: Publication date
-                  fr: Date de publication
-                type: date
-                required: true
-                default: today
+                extends: fields/publishedDate
                 width: 1/2
               date:
                 label:
