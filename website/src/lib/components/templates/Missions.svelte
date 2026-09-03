@@ -24,9 +24,11 @@
 	const color = 'var(--color-blue)';
 	const noResultsText = 'Aucune mission ne correspond à votre sélection.';
 
-	// The values the CMS sorts on; an unset sort keeps the CMS order.
+	// The values the CMS sorts on. An unset sort is not an absence of order: the
+	// CMS falls back to the most recent missions first, so that is the empty
+	// option rather than a `dateDesc` of its own.
 	const sortOptions = [
-		{ value: 'dateDesc', label: 'Date (plus récentes)' },
+		{ value: '', label: 'Date (plus récentes)' },
 		{ value: 'dateAsc', label: 'Date (plus anciennes)' },
 		{ value: 'titleAsc', label: 'Titre (A-Z)' }
 	];
@@ -34,7 +36,10 @@
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
 	let selectedCategories = $state<string[]>(parseListParam(initialParams.get('categories')));
-	let sort = $state(initialParams.get('sort') ?? '');
+	// `?sort=dateDesc` asks for what the empty option already does, so a link
+	// carrying it still lands on that option instead of on no option at all.
+	const initialSort = initialParams.get('sort') ?? '';
+	let sort = $state(initialSort === 'dateDesc' ? '' : initialSort);
 
 	// Only offer terms actually used by at least one mission, in CMS order. The
 	// list is paginated, so which terms it uses is answered by the CMS rather
@@ -77,7 +82,7 @@
 		bind:value={sort}
 		options={sortOptions}
 		label="Trier par..."
-		allLabel="Ordre par défaut"
+		clearable={false}
 		{color}
 		class="mt-12 lg:mt-18"
 	/>

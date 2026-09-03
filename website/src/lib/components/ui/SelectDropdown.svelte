@@ -14,6 +14,12 @@
 		label: string;
 		/** Name of the selection-free state, announced by the clearing action. */
 		allLabel?: string;
+		/**
+		 * Whether the panel offers a way back to the empty value. Turn it off when
+		 * the empty value is not a selection-free state but an option of its own
+		 * (a default order, say) — there is nothing left to clear then.
+		 */
+		clearable?: boolean;
 		color?: string;
 		class?: string;
 	}
@@ -23,6 +29,7 @@
 		options,
 		label,
 		allLabel = 'Tous',
+		clearable = true,
 		color = 'var(--color-teal)',
 		class: className = ''
 	}: Props = $props();
@@ -34,8 +41,11 @@
 	let rootEl = $state<HTMLDivElement>();
 	let triggerEl = $state<HTMLButtonElement>();
 
-	// The trigger reads as the current selection; with none it reads as the field itself.
-	const selectedLabel = $derived(options.find((option) => option.value === value)?.label ?? label);
+	// The trigger reads as the current selection; with none it reads as the field
+	// itself. A list may offer the empty value as a real option (a default order,
+	// say), and then it is a selection like any other.
+	const selectedOption = $derived(options.find((option) => option.value === value));
+	const selectedLabel = $derived(selectedOption?.label ?? label);
 
 	const panelSlide = $derived({ duration: prefersReducedMotion.current ? 0 : 250 });
 
@@ -86,7 +96,7 @@
 				: 'rounded-b-xl hover:bg-(--select-tint)'}"
 			aria-expanded={open}
 			aria-controls={panelId}
-			aria-label={value === '' ? label : `${label} : ${selectedLabel}`}
+			aria-label={selectedOption ? `${label} : ${selectedLabel}` : label}
 			onclick={() => (open = !open)}
 		>
 			<div class="border-b-2 border-current flex items-center justify-between gap-3 pb-1">
@@ -132,18 +142,20 @@
 					{/each}
 				</fieldset>
 
-				<button
-					type="button"
-					class="text-label w-full text-left px-3 py-1 transition-colors enabled:hover:bg-(--select-tint) disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
-					disabled={value === ''}
-					aria-label="Effacer : {allLabel}"
-					onclick={() => {
-						value = '';
-						close(true);
-					}}
-				>
-					Effacer
-				</button>
+				{#if clearable}
+					<button
+						type="button"
+						class="text-label w-full text-left px-3 py-1 transition-colors enabled:hover:bg-(--select-tint) disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+						disabled={value === ''}
+						aria-label="Effacer : {allLabel}"
+						onclick={() => {
+							value = '';
+							close(true);
+						}}
+					>
+						Effacer
+					</button>
+				{/if}
 			</div>
 		{/if}
 	</div>

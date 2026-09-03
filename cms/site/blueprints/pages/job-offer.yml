@@ -47,6 +47,8 @@ tabs:
                 type: headline
               openToApplications:
                 extends: fields/openToApplications
+              publishedDate:
+                extends: fields/publishedDate
               location:
                 label:
                   en: Place of work
