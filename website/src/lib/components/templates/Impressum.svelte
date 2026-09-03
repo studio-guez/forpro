@@ -4,6 +4,7 @@
 	import Img from '$lib/components/ui/Img.svelte';
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
+	import { LABELLED_SECTION, LABELLED_SECTION_ITEMS } from '$lib/utils/sectionStyles';
 	import type { ImpressumPage } from '$lib/interfaces/impressum';
 
 	let { page }: { page: ImpressumPage } = $props();
@@ -54,13 +55,10 @@
 {/if}
 
 {#each page.sections as section, sectionIndex (sectionIndex)}
-	<section
-		aria-labelledby="impressum-section-{sectionIndex}"
-		class="px-base grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-y-9"
-	>
+	<section aria-labelledby="impressum-section-{sectionIndex}" class={LABELLED_SECTION}>
 		<h2 id="impressum-section-{sectionIndex}" class="text-label font-bold">{section.title}</h2>
 
-		<dl class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-y-12">
+		<dl class={LABELLED_SECTION_ITEMS}>
 			{#each section.credits as credit, creditIndex (creditIndex)}
 				<div>
 					<dt class="text-label font-bold">{credit.role}</dt>
