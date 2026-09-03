@@ -1,5 +1,6 @@
 import type { Block, ProjetCard, Seo } from './page';
 import type { EventProjectBase } from './eventProject';
+import type { PaginatedList } from './pagination';
 import type { TaxonomyFilterTerm, TaxonomyTerm } from './taxonomy';
 
 export interface CollectiveMember {
@@ -14,7 +15,11 @@ export interface ProjectPage extends EventProjectBase {
 	readonly collectiveMembers: CollectiveMember[];
 }
 
-// The projects index page (projects.json.php): every project plus its filters.
+/** One page of the projects archive, from `/api/list/projects`. */
+export type ProjectsList = PaginatedList<ProjetCard>;
+
+// The projects index page (projects.json.php): the filters, and the first
+// unfiltered page of the paginated archive.
 export interface ProjectsPage {
 	readonly template: 'projects';
 	readonly title: string;
@@ -22,9 +27,13 @@ export interface ProjectsPage {
 	readonly path: string;
 	readonly programs: TaxonomyFilterTerm[];
 	readonly categories: TaxonomyFilterTerm[];
+	/** Program term slugs carried by at least one project. */
+	readonly usedPrograms: string[];
+	/** Category term slugs carried by at least one project. */
+	readonly usedCategories: string[];
 	/** Years used by at least one project, most recent first. Filter only. */
 	readonly years: number[];
-	readonly projects: ProjetCard[];
+	readonly projects: ProjectsList;
 	readonly body: Block[];
 	readonly seo: Seo;
 }

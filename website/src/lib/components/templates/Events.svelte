@@ -10,7 +10,7 @@
 	import EventListItem from '$lib/components/ui/EventListItem.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
-	import LoadMore from '$lib/components/ui/LoadMore.svelte';
+	import InfiniteScroll from '$lib/components/ui/InfiniteScroll.svelte';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import SelectDropdown from '$lib/components/ui/SelectDropdown.svelte';
@@ -24,9 +24,10 @@
 		stripTags,
 		syncQueryString
 	} from '$lib/utils/filters';
+	import { createPaginatedList } from '$lib/utils/paginatedList.svelte';
 	import { monthKey, monthKeyLabel, monthKeyOf, monthKeysBetween } from '$lib/utils/date';
 	import type { AgendaEventCard } from '$lib/interfaces/page';
-	import type { EventsPage } from '$lib/interfaces/event';
+	import type { EventsPage, PastEventsList } from '$lib/interfaces/event';
 
 	let { page }: { page: EventsPage } = $props();
 
@@ -35,8 +36,6 @@
 
 	const color = 'var(--color-blue)';
 	const noResultsText = 'Aucun événement ne correspond à votre recherche.';
-	// Past events are revealed page by page while scrolling.
-	const PAGE_SIZE = 10;
 
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
@@ -44,19 +43,17 @@
 	let selectedPublics = $state<string[]>(parseListParam(initialParams.get('publics')));
 	let selectedMonth = $state(initialParams.get('month') ?? '');
 
-	const allEvents = $derived([...page.upcomingEvents, ...page.pastEvents]);
-
 	// Events are only filtered by public; only offer terms actually used by at
-	// least one event, in CMS order.
-	const usedSlugs = $derived(
-		new Set(allEvents.flatMap((event) => event.publics.map((term) => term.slug)))
-	);
-	const publicTerms = $derived(filterUsedTerms(page.publics, usedSlugs));
+	// least one event, in CMS order. The past archive is paginated, so which
+	// terms it uses is answered by the CMS rather than counted here.
+	const publicTerms = $derived(filterUsedTerms(page.publics, page.usedPublics));
 
 	// Drop stale slugs coming from the URL so counters stay accurate.
 	const activePublics = $derived(keepKnownSlugs(selectedPublics, publicTerms));
 
 	// Selecting a parent term also matches events tagged with one of its sub-terms.
+	// Only the upcoming list needs this: the past archive is filtered by the CMS,
+	// which resolves the raw selection itself.
 	const publicFilter = $derived(expandSelection(activePublics, publicTerms));
 
 	const matchesFilters = (event: AgendaEventCard): boolean =>
@@ -68,14 +65,6 @@
 		]);
 
 	const upcoming = $derived(page.upcomingEvents.filter(matchesFilters));
-	const past = $derived(page.pastEvents.filter(matchesFilters));
-
-	/** The months a list of events starts in, in the order the events come in. */
-	const monthsOf = (events: AgendaEventCard[]): { value: string; label: string }[] =>
-		[...new Set(events.flatMap((event) => monthKey(event.dateStart) ?? []))].map((value) => ({
-			value,
-			label: monthKeyLabel(value)
-		}));
 
 	// Months already over are never offered, so an event that started in February
 	// and runs until October is only listed from the current month on.
@@ -132,33 +121,38 @@
 		selectedUpcomingMonth = month.value;
 	};
 
-	// Past events are browsed month by month, most recent month first.
-	const pastMonths = $derived(monthsOf(past));
+	// The past archive is paginated by the CMS, so it is filtered there too — the
+	// page payload embeds the first page for the filters in the URL, so a shared
+	// or reloaded filtered link renders the right archive server-side. Filters
+	// travel raw, exactly as they appear in the URL.
+	const archive = createPaginatedList<AgendaEventCard, PastEventsList>({
+		kind: 'past-events',
+		path: () => page.path,
+		seed: () => page.pastEvents,
+		filters: () => ({
+			q: search.trim(),
+			publics: activePublics.join(','),
+			month: activeMonth
+		})
+	});
+
+	// Past events are browsed month by month, most recent month first. The CMS
+	// lists the months of the current match set whatever month is selected, so
+	// the dropdown keeps offering the ones the selection excludes.
+	//
+	// Annotated because the months close a type cycle: they come out of the
+	// archive, which is filtered by `activeMonth`, which is picked out of them.
+	const pastMonths: { value: string; label: string }[] = $derived(
+		archive.current.months.map((value) => ({ value, label: monthKeyLabel(value) }))
+	);
 	const activeMonth = $derived(
 		pastMonths.some((month) => month.value === selectedMonth) ? selectedMonth : ''
 	);
-	const pastForMonth = $derived(
-		activeMonth === '' ? past : past.filter((event) => monthKey(event.dateStart) === activeMonth)
-	);
-
-	let visibleCount = $state(PAGE_SIZE);
-
-	// Any change of filters restarts the pagination at the first page.
-	$effect(() => {
-		void pastForMonth;
-		visibleCount = PAGE_SIZE;
-	});
-
-	const visiblePast = $derived(pastForMonth.slice(0, visibleCount));
-	const hasMore = $derived(visibleCount < pastForMonth.length);
-
-	const loadMore = (): void => {
-		visibleCount = Math.min(visibleCount + PAGE_SIZE, pastForMonth.length);
-	};
 
 	const hasSearch = $derived(search.trim() !== '');
-	// Past events are listed further down, so they count as results too.
-	const resultCount = $derived(upcoming.length + past.length);
+	// Past events are listed further down, so they count as results too. The
+	// archive's `matchTotal` ignores the month, so the count covers every match.
+	const resultCount = $derived(upcoming.length + archive.current.matchTotal);
 
 	const clearSearch = (): void => {
 		search = '';
@@ -207,7 +201,7 @@
 				{noResultsText}
 				{color}
 			/>
-			{#if upcoming.length === 0 && past.length > 0}
+			{#if upcoming.length === 0 && archive.current.matchTotal > 0}
 				<p class="text-body-1 text-grey-dark mt-4">
 					Aucun événement à venir, voir les événements passés ci-dessous.
 				</p>
@@ -280,8 +274,12 @@
 	</div>
 </section>
 
-{#if past.length > 0}
-	<section aria-labelledby="past-events-title" class="px-base pb-12 lg:pb-16">
+{#if archive.current.matchTotal > 0}
+	<section
+		aria-labelledby="past-events-title"
+		style:--events-color={color}
+		class="px-base pb-12 lg:pb-16"
+	>
 		<CardTitle
 			id="past-events-title"
 			title="Les événements passés"
@@ -299,12 +297,19 @@
 		/>
 
 		<div aria-live="polite" class="mt-6">
-			{#each visiblePast as event (event.url)}
+			{#each archive.items as event (event.url)}
 				<EventListItem {event} {color} headingTag="h3" />
 			{/each}
 		</div>
 
-		<LoadMore {hasMore} {loadMore} label="Voir plus d'événements" {color} class="mt-12" />
+		<InfiniteScroll
+			hasMore={archive.hasMore}
+			loadMore={archive.loadMore}
+			key={archive.items.length}
+			{color}
+			label="Chargement des événements passés…"
+			class="py-8"
+		/>
 	</section>
 {/if}
 
