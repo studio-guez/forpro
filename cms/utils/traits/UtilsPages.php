@@ -289,16 +289,19 @@ trait UtilsPages
         return $pages->filter(fn(\Kirby\Cms\Page $page) => self::isOpenToApplications($page));
     }
 
-    /** Accepted `?sort=` values of the missions index; anything else keeps CMS order. */
+    /** Accepted `?sort=` values of the missions index; anything else falls back to the default. */
     private const MISSION_SORTS = ['dateDesc', 'dateAsc', 'titleAsc'];
+
+    /** Order of the missions index when `?sort=` is absent or unknown: most recent first. */
+    private const MISSION_SORT_DEFAULT = 'dateDesc';
 
     /**
      * Filtered, sorted, paginated missions of a missions index.
      *
      * Sorting has to happen here rather than on the frontend: it decides which
      * missions land in a page at all. `$categories` is a **raw** selection of
-     * term slugs; an unknown or empty `$sort` keeps the CMS order, and `usort()`
-     * being stable keeps ties in it too, like `Array.sort()` does.
+     * term slugs; an unknown or empty `$sort` means the default one, and
+     * `usort()` being stable keeps ties in CMS order, like `Array.sort()` does.
      *
      * @return array{offset:int, total:int, hasMore:bool, items:array<int,array>}
      */
@@ -328,19 +331,21 @@ trait UtilsPages
             'title' => (string)$mission->title()->value(),
         ]);
 
-        if (in_array($sort, self::MISSION_SORTS, true) === true) {
-            // `localeCompare(…, 'fr')` on the frontend: accented titles have to
-            // sort where a French reader expects them, not by code point.
-            $collator = class_exists('Collator') ? new \Collator('fr_FR') : null;
-
-            usort($items, match ($sort) {
-                'dateDesc' => fn(array $a, array $b) => strcmp($b['date'], $a['date']),
-                'dateAsc'  => fn(array $a, array $b) => strcmp($a['date'], $b['date']),
-                'titleAsc' => fn(array $a, array $b) => $collator
-                    ? $collator->compare($a['title'], $b['title'])
-                    : strcmp(self::normalizeForSearch($a['title']), self::normalizeForSearch($b['title'])),
-            });
+        if (in_array($sort, self::MISSION_SORTS, true) === false) {
+            $sort = self::MISSION_SORT_DEFAULT;
         }
+
+        // `localeCompare(…, 'fr')` on the frontend: accented titles have to
+        // sort where a French reader expects them, not by code point.
+        $collator = class_exists('Collator') ? new \Collator('fr_FR') : null;
+
+        usort($items, match ($sort) {
+            'dateDesc' => fn(array $a, array $b) => strcmp($b['date'], $a['date']),
+            'dateAsc'  => fn(array $a, array $b) => strcmp($a['date'], $b['date']),
+            'titleAsc' => fn(array $a, array $b) => $collator
+                ? $collator->compare($a['title'], $b['title'])
+                : strcmp(self::normalizeForSearch($a['title']), self::normalizeForSearch($b['title'])),
+        });
 
         return self::paginate(
             $items,
@@ -373,12 +378,13 @@ trait UtilsPages
     static function getJobOfferCardData(\Kirby\Cms\Page $page): array
     {
         return [
-            'title'    => $page->title()->value(),
-            'url'      => '/' . $page->virtualPath(),
-            'location' => $page->location()->value(),
-            'deadline' => $page->deadline()->toDate('Y-m-d'),
+            'title'         => $page->title()->value(),
+            'url'           => '/' . $page->virtualPath(),
+            'publishedDate' => $page->publishedDate()->toDate('Y-m-d'),
+            'location'      => $page->location()->value(),
+            'deadline'      => $page->deadline()->toDate('Y-m-d'),
             ...self::getActivityRate($page),
-            'terms'    => self::resolveTaxonomyTerms($page->sectors(), 'sectors'),
+            'terms'         => self::resolveTaxonomyTerms($page->sectors(), 'sectors'),
         ];
     }
 

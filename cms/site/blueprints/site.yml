@@ -101,6 +101,7 @@ tabs:
             image: false
             parent: site.index.template("job-offers").first()
             limit: 10
+            sortBy: openToApplications desc publishedDate desc
             templates:
               - job-offer
             create: job-offer
@@ -111,6 +112,7 @@ tabs:
             image: false
             parent: site.index.template("missions").first()
             limit: 10
+            sortBy: openToApplications desc publishedDate desc
             templates:
               - mission
             create: mission
