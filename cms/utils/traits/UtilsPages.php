@@ -1,11 +1,61 @@
 <?php
 
 /**
- * Page-level payloads: hero, event dates, card data and the shared
- * event/project base serialization.
+ * Page-level payloads: hero, event dates, card data, the shared event/project
+ * base serialization, and the paginated index lists (past events, projects,
+ * missions) behind the frontends' infinite scroll.
  */
 trait UtilsPages
 {
+    /**
+     * Resolves a frontend path to the page it addresses. The frontend routes on
+     * `virtualPath` (real ancestors, minus the top-level containers, then the
+     * `parentPage` chain), which is *not* the Kirby page id: the missions index
+     * lives at `pages/missions` but is published at `programme-campus/missions`.
+     *
+     * `$template` guards a route that only makes sense for one index, so that
+     * `?path=` cannot be pointed at an unrelated page. Returns null when
+     * nothing matches, which lets a route fall through to Kirby's own 404.
+     */
+    static function findPageByVirtualPath(string $path, ?string $template = null): ?\Kirby\Cms\Page
+    {
+        $page = kirby()->site()->index()->filter(
+            fn($candidate) => $candidate->virtualPath() === $path
+        )->first();
+
+        if ($page === null) {
+            return null;
+        }
+
+        return $template === null || $page->intendedTemplate()->name() === $template ? $page : null;
+    }
+
+    /**
+     * One page of a filtered list, in the envelope the three index lists share
+     * (`PaginatedList<T>` on the frontend).
+     *
+     * `$serialize` is applied to the returned slice only, never to the whole
+     * set: card payloads generate thumbnails, and doing that for an archive the
+     * visitor is about to scroll past one page of is the cost this pagination
+     * exists to avoid.
+     *
+     * @param  array<int, mixed> $items Already filtered and ordered.
+     * @return array{offset:int, total:int, hasMore:bool, items:array<int, array>}
+     */
+    private static function paginate(array $items, int $offset, int $limit, \Closure $serialize): array
+    {
+        $total = count($items);
+        $offset = max(0, $offset);
+        $slice = array_slice($items, $offset, $limit);
+
+        return [
+            'offset'  => $offset,
+            'total'   => $total,
+            'hasMore' => $offset + count($slice) < $total,
+            'items'   => array_map($serialize, $slice),
+        ];
+    }
+
     static function getHeroFromPage(\Kirby\Cms\Page $kirbyPage): array
     {
         $hero = $kirbyPage->hero()->toStructure()?->get(0);
@@ -85,6 +135,199 @@ trait UtilsPages
             'programs'  => self::resolveTaxonomyTerms($page->programs(), 'programs'),
             'publics'   => self::resolveTaxonomyTerms($page->publics(), 'publics'),
         ];
+    }
+
+    /**
+     * Filtered, paginated past events of an events page, most recent first.
+     *
+     * The filters mirror the frontend ones: `$query` is matched as a whole
+     * phrase, accent- and case-insensitively, against title, short description
+     * and term titles; `$publics` is a **raw** selection of `publics` slugs, as
+     * it appears in the URL; `$month` is a `YYYY-MM` key on `dateStart`.
+     *
+     * `total` counts the events the returned page is sliced out of, so it
+     * drives the pagination. `matchTotal` and `months` deliberately ignore
+     * `$month`: the results header counts every match, and the month dropdown
+     * has to keep offering the months the selection excludes.
+     *
+     * Month keys, not labels: formatting them is the frontend's job.
+     *
+     * @return array{offset:int, total:int, matchTotal:int, hasMore:bool, months:array<int,string>, items:array<int,array>}
+     */
+    static function getPastEvents(
+        \Kirby\Cms\Pages $events,
+        string $query = '',
+        array $publics = [],
+        string $month = '',
+        int $offset = 0,
+        int $limit = 10
+    ): array {
+        // `splitEventsByDate()` already sorts past events most recent first and
+        // drops the ones without a start date.
+        $past = self::splitEventsByDate($events)['past'];
+
+        // Raw selection in, resolved here: `resolveTaxonomySelection()` is the
+        // mirror of the frontend's own rule, so a URL means the same on both ends.
+        $past = self::filterPagesByTaxonomy(
+            $past,
+            'publics',
+            self::resolveTaxonomySelection('publics', $publics),
+            false
+        );
+
+        $past = $past->filter(fn($event) => self::matchesSearchFields($query, [
+            $event->title()->value(),
+            self::stripHtmlTags($event->shortDesc()->value()),
+            ...array_column([
+                ...self::resolveTaxonomyTerms($event->programs(), 'programs'),
+                ...self::resolveTaxonomyTerms($event->publics(), 'publics'),
+            ], 'title'),
+        ]));
+
+        // The month key is needed twice below, so it is resolved once per event.
+        $matched = [];
+        foreach ($past as $event) {
+            $matched[] = [
+                'page'  => $event,
+                'month' => mb_substr((string)self::getEventDateFields($event)['dateStart'], 0, 7),
+            ];
+        }
+
+        $months = array_values(array_unique(array_filter(array_column($matched, 'month'))));
+
+        // A month the current match set does not offer is ignored rather than
+        // matched, exactly as the frontend drops it from the dropdown: a stale
+        // `?month=` then widens the archive instead of emptying it, and both
+        // ends agree on what the URL means.
+        $month = in_array($month, $months, true) ? $month : '';
+
+        $forMonth = $month === ''
+            ? $matched
+            : array_values(array_filter($matched, fn(array $entry) => $entry['month'] === $month));
+
+        return [
+            ...self::paginate(
+                $forMonth,
+                $offset,
+                $limit,
+                fn(array $entry) => self::getEventCardData($entry['page'])
+            ),
+            'matchTotal' => count($matched),
+            'months'     => $months,
+        ];
+    }
+
+    /**
+     * Filtered, paginated projects of a projects index, in CMS order.
+     *
+     * The filters mirror the frontend ones: `$query` is matched as a whole
+     * phrase against title, short description, collective name and term titles;
+     * `$programs` and `$categories` are **raw** selections of term slugs;
+     * `$years` is a list of years as strings, matched on the `year` field,
+     * which exists only to filter.
+     *
+     * @return array{offset:int, total:int, hasMore:bool, items:array<int,array>}
+     */
+    static function getProjects(
+        \Kirby\Cms\Pages $projects,
+        string $query = '',
+        array $programs = [],
+        array $categories = [],
+        array $years = [],
+        int $offset = 0,
+        int $limit = 12
+    ): array {
+        // Raw selections in, resolved here: `resolveTaxonomySelection()` is the
+        // mirror of the frontend's own rule, so a URL means the same on both ends.
+        foreach (['programs' => $programs, 'categories' => $categories] as $taxonomy => $selected) {
+            $projects = self::filterPagesByTaxonomy(
+                $projects,
+                $taxonomy,
+                self::resolveTaxonomySelection($taxonomy, $selected),
+                false
+            );
+        }
+
+        if ($years !== []) {
+            $projects = $projects->filter(
+                fn($project) => in_array((string)(int)$project->year()->value(), $years, true)
+            );
+        }
+
+        $projects = $projects->filter(fn($project) => self::matchesSearchFields($query, [
+            $project->title()->value(),
+            self::stripHtmlTags($project->shortDesc()->value()),
+            $project->collectiveName()->value(),
+            ...array_column([
+                ...self::resolveTaxonomyTerms($project->programs(), 'programs'),
+                ...self::resolveTaxonomyTerms($project->categories(), 'categories'),
+            ], 'title'),
+        ]));
+
+        return self::paginate(
+            $projects->values(),
+            $offset,
+            $limit,
+            fn(\Kirby\Cms\Page $project) => self::getProjectCardData($project)
+        );
+    }
+
+    /** Accepted `?sort=` values of the missions index; anything else keeps CMS order. */
+    private const MISSION_SORTS = ['dateDesc', 'dateAsc', 'titleAsc'];
+
+    /**
+     * Filtered, sorted, paginated missions of a missions index.
+     *
+     * Sorting has to happen here rather than on the frontend: it decides which
+     * missions land in a page at all. `$categories` is a **raw** selection of
+     * term slugs; an unknown or empty `$sort` keeps the CMS order, and `usort()`
+     * being stable keeps ties in it too, like `Array.sort()` does.
+     *
+     * @return array{offset:int, total:int, hasMore:bool, items:array<int,array>}
+     */
+    static function getMissions(
+        \Kirby\Cms\Pages $missions,
+        array $categories = [],
+        string $sort = '',
+        int $offset = 0,
+        int $limit = 24
+    ): array {
+        // Raw selection in, resolved here: `resolveTaxonomySelection()` is the
+        // mirror of the frontend's own rule, so a URL means the same on both ends.
+        $missions = self::filterPagesByTaxonomy(
+            $missions,
+            'categories',
+            self::resolveTaxonomySelection('categories', $categories),
+            false
+        );
+
+        // Sorting reads two fields per comparison, so both are resolved once.
+        $items = $missions->values(fn($mission) => [
+            'page'  => $mission,
+            'date'  => (string)$mission->date()->toDate('Y-m-d'),
+            'title' => (string)$mission->title()->value(),
+        ]);
+
+        if (in_array($sort, self::MISSION_SORTS, true) === true) {
+            // `localeCompare(…, 'fr')` on the frontend: accented titles have to
+            // sort where a French reader expects them, not by code point.
+            $collator = class_exists('Collator') ? new \Collator('fr_FR') : null;
+
+            usort($items, match ($sort) {
+                'dateDesc' => fn(array $a, array $b) => strcmp($b['date'], $a['date']),
+                'dateAsc'  => fn(array $a, array $b) => strcmp($a['date'], $b['date']),
+                'titleAsc' => fn(array $a, array $b) => $collator
+                    ? $collator->compare($a['title'], $b['title'])
+                    : strcmp(self::normalizeForSearch($a['title']), self::normalizeForSearch($b['title'])),
+            });
+        }
+
+        return self::paginate(
+            $items,
+            $offset,
+            $limit,
+            fn(array $entry) => self::getMissionCardData($entry['page'])
+        );
     }
 
     /**
