@@ -270,6 +270,25 @@ trait UtilsPages
         );
     }
 
+    /**
+     * Whether a mission / job offer still accepts applications.
+     *
+     * A closed one stays online — its page keeps its URL and says so — but it
+     * leaves the index and the sitemap. The field is missing from every page
+     * saved before it existed, and those have to keep counting as open, hence
+     * the `true` default rather than a bare `toBool()`.
+     */
+    static function isOpenToApplications(\Kirby\Cms\Page $page): bool
+    {
+        return $page->openToApplications()->toBool(true);
+    }
+
+    /** The pages of a listing that still accept applications. */
+    static function filterOpenToApplications(\Kirby\Cms\Pages $pages): \Kirby\Cms\Pages
+    {
+        return $pages->filter(fn(\Kirby\Cms\Page $page) => self::isOpenToApplications($page));
+    }
+
     /** Accepted `?sort=` values of the missions index; anything else keeps CMS order. */
     private const MISSION_SORTS = ['dateDesc', 'dateAsc', 'titleAsc'];
 
@@ -290,6 +309,9 @@ trait UtilsPages
         int $offset = 0,
         int $limit = 24
     ): array {
+        // Closed missions never reach the index, whichever page of it is asked for.
+        $missions = self::filterOpenToApplications($missions);
+
         // Raw selection in, resolved here: `resolveTaxonomySelection()` is the
         // mirror of the frontend's own rule, so a URL means the same on both ends.
         $missions = self::filterPagesByTaxonomy(
