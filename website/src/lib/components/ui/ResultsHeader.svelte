@@ -38,7 +38,7 @@
 
 <ListHeader {color} {variant} {count} {nouns} class={className}>
 	<div class="flex flex-wrap items-start justify-between gap-4 text-(--list-color)">
-		<h2 class="text-h2">
+		<h2 class="text-h2 h-12.5">
 			Résultats pour : <span class="opacity-50">{query}</span>
 		</h2>
 
