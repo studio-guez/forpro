@@ -1,0 +1,13 @@
+// Grid shared by the "label + items" sections of the Team and Impressum templates: a
+// heading in the first column and the entries spanning the remaining three from `lg` up,
+// stacked below that. It lives here because the two templates fill the items grid with
+// different elements — a `ul` of members, a `dl` of credits — so the classes cannot be
+// shared by wrapping.
+//
+// Mobile collapses to a single 1.5rem gap so the stacked heading, entries and the next
+// section keep one rhythm; the taller row gaps only kick in once the columns exist.
+
+export const LABELLED_SECTION = 'px-base grid grid-cols-1 lg:grid-cols-4 gap-x-6 gap-y-4 lg:gap-y-9';
+
+export const LABELLED_SECTION_ITEMS =
+	'lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 lg:gap-y-12';
