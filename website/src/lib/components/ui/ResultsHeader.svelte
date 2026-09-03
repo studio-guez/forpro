@@ -1,5 +1,12 @@
 <script lang="ts">
 	import IconClose from '$lib/components/svg/IconClose.svelte';
+	import ListHeader from '$lib/components/ui/ListHeader.svelte';
+	import {
+		CTA_BASE,
+		ctaColorClasses,
+		ctaIconSizeClasses,
+		ctaSizeClasses
+	} from '$lib/utils/ctaStyles';
 
 	interface Props {
 		/** The current search query; the heading is only shown when it is set. */
@@ -10,6 +17,8 @@
 		onClear: () => void;
 		noResultsText?: string;
 		color?: string;
+		/** Band it is drawn as; `section` where it stands in for a browsable band. */
+		variant?: 'section' | 'plain';
 		class?: string;
 	}
 
@@ -20,35 +29,31 @@
 		onClear,
 		noResultsText = 'Aucun résultat ne correspond à votre recherche.',
 		color = 'var(--color-teal)',
+		variant = 'plain',
 		class: className = ''
 	}: Props = $props();
+
+	const colorClasses = ctaColorClasses(false);
 </script>
 
-<div style:--results-color={color} class="border-t border-black pt-6 lg:pt-8 {className}">
-	<div class="flex flex-wrap items-start justify-between gap-4">
-		<div>
-			<h2 class="text-h2 text-(--results-color)">
-				Résultats pour : <span class="text-grey-light">{query}</span>
-			</h2>
-			{#if count > 0}
-				<p class="text-label text-(--results-color) mt-1">
-					{count}
-					{count > 1 ? nouns[1] : nouns[0]}
-				</p>
-			{/if}
-		</div>
+<ListHeader {color} {variant} {count} {nouns} class={className}>
+	<div class="flex flex-wrap items-start justify-between gap-4 text-(--list-color)">
+		<h2 class="text-h2 h-12.5">
+			Résultats pour : <span class="opacity-50">{query}</span>
+		</h2>
 
 		<button
 			type="button"
-			class="text-label shrink-0 flex items-center gap-2 rounded-full border-2 border-(--results-color) text-(--results-color) px-4 py-1.5 leading-tight transition-colors hover:bg-(--results-color) hover:text-white"
+			style:--color-cta="var(--list-color)"
+			class="{CTA_BASE} {colorClasses} {ctaSizeClasses.md} shrink-0"
 			onclick={onClear}
 		>
-			Effacer la recherche
-			<IconClose class="w-4.75 h-4.75" />
+			<span class="text-trim">Effacer la recherche</span>
+			<IconClose class={ctaIconSizeClasses.md} />
 		</button>
 	</div>
 
 	{#if count === 0}
-		<p class="text-body-1 text-grey-dark mt-4">{noResultsText}</p>
+		<p class="text-body-1 mt-4 text-(--list-color)">{noResultsText}</p>
 	{/if}
-</div>
+</ListHeader>

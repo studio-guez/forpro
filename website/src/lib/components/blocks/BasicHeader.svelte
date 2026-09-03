@@ -21,7 +21,7 @@
 	}: Props = $props();
 </script>
 
-<section aria-labelledby={id} class={['mb-12 lg:mb-24 lg:pt-13', className]}>
+<section aria-labelledby={id} class={['px-base mb-12 lg:mb-24 lg:pt-13', className]}>
 	<h1 {id} style:color class="text-h1 text-center">{title}</h1>
 
 	{@render children?.()}
