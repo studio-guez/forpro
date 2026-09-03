@@ -14,7 +14,14 @@
 </script>
 
 {#if terms.length > 0}
-	<ul class={['flex flex-wrap items-center gap-y-1.5', className, size === 'sm' ? 'gap-x-1.5' : 'gap-x-3']} aria-label={label ?? undefined}>
+	<ul
+		class={[
+			'flex flex-wrap items-center gap-y-1.5',
+			className,
+			size === 'sm' ? 'gap-x-1.5' : 'gap-x-3'
+		]}
+		aria-label={label ?? undefined}
+	>
 		{#each terms as term (term.slug)}
 			<li
 				style:--term-color={termColor(term)}
