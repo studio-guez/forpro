@@ -11,6 +11,11 @@
 	interface Props {
 		/** Title passed to the native share sheet. Falls back to the document title. */
 		title?: string;
+		/**
+		 * Link to share, resolved against the current page — so `?question=slug`
+		 * shares this page opened on that question. Defaults to the current URL.
+		 */
+		url?: string;
 		label?: string;
 		copiedLabel?: string;
 		/** Any CSS colour: drives the outline, the label and the hover fill. */
@@ -22,6 +27,7 @@
 
 	let {
 		title,
+		url,
 		label = 'Partager',
 		copiedLabel = 'Lien copié !',
 		color = 'var(--color-blue)',
@@ -36,13 +42,13 @@
 
 	// Native share sheet when available (mobile), clipboard fallback otherwise.
 	const share = async (): Promise<void> => {
-		const url = window.location.href;
+		const shareUrl = url ? new URL(url, window.location.href).href : window.location.href;
 		try {
 			if (navigator.share) {
-				await navigator.share({ title: title ?? document.title, url });
+				await navigator.share({ title: title ?? document.title, url: shareUrl });
 				return;
 			}
-			await navigator.clipboard.writeText(url);
+			await navigator.clipboard.writeText(shareUrl);
 			shared = true;
 			setTimeout(() => (shared = false), 3000);
 		} catch {

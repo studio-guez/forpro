@@ -34,6 +34,8 @@ export interface JobOfferPage {
 	readonly slug: string;
 	readonly path: string;
 	readonly parentPage: PageParent | null;
+	/** A closed offer keeps its page, but leaves the index and the sitemap. */
+	readonly openToApplications: boolean;
 	readonly sectors: TaxonomyTerm[];
 	readonly description: string;
 	readonly profile: string;
@@ -45,7 +47,8 @@ export interface JobOfferPage {
 	readonly startDate: string;
 	/** ISO date `YYYY-MM-DD`. */
 	readonly deadline: string;
-	readonly applicationEmail: string;
+	/** Null once the offer is closed: the address is not shipped at all then. */
+	readonly applicationEmail: string | null;
 	readonly pdfOffer: CmsDocument | null;
 	readonly applicationContent: string;
 	readonly applicationQuestions: JobOfferQuestion[];

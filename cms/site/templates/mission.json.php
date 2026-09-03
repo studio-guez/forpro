@@ -13,11 +13,18 @@ $json['parentPage'] = Utils::getParentPageData($page);
 
 $json['categories'] = Utils::resolveTaxonomyTerms($page->categories(), 'categories');
 
+// Closed missions stay reachable at their URL: the frontend replaces the apply
+// button by a notice rather than 404ing.
+$json['openToApplications'] = Utils::isOpenToApplications($page);
+
 $json['announcer']     = $page->announcer()->value();
 $json['publishedDate'] = $page->publishedDate()->toDate('Y-m-d');
 $json['date']          = $page->date()->toDate('Y-m-d');
 $json['location']      = $page->location()->value();
-$json['applyCta']      = Utils::resolveCtaStructure($page->applyCta());
+// Closed missions ship no way to apply at all, not even in the page payload.
+$json['applyCta']      = $json['openToApplications']
+    ? Utils::resolveCtaStructure($page->applyCta())
+    : null;
 
 $json['cover']      = Utils::getJsonEncodeImageDataOrNull($page->cover()->toFile());
 $json['introTitle'] = $page->introTitle()->value();

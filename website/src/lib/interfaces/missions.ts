@@ -19,6 +19,8 @@ export interface MissionPage {
 	readonly slug: string;
 	readonly path: string;
 	readonly parentPage: PageParent | null;
+	/** A closed mission keeps its page, but leaves the index and the sitemap. */
+	readonly openToApplications: boolean;
 	readonly categories: TaxonomyTerm[];
 	readonly announcer: string;
 	/** ISO date `YYYY-MM-DD`. */
