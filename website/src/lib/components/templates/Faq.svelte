@@ -257,9 +257,7 @@
 							onclick={() => toggleSection(section.index)}
 						>
 							{section.title}
-							<IconChevron
-								class="shrink-0 transition-transform {open ? 'rotate-180' : ''}"
-							/>
+							<IconChevron class="shrink-0 transition-transform {open ? 'rotate-180' : ''}" />
 						</button>
 					</h2>
 

@@ -39,7 +39,9 @@
 			<div
 				class="absolute inset-0 opacity-0 transition-opacity group-hover:opacity-30 bg-orange"
 			></div>
-			<div class="lg:hidden absolute inset-0 bg-linear-to-b from-black/15 via-black/0 to-black/30 group-hover:opacity-30 transition-opacity"></div>
+			<div
+				class="lg:hidden absolute inset-0 bg-linear-to-b from-black/15 via-black/0 to-black/30 group-hover:opacity-30 transition-opacity"
+			></div>
 			<TermTags
 				terms={project.programs}
 				label="Programmes"
