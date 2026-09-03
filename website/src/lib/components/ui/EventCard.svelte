@@ -57,6 +57,7 @@
 
 			<div class="flex items-end justify-between gap-4">
 				<div class="min-w-0">
+					<TermTags terms={event.programs} label="Programmes" size="sm" class="mb-1.5" />
 					{#if start}
 						<p class="text-body-2">
 							{#if range}
@@ -67,8 +68,7 @@
 							{/if}
 						</p>
 					{/if}
-					<div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
-						<TermTags terms={event.programs} label="Programmes" size="sm" />
+					<div class="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-2">
 						{#if timeStart}
 							<span class="text-label inline-flex items-center gap-1.5">
 								<time datetime={timeAttr(event.timeStart)}>{timeStart}</time>
