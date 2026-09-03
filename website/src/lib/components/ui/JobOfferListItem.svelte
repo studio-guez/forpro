@@ -18,7 +18,7 @@
 		headingTag = 'h3'
 	}: Props = $props();
 
-	const posted = $derived(toDate(offer.datePosted));
+	const published = $derived(toDate(offer.publishedDate));
 
 	// Sectors read as plain text here, not as tags: the row already carries its colour.
 	const sectors = $derived(offer.terms.map((term) => term.title).join(', '));
@@ -37,17 +37,20 @@
 		{offer.title}
 	</svelte:element>
 
-	{#if sectors || posted}
+	{#if sectors || offer.publishedDate}
 		<div class="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-body-2 text-(--row-color)">
 			{#if sectors}
 				<p>{sectors}</p>
-				{#if posted}
+				{#if offer.publishedDate}
 					<span aria-hidden="true">·</span>
 				{/if}
 			{/if}
-			{#if posted}
+			{#if offer.publishedDate}
 				<p>
-					Posté le <time datetime={offer.datePosted ?? undefined}>{formatShortDate(posted)}</time>
+					Posté le
+					<time datetime={offer.publishedDate}>
+						{published ? formatShortDate(published) : offer.publishedDate}
+					</time>
 				</p>
 			{/if}
 		</div>

@@ -19,8 +19,8 @@ export interface JobOfferQuestion {
 export interface JobOfferCard {
 	readonly title: string;
 	readonly url: string;
-	/** ISO date `YYYY-MM-DD`; null when the editor left it empty. */
-	readonly datePosted: string | null;
+	/** ISO date `YYYY-MM-DD`. */
+	readonly publishedDate: string;
 	readonly location: string;
 	/** ISO date `YYYY-MM-DD`. */
 	readonly deadline: string;

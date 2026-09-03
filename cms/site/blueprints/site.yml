@@ -101,7 +101,7 @@ tabs:
             image: false
             parent: site.index.template("job-offers").first()
             limit: 10
-            sortBy: openToApplications desc datePosted desc
+            sortBy: openToApplications desc publishedDate desc
             templates:
               - job-offer
             create: job-offer
