@@ -146,6 +146,9 @@
 
 	/* SPACING */
 
+	.px-base {
+		@apply px-5 lg:px-9;
+	}
 	.px-card {
 		@apply px-5 lg:px-15 xl:px-30;
 	}

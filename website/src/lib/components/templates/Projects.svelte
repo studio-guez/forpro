@@ -1,24 +1,22 @@
 <script lang="ts">
 	import { page as appPage } from '$app/state';
+	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
-	import LoadMore from '$lib/components/ui/LoadMore.svelte';
+	import InfiniteScroll from '$lib/components/ui/InfiniteScroll.svelte';
 	import ProjectCard from '$lib/components/ui/ProjectCard.svelte';
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import {
-		expandSelection,
 		filterUsedTerms,
 		keepKnownSlugs,
-		matchesSearch,
-		matchesTerms,
 		parseListParam,
-		stripTags,
 		syncQueryString
 	} from '$lib/utils/filters';
+	import { createPaginatedList } from '$lib/utils/paginatedList.svelte';
 	import type { ProjetCard } from '$lib/interfaces/page';
-	import type { ProjectsPage } from '$lib/interfaces/project';
+	import type { ProjectsList, ProjectsPage } from '$lib/interfaces/project';
 	import type { TaxonomyFilterTerm } from '$lib/interfaces/taxonomy';
 
 	let { page }: { page: ProjectsPage } = $props();
@@ -28,8 +26,6 @@
 
 	const color = 'var(--color-orange)';
 	const noResultsText = 'Aucun projet ne correspond à votre recherche.';
-	// Projects are revealed page by page while scrolling.
-	const PAGE_SIZE = 9;
 
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
@@ -38,16 +34,11 @@
 	let selectedCategories = $state<string[]>(parseListParam(initialParams.get('categories')));
 	let selectedYears = $state<string[]>(parseListParam(initialParams.get('years')));
 
-	// Only offer terms actually used by at least one project, in CMS order.
-	const usedSlugs = $derived(
-		new Set(
-			page.projects.flatMap((project) =>
-				[...project.programs, ...project.categories].map((t) => t.slug)
-			)
-		)
-	);
-	const programTerms = $derived(filterUsedTerms(page.programs, usedSlugs));
-	const categoryTerms = $derived(filterUsedTerms(page.categories, usedSlugs));
+	// Only offer terms actually used by at least one project, in CMS order. The
+	// archive is paginated, so which terms it uses is answered by the CMS rather
+	// than counted here.
+	const programTerms = $derived(filterUsedTerms(page.programs, page.usedPrograms));
+	const categoryTerms = $derived(filterUsedTerms(page.categories, page.usedCategories));
 	// Years are not a taxonomy, but they are filtered with the same tag UI.
 	const yearTerms = $derived<TaxonomyFilterTerm[]>(
 		page.years.map((year) => ({
@@ -63,37 +54,22 @@
 	const activeCategories = $derived(keepKnownSlugs(selectedCategories, categoryTerms));
 	const activeYears = $derived(keepKnownSlugs(selectedYears, yearTerms));
 
-	// Selecting a parent term also matches projects tagged with one of its sub-terms.
-	const programFilter = $derived(expandSelection(activePrograms, programTerms));
-	const categoryFilter = $derived(expandSelection(activeCategories, categoryTerms));
-
-	const matchesFilters = (project: ProjetCard): boolean =>
-		matchesTerms(programFilter, project.programs) &&
-		matchesTerms(categoryFilter, project.categories) &&
-		(activeYears.length === 0 || activeYears.includes(String(project.year))) &&
-		matchesSearch(search, [
-			project.title,
-			stripTags(project.shortDesc),
-			project.collectiveName,
-			...[...project.programs, ...project.categories].map((term) => term.title)
-		]);
-
-	const filteredProjects = $derived(page.projects.filter(matchesFilters));
-
-	let visibleCount = $state(PAGE_SIZE);
-
-	// Any change of filters restarts the pagination at the first page.
-	$effect(() => {
-		void filteredProjects;
-		visibleCount = PAGE_SIZE;
+	// The archive is paginated by the CMS, so it is filtered there too — the page
+	// payload embeds the first page for the filters in the URL, so a shared or
+	// reloaded filtered link renders the right projects server-side. Filters
+	// travel raw, exactly as they appear in the URL: the CMS resolves a selected
+	// parent term into its sub-terms itself.
+	const archive = createPaginatedList<ProjetCard, ProjectsList>({
+		kind: 'projects',
+		path: () => page.path,
+		seed: () => page.projects,
+		filters: () => ({
+			q: search.trim(),
+			programs: activePrograms.join(','),
+			categories: activeCategories.join(','),
+			years: activeYears.join(',')
+		})
 	});
-
-	const visibleProjects = $derived(filteredProjects.slice(0, visibleCount));
-	const hasMore = $derived(visibleCount < filteredProjects.length);
-
-	const loadMore = (): void => {
-		visibleCount = Math.min(visibleCount + PAGE_SIZE, filteredProjects.length);
-	};
 
 	const hasSearch = $derived(search.trim() !== '');
 
@@ -112,9 +88,7 @@
 	});
 </script>
 
-<section aria-labelledby="projects-title" class="py-12 lg:py-16">
-	<h1 id="projects-title" class="text-h1 text-orange text-center">{page.title}</h1>
-
+<BasicHeader title={page.title} {color} id="projects-title">
 	<SearchInput
 		bind:value={search}
 		label="Rechercher un projet"
@@ -126,6 +100,7 @@
 	<FilterTags
 		terms={programTerms}
 		bind:selected={selectedPrograms}
+		{color}
 		legend="Projets concernant :"
 		class="mt-12 lg:mt-18"
 	/>
@@ -133,6 +108,7 @@
 	<FilterTags
 		terms={categoryTerms}
 		bind:selected={selectedCategories}
+		{color}
 		legend="Catégories :"
 		class="mt-9 lg:mt-12"
 	/>
@@ -140,31 +116,32 @@
 	<FilterTags
 		terms={yearTerms}
 		bind:selected={selectedYears}
+		{color}
 		legend="Années :"
 		class="mt-9 lg:mt-12"
 	/>
-</section>
+</BasicHeader>
 
-<section aria-label="Projets" class="pb-12 lg:pb-16">
+<section aria-label="Projets" class="px-base pb-12 lg:pb-16">
 	<div aria-live="polite">
 		{#if hasSearch}
 			<ResultsHeader
 				query={search.trim()}
-				count={filteredProjects.length}
+				count={archive.total}
 				nouns={['projet', 'projets']}
 				onClear={clearSearch}
 				{noResultsText}
 				{color}
 			/>
-		{:else if filteredProjects.length === 0}
+		{:else if archive.total === 0}
 			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
 				{noResultsText}
 			</p>
 		{/if}
 
-		{#if visibleProjects.length > 0}
+		{#if archive.items.length > 0}
 			<ul class="mt-9 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-				{#each visibleProjects as project (project.url)}
+				{#each archive.items as project (project.url)}
 					<li>
 						<ProjectCard {project} headingTag="h2" sizes={cardSizes} />
 					</li>
@@ -173,7 +150,14 @@
 		{/if}
 	</div>
 
-	<LoadMore {hasMore} {loadMore} label="Voir plus de projets" {color} class="mt-12" />
+	<InfiniteScroll
+		hasMore={archive.hasMore}
+		loadMore={archive.loadMore}
+		key={archive.items.length}
+		{color}
+		label="Chargement des projets…"
+		class="py-8"
+	/>
 </section>
 
 <Blocks blocks={page.body} />

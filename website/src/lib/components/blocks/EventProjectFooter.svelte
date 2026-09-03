@@ -16,7 +16,7 @@
 	const color = $derived(variant === 'project' ? 'var(--color-orange)' : 'var(--color-blue)');
 </script>
 
-<div class={['px-card', className]}>
+<div class={['px-base', className]}>
 	<div class="text-right">
 		<ShareButton {title} {color} class="ms-auto" />
 	</div>

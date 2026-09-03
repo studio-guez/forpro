@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { termColor } from '$lib/utils/shared';
+	import { TAG_BASE, tagColorClasses, tagSizeClasses, type TagSize } from '$lib/utils/tagStyles';
 	import type { TaxonomyTerm } from '$lib/interfaces/taxonomy';
 
 	interface Props {
 		terms: TaxonomyTerm[];
 		label?: string | null;
+		size?: TagSize;
 		class?: string;
 	}
 
-	let { terms, label = null, class: className = '' }: Props = $props();
+	let { terms, label = null, size = 'lg', class: className = '' }: Props = $props();
 </script>
 
 {#if terms.length > 0}
@@ -16,7 +18,7 @@
 		{#each terms as term (term.slug)}
 			<li
 				style:--term-color={termColor(term)}
-				class="text-body-2 rounded-full border-2 border-(--term-color) text-(--term-color) px-4.5 py-2.5 leading-none text-trim"
+				class={[TAG_BASE, tagSizeClasses[size], tagColorClasses(size, false)]}
 			>
 				{term.title}
 			</li>

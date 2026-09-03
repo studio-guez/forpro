@@ -233,6 +233,80 @@ return [
                 );
             },
         ],
+        // The three paginated index lists behind the frontends' infinite scroll.
+        // Each takes `?path=`, the index page's `virtualPath` (not its Kirby id,
+        // see `pages/(:all).json` below), and returns one page of the envelope
+        // `{offset, total, hasMore, items}`. Every taxonomy parameter is an
+        // *already expanded* selection of term slugs, because the frontend
+        // narrows a selected parent down to its selected sub-terms and
+        // re-expanding here would undo that. Returning null on an unknown or
+        // wrong-template path falls through to Kirby's own routing (404 page).
+        [
+            // Paginated archive of an events page, filtered the way the agenda
+            // filters it.
+            "pattern" => "past-events.json",
+            "action" => function () {
+                require_once 'utils/Utils.php';
+
+                $page = Utils::findPageByVirtualPath((string)(get('path') ?? ''), 'events');
+                if ($page === null) {
+                    return null;
+                }
+
+                return \Kirby\Http\Response::json(Utils::getPastEvents(
+                    $page->children()->listed(),
+                    mb_substr((string)(get('q') ?? ''), 0, 100),
+                    array_filter(explode(',', (string)(get('publics') ?? ''))),
+                    (string)(get('month') ?? ''),
+                    max((int)(get('offset') ?? 0), 0),
+                    min(max((int)(get('limit') ?? 10), 1), 50)
+                ));
+            },
+        ],
+        [
+            // Paginated projects of a projects index, filtered the way the
+            // projects page filters them.
+            "pattern" => "projects.json",
+            "action" => function () {
+                require_once 'utils/Utils.php';
+
+                $page = Utils::findPageByVirtualPath((string)(get('path') ?? ''), 'projects');
+                if ($page === null) {
+                    return null;
+                }
+
+                return \Kirby\Http\Response::json(Utils::getProjects(
+                    $page->children()->listed(),
+                    mb_substr((string)(get('q') ?? ''), 0, 100),
+                    array_filter(explode(',', (string)(get('programs') ?? ''))),
+                    array_filter(explode(',', (string)(get('categories') ?? ''))),
+                    array_filter(explode(',', (string)(get('years') ?? ''))),
+                    max((int)(get('offset') ?? 0), 0),
+                    min(max((int)(get('limit') ?? 12), 1), 50)
+                ));
+            },
+        ],
+        [
+            // Paginated missions of a missions index. `?sort=` has to be applied
+            // here rather than on the frontend: it decides what lands in a page.
+            "pattern" => "missions.json",
+            "action" => function () {
+                require_once 'utils/Utils.php';
+
+                $page = Utils::findPageByVirtualPath((string)(get('path') ?? ''), 'missions');
+                if ($page === null) {
+                    return null;
+                }
+
+                return \Kirby\Http\Response::json(Utils::getMissions(
+                    $page->children()->listed(),
+                    array_filter(explode(',', (string)(get('categories') ?? ''))),
+                    (string)(get('sort') ?? ''),
+                    max((int)(get('offset') ?? 0), 0),
+                    min(max((int)(get('limit') ?? 24), 1), 50)
+                ));
+            },
+        ],
         [
             // The frontend routes on `virtualPath` (real ancestors, minus the
             // top-level containers, then the `parentPage` chain), which is not
@@ -242,9 +316,9 @@ return [
             // Returning null falls through to Kirby's own routing (404 page).
             "pattern" => "pages/(:all).json",
             "action" => function (string $path) {
-                $page = site()->index()->filter(
-                    fn($candidate) => $candidate->virtualPath() === $path
-                )->first();
+                require_once 'utils/Utils.php';
+
+                $page = Utils::findPageByVirtualPath($path);
 
                 if ($page === null) {
                     return null;

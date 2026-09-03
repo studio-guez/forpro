@@ -195,6 +195,40 @@ trait UtilsSearchText
     }
 
     /**
+     * Rich-text fields are stored as HTML; only their text content is
+     * searchable. Tags become a space, so two paragraphs never merge into one
+     * word. Mirrors `stripTags()` in `website/src/lib/utils/filters.ts`.
+     */
+    private static function stripHtmlTags(?string $html): string
+    {
+        return preg_replace('/<[^>]*>/', ' ', (string)$html) ?? '';
+    }
+
+    /**
+     * True when the whole query, trimmed and accent/case-folded, is found as a
+     * single phrase across the given fields. An empty query matches everything,
+     * so callers can pass an optional filter straight through.
+     *
+     * This is the list-filtering counterpart of `searchPages()`, and the exact
+     * mirror of `matchesSearch()` in `website/src/lib/utils/filters.ts`: the
+     * agenda, the projects archive and their frontends have to agree on what a
+     * given query matches, or a filtered page would be sliced out of a set the
+     * visitor cannot see.
+     */
+    private static function matchesSearchFields(string $query, array $fields): bool
+    {
+        $query = trim($query);
+        if ($query === '') return true;
+
+        $haystack = implode(' ', array_filter(
+            $fields,
+            fn($field) => (string)$field !== ''
+        ));
+
+        return str_contains(self::normalizeForSearch($haystack), self::normalizeForSearch($query));
+    }
+
+    /**
      * Text snippet around the first matching word, cut on word boundaries.
      */
     private static function buildSearchExcerpt(string $text, string $normalized, array $words, int $length = 180): string

@@ -79,7 +79,7 @@
 		: ''}"
 >
 	<div
-		class="w-full max-w-360 mx-auto shrink-0 flex items-center gap-x-3 lg:gap-x-12 px-5 lg:px-9 py-3 text-blue"
+		class="w-full max-w-360 mx-auto shrink-0 flex items-center gap-x-3 lg:gap-x-12 px-base py-3 text-blue"
 	>
 		<a
 			href="/"

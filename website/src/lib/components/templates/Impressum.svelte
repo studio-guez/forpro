@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
-	import PageHeaderCompact from '$lib/components/blocks/PageHeaderCompact.svelte';
+	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
@@ -13,12 +13,12 @@
 	);
 </script>
 
-<PageHeaderCompact title={page.title} />
+<BasicHeader title={page.title} />
 
 {#if page.partners.length > 0}
 	<section
 		aria-labelledby="impressum-partners"
-		class="grid grid-cols-1 lg:grid-cols-4 gap-x-6 gap-y-9"
+		class="px-base grid grid-cols-1 lg:grid-cols-4 gap-x-6 gap-y-9"
 	>
 		<h2 id="impressum-partners" class="text-label font-bold">{page.partnersTitle}</h2>
 

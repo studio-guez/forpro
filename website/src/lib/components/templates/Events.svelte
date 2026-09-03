@@ -1,10 +1,16 @@
 <script lang="ts">
 	import { page as appPage } from '$app/state';
+	import { fly } from 'svelte/transition';
+	import { prefersReducedMotion } from 'svelte/motion';
+	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
+	import CardTitle from '$lib/components/ui/CardTitle.svelte';
 	import EventCard from '$lib/components/ui/EventCard.svelte';
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import EventListItem from '$lib/components/ui/EventListItem.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
+	import IconChevron from '$lib/components/svg/IconChevron.svelte';
+	import InfiniteScroll from '$lib/components/ui/InfiniteScroll.svelte';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import SelectDropdown from '$lib/components/ui/SelectDropdown.svelte';
@@ -18,9 +24,10 @@
 		stripTags,
 		syncQueryString
 	} from '$lib/utils/filters';
-	import { formatMonth, monthKey, toDate } from '$lib/utils/date';
+	import { createPaginatedList } from '$lib/utils/paginatedList.svelte';
+	import { monthKey, monthKeyLabel, monthKeyOf, monthKeysBetween } from '$lib/utils/date';
 	import type { AgendaEventCard } from '$lib/interfaces/page';
-	import type { EventsPage } from '$lib/interfaces/event';
+	import type { EventsPage, PastEventsList } from '$lib/interfaces/event';
 
 	let { page }: { page: EventsPage } = $props();
 
@@ -33,56 +40,119 @@
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
-	let selectedPrograms = $state<string[]>(parseListParam(initialParams.get('programs')));
 	let selectedPublics = $state<string[]>(parseListParam(initialParams.get('publics')));
 	let selectedMonth = $state(initialParams.get('month') ?? '');
 
-	const allEvents = $derived([...page.upcomingEvents, ...page.pastEvents]);
-
-	// Only offer terms actually used by at least one event, in CMS order.
-	const usedSlugs = $derived(new Set(allEvents.flatMap((event) => event.terms.map((t) => t.slug))));
-	const programTerms = $derived(filterUsedTerms(page.programs, usedSlugs));
-	const publicTerms = $derived(filterUsedTerms(page.publics, usedSlugs));
+	// Events are only filtered by public; only offer terms actually used by at
+	// least one event, in CMS order. The past archive is paginated, so which
+	// terms it uses is answered by the CMS rather than counted here.
+	const publicTerms = $derived(filterUsedTerms(page.publics, page.usedPublics));
 
 	// Drop stale slugs coming from the URL so counters stay accurate.
-	const activePrograms = $derived(keepKnownSlugs(selectedPrograms, programTerms));
 	const activePublics = $derived(keepKnownSlugs(selectedPublics, publicTerms));
 
 	// Selecting a parent term also matches events tagged with one of its sub-terms.
-	const programFilter = $derived(expandSelection(activePrograms, programTerms));
+	// Only the upcoming list needs this: the past archive is filtered by the CMS,
+	// which resolves the raw selection itself.
 	const publicFilter = $derived(expandSelection(activePublics, publicTerms));
 
 	const matchesFilters = (event: AgendaEventCard): boolean =>
-		matchesTerms(programFilter, event.terms) &&
-		matchesTerms(publicFilter, event.terms) &&
+		matchesTerms(publicFilter, event.publics) &&
 		matchesSearch(search, [
 			event.title,
 			stripTags(event.shortDesc),
-			...event.terms.map((t) => t.title)
+			...[...event.programs, ...event.publics].map((term) => term.title)
 		]);
 
 	const upcoming = $derived(page.upcomingEvents.filter(matchesFilters));
-	const past = $derived(page.pastEvents.filter(matchesFilters));
 
-	// Past events are browsed month by month, most recent month first.
-	const months = $derived.by(() => {
-		const seen = new Map<string, string>();
-		for (const event of past) {
-			const key = monthKey(event.dateStart);
-			const date = toDate(event.dateStart);
-			if (key && date && !seen.has(key)) seen.set(key, formatMonth(date));
-		}
-		return [...seen].map(([value, label]) => ({ value, label }));
+	// Months already over are never offered, so an event that started in February
+	// and runs until October is only listed from the current month on.
+	const currentMonth = monthKeyOf(new Date());
+
+	/** Every month an upcoming event runs in, from the current one at the earliest. */
+	const eventMonths = (event: AgendaEventCard): string[] => {
+		const start = monthKey(event.dateStart);
+		if (!start) return [];
+
+		const end = monthKey(event.dateEnd) ?? start;
+		return monthKeysBetween(start < currentMonth ? currentMonth : start, end < start ? start : end);
+	};
+
+	// Upcoming events are paginated one month at a time, soonest month first; an
+	// event spanning several months shows up under each of them. The selection
+	// falls back to the first month, so a filter change that drops the current
+	// month lands on a non-empty page.
+	const upcomingMonths = $derived(
+		[...new Set(upcoming.flatMap(eventMonths))]
+			.sort()
+			.map((value) => ({ value, label: monthKeyLabel(value) }))
+	);
+	let selectedUpcomingMonth = $state('');
+	const upcomingMonth = $derived(
+		upcomingMonths.find((month) => month.value === selectedUpcomingMonth) ?? upcomingMonths[0]
+	);
+	const upcomingIndex = $derived(
+		upcomingMonths.findIndex((month) => month.value === upcomingMonth?.value)
+	);
+	const upcomingForMonth = $derived(
+		upcoming.filter((event) => eventMonths(event).includes(upcomingMonth?.value ?? ''))
+	);
+
+	// Direction of the last month change. Both labels travel a full box width in
+	// lockstep, so the leaving month looks pushed out by the arriving one. Motion
+	// is dropped entirely when the visitor asked for it.
+	let slideDirection = $state(1);
+	const monthSlideDuration = $derived(prefersReducedMotion.current ? 0 : 500);
+	const monthEnter = $derived({
+		duration: monthSlideDuration,
+		x: `${100 * slideDirection}%`
+	});
+	const monthLeave = $derived({
+		duration: monthSlideDuration,
+		x: `${-100 * slideDirection}%`
 	});
 
-	const activeMonth = $derived(months.some((m) => m.value === selectedMonth) ? selectedMonth : '');
-	const pastForMonth = $derived(
-		activeMonth === '' ? past : past.filter((event) => monthKey(event.dateStart) === activeMonth)
+	const goToMonth = (offset: number): void => {
+		const month = upcomingMonths[upcomingIndex + offset];
+		if (!month) return;
+
+		slideDirection = offset;
+		selectedUpcomingMonth = month.value;
+	};
+
+	// The past archive is paginated by the CMS, so it is filtered there too — the
+	// page payload embeds the first page for the filters in the URL, so a shared
+	// or reloaded filtered link renders the right archive server-side. Filters
+	// travel raw, exactly as they appear in the URL.
+	const archive = createPaginatedList<AgendaEventCard, PastEventsList>({
+		kind: 'past-events',
+		path: () => page.path,
+		seed: () => page.pastEvents,
+		filters: () => ({
+			q: search.trim(),
+			publics: activePublics.join(','),
+			month: activeMonth
+		})
+	});
+
+	// Past events are browsed month by month, most recent month first. The CMS
+	// lists the months of the current match set whatever month is selected, so
+	// the dropdown keeps offering the ones the selection excludes.
+	//
+	// Annotated because the months close a type cycle: they come out of the
+	// archive, which is filtered by `activeMonth`, which is picked out of them.
+	const pastMonths: { value: string; label: string }[] = $derived(
+		archive.current.months.map((value) => ({ value, label: monthKeyLabel(value) }))
+	);
+	const activeMonth = $derived(
+		pastMonths.some((month) => month.value === selectedMonth) ? selectedMonth : ''
 	);
 
 	const hasSearch = $derived(search.trim() !== '');
-	// Past events are listed further down, so they count as results too.
-	const resultCount = $derived(upcoming.length + past.length);
+	// Past events are listed further down, so they count as results too. The
+	// archive's `matchTotal` ignores the month, so the count covers every match.
+	const resultCount = $derived(upcoming.length + archive.current.matchTotal);
 
 	const clearSearch = (): void => {
 		search = '';
@@ -92,16 +162,13 @@
 	$effect(() => {
 		syncQueryString({
 			q: search,
-			programs: activePrograms,
 			publics: activePublics,
 			month: activeMonth
 		});
 	});
 </script>
 
-<section aria-labelledby="events-title" class="py-12 lg:py-16">
-	<h1 id="events-title" class="text-h1 text-blue text-center">{page.title}</h1>
-
+<BasicHeader title={page.title} {color} id="events-title">
 	<SearchInput
 		bind:value={search}
 		label="Rechercher un événement"
@@ -111,21 +178,19 @@
 	/>
 
 	<FilterTags
-		terms={programTerms}
-		bind:selected={selectedPrograms}
+		terms={publicTerms}
+		bind:selected={selectedPublics}
+		{color}
 		legend="Événements concernant :"
 		class="mt-12 lg:mt-18"
 	/>
+</BasicHeader>
 
-	<FilterTags
-		terms={publicTerms}
-		bind:selected={selectedPublics}
-		legend="Publics :"
-		class="mt-9 lg:mt-12"
-	/>
-</section>
-
-<section aria-label="Événements à venir" class="pb-12 lg:pb-16">
+<section
+	aria-label="Événements à venir"
+	style:--events-color={color}
+	class="px-base pb-12 lg:pb-16"
+>
 	<div aria-live="polite">
 		{#if hasSearch}
 			<ResultsHeader
@@ -136,7 +201,7 @@
 				{noResultsText}
 				{color}
 			/>
-			{#if upcoming.length === 0 && past.length > 0}
+			{#if upcoming.length === 0 && archive.current.matchTotal > 0}
 				<p class="text-body-1 text-grey-dark mt-4">
 					Aucun événement à venir, voir les événements passés ci-dessous.
 				</p>
@@ -147,11 +212,61 @@
 			</p>
 		{/if}
 
-		{#if upcoming.length > 0}
+		{#if upcomingMonth}
+			<div class="mt-9 border-t-2 border-(--events-color) pt-4">
+				<div class="flex items-center gap-2 lg:gap-4">
+					<button
+						type="button"
+						class="text-(--events-color) p-1 disabled:opacity-30"
+						aria-label="Mois précédent"
+						disabled={upcomingIndex <= 0}
+						onclick={() => goToMonth(-1)}
+					>
+						<IconChevron class="w-6.25 h-6.25 rotate-90" />
+					</button>
+					<!-- Every month is laid out in the same cell, so the box keeps the width of the
+					     longest label, the arrows never move and each label stays centred whatever
+					     its length. The two labels in flight travel a full box width in lockstep,
+					     which is what makes the leaving one look pushed out by the arriving one. -->
+					<div class="grid overflow-hidden">
+						{#each upcomingMonths as month (month.value)}
+							<span
+								class="text-h2 invisible col-start-1 row-start-1 text-center"
+								aria-hidden="true"
+							>
+								{month.label}
+							</span>
+						{/each}
+						{#key upcomingMonth.value}
+							<h2
+								class="text-h2 text-(--events-color) col-start-1 row-start-1 text-center"
+								in:fly={monthEnter}
+								out:fly={monthLeave}
+							>
+								{upcomingMonth.label}
+							</h2>
+						{/key}
+					</div>
+					<button
+						type="button"
+						class="text-(--events-color) p-1 disabled:opacity-30"
+						aria-label="Mois suivant"
+						disabled={upcomingIndex >= upcomingMonths.length - 1}
+						onclick={() => goToMonth(1)}
+					>
+						<IconChevron class="w-6.25 h-6.25 -rotate-90" />
+					</button>
+				</div>
+				<p class="text-label text-(--events-color) mt-1">
+					{upcomingForMonth.length}
+					{upcomingForMonth.length > 1 ? 'événements' : 'événement'}
+				</p>
+			</div>
+
 			<ul class="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-				{#each upcoming as event (event.url)}
+				{#each upcomingForMonth as event (event.url)}
 					<li class="aspect-3/4">
-						<EventCard {event} {color} headingTag="h2" sizes={cardSizes} />
+						<EventCard {event} {color} headingTag="h3" sizes={cardSizes} />
 					</li>
 				{/each}
 			</ul>
@@ -159,17 +274,22 @@
 	</div>
 </section>
 
-{#if past.length > 0}
-	<section aria-labelledby="past-events-title" class="pb-12 lg:pb-16">
-		<h2 id="past-events-title" class="text-h2 text-center">
-			<span class="inline-block bg-blue text-white rounded-full px-8 py-3">
-				Les événements passés :
-			</span>
-		</h2>
+{#if archive.current.matchTotal > 0}
+	<section
+		aria-labelledby="past-events-title"
+		style:--events-color={color}
+		class="px-base pb-12 lg:pb-16"
+	>
+		<CardTitle
+			id="past-events-title"
+			title="Les événements passés"
+			class="text-center"
+			pillClass="bg-blue text-white"
+		/>
 
 		<SelectDropdown
 			bind:value={selectedMonth}
-			options={months}
+			options={pastMonths}
 			label="Mois"
 			allLabel="Tous les mois"
 			{color}
@@ -177,10 +297,19 @@
 		/>
 
 		<div aria-live="polite" class="mt-6">
-			{#each pastForMonth as event (event.url)}
+			{#each archive.items as event (event.url)}
 				<EventListItem {event} {color} headingTag="h3" />
 			{/each}
 		</div>
+
+		<InfiniteScroll
+			hasMore={archive.hasMore}
+			loadMore={archive.loadMore}
+			key={archive.items.length}
+			{color}
+			label="Chargement des événements passés…"
+			class="py-8"
+		/>
 	</section>
 {/if}
 

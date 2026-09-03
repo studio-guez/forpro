@@ -38,7 +38,7 @@
 	});
 </script>
 
-<section class="px-5 lg:px-9" aria-labelledby="page-title">
+<section class="px-base" aria-labelledby="page-title">
 	<div
 		class="min-h-69 lg:min-h-138 relative text-white bg-grey-light rounded-3xl overflow-hidden flex"
 	>

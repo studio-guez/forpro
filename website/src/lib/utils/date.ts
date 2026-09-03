@@ -83,8 +83,36 @@ export const formatEventTime = (time: string | null): string | null => {
 export const formatShortDate = (date: Date): string =>
 	shortDateFormat.format(date).replace(/\//g, '.');
 
-/** "août 2026" */
-export const formatMonth = (date: Date): string => monthFormat.format(date);
+/** "Août 2026" */
+export const formatMonth = (date: Date): string => dateLabel(monthFormat, date);
 
 /** Sortable month key of a `YYYY-MM-DD` date, e.g. "2026-07". */
 export const monthKey = (date: string | null): string | null => (date ? date.slice(0, 7) : null);
+
+/** Same key, from a `Date` — local time, so it never slips a month on a timezone offset. */
+export const monthKeyOf = (date: Date): string =>
+	`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+
+/**
+ * Every month key from `start` to `end`, both included, e.g.
+ * `["2026-09", "2026-10"]`. Empty when either end is unparseable or the range
+ * runs backwards.
+ */
+export const monthKeysBetween = (start: string, end: string): string[] => {
+	const month = toDate(`${start}-01`);
+	const last = toDate(`${end}-01`);
+	if (!month || !last) return [];
+
+	const keys: string[] = [];
+	while (month <= last) {
+		keys.push(monthKeyOf(month));
+		month.setMonth(month.getMonth() + 1);
+	}
+	return keys;
+};
+
+/** "Août 2026" from a month key. */
+export const monthKeyLabel = (key: string): string => {
+	const date = toDate(`${key}-01`);
+	return date ? formatMonth(date) : key;
+};
