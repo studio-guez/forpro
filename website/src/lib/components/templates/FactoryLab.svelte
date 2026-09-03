@@ -35,7 +35,7 @@
 	{#if badge.url}
 		<IconLink class="shrink-0 w-4 h-4" />
 	{/if}
-	{badge.label}
+	<span class="text-trim">{badge.label}</span>
 {/snippet}
 
 {#snippet badgeList(label: string, badges: CompanyBadge[], badgeColor: string)}
