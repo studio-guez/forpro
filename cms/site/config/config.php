@@ -47,11 +47,14 @@ return [
             // containers and taxonomies don't), and their canonical path is the
             // parentPage-based `virtualPath`, not `/pages/<slug>`.
             'generator' => function (\tobimori\Seo\Sitemap\SitemapIndex $sitemap) {
+                require_once 'utils/Utils.php';
+
                 $urls = $sitemap->create('pages');
 
                 $pages = site()->index()->filter(
                     fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'events', 'event', 'projects', 'project', 'team', 'missions', 'mission', 'job-offers', 'job-offer', 'impressum', 'press', 'basic-page', 'factory-lab'], true)
                         && $page->metadata()->robotsIndex()->toBool()
+                        && Utils::isOpenToApplications($page)
                 );
 
                 foreach ($pages as $page) {
