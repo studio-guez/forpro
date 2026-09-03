@@ -80,11 +80,6 @@
 		max-width: var(--content-max);
 		margin-inline: auto;
 	}
-	/* Sticky footer: a short page still pushes the footer down to the bottom of the
-       viewport, without taking it out of the flow on a long one. `%sveltekit.body%` is
-       wrapped in a `display: contents` div, so the layout's own children (header, main,
-       footer) are the flex items here. The marquee adds its height as a body
-       padding-bottom, which `border-box` keeps inside the 100dvh. */
 	body {
 		display: flex;
 		flex-direction: column;
