@@ -5,6 +5,7 @@
 	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import FaqQuestion from '$lib/components/ui/FaqQuestion.svelte';
+	import ListHeader from '$lib/components/ui/ListHeader.svelte';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
@@ -16,6 +17,7 @@
 		matchesSearch,
 		matchesTerms,
 		parseListParam,
+		slugify,
 		stripTags,
 		syncQueryString
 	} from '$lib/utils/filters';
@@ -23,6 +25,7 @@
 
 	let { page }: { page: FaqPage } = $props();
 
+	const color = 'var(--color-teal)';
 	const noResultsText = 'Aucune question ne correspond à votre recherche.';
 
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
@@ -33,6 +36,23 @@
 	let selectedPublics = $state<string[]>(parseListParam(initialParams.get('publics')));
 
 	const allFaqs = $derived(page.sections.flatMap((section) => section.faqs));
+
+	// A shareable id per question, so `?question=<id>` opens one directly. Two
+	// questions worded the same are told apart by a suffix, in page order.
+	const questionIds = $derived.by(() => {
+		const ids = new Map<FaqItem, string>();
+		const seen = new Map<string, number>();
+
+		for (const faq of allFaqs) {
+			const base = slugify(faq.question) || 'question';
+			const count = (seen.get(base) ?? 0) + 1;
+			seen.set(base, count);
+			ids.set(faq, count > 1 ? `${base}-${count}` : base);
+		}
+
+		return ids;
+	});
+	const questionId = (faq: FaqItem): string => questionIds.get(faq) ?? '';
 
 	// Only offer terms that are actually used by at least one question,
 	// kept in the CMS-defined taxonomy order.
@@ -100,8 +120,19 @@
 		hasSearch ? page.sections.flatMap((section) => section.faqs.filter(matchesFilters)) : []
 	);
 
-	// The first section starts open; filtering expands every matching section.
-	let openSections = $state<number[]>([0]);
+	// A shared link names one question: it is rendered open, inside its own
+	// section, server-side — so the answer is there before any script runs.
+	const requestedQuestion = initialParams.get('question') ?? '';
+	const sectionOfQuestion = (id: string): number =>
+		page.sections.findIndex((section) => section.faqs.some((faq) => questionId(faq) === id));
+
+	let openQuestions = $state<Record<string, boolean>>(
+		requestedQuestion ? { [requestedQuestion]: true } : {}
+	);
+
+	// The deep-linked section starts open, the first one otherwise; filtering
+	// expands every matching section.
+	let openSections = $state<number[]>([Math.max(sectionOfQuestion(requestedQuestion), 0)]);
 	const isSectionOpen = (index: number): boolean => isFiltering || openSections.includes(index);
 
 	const toggleSection = (index: number): void => {
@@ -115,13 +146,24 @@
 	};
 
 	// Mirror search + filters into the query string without triggering navigation.
+	// The deep-linked question travels with them for as long as it stays open, so
+	// the page can be reloaded on it.
 	$effect(() => {
 		syncQueryString({
 			q: search,
 			sectors: activeSectors,
 			programs: activePrograms,
-			publics: activePublics
+			publics: activePublics,
+			question: openQuestions[requestedQuestion] ? requestedQuestion : ''
 		});
+	});
+
+	// Rendering it open is not enough to find it: a question further down the page
+	// is brought into view once the page is interactive.
+	$effect(() => {
+		if (!requestedQuestion) return;
+
+		document.getElementById(`faq-${requestedQuestion}`)?.scrollIntoView({ block: 'center' });
 	});
 </script>
 
@@ -130,7 +172,19 @@
 	{count > 1 ? 'questions' : 'question'}
 {/snippet}
 
-<BasicHeader title={page.title} color="var(--color-teal)" id="faq-title">
+{#snippet questionItem(faq: FaqItem)}
+	{@const id = questionId(faq)}
+	<FaqQuestion
+		id="faq-{id}"
+		question={faq.question}
+		answer={faq.answer}
+		{color}
+		shareUrl="?question={id}"
+		bind:open={() => openQuestions[id] ?? false, (value) => (openQuestions[id] = value)}
+	/>
+{/snippet}
+
+<BasicHeader title={page.title} {color} id="faq-title">
 	<SearchInput
 		bind:value={search}
 		label="Rechercher une question"
@@ -141,6 +195,7 @@
 	<FilterTags
 		terms={sectorTerms}
 		bind:selected={selectedSectors}
+		{color}
 		legend="Questions concernant :"
 		class="mt-12 lg:mt-18"
 	/>
@@ -148,6 +203,7 @@
 	<FilterTags
 		terms={programTerms}
 		bind:selected={selectedPrograms}
+		{color}
 		legend="Programmes :"
 		class="mt-9 lg:mt-12"
 	/>
@@ -155,30 +211,33 @@
 	<FilterTags
 		terms={publicTerms}
 		bind:selected={selectedPublics}
+		{color}
 		legend="Publics :"
 		class="mt-9 lg:mt-12"
 	/>
 </BasicHeader>
 
-<section aria-label="Questions et réponses" class="px-base">
+<section aria-label="Questions et réponses" class="px-base pb-12 lg:pb-16">
 	<div aria-live="polite">
 		{#if hasSearch}
-			<div class="py-6 lg:py-8">
-				<ResultsHeader
-					query={search.trim()}
-					count={searchResults.length}
-					nouns={['question', 'questions']}
-					onClear={clearSearch}
-					{noResultsText}
-				/>
-				{#if searchResults.length > 0}
-					<div class="mt-9 space-y-6">
-						{#each searchResults as faq, faqIndex (faqIndex)}
-							<FaqQuestion id="faq-search-{faqIndex}" question={faq.question} answer={faq.answer} />
-						{/each}
-					</div>
-				{/if}
-			</div>
+			<ResultsHeader
+				query={search.trim()}
+				count={searchResults.length}
+				nouns={['question', 'questions']}
+				onClear={clearSearch}
+				{noResultsText}
+				{color}
+				variant="section"
+				class="mt-12 lg:mt-18"
+			/>
+
+			{#if searchResults.length > 0}
+				<div class="mt-9 space-y-6">
+					{#each searchResults as faq (questionId(faq))}
+						{@render questionItem(faq)}
+					{/each}
+				</div>
+			{/if}
 		{:else if filteredSections.length === 0}
 			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
 				{noResultsText}
@@ -186,8 +245,10 @@
 		{:else}
 			{#each filteredSections as section (section.index)}
 				{@const open = isSectionOpen(section.index)}
-				<div class="border-t border-black py-6 lg:py-8">
-					<h2 class="text-h2 text-teal">
+				<!-- Every section is browsed with the same band the other lists use, the
+				     heading itself opening and closing it. -->
+				<ListHeader {color} class="mt-12 lg:mt-18">
+					<h2 class="text-h2 text-(--list-color)">
 						<button
 							type="button"
 							class="w-full flex items-start justify-between gap-4 text-left"
@@ -197,33 +258,33 @@
 						>
 							{section.title}
 							<IconChevron
-								class="text-teal shrink-0 mt-[.5em] transition-transform {open ? 'rotate-180' : ''}"
+								class="shrink-0 mt-[.5em] transition-transform {open ? 'rotate-180' : ''}"
 							/>
 						</button>
 					</h2>
-					<div class="mt-1 flex flex-wrap items-center gap-3">
-						<p class="text-label">{@render questionCount(section.faqs.length)}</p>
-						<TermTags terms={section.commonTerms} label="Secteurs" />
+
+					<div class="mt-2 flex flex-wrap items-center gap-x-6 gap-y-3">
+						<p class="text-label text-(--list-color)">
+							{@render questionCount(section.faqs.length)}
+						</p>
+						<TermTags terms={section.commonTerms} label="Secteurs" size="md" />
 					</div>
-					{#if open}
-						<div
-							id="faq-section-{section.index}"
-							role="region"
-							aria-label={section.title}
-							transition:slide={{ duration: 300 }}
-						>
-							<div class="mt-9 space-y-6">
-								{#each section.faqs as faq, faqIndex (faqIndex)}
-									<FaqQuestion
-										id="faq-{section.index}-{faqIndex}"
-										question={faq.question}
-										answer={faq.answer}
-									/>
-								{/each}
-							</div>
+				</ListHeader>
+
+				{#if open}
+					<div
+						id="faq-section-{section.index}"
+						role="region"
+						aria-label={section.title}
+						transition:slide={{ duration: 300 }}
+					>
+						<div class="mt-9 space-y-6">
+							{#each section.faqs as faq (questionId(faq))}
+								{@render questionItem(faq)}
+							{/each}
 						</div>
-					{/if}
-				</div>
+					</div>
+				{/if}
 			{/each}
 		{/if}
 	</div>
