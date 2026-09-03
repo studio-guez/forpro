@@ -53,6 +53,7 @@ tabs:
                   fr: Date de publication
                 type: date
                 default: now
+                required: true
                 help:
                   en: Shown as "Posted on ..." in the job offers list.
                   fr: Affichée « Posté le ... » dans la liste des offres.
