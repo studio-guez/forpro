@@ -248,22 +248,22 @@
 				<!-- Every section is browsed with the same band the other lists use, the
 				     heading itself opening and closing it. -->
 				<ListHeader {color} class="mt-12 lg:mt-18">
-					<h2 class="text-h2 text-(--list-color)">
+					<h2 class="text-h2 text-(--list-color) h-12.5">
 						<button
 							type="button"
-							class="w-full flex items-start justify-between gap-4 text-left"
+							class="w-full flex items-center justify-between gap-4 text-left"
 							aria-expanded={open}
 							aria-controls="faq-section-{section.index}"
 							onclick={() => toggleSection(section.index)}
 						>
 							{section.title}
 							<IconChevron
-								class="shrink-0 mt-[.5em] transition-transform {open ? 'rotate-180' : ''}"
+								class="shrink-0 transition-transform {open ? 'rotate-180' : ''}"
 							/>
 						</button>
 					</h2>
 
-					<div class="mt-2 flex flex-wrap items-center gap-x-6 gap-y-3">
+					<div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
 						<p class="text-label text-(--list-color)">
 							{@render questionCount(section.faqs.length)}
 						</p>
