@@ -2,6 +2,7 @@
 	import Img from '$lib/components/ui/Img.svelte';
 	import IconArrow from '$lib/components/svg/IconArrow.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
+	import { termColor } from '$lib/utils/shared';
 	import {
 		formatEventDate,
 		formatEventDateRange,
@@ -28,6 +29,31 @@
 	const range = $derived(start && end ? formatEventDateRange(start, end) : null);
 	const timeStart = $derived(formatEventTime(event.timeStart));
 	const timeEnd = $derived(formatEventTime(event.timeEnd));
+
+	// Hover tint: the programme colour over the cover, or equal stripes across them
+	// all. Each colour holds flat over most of its band and only blends over a
+	// narrow seam, so it reads as stripes rather than as one long gradient.
+	const SEAM = 0.5; // share of a band spent fading into the next one
+	const programColors = $derived(event.programs.map(termColor));
+	const stripes = $derived(
+		programColors
+			.map((color, i) => {
+				const band = 100 / programColors.length;
+				const feather = (band * SEAM) / 2;
+				// The outer edges of the card stay flush — only interior seams feather.
+				const from = i === 0 ? 0 : i * band + feather;
+				const to = i === programColors.length - 1 ? 100 : (i + 1) * band - feather;
+				return `${color} ${from.toFixed(3)}% ${to.toFixed(3)}%`;
+			})
+			.join(', ')
+	);
+	const hoverTint = $derived(
+		programColors.length === 0
+			? null
+			: programColors.length === 1
+				? programColors[0]
+				: `linear-gradient(135deg, ${stripes})`
+	);
 </script>
 
 <article class="h-full">
@@ -40,8 +66,14 @@
 				image={event.cover}
 				alt={event.cover.alt ?? event.title}
 				{sizes}
-				class="absolute inset-0 -z-1 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+				class="absolute inset-0 -z-1 w-full h-full object-cover transition-all group-hover:scale-115 group-hover:blur-xs"
 			/>
+		{/if}
+		{#if hoverTint}
+			<div
+				class="absolute inset-0 -z-1 opacity-0 transition-opacity group-hover:opacity-30"
+				style:background={hoverTint}
+			></div>
 		{/if}
 		<div class="absolute inset-0 -z-1 bg-linear-to-b from-black/50 via-black/25 to-black/75"></div>
 
