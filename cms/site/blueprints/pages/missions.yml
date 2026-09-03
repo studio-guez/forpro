@@ -38,6 +38,8 @@ tabs:
           title:
             type: fields
             fields:
+              headerType:
+                extends: fields/headerType
               title:
                 label:
                   en: Title
@@ -49,6 +51,8 @@ tabs:
                   en: Overtitle
                   fr: Sur-titre
                 type: text
+                when:
+                  headerType: full
               theme:
                 extends: fields/theme
           cover:
@@ -75,6 +79,8 @@ tabs:
                   fr: Titre introduction
                 type: text
                 required: true
+                when:
+                  headerType: full
               intro:
                 extends: fields/writer
                 label:

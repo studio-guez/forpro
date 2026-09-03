@@ -12,10 +12,27 @@ $json = Utils::getPageBaseData($page, 'events');
 $json['programs'] = Utils::getTaxonomyTerms('programs');
 $json['publics']  = Utils::getTaxonomyTerms('publics');
 
-['upcoming' => $upcoming, 'past' => $past] = Utils::splitEventsByDate($page->children()->listed());
+$events = $page->children()->listed();
 
-$json['upcomingEvents'] = array_values($upcoming->map(fn($event) => Utils::getEventCardData($event))->data());
-$json['pastEvents']     = array_values($past->map(fn($event) => Utils::getEventCardData($event))->data());
+// Only the terms at least one event carries, so the frontend can offer filters
+// that lead somewhere without holding the whole archive.
+$json['usedPublics'] = Utils::getUsedTaxonomySlugs($events, 'publics');
+
+$json['upcomingEvents'] = array_values(
+    Utils::splitEventsByDate($events)['upcoming']->map(fn($event) => Utils::getEventCardData($event))->data()
+);
+
+// Past events are paginated: this is the first page. The agenda's filters are
+// read off the query string so a shared or reloaded `?q=…&publics=…&month=…`
+// URL renders the archive it actually asks for — otherwise the first paint
+// would show ten unrelated events and swap them out on hydration. Every later
+// page comes from the `past-events.json` route.
+$json['pastEvents'] = Utils::getPastEvents(
+    $events,
+    mb_substr((string)(get('q') ?? ''), 0, 100),
+    array_filter(explode(',', (string)(get('publics') ?? ''))),
+    (string)(get('month') ?? '')
+);
 
 $json['body'] = Utils::getBodyBlocks($page->body());
 

@@ -3,8 +3,8 @@
 	import { tick } from 'svelte';
 	import IconSearch from '$lib/components/svg/IconSearch.svelte';
 	import IconClose from '$lib/components/svg/IconClose.svelte';
-	import IconSpinner from '$lib/components/svg/IconSpinner.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
+	import InfiniteScroll from '$lib/components/ui/InfiniteScroll.svelte';
 	import { lockPageScroll } from '$lib/utils/smoothScroll';
 	import type { SearchGroup, SearchResponse, SearchResult } from '$lib/interfaces/search';
 
@@ -36,7 +36,6 @@
 	let dialog = $state<HTMLDialogElement>();
 	let input = $state<HTMLInputElement>();
 	let scroller = $state<HTMLElement>();
-	let sentinel = $state<HTMLElement>();
 
 	let group = $state<SearchGroup>('all');
 	let results = $state<SearchResult[]>([]);
@@ -152,27 +151,6 @@
 		}
 		loadingMore = false;
 	};
-
-	// Infinite scroll: the sentinel sits under the last row, inside the scroller.
-	$effect(() => {
-		if (!scroller || !sentinel || !hasMore) return;
-
-		let timer: ReturnType<typeof setTimeout> | undefined;
-		const observer = new IntersectionObserver(
-			(entries) => {
-				clearTimeout(timer);
-				// Debounced: a fast flick past the sentinel must not queue a fetch per page.
-				if (entries[0].isIntersecting) timer = setTimeout(loadMore, 200);
-			},
-			{ root: scroller, rootMargin: '200px' }
-		);
-		observer.observe(sentinel);
-
-		return () => {
-			clearTimeout(timer);
-			observer.disconnect();
-		};
-	});
 
 	// The FAQ page filters its questions on `?q=`, so a FAQ hit can land the
 	// visitor directly on the matching question instead of the whole list.
@@ -350,13 +328,15 @@
 					</li>
 				{/each}
 			</ul>
-			<div bind:this={sentinel} class="h-px" aria-hidden="true"></div>
-			{#if hasMore}
-				<p class="flex justify-center py-4 text-grey-dark">
-					<IconSpinner class="motion-safe:animate-spin w-8 h-8" />
-					<span class="sr-only">Chargement…</span>
-				</p>
-			{/if}
+			<InfiniteScroll
+				{hasMore}
+				{loadMore}
+				key={results.length}
+				root={scroller}
+				rootMargin="200px"
+				color="var(--color-grey-dark)"
+				class="py-4"
+			/>
 		{/if}
 	</div>
 </dialog>

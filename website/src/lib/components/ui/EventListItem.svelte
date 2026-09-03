@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconArrow from '$lib/components/svg/IconArrow.svelte';
+	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import { formatShortDate, toDate } from '$lib/utils/date';
 	import type { AgendaEventCard } from '$lib/interfaces/page';
@@ -20,6 +20,15 @@
 	}: Props = $props();
 
 	const start = $derived(toDate(event.dateStart));
+	const terms = $derived([...event.programs, ...event.publics]);
+
+	// The row links to the event, so it is a CTA like any other pill button.
+	const cta = $derived({
+		label: detailsLabel,
+		url: event.url,
+		icon: 'arrow',
+		target: null
+	} as const);
 </script>
 
 <article
@@ -35,19 +44,13 @@
 				<p class="text-label text-(--row-color)">
 					<time datetime={event.dateStart}>{formatShortDate(start)}</time>
 				</p>
-				{#if event.terms.length > 0}
+				{#if terms.length > 0}
 					<span class="text-label text-(--row-color)" aria-hidden="true">·</span>
 				{/if}
 			{/if}
-			<TermTags terms={event.terms} label="Thématiques" />
+			<TermTags {terms} label="Thématiques" size="md" />
 		</div>
 	</div>
 
-	<a
-		href={event.url}
-		class="text-label group shrink-0 flex items-center gap-2 rounded-full border-2 border-(--row-color) text-(--row-color) px-4 py-1.5 leading-tight transition-colors hover:bg-(--row-color) hover:text-white"
-	>
-		<span>{detailsLabel}<span class="sr-only"> : {event.title}</span></span>
-		<IconArrow class="transition-transform group-hover:translate-x-1 w-5 h-5" />
-	</a>
+	<CtaLink {cta} {color} ariaLabel="{detailsLabel} : {event.title}" class="shrink-0" />
 </article>
