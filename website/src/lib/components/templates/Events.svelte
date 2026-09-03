@@ -11,6 +11,7 @@
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
 	import InfiniteScroll from '$lib/components/ui/InfiniteScroll.svelte';
+	import ListHeader from '$lib/components/ui/ListHeader.svelte';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import SelectDropdown from '$lib/components/ui/SelectDropdown.svelte';
@@ -154,6 +155,10 @@
 	// archive's `matchTotal` ignores the month, so the count covers every match.
 	const resultCount = $derived(upcoming.length + archive.current.matchTotal);
 
+	// A search is answered across the whole agenda: the month browser steps aside
+	// for the results header, and every matching upcoming event is listed at once.
+	const visibleUpcoming = $derived(hasSearch ? upcoming : upcomingForMonth);
+
 	const clearSearch = (): void => {
 		search = '';
 	};
@@ -186,11 +191,7 @@
 	/>
 </BasicHeader>
 
-<section
-	aria-label="Événements à venir"
-	style:--events-color={color}
-	class="px-base pb-12 lg:pb-16"
->
+<section aria-label="Événements à venir" class="px-base pb-12 lg:pb-16">
 	<div aria-live="polite">
 		{#if hasSearch}
 			<ResultsHeader
@@ -200,6 +201,8 @@
 				onClear={clearSearch}
 				{noResultsText}
 				{color}
+				variant="section"
+				class="mt-12 lg:mt-18"
 			/>
 			{#if upcoming.length === 0 && archive.current.matchTotal > 0}
 				<p class="text-body-1 text-grey-dark mt-4">
@@ -210,14 +213,17 @@
 			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
 				Aucun événement à venir pour le moment.
 			</p>
-		{/if}
-
-		{#if upcomingMonth}
-			<div class="mt-9 border-t-2 border-(--events-color) pt-4">
+		{:else if upcomingMonth}
+			<ListHeader
+				{color}
+				count={upcomingForMonth.length}
+				nouns={['événement', 'événements']}
+				class="mt-12 lg:mt-18"
+			>
 				<div class="flex items-center gap-2 lg:gap-4">
 					<button
 						type="button"
-						class="text-(--events-color) p-1 disabled:opacity-30"
+						class="text-(--list-color) p-1 disabled:opacity-30"
 						aria-label="Mois précédent"
 						disabled={upcomingIndex <= 0}
 						onclick={() => goToMonth(-1)}
@@ -239,7 +245,7 @@
 						{/each}
 						{#key upcomingMonth.value}
 							<h2
-								class="text-h2 text-(--events-color) col-start-1 row-start-1 text-center"
+								class="text-h2 text-(--list-color) col-start-1 row-start-1 text-center"
 								in:fly={monthEnter}
 								out:fly={monthLeave}
 							>
@@ -249,7 +255,7 @@
 					</div>
 					<button
 						type="button"
-						class="text-(--events-color) p-1 disabled:opacity-30"
+						class="text-(--list-color) p-1 disabled:opacity-30"
 						aria-label="Mois suivant"
 						disabled={upcomingIndex >= upcomingMonths.length - 1}
 						onclick={() => goToMonth(1)}
@@ -257,14 +263,12 @@
 						<IconChevron class="w-6.25 h-6.25 -rotate-90" />
 					</button>
 				</div>
-				<p class="text-label text-(--events-color) mt-1">
-					{upcomingForMonth.length}
-					{upcomingForMonth.length > 1 ? 'événements' : 'événement'}
-				</p>
-			</div>
+			</ListHeader>
+		{/if}
 
+		{#if visibleUpcoming.length > 0}
 			<ul class="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-				{#each upcomingForMonth as event (event.url)}
+				{#each visibleUpcoming as event (event.url)}
 					<li class="aspect-3/4">
 						<EventCard {event} {color} headingTag="h3" sizes={cardSizes} />
 					</li>
@@ -275,11 +279,7 @@
 </section>
 
 {#if archive.current.matchTotal > 0}
-	<section
-		aria-labelledby="past-events-title"
-		style:--events-color={color}
-		class="px-base pb-12 lg:pb-16"
-	>
+	<section aria-labelledby="past-events-title" class="px-base pb-12 lg:pb-16">
 		<CardTitle
 			id="past-events-title"
 			title="Les événements passés"
