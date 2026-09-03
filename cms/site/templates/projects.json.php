@@ -9,15 +9,13 @@ require_once 'utils/Utils.php';
 $json = Utils::getPageBaseData($page, 'projects');
 
 // All terms in their CMS-defined order, so the frontend can order filters accordingly.
-$json['programs']   = Utils::getTaxonomyTerms('programs');
-$json['categories'] = Utils::getTaxonomyTerms('categories');
+$json['programs'] = Utils::getTaxonomyTerms('programs');
 
 $projects = $page->children()->listed();
 
 // Only the terms actually carried by a project, so the frontend can offer
 // filters that lead somewhere without being shipped the whole archive.
-$json['usedPrograms']   = Utils::getUsedTaxonomySlugs($projects, 'programs');
-$json['usedCategories'] = Utils::getUsedTaxonomySlugs($projects, 'categories');
+$json['usedPrograms'] = Utils::getUsedTaxonomySlugs($projects, 'programs');
 
 // Years actually used by a project, most recent first: the year field is only a
 // filter, so it is read off the collection rather than off the (paginated) cards.
@@ -33,7 +31,6 @@ $json['projects'] = Utils::getProjects(
     $projects,
     mb_substr((string)(get('q') ?? ''), 0, 100),
     array_filter(explode(',', (string)(get('programs') ?? ''))),
-    array_filter(explode(',', (string)(get('categories') ?? ''))),
     array_filter(explode(',', (string)(get('years') ?? '')))
 );
 
