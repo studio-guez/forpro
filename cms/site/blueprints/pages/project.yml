@@ -39,6 +39,7 @@ tabs:
                 extends: fields/taxonomies/programs
               categories:
                 extends: fields/taxonomies/categories
+                max: 1
       main:
         sections:
           collective:
