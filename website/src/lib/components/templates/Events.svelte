@@ -220,7 +220,7 @@
 				nouns={['événement', 'événements']}
 				class="mt-12 lg:mt-18"
 			>
-				<div class="flex items-center gap-2 lg:gap-4">
+				<div class="flex items-center gap-2 lg:gap-4 h-12.5">
 					<button
 						type="button"
 						class="text-(--list-color) p-1 disabled:opacity-30"
