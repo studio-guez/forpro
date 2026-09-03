@@ -27,6 +27,7 @@
 		{ label: 'Conditions :', html: page.conditions }
 	]);
 </script>
+
 <article class="max-w-none space-y-16 lg:space-y-24">
 	<div class="mx-auto w-full max-w-(--content-max) space-y-16 lg:space-y-24">
 		<div class="px-base space-y-6">
