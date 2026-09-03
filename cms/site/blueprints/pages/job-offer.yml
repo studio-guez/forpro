@@ -47,6 +47,15 @@ tabs:
                 type: headline
               openToApplications:
                 extends: fields/openToApplications
+              datePosted:
+                label:
+                  en: Publication date
+                  fr: Date de publication
+                type: date
+                default: now
+                help:
+                  en: Shown as "Posted on ..." in the job offers list.
+                  fr: Affichée « Posté le ... » dans la liste des offres.
               location:
                 label:
                   en: Place of work
