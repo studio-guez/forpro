@@ -4,6 +4,7 @@
 	import IconApprentice from '$lib/components/svg/IconApprentice.svelte';
 	import IconEmployee from '$lib/components/svg/IconEmployee.svelte';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
+	import { LABELLED_SECTION, LABELLED_SECTION_ITEMS } from '$lib/utils/sectionStyles';
 	import type { TeamPage } from '$lib/interfaces/team';
 
 	let { page }: { page: TeamPage } = $props();
@@ -12,13 +13,10 @@
 <PageHeader {page} />
 
 {#each page.sections as section, sectionIndex (sectionIndex)}
-	<section
-		aria-labelledby="team-section-{sectionIndex}"
-		class="px-base grid grid-cols-1 lg:grid-cols-4 gap-x-6 gap-y-9"
-	>
+	<section aria-labelledby="team-section-{sectionIndex}" class={LABELLED_SECTION}>
 		<h2 id="team-section-{sectionIndex}" class="text-label font-bold">{section.title}</h2>
 
-		<ul class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
+		<ul class={LABELLED_SECTION_ITEMS}>
 			{#each section.members as member, memberIndex (memberIndex)}
 				<li>
 					<p class="text-label font-bold">{member.name}</p>

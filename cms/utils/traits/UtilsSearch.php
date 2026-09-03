@@ -40,11 +40,16 @@ trait UtilsSearch
 
     /**
      * Every page the frontend can link to, i.e. a potential search result.
+     *
+     * A mission / job offer closed to applications is left out, like it is left
+     * out of its index and of the sitemap: the page stays reachable by URL, but
+     * the site stops leading visitors to something they can no longer apply to.
      */
     static function getSearchablePages(): \Kirby\Cms\Pages
     {
         return site()->index()->filter(
             fn(\Kirby\Cms\Page $page) => isset(self::SEARCHABLE_TEMPLATES[$page->intendedTemplate()->name()])
+                && self::isOpenToApplications($page)
         );
     }
 

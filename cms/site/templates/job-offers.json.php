@@ -18,7 +18,8 @@ $json['intro'] = $page->intro()->value();
 // All terms in their CMS-defined order, so the frontend can order filters accordingly.
 $json['sectors'] = Utils::getTaxonomyTerms('sectors');
 
-$json['jobOffers'] = array_values($page->children()->listed()
+// An offer closed to applications keeps its page but leaves the index.
+$json['jobOffers'] = array_values(Utils::filterOpenToApplications($page->children()->listed())
     ->map(fn($offer) => Utils::getJobOfferCardData($offer))->data());
 
 $json['body'] = Utils::getBodyBlocks($page->body());

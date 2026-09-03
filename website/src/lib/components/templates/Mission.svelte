@@ -3,6 +3,7 @@
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import BackLink from '$lib/components/ui/BackLink.svelte';
 	import ShareButton from '$lib/components/ui/ShareButton.svelte';
+	import ApplicationsClosedNotice from '$lib/components/ui/ApplicationsClosedNotice.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import { formatShortDate, toDate } from '$lib/utils/date';
 	import type { MissionPage } from '$lib/interfaces/missions';
@@ -25,6 +26,12 @@
 	<header class="space-y-6">
 		{#if page.parentPage}
 			<BackLink parentPage={page.parentPage} />
+		{/if}
+
+		{#if !page.openToApplications}
+			<ApplicationsClosedNotice
+				message="Cette mission n'est plus ouverte aux candidatures. Elle reste consultable à titre informatif."
+			/>
 		{/if}
 
 		<h1 class="text-h1 text-blue">Mission : {page.title}</h1>
@@ -70,7 +77,7 @@
 	<div class="flex flex-wrap items-center justify-end gap-4">
 		<ShareButton title="Mission : {page.title}" />
 
-		{#if page.applyCta}
+		{#if page.openToApplications && page.applyCta}
 			<a
 				href={page.applyCta.url}
 				class="text-label inline-flex items-center gap-2.5 rounded-full border-3 border-blue bg-blue text-white px-5.5 py-3 leading-none transition-colors hover:bg-transparent hover:text-blue"

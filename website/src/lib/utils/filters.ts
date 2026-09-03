@@ -9,6 +9,15 @@ export const normalizeText = (value: string): string =>
 		.normalize('NFD')
 		.replace(/\p{Diacritic}/gu, '');
 
+/**
+ * A URL-safe id for a piece of text, so it can be deep-linked to (`?question=…`).
+ * Accents are folded first, so "Où s'inscrire ?" becomes "ou-s-inscrire".
+ */
+export const slugify = (value: string): string =>
+	normalizeText(value)
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+
 // Rich-text fields are stored as HTML; only their text content is searchable.
 export const stripTags = (html: string | null | undefined): string =>
 	(html ?? '').replace(/<[^>]*>/g, ' ');

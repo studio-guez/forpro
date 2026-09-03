@@ -44,7 +44,7 @@
 			class="mt-12"
 		>
 			{#snippet item(project)}
-				<ProjectCard {project} sizes={cardSizes} />
+				<ProjectCard {project} variant={content.variant} sizes={cardSizes} />
 			{/snippet}
 		</Carousel>
 

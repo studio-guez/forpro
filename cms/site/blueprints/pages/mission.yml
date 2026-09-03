@@ -48,6 +48,8 @@ tabs:
                   en: Practical information
                   fr: Informations pratiques
                 type: headline
+              openToApplications:
+                extends: fields/openToApplications
               announcer:
                 label:
                   en: Announcer

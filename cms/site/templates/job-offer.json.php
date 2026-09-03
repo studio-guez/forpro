@@ -13,6 +13,10 @@ $json['parentPage'] = Utils::getParentPageData($page);
 
 $json['sectors'] = Utils::resolveTaxonomyTerms($page->sectors(), 'sectors');
 
+// Closed offers stay reachable at their URL: the frontend replaces the
+// application details by a notice rather than 404ing.
+$json['openToApplications'] = Utils::isOpenToApplications($page);
+
 $json['description'] = $page->description()->value();
 $json['profile']     = $page->profile()->value();
 $json['conditions']  = $page->conditions()->value();
@@ -22,7 +26,8 @@ $json += Utils::getActivityRate($page);
 $json['startDate'] = $page->startDate()->value();
 $json['deadline']  = $page->deadline()->toDate('Y-m-d');
 
-$json['applicationEmail']   = $page->applicationEmail()->value();
+// Closed offers ship no address to apply to, not even in the page payload.
+$json['applicationEmail']   = $json['openToApplications'] ? $page->applicationEmail()->value() : null;
 $json['pdfOffer']           = Utils::getJsonEncodeDocumentDataOrNull($page->pdfOffer()->toFile());
 $json['applicationContent'] = $page->applicationContent()->value();
 

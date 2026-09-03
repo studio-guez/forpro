@@ -4,6 +4,7 @@
 	import BlockModuleTimeline from '$lib/components/blocks/BlockModuleTimeline.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import CardSmall2Cols from '$lib/components/ui/CardSmall2Cols.svelte';
+	import ApplicationsClosedNotice from '$lib/components/ui/ApplicationsClosedNotice.svelte';
 	import { toDate } from '$lib/utils/date';
 	import type { JobOfferPage } from '$lib/interfaces/jobOffers';
 
@@ -33,6 +34,12 @@
 		<div class="px-base space-y-6">
 			{#if page.parentPage}
 				<BackLink parentPage={page.parentPage} />
+			{/if}
+
+			{#if !page.openToApplications}
+				<ApplicationsClosedNotice
+					message="Cette offre n'est plus ouverte aux candidatures. Elle reste consultable à titre informatif."
+				/>
 			{/if}
 
 			<h1 class="text-h1 text-blue">{page.title}</h1>
@@ -76,15 +83,17 @@
 			{/snippet}
 
 			{#snippet second()}
-				<div>
-					<h2 class="text-h4">Le dossier complet doit être adressé à :</h2>
-					<a
-						href="mailto:{page.applicationEmail}"
-						class="text-body-2 underline underline-offset-4 mt-4 inline-block hover:opacity-70 transition"
-					>
-						{page.applicationEmail}
-					</a>
-				</div>
+				{#if page.openToApplications}
+					<div>
+						<h2 class="text-h4">Le dossier complet doit être adressé à :</h2>
+						<a
+							href="mailto:{page.applicationEmail}"
+							class="text-body-2 underline underline-offset-4 mt-4 inline-block hover:opacity-70 transition"
+						>
+							{page.applicationEmail}
+						</a>
+					</div>
+				{/if}
 
 				{#if page.pdfOffer}
 					<a
@@ -102,30 +111,32 @@
 			{/snippet}
 		</CardSmall2Cols>
 
-		<section aria-labelledby="job-offer-apply" class="px-base space-y-10">
-			<h2 id="job-offer-apply" class="text-h3 text-center">
-				<span class="inline-block bg-blue text-white rounded-2xl px-8 pt-2 pb-3.5"
-					>Comment postuler ?</span
-				>
-			</h2>
+		{#if page.openToApplications}
+			<section aria-labelledby="job-offer-apply" class="px-base space-y-10">
+				<h2 id="job-offer-apply" class="text-h3 text-center">
+					<span class="inline-block bg-blue text-white rounded-2xl px-8 pt-2 pb-3.5"
+						>Comment postuler ?</span
+					>
+				</h2>
 
-			<div class="prose text-body-2 text-blue text-center max-w-3xl mx-auto">
-				{@html page.applicationContent}
-			</div>
+				<div class="prose text-body-2 text-blue text-center max-w-3xl mx-auto">
+					{@html page.applicationContent}
+				</div>
 
-			{#if page.applicationQuestions.length > 0}
-				<ul class="space-y-6">
-					{#each page.applicationQuestions as item, i (i)}
-						<li
-							class="bg-blue text-white rounded-3xl px-6 py-8 lg:px-12 lg:py-10 grid lg:grid-cols-3 gap-4 lg:gap-8"
-						>
-							<h3 class="text-h4">{item.question}</h3>
-							<div class="prose text-body-2 lg:col-span-2">{@html item.answer}</div>
-						</li>
-					{/each}
-				</ul>
-			{/if}
-		</section>
+				{#if page.applicationQuestions.length > 0}
+					<ul class="space-y-6">
+						{#each page.applicationQuestions as item, i (i)}
+							<li
+								class="bg-blue text-white rounded-3xl px-6 py-8 lg:px-12 lg:py-10 grid lg:grid-cols-3 gap-4 lg:gap-8"
+							>
+								<h3 class="text-h4">{item.question}</h3>
+								<div class="prose text-body-2 lg:col-span-2">{@html item.answer}</div>
+							</li>
+						{/each}
+					</ul>
+				{/if}
+			</section>
+		{/if}
 	</div>
 
 	<BlockModuleTimeline

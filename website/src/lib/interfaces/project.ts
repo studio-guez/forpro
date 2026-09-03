@@ -26,11 +26,8 @@ export interface ProjectsPage {
 	readonly slug: string;
 	readonly path: string;
 	readonly programs: TaxonomyFilterTerm[];
-	readonly categories: TaxonomyFilterTerm[];
 	/** Program term slugs carried by at least one project. */
 	readonly usedPrograms: string[];
-	/** Category term slugs carried by at least one project. */
-	readonly usedCategories: string[];
 	/** Years used by at least one project, most recent first. Filter only. */
 	readonly years: number[];
 	readonly projects: ProjectsList;

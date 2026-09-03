@@ -90,8 +90,10 @@
 			onclick={() => (open = !open)}
 		>
 			<div class="border-b-2 border-current flex items-center justify-between gap-3 pb-1">
-			<div class="truncate">{selectedLabel}</div>
-			<IconChevron class="shrink-0 w-5.25 h-5.25 transition-transform {open ? 'rotate-180' : ''}" />
+				<div class="truncate">{selectedLabel}</div>
+				<IconChevron
+					class="shrink-0 w-5.25 h-5.25 transition-transform {open ? 'rotate-180' : ''}"
+				/>
 			</div>
 		</button>
 
