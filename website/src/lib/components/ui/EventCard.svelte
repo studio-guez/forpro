@@ -82,7 +82,7 @@
 				</div>
 
 				<span
-					class="shrink-0 w-12 h-12 rounded-full bg-white flex items-center justify-center transition-transform group-hover:translate-x-1"
+					class="shrink-0 w-12 h-12 rounded-full bg-white flex items-center justify-center"
 					style="color: {color}"
 				>
 					<IconArrow class="w-6.5 h-6.5" />
