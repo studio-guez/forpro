@@ -3,7 +3,6 @@
 	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
-	import IconClose from '$lib/components/svg/IconClose.svelte';
 	import InfiniteScroll from '$lib/components/ui/InfiniteScroll.svelte';
 	import ListHeader from '$lib/components/ui/ListHeader.svelte';
 	import ProjectCard from '$lib/components/ui/ProjectCard.svelte';
