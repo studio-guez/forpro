@@ -26,7 +26,9 @@ $json['parentPage'] = $parentPage ? [
 // All terms in their CMS-defined order, so the frontend can order filters accordingly.
 $json['categories'] = Utils::getTaxonomyTerms('categories');
 
-$missions = $page->children()->listed();
+// A mission closed to applications keeps its page but leaves the index, so it
+// is out before the filters and the counts are built from what is left.
+$missions = Utils::filterOpenToApplications($page->children()->listed());
 
 // Only the terms actually carried by a mission, so the frontend can offer
 // filters that lead somewhere without being shipped the whole list.
