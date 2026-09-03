@@ -221,8 +221,9 @@ trait UtilsPages
      * Filtered, paginated projects of a projects index, in CMS order.
      *
      * The filters mirror the frontend ones: `$query` is matched as a whole
-     * phrase against title, short description, collective name and term titles;
-     * `$programs` and `$categories` are **raw** selections of term slugs;
+     * phrase against title, short description, collective name and term titles
+     * (categories included: they are still carried by a project, they are just
+     * not filtered on); `$programs` is a **raw** selection of term slugs;
      * `$years` is a list of years as strings, matched on the `year` field,
      * which exists only to filter.
      *
@@ -232,21 +233,18 @@ trait UtilsPages
         \Kirby\Cms\Pages $projects,
         string $query = '',
         array $programs = [],
-        array $categories = [],
         array $years = [],
         int $offset = 0,
         int $limit = 12
     ): array {
-        // Raw selections in, resolved here: `resolveTaxonomySelection()` is the
+        // Raw selection in, resolved here: `resolveTaxonomySelection()` is the
         // mirror of the frontend's own rule, so a URL means the same on both ends.
-        foreach (['programs' => $programs, 'categories' => $categories] as $taxonomy => $selected) {
-            $projects = self::filterPagesByTaxonomy(
-                $projects,
-                $taxonomy,
-                self::resolveTaxonomySelection($taxonomy, $selected),
-                false
-            );
-        }
+        $projects = self::filterPagesByTaxonomy(
+            $projects,
+            'programs',
+            self::resolveTaxonomySelection('programs', $programs),
+            false
+        );
 
         if ($years !== []) {
             $projects = $projects->filter(
