@@ -33,13 +33,13 @@
 
 <article
 	style:--row-color={color}
-	class="border-t border-(--row-color) py-4 lg:py-6 flex flex-wrap items-center justify-between gap-4"
+	class="border-t border-(--row-color) py-4 lg:py-6 flex items-center justify-between gap-4"
 >
 	<div class="min-w-0">
 		<svelte:element this={headingTag} class="text-h4 text-(--row-color)">
-			<a href={event.url} class="hover:underline">{event.title}</a>
+			{event.title}
 		</svelte:element>
-		<div class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-2">
+		<div class="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-2">
 			{#if start}
 				<p class="text-label text-(--row-color)">
 					<time datetime={event.dateStart}>{formatShortDate(start)}</time>
