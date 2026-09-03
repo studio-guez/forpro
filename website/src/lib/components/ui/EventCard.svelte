@@ -75,7 +75,7 @@
 				style:background={hoverTint}
 			></div>
 		{/if}
-		<div class="absolute inset-0 -z-1 bg-linear-to-b from-black/50 via-black/25 to-black/75"></div>
+		<div class="absolute inset-0 -z-1 bg-linear-to-b from-black/15 via-black/0 to-black/30 group-hover:opacity-30 transition-opacity"></div>
 
 		<div class="h-full flex flex-col justify-between gap-8 px-5 lg:px-6 pb-5 lg:pb-6 pt-6 lg:pt-8">
 			<svelte:element this={headingTag} class="text-h4">{event.title}</svelte:element>
