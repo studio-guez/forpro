@@ -159,7 +159,7 @@
 		<ul class="mt-9 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
 			{#each archive.items as project (project.url)}
 				<li>
-					<ProjectCard {project} headingTag="h3" sizes={cardSizes} />
+					<ProjectCard {project} headingTag="h3" variant="inverted" sizes={cardSizes} />
 				</li>
 			{/each}
 		</ul>
