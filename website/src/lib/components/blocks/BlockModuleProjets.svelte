@@ -31,8 +31,9 @@
 		background={filled ? colors.main : null}
 		color={filled ? 'var(--color-white)' : colors.main}
 		shapeLeft={filled ? ShapeProjets1 : null}
+		shapeLeftClasses="absolute top-0 left-0 -translate-x-1/10 -translate-y-1/10 w-1/2"
 		shapeRight={filled ? ShapeProjets2 : null}
-		shapeRightClasses="absolute bottom-0 right-0 translate-1/6 w-2/5 rotate-180"
+		shapeRightClasses="absolute max-lg:bottom-0 lg:top-0 right-0 translate-x-1/6 translate-y-1/10 lg:-translate-y-1/10 w-2/5 max-lg:rotate-180 max-lg:-scale-x-100"
 		shapeColor={colors.deco}
 	>
 		<Carousel
