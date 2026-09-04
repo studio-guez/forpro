@@ -217,6 +217,7 @@ return [
                     'banner'  => $bannerAnnouncements,
                     'favicon' => Utils::getFaviconData($site),
                     'cookies' => [
+                        'text' => $orNull($site->cookiesText()),
                         // Null when no page is picked: the banner then drops the link
                         // rather than pointing at a 404.
                         'privacyPolicyUrl' => Utils::pageUrl($site->privacyPolicyPage()->toPage()),

@@ -7,13 +7,15 @@
 	import IconCheck from '$lib/components/svg/IconCheck.svelte';
 
 	interface Props {
-		/** Picked in the Panel (Site web tab); null hides the link. */
+		/** Intro copy, from the Panel's Cookies tab. */
+		text: string | null;
+		/** Picked in the Panel (Cookies tab); null hides the link. */
 		privacyPolicyUrl: string | null;
 		/** Lifts the card above the announcements marquee, which is sticky at the bottom. */
 		raised?: boolean;
 	}
 
-	let { privacyPolicyUrl, raised = false }: Props = $props();
+	let { text, privacyPolicyUrl, raised = false }: Props = $props();
 
 	let view = $state<'intro' | 'preferences'>('intro');
 	// Draft choice: only written to storage when "Enregistrer mes préférences" is pressed.
@@ -80,10 +82,9 @@
 			<div class={RULE}></div>
 
 			{#if view === 'intro'}
-				<p class="text-body-1 py-6">
-					Les cookies sont des fichiers qui servent au fonctionnement du site et à l'amélioration de
-					ton utilisation.
-				</p>
+				{#if text}
+					<p class="text-body-1 py-6 whitespace-pre-line">{text}</p>
+				{/if}
 				<div class={RULE}></div>
 				<div class="flex flex-wrap justify-end gap-3">
 					<button
