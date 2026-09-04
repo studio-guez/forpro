@@ -104,4 +104,6 @@ export interface Global {
 	readonly banner: BannerAnnouncement[];
 	readonly favicon: Favicon | null;
 	readonly cookies: CookieSettings;
+	/** Site-wide JSON-LD (Organization, WebSite); page schemas link back to it. */
+	readonly schemas: Record<string, unknown>[];
 }
