@@ -179,6 +179,8 @@ tabs:
 
   banner: tabs/banner
 
+  cookies: tabs/cookies
+
   contact: tabs/contact
 
   social: tabs/social
