@@ -23,8 +23,8 @@
 	]);
 </script>
 
-<article class="px-base space-y-16 lg:space-y-24">
-	<header class="space-y-6">
+<article class="space-y-16 lg:space-y-24">
+	<section class="px-base space-y-6">
 		{#if page.parentPage}
 			<BackLink parentPage={page.parentPage} />
 		{/if}
@@ -48,9 +48,12 @@
 		</p>
 
 		<TermTags terms={page.categories} label="Catégories" />
-	</header>
+	</section>
 
-	<section aria-labelledby="mission-intro" class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+	<section
+		aria-labelledby="mission-intro"
+		class="px-base grid lg:grid-cols-2 gap-8 lg:gap-16 items-start"
+	>
 		<div class="space-y-6">
 			<h2 id="mission-intro" class="text-h3 text-black">{page.introTitle}</h2>
 			<div class="prose text-body-2 text-grey-dark">{@html page.shortDesc}</div>
@@ -66,7 +69,7 @@
 		{/if}
 	</section>
 
-	<div class="space-y-10">
+	<div class="px-base space-y-10">
 		{#each sections as section (section.label)}
 			<section class="grid lg:grid-cols-3 gap-4 lg:gap-8">
 				<h2 class="text-h4 text-black">{section.label}</h2>
