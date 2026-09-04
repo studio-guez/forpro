@@ -105,9 +105,22 @@ const section = (title: string, html: string | null | undefined, level = 2): str
 const bullet = (label: string, value: string | null | undefined): string | null =>
 	value && String(value).trim() ? `- ${label} : ${inline(String(value))}` : null;
 
-/** An internal path from the CMS payload, resolved against the site origin. */
-const absolute = (url: string, origin: string): string =>
-	url.startsWith('http') ? url : `${origin}${url.startsWith('/') ? '' : '/'}${url}`;
+/**
+ * A link from the payload, pointed at its Markdown twin when it is one of ours.
+ *
+ * A reader who arrived in Markdown should be able to stay there, and every one
+ * of these files opens with the canonical HTML URL it stands for, so nothing is
+ * lost on the way. Only site-internal page paths are rewritten: the CMS emits
+ * those as paths (`/projets/x`, `/` for the home page) and everything else — a
+ * `mailto:`, a `tel:`, a file on the CMS, an external site — as an absolute
+ * URL, which is passed through untouched.
+ */
+const markdownUrl = (url: string, origin: string): string => {
+	if (!url.startsWith('/') || url.startsWith('//')) return url;
+
+	// `/.md` would be a dotfile path, which a reverse proxy may well refuse.
+	return url === '/' ? `${origin}/index.md` : `${origin}${url}.md`;
+};
 
 /** A run of `- Label : value` lines as one block, or nothing when none apply. */
 const facts = (lines: (string | null)[]): string | null => {
@@ -116,7 +129,7 @@ const facts = (lines: (string | null)[]): string | null => {
 };
 
 const ctaLine = (cta: PageCta | null | undefined, origin: string): string | null =>
-	cta && cta.url ? `- [${cta.label || cta.url}](${absolute(cta.url, origin)})` : null;
+	cta && cta.url ? `- [${cta.label || cta.url}](${markdownUrl(cta.url, origin)})` : null;
 
 const termNames = (terms: TaxonomyTerm[] | undefined): string | null =>
 	terms && terms.length ? terms.map((term) => term.title).join(', ') : null;
@@ -131,9 +144,12 @@ const contentBlocks = (blocks: ContentBlock[] | undefined, level = 2): string | 
 			)
 		: null;
 
-const externalLinks = (links: ContentExternalLink[] | undefined): string | null =>
+const externalLinks = (links: ContentExternalLink[] | undefined, origin: string): string | null =>
 	links && links.length
-		? join([heading(2, 'Liens'), links.map((link) => `- [${link.title}](${link.url})`).join('\n')])
+		? join([
+				heading(2, 'Liens'),
+				links.map((link) => `- [${link.title}](${markdownUrl(link.url, origin)})`).join('\n')
+			])
 		: null;
 
 /**
@@ -251,7 +267,7 @@ function renderBlock(block: Block, origin: string): string | null {
 				bullets(
 					c.events,
 					(event: { title: string; url: string; dateStart: string | null }) =>
-						`- [${event.title}](${absolute(event.url, origin)})${event.dateStart ? ` — ${event.dateStart}` : ''}`
+						`- [${event.title}](${markdownUrl(event.url, origin)})${event.dateStart ? ` — ${event.dateStart}` : ''}`
 				),
 				ctaLine(c.cta as PageCta, origin)
 			]);
@@ -263,7 +279,7 @@ function renderBlock(block: Block, origin: string): string | null {
 				bullets(
 					c.projects,
 					(project: { title: string; url: string }) =>
-						`- [${project.title}](${absolute(project.url, origin)})`
+						`- [${project.title}](${markdownUrl(project.url, origin)})`
 				),
 				ctaLine(c.cta as PageCta, origin)
 			]);
@@ -352,7 +368,7 @@ function renderTemplate(page: CmsContent, origin: string): string {
 					bullet('Publics', termNames(page.publics))
 				]),
 				contentBlocks(page.blocks),
-				externalLinks(page.externalLinks)
+				externalLinks(page.externalLinks, origin)
 			]);
 
 		case 'project':
@@ -366,7 +382,7 @@ function renderTemplate(page: CmsContent, origin: string): string {
 					bullet('Catégories', termNames(page.categories))
 				]),
 				contentBlocks(page.blocks),
-				externalLinks(page.externalLinks)
+				externalLinks(page.externalLinks, origin)
 			]);
 
 		case 'job-offer':
@@ -459,7 +475,9 @@ function renderTemplate(page: CmsContent, origin: string): string {
 							heading(2, page.partnersTitle ?? 'Partenaires'),
 							page.partners
 								.map((partner) =>
-									partner.link ? `- [${partner.title}](${partner.link.url})` : `- ${partner.title}`
+									partner.link
+										? `- [${partner.title}](${markdownUrl(partner.link.url, origin)})`
+										: `- ${partner.title}`
 								)
 								.join('\n')
 						])
@@ -511,7 +529,7 @@ function renderTemplate(page: CmsContent, origin: string): string {
 							page.upcomingEvents
 								.map(
 									(event) =>
-										`- [${event.title}](${absolute(event.url, origin)})${event.dateStart ? ` — ${event.dateStart}` : ''}`
+										`- [${event.title}](${markdownUrl(event.url, origin)})${event.dateStart ? ` — ${event.dateStart}` : ''}`
 								)
 								.join('\n')
 						])
@@ -519,11 +537,10 @@ function renderTemplate(page: CmsContent, origin: string): string {
 				page.pastEvents.items.length
 					? join([
 							heading(2, 'Événements passés'),
-							`Les ${page.pastEvents.items.length} plus récents sur ${page.pastEvents.total} ; la suite est paginée sur la page HTML.`,
 							page.pastEvents.items
 								.map(
 									(event) =>
-										`- [${event.title}](${absolute(event.url, origin)})${event.dateStart ? ` — ${event.dateStart}` : ''}`
+										`- [${event.title}](${markdownUrl(event.url, origin)})${event.dateStart ? ` — ${event.dateStart}` : ''}`
 								)
 								.join('\n')
 						])
@@ -534,11 +551,8 @@ function renderTemplate(page: CmsContent, origin: string): string {
 		case 'projects':
 			return join([
 				heading(2, 'Projets'),
-				page.projects.total > page.projects.items.length
-					? `Les ${page.projects.items.length} premiers sur ${page.projects.total} ; la suite est paginée sur la page HTML.`
-					: null,
 				page.projects.items
-					.map((project) => `- [${project.title}](${absolute(project.url, origin)})`)
+					.map((project) => `- [${project.title}](${markdownUrl(project.url, origin)})`)
 					.join('\n'),
 				bodyBlocks(page.body, origin)
 			]);
@@ -553,7 +567,7 @@ function renderTemplate(page: CmsContent, origin: string): string {
 							page.jobOffers
 								.map(
 									(offer) =>
-										`- [${offer.title}](${absolute(offer.url, origin)}) — ${offer.location}, délai ${offer.deadline}`
+										`- [${offer.title}](${markdownUrl(offer.url, origin)}) — ${offer.location}, délai ${offer.deadline}`
 								)
 								.join('\n')
 						])
@@ -565,13 +579,10 @@ function renderTemplate(page: CmsContent, origin: string): string {
 			return join([
 				heading(2, page.introTitle),
 				htmlToMarkdown(page.intro),
-				page.missions.total > page.missions.items.length
-					? `Les ${page.missions.items.length} premières sur ${page.missions.total} ; la suite est paginée sur la page HTML.`
-					: null,
 				page.missions.items
 					.map(
 						(mission) =>
-							`- [${mission.title}](${absolute(mission.url, origin)}) — ${mission.location}`
+							`- [${mission.title}](${markdownUrl(mission.url, origin)}) — ${mission.location}`
 					)
 					.join('\n'),
 				bodyBlocks(page.body, origin)
@@ -587,7 +598,9 @@ function renderTemplate(page: CmsContent, origin: string): string {
 							htmlToMarkdown(page.companiesModule.intro, 3),
 							page.companiesModule.companies
 								.map((company) =>
-									company.url ? `- [${company.title}](${company.url})` : `- ${company.title}`
+									company.url
+										? `- [${company.title}](${markdownUrl(company.url, origin)})`
+										: `- ${company.title}`
 								)
 								.join('\n')
 						])
