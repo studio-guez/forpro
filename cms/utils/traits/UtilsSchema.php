@@ -211,7 +211,7 @@ trait UtilsSchema
             '@type'               => 'Event',
             '@id'                 => $meta['canonicalUrl'] . '#event',
             'name'                => $page->title()->value(),
-            'description'         => self::schemaText($page->shortDesc()->value()),
+            'description'         => self::toPlainText($page->shortDesc()->value()),
             'startDate'           => $start,
             'endDate'             => $end === $start ? null : $end,
             'eventStatus'         => 'https://schema.org/EventScheduled',
@@ -305,7 +305,7 @@ trait UtilsSchema
             '@id'              => $meta['canonicalUrl'] . '#project',
             'name'             => $page->title()->value(),
             'headline'         => $page->subtitle()->value(),
-            'description'      => self::schemaText($page->shortDesc()->value()),
+            'description'      => self::toPlainText($page->shortDesc()->value()),
             'image'            => self::schemaImage($page->cover()->toFile()),
             'creator'          => $page->collectiveName()->isNotEmpty()
                 ? ['@type' => 'Organization', 'name' => $page->collectiveName()->value()]
@@ -428,12 +428,6 @@ trait UtilsSchema
         } catch (\Exception) {
             return $date;
         }
-    }
-
-    /** Rich-text field -> the plain, single-spaced sentence a schema wants. */
-    private static function schemaText(?string $html): string
-    {
-        return trim(preg_replace('/\s+/', ' ', self::stripHtmlTags($html)) ?? '');
     }
 
     /** Public base URL of the frontend, without its trailing slash. */

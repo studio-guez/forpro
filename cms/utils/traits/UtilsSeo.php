@@ -1,10 +1,50 @@
 <?php
 
 /**
- * Kirby SEO metadata cascade -> frontend head payload.
+ * Kirby SEO metadata cascade -> frontend head payload, plus the page set the
+ * site-wide discovery documents (sitemap, llms.txt) are built from.
  */
 trait UtilsSeo
 {
+    /**
+     * Templates that have a route on the decoupled frontend. Wider than
+     * `UtilsSearch::SEARCHABLE_TEMPLATES`: the index pages are listed here
+     * because they are destinations, even though they carry no text of their
+     * own. The structural containers and the taxonomy terms have no URL.
+     */
+    private const INDEXABLE_TEMPLATES = [
+        'page',
+        'basic-page',
+        'faq',
+        'team',
+        'press',
+        'impressum',
+        'factory-lab',
+        'events',
+        'event',
+        'projects',
+        'project',
+        'job-offers',
+        'job-offer',
+        'missions',
+        'mission',
+    ];
+
+    /**
+     * Every page a crawler may be pointed at: it has a frontend URL, its SEO
+     * settings let it be indexed, and — for a job offer or a mission — it is
+     * still open to applications. The source of truth for both the sitemap and
+     * llms.txt, so the two can never advertise different sets of pages.
+     */
+    static function getIndexablePages(): \Kirby\Cms\Pages
+    {
+        return site()->index()->filter(
+            fn(\Kirby\Cms\Page $page) => in_array($page->intendedTemplate()->name(), self::INDEXABLE_TEMPLATES, true)
+                && $page->metadata()->robotsIndex()->toBool()
+                && self::isOpenToApplications($page)
+        );
+    }
+
     /**
      * Resolves the page metadata through Kirby SEO's cascade
      * (page fields -> parent -> site -> plugin defaults) and returns it
