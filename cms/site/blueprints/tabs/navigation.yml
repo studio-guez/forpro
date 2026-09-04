@@ -202,17 +202,6 @@ columns:
               en: The links themselves are managed in the Social networks tab.
               fr: Les liens eux-mêmes sont gérés dans l'onglet Réseaux sociaux.
             required: true
-          footerNewsletterLine:
-            type: line
-          footerNewsletterTitle:
-            label:
-              en: "Newsletter — Title"
-              fr: "Newsletter — Titre"
-            type: text
-            help:
-              en: Shown above the newsletter subscription field in the footer.
-              fr: Affiché au-dessus du champ d'inscription à la newsletter du pied de page.
-            required: true
 
   - width: 1/2
     sections:

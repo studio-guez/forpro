@@ -209,7 +209,37 @@ return [
                         'socialLinks'     => $socialLinks,
                         'menuTitle'       => $orNull($site->footerMenuTitle()),
                         'menuLinks'       => $footerMenuLinks,
-                        'newsletterTitle' => $orNull($site->footerNewsletterTitle()),
+                        // Copy shown around the footer form. The provider credentials it
+                        // posts to are deliberately *not* in here: see the top-level
+                        // `newsletter` key below.
+                        'newsletter' => [
+                            'title'        => $orNull($site->footerNewsletterTitle()),
+                            'placeholder'  => $orNull($site->newsletterPlaceholder()),
+                            'submitLabel'  => $orNull($site->newsletterSubmitLabel()),
+                            'messages'     => [
+                                'success'      => $orNull($site->newsletterSuccessMessage()),
+                                'error'        => $orNull($site->newsletterErrorMessage()),
+                                'invalidEmail' => $orNull($site->newsletterInvalidEmailMessage()),
+                            ],
+                        ],
+                    ],
+                    // Submit settings for the newsletter provider. Kept out of `footer`
+                    // on purpose: `+layout.server.ts` only forwards the keys it names, so
+                    // this one stays server-side and the subscription is proxied by the
+                    // frontend's /api/newsletter route instead of posted from the browser
+                    // (a cross-origin post gives an opaque response — no success/error).
+                    'newsletter' => [
+                        'actionUrl'      => $orNull($site->newsletterActionUrl()),
+                        'challengeUrl'   => $orNull($site->newsletterChallengeUrl()),
+                        'key'            => $orNull($site->newsletterKey()),
+                        'webformId'      => $orNull($site->newsletterWebformId()),
+                        'emailFieldName' => $orNull($site->newsletterEmailFieldName()),
+                        // Decoy inputs, submitted empty. Comma-separated in the Panel so the
+                        // list can follow the provider's markup without a code change.
+                        'honeypotFields' => array_values(array_filter(array_map(
+                            'trim',
+                            explode(',', (string)$site->newsletterHoneypotFields())
+                        ), fn($name) => $name !== '')),
                     ],
                     'banner'  => $bannerAnnouncements,
                     'favicon' => Utils::getFaviconData($site),

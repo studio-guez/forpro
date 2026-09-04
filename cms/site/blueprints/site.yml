@@ -185,6 +185,8 @@ tabs:
 
   social: tabs/social
 
+  newsletter: tabs/newsletter
+
   general: tabs/general
 
   seo: tabs/seo-site
