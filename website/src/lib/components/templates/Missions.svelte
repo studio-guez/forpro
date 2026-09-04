@@ -89,21 +89,24 @@
 </section>
 
 <section aria-label="Missions" class="px-base pb-12 lg:pb-16">
-	<div aria-live="polite">
-		{#if list.items.length > 0}
-			<ul class="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-				{#each list.items as mission (mission.url)}
-					<li>
-						<MissionCard {mission} headingTag="h2" />
-					</li>
-				{/each}
-			</ul>
-		{:else}
-			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
-				{noResultsText}
-			</p>
-		{/if}
-	</div>
+	<p class="sr-only" aria-live="polite">
+		{list.total}
+		{list.total > 1 ? 'missions' : 'mission'}
+	</p>
+
+	{#if list.items.length > 0}
+		<ul class="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+			{#each list.items as mission (mission.url)}
+				<li>
+					<MissionCard {mission} headingTag="h2" />
+				</li>
+			{/each}
+		</ul>
+	{:else}
+		<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
+			{noResultsText}
+		</p>
+	{/if}
 
 	<InfiniteScroll
 		hasMore={list.hasMore}

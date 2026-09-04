@@ -147,14 +147,13 @@
 				</span>
 			</button>
 		</div>
-
 		<button
 			type="button"
 			id="burger-menu-button"
 			bind:this={burgerButtonEl}
 			onclick={toggleMenu}
 			aria-expanded={menuOpen}
-			aria-controls="burger-menu-desktop burger-menu-mobile"
+			aria-controls={menuOpen ? 'burger-menu-desktop burger-menu-mobile' : undefined}
 			class="text-body-2 font-bold px-3 py-2 flex items-center gap-x-3 shrink-0 justify-end rounded-full hover:bg-blue hover:text-white transition-colors"
 			aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
 		>
