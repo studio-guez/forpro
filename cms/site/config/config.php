@@ -51,13 +51,7 @@ return [
 
                 $urls = $sitemap->create('pages');
 
-                $pages = site()->index()->filter(
-                    fn($page) => in_array($page->intendedTemplate()->name(), ['page', 'faq', 'events', 'event', 'projects', 'project', 'team', 'missions', 'mission', 'job-offers', 'job-offer', 'impressum', 'press', 'basic-page', 'factory-lab'], true)
-                        && $page->metadata()->robotsIndex()->toBool()
-                        && Utils::isOpenToApplications($page)
-                );
-
-                foreach ($pages as $page) {
+                foreach (Utils::getIndexablePages() as $page) {
                     $urls->createUrl($page->frontendUrl())
                         ->lastmod($page->modified() ?? time())
                         ->changefreq('weekly')
@@ -230,6 +224,14 @@ return [
                         'privacyPolicyUrl' => Utils::pageUrl($site->privacyPolicyPage()->toPage()),
                     ],
                 ]);
+            },
+        ],
+        [
+            "pattern" => "llms.txt",
+            "action" => function () {
+                require_once 'utils/Utils.php';
+
+                return new \Kirby\Http\Response(Utils::getLlmsTxt(), 'text/plain');
             },
         ],
         [
