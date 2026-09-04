@@ -1,6 +1,6 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- hrefs come from the CMS */
-	import type { Footer } from '$lib/interfaces/global';
+	import type { Footer, NewsletterResponse, NewsletterStatus } from '$lib/interfaces/global';
 	import FooterBackground from '$lib/components/svg/FooterBackground.svelte';
 	import FooterBackgroundMobile from '$lib/components/svg/FooterBackgroundMobile.svelte';
 	import IconEmail from '$lib/components/svg/IconEmail.svelte';
@@ -20,12 +20,51 @@
 	const cityLine = $derived([address.postalCode, address.locality].filter(Boolean).join(' '));
 	const hasAddress = $derived(Boolean(address.street || cityLine));
 
-	let newsletterEmail = $state('');
+	const newsletter = $derived(footer.newsletter);
 
-	// No subscription endpoint exists yet (the CMS holds no provider settings): the field is
-	// wired up to nothing on purpose rather than posting somewhere that would silently fail.
-	const onNewsletterSubmit = (event: SubmitEvent) => {
+	let newsletterEmail = $state('');
+	let newsletterStatus = $state<NewsletterStatus | 'idle'>('idle');
+	let submitting = $state(false);
+
+	// Every message is CMS-managed, so the endpoint only reports which one to show.
+	const newsletterMessage = $derived.by(() => {
+		switch (newsletterStatus) {
+			case 'ok':
+				return newsletter.messages.success;
+			case 'invalidEmail':
+				return newsletter.messages.invalidEmail;
+			case 'error':
+				return newsletter.messages.error;
+			default:
+				return null;
+		}
+	});
+
+	// Posts to our own origin rather than to the provider: `/api/newsletter` forwards it
+	// server-side, which is what lets us answer here instead of in a new tab.
+	const onNewsletterSubmit = async (event: SubmitEvent) => {
 		event.preventDefault();
+		if (submitting) return;
+
+		submitting = true;
+		newsletterStatus = 'idle';
+
+		try {
+			const response = await fetch('/api/newsletter', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ email: newsletterEmail })
+			});
+			const result: NewsletterResponse = await response.json();
+			newsletterStatus = result.status;
+		} catch {
+			// Offline, or an answer that was not the JSON the endpoint always returns.
+			newsletterStatus = 'error';
+		} finally {
+			submitting = false;
+		}
+
+		if (newsletterStatus === 'ok') newsletterEmail = '';
 	};
 </script>
 
@@ -154,32 +193,51 @@
 		</nav>
 
 		<div class="col-span-2 lg:col-span-1 xl:col-span-2">
-			{#if footer.newsletterTitle}
-				{@render columnTitle(footer.newsletterTitle)}
+			{#if newsletter.title}
+				{@render columnTitle(newsletter.title)}
 			{/if}
 			<!-- Same pill as the header's search control, but permanently expanded and on white. -->
+			<!-- `novalidate`: the CMS owns the wording of the invalid-address message, so the
+				 browser's own validation bubble would say the same thing twice, in its language. -->
 			<form
 				onsubmit={onNewsletterSubmit}
+				novalidate
 				class="flex items-center p-1 rounded-full bg-white transition-shadow focus-within:ring-2 focus-within:ring-black"
 			>
-				<label class="sr-only" for="footer-newsletter-email">Votre adresse e-mail</label>
+				<label class="sr-only" for="footer-newsletter-email">
+					{newsletter.submitLabel ?? "S'inscrire à la newsletter"}
+				</label>
 				<input
 					id="footer-newsletter-email"
 					type="email"
 					required
 					autocomplete="email"
+					disabled={submitting}
+					aria-invalid={newsletterStatus === 'invalidEmail' || newsletterStatus === 'error'}
+					aria-describedby="footer-newsletter-message"
 					bind:value={newsletterEmail}
-					placeholder="Votre e-mail..."
-					class="min-w-0 flex-1 border-0 bg-transparent pl-3 py-1 font-bold placeholder-beige focus:border-0 focus:ring-0 focus:outline-none"
+					placeholder={newsletter.placeholder ?? ''}
+					class="min-w-0 flex-1 border-0 bg-transparent pl-3 py-1 font-bold placeholder-beige focus:border-0 focus:ring-0 focus:outline-none disabled:opacity-60"
 				/>
 				<button
 					type="submit"
-					aria-label="S'inscrire à la newsletter"
-					class="shrink-0 p-2.5 rounded-full bg-blue text-white"
+					disabled={submitting}
+					aria-label={newsletter.submitLabel ?? "S'inscrire à la newsletter"}
+					class="shrink-0 p-2.5 rounded-full bg-blue text-white transition-opacity disabled:opacity-60"
 				>
 					<IconEmail class="shrink-0 w-6.25 h-6.25" />
 				</button>
 			</form>
+
+			<!-- Always in the DOM so screen readers announce the message when it appears
+				 rather than when the region itself is inserted. -->
+			<p
+				id="footer-newsletter-message"
+				aria-live="polite"
+				class="text-label mt-2 font-bold {newsletterStatus === 'ok' ? 'text-black' : 'text-red'}"
+			>
+				{newsletterMessage ?? ''}
+			</p>
 		</div>
 	</div>
 	<div
