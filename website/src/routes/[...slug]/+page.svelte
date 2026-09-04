@@ -16,10 +16,23 @@
 	import FactoryLab from '$lib/components/templates/FactoryLab.svelte';
 	import type { PageData } from './$types';
 	import { IS_PROD } from '$lib/env';
+	import { page as currentPage } from '$app/state';
+	import { cookieConsent } from '$lib/utils/cookieConsent.svelte';
+	import { trackPageView } from '$lib/utils/matomo';
 
 	let { data }: { data: PageData } = $props();
 
 	const page = $derived(data.page);
+
+	const trackable = $derived(
+		IS_PROD && page.trackWithMatomo
+	);
+
+	$effect(() => {
+		if (trackable && cookieConsent.performance) {
+			trackPageView(currentPage.url.href);
+		}
+	});
 </script>
 
 <svelte:head>
@@ -32,38 +45,6 @@
 	{/if}
 	{#if page.seo.robots && IS_PROD}
 		<meta name="robots" content={page.seo.robots} />
-	{/if}
-
-	{#if (page.template === 'page' || page.template === 'factory-lab') && page.trackWithMatomo && IS_PROD}
-		<!-- Matomo -->
-		<script>
-			var _paq = (window._paq = window._paq || []);
-			/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-			_paq.push(['trackPageView']);
-			_paq.push(['enableLinkTracking']);
-			(function () {
-				var u = '//matomo.for-pro.ch/';
-				_paq.push(['setTrackerUrl', u + 'matomo.php']);
-				_paq.push(['setSiteId', '1']);
-				var d = document,
-					g = d.createElement('script'),
-					s = d.getElementsByTagName('script')[0];
-				g.async = true;
-				g.src = u + 'matomo.js';
-				s.parentNode.insertBefore(g, s);
-			})();
-		</script>
-		<noscript
-			><p>
-				<img
-					referrerpolicy="no-referrer-when-downgrade"
-					src="//matomo.for-pro.ch/matomo.php?idsite=1&amp;rec=1"
-					style="border:0;"
-					alt=""
-				/>
-			</p></noscript
-		>
-		<!-- End Matomo Code -->
 	{/if}
 </svelte:head>
 
