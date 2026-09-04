@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BackLink from '$lib/components/ui/BackLink.svelte';
+	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
 	import IconArrow from '$lib/components/svg/IconArrow.svelte';
 	import BlockModuleTimeline from '$lib/components/blocks/BlockModuleTimeline.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
@@ -141,5 +142,11 @@
 
 	<BlockModuleTimeline
 		content={{ title: 'Étapes du recrutement', hideTitle: false, steps: page.recruitingSteps }}
+	/>
+
+	<SingleContentFooter
+		parentPage={page.parentPage}
+		title={page.title}
+		class="mx-auto w-full max-w-(--content-max)"
 	/>
 </article>

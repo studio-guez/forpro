@@ -2,7 +2,8 @@
 	import Img from '$lib/components/ui/Img.svelte';
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import BackLink from '$lib/components/ui/BackLink.svelte';
-	import ShareButton from '$lib/components/ui/ShareButton.svelte';
+	import CtaLink from '$lib/components/ui/CtaLink.svelte';
+	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
 	import ApplicationsClosedNotice from '$lib/components/ui/ApplicationsClosedNotice.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import { formatShortDate, toDate } from '$lib/utils/date';
@@ -74,22 +75,15 @@
 		{/each}
 	</div>
 
-	<div class="flex flex-wrap items-center justify-end gap-4">
-		<ShareButton title="Mission : {page.title}" />
-
-		{#if page.openToApplications && page.applyCta}
-			<a
-				href={page.applyCta.url}
-				class="text-label inline-flex items-center gap-2.5 rounded-full border-3 border-blue bg-blue text-white px-5.5 py-3 leading-none transition-colors hover:bg-transparent hover:text-blue"
-			>
-				{page.applyCta.label}
-			</a>
-		{/if}
-	</div>
-
-	{#if page.parentPage}
-		<footer>
-			<BackLink parentPage={page.parentPage} label="Retour aux missions" />
-		</footer>
-	{/if}
+	<SingleContentFooter
+		parentPage={page.parentPage}
+		title="Mission : {page.title}"
+		backLabel="Retour aux missions"
+	>
+		{#snippet actions()}
+			{#if page.openToApplications && page.applyCta}
+				<CtaLink cta={page.applyCta} />
+			{/if}
+		{/snippet}
+	</SingleContentFooter>
 </article>
