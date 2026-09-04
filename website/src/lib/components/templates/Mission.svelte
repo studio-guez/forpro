@@ -1,8 +1,7 @@
 <script lang="ts">
-	import Img from '$lib/components/ui/Img.svelte';
-	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import BackLink from '$lib/components/ui/BackLink.svelte';
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
+	import EventProjectHeader from '$lib/components/blocks/EventProjectHeader.svelte';
 	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
 	import ApplicationsClosedNotice from '$lib/components/ui/ApplicationsClosedNotice.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
@@ -11,10 +10,7 @@
 
 	let { page }: { page: MissionPage } = $props();
 
-	const coverSizes = toSizes(cell(PAGE, { 0: 1, 1024: 2 }, 4));
-
 	const publishedDate = $derived(toDate(page.publishedDate));
-	const missionDate = $derived(toDate(page.date));
 
 	const sections = $derived([
 		{ label: 'Ton profil :', html: page.profile },
@@ -24,50 +20,39 @@
 </script>
 
 <article class="space-y-16 lg:space-y-24">
-	<section class="px-base space-y-6">
-		{#if page.parentPage}
-			<BackLink parentPage={page.parentPage} />
-		{/if}
-
-		{#if !page.openToApplications}
-			<ApplicationsClosedNotice
-				message="Cette mission n'est plus ouverte aux candidatures. Elle reste consultable à titre informatif."
-			/>
-		{/if}
-
-		<h1 class="text-h1 text-blue">Mission : {page.title}</h1>
-
-		<p class="text-label text-grey-dark flex flex-wrap gap-x-12 gap-y-2">
-			<span>
-				Publiée le
-				<time datetime={page.publishedDate}>
-					{publishedDate ? formatShortDate(publishedDate) : page.publishedDate}
-				</time>
-			</span>
-			<span>Annonceur : {page.announcer}</span>
-		</p>
-
-		<TermTags terms={page.categories} label="Catégories" />
-	</section>
-
-	<section
-		aria-labelledby="mission-intro"
-		class="px-base grid lg:grid-cols-2 gap-8 lg:gap-16 items-start"
+	<EventProjectHeader
+		title="Mission : {page.title}"
+		subtitle={page.introTitle}
+		shortDesc={page.shortDesc}
+		cover={page.cover}
+		variant="mission"
 	>
-		<div class="space-y-6">
-			<h2 id="mission-intro" class="text-h3 text-black">{page.introTitle}</h2>
-			<div class="prose text-body-2 text-grey-dark">{@html page.shortDesc}</div>
-		</div>
+		{#snippet before()}
+			{#if page.parentPage}
+				<BackLink parentPage={page.parentPage} />
+			{/if}
 
-		{#if page.cover}
-			<Img
-				image={page.cover}
-				alt={page.cover.alt ?? page.title}
-				sizes={coverSizes}
-				class="w-full aspect-4/3 object-cover rounded-3xl"
-			/>
-		{/if}
-	</section>
+			{#if !page.openToApplications}
+				<ApplicationsClosedNotice
+					message="Cette mission n'est plus ouverte aux candidatures. Elle reste consultable à titre informatif."
+				/>
+			{/if}
+		{/snippet}
+
+		{#snippet meta()}
+			<p class="text-label text-grey-dark flex flex-wrap gap-x-12 gap-y-2 mt-4.5 lg:mt-3">
+				<span>
+					Publiée le
+					<time datetime={page.publishedDate}>
+						{publishedDate ? formatShortDate(publishedDate) : page.publishedDate}
+					</time>
+				</span>
+				<span>Annonceur : {page.announcer}</span>
+			</p>
+
+			<TermTags terms={page.categories} label="Catégories" class="mt-4.5" />
+		{/snippet}
+	</EventProjectHeader>
 
 	<div class="px-base space-y-10">
 		{#each sections as section (section.label)}

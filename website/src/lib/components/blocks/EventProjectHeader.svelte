@@ -9,16 +9,24 @@
 		subtitle: string;
 		shortDesc: string;
 		cover: CmsImage | null;
-		variant: 'event' | 'project';
+		variant: 'event' | 'project' | 'mission';
+		/** Rendered above the title, in the page text color (back link, notice, ...). */
+		before?: Snippet;
 		meta?: Snippet;
 	}
 
-	let { title, subtitle, shortDesc, cover, variant, meta }: Props = $props();
+	let { title, subtitle, shortDesc, cover, variant, before, meta }: Props = $props();
 
 	const textColor = $derived(variant === 'project' ? 'text-orange' : 'text-blue');
 </script>
 
 <section class="px-base">
+	{#if before}
+		<div class="space-y-6 mb-6">
+			{@render before()}
+		</div>
+	{/if}
+
 	<div class={textColor}>
 		<h1 class="text-h1 mt-2">{title}</h1>
 		{#if meta}
