@@ -9,6 +9,9 @@
 	import CookieBanner from '$lib/components/layout/CookieBanner.svelte';
 	import JsonLd from '$lib/components/layout/JsonLd.svelte';
 	import { IS_PROD } from '$lib/env';
+	import { PUBLIC_CMS_BASE_URL } from '$env/static/public';
+	import fontRegular from '$lib/assets/fonts/Jungka_Webfonts/Jungka-Regular.woff2?url';
+	import fontBold from '$lib/assets/fonts/Jungka_Webfonts/Jungka-Bold.woff2?url';
 	import type { LayoutData } from './$types';
 
 	interface Props {
@@ -26,6 +29,9 @@
 </script>
 
 <svelte:head>
+	<link rel="preconnect" href={PUBLIC_CMS_BASE_URL} />
+	<link rel="preload" href={fontRegular} as="font" type="font/woff2" crossorigin="anonymous" />
+	<link rel="preload" href={fontBold} as="font" type="font/woff2" crossorigin="anonymous" />
 	{#if !IS_PROD}
 		<meta name="robots" content="noindex, nofollow" />
 	{/if}
