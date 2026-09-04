@@ -8,8 +8,9 @@ ENV TZ=Europe/Zurich
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Activer mod_rewrite pour Kirby
-RUN a2enmod rewrite
+# mod_rewrite pour Kirby ; mod_headers pour le Cache-Control de /media et les
+# en-têtes de sécurité du .htaccess (sans lui, ces blocs sont des no-op).
+RUN a2enmod rewrite headers
 
 # Installer dépendances système + extensions PHP
 RUN apt-get update && apt-get install -y --no-install-recommends \
