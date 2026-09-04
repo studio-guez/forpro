@@ -158,7 +158,7 @@ trait UtilsLlms
         // Brackets in a title would otherwise cut the Markdown link short.
         $title = str_replace(['[', ']'], ['\[', '\]'], $page->title()->value());
 
-        $link = '- [' . $title . '](' . $page->frontendUrl() . ')';
+        $link = '- [' . $title . '](' . self::getLlmsMarkdownUrl($page) . ')';
 
         // A list page states what it lists before whatever it says of itself.
         $role = self::LLMS_ROLES[$page->intendedTemplate()->name()] ?? '';
@@ -166,6 +166,24 @@ trait UtilsLlms
         $description = trim($role . ' ' . self::getLlmsDescription($page));
 
         return $description === '' ? $link : $link . ': ' . $description;
+    }
+
+    /**
+     * The Markdown twin of a page — `/equipe.md` for `/equipe` — which is where
+     * the links point: a reader following one wants the text, not the markup,
+     * and reaching it should not cost a fetch of the HTML page first.
+     *
+     * The canonical URL is not lost on the way: every `.md` opens with a
+     * `Source :` line carrying it, so a reader still has the address to cite.
+     *
+     * The home page answers at `/index.md`, not `/.md`: a path starting with a
+     * dot is what dotfile rules on a reverse proxy are written to block.
+     */
+    private static function getLlmsMarkdownUrl(\Kirby\Cms\Page $page): string
+    {
+        $url = $page->frontendUrl();
+
+        return str_ends_with($url, '/') ? $url . 'index.md' : $url . '.md';
     }
 
     /**
@@ -241,11 +259,13 @@ trait UtilsLlms
         return array_values(array_filter([
             $address === '' ? null : $address . '.',
             $contact === '' ? null : 'Contact : ' . $contact . '.',
-            'Site en français. Chaque lien ci-dessous mène à une page publique du site.',
-            // The links stay canonical HTML: that is what a reader should cite,
-            // and what the `rel="alternate"` on each page points away from.
-            'Version Markdown de n’importe quelle page : ajouter « .md » à son URL '
-                . '(la page d’accueil répond sur ' . $base . '/index.md).',
+            'Site en français.',
+            // The links are Markdown, so the note now runs the other way: it
+            // says where the citable address is rather than how to reach the
+            // Markdown, which is no longer something a reader has to work out.
+            'Les liens ci-dessous mènent à la version Markdown de chaque page. '
+                . 'Chaque fichier rappelle en tête son URL HTML canonique, celle à citer ; '
+                . 'c’est la même adresse sans « .md ».',
             'Événements, projets, offres d’emploi et missions ne sont pas listés un par un : '
                 . 'ils vivent derrière les pages d’index ci-dessous, qui en donnent la liste à jour.',
             'Inventaire complet des URL : ' . $base . '/sitemap.xml',
