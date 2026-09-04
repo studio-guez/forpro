@@ -45,6 +45,7 @@ export interface Seo {
 	readonly twitterSite: string;
 	readonly twitterCreator: string;
 	readonly schemas: Record<string, unknown>[];
+	readonly trackWithMatomo: boolean;
 }
 
 export type Variant = 'default' | 'inverted';
@@ -305,6 +306,5 @@ export interface Page {
 	readonly body: Block[];
 	readonly seo: Seo;
 	readonly path: string;
-	readonly trackWithMatomo: boolean;
 	readonly parentPage: PageParent | null;
 }

@@ -94,6 +94,7 @@ export interface Favicon {
 }
 
 export interface CookieSettings {
+	readonly text: string | null;
 	readonly privacyPolicyUrl: string | null;
 }
 

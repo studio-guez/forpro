@@ -48,6 +48,7 @@ trait UtilsSeo
             'twitterCreator'  => $meta->get('twitterCreator')->value(),
             // Schema.org JSON-LD
             'schemas'         => $schemas,
+            'trackWithMatomo' => $kirbyPage->trackWithMatomo()->toBool(),
         ];
     }
 }

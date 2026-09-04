@@ -98,4 +98,8 @@
 	<SiteMarquee announcements={data.banner} />
 {/if}
 
-<CookieBanner privacyPolicyUrl={data.cookies.privacyPolicyUrl} raised={data.banner.length > 0} />
+<CookieBanner
+	text={data.cookies.text}
+	privacyPolicyUrl={data.cookies.privacyPolicyUrl}
+	raised={data.banner.length > 0}
+/>

@@ -24,9 +24,7 @@
 
 	const page = $derived(data.page);
 
-	const trackable = $derived(
-		IS_PROD && page.trackWithMatomo
-	);
+	const trackable = $derived(IS_PROD && page.seo.trackWithMatomo);
 
 	$effect(() => {
 		if (trackable && cookieConsent.performance) {
