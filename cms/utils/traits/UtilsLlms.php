@@ -242,6 +242,10 @@ trait UtilsLlms
             $address === '' ? null : $address . '.',
             $contact === '' ? null : 'Contact : ' . $contact . '.',
             'Site en français. Chaque lien ci-dessous mène à une page publique du site.',
+            // The links stay canonical HTML: that is what a reader should cite,
+            // and what the `rel="alternate"` on each page points away from.
+            'Version Markdown de n’importe quelle page : ajouter « .md » à son URL '
+                . '(la page d’accueil répond sur ' . $base . '/index.md).',
             'Événements, projets, offres d’emploi et missions ne sont pas listés un par un : '
                 . 'ils vivent derrière les pages d’index ci-dessous, qui en donnent la liste à jour.',
             'Inventaire complet des URL : ' . $base . '/sitemap.xml',

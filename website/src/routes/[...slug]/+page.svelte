@@ -32,6 +32,13 @@
 	const ogTitle = $derived(seo.ogTitle || seo.title);
 	const ogDescription = $derived(seo.ogDescription || seo.description);
 
+	// Markdown twin of this page, for readers that would rather not parse the
+	// HTML. The home page's canonical ends in a slash, where `.md` alone would
+	// make a dotfile path.
+	const markdownUrl = $derived(
+		seo.canonicalUrl.endsWith('/') ? `${seo.canonicalUrl}index.md` : `${seo.canonicalUrl}.md`
+	);
+
 	const trackable = $derived(IS_PROD && page.seo.trackWithMatomo);
 
 	$effect(() => {
@@ -51,6 +58,10 @@
 	{/if}
 	{#if seo.robots && IS_PROD}
 		<meta name="robots" content={seo.robots} />
+	{/if}
+
+	{#if seo.canonicalUrl}
+		<link rel="alternate" type="text/markdown" href={markdownUrl} />
 	{/if}
 
 	<!-- Open Graph: what a link to this page looks like once it is shared. -->
