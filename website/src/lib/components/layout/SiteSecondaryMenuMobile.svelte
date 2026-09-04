@@ -41,7 +41,7 @@
 						type="button"
 						class="w-full flex items-center justify-between gap-x-4 py-4 text-left text-2xl font-bold text-blue"
 						aria-expanded={openColumns.includes(i)}
-						aria-controls="burger-menu-column-{i}"
+						aria-controls={expanded ? `burger-menu-column-${i}` : undefined}
 						onclick={() => toggleColumn(i)}
 					>
 						<span class="text-trim">{column.title}</span>

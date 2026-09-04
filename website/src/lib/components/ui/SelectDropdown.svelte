@@ -82,7 +82,6 @@
 	style:--select-tint="color-mix(in oklab, {color} 12%, transparent)"
 	class="text-(--select-color) -mx-3 {className}"
 >
-	<!-- Open, the trigger becomes the head of the panel, so both share its rounding. -->
 	<div
 		class="w-64 max-w-full rounded-xl overflow-hidden transition-shadow {open
 			? 'bg-white shadow-lg'
@@ -95,7 +94,7 @@
 				? ''
 				: 'rounded-b-xl hover:bg-(--select-tint)'}"
 			aria-expanded={open}
-			aria-controls={panelId}
+			aria-controls={open ? panelId : undefined}
 			aria-label={selectedOption ? `${label} : ${selectedLabel}` : label}
 			onclick={() => (open = !open)}
 		>
