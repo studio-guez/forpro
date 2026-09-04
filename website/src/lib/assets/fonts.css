@@ -14,32 +14,36 @@
 @font-face {
 	font-family: 'Jungka-ForPro';
 	src:
-		url('./fonts/Jungka_Webfonts/Jungka-Regular.woff') format('woff'),
-		url('./fonts/Jungka_Webfonts/Jungka-Regular.woff2') format('woff2');
+		url('./fonts/Jungka_Webfonts/Jungka-Regular.woff2') format('woff2'),
+		url('./fonts/Jungka_Webfonts/Jungka-Regular.woff') format('woff');
 	font-weight: 400;
 	font-style: normal;
+	font-display: swap;
 }
 @font-face {
 	font-family: 'Jungka-ForPro';
 	src:
-		url('./fonts/Jungka_Webfonts/Jungka-RegularItalic.woff') format('woff'),
-		url('./fonts/Jungka_Webfonts/Jungka-RegularItalic.woff2') format('woff2');
+		url('./fonts/Jungka_Webfonts/Jungka-RegularItalic.woff2') format('woff2'),
+		url('./fonts/Jungka_Webfonts/Jungka-RegularItalic.woff') format('woff');
 	font-weight: 400;
 	font-style: italic;
+	font-display: swap;
 }
 @font-face {
 	font-family: 'Jungka-ForPro';
 	src:
-		url('./fonts/Jungka_Webfonts/Jungka-Medium.woff') format('woff'),
-		url('./fonts/Jungka_Webfonts/Jungka-Medium.woff2') format('woff2');
+		url('./fonts/Jungka_Webfonts/Jungka-Medium.woff2') format('woff2'),
+		url('./fonts/Jungka_Webfonts/Jungka-Medium.woff') format('woff');
 	font-weight: 500;
 	font-style: normal;
+	font-display: swap;
 }
 @font-face {
 	font-family: 'Jungka-ForPro';
 	src:
-		url('./fonts/Jungka_Webfonts/Jungka-Bold.woff') format('woff'),
-		url('./fonts/Jungka_Webfonts/Jungka-Bold.woff2') format('woff2');
+		url('./fonts/Jungka_Webfonts/Jungka-Bold.woff2') format('woff2'),
+		url('./fonts/Jungka_Webfonts/Jungka-Bold.woff') format('woff');
 	font-weight: 700;
 	font-style: normal;
+	font-display: swap;
 }
