@@ -69,7 +69,11 @@ cms/site/plugins/**/node_modules/*
 # DATA PLUGINS
 cms/site/plugins/**/data/*
 
+# ID
+cms/id.env
+
+# Backup files
+cms/bckp
+
 node_modules
 vendor
-
-cms/id.env

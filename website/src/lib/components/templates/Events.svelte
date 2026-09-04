@@ -158,6 +158,7 @@
 	// A search is answered across the whole agenda: the month browser steps aside
 	// for the results header, and every matching upcoming event is listed at once.
 	const visibleUpcoming = $derived(hasSearch ? upcoming : upcomingForMonth);
+	const announcedCount = $derived(hasSearch ? resultCount : visibleUpcoming.length);
 
 	const clearSearch = (): void => {
 		search = '';
@@ -192,90 +193,90 @@
 </BasicHeader>
 
 <section aria-label="Événements à venir" class="px-base pb-12 lg:pb-16">
-	<div aria-live="polite">
-		{#if hasSearch}
-			<ResultsHeader
-				query={search.trim()}
-				count={resultCount}
-				nouns={['événement', 'événements']}
-				onClear={clearSearch}
-				{noResultsText}
-				{color}
-				variant="section"
-				class="mt-12 lg:mt-18"
-			/>
-			{#if upcoming.length === 0 && archive.current.matchTotal > 0}
-				<p class="text-body-1 text-grey-dark mt-4">
-					Aucun événement à venir, voir les événements passés ci-dessous.
-				</p>
-			{/if}
-		{:else if upcoming.length === 0}
-			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
-				Aucun événement à venir pour le moment.
-			</p>
-		{:else if upcomingMonth}
-			<ListHeader
-				{color}
-				count={upcomingForMonth.length}
-				nouns={['événement', 'événements']}
-				class="mt-12 lg:mt-18"
-			>
-				<div class="flex items-center gap-2 lg:gap-4 h-12.5">
-					<button
-						type="button"
-						class="text-(--list-color) p-1 disabled:opacity-30"
-						aria-label="Mois précédent"
-						disabled={upcomingIndex <= 0}
-						onclick={() => goToMonth(-1)}
-					>
-						<IconChevron class="w-6.25 h-6.25 rotate-90" />
-					</button>
-					<!-- Every month is laid out in the same cell, so the box keeps the width of the
-					     longest label, the arrows never move and each label stays centred whatever
-					     its length. The two labels in flight travel a full box width in lockstep,
-					     which is what makes the leaving one look pushed out by the arriving one. -->
-					<div class="grid overflow-hidden">
-						{#each upcomingMonths as month (month.value)}
-							<span
-								class="text-h2 invisible col-start-1 row-start-1 text-center"
-								aria-hidden="true"
-							>
-								{month.label}
-							</span>
-						{/each}
-						{#key upcomingMonth.value}
-							<h2
-								class="text-h2 text-(--list-color) col-start-1 row-start-1 text-center"
-								in:fly={monthEnter}
-								out:fly={monthLeave}
-							>
-								{upcomingMonth.label}
-							</h2>
-						{/key}
-					</div>
-					<button
-						type="button"
-						class="text-(--list-color) p-1 disabled:opacity-30"
-						aria-label="Mois suivant"
-						disabled={upcomingIndex >= upcomingMonths.length - 1}
-						onclick={() => goToMonth(1)}
-					>
-						<IconChevron class="w-6.25 h-6.25 -rotate-90" />
-					</button>
-				</div>
-			</ListHeader>
-		{/if}
+	<p class="sr-only" aria-live="polite">
+		{announcedCount}
+		{announcedCount > 1 ? 'événements' : 'événement'}
+	</p>
 
-		{#if visibleUpcoming.length > 0}
-			<ul class="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-				{#each visibleUpcoming as event (event.url)}
-					<li class="aspect-3/4">
-						<EventCard {event} {color} headingTag="h3" sizes={cardSizes} />
-					</li>
-				{/each}
-			</ul>
+	{#if hasSearch}
+		<ResultsHeader
+			query={search.trim()}
+			count={resultCount}
+			nouns={['événement', 'événements']}
+			onClear={clearSearch}
+			{noResultsText}
+			{color}
+			variant="section"
+			class="mt-12 lg:mt-18"
+		/>
+		{#if upcoming.length === 0 && archive.current.matchTotal > 0}
+			<p class="text-body-1 text-grey-dark mt-4">
+				Aucun événement à venir, voir les événements passés ci-dessous.
+			</p>
 		{/if}
-	</div>
+	{:else if upcoming.length === 0}
+		<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
+			Aucun événement à venir pour le moment.
+		</p>
+	{:else if upcomingMonth}
+		<ListHeader
+			{color}
+			count={upcomingForMonth.length}
+			nouns={['événement', 'événements']}
+			class="mt-12 lg:mt-18"
+		>
+			<div class="flex items-center gap-2 lg:gap-4 h-12.5">
+				<button
+					type="button"
+					class="text-(--list-color) p-1 disabled:opacity-30"
+					aria-label="Mois précédent"
+					disabled={upcomingIndex <= 0}
+					onclick={() => goToMonth(-1)}
+				>
+					<IconChevron class="w-6.25 h-6.25 rotate-90" />
+				</button>
+				<!-- Every month is laid out in the same cell, so the box keeps the width of the
+				     longest label, the arrows never move and each label stays centred whatever
+				     its length. The two labels in flight travel a full box width in lockstep,
+				     which is what makes the leaving one look pushed out by the arriving one. -->
+				<div class="grid overflow-hidden">
+					{#each upcomingMonths as month (month.value)}
+						<span class="text-h2 invisible col-start-1 row-start-1 text-center" aria-hidden="true">
+							{month.label}
+						</span>
+					{/each}
+					{#key upcomingMonth.value}
+						<h2
+							class="text-h2 text-(--list-color) col-start-1 row-start-1 text-center"
+							in:fly={monthEnter}
+							out:fly={monthLeave}
+						>
+							{upcomingMonth.label}
+						</h2>
+					{/key}
+				</div>
+				<button
+					type="button"
+					class="text-(--list-color) p-1 disabled:opacity-30"
+					aria-label="Mois suivant"
+					disabled={upcomingIndex >= upcomingMonths.length - 1}
+					onclick={() => goToMonth(1)}
+				>
+					<IconChevron class="w-6.25 h-6.25 -rotate-90" />
+				</button>
+			</div>
+		</ListHeader>
+	{/if}
+
+	{#if visibleUpcoming.length > 0}
+		<ul class="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			{#each visibleUpcoming as event (event.url)}
+				<li class="aspect-3/4">
+					<EventCard {event} {color} headingTag="h3" sizes={cardSizes} />
+				</li>
+			{/each}
+		</ul>
+	{/if}
 </section>
 
 {#if archive.current.matchTotal > 0}
@@ -296,7 +297,12 @@
 			class="mt-12 lg:mt-18"
 		/>
 
-		<div aria-live="polite" class="mt-6">
+		<p class="sr-only" aria-live="polite">
+			{archive.total}
+			{archive.total > 1 ? 'événements passés' : 'événement passé'}
+		</p>
+
+		<div class="mt-6">
 			{#each archive.items as event (event.url)}
 				<EventListItem {event} {color} headingTag="h3" />
 			{/each}

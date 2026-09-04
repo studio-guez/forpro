@@ -1,0 +1,9 @@
+# Bare page picker over every template that has a frontend route. `pageLink` extends
+# it with the `when: type: page` condition the link structures need; use this one
+# directly for a standalone "point at that page" setting.
+label: { en: Page, fr: Page }
+type: pages
+link: false
+max: 1
+query: site.index.listed.filterBy('template', 'in', ['page', 'faq', 'events', 'projects', 'team', 'job-offers', 'missions', 'impressum', 'press', 'basic-page', 'factory-lab']).sortBy('breadcrumbtitle', 'asc')
+text: "{{ page.breadcrumbTitle }}"

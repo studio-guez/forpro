@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BackLink from '$lib/components/ui/BackLink.svelte';
+	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
 	import IconArrow from '$lib/components/svg/IconArrow.svelte';
 	import BlockModuleTimeline from '$lib/components/blocks/BlockModuleTimeline.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
@@ -31,7 +32,7 @@
 
 <article class="max-w-none space-y-16 lg:space-y-24">
 	<div class="mx-auto w-full max-w-(--content-max) space-y-16 lg:space-y-24">
-		<div class="px-base space-y-6">
+		<section class="px-base space-y-6">
 			{#if page.parentPage}
 				<BackLink parentPage={page.parentPage} />
 			{/if}
@@ -45,12 +46,12 @@
 			<h1 class="text-h1 text-blue">{page.title}</h1>
 
 			<TermTags {terms} label="Catégories" />
-		</div>
+		</section>
 
 		<div class="px-base space-y-10">
 			{#each sections as section (section.label)}
 				<section class="grid lg:grid-cols-3 gap-4 lg:gap-8">
-					<h2 class="text-h4 text-blue">{section.label}</h2>
+					<h2 class="text-h4">{section.label}</h2>
 					<div class="prose text-body-2 lg:col-span-2">{@html section.html}</div>
 				</section>
 			{/each}
@@ -141,5 +142,11 @@
 
 	<BlockModuleTimeline
 		content={{ title: 'Étapes du recrutement', hideTitle: false, steps: page.recruitingSteps }}
+	/>
+
+	<SingleContentFooter
+		parentPage={page.parentPage}
+		title={page.title}
+		class="mx-auto w-full max-w-(--content-max)"
 	/>
 </article>

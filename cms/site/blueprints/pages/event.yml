@@ -50,6 +50,14 @@ tabs:
                 type: text
                 placeholder: HH:mm
                 width: 1/2
+              location:
+                label:
+                  en: Venue
+                  fr: Lieu
+                type: text
+                help:
+                  en: Leave empty when the event is held at the foundation's own address.
+                  fr: Laisser vide si l'événement a lieu à l'adresse de la fondation.
           taxonomies:
             type: fields
             fields:

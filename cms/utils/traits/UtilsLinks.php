@@ -11,11 +11,7 @@ trait UtilsLinks
     static function resolvePageOrUrlItem(\Kirby\Cms\StructureObject $item): ?string
     {
         if ($item->type()->value() === 'page') {
-            $linkedPage = $item->page()->toPage();
-            if ($linkedPage) {
-                return $linkedPage->isHomePage() ? '/' : '/' . $linkedPage->virtualPath();
-            }
-            return null;
+            return self::pageUrl($item->page()->toPage());
         }
         if ($item->type()->value() === 'mailto') {
             return $item->email()->isNotEmpty() ? 'mailto:' . $item->email()->value() : null;
@@ -24,6 +20,18 @@ trait UtilsLinks
             return self::telHref($item->phone());
         }
         return $item->url()->isNotEmpty() ? $item->url()->value() : null;
+    }
+
+    /**
+     * Frontend path of a page: its `virtualPath` (see the `parent-page` plugin), with the
+     * home page collapsed to `/`. Null for a missing page, so callers can drop the link.
+     */
+    static function pageUrl(?\Kirby\Cms\Page $page): ?string
+    {
+        if ($page === null) {
+            return null;
+        }
+        return $page->isHomePage() ? '/' : '/' . $page->virtualPath();
     }
 
     /**

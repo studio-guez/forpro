@@ -3,7 +3,7 @@
 	import EventProjectMedia from '$lib/components/blocks/EventProjectMedia.svelte';
 	import EventProjectBlocks from '$lib/components/blocks/EventProjectBlocks.svelte';
 	import EventProjectLinks from '$lib/components/blocks/EventProjectLinks.svelte';
-	import EventProjectFooter from '$lib/components/blocks/EventProjectFooter.svelte';
+	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import {
 		formatEventDate,
@@ -52,6 +52,9 @@
 							{/if}
 						</p>
 					{/if}
+					{#if page.location}
+						<p>{page.location}</p>
+					{/if}
 				</div>
 			{/if}
 
@@ -69,5 +72,5 @@
 
 	<EventProjectLinks links={page.externalLinks} />
 
-	<EventProjectFooter parentPage={page.parentPage} title={page.title} variant="event" />
+	<SingleContentFooter parentPage={page.parentPage} title={page.title} />
 </article>

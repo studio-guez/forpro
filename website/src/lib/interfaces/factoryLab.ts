@@ -54,6 +54,5 @@ export interface FactoryLabPage {
 	readonly companiesModule: CompaniesModule;
 	readonly body: Block[];
 	readonly seo: Seo;
-	readonly trackWithMatomo: boolean;
 	readonly parentPage: PageParent | null;
 }

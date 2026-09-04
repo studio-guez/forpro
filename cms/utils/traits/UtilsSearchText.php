@@ -205,6 +205,18 @@ trait UtilsSearchText
     }
 
     /**
+     * Rich-text field -> the plain, single-spaced sentence a description wants.
+     * Unlike `normalizeForSearch()` it keeps the accents and the case: the
+     * result is meant to be read, not matched.
+     */
+    private static function toPlainText(?string $html): string
+    {
+        $text = html_entity_decode(self::stripHtmlTags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        return trim(preg_replace('/[\s\x{00A0}]+/u', ' ', $text) ?? '');
+    }
+
+    /**
      * True when the whole query, trimmed and accent/case-folded, is found as a
      * single phrase across the given fields. An empty query matches everything,
      * so callers can pass an optional filter straight through.

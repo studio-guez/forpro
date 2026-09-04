@@ -51,7 +51,7 @@
 			type="button"
 			class="w-full flex items-center justify-between gap-2 lg:gap-3 text-left px-2.25 lg:px-7.5 h-9 lg:h-15"
 			aria-expanded={open}
-			aria-controls="{id}-answer"
+			aria-controls={open ? `${id}-answer` : undefined}
 			onclick={() => (open = !open)}
 		>
 			<span class="text-base lg:text-2xl font-bold">{question}</span>

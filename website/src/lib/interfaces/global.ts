@@ -93,9 +93,17 @@ export interface Favicon {
 	readonly dark: FaviconVariant;
 }
 
+export interface CookieSettings {
+	readonly text: string | null;
+	readonly privacyPolicyUrl: string | null;
+}
+
 export interface Global {
 	readonly header: Header;
 	readonly footer: Footer;
 	readonly banner: BannerAnnouncement[];
 	readonly favicon: Favicon | null;
+	readonly cookies: CookieSettings;
+	/** Site-wide JSON-LD (Organization, WebSite); page schemas link back to it. */
+	readonly schemas: Record<string, unknown>[];
 }
