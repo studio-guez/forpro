@@ -6,6 +6,7 @@
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
 	import SiteMarquee from '$lib/components/layout/SiteMarquee.svelte';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
+	import CookieBanner from '$lib/components/layout/CookieBanner.svelte';
 	import { IS_PROD } from '$lib/env';
 	import type { LayoutData } from './$types';
 
@@ -96,3 +97,5 @@
 {#if data.banner.length > 0}
 	<SiteMarquee announcements={data.banner} />
 {/if}
+
+<CookieBanner privacyPolicyUrl={data.cookies.privacyPolicyUrl} raised={data.banner.length > 0} />
