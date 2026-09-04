@@ -14,6 +14,7 @@
 	import Impressum from '$lib/components/templates/Impressum.svelte';
 	import Press from '$lib/components/templates/Press.svelte';
 	import FactoryLab from '$lib/components/templates/FactoryLab.svelte';
+	import JsonLd from '$lib/components/layout/JsonLd.svelte';
 	import type { PageData } from './$types';
 	import { IS_PROD } from '$lib/env';
 	import { page as currentPage } from '$app/state';
@@ -23,6 +24,13 @@
 	let { data }: { data: PageData } = $props();
 
 	const page = $derived(data.page);
+
+	// The CMS resolves the Open Graph cascade (page -> parent -> site), but only
+	// over the fields an editor filled in: the meta title and description are the
+	// sensible fallbacks for the ones left empty.
+	const seo = $derived(page.seo);
+	const ogTitle = $derived(seo.ogTitle || seo.title);
+	const ogDescription = $derived(seo.ogDescription || seo.description);
 
 	const trackable = $derived(IS_PROD && page.seo.trackWithMatomo);
 
@@ -34,17 +42,47 @@
 </script>
 
 <svelte:head>
-	<title>{page.seo.title}</title>
-	{#if page.seo.description}
-		<meta name="description" content={page.seo.description} />
+	<title>{seo.title}</title>
+	{#if seo.description}
+		<meta name="description" content={seo.description} />
 	{/if}
-	{#if page.seo.canonicalUrl}
-		<link rel="canonical" href={page.seo.canonicalUrl} />
+	{#if seo.canonicalUrl}
+		<link rel="canonical" href={seo.canonicalUrl} />
 	{/if}
-	{#if page.seo.robots && IS_PROD}
-		<meta name="robots" content={page.seo.robots} />
+	{#if seo.robots && IS_PROD}
+		<meta name="robots" content={seo.robots} />
+	{/if}
+
+	<!-- Open Graph: what a link to this page looks like once it is shared. -->
+	<meta property="og:type" content={seo.ogType || 'website'} />
+	<meta property="og:title" content={ogTitle} />
+	{#if ogDescription}
+		<meta property="og:description" content={ogDescription} />
+	{/if}
+	{#if seo.canonicalUrl}
+		<meta property="og:url" content={seo.canonicalUrl} />
+	{/if}
+	{#if seo.ogSiteName}
+		<meta property="og:site_name" content={seo.ogSiteName} />
+	{/if}
+	{#if seo.locale}
+		<meta property="og:locale" content={seo.locale} />
+	{/if}
+	{#if seo.ogImage}
+		<meta property="og:image" content={seo.ogImage} />
+	{/if}
+
+	<!-- Twitter/X reads the Open Graph tags, except for the card format and the
+		 image, which it wants under its own names. -->
+	<meta name="twitter:card" content={seo.twitterCardType || 'summary_large_image'} />
+	{#if seo.ogImage}
+		<meta name="twitter:image" content={seo.ogImage} />
 	{/if}
 </svelte:head>
+
+<!-- WebPage, breadcrumb, and the entity this template is about (Event,
+	 JobPosting, FAQ, ...) — all assembled by the CMS. -->
+<JsonLd schemas={seo.schemas} />
 
 {#if page.template === 'basic-page'}
 	<BasicPage {page} />

@@ -69,7 +69,10 @@ return [
             },
         ],
         'default' => [
+            // The home page is titled after the site itself, so appending the
+            // site title there would render "ForPro - ForPro".
             'metaTemplate' => fn($page) => $page->site()->title()->isNotEmpty()
+                && $page->title()->value() !== $page->site()->title()->value()
                 ? '{{ title }} - {{ site.title }}'
                 : '{{ title }}',
         ],
@@ -216,6 +219,10 @@ return [
                     ],
                     'banner'  => $bannerAnnouncements,
                     'favicon' => Utils::getFaviconData($site),
+                    // Site-wide JSON-LD (Organization, WebSite). Every page schema
+                    // links back to these by `@id`, so they are emitted once, in
+                    // the layout, rather than repeated on every page.
+                    'schemas' => Utils::getSiteSchemas(),
                     'cookies' => [
                         'text' => $orNull($site->cookiesText()),
                         // Null when no page is picked: the banner then drops the link

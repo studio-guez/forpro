@@ -52,6 +52,9 @@
 							{/if}
 						</p>
 					{/if}
+					{#if page.location}
+						<p>{page.location}</p>
+					{/if}
 				</div>
 			{/if}
 
