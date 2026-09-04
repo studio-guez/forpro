@@ -10,6 +10,8 @@ require_once __DIR__ . '/traits/UtilsMedia.php';
 require_once __DIR__ . '/traits/UtilsLinks.php';
 require_once __DIR__ . '/traits/UtilsTaxonomies.php';
 require_once __DIR__ . '/traits/UtilsSeo.php';
+require_once __DIR__ . '/traits/UtilsSchema.php';
+require_once __DIR__ . '/traits/UtilsLlms.php';
 require_once __DIR__ . '/traits/UtilsEmbeds.php';
 require_once __DIR__ . '/traits/UtilsPages.php';
 require_once __DIR__ . '/traits/UtilsBlocks.php';
@@ -29,6 +31,12 @@ class Utils
 
     /** Kirby SEO metadata -> frontend head payload. */
     use UtilsSeo;
+
+    /** schema.org JSON-LD nodes. */
+    use UtilsSchema;
+
+    /** The `/llms.txt` Markdown index. */
+    use UtilsLlms;
 
     /** YouTube embeds. */
     use UtilsEmbeds;

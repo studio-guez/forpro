@@ -134,7 +134,7 @@ trait UtilsSearch
                 'result' => [
                     'id'         => $page->id(),
                     'title'      => $page->title()->value(),
-                    'url'        => $page->isHomePage() ? '/' : '/' . $page->virtualPath(),
+                    'url'        => self::pageUrl($page),
                     'type'       => $template,
                     'typeLabel'  => self::SEARCHABLE_TEMPLATES[$template],
                     'group'      => $pageGroup,

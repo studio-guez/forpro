@@ -50,8 +50,6 @@ $json['body'] = Utils::getBodyBlocks($page->body());
 
 $json['seo'] = Utils::getSeoDataFromPage($page);
 
-$json['trackWithMatomo'] = $page->trackWithMatomo()->toBool();
-
 $parentPage = $page->parentPage()->toPage();
 $json['parentPage'] = $parentPage ? [
     'title' => $parentPage->title()->value(),

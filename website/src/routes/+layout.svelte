@@ -6,6 +6,8 @@
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
 	import SiteMarquee from '$lib/components/layout/SiteMarquee.svelte';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
+	import CookieBanner from '$lib/components/layout/CookieBanner.svelte';
+	import JsonLd from '$lib/components/layout/JsonLd.svelte';
 	import { IS_PROD } from '$lib/env';
 	import type { LayoutData } from './$types';
 
@@ -68,6 +70,10 @@
 	{/if}
 </svelte:head>
 
+<!-- Organization + WebSite, emitted once for the whole site: every page's own
+	 JSON-LD references these two nodes by `@id` instead of restating them. -->
+<JsonLd schemas={data.schemas} />
+
 <!-- Bypass block (WCAG 2.4.1): the header carries the whole navigation, so keyboard and
 	 screen reader users get a first tab stop that jumps straight past it. -->
 <a
@@ -96,3 +102,9 @@
 {#if data.banner.length > 0}
 	<SiteMarquee announcements={data.banner} />
 {/if}
+
+<CookieBanner
+	text={data.cookies.text}
+	privacyPolicyUrl={data.cookies.privacyPolicyUrl}
+	raised={data.banner.length > 0}
+/>

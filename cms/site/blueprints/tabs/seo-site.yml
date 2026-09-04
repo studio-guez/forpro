@@ -6,3 +6,29 @@ columns:
       # Social accounts are managed in the Social tab; only fed twitter:site
       # meta which the frontend never renders, so hide this unused field.
       socialMediaAccounts: false
+      llmsLabel:
+        label:
+          en: AI Presentation
+          fr: Présentation IA
+        type: headline
+      llmsSummary:
+        label:
+          en: Presentation for AI assistants
+          fr: Présentation pour les assistants IA
+        type: textarea
+        buttons: false
+        help:
+          en: >
+            A few sentences on what the foundation does and what visitors come
+            to the site for. Published as plain text at /llms.txt, the index AI
+            assistants read to understand the site. Nothing else on the site
+            says this, so leaving it empty leaves them to guess. The first
+            paragraph also serves as the one-line summary, unless the SEO
+            description above is filled in.
+          fr: >
+            Quelques phrases sur ce que fait la fondation et sur ce que les
+            visiteurs viennent chercher. Publié en texte brut sur /llms.txt,
+            l'index que lisent les assistants IA pour comprendre le site. Rien
+            d'autre sur le site ne le dit : vide, ils doivent le deviner. Le
+            premier paragraphe sert aussi de résumé en une ligne, sauf si la
+            description SEO ci-dessus est remplie.

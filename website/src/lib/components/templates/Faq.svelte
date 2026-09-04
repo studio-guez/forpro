@@ -120,6 +120,12 @@
 		hasSearch ? page.sections.flatMap((section) => section.faqs.filter(matchesFilters)) : []
 	);
 
+	const announcedCount = $derived(
+		hasSearch
+			? searchResults.length
+			: filteredSections.reduce((total, section) => total + section.faqs.length, 0)
+	);
+
 	// A shared link names one question: it is rendered open, inside its own
 	// section, server-side — so the answer is there before any script runs.
 	const requestedQuestion = initialParams.get('question') ?? '';
@@ -218,74 +224,76 @@
 </BasicHeader>
 
 <section aria-label="Questions et réponses" class="px-base pb-12 lg:pb-16">
-	<div aria-live="polite">
-		{#if hasSearch}
-			<ResultsHeader
-				query={search.trim()}
-				count={searchResults.length}
-				nouns={['question', 'questions']}
-				onClear={clearSearch}
-				{noResultsText}
-				{color}
-				variant="section"
-				class="mt-12 lg:mt-18"
-			/>
+	<p class="sr-only" aria-live="polite">
+		{@render questionCount(announcedCount)}
+	</p>
 
-			{#if searchResults.length > 0}
-				<div class="mt-9 space-y-6">
-					{#each searchResults as faq (questionId(faq))}
-						{@render questionItem(faq)}
-					{/each}
+	{#if hasSearch}
+		<ResultsHeader
+			query={search.trim()}
+			count={searchResults.length}
+			nouns={['question', 'questions']}
+			onClear={clearSearch}
+			{noResultsText}
+			{color}
+			variant="section"
+			class="mt-12 lg:mt-18"
+		/>
+
+		{#if searchResults.length > 0}
+			<div class="mt-9 space-y-6">
+				{#each searchResults as faq (questionId(faq))}
+					{@render questionItem(faq)}
+				{/each}
+			</div>
+		{/if}
+	{:else if filteredSections.length === 0}
+		<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
+			{noResultsText}
+		</p>
+	{:else}
+		{#each filteredSections as section (section.index)}
+			{@const open = isSectionOpen(section.index)}
+			<!-- Every section is browsed with the same band the other lists use, the
+			     heading itself opening and closing it. -->
+			<ListHeader {color} class="mt-12 lg:mt-18">
+				<h2 class="text-h2 text-(--list-color) h-12.5">
+					<button
+						type="button"
+						class="w-full flex items-center justify-between gap-4 text-left"
+						aria-expanded={open}
+						aria-controls={open ? `faq-section-${section.index}` : undefined}
+						onclick={() => toggleSection(section.index)}
+					>
+						{section.title}
+						<IconChevron class="shrink-0 transition-transform {open ? 'rotate-180' : ''}" />
+					</button>
+				</h2>
+
+				<div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
+					<p class="text-label text-(--list-color)">
+						{@render questionCount(section.faqs.length)}
+					</p>
+					<TermTags terms={section.commonTerms} label="Secteurs" size="md" />
+				</div>
+			</ListHeader>
+
+			{#if open}
+				<div
+					id="faq-section-{section.index}"
+					role="region"
+					aria-label={section.title}
+					transition:slide={{ duration: 300 }}
+				>
+					<div class="mt-9 space-y-6">
+						{#each section.faqs as faq (questionId(faq))}
+							{@render questionItem(faq)}
+						{/each}
+					</div>
 				</div>
 			{/if}
-		{:else if filteredSections.length === 0}
-			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
-				{noResultsText}
-			</p>
-		{:else}
-			{#each filteredSections as section (section.index)}
-				{@const open = isSectionOpen(section.index)}
-				<!-- Every section is browsed with the same band the other lists use, the
-				     heading itself opening and closing it. -->
-				<ListHeader {color} class="mt-12 lg:mt-18">
-					<h2 class="text-h2 text-(--list-color) h-12.5">
-						<button
-							type="button"
-							class="w-full flex items-center justify-between gap-4 text-left"
-							aria-expanded={open}
-							aria-controls="faq-section-{section.index}"
-							onclick={() => toggleSection(section.index)}
-						>
-							{section.title}
-							<IconChevron class="shrink-0 transition-transform {open ? 'rotate-180' : ''}" />
-						</button>
-					</h2>
-
-					<div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
-						<p class="text-label text-(--list-color)">
-							{@render questionCount(section.faqs.length)}
-						</p>
-						<TermTags terms={section.commonTerms} label="Secteurs" size="md" />
-					</div>
-				</ListHeader>
-
-				{#if open}
-					<div
-						id="faq-section-{section.index}"
-						role="region"
-						aria-label={section.title}
-						transition:slide={{ duration: 300 }}
-					>
-						<div class="mt-9 space-y-6">
-							{#each section.faqs as faq (questionId(faq))}
-								{@render questionItem(faq)}
-							{/each}
-						</div>
-					</div>
-				{/if}
-			{/each}
-		{/if}
-	</div>
+		{/each}
+	{/if}
 </section>
 
 <Blocks blocks={page.body} />

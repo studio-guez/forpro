@@ -12,6 +12,9 @@ $json['template'] = 'event';
 
 $json += Utils::getEventDateFields($page);
 
+// Optional venue; null means the event is held at the foundation's own address.
+$json['location'] = $page->location()->isNotEmpty() ? $page->location()->value() : null;
+
 $json['programs'] = Utils::resolveTaxonomyTerms($page->programs(), 'programs');
 $json['publics']  = Utils::resolveTaxonomyTerms($page->publics(), 'publics');
 

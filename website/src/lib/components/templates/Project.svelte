@@ -3,7 +3,7 @@
 	import EventProjectMedia from '$lib/components/blocks/EventProjectMedia.svelte';
 	import EventProjectBlocks from '$lib/components/blocks/EventProjectBlocks.svelte';
 	import EventProjectLinks from '$lib/components/blocks/EventProjectLinks.svelte';
-	import EventProjectFooter from '$lib/components/blocks/EventProjectFooter.svelte';
+	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import type { ProjectPage } from '$lib/interfaces/project';
 
@@ -23,7 +23,7 @@
 				<div class="flex gap-3 mt-4.5 lg:mt-3">
 					{#if page.collectiveName}
 						<strong>{page.collectiveName}</strong>
-						<span>·</span>
+						<span aria-hidden="true">·</span>
 					{/if}
 					{#if page.collectiveMembers.length > 0}
 						<ul class="flex gap-3">
@@ -38,13 +38,13 @@
 			{/if}
 
 			{#if page.categories.length > 0}
-				<div class="mt-4.5 lg:mt-3">
+				<ul class="mt-4.5 lg:mt-3">
 					{#each page.categories as category, index (index)}
 						<li class="inline font-bold">
 							{category.title}{index < page.categories.length - 1 ? ', ' : ''}
 						</li>
 					{/each}
-				</div>
+				</ul>
 			{/if}
 
 			{#if page.programs.length > 0}
@@ -61,5 +61,9 @@
 
 	<EventProjectLinks links={page.externalLinks} />
 
-	<EventProjectFooter parentPage={page.parentPage} title={page.title} variant="project" />
+	<SingleContentFooter
+		parentPage={page.parentPage}
+		title={page.title}
+		color="var(--color-orange)"
+	/>
 </article>

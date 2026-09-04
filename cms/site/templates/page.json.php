@@ -30,8 +30,6 @@ $json['body'] = Utils::getBodyBlocks($page->body());
 
 $json['seo'] = Utils::getSeoDataFromPage($page);
 
-$json['trackWithMatomo'] = $page->trackWithMatomo()->toBool();
-
 $json['path'] = $page->virtualPath();
 
 $parentPage = $page->parentPage()->toPage();

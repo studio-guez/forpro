@@ -14,6 +14,8 @@ export const load: LayoutServerLoad = async () => {
 		header: global?.header ?? null,
 		footer: global?.footer ?? null,
 		banner: global?.banner ?? [],
-		favicon: global?.favicon ?? null
+		favicon: global?.favicon ?? null,
+		cookies: global?.cookies ?? { text: null, privacyPolicyUrl: null },
+		schemas: global?.schemas ?? []
 	};
 };
