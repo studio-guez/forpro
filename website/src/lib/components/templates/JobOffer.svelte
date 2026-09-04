@@ -32,7 +32,7 @@
 
 <article class="max-w-none space-y-16 lg:space-y-24">
 	<div class="mx-auto w-full max-w-(--content-max) space-y-16 lg:space-y-24">
-		<div class="px-base space-y-6">
+		<section class="px-base space-y-6">
 			{#if page.parentPage}
 				<BackLink parentPage={page.parentPage} />
 			{/if}
@@ -46,7 +46,7 @@
 			<h1 class="text-h1 text-blue">{page.title}</h1>
 
 			<TermTags {terms} label="Catégories" />
-		</div>
+		</section>
 
 		<div class="px-base space-y-10">
 			{#each sections as section (section.label)}
