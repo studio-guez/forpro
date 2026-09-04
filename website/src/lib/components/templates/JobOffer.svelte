@@ -51,7 +51,7 @@
 		<div class="px-base space-y-10">
 			{#each sections as section (section.label)}
 				<section class="grid lg:grid-cols-3 gap-4 lg:gap-8">
-					<h2 class="text-h4 text-blue">{section.label}</h2>
+					<h2 class="text-h4">{section.label}</h2>
 					<div class="prose text-body-2 lg:col-span-2">{@html section.html}</div>
 				</section>
 			{/each}
