@@ -68,7 +68,31 @@ export interface Footer {
 	readonly socialLinks: SocialLink[];
 	readonly menuTitle: string | null;
 	readonly menuLinks: MenuLink[];
-	readonly newsletterTitle: string | null;
+	readonly newsletter: Newsletter;
+}
+
+export interface NewsletterMessages {
+	readonly success: string | null;
+	readonly error: string | null;
+	readonly invalidEmail: string | null;
+}
+
+/**
+ * Copy for the footer subscription form. The provider credentials it posts to stay
+ * server-side (see `routes/api/newsletter`), so nothing here is a secret.
+ */
+export interface Newsletter {
+	readonly title: string | null;
+	readonly placeholder: string | null;
+	readonly submitLabel: string | null;
+	readonly messages: NewsletterMessages;
+}
+
+/** Outcome of a `POST /api/newsletter`; the footer maps it to a CMS-managed message. */
+export type NewsletterStatus = 'ok' | 'invalidEmail' | 'error';
+
+export interface NewsletterResponse {
+	readonly status: NewsletterStatus;
 }
 
 export interface BannerAnnouncement {
