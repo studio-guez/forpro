@@ -2,48 +2,58 @@
 
 /**
  * `/llms.txt` — the Markdown index an LLM reads to find its way around the
- * site (https://llmstxt.org). Same idea as the sitemap, but written for a
- * reader rather than a crawler: a short description of the organization, then
- * one titled, described link per page, grouped by content type.
+ * site (https://llmstxt.org). Same page set as the sitemap, but a different
+ * job: the sitemap is an inventory for a crawler, this is an orientation map
+ * for a reader deciding what to fetch.
  *
- * It is built from the same page set as the sitemap
- * (`UtilsSeo::getIndexablePages()`), so the two documents can never disagree
- * about what the site publishes — and a `noindex` environment (preprod) is
- * left with headings and no links, exactly like its empty sitemap.
+ * That difference is why it lists the editorial pages and the index pages, and
+ * not the collections behind them. A reader after a particular event, offer or
+ * mission opens the index named here and finds it there, with the search and
+ * filters the site already provides; reprinting those collections would spend
+ * the reader's context restating the sitemap, and they grow without bound while
+ * the pages that explain the site do not.
+ *
+ * The page set comes from `UtilsSeo::getIndexablePages()`, so the two documents
+ * can never disagree about what the site publishes — and a `noindex`
+ * environment (preprod) is left with headings and no links, exactly like its
+ * empty sitemap.
  */
 trait UtilsLlms
 {
     /**
-     * Headings of the file, in output order. `templates` are the pages the
-     * section lists; `index` is the template of the page that lists those same
-     * pages on the site. `Optional` is the keyword the spec reserves for the
-     * pages a reader may skip: here the legal ones.
+     * Headings of the file, in output order, mapped to the templates they
+     * gather. `Optional` is the keyword the spec reserves for the pages a
+     * reader may skip: here the legal ones.
      *
-     * The index page leads its own section rather than sitting in `Pages`: it
-     * is the entry point of that content type — the page to follow to browse,
-     * search and paginate what the flat list below only samples — so it has to
-     * be the first link met under the heading, and a link, not a sentence: a
-     * reader collecting the list items would miss anything else.
+     * The index pages are gathered under one heading of their own rather than
+     * scattered through `Pages`: they are the five entry points to everything
+     * the site updates, and a reader should meet them as a group.
      */
     private const LLMS_SECTIONS = [
-        'Pages'           => ['templates' => ['page', 'faq', 'team', 'press', 'factory-lab']],
-        'Événements'      => ['templates' => ['event'],     'index' => 'events'],
-        'Projets'         => ['templates' => ['project'],   'index' => 'projects'],
-        "Offres d'emploi" => ['templates' => ['job-offer'], 'index' => 'job-offers'],
-        'Missions'        => ['templates' => ['mission'],   'index' => 'missions'],
-        'Optional'        => ['templates' => ['impressum', 'basic-page']],
+        'Pages' => [
+            'templates' => ['page', 'team', 'press', 'factory-lab'],
+        ],
+        'Index et listes' => [
+            'templates' => ['events', 'projects', 'job-offers', 'missions', 'faq'],
+            // Read in the order they are declared above, which is the order
+            // they matter in, not the alphabetical accident of their URLs.
+            'sort'      => 'templates',
+        ],
+        'Optional' => [
+            'templates' => ['impressum', 'basic-page'],
+        ],
     ];
 
     /**
      * What a list page is, said in front of its own description: its title
      * never carries it — "Agenda" says nothing about listing every event, and
-     * these pages are the entry points a reader is most likely to want.
+     * these are the pages a reader is most likely to want.
      *
      * Each claim is about the page's actual UI, so it has to be revisited when
      * a list page gains or loses its search field or its filters.
      */
     private const LLMS_ROLES = [
-        'events'     => 'Page d’index : tous les événements du site, avec recherche et filtres.',
+        'events'     => 'Page d’index : tous les événements du site, passés et à venir, avec recherche et filtres.',
         'projects'   => 'Page d’index : tous les projets du site, avec recherche et filtres.',
         'job-offers' => 'Page d’index : toutes les offres d’emploi ouvertes.',
         'missions'   => 'Page d’index : toutes les missions ouvertes, avec filtres.',
@@ -93,24 +103,18 @@ trait UtilsLlms
         $pages = self::getIndexablePages();
 
         foreach (self::LLMS_SECTIONS as $heading => $section) {
-            $listed = $pages->filter(
-                fn(\Kirby\Cms\Page $page) => in_array($page->intendedTemplate()->name(), $section['templates'], true)
+            $listed = self::sortLlmsPages(
+                $pages->filter(
+                    fn(\Kirby\Cms\Page $page) => in_array($page->intendedTemplate()->name(), $section['templates'], true)
+                ),
+                $section
             );
 
-            $indexPage = self::findLlmsIndexPage($pages, $section['index'] ?? null);
-
-            if ($listed->count() === 0 && $indexPage === null) {
+            if ($listed === []) {
                 continue;
             }
 
-            $links = array_map(
-                fn(\Kirby\Cms\Page $page) => self::getLlmsLink($page),
-                self::sortLlmsPages($listed, $heading)
-            );
-
-            if ($indexPage !== null) {
-                array_unshift($links, self::getLlmsLink($indexPage));
-            }
+            $links = array_map(fn(\Kirby\Cms\Page $page) => self::getLlmsLink($page), $listed);
 
             $blocks[] = '## ' . $heading . "\n\n" . implode("\n", $links);
         }
@@ -121,43 +125,31 @@ trait UtilsLlms
     }
 
     /**
-     * Reading order inside a section. Events lead with what is still to come,
-     * because that is what a reader asking about the site wants first;
-     * everything else follows the URL tree, so children read under their parent.
+     * Reading order inside a section: the order the templates are declared in
+     * when the section says so, the URL tree otherwise — which keeps a child
+     * page under its parent. Ties break on the path, so the file is
+     * byte-identical from one build to the next.
      *
      * @return \Kirby\Cms\Page[]
      */
-    private static function sortLlmsPages(\Kirby\Cms\Pages $pages, string $heading): array
+    private static function sortLlmsPages(\Kirby\Cms\Pages $pages, array $section): array
     {
-        if ($heading === 'Événements') {
-            ['upcoming' => $upcoming, 'past' => $past] = self::splitEventsByDate($pages);
-
-            return [...$upcoming->values(), ...$past->values()];
-        }
-
         $sorted = $pages->values();
 
-        // The home page is the entry point, so it leads its section instead of
-        // being sorted into it.
+        // What comes first: the declared position of a page's template, or —
+        // by default — nothing except the home page, which is the site's entry
+        // point and leads its section instead of being sorted into it.
+        $rank = ($section['sort'] ?? null) === 'templates'
+            ? fn(\Kirby\Cms\Page $page) => array_search($page->intendedTemplate()->name(), $section['templates'], true)
+            : fn(\Kirby\Cms\Page $page) => $page->isHomePage() ? -1 : 0;
+
         usort(
             $sorted,
-            fn(\Kirby\Cms\Page $a, \Kirby\Cms\Page $b) => ($b->isHomePage() <=> $a->isHomePage())
+            fn(\Kirby\Cms\Page $a, \Kirby\Cms\Page $b) => ($rank($a) <=> $rank($b))
                 ?: strcmp($a->virtualPath(), $b->virtualPath())
         );
 
         return $sorted;
-    }
-
-    /** The section's own index page on the site, when it is published. */
-    private static function findLlmsIndexPage(\Kirby\Cms\Pages $pages, ?string $template): ?\Kirby\Cms\Page
-    {
-        if ($template === null) {
-            return null;
-        }
-
-        return $pages->filter(
-            fn(\Kirby\Cms\Page $page) => $page->intendedTemplate()->name() === $template
-        )->first();
     }
 
     /** One `- [Title](url): description` entry. */
@@ -183,13 +175,11 @@ trait UtilsLlms
     private static function getLlmsDescription(\Kirby\Cms\Page $page): string
     {
         // Ordered by how deliberate the text is: what an editor wrote for
-        // search engines first, then the lead the page shows, then — for a job
-        // offer, which has neither — the opening of the offer itself.
+        // search engines first, then the lead the page shows.
         $candidates = [
             $page->metadata()->get('metaDescription')->value(),
             $page->shortDesc()->value(),
             $page->intro()->value(),
-            $page->description()->value(),
         ];
 
         foreach ($candidates as $candidate) {
@@ -252,7 +242,9 @@ trait UtilsLlms
             $address === '' ? null : $address . '.',
             $contact === '' ? null : 'Contact : ' . $contact . '.',
             'Site en français. Chaque lien ci-dessous mène à une page publique du site.',
-            'Plan du site : ' . $base . '/sitemap.xml',
+            'Événements, projets, offres d’emploi et missions ne sont pas listés un par un : '
+                . 'ils vivent derrière les pages d’index ci-dessous, qui en donnent la liste à jour.',
+            'Inventaire complet des URL : ' . $base . '/sitemap.xml',
         ]));
     }
 
