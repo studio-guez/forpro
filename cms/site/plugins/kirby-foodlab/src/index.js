@@ -1,7 +1,11 @@
 import MenuView from "./components/MenuView.vue";
 import MenuSpecialView from "./components/MenuSpecialView.vue";
 import RestaurantView from "./components/RestaurantView.vue";
-import RestaurantImageField from "./components/RestaurantImageField.vue";
+import RestaurantFilesField from "./components/RestaurantFilesField.vue";
+import RestaurantFilesFieldPreview from "./components/RestaurantFilesFieldPreview.vue";
+import RestaurantLinkField from "./components/RestaurantLinkField.vue";
+import RestaurantLinkFieldPreview from "./components/RestaurantLinkFieldPreview.vue";
+import RestaurantMediaInput from "./components/RestaurantMediaInput.vue";
 import SectionHeader from "./components/SectionHeader.vue";
 import BeerTable from "./components/BeerTable.vue";
 import CocktailTable from "./components/CocktailTable.vue";
@@ -16,9 +20,13 @@ import SoftDrinkTable from "./components/SoftDrinkTable.vue";
 
 panel.plugin("eclypsys/foodlab", {
   fields: {
-    restaurantimage: RestaurantImageField,
+    restaurantfiles: RestaurantFilesField,
+    restaurantlink: RestaurantLinkField,
   },
   components: {
+    "k-restaurantfiles-field-preview": RestaurantFilesFieldPreview,
+    "k-restaurantlink-field-preview": RestaurantLinkFieldPreview,
+    "k-restaurant-media-input": RestaurantMediaInput,
     "k-menu-view": MenuView,
     "k-menu-special-view": MenuSpecialView,
     "k-restaurant-view": RestaurantView,

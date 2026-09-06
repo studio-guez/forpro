@@ -1,27 +1,52 @@
 <?php
 
-use Eclypsys\Restaurant;
-
 /**
- * Fields of the restaurant content form (custom panel view, see
- * views/restaurant.php). The keys are also the keys stored in
- * data/restaurant.json.
+ * Fields of the restaurant content form, a straight port of the former
+ * `blueprints/tabs/restaurant.yml`. They are fed to `Kirby\Form\Form`
+ * (see `Eclypsys\Restaurant::form()`), so this is a blueprint in every way
+ * except that it is not attached to a page.
+ *
+ * The keys are also the keys stored in data/restaurant.json.
+ *
+ * Two things differ from the old blueprint, both because a custom panel view
+ * has no model behind it:
+ *   - `files` fields are `restaurantfiles` fields (see restaurantfiles.php);
+ *   - `link` fields are `restaurantlink` fields (see restaurantlink.php):
+ *     `page` is dropped, and `file` is replaced by a `media` type picking
+ *     from the restaurant media library.
  */
 
 $image = [
-    "type" => "restaurantimage",
-    "mediaBase" => url(Restaurant::MEDIA_PATH) . "/",
+    "type" => "restaurantfiles",
+    "uploads" => [
+        "accept" => "image/jpeg,image/png,image/gif,image/webp,image/svg+xml",
+    ],
 ];
 
+$link = [
+    "type" => "restaurantlink",
+    "options" => ["url", "email", "tel", "anchor", "custom"],
+];
+
+/**
+ * The file button of the toolbar picks from the same media library as the
+ * image fields, see `restaurant/fields/(:any)/files` in routes/index.php.
+ *
+ * `uploads` stays off: uploading straight from the toolbar makes the panel
+ * refresh `$panel.content`, the model content state this view does not use.
+ * New media is added through the image fields.
+ */
+$textarea = [
+    "type" => "textarea",
+    "uploads" => false,
+];
+
+// the old blueprint left these unlabelled, which reads as an empty field
 $button = [
     "type" => "object",
     "width" => "1/2",
     "fields" => [
-        "link" => [
-            "label" => "Lien",
-            "type" => "text",
-            "help" => "URL complète (https://…), ancre (#lefood) ou mailto:",
-        ],
+        "link" => ["label" => "url"] + $link,
         "linkText" => [
             "label" => "Texte",
             "type" => "text",
@@ -38,7 +63,7 @@ return [
         "label" => "Bandeau",
         "type" => "writer",
         "inline" => true,
-        "marks" => ["bold", "italic", "link"],
+        "marks" => ["link"],
     ],
 
     "menuHeadline" => [
@@ -56,10 +81,15 @@ return [
             ],
             "link" => [
                 "label" => "Lien",
-                "type" => "text",
-                "help" =>
-                    "Ancres disponibles: #hero, #lefood, #lelab, #equipe-formation, #foodcourt-popup-cafe, #engagements",
-            ],
+                "help" => "les lien d'ancrages disponible sur le site sont
+- \\#hero
+- \\#lefood
+- \\#lelab
+- \\#equipe-formation
+- \\#foodcourt-popup-cafe
+- \\#engagements
+",
+            ] + $link,
         ],
     ],
 
@@ -81,10 +111,8 @@ return [
 
     "textHero1" => [
         "label" => "Text Hero 1",
-        "type" => "textarea",
         "width" => "1/2",
-        "uploads" => false,
-    ],
+    ] + $textarea,
 
     "line1" => ["type" => "line"],
 
@@ -96,14 +124,13 @@ return [
     "titleFood" => [
         "label" => "Title 1",
         "type" => "text",
+        "width" => "1",
     ],
 
     "textFood" => [
-        "label" => "Text",
-        "type" => "textarea",
+        "label" => "Text Hero 1",
         "width" => "1/2",
-        "uploads" => false,
-    ],
+    ] + $textarea,
 
     "fileFood1" => ["label" => "Image 1", "width" => "1/2"] + $image,
 
@@ -119,27 +146,24 @@ return [
     "titleLab" => [
         "label" => "Title 1",
         "type" => "text",
+        "width" => "1",
     ],
 
     "fileLab1" => ["label" => "Image 1", "width" => "1/2"] + $image,
 
     "textLab" => [
-        "label" => "Text",
-        "type" => "textarea",
+        "label" => "Text Hero 1",
         "width" => "1/2",
-        "uploads" => false,
-    ],
+    ] + $textarea,
 
-    "btnLab" =>
-        [
-            "label" => "Bouton",
-            "help" =>
-                "Le lien est remplacé automatiquement par le PDF publié depuis « Menu »",
-        ] + $button,
+    "btnLab" => ["label" => "Bouton"] + $button,
 
     "line3" => ["type" => "line"],
 
-    "picture1" => ["label" => "Image 1"] + $image,
+    "picture1" => [
+        "label" => "Image 1",
+        "width" => "1",
+    ] + $image,
 
     "line4" => ["type" => "line"],
 
@@ -151,14 +175,13 @@ return [
     "titleFormation" => [
         "label" => "Title 1",
         "type" => "text",
+        "width" => "1",
     ],
 
     "textFormation" => [
-        "label" => "Text",
-        "type" => "textarea",
+        "label" => "Text Hero 1",
         "width" => "1/2",
-        "uploads" => false,
-    ],
+    ] + $textarea,
 
     "fileFormation" => ["label" => "Image 1", "width" => "1/2"] + $image,
 
@@ -174,11 +197,13 @@ return [
     "titleUnivers" => [
         "label" => "Title",
         "type" => "text",
+        "width" => "1",
     ],
 
     "subtitleUnivers" => [
         "label" => "Subtitle",
         "type" => "text",
+        "width" => "1",
     ],
 
     "blogUniversTitle1" => [
@@ -191,9 +216,8 @@ return [
 
     "blogUniversText1" => [
         "label" => "Text",
-        "type" => "textarea",
-        "uploads" => false,
-    ],
+        "width" => "1",
+    ] + $textarea,
 
     "blogUniversTitle2" => [
         "label" => "Title",
@@ -205,9 +229,8 @@ return [
 
     "blogUniversText2" => [
         "label" => "Text",
-        "type" => "textarea",
-        "uploads" => false,
-    ],
+        "width" => "1",
+    ] + $textarea,
 
     "line6" => ["type" => "line"],
 
@@ -219,13 +242,13 @@ return [
     "titleValues" => [
         "label" => "Title",
         "type" => "text",
+        "width" => "1",
     ],
 
     "textValues" => [
         "label" => "Text",
-        "type" => "textarea",
-        "uploads" => false,
-    ],
+        "width" => "1",
+    ] + $textarea,
 
     "lstValues" => [
         "label" => "Liste",
@@ -248,31 +271,28 @@ return [
 
     "textFooter1" => [
         "label" => "Text 1",
-        "type" => "textarea",
         "width" => "1/2",
-        "uploads" => false,
-    ],
+    ] + $textarea,
 
     "textFooter2" => [
         "label" => "Text 2",
-        "type" => "textarea",
         "width" => "1/2",
-        "uploads" => false,
-    ],
+    ] + $textarea,
 
     "textFooter3" => [
         "label" => "Text 3",
-        "type" => "textarea",
         "width" => "1/2",
-        "uploads" => false,
-    ],
+    ] + $textarea,
 
-    "btnFooter1" =>
-        [
-            "label" => "Bouton 1",
-            "help" =>
-                "Le lien est remplacé automatiquement par le PDF publié depuis « Menu »",
-        ] + $button,
+    "btnFooter1" => ["label" => "Bouton 1"] + $button,
 
     "btnFooter2" => ["label" => "Bouton 2"] + $button,
+
+    "menuPdf" => [
+        "label" => "Menu PDF",
+        "type" => "restaurantfiles",
+        "uploads" => ["accept" => "application/pdf"],
+        "help" =>
+            'Remplit automatiquement lors de la génération du menu avec image et fond dans "Menu"',
+    ],
 ];

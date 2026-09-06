@@ -172,39 +172,86 @@ return [
                     ]);
                 },
             ],
+            /**
+             * Unsaved draft / publish / discard of the restaurant form, the
+             * three operations Kirby exposes as `<model>/changes/…` for pages
+             * and files.
+             *
+             * They must NOT live under `<path>/changes/…`: Kirby registers
+             * `(:all)/changes/save` as a core api route and core routes are
+             * matched before plugin ones, so the request would end up in
+             * `Find::parent()` ("Invalid model type").
+             */
             [
-                "pattern" => "restaurant/update",
+                "pattern" => Restaurant::API_PATH . "/content/save",
                 "method" => "POST",
                 "action" => function () {
                     Restaurant::requireEditPermission();
 
-                    Restaurant::save(get());
+                    Restaurant::saveChanges(get());
 
                     return ["status" => "ok"];
                 },
             ],
             [
-                "pattern" => "restaurant/media/upload",
+                "pattern" => Restaurant::API_PATH . "/content/publish",
                 "method" => "POST",
                 "action" => function () {
                     Restaurant::requireEditPermission();
 
-                    return Restaurant::upload(
-                        get("filename") ?? "",
-                        get("data") ?? "",
-                        get("mime") ?? ""
+                    Restaurant::publish(get());
+
+                    return ["status" => "ok"];
+                },
+            ],
+            [
+                "pattern" => Restaurant::API_PATH . "/content/discard",
+                "method" => "POST",
+                "action" => function () {
+                    Restaurant::requireEditPermission();
+
+                    Restaurant::discard();
+
+                    return ["status" => "ok"];
+                },
+            ],
+
+            /**
+             * Field endpoints of the restaurant form, mirroring the
+             * `<model>/fields/<name>/…` routes. The media library is shared by
+             * every field, so the field name is only part of the path the
+             * panel builds — `(:any)` also covers the `<field>+<subfield>`
+             * paths of structure and object subfields.
+             */
+            [
+                "pattern" => [
+                    Restaurant::API_PATH . "/fields/(:any)",
+                    // the file button of the textarea toolbar
+                    Restaurant::API_PATH . "/fields/(:any)/files",
+                ],
+                "method" => "GET",
+                "action" => function () {
+                    Restaurant::requireEditPermission();
+
+                    return Restaurant::picker(
+                        $this->requestQuery("search"),
+                        (int) ($this->requestQuery("page") ?? 1)
                     );
                 },
             ],
             [
-                "pattern" => "restaurant/media/delete",
+                "pattern" => Restaurant::API_PATH . "/fields/(:any)/upload",
                 "method" => "POST",
                 "action" => function () {
                     Restaurant::requireEditPermission();
 
-                    Restaurant::deleteMedia(get("filename") ?? "");
-
-                    return ["status" => "ok"];
+                    return $this->upload(
+                        fn(string $source, string $filename) => Restaurant::upload(
+                            $source,
+                            $filename
+                        ),
+                        single: true
+                    );
                 },
             ],
             [

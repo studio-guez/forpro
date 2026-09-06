@@ -195,6 +195,11 @@ Kirby::plugin("eclypsys/foodlab", [
             ];
         }
     ],
+    "fields" => [
+        // field types of the restaurant form, see fields/restaurant.php
+        "restaurantfiles" => require __DIR__ . "/fields/restaurantfiles.php",
+        "restaurantlink" => require __DIR__ . "/fields/restaurantlink.php",
+    ],
     "templates" => [
         "menu-pdf" => __DIR__ . "/templates/menu-pdf.php",
         "menu-special-pdf" => __DIR__ . "/templates/menu-special-pdf.php",
