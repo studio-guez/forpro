@@ -4,6 +4,7 @@
 
 load([
     "Eclypsys\BaseClass"                  => __DIR__ . "/classes/BaseClass.php",
+    "Eclypsys\Restaurant"                 => __DIR__ . "/classes/Restaurant.php",
     "Eclypsys\Menu"                       => __DIR__ . "/classes/Menu.php",
     "Eclypsys\Menu\Metadata"              => __DIR__ . "/classes/Metadata.php",
     "Eclypsys\Menu\MainCourse"            => __DIR__ . "/classes/MainCourse.php",
@@ -31,42 +32,17 @@ Kirby::plugin("eclypsys/foodlab", [
     'permissions' => [
         'access' => false,
     ],
-    'hooks' => [
-        'page.render:before' => function () {
-            var_dump(kirby()->roots);
-            die();
-            $dataFolder = __DIR__ . '/data';
-
-            if (!is_dir($dataFolder)) {
-                Dir::make($dataFolder);
-
-                $jsonFiles = [
-                    'beer.json',
-                    'bubblewine.json',
-                    'cocktail.json',
-                    'dessert.json',
-                    'hotdrink.json',
-                    'maincourse.json',
-                    'menu.json',
-                    'menu-special.json',
-                    'metadata.json',
-                    'origin.json',
-                    'redwine.json',
-                    'softdrink.json',
-                    'starter.json',
-                    'whitewine.json'
-                ];
-
-                foreach ($jsonFiles as $filename) {
-                    F::write(
-                        $dataFolder . '/' . $filename,
-                        '[]'
-                    );
-                }
-            }
-        }
-    ],
     "areas" => [
+        "restaurant" => function ($kirby) {
+            return [
+                "label" => "Restaurant",
+                "menu" => fn() => \Eclypsys\Restaurant::canEdit(),
+                "icon" => "food",
+                "link" => "foodlab/restaurant/content",
+                "view" => "k-restaurant-view",
+                "views" => [require __DIR__ . "/views/restaurant.php"],
+            ];
+        },
         "menu" => function ($kirby) {
             return [
                 "label" => "Menu",
@@ -184,14 +160,15 @@ Kirby::plugin("eclypsys/foodlab", [
             ];
         }
     ],
+    "fields" => [
+        // field types of the restaurant form, see fields/restaurant.php
+        "restaurantfiles" => require __DIR__ . "/fields/restaurantfiles.php",
+        "restaurantlink" => require __DIR__ . "/fields/restaurantlink.php",
+    ],
     "templates" => [
         "menu-pdf" => __DIR__ . "/templates/menu-pdf.php",
         "menu-special-pdf" => __DIR__ . "/templates/menu-special-pdf.php",
         "menu-special-preview-pdf" => __DIR__ . "/templates/menu-special-preview-pdf.php",
-    ],
-    "blueprints" => [
-        "tabs/restaurant" => __DIR__ . "/blueprints/tabs/restaurant.yml",
-        "pages/restaurant" => __DIR__ . "/blueprints/pages/restaurant.yml",
     ],
     "api" => require __DIR__ . "/routes/index.php",
 
