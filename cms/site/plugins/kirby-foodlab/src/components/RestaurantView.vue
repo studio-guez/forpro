@@ -58,6 +58,9 @@ export default {
             values: this.$helper.object.clone(this.changes),
             isProcessing: false,
             isSaved: true,
+            // pending autosave: the debounce timer and the in-flight request
+            saveTimer: null,
+            saveAbortController: null,
         };
     },
     computed: {
@@ -90,18 +93,27 @@ export default {
             this.isSaved = true;
         },
     },
-    created() {
-        this.saveLazy = this.$helper.debounce(this.save, 1000);
-    },
     mounted() {
         this.$events.on("beforeunload", this.onBeforeUnload);
         this.$events.on("view.save", this.onViewSave);
     },
     destroyed() {
+        this.cancelSaving();
         this.$events.off("beforeunload", this.onBeforeUnload);
         this.$events.off("view.save", this.onViewSave);
     },
     methods: {
+        /**
+         * Same as `$panel.content.cancelSaving()`: a save scheduled or
+         * running while the user publishes or discards would otherwise land
+         * afterwards and recreate the unsaved version just removed
+         */
+        cancelSaving() {
+            clearTimeout(this.saveTimer);
+            this.saveTimer = null;
+            this.saveAbortController?.abort();
+            this.saveAbortController = null;
+        },
         onBeforeUnload(event) {
             if (this.isSaved === false || this.isProcessing === true) {
                 event.preventDefault();
@@ -113,6 +125,7 @@ export default {
                 return;
             }
 
+            this.cancelSaving();
             this.isProcessing = true;
 
             try {
@@ -134,6 +147,7 @@ export default {
                 return;
             }
 
+            this.cancelSaving();
             this.isProcessing = true;
 
             try {
@@ -159,21 +173,36 @@ export default {
          * navigation does not lose what has been typed
          */
         async save() {
+            this.cancelSaving();
+
             const values = this.values;
+            const controller = (this.saveAbortController =
+                new AbortController());
 
             try {
                 await this.$api.post(
                     this.endpoint + "/content/save",
                     values,
-                    { silent: true },
+                    { silent: true, signal: controller.signal },
                 );
 
                 if (this.values === values) {
                     this.isSaved = true;
                 }
             } catch (error) {
-                this.$panel.error(error);
+                if (error.name !== "AbortError") {
+                    this.$panel.error(error);
+                }
+            } finally {
+                if (this.saveAbortController === controller) {
+                    this.saveAbortController = null;
+                }
             }
+        },
+        // `$helper.debounce` cannot be cancelled, hence the explicit timer
+        saveLazy() {
+            clearTimeout(this.saveTimer);
+            this.saveTimer = setTimeout(this.save, 1000);
         },
     },
 };
