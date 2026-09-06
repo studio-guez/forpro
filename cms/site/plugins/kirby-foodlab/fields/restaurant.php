@@ -25,6 +25,11 @@ $image = [
     ],
 ];
 
+$pdf = [
+    "type" => "restaurantfiles",
+    "uploads" => ["accept" => "application/pdf"],
+];
+
 $link = [
     "type" => "restaurantlink",
     "options" => ["url", "email", "tel", "anchor", "custom"],
@@ -293,9 +298,12 @@ return [
 
     "menuPdf" => [
         "label" => "Menu PDF",
-        "type" => "restaurantfiles",
-        "uploads" => ["accept" => "application/pdf"],
         "help" =>
             'Remplit automatiquement lors de la génération du menu avec image et fond dans "Menu"',
-    ],
+    ] + $pdf,
+
+    "popupMenuPdf" => [
+        "label" => "Carte du PopUp Café (PDF)",
+        "help" => 'Bouton "Carte du PopUp" du site, servi sous /menu_popup_cafe.pdf',
+    ] + $pdf,
 ];

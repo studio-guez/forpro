@@ -636,6 +636,9 @@ class Restaurant
                 static::value($data, "bloguniversfile2")
             ),
             "blogText2" => static::text($data, "bloguniverstext2"),
+            "popupMenuUrl" => static::mediaUrl(
+                static::value($data, "popupmenupdf")
+            ),
         ];
 
         $json["values"] = [
