@@ -94,6 +94,12 @@ for f in beer bubblewine cocktail dessert hotdrink maincourse menu menu-special 
 done
 ```
 
+The restaurant page content is stored separately by the plugin, in
+`data/restaurant.json` (with an in-progress draft, if any, in
+`data/restaurant.changes.json`), with its media library in
+`data/restaurant-media/`. Both are created on demand by the plugin the first
+time the restaurant panel view is used, so there is nothing to seed here.
+
 ### 5. Fix permissions
 
 ```bash
@@ -654,3 +660,4 @@ deploy. Each step is a no-op when the target already exists:
 | `$SHARED_PATH/deploy.env`                             | `deploy.env.example` — set `BIND_ADDRESS` if the reverse proxy is on another host, edit the ports if the defaults collide (or set the `*_HTTP_PORT` environment variables) |
 | `$SHARED_PATH/cms/…` state directories                | created empty                                                 |
 | `$SHARED_PATH/cms/site/plugins/kirby-foodlab/data/*.json` | seeded as `[]` (overwritten by your rsync of real data)  |
+| `$SHARED_PATH/cms/site/plugins/kirby-foodlab/data/restaurant-media/` | created on demand by the plugin, nothing to seed |

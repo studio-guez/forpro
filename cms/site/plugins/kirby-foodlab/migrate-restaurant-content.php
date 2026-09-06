@@ -13,8 +13,11 @@
  *   2. copies every referenced image/PDF to `data/restaurant-media/`
  *   3. removes the migrated keys from `content/site.txt`
  *
- * The originals are left untouched in `content/` - they are simply not
- * referenced anymore and can be deleted from the Panel afterwards.
+ * The originals are left untouched in `content/`. Do NOT delete them from the
+ * Panel without checking first: `restaurant/src/routes/menu_popup_cafe.pdf/+server.ts`
+ * still hardcodes a site media file (`menu_popup.pdf`), and KirbyText in other
+ * site fields may still reference these files. Only remove files that are
+ * provably unreferenced.
  *
  * Usage (run from the project root, inside the container):
  *   php site/plugins/kirby-foodlab/migrate-restaurant-content.php --dry-run
@@ -99,16 +102,15 @@ $link = function ($field) use ($copy) {
 
 $button = fn($object) => [
     'link'     => $link($object->link()),
-    'linkText' => $object->linkText()->value() ?? '',
+    'linktext' => $object->linkText()->value() ?? '',
     'target'   => $object->target()->toBool(),
 ];
 
 $export = function (string $type, $field) use ($copy, $link, $button) {
     return match ($type) {
         'restaurantfiles'       => $copy($field->toFile()),
-        'link'                  => $link($field),
+        'restaurantlink'        => $link($field),
         'object'                => $button($field->toObject()),
-        'toggle'                => $field->toBool(),
         default                 => $field->value() ?? '',
     };
 };
@@ -124,28 +126,30 @@ foreach ($fields as $name => $field) {
         continue;
     }
 
+    $key = strtolower($name);
+
     if ($field['type'] === 'structure') {
-        $data[$name] = [];
+        $data[$key] = [];
 
         foreach ($site->$name()->toStructure() as $row) {
             $entry = [];
 
             foreach ($field['fields'] as $subName => $subField) {
-                $entry[$subName] = $export($subField['type'], $row->$subName());
+                $entry[strtolower($subName)] = $export($subField['type'], $row->$subName());
             }
 
-            $data[$name][] = $entry;
+            $data[$key][] = $entry;
         }
 
         continue;
     }
 
-    $data[$name] = $export($field['type'], $site->$name());
+    $data[$key] = $export($field['type'], $site->$name());
 }
 
 // the published menu PDF is tracked separately so the panel can replace it
 if ($pdf = $site->btnLab()->toObject()->link()->toFile()) {
-    $data['menuPdf'] = $pdf->filename();
+    $data['menupdf'] = $pdf->filename();
 }
 
 if ($dryRun === false) {

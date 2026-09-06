@@ -2,6 +2,7 @@
 
 namespace Eclypsys;
 
+use Closure;
 use Kirby\Data\Json;
 use Kirby\Exception\Exception;
 use Kirby\Exception\InvalidArgumentException;
@@ -139,9 +140,12 @@ class Restaurant
      */
     public static function saveChanges(array $values): void
     {
-        static::write(
+        static::modify(
             static::changesFile(),
-            static::toStoredValues($values, static::changes() ?? static::get())
+            fn(array $data): array => static::toStoredValues(
+                $values,
+                $data === [] ? static::get() : $data
+            )
         );
     }
 
@@ -150,9 +154,12 @@ class Restaurant
      */
     public static function publish(array $values): array
     {
-        $data = static::toStoredValues($values, static::get());
+        static::form($values)->validate();
 
-        static::write(static::file(), $data);
+        $data = static::modify(
+            static::file(),
+            fn(array $data): array => static::toStoredValues($values, $data)
+        );
 
         F::remove(static::changesFile());
 
@@ -165,8 +172,10 @@ class Restaurant
     }
 
     /**
-     * Panel form values -> stored content. `Form` lowercases every field key,
-     * so they are mapped back to the camelCase keys of fields/restaurant.php.
+     * Panel form values -> stored content. `Form` lowercases every field
+     * name, including nested structure/object subfield names, so the JSON
+     * keys are the lowercased field names of fields/restaurant.php (e.g.
+     * `btnHero1` is stored as `btnhero1`, `linkText` as `linktext`).
      *
      * Only the submitted fields are written. `Form` fills the ones that are
      * missing with their empty value, so without this a truncated request
@@ -182,19 +191,23 @@ class Restaurant
             );
         }
 
-        $submitted = array_change_key_case($values, CASE_LOWER);
+        $values = array_change_key_case($values, CASE_LOWER);
         $stored = array_intersect_key(
             static::form($values)->toStoredValues(),
-            $submitted
+            $values
         );
 
-        return [...$data, ...static::restoreKeys($stored, static::keyMap())];
+        return [...$data, ...$stored];
     }
 
     /**
-     * Writes JSON under an exclusive lock
+     * Reads the current content of $file (or an empty array if it does not
+     * exist yet), lets $callback transform it, and writes the result back —
+     * the whole read-modify-write cycle happens under one exclusive lock, so
+     * concurrent requests cannot race each other or clobber one another's
+     * writes.
      */
-    private static function write(string $file, array $data): void
+    private static function modify(string $file, Closure $callback): array
     {
         $lock = fopen($file . ".lock", "c");
 
@@ -203,9 +216,14 @@ class Restaurant
         }
 
         try {
+            $data = F::exists($file) === true ? Json::read($file) : [];
+            $data = $callback($data);
+
             if (Json::write($file, $data) === false) {
                 throw new Exception(message: "Failed to write " . basename($file) . ".");
             }
+
+            return $data;
         } finally {
             flock($lock, LOCK_UN);
             fclose($lock);
@@ -213,70 +231,19 @@ class Restaurant
     }
 
     /**
-     * Lowercased field name -> original name (+ subfields), so the stored
-     * content keeps the camelCase keys the rest of the plugin reads
-     */
-    private static function keyMap(array|null $fields = null): array
-    {
-        $map = [];
-
-        foreach ($fields ?? static::fields() as $name => $field) {
-            $map[strtolower($name)] = [
-                "key" => $name,
-                "type" => $field["type"] ?? "text",
-                "fields" => isset($field["fields"]) === true
-                    ? static::keyMap($field["fields"])
-                    : null,
-            ];
-        }
-
-        return $map;
-    }
-
-    private static function restoreKeys(array $values, array $map): array
-    {
-        $result = [];
-
-        foreach ($values as $name => $value) {
-            $entry = $map[strtolower($name)] ?? null;
-            $fields = $entry["fields"] ?? null;
-
-            if ($fields !== null && is_array($value) === true) {
-                $value = array_is_list($value) === true
-                    // structure: a list of rows
-                    ? array_map(
-                        fn($row) => is_array($row) === true
-                            ? static::restoreKeys($row, $fields)
-                            : $row,
-                        $value
-                    )
-                    // object: a single row
-                    : static::restoreKeys($value, $fields);
-            }
-
-            // Form::toStoredValues() targets Kirby's flat text files, where
-            // everything is a string; JSON can hold the boolean as it is
-            if (($entry["type"] ?? null) === "toggle") {
-                $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
-            }
-
-            $result[$entry["key"] ?? $name] = $value;
-        }
-
-        return $result;
-    }
-
-    /**
      * The form of the restaurant content, filled with the given values.
      *
      * The site is passed as the model so field types that expect one (the
      * link and textarea previews) keep working; nothing is ever written to it.
+     *
+     * `passthrough: false` keeps keys that are not fields of
+     * fields/restaurant.php out of the form (and therefore out of the JSON).
      */
     public static function form(array $values = []): Form
     {
         $form = new Form(fields: static::fields(), model: kirby()->site());
 
-        return $form->fill(input: $values);
+        return $form->fill(input: $values, passthrough: false);
     }
 
     /**
@@ -509,24 +476,31 @@ class Restaurant
     {
         $filename = basename($filename);
         $path = static::mediaDir() . "/" . $filename;
+        $extension = strtolower(F::extension($filename));
 
         if (
-            in_array(
-                strtolower(F::extension($filename)),
-                static::SERVABLE_EXTENSIONS,
-                true
-            ) === false ||
+            in_array($extension, static::SERVABLE_EXTENSIONS, true) === false ||
             F::exists($path, static::mediaDir()) === false
         ) {
             throw new NotFoundException(message: "Media not found");
         }
 
-        return new Response(F::read($path), F::mime($path), 200, [
+        $headers = [
             "Content-Disposition" => 'inline; filename="' . $filename . '"',
-            "Content-Security-Policy" => "default-src 'none'; style-src 'unsafe-inline'; sandbox",
             "X-Content-Type-Options" => "nosniff",
             "Cache-Control" => "public, max-age=3600",
-        ]);
+        ];
+
+        // the sandboxed CSP is only meant to neutralise SVGs (the one type
+        // here that can carry a script); applying it to every file breaks
+        // PDFs in Chrome, which refuses to render a PDF served with a
+        // sandbox CSP at all
+        if ($extension === "svg") {
+            $headers["Content-Security-Policy"] =
+                "default-src 'none'; style-src 'unsafe-inline'; sandbox";
+        }
+
+        return new Response(F::read($path), F::mime($path), 200, $headers);
     }
 
     /**
@@ -543,43 +517,39 @@ class Restaurant
             throw new Exception(message: "Failed to write PDF file to disk.");
         }
 
-        $lock = fopen(static::file() . '.lock', 'c');
+        $path = "/" . static::MEDIA_PATH . "/" . $filename;
 
-        if ($lock === false || flock($lock, LOCK_EX) === false) {
-            throw new Exception(message: "Failed to acquire write lock.");
-        }
-
-        try {
-            $data = static::get();
-            $path = "/" . static::MEDIA_PATH . "/" . $filename;
-
-            foreach (["btnLab", "btnFooter1"] as $key) {
-                $button = $data[$key] ?? [];
-                $button["link"] = $path;
-                $button["target"] = true;
-                $data[$key] = $button;
-            }
-
-            $data["menuPdf"] = $filename;
-
-            if (Json::write(static::file(), $data) === false) {
-                throw new Exception(message: "Failed to update restaurant data.");
-            }
-
-            // an editor may have unsaved changes open; the published menu must
-            // not be undone the next time they hit save
-            if ($changes = static::changes()) {
-                foreach (["btnLab", "btnFooter1"] as $key) {
-                    $changes[$key] = $data[$key];
+        $data = static::modify(
+            static::file(),
+            function (array $data) use ($path, $filename): array {
+                foreach (["btnlab", "btnfooter1"] as $key) {
+                    $button = $data[$key] ?? [];
+                    $button["link"] = $path;
+                    $button["target"] = true;
+                    $data[$key] = $button;
                 }
 
-                $changes["menuPdf"] = $filename;
+                $data["menupdf"] = $filename;
 
-                Json::write(static::changesFile(), $changes);
+                return $data;
             }
-        } finally {
-            flock($lock, LOCK_UN);
-            fclose($lock);
+        );
+
+        // an editor may have unsaved changes open; the published menu must
+        // not be undone the next time they hit save
+        if (F::exists(static::changesFile()) === true) {
+            static::modify(
+                static::changesFile(),
+                function (array $changes) use ($data): array {
+                    foreach (["btnlab", "btnfooter1"] as $key) {
+                        $changes[$key] = $data[$key];
+                    }
+
+                    $changes["menupdf"] = $data["menupdf"];
+
+                    return $changes;
+                }
+            );
         }
 
         return url(ltrim($path, "/"));
@@ -603,7 +573,9 @@ class Restaurant
 
         $json = [];
 
-        $json["banner_info"] = static::value($data, "banner_info");
+        $json["banner_info"] = static::absoluteMediaUrls(
+            static::value($data, "banner_info")
+        );
 
         $json["menu"] = [
             "baseline" => static::value($data, "headline"),
@@ -617,25 +589,25 @@ class Restaurant
         }
 
         $json["hero"] = [
-            "btn1" => static::button($data, "btnHero1"),
-            "pictureURL1" => static::mediaUrl(static::value($data, "picHero1")),
-            "pictureURL2" => static::mediaUrl(static::value($data, "picHero2")),
-            "pictureURL3" => static::mediaUrl(static::value($data, "picHero3")),
-            "text" => static::text($data, "textHero1"),
+            "btn1" => static::button($data, "btnhero1"),
+            "pictureURL1" => static::mediaUrl(static::value($data, "pichero1")),
+            "pictureURL2" => static::mediaUrl(static::value($data, "pichero2")),
+            "pictureURL3" => static::mediaUrl(static::value($data, "pichero3")),
+            "text" => static::text($data, "texthero1"),
         ];
 
         $json["food"] = [
-            "title" => static::value($data, "titleFood"),
-            "text" => static::text($data, "textFood"),
-            "pictureURL" => static::mediaUrl(static::value($data, "fileFood1")),
-            "btn" => static::button($data, "btnFood"),
+            "title" => static::value($data, "titlefood"),
+            "text" => static::text($data, "textfood"),
+            "pictureURL" => static::mediaUrl(static::value($data, "filefood1")),
+            "btn" => static::button($data, "btnfood"),
         ];
 
         $json["lab"] = [
-            "title" => static::value($data, "titleLab"),
-            "text" => static::text($data, "textLab"),
-            "pictureURL" => static::mediaUrl(static::value($data, "fileLab1")),
-            "btn" => static::button($data, "btnLab"),
+            "title" => static::value($data, "titlelab"),
+            "text" => static::text($data, "textlab"),
+            "pictureURL" => static::mediaUrl(static::value($data, "filelab1")),
+            "btn" => static::button($data, "btnlab"),
         ];
 
         $json["highlight"] = [
@@ -643,35 +615,35 @@ class Restaurant
         ];
 
         $json["formation"] = [
-            "title" => static::value($data, "titleFormation"),
-            "text" => static::text($data, "textFormation"),
+            "title" => static::value($data, "titleformation"),
+            "text" => static::text($data, "textformation"),
             "pictureURL" => static::mediaUrl(
-                static::value($data, "fileFormation")
+                static::value($data, "fileformation")
             ),
-            "btn" => static::button($data, "btnFormation"),
+            "btn" => static::button($data, "btnformation"),
         ];
 
         $json["univers"] = [
-            "title" => static::value($data, "titleUnivers"),
-            "subtitle" => static::value($data, "subtitleUnivers"),
-            "blogTitle1" => static::value($data, "blogUniversTitle1"),
+            "title" => static::value($data, "titleunivers"),
+            "subtitle" => static::value($data, "subtitleunivers"),
+            "blogTitle1" => static::value($data, "bloguniverstitle1"),
             "blogPictureUrl1" => static::mediaUrl(
-                static::value($data, "blogUniversFil1")
+                static::value($data, "bloguniversfil1")
             ),
-            "blogText1" => static::text($data, "blogUniversText1"),
-            "blogTitle2" => static::value($data, "blogUniversTitle2"),
+            "blogText1" => static::text($data, "bloguniverstext1"),
+            "blogTitle2" => static::value($data, "bloguniverstitle2"),
             "blogPictureUrl2" => static::mediaUrl(
-                static::value($data, "blogUniversFile2")
+                static::value($data, "bloguniversfile2")
             ),
-            "blogText2" => static::text($data, "blogUniversText2"),
+            "blogText2" => static::text($data, "bloguniverstext2"),
         ];
 
         $json["values"] = [
-            "title" => static::value($data, "titleValues"),
-            "text" => static::value($data, "textValues"),
+            "title" => static::value($data, "titlevalues"),
+            "text" => static::value($data, "textvalues"),
         ];
 
-        foreach (static::rows($data, "lstValues") as $value) {
+        foreach (static::rows($data, "lstvalues") as $value) {
             $json["values"]["list"][] = [
                 "title" => $value["title"] ?? "",
                 "icon" => static::mediaUrl($value["icon"] ?? ""),
@@ -679,12 +651,12 @@ class Restaurant
         }
 
         $json["footer"] = [
-            "Headline" => static::value($data, "footerHeadline"),
-            "text1" => static::text($data, "textFooter1"),
-            "text2" => static::text($data, "textFooter2"),
-            "text3" => static::text($data, "textFooter3"),
-            "btn1" => static::button($data, "btnFooter1"),
-            "btn2" => static::button($data, "btnFooter2"),
+            "Headline" => static::value($data, "footerheadline"),
+            "text1" => static::text($data, "textfooter1"),
+            "text2" => static::text($data, "textfooter2"),
+            "text3" => static::text($data, "textfooter3"),
+            "btn1" => static::button($data, "btnfooter1"),
+            "btn2" => static::button($data, "btnfooter2"),
         ];
 
         return $json;
@@ -699,10 +671,6 @@ class Restaurant
 
     /**
      * Renders a textarea value with KirbyText, like the site fields did.
-     *
-     * Media inserted through the file button of the toolbar is stored as a
-     * root-relative path so the content stays portable between environments;
-     * the frontend runs on another host, so it is made absolute here.
      */
     private static function text(array $data, string $key): string
     {
@@ -712,10 +680,21 @@ class Restaurant
             return "";
         }
 
+        return static::absoluteMediaUrls((string) kirbytext($value));
+    }
+
+    /**
+     * Media inserted through the file button of a textarea/writer toolbar is
+     * stored as a root-relative path so the content stays portable between
+     * environments; the frontend runs on another host, so it is made
+     * absolute here.
+     */
+    private static function absoluteMediaUrls(string $html): string
+    {
         return str_replace(
             '="/' . static::MEDIA_PATH . '/',
             '="' . url(static::MEDIA_PATH) . '/',
-            (string) kirbytext($value)
+            $html
         );
     }
 
@@ -733,7 +712,7 @@ class Restaurant
 
         return [
             "link" => static::link($button["link"] ?? ""),
-            "text" => $button["linkText"] ?? "",
+            "text" => $button["linktext"] ?? "",
             "target" => filter_var(
                 $button["target"] ?? false,
                 FILTER_VALIDATE_BOOLEAN

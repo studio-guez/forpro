@@ -6,6 +6,7 @@ import RestaurantFilesFieldPreview from "./components/RestaurantFilesFieldPrevie
 import RestaurantLinkField from "./components/RestaurantLinkField.vue";
 import RestaurantLinkFieldPreview from "./components/RestaurantLinkFieldPreview.vue";
 import RestaurantMediaInput from "./components/RestaurantMediaInput.vue";
+import restaurantLinkDialog from "./components/restaurantLinkDialog.js";
 import SectionHeader from "./components/SectionHeader.vue";
 import BeerTable from "./components/BeerTable.vue";
 import CocktailTable from "./components/CocktailTable.vue";
@@ -27,6 +28,8 @@ panel.plugin("eclypsys/foodlab", {
     "k-restaurantfiles-field-preview": RestaurantFilesFieldPreview,
     "k-restaurantlink-field-preview": RestaurantLinkFieldPreview,
     "k-restaurant-media-input": RestaurantMediaInput,
+    "k-link-dialog": restaurantLinkDialog("k-link-dialog"),
+    "k-toolbar-link-dialog": restaurantLinkDialog("k-toolbar-link-dialog"),
     "k-menu-view": MenuView,
     "k-menu-special-view": MenuSpecialView,
     "k-restaurant-view": RestaurantView,
