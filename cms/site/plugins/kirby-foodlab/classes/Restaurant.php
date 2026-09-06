@@ -10,6 +10,7 @@ use Kirby\Exception\NotFoundException;
 use Kirby\Exception\PermissionException;
 use Kirby\Filesystem\Dir;
 use Kirby\Filesystem\F;
+use Kirby\Filesystem\Mime;
 use Kirby\Form\Form;
 use Kirby\Http\Response;
 
@@ -439,6 +440,21 @@ class Restaurant
             );
         }
 
+        // the extension alone is not enough: a html document renamed to
+        // `.jpg` would otherwise be stored and served from this origin, so
+        // the detected content has to be of a type the extension stands for
+        // (`Mime::type()` also recognises svg files finfo reports as text)
+        $mime = Mime::type($source, $extension);
+
+        if (
+            is_string($mime) === false ||
+            in_array($extension, Mime::toExtensions($mime), true) === false
+        ) {
+            throw new InvalidArgumentException(
+                message: "Le contenu du fichier ne correspond pas à son extension"
+            );
+        }
+
         $dir = static::mediaDir();
 
         if (Dir::make($dir) === false) {
@@ -500,7 +516,14 @@ class Restaurant
                 "default-src 'none'; style-src 'unsafe-inline'; sandbox";
         }
 
-        return new Response(F::read($path), F::mime($path), 200, $headers);
+        // the type is derived from the extension checked on upload rather
+        // than sniffed from the file, so nothing is ever served as html
+        return new Response(
+            F::read($path),
+            Mime::fromExtension($extension),
+            200,
+            $headers
+        );
     }
 
     /**
@@ -579,6 +602,7 @@ class Restaurant
 
         $json["menu"] = [
             "baseline" => static::value($data, "headline"),
+            "content" => [],
         ];
 
         foreach (static::rows($data, "menu") as $element) {
@@ -644,6 +668,7 @@ class Restaurant
         $json["values"] = [
             "title" => static::value($data, "titlevalues"),
             "text" => static::value($data, "textvalues"),
+            "list" => [],
         ];
 
         foreach (static::rows($data, "lstvalues") as $value) {
