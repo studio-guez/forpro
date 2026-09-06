@@ -6,7 +6,9 @@
  * (see `Eclypsys\Restaurant::form()`), so this is a blueprint in every way
  * except that it is not attached to a page.
  *
- * The keys are also the keys stored in data/restaurant.json.
+ * `Kirby\Form\Form` lowercases every field name, so the keys stored in
+ * data/restaurant.json are the lowercased versions of the keys below
+ * (`picHero1` -> `pichero1`, `linkText` -> `linktext`, etc.).
  *
  * Two things differ from the old blueprint, both because a custom panel view
  * has no model behind it:
@@ -32,13 +34,14 @@ $link = [
  * The file button of the toolbar picks from the same media library as the
  * image fields, see `restaurant/fields/(:any)/files` in routes/index.php.
  *
- * `uploads` stays off: uploading straight from the toolbar makes the panel
- * refresh `$panel.content`, the model content state this view does not use.
- * New media is added through the image fields.
+ * Uploads made through the toolbar go through the same
+ * `restaurant/fields/<name>/upload` route as the image fields: `k-textarea-
+ * input`'s upload mixin forces `accept` to `*`, so the extension check
+ * happens server-side, in `Restaurant::upload()`.
  */
 $textarea = [
     "type" => "textarea",
-    "uploads" => false,
+    "uploads" => true,
 ];
 
 // the old blueprint left these unlabelled, which reads as an empty field

@@ -32,41 +32,6 @@ Kirby::plugin("eclypsys/foodlab", [
     'permissions' => [
         'access' => false,
     ],
-    'hooks' => [
-        'page.render:before' => function () {
-            var_dump(kirby()->roots);
-            die();
-            $dataFolder = __DIR__ . '/data';
-
-            if (!is_dir($dataFolder)) {
-                Dir::make($dataFolder);
-
-                $jsonFiles = [
-                    'beer.json',
-                    'bubblewine.json',
-                    'cocktail.json',
-                    'dessert.json',
-                    'hotdrink.json',
-                    'maincourse.json',
-                    'menu.json',
-                    'menu-special.json',
-                    'metadata.json',
-                    'origin.json',
-                    'redwine.json',
-                    'softdrink.json',
-                    'starter.json',
-                    'whitewine.json'
-                ];
-
-                foreach ($jsonFiles as $filename) {
-                    F::write(
-                        $dataFolder . '/' . $filename,
-                        '[]'
-                    );
-                }
-            }
-        }
-    ],
     "areas" => [
         "restaurant" => function ($kirby) {
             return [
