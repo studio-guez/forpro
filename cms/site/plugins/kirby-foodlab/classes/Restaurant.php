@@ -4,9 +4,12 @@ namespace Eclypsys;
 
 use Kirby\Data\Json;
 use Kirby\Exception\Exception;
+use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\NotFoundException;
 use Kirby\Exception\PermissionException;
+use Kirby\Filesystem\Dir;
 use Kirby\Filesystem\F;
+use Kirby\Form\Form;
 use Kirby\Http\Response;
 
 /**
@@ -21,14 +24,23 @@ class Restaurant
     /** Public path the uploaded media are served from */
     public const MEDIA_PATH = "api/restaurant/media";
 
-    private const MAX_UPLOAD_SIZE = 10 * 1024 * 1024;
+    /**
+     * Api path the panel view talks to. It plays the role a model api path
+     * (`pages/…`) plays for a normal panel view: the content changes
+     * endpoints live under `<API_PATH>/changes/…` and the field endpoints
+     * under `<API_PATH>/fields/…`.
+     */
+    public const API_PATH = "restaurant";
 
-    private const ALLOWED_MIMES = [
-        "image/jpeg" => "jpg",
-        "image/png" => "png",
-        "image/gif" => "gif",
-        "image/webp" => "webp",
-        "image/svg+xml" => "svg",
+    private const MAX_UPLOAD_SIZE = 20 * 1024 * 1024;
+
+    private const IMAGE_EXTENSIONS = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "webp",
+        "svg",
     ];
 
     private const SERVABLE_EXTENSIONS = [
@@ -85,41 +97,237 @@ class Restaurant
     }
 
     /**
-     * Stores the values of the panel form. Only fields defined in
-     * fields/restaurant.php are kept.
+     * The unsaved draft of the panel form, mirroring Kirby's `changes`
+     * content version. Absent as long as there is nothing to save.
      */
-    public static function save(array $values): array
+    public static function changesFile(): string
     {
-        $lock = fopen(static::file() . '.lock', 'c');
+        return __DIR__ . "/../data/restaurant.changes.json";
+    }
+
+    public static function changes(): array|null
+    {
+        if (F::exists(static::changesFile()) === false) {
+            return null;
+        }
+
+        return Json::read(static::changesFile());
+    }
+
+    /**
+     * The `latest` / `changes` versions the panel content state works with.
+     * Both are form values, so `$panel.content.diff()` compares like for like.
+     */
+    public static function versions(): array
+    {
+        $latest = static::get();
+        $changes = static::changes();
+
+        return [
+            "latest" => static::form($latest)->toFormValues(),
+            // a draft is always a complete version, but merging keeps the form
+            // whole should a field ever be added to fields/restaurant.php
+            // while an editor has unsaved changes
+            "changes" => static::form(
+                $changes === null ? $latest : [...$latest, ...$changes]
+            )->toFormValues(),
+        ];
+    }
+
+    /**
+     * Keeps the draft of the panel form (autosave)
+     */
+    public static function saveChanges(array $values): void
+    {
+        static::write(
+            static::changesFile(),
+            static::toStoredValues($values, static::changes() ?? static::get())
+        );
+    }
+
+    /**
+     * Writes the draft to the stored content and drops it
+     */
+    public static function publish(array $values): array
+    {
+        $data = static::toStoredValues($values, static::get());
+
+        static::write(static::file(), $data);
+
+        F::remove(static::changesFile());
+
+        return $data;
+    }
+
+    public static function discard(): void
+    {
+        F::remove(static::changesFile());
+    }
+
+    /**
+     * Panel form values -> stored content. `Form` lowercases every field key,
+     * so they are mapped back to the camelCase keys of fields/restaurant.php.
+     *
+     * Only the submitted fields are written. `Form` fills the ones that are
+     * missing with their empty value, so without this a truncated request
+     * would blank everything it did not carry.
+     */
+    private static function toStoredValues(
+        array $values,
+        array $data = []
+    ): array {
+        if ($values === []) {
+            throw new InvalidArgumentException(
+                message: "No restaurant content was submitted"
+            );
+        }
+
+        $submitted = array_change_key_case($values, CASE_LOWER);
+        $stored = array_intersect_key(
+            static::form($values)->toStoredValues(),
+            $submitted
+        );
+
+        return [...$data, ...static::restoreKeys($stored, static::keyMap())];
+    }
+
+    /**
+     * Writes JSON under an exclusive lock
+     */
+    private static function write(string $file, array $data): void
+    {
+        $lock = fopen($file . ".lock", "c");
 
         if ($lock === false || flock($lock, LOCK_EX) === false) {
             throw new Exception(message: "Failed to acquire write lock.");
         }
 
         try {
-            $data = static::get();
-
-            foreach (static::fields() as $name => $field) {
-                if (in_array($field["type"], ["headline", "line"], true)) {
-                    continue;
-                }
-
-                if (array_key_exists($name, $values) === false) {
-                    continue;
-                }
-
-                $data[$name] = $values[$name];
-            }
-
-            if (Json::write(static::file(), $data) === false) {
-                throw new Exception(message: "Failed to write restaurant data.");
+            if (Json::write($file, $data) === false) {
+                throw new Exception(message: "Failed to write " . basename($file) . ".");
             }
         } finally {
             flock($lock, LOCK_UN);
             fclose($lock);
         }
+    }
 
-        return $data;
+    /**
+     * Lowercased field name -> original name (+ subfields), so the stored
+     * content keeps the camelCase keys the rest of the plugin reads
+     */
+    private static function keyMap(array|null $fields = null): array
+    {
+        $map = [];
+
+        foreach ($fields ?? static::fields() as $name => $field) {
+            $map[strtolower($name)] = [
+                "key" => $name,
+                "type" => $field["type"] ?? "text",
+                "fields" => isset($field["fields"]) === true
+                    ? static::keyMap($field["fields"])
+                    : null,
+            ];
+        }
+
+        return $map;
+    }
+
+    private static function restoreKeys(array $values, array $map): array
+    {
+        $result = [];
+
+        foreach ($values as $name => $value) {
+            $entry = $map[strtolower($name)] ?? null;
+            $fields = $entry["fields"] ?? null;
+
+            if ($fields !== null && is_array($value) === true) {
+                $value = array_is_list($value) === true
+                    // structure: a list of rows
+                    ? array_map(
+                        fn($row) => is_array($row) === true
+                            ? static::restoreKeys($row, $fields)
+                            : $row,
+                        $value
+                    )
+                    // object: a single row
+                    : static::restoreKeys($value, $fields);
+            }
+
+            // Form::toStoredValues() targets Kirby's flat text files, where
+            // everything is a string; JSON can hold the boolean as it is
+            if (($entry["type"] ?? null) === "toggle") {
+                $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+            }
+
+            $result[$entry["key"] ?? $name] = $value;
+        }
+
+        return $result;
+    }
+
+    /**
+     * The form of the restaurant content, filled with the given values.
+     *
+     * The site is passed as the model so field types that expect one (the
+     * link and textarea previews) keep working; nothing is ever written to it.
+     */
+    public static function form(array $values = []): Form
+    {
+        $form = new Form(fields: static::fields(), model: kirby()->site());
+
+        return $form->fill(input: $values);
+    }
+
+    /**
+     * Props of every field, as `k-form` expects them. `endpoints` is what
+     * `k-fields-section` adds client-side for a model.
+     */
+    public static function fieldProps(): array
+    {
+        $props = static::form()->toProps();
+
+        foreach ($props as $name => $field) {
+            $props[$name]["endpoints"] = [
+                "field" => static::API_PATH . "/fields/" . $name,
+                "model" => static::API_PATH,
+            ];
+        }
+
+        return $props;
+    }
+
+    /**
+     * `k-files-field` hands back an array of picker items; only the filename
+     * of the first one is stored.
+     */
+    public static function toStoredMedia($value): string
+    {
+        if (is_string($value) === true) {
+            return basename($value);
+        }
+
+        if (is_array($value) === false) {
+            return "";
+        }
+
+        $first = reset($value);
+
+        if (is_array($first) === false) {
+            return is_string($first) === true ? basename($first) : "";
+        }
+
+        return basename($first["id"] ?? ($first["filename"] ?? ""));
+    }
+
+    /**
+     * Stored filename -> the picker payload `k-files-field` expects
+     */
+    public static function toPickerValue($value): array
+    {
+        return array_values(
+            array_filter([static::pickerData(static::toStoredMedia($value))])
+        );
     }
 
     public static function fields(): array
@@ -128,39 +336,159 @@ class Restaurant
     }
 
     /**
-     * Stores an uploaded image and returns its filename and public url
+     * Every file in the media library, oldest first (same order Kirby lists
+     * the files of a page in its file picker)
      */
-    public static function upload(
-        string $originalName,
-        string $base64,
-        string $mime
+    public static function media(): array
+    {
+        $files = array_values(
+            array_filter(
+                Dir::files(static::mediaDir()),
+                fn(string $filename): bool => in_array(
+                    strtolower(F::extension($filename)),
+                    static::SERVABLE_EXTENSIONS,
+                    true
+                )
+            )
+        );
+
+        sort($files, SORT_NATURAL | SORT_FLAG_CASE);
+
+        return $files;
+    }
+
+    /**
+     * One entry of the media library, in the shape `k-collection` /
+     * `k-files-dialog` expect (mirrors `$file->panel()->pickerData()`)
+     */
+    public static function pickerData(string $filename): array|null
+    {
+        $filename = basename($filename);
+
+        if ($filename === "") {
+            return null;
+        }
+
+        $path = static::mediaDir() . "/" . $filename;
+
+        if (F::exists($path, static::mediaDir()) === false) {
+            return null;
+        }
+
+        $extension = strtolower(F::extension($filename));
+        $isImage = in_array($extension, static::IMAGE_EXTENSIONS, true);
+        $url = static::mediaUrl($filename);
+
+        return [
+            "id" => $filename,
+            "filename" => $filename,
+            "extension" => $extension,
+            "mime" => F::mime($path),
+            "text" => $filename,
+            "info" => F::niceSize($path),
+            "link" => $url,
+            "url" => $url,
+            // what a media link field stores, kept relative so the content
+            // survives a change of host
+            "path" => "/" . static::MEDIA_PATH . "/" . $filename,
+            "image" => [
+                "back" => "pattern",
+                "color" => $isImage === true ? "gray-500" : "red-400",
+                "cover" => false,
+                "icon" => $isImage === true ? "image" : "file-document",
+                "src" => $isImage === true ? $url : null,
+            ],
+            "permissions" => ["delete" => false, "sort" => true],
+            "sortable" => true,
+            "type" => $isImage === true ? "image" : "document",
+            // what the file button of the textarea toolbar inserts; the path
+            // stays relative so the content survives a change of host
+            "dragText" => $isImage === true
+                ? "(image: /" . static::MEDIA_PATH . "/" . $filename . ")"
+                : "(link: /" . static::MEDIA_PATH . "/" . $filename .
+                    " text: " . $filename . ")",
+        ];
+    }
+
+    /**
+     * Paginated media library for the `k-files-dialog` picker
+     */
+    public static function picker(
+        string|null $search = null,
+        int $page = 1,
+        int $limit = 20
     ): array {
-        if (isset(static::ALLOWED_MIMES[$mime]) === false) {
-            throw new Exception(message: "Type de fichier non autorisé");
+        $files = static::media();
+
+        if (empty($search) === false) {
+            $files = array_values(
+                array_filter(
+                    $files,
+                    fn(string $filename): bool => stripos(
+                        $filename,
+                        $search
+                    ) !== false
+                )
+            );
         }
 
-        $binary = base64_decode($base64, true);
+        $page = max(1, $page);
 
-        if ($binary === false) {
-            throw new Exception(message: "Données invalides");
+        return [
+            "data" => array_values(
+                array_filter(
+                    array_map(
+                        static::pickerData(...),
+                        array_slice($files, ($page - 1) * $limit, $limit)
+                    )
+                )
+            ),
+            "pagination" => [
+                "limit" => $limit,
+                "page" => $page,
+                "total" => count($files),
+            ],
+        ];
+    }
+
+    /**
+     * Stores an uploaded file in the media library and returns its picker
+     * payload. Called from the api route through `Api::upload()`, so chunked
+     * uploads of large files are handled by Kirby.
+     */
+    public static function upload(string $source, string $filename): array
+    {
+        $extension = strtolower(F::extension($filename));
+
+        if (in_array($extension, static::SERVABLE_EXTENSIONS, true) === false) {
+            throw new InvalidArgumentException(
+                message: "Type de fichier non autorisé"
+            );
         }
 
-        if (strlen($binary) > static::MAX_UPLOAD_SIZE) {
-            throw new Exception(message: "Fichier trop volumineux (max 10 Mo)");
+        if (F::size($source) > static::MAX_UPLOAD_SIZE) {
+            throw new InvalidArgumentException(
+                message: "Fichier trop volumineux (max 20 Mo)"
+            );
         }
 
-        $extension = static::ALLOWED_MIMES[$mime];
-        $name = F::safeName(pathinfo($originalName, PATHINFO_FILENAME));
-        $filename =
-            $name . "-" . bin2hex(random_bytes(4)) . "." . $extension;
         $dir = static::mediaDir();
-        $path = $dir . "/" . $filename;
 
-        if (is_dir($dir) === false && mkdir($dir, 0755, true) === false) {
+        if (Dir::make($dir) === false) {
             throw new Exception(message: "Failed to create media directory.");
         }
 
-        if (F::write($path, $binary) === false) {
+        $name = F::safeName(F::name($filename));
+        $filename = $name . "." . $extension;
+        $index = 1;
+
+        while (F::exists($dir . "/" . $filename, $dir) === true) {
+            $filename = $name . "-" . $index++ . "." . $extension;
+        }
+
+        $path = $dir . "/" . $filename;
+
+        if (F::move($source, $path) === false) {
             throw new Exception(message: "Failed to write media file to disk.");
         }
 
@@ -170,10 +498,8 @@ class Restaurant
             \ImageGuard::process($path);
         }
 
-        return [
-            "filename" => $filename,
-            "url" => static::mediaUrl($filename),
-        ];
+        return static::pickerData($filename) ??
+            throw new Exception(message: "Failed to read the uploaded file.");
     }
 
     /**
@@ -239,30 +565,24 @@ class Restaurant
             if (Json::write(static::file(), $data) === false) {
                 throw new Exception(message: "Failed to update restaurant data.");
             }
+
+            // an editor may have unsaved changes open; the published menu must
+            // not be undone the next time they hit save
+            if ($changes = static::changes()) {
+                foreach (["btnLab", "btnFooter1"] as $key) {
+                    $changes[$key] = $data[$key];
+                }
+
+                $changes["menuPdf"] = $filename;
+
+                Json::write(static::changesFile(), $changes);
+            }
         } finally {
             flock($lock, LOCK_UN);
             fclose($lock);
         }
 
         return url(ltrim($path, "/"));
-    }
-
-    /**
-     * Deletes a media file from the plugin data folder
-     */
-    public static function deleteMedia(string $filename): void
-    {
-        $filename = basename($filename);
-
-        if (empty($filename) === true) {
-            return;
-        }
-
-        $path = static::mediaDir() . "/" . $filename;
-
-        if (F::exists($path, static::mediaDir()) === true) {
-            F::remove($path);
-        }
     }
 
     public static function mediaUrl(?string $filename): string
@@ -378,13 +698,25 @@ class Restaurant
     }
 
     /**
-     * Renders a textarea value with KirbyText, like the site fields did
+     * Renders a textarea value with KirbyText, like the site fields did.
+     *
+     * Media inserted through the file button of the toolbar is stored as a
+     * root-relative path so the content stays portable between environments;
+     * the frontend runs on another host, so it is made absolute here.
      */
     private static function text(array $data, string $key): string
     {
         $value = static::value($data, $key);
 
-        return $value === "" ? "" : (string) kirbytext($value);
+        if ($value === "") {
+            return "";
+        }
+
+        return str_replace(
+            '="/' . static::MEDIA_PATH . '/',
+            '="' . url(static::MEDIA_PATH) . '/',
+            (string) kirbytext($value)
+        );
     }
 
     private static function rows(array $data, string $key): array

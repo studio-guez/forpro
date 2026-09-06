@@ -103,12 +103,13 @@ $button = fn($object) => [
     'target'   => $object->target()->toBool(),
 ];
 
-$export = function (string $type, $field) use ($copy, $button) {
+$export = function (string $type, $field) use ($copy, $link, $button) {
     return match ($type) {
-        'restaurantimage' => $copy($field->toFile()),
-        'object'          => $button($field->toObject()),
-        'toggle'          => $field->toBool(),
-        default           => $field->value() ?? '',
+        'restaurantfiles'       => $copy($field->toFile()),
+        'link'                  => $link($field),
+        'object'                => $button($field->toObject()),
+        'toggle'                => $field->toBool(),
+        default                 => $field->value() ?? '',
     };
 };
 
