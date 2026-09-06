@@ -10,14 +10,14 @@
  *
  * It does three things:
  *   1. exports the restaurant fields to `data/restaurant.json`
- *   2. copies every referenced image/PDF to `data/restaurant-media/`
+ *   2. copies every referenced image/PDF to `data/restaurant-media/`, plus
+ *      the PopUp Café menu (`menu_popup.pdf`, a site file the restaurant
+ *      frontend used to link by a hardcoded media path)
  *   3. removes the migrated keys from `content/site.txt`
  *
  * The originals are left untouched in `content/`. Do NOT delete them from the
- * Panel without checking first: `restaurant/src/routes/menu_popup_cafe.pdf/+server.ts`
- * still hardcodes a site media file (`menu_popup.pdf`), and KirbyText in other
- * site fields may still reference these files. Only remove files that are
- * provably unreferenced.
+ * Panel without checking first: KirbyText in other site fields may still
+ * reference these files. Only remove files that are provably unreferenced.
  *
  * Usage (run from the project root, inside the container):
  *   php site/plugins/kirby-foodlab/migrate-restaurant-content.php --dry-run
@@ -150,6 +150,14 @@ foreach ($fields as $name => $field) {
 // the published menu PDF is tracked separately so the panel can replace it
 if ($pdf = $site->btnLab()->toObject()->link()->toFile()) {
     $data['menupdf'] = $pdf->filename();
+}
+
+// the PopUp Café menu was uploaded by hand as a site file and linked from the
+// restaurant frontend by a hardcoded media path; it becomes a regular field
+if ($popup = $site->file('menu_popup.pdf')) {
+    $data['popupmenupdf'] = $copy($popup);
+} else {
+    echo "  note   menu_popup.pdf not found among the site files, popupMenuPdf left empty\n";
 }
 
 if ($dryRun === false) {
