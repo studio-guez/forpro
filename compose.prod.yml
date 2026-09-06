@@ -18,6 +18,12 @@
 #   deploy action exports.
 # - Set BIND_ADDRESS to the server's private IP when the reverse proxy runs on
 #   another machine; keep 127.0.0.1 when it runs on the same host.
+# - BASIC_AUTH (also from deploy.env) gates the three frontends behind HTTP
+#   Basic auth; set on preprod, left empty on production.
+
+# Shared by website, restaurant and menu so one credential covers all three.
+x-basic-auth: &basic-auth
+  BASIC_AUTH: ${BASIC_AUTH:-}
 
 services:
 
@@ -58,7 +64,8 @@ services:
     # SSR fetches the API over the Docker network instead of hairpinning through
     # the public domain (nginx). Kirby still emits public URLs, see KIRBY_URL.
     environment:
-      - CMS_INTERNAL_URL=http://cms
+      <<: *basic-auth
+      CMS_INTERNAL_URL: http://cms
     restart: unless-stopped
     depends_on:
       - cms
@@ -79,7 +86,8 @@ services:
     volumes:
       - ${SHARED_PATH}/restaurant/robots.txt:/app/build/client/robots.txt
     environment:
-      - CMS_INTERNAL_URL=http://cms
+      <<: *basic-auth
+      CMS_INTERNAL_URL: http://cms
     restart: unless-stopped
     depends_on:
       - cms
@@ -99,11 +107,13 @@ services:
     # rebuild (e.g. to lock crawlers out on preprod).
     volumes:
       - ${SHARED_PATH}/menu/robots.txt:/app/.output/public/robots.txt
+    environment:
+      <<: *basic-auth
     restart: unless-stopped
     depends_on:
       - cms
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/"]
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/health"]
       interval: 30s
       timeout: 5s
       retries: 3
