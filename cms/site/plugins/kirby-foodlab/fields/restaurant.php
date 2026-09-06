@@ -299,11 +299,12 @@ return [
     "menuPdf" => [
         "label" => "Menu PDF",
         "help" =>
-            'Remplit automatiquement lors de la génération du menu avec image et fond dans "Menu"',
+        'Remplit automatiquement lors de la génération du menu avec image et fond dans "Menu"',
     ] + $pdf,
 
     "popupMenuPdf" => [
         "label" => "Carte du PopUp Café (PDF)",
+        "required" => true,
         "help" => 'Bouton "Carte du PopUp" du site, servi sous /menu_popup_cafe.pdf',
     ] + $pdf,
 ];
