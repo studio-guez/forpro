@@ -28,11 +28,14 @@ export async function getfoodLabData(): Promise<IMenuData__foodLab> {
 }
 
 export function foodLab_GetCurrentWeekMenu(menus: IMenuData__foodLab): IMenuData__foodLab__weekMenu | null {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
+  // Les menus sont enregistrés à la date du lundi, mais la bascule doit se faire
+  // dans la nuit du vendredi au samedi : on compare avec 2 jours d'avance.
+  const reference = new Date()
+  reference.setHours(0, 0, 0, 0)
+  reference.setDate(reference.getDate() + 2)
 
   const currentWeekMenu = menus.menus
-    .filter(menu => new Date(menu.date) <= today)
+    .filter(menu => new Date(menu.date) <= reference)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     [0] || null
 
