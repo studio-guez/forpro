@@ -46,11 +46,11 @@
 	let selectedPublics = $state<string[]>(parseListParam(initialParams.get('publics')));
 	let selectedMonth = $state(initialParams.get('month') ?? '');
 
-	// Upcoming events are browsed one month at a time by default; the toggle
-	// swaps to a single list of every upcoming event. Mirrored into the URL so
-	// the whole-agenda view can be shared too.
+	// Every upcoming event is listed at once by default; the toggle swaps to
+	// browsing them one month at a time. Mirrored into the URL so the month
+	// view can be shared too.
 	type UpcomingView = 'month' | 'all';
-	let upcomingView = $state<UpcomingView>(initialParams.get('view') === 'all' ? 'all' : 'month');
+	let upcomingView = $state<UpcomingView>(initialParams.get('view') === 'month' ? 'month' : 'all');
 	const showAllUpcoming = $derived(upcomingView === 'all');
 
 	const toggleUpcomingView = (): void => {
@@ -187,7 +187,7 @@
 			q: search,
 			publics: activePublics,
 			month: activeMonth,
-			view: showAllUpcoming ? 'all' : ''
+			view: showAllUpcoming ? '' : 'month'
 		});
 	});
 </script>
