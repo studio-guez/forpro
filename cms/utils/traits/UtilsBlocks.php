@@ -172,7 +172,8 @@ trait UtilsBlocks
     /**
      * The `fields/threeElements` structure, shared by the `module-infos-pratiques`
      * and `module-3-elements` blocks. Either empty or exactly 3 title/description
-     * pairs (enforced by the blueprint).
+     * pairs (enforced by the blueprint); descriptions are required, titles may be
+     * empty strings.
      */
     static function getThreeElements(\Kirby\Content\Field $field): array
     {

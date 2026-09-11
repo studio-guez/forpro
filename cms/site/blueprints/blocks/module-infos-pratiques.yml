@@ -26,8 +26,8 @@ fields:
   elements:
     extends: fields/threeElements
     help:
-      en: Optional. If added, all 3 elements must be filled in.
-      fr: Optionnel. Si ajouté, les 3 éléments doivent être remplis.
+      en: Optional. If added, all 3 descriptions must be filled in; titles are optional.
+      fr: Optionnel. Si ajouté, les 3 descriptions doivent être remplies ; les titres sont facultatifs.
   sectors:
     extends: fields/taxonomies/sectors
     width: 1/2
