@@ -460,8 +460,8 @@ trait UtilsPages
     }
 
     /**
-     * Resolves the shared event/project content blocks structure
-     * (repeatable `title` + rich-text `description`) to a JSON-ready list.
+     * Resolves the `fields/contentBlocks` structure (repeatable `title` +
+     * rich-text `description`, basic pages) to a JSON-ready list.
      */
     static function getContentBlocks(\Kirby\Content\Field $field): array
     {
@@ -485,11 +485,8 @@ trait UtilsPages
             'subtitle'      => $page->subtitle()->value(),
             'shortDesc'     => $page->shortDesc()->value(),
             'cover'         => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
-            'medias'        => self::getJsonEncodeMediaArray($page->medias()->toFiles()),
-            // Field is named `videos`, so it must be read through get() — $page->videos() is Kirby's video Files helper.
-            'videos'        => self::getVideos($page->content()->get('videos')),
-            'blocks'        => self::getContentBlocks($page->blocks()),
-            'externalLinks' => self::getExternalLinks($page->externalLinks()),
+            // `fields/contentBody`: medias / video / text / links blocks, freely ordered.
+            'body'          => self::getBodyBlocks($page->body()),
             'parentPage'    => self::getParentPageData($page),
             'seo'           => self::getSeoDataFromPage($page),
         ];

@@ -1,8 +1,9 @@
 <?php
 
 /**
- * Serialization of the `body` blocks field (the module blockbuilder shared by
- * the `page`, `team` and `job-offers` templates) to a JSON-ready list.
+ * Serialization of the `body` blocks fields to a JSON-ready list: the module
+ * blockbuilder (`fields/body`, shared by the `page`, `team` and `job-offers`
+ * templates) and the lighter event/project one (`fields/contentBody`).
  */
 trait UtilsBlocks
 {
@@ -54,6 +55,14 @@ trait UtilsBlocks
                 return self::getProjetsBlockData($block);
             case 'module-resources':
                 return self::getResourcesBlockData($block);
+            case 'content-medias':
+                return self::getContentMediasBlockData($block);
+            case 'content-video':
+                return self::getContentVideoBlockData($block);
+            case 'content-text':
+                return self::getContentTextBlockData($block);
+            case 'content-links':
+                return self::getContentLinksBlockData($block);
             default:
                 return $block->toArray()['content'] ?? [];
         }
@@ -368,6 +377,40 @@ trait UtilsBlocks
             'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
             'resources' => $resources,
             'variant'   => $block->variant()->or('default')->value(),
+        ];
+    }
+
+    /* ---------------------------------------------------------------------
+       `fields/contentBody` blocks (event / project pages)
+       --------------------------------------------------------------------- */
+
+    private static function getContentMediasBlockData(\Kirby\Cms\Block $block): array
+    {
+        return [
+            'medias' => self::getJsonEncodeMediaArray($block->medias()->toFiles()),
+        ];
+    }
+
+    private static function getContentVideoBlockData(\Kirby\Cms\Block $block): array
+    {
+        return [
+            'video' => self::getVideo($block->content()->get('video')),
+        ];
+    }
+
+    private static function getContentTextBlockData(\Kirby\Cms\Block $block): array
+    {
+        return [
+            'title'       => $block->title()->value(),
+            'description' => $block->description()->value(),
+        ];
+    }
+
+    private static function getContentLinksBlockData(\Kirby\Cms\Block $block): array
+    {
+        return [
+            'title' => $block->title()->isNotEmpty() ? $block->title()->value() : null,
+            'links' => self::getExternalLinks($block->links()),
         ];
     }
 }

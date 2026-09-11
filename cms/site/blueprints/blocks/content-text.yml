@@ -1,0 +1,23 @@
+# Event/project content block: a title + rich-text paragraph.
+# Serialized by Utils::getContentTextBlockData() to `{title, description}`.
+extends: blocks/base
+
+name:
+  en: Text
+  fr: Texte
+
+icon: text
+
+fields:
+  title:
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  description:
+    label:
+      en: Description
+      fr: Description
+    extends: fields/writer
+    required: true

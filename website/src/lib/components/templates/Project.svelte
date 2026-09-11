@@ -1,9 +1,6 @@
 <script lang="ts">
 	import EventProjectHeader from '$lib/components/blocks/EventProjectHeader.svelte';
-	import EventProjectMedia from '$lib/components/blocks/EventProjectMedia.svelte';
-	import EventProjectVideos from '$lib/components/blocks/EventProjectVideos.svelte';
-	import EventProjectBlocks from '$lib/components/blocks/EventProjectBlocks.svelte';
-	import EventProjectLinks from '$lib/components/blocks/EventProjectLinks.svelte';
+	import EventProjectBody from '$lib/components/blocks/EventProjectBody.svelte';
 	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import type { ProjectPage } from '$lib/interfaces/project';
@@ -25,7 +22,7 @@
 					{#if page.collectiveName}
 						<strong>{page.collectiveName}</strong>
 						{#if page.collectiveMembers.length > 0}
-						<span aria-hidden="true">·</span>
+							<span aria-hidden="true">·</span>
 						{/if}
 					{/if}
 					{#if page.collectiveMembers.length > 0}
@@ -58,13 +55,7 @@
 		{/snippet}
 	</EventProjectHeader>
 
-	<EventProjectMedia medias={page.medias} title={page.title} />
-
-	<EventProjectVideos videos={page.videos} title={page.title} />
-
-	<EventProjectBlocks blocks={page.blocks} />
-
-	<EventProjectLinks links={page.externalLinks} />
+	<EventProjectBody blocks={page.body} title={page.title} />
 
 	<SingleContentFooter
 		parentPage={page.parentPage}

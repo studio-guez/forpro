@@ -1,0 +1,18 @@
+# Event/project content block: a single video, uploaded or YouTube.
+# Serialized by Utils::getContentVideoBlockData() to `{video: <video>|null}`.
+extends: blocks/base
+
+name:
+  en: Video
+  fr: Vidéo
+
+icon: video
+
+fields:
+  video:
+    extends: fields/video
+    label:
+      en: Video
+      fr: Vidéo
+    max: 1
+    required: true
