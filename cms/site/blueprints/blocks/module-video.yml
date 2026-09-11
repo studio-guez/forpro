@@ -26,11 +26,10 @@ fields:
       fr: Affichée au-dessus de la vidéo
     extends: fields/writer
   video:
+    extends: fields/video
     label:
       en: Video
       fr: Vidéo
-    type: files
-    uploads: video
     max: 1
     required: true
   contentTitle:

@@ -486,7 +486,8 @@ trait UtilsPages
             'shortDesc'     => $page->shortDesc()->value(),
             'cover'         => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             'medias'        => self::getJsonEncodeMediaArray($page->medias()->toFiles()),
-            'embedVideos'   => self::getYoutubeEmbeds($page->embedVideos()),
+            // Field is named `videos`, so it must be read through get() — $page->videos() is Kirby's video Files helper.
+            'videos'        => self::getVideos($page->content()->get('videos')),
             'blocks'        => self::getContentBlocks($page->blocks()),
             'externalLinks' => self::getExternalLinks($page->externalLinks()),
             'parentPage'    => self::getParentPageData($page),
