@@ -72,7 +72,7 @@
 				</div>
 				{#if hasCta}
 					<div class="max-lg:text-right mt-6 lg:mt-12">
-						<CtaLink cta={cta!} color={themeColor} size="lg" />
+						<CtaLink cta={cta!} color={themeColor} />
 					</div>
 				{/if}
 			</div>
@@ -95,7 +95,7 @@
 		</div>
 		{#if hasCta}
 			<div class="text-right mt-6 lg:mt-12">
-				<CtaLink cta={cta!} color={themeColor} size="lg" />
+				<CtaLink cta={cta!} color={themeColor} />
 			</div>
 		{/if}
 	{/if}
