@@ -6,6 +6,24 @@
 trait UtilsLinks
 {
     /**
+     * Inline KirbyText reduced to its text and `<a>` tags. The `(link: …)` / `(email: …)`
+     * tags render as links; every other markup (Markdown, raw HTML) is flattened to its
+     * text, and `Kirby\Sane\Html` first strips unsafe attributes and `javascript:` hrefs
+     * from the links that stay. Newlines survive as newlines (the `<br>` Markdown adds is
+     * dropped again), so a `whitespace-pre-line` frontend keeps rendering them. Plain text
+     * passes through untouched apart from entity escaping, which is what lets a field
+     * adopt this helper without migrating its content.
+     */
+    static function getLinkedText(\Kirby\Content\Field $field): string
+    {
+        $html = $field->kirbytextinline()->value();
+        if ($html === null || $html === '') {
+            return '';
+        }
+        return strip_tags(\Kirby\Sane\Html::sanitize($html), '<a>');
+    }
+
+    /**
      * Resolves the URL from a structure item using the type/page/url pattern.
      */
     static function resolvePageOrUrlItem(\Kirby\Cms\StructureObject $item): ?string

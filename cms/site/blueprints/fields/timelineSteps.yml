@@ -17,8 +17,8 @@ fields:
     label:
       en: Short description
       fr: Description courte
-    # Plain text, no formatting at all: the text sits in a fixed-size shape.
     type: textarea
-    buttons: false
+    buttons:
+      - link
     size: small
-    maxlength: 70
+    maxlength: 80
