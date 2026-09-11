@@ -1,6 +1,7 @@
 <script lang="ts">
 	import EventProjectHeader from '$lib/components/blocks/EventProjectHeader.svelte';
 	import EventProjectMedia from '$lib/components/blocks/EventProjectMedia.svelte';
+	import EventProjectVideos from '$lib/components/blocks/EventProjectVideos.svelte';
 	import EventProjectBlocks from '$lib/components/blocks/EventProjectBlocks.svelte';
 	import EventProjectLinks from '$lib/components/blocks/EventProjectLinks.svelte';
 	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
@@ -55,7 +56,9 @@
 		{/snippet}
 	</EventProjectHeader>
 
-	<EventProjectMedia medias={page.medias} embedVideos={page.embedVideos} title={page.title} />
+	<EventProjectMedia medias={page.medias} title={page.title} />
+
+	<EventProjectVideos videos={page.videos} title={page.title} />
 
 	<EventProjectBlocks blocks={page.blocks} />
 

@@ -46,9 +46,9 @@
 	const hasCta = $derived(!!cta?.label && !!cta?.url);
 </script>
 
-<section class="px-8 lg:px-15 xl:px-30 relative max-lg:py-9" aria-labelledby="page-intro-title">
+<section class="px-13 lg:px-24 xl:px-39 relative max-lg:py-9" aria-labelledby="page-intro-title">
 	{#if parentPage}
-		<div class="mb-6 mt-[calc(-1.5rem-1lh)]">
+		<div class="mb-6 mt-[calc(-1.5rem-1lh)] -ml-8 lg:-ml-15 xl:-ml-30">
 			<BackLink {parentPage} color={themeColor} />
 		</div>
 	{/if}
@@ -72,7 +72,7 @@
 				</div>
 				{#if hasCta}
 					<div class="max-lg:text-right mt-6 lg:mt-12">
-						<CtaLink cta={cta!} color={themeColor} size="lg" />
+						<CtaLink cta={cta!} color={themeColor} />
 					</div>
 				{/if}
 			</div>
@@ -95,7 +95,7 @@
 		</div>
 		{#if hasCta}
 			<div class="text-right mt-6 lg:mt-12">
-				<CtaLink cta={cta!} color={themeColor} size="lg" />
+				<CtaLink cta={cta!} color={themeColor} />
 			</div>
 		{/if}
 	{/if}

@@ -33,7 +33,7 @@
 		<div class="flex flex-wrap gap-4 justify-center md:justify-end mt-6 lg:mt-12">
 			<!-- Keyed by index: several ctas can share the same url. -->
 			{#each content.ctas as cta, i (i)}
-				<CtaLink {cta} color={colors.accent} inverted={colors.onDark} size="lg" />
+				<CtaLink {cta} color={colors.accent} inverted={colors.onDark} />
 			{/each}
 		</div>
 	{/if}

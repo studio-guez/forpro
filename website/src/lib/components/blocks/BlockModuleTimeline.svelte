@@ -142,8 +142,11 @@
 		<div class="absolute inset-0 flex flex-col justify-center px-[15%] {colors.step}">
 			<p class="text-[9cqw]/[1.05] font-bold">{step.title}</p>
 			{#if step.shortDesc}
-				<p class="text-[6.6cqw]/[1.2] font-bold mt-[5cqw] whitespace-pre-line">
-					{step.shortDesc}
+				<p
+					class="text-[6.6cqw]/[1.2] font-bold mt-[5cqw] whitespace-pre-line [&_a]:underline [&_a]:transition-opacity [&_a:hover]:opacity-50"
+				>
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -- sanitized by the CMS: `<a>` is the only tag `Utils::getLinkedText()` lets through -->
+					{@html step.shortDesc}
 				</p>
 			{/if}
 		</div>

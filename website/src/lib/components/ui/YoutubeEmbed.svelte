@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { YoutubeEmbedData } from '$lib/interfaces/eventProject';
+	import type { YoutubeEmbedData } from '$lib/interfaces/page';
 
 	interface Props {
 		embed: YoutubeEmbedData;

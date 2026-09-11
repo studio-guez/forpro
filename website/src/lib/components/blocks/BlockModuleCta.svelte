@@ -32,7 +32,7 @@
 		<ul class="flex flex-wrap gap-3 justify-end shrink-0 max-w-full">
 			{#each content.links as link (link.url + link.label)}
 				<li>
-					<CtaLink cta={link} color="var(--color-blue)" inverted={onDark} size="lg" />
+					<CtaLink cta={link} color="var(--color-blue)" inverted={onDark} />
 				</li>
 			{/each}
 		</ul>

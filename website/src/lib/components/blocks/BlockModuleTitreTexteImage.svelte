@@ -35,13 +35,13 @@
 				<Img image={content.image} sizes={imageSizes} class="w-full h-full object-cover" />
 			</div>
 		{/if}
-		<div>
+		<div class="flex flex-col justify-center">
 			<div class="prose text-body-2">
 				{@html content.description}
 			</div>
 			{#if content.cta}
 				<div class="max-xl:text-right mt-6 lg:mt-12">
-					<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} size="lg" />
+					<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} />
 				</div>
 			{/if}
 		</div>
