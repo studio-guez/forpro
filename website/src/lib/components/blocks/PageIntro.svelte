@@ -48,7 +48,7 @@
 
 <section class="px-13 lg:px-24 xl:px-39 relative max-lg:py-9" aria-labelledby="page-intro-title">
 	{#if parentPage}
-		<div class="mb-6 mt-[calc(-1.5rem-1lh)]">
+		<div class="mb-6 mt-[calc(-1.5rem-1lh)] -ml-8 lg:-ml-15 xl:-ml-30">
 			<BackLink {parentPage} color={themeColor} />
 		</div>
 	{/if}
