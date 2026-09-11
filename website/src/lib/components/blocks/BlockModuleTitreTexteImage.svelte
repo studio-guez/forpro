@@ -35,7 +35,7 @@
 				<Img image={content.image} sizes={imageSizes} class="w-full h-full object-cover" />
 			</div>
 		{/if}
-		<div>
+		<div class="flex flex-col justify-center">
 			<div class="prose text-body-2">
 				{@html content.description}
 			</div>
