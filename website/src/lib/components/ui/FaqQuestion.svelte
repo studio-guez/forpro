@@ -49,7 +49,7 @@
 	<h3>
 		<button
 			type="button"
-			class="w-full flex items-center justify-between gap-2 lg:gap-3 text-left px-2.25 lg:px-7.5 h-9 lg:h-15"
+			class="w-full flex items-center justify-between gap-2 lg:gap-3 text-left px-2.25 lg:px-7.5 py-1.5 lg:py-3.5 min-h-9 lg:min-h-15"
 			aria-expanded={open}
 			aria-controls={open ? `${id}-answer` : undefined}
 			onclick={() => (open = !open)}
