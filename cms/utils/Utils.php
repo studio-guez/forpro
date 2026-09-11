@@ -38,7 +38,7 @@ class Utils
     /** The `/llms.txt` Markdown index. */
     use UtilsLlms;
 
-    /** YouTube embeds. */
+    /** Videos: the `fields/video` structure (upload or YouTube) and YouTube URL parsing. */
     use UtilsEmbeds;
 
     /** Page-level payloads: hero, event dates, cards, event/project base. */

@@ -1,13 +1,4 @@
-import type { CmsImage, CmsMedia, PageParent, Seo } from './page';
-
-// A YouTube embed resolved by the CMS. `type` distinguishes a regular 16:9
-// video from a vertical Short; `embedUrl` is the privacy-friendly nocookie URL.
-export interface YoutubeEmbedData {
-	readonly id: string;
-	readonly type: 'video' | 'short';
-	readonly url: string;
-	readonly embedUrl: string;
-}
+import type { CmsImage, CmsMedia, PageParent, Seo, VideoItem } from './page';
 
 // A repeatable title + rich-text block shared by events and projects.
 export interface ContentBlock {
@@ -30,7 +21,8 @@ export interface EventProjectBase {
 	readonly shortDesc: string;
 	readonly cover: CmsImage | null;
 	readonly medias: CmsMedia[];
-	readonly embedVideos: YoutubeEmbedData[];
+	/** Uploaded files or YouTube embeds, shown below the media gallery. */
+	readonly videos: VideoItem[];
 	readonly blocks: ContentBlock[];
 	readonly externalLinks: ContentExternalLink[];
 	/** The index the "back" link points to (agenda / projets). */

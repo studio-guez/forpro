@@ -155,14 +155,13 @@ trait UtilsBlocks
 
     private static function getVideoBlockData(\Kirby\Cms\Block $block): array
     {
-        $video = $block->content()->get('video')->toFile();
         // Field is named `content`, so it must be read through get() — $block->content() is the Content object.
-        $text  = $block->content()->get('content');
+        $text = $block->content()->get('content');
 
         return [
             'title'        => $block->title()->value(),
             'shortDesc'    => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
-            'video'        => $video ? self::getJsonEncodeMediaData($video) : null,
+            'video'        => self::getVideo($block->content()->get('video')),
             'contentTitle' => $block->contentTitle()->isNotEmpty() ? $block->contentTitle()->value() : null,
             'content'      => $text->isNotEmpty() ? $text->value() : null,
             'variant'      => $block->variant()->or('default')->value(),

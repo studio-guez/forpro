@@ -2,7 +2,7 @@
 	import type { ModuleVideoContent, Theme } from '$lib/interfaces/page';
 	import { getThemeColors } from '$lib/utils/themeColors';
 	import Card from '$lib/components/ui/Card.svelte';
-	import VideoPlayer from '$lib/components/ui/VideoPlayer.svelte';
+	import Video from '$lib/components/ui/Video.svelte';
 	import ShapeCasesDefault1 from '$lib/components/svg/ShapeCasesDefault1.svelte';
 	import ShapeCasesDefault2 from '$lib/components/svg/ShapeCasesDefault2.svelte';
 
@@ -28,9 +28,7 @@
 	titleColor={colors.title}
 >
 	{#if content.video}
-		<div class="overflow-hidden rounded-2xl mt-6 lg:mt-12">
-			<VideoPlayer src={content.video.url} />
-		</div>
+		<Video video={content.video} title="Vidéo — {content.title}" class="mt-6 lg:mt-12" />
 	{/if}
 
 	{#if content.content}
