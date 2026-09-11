@@ -57,13 +57,13 @@ tabs:
                 type: text
               collectiveMembers:
                 label:
-                  en: Collective members
-                  fr: Membres du collectif
+                  en: Project by
+                  fr: Projet réalisé par
                 type: structure
                 fields:
                   name:
                     label:
-                      en: Name
-                      fr: Nom
+                      en: Last name/First name
+                      fr: Nom/Prénom
                     type: text
                     required: true
