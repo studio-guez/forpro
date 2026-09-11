@@ -1,21 +1,16 @@
 <script lang="ts">
 	import Img from '$lib/components/ui/Img.svelte';
 	import VideoPlayer from '$lib/components/ui/VideoPlayer.svelte';
-	import YoutubeEmbed from '$lib/components/ui/YoutubeEmbed.svelte';
 	import { PAGE_CARD, cell, toSizes } from '$lib/utils/imgSizes';
 	import type { CmsMedia } from '$lib/interfaces/page';
-	import type { YoutubeEmbedData } from '$lib/interfaces/eventProject';
 
 	interface Props {
 		medias?: CmsMedia[];
-		embedVideos?: YoutubeEmbedData[];
 		title: string;
 		class?: string;
 	}
 
-	let { medias = [], embedVideos = [], title, class: className = '' }: Props = $props();
-
-	const hasMedia = $derived(medias.length > 0 || embedVideos.length > 0);
+	let { medias = [], title, class: className = '' }: Props = $props();
 
 	// Alternate the media column span in a 2/2/1/1 pattern, like `BlockModuleCases`.
 	const mediaSpan = (index: number) => [2, 1, 1, 2][index % 4];
@@ -24,7 +19,7 @@
 		toSizes(cell(PAGE_CARD, { 0: 1, 1024: 3 }, 1.5, mediaSpan(index)));
 </script>
 
-{#if hasMedia}
+{#if medias.length > 0}
 	<section class={['px-base', className]} aria-label="Médias — {title}">
 		<div class="grid grid-cols-1 lg:grid-cols-3 max-lg:gap-y-2.5 gap-6 items-stretch">
 			{#each medias as media, index (index)}
@@ -43,12 +38,6 @@
 						<figcaption class="text-caption text-grey-dark mt-2">{media.caption}</figcaption>
 					{/if}
 				</figure>
-			{/each}
-
-			{#each embedVideos as embed (embed.id)}
-				<div class={embed.type === 'short' ? 'mx-auto w-full max-w-xs' : ''}>
-					<YoutubeEmbed {embed} title="Vidéo — {title}" class="rounded-2xl" />
-				</div>
 			{/each}
 		</div>
 	</section>
