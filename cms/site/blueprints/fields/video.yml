@@ -1,7 +1,7 @@
 # Reusable video list. Each row is either an uploaded file (`files/video`
 # blueprint) or a YouTube URL, switched by `source`; the `when` rules only show
-# the input that matches. Shared by the `module-video` block (one row, `max: 1`)
-# and the event/project pages (`videos`, repeatable), and serialized by
+# the input that matches. Shared by the `module-video` and `content-video`
+# blocks (one row, `max: 1`), and serialized by
 # `Utils::getVideos()` / `Utils::getVideo()` to
 # `{source: 'upload', file: <media>}` or `{source: 'youtube', embed: <embed>}`.
 label:
