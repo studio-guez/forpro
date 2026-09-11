@@ -80,6 +80,20 @@ export interface CmsVideo {
 
 export type CmsMedia = (CmsImage & { readonly type: 'image' }) | CmsVideo;
 
+// A YouTube embed resolved by the CMS. `type` distinguishes a regular 16:9
+// video from a vertical Short; `embedUrl` is the privacy-friendly nocookie URL.
+export interface YoutubeEmbedData {
+	readonly id: string;
+	readonly type: 'video' | 'short';
+	readonly url: string;
+	readonly embedUrl: string;
+}
+
+/** One row of the shared `fields/video` structure: an uploaded file or a YouTube embed. */
+export type VideoItem =
+	| { readonly source: 'upload'; readonly file: CmsVideo }
+	| { readonly source: 'youtube'; readonly embed: YoutubeEmbedData };
+
 export type CasesLayout = 'alternate' | 'images-right' | 'images-left';
 
 export interface ModuleCasesRow {
@@ -116,7 +130,7 @@ export interface ModuleGrilleImagesContent {
 export interface ModuleVideoContent {
 	readonly title: string;
 	readonly shortDesc: string | null;
-	readonly video: CmsVideo | null;
+	readonly video: VideoItem | null;
 	readonly contentTitle: string | null;
 	readonly content: string | null;
 	readonly variant: Variant;

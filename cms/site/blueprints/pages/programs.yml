@@ -1,9 +1,9 @@
-title: Programmes
+title: Pages
 
 extends: pages/taxonomy
 
 sections:
   terms:
-    label: Programmes
+    label: Pages
     templates:
       - program

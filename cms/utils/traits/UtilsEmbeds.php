@@ -1,7 +1,8 @@
 <?php
 
 /**
- * YouTube embed parsing for the `embedVideos` structure.
+ * Video serialization: the shared `fields/video` structure (an uploaded file
+ * or a YouTube URL per row) and the YouTube URL parsing behind it.
  */
 trait UtilsEmbeds
 {
@@ -19,25 +20,72 @@ trait UtilsEmbeds
     }
 
     /**
-     * Resolves an `embedVideos` structure (each item exposing a `url` field)
-     * to a JSON-ready list of YouTube embeds. Only YouTube links are kept;
-     * Shorts are flagged with `type => 'short'` (vertical), everything else is
-     * `type => 'video'` (16:9). `embedUrl` is the privacy-friendly nocookie URL.
+     * Resolves a single YouTube URL to a JSON-ready embed, or null when it is
+     * not a recognizable YouTube link. Shorts are flagged with `type => 'short'`
+     * (vertical), everything else is `type => 'video'` (16:9). `embedUrl` is
+     * the privacy-friendly nocookie URL.
      */
-    static function getYoutubeEmbeds(\Kirby\Content\Field $field): array
+    static function getYoutubeEmbed(string $url): ?array
     {
-        $embeds = [];
-        foreach ($field->toStructure() as $item) {
-            $url = $item->url()->value();
-            $id  = self::parseYoutubeId((string)$url);
-            if (!$id) continue;
-            $embeds[] = [
-                'id'       => $id,
-                'type'     => stripos((string)$url, '/shorts/') !== false ? 'short' : 'video',
-                'url'      => $url,
-                'embedUrl' => 'https://www.youtube-nocookie.com/embed/' . $id,
-            ];
+        $id = self::parseYoutubeId($url);
+        if (!$id) return null;
+
+        return [
+            'id'       => $id,
+            'type'     => stripos($url, '/shorts/') !== false ? 'short' : 'video',
+            'url'      => $url,
+            'embedUrl' => 'https://www.youtube-nocookie.com/embed/' . $id,
+        ];
+    }
+
+    /**
+     * Resolves a `fields/video` structure to a JSON-ready list. Each entry is
+     * either `{source: 'upload', file: <media>}` or
+     * `{source: 'youtube', embed: <embed>}`; rows without a video file or
+     * without a recognizable YouTube link are dropped.
+     */
+    static function getVideos(\Kirby\Content\Field $field): array
+    {
+        try {
+            $rows = $field->toStructure();
+        } catch (\Kirby\Exception\InvalidArgumentException) {
+            // Content still in the pre-`fields/video` shape (a bare files list):
+            // degrade to "no video" instead of a 500 until
+            // `utils/migrate-video-fields.php` has been run.
+            return [];
         }
-        return $embeds;
+
+        $videos = [];
+        foreach ($rows as $row) {
+            $video = self::getVideoRowData($row);
+            if ($video) $videos[] = $video;
+        }
+        return $videos;
+    }
+
+    /**
+     * Single-row variant of getVideos() for fields capped at `max: 1`
+     * (the `module-video` block).
+     */
+    static function getVideo(\Kirby\Content\Field $field): ?array
+    {
+        return self::getVideos($field)[0] ?? null;
+    }
+
+    private static function getVideoRowData(\Kirby\Cms\StructureObject $row): ?array
+    {
+        // Row fields are read through get(): `file`/`url` would otherwise be easy
+        // to confuse with model methods of the same name.
+        $content = $row->content();
+
+        if ($content->get('source')->value() === 'youtube') {
+            $embed = self::getYoutubeEmbed((string)$content->get('url')->value());
+            return $embed ? ['source' => 'youtube', 'embed' => $embed] : null;
+        }
+
+        $file = $content->get('file')->toFile();
+        if (!$file || $file->type() !== 'video') return null;
+
+        return ['source' => 'upload', 'file' => self::getJsonEncodeMediaData($file)];
     }
 }

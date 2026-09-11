@@ -155,14 +155,13 @@ trait UtilsBlocks
 
     private static function getVideoBlockData(\Kirby\Cms\Block $block): array
     {
-        $video = $block->content()->get('video')->toFile();
         // Field is named `content`, so it must be read through get() — $block->content() is the Content object.
-        $text  = $block->content()->get('content');
+        $text = $block->content()->get('content');
 
         return [
             'title'        => $block->title()->value(),
             'shortDesc'    => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
-            'video'        => $video ? self::getJsonEncodeMediaData($video) : null,
+            'video'        => self::getVideo($block->content()->get('video')),
             'contentTitle' => $block->contentTitle()->isNotEmpty() ? $block->contentTitle()->value() : null,
             'content'      => $text->isNotEmpty() ? $text->value() : null,
             'variant'      => $block->variant()->or('default')->value(),
@@ -172,7 +171,8 @@ trait UtilsBlocks
     /**
      * The `fields/threeElements` structure, shared by the `module-infos-pratiques`
      * and `module-3-elements` blocks. Either empty or exactly 3 title/description
-     * pairs (enforced by the blueprint).
+     * pairs (enforced by the blueprint); descriptions are required, titles may be
+     * empty strings.
      */
     static function getThreeElements(\Kirby\Content\Field $field): array
     {
@@ -263,13 +263,14 @@ trait UtilsBlocks
 
     /**
      * Steps of a timeline. Shared with the `job-offer` template, whose
-     * `recruitingSteps` are rendered by the same module.
+     * `recruitingSteps` are rendered by the same module. `shortDesc` is HTML limited
+     * to `<a>` tags (see `getLinkedText()`), the frontend renders it with `@html`.
      */
     static function getTimelineSteps(\Kirby\Content\Field $field): array
     {
         return array_values($field->toStructure()->map(fn($step) => [
             'title'     => $step->title()->value(),
-            'shortDesc' => $step->shortDesc()->value(),
+            'shortDesc' => self::getLinkedText($step->shortDesc()),
         ])->data());
     }
 

@@ -1,7 +1,7 @@
 # Shared base for event and project pages.
 # Provides the fields common to both content types:
 #   - title / subtitle / shortDesc / cover (sidebar)
-#   - medias + embedVideos, repeatable content blocks and external links (main)
+#   - medias + videos (upload or YouTube), repeatable content blocks and external links (main)
 # Event- and project-specific fields (dates, taxonomies, collective, ...) are
 # added by pages/event.yml and pages/project.yml, which extend this blueprint.
 tabs:
@@ -58,21 +58,11 @@ tabs:
                 type: files
                 layout: cards
                 uploads: media
-              embedVideos:
-                label:
-                  en: Embedded videos (YouTube)
-                  fr: Vidéos intégrées (YouTube)
-                type: structure
+              videos:
+                extends: fields/video
                 help:
-                  en: Paste a YouTube URL. Regular videos and Shorts are both supported.
-                  fr: Collez une URL YouTube. Les vidéos classiques et les Shorts sont pris en charge.
-                fields:
-                  url:
-                    label:
-                      en: YouTube URL
-                      fr: URL YouTube
-                    type: url
-                    required: true
+                  en: Displayed below the media gallery. Each video is either an uploaded file or a YouTube link.
+                  fr: Affichées sous la galerie de médias. Chaque vidéo est soit un fichier téléversé, soit un lien YouTube.
           blocks:
             type: fields
             fields:
@@ -83,9 +73,6 @@ tabs:
                 type: headline
               blocks:
                 extends: fields/contentBlocks
-                fields:
-                  title:
-                    default: Infos supplémentaires
           links:
             type: fields
             fields:

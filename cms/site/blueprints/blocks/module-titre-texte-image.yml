@@ -8,14 +8,15 @@ icon: text-left
 
 fields:
   title:
-    width: 1/3
+    width: 1/2
     label:
       en: Title
       fr: Titre
     type: text
     required: true
+  hideTitle:
+    extends: fields/hideTitle
   description:
-    width: 2/3
     label:
       en: Description
       fr: Description
