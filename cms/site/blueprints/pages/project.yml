@@ -52,8 +52,11 @@ tabs:
                 type: headline
               collectiveName:
                 label:
-                  en: Collective name
-                  fr: Nom du collectif
+                  en: Collective name / Contributor name
+                  fr: Nom du collectif / Nom du contributeur
+                  help: 
+                    en: If there is only one contributor, indicate their name and do not add additional members.
+                    fr: Si un seul contributeur, indiquez son nom et ne pas ajouter de membres supplémentaires.
                 type: text
               collectiveMembers:
                 label:
@@ -63,7 +66,7 @@ tabs:
                 fields:
                   name:
                     label:
-                      en: Last name/First name
-                      fr: Nom/Prénom
+                      en: Last name / First name
+                      fr: Nom / Prénom
                     type: text
                     required: true
