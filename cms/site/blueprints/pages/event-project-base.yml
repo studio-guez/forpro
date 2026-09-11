@@ -1,7 +1,8 @@
 # Shared base for event and project pages.
 # Provides the fields common to both content types:
 #   - title / subtitle / shortDesc / cover (sidebar)
-#   - medias + videos (upload or YouTube), repeatable content blocks and external links (main)
+#   - body: a blockbuilder of medias, videos, text and external links (main),
+#     see fields/contentBody
 # Event- and project-specific fields (dates, taxonomies, collective, ...) are
 # added by pages/event.yml and pages/project.yml, which extend this blueprint.
 tabs:
@@ -43,55 +44,9 @@ tabs:
       main:
         width: 2/3
         sections:
-          media:
+          body:
             type: fields
             fields:
-              mediaLabel:
-                label:
-                  en: Media
-                  fr: Médias
-                type: headline
-              medias:
-                label:
-                  en: Medias (images or videos)
-                  fr: Médias (images ou vidéos)
-                type: files
-                layout: cards
-                uploads: media
-              videos:
-                extends: fields/video
-                help:
-                  en: Displayed below the media gallery. Each video is either an uploaded file or a YouTube link.
-                  fr: Affichées sous la galerie de médias. Chaque vidéo est soit un fichier téléversé, soit un lien YouTube.
-          blocks:
-            type: fields
-            fields:
-              contentLabel:
-                label:
-                  en: Content
-                  fr: Contenu
-                type: headline
-              blocks:
-                extends: fields/contentBlocks
-          links:
-            type: fields
-            fields:
-              externalLinks:
-                label:
-                  en: External links
-                  fr: Liens externes
-                type: structure
-                fields:
-                  title:
-                    label:
-                      en: Title
-                      fr: Titre
-                    type: text
-                    required: true
-                  link:
-                    label:
-                      en: Link
-                      fr: Lien
-                    type: url
-                    required: true
+              body:
+                extends: fields/contentBody
   seo: tabs/seo

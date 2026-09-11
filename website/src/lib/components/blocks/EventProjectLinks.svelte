@@ -5,11 +5,14 @@
 
 	interface Props {
 		links: ContentExternalLink[];
-		title?: string;
+		/** Section heading; null or empty falls back to "Liens externes". */
+		title?: string | null;
 		class?: string;
 	}
 
-	let { links, title = 'Liens externes', class: className = '' }: Props = $props();
+	let { links, title: customTitle = null, class: className = '' }: Props = $props();
+
+	const title = $derived(customTitle || 'Liens externes');
 </script>
 
 {#if links.length > 0}

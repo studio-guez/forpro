@@ -51,7 +51,7 @@ trait UtilsEmbeds
         } catch (\Kirby\Exception\InvalidArgumentException) {
             // Content still in the pre-`fields/video` shape (a bare files list):
             // degrade to "no video" instead of a 500 until
-            // `utils/migrate-video-fields.php` has been run.
+            // `utils/migrate-event-project-body.php` has been run.
             return [];
         }
 
