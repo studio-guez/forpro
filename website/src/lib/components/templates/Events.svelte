@@ -10,6 +10,7 @@
 	import EventListItem from '$lib/components/ui/EventListItem.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
+	import IconHamburger from '$lib/components/svg/IconHamburger.svelte';
 	import InfiniteScroll from '$lib/components/ui/InfiniteScroll.svelte';
 	import ListHeader from '$lib/components/ui/ListHeader.svelte';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
@@ -26,6 +27,7 @@
 		syncQueryString
 	} from '$lib/utils/filters';
 	import { createPaginatedList } from '$lib/utils/paginatedList.svelte';
+	import { CTA_BASE, ctaColorClasses } from '$lib/utils/ctaStyles';
 	import { monthKey, monthKeyLabel, monthKeyOf, monthKeysBetween } from '$lib/utils/date';
 	import type { AgendaEventCard } from '$lib/interfaces/page';
 	import type { EventsPage, PastEventsList } from '$lib/interfaces/event';
@@ -43,6 +45,20 @@
 	let search = $state(initialParams.get('q') ?? '');
 	let selectedPublics = $state<string[]>(parseListParam(initialParams.get('publics')));
 	let selectedMonth = $state(initialParams.get('month') ?? '');
+
+	// Upcoming events are browsed one month at a time by default; the toggle
+	// swaps to a single list of every upcoming event. Mirrored into the URL so
+	// the whole-agenda view can be shared too.
+	type UpcomingView = 'month' | 'all';
+	let upcomingView = $state<UpcomingView>(initialParams.get('view') === 'all' ? 'all' : 'month');
+	const showAllUpcoming = $derived(upcomingView === 'all');
+
+	const toggleUpcomingView = (): void => {
+		upcomingView = showAllUpcoming ? 'month' : 'all';
+	};
+
+	// The toggle is a smaller pill than the CTAs, but shares their outline and hover.
+	const viewToggleClasses = `${CTA_BASE} ${ctaColorClasses(false)} text-sm gap-2 px-3.5 h-10 border-3 shrink-0`;
 
 	// Events are only filtered by public; only offer terms actually used by at
 	// least one event, in CMS order. The past archive is paginated, so which
@@ -156,8 +172,9 @@
 	const resultCount = $derived(upcoming.length + archive.current.matchTotal);
 
 	// A search is answered across the whole agenda: the month browser steps aside
-	// for the results header, and every matching upcoming event is listed at once.
-	const visibleUpcoming = $derived(hasSearch ? upcoming : upcomingForMonth);
+	// for the results header, and every matching upcoming event is listed at once —
+	// as it is when the visitor asked for the whole list.
+	const visibleUpcoming = $derived(hasSearch || showAllUpcoming ? upcoming : upcomingForMonth);
 	const announcedCount = $derived(hasSearch ? resultCount : visibleUpcoming.length);
 
 	const clearSearch = (): void => {
@@ -169,10 +186,24 @@
 		syncQueryString({
 			q: search,
 			publics: activePublics,
-			month: activeMonth
+			month: activeMonth,
+			view: showAllUpcoming ? 'all' : ''
 		});
 	});
 </script>
+
+{#snippet viewToggle()}
+	<button
+		type="button"
+		style:--color-cta="var(--list-color)"
+		class={viewToggleClasses}
+		aria-pressed={showAllUpcoming}
+		onclick={toggleUpcomingView}
+	>
+		<span class="text-trim">{showAllUpcoming ? 'Vue par mois' : 'Tous les événements'}</span>
+		<IconHamburger class="w-6 h-6" />
+	</button>
+{/snippet}
 
 <BasicHeader title={page.title} {color} id="events-title">
 	<SearchInput
@@ -218,6 +249,18 @@
 		<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
 			Aucun événement à venir pour le moment.
 		</p>
+	{:else if showAllUpcoming}
+		<ListHeader
+			{color}
+			count={upcoming.length}
+			nouns={['événement', 'événements']}
+			class="mt-12 lg:mt-18"
+		>
+			<div class="flex flex-wrap items-center justify-between gap-4">
+				<h2 class="text-h2 text-(--list-color) h-12.5">Tous les événements</h2>
+				{@render viewToggle()}
+			</div>
+		</ListHeader>
 	{:else if upcomingMonth}
 		<ListHeader
 			{color}
@@ -225,45 +268,51 @@
 			nouns={['événement', 'événements']}
 			class="mt-12 lg:mt-18"
 		>
-			<div class="flex items-center gap-2 lg:gap-4 h-12.5">
-				<button
-					type="button"
-					class="text-(--list-color) p-1 disabled:opacity-30"
-					aria-label="Mois précédent"
-					disabled={upcomingIndex <= 0}
-					onclick={() => goToMonth(-1)}
-				>
-					<IconChevron class="w-6.25 h-6.25 rotate-90" />
-				</button>
-				<!-- Every month is laid out in the same cell, so the box keeps the width of the
-				     longest label, the arrows never move and each label stays centred whatever
-				     its length. The two labels in flight travel a full box width in lockstep,
-				     which is what makes the leaving one look pushed out by the arriving one. -->
-				<div class="grid overflow-hidden">
-					{#each upcomingMonths as month (month.value)}
-						<span class="text-h2 invisible col-start-1 row-start-1 text-center" aria-hidden="true">
-							{month.label}
-						</span>
-					{/each}
-					{#key upcomingMonth.value}
-						<h2
-							class="text-h2 text-(--list-color) col-start-1 row-start-1 text-center"
-							in:fly={monthEnter}
-							out:fly={monthLeave}
-						>
-							{upcomingMonth.label}
-						</h2>
-					{/key}
+			<div class="flex flex-wrap items-center justify-between gap-4">
+				<div class="flex items-center gap-2 lg:gap-4 h-12.5">
+					<button
+						type="button"
+						class="text-(--list-color) p-1 disabled:opacity-30"
+						aria-label="Mois précédent"
+						disabled={upcomingIndex <= 0}
+						onclick={() => goToMonth(-1)}
+					>
+						<IconChevron class="w-6.25 h-6.25 rotate-90" />
+					</button>
+					<!-- Every month is laid out in the same cell, so the box keeps the width of the
+					     longest label, the arrows never move and each label stays centred whatever
+					     its length. The two labels in flight travel a full box width in lockstep,
+					     which is what makes the leaving one look pushed out by the arriving one. -->
+					<div class="grid overflow-hidden">
+						{#each upcomingMonths as month (month.value)}
+							<span
+								class="text-h2 invisible col-start-1 row-start-1 text-center"
+								aria-hidden="true"
+							>
+								{month.label}
+							</span>
+						{/each}
+						{#key upcomingMonth.value}
+							<h2
+								class="text-h2 text-(--list-color) col-start-1 row-start-1 text-center"
+								in:fly={monthEnter}
+								out:fly={monthLeave}
+							>
+								{upcomingMonth.label}
+							</h2>
+						{/key}
+					</div>
+					<button
+						type="button"
+						class="text-(--list-color) p-1 disabled:opacity-30"
+						aria-label="Mois suivant"
+						disabled={upcomingIndex >= upcomingMonths.length - 1}
+						onclick={() => goToMonth(1)}
+					>
+						<IconChevron class="w-6.25 h-6.25 -rotate-90" />
+					</button>
 				</div>
-				<button
-					type="button"
-					class="text-(--list-color) p-1 disabled:opacity-30"
-					aria-label="Mois suivant"
-					disabled={upcomingIndex >= upcomingMonths.length - 1}
-					onclick={() => goToMonth(1)}
-				>
-					<IconChevron class="w-6.25 h-6.25 -rotate-90" />
-				</button>
+				{@render viewToggle()}
 			</div>
 		</ListHeader>
 	{/if}
