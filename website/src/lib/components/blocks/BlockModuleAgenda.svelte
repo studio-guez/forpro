@@ -51,7 +51,7 @@
 
 		{#if content.cta}
 			<div class="flex justify-center md:justify-end mt-8">
-				<CtaLink cta={content.cta} color={colors.main} inverted={filled} size="lg" />
+				<CtaLink cta={content.cta} color={colors.main} inverted={filled} />
 			</div>
 		{/if}
 	</Card>
