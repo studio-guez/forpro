@@ -1,0 +1,12 @@
+# Lightweight blockbuilder for the single event/project pages: medias, videos,
+# text and external links, freely ordered and repeated. Serialized by
+# Utils::getBodyBlocks(), like `fields/body`, but with its own block set.
+label:
+  en: Content
+  fr: Contenu
+type: blocks
+fieldsets:
+  content-medias: true
+  content-video: true
+  content-text: true
+  content-links: true

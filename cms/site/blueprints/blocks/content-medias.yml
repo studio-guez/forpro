@@ -1,0 +1,19 @@
+# Event/project content block: a gallery of uploaded images and/or videos.
+# Serialized by Utils::getContentMediasBlockData() to `{medias: <media>[]}`.
+extends: blocks/base
+
+name:
+  en: Medias
+  fr: Médias
+
+icon: image
+
+fields:
+  medias:
+    label:
+      en: Medias (images or videos)
+      fr: Médias (images ou vidéos)
+    type: files
+    layout: cards
+    uploads: media
+    required: true

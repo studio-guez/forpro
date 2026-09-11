@@ -8,7 +8,7 @@
  * crops, decorative shapes.
  */
 import type { CmsContent } from '$lib/interfaces/content';
-import type { Block, PageCta } from '$lib/interfaces/page';
+import type { Block, CmsMedia, PageCta, VideoItem } from '$lib/interfaces/page';
 import type { ContentBlock, ContentExternalLink } from '$lib/interfaces/eventProject';
 import type { TaxonomyTerm } from '$lib/interfaces/taxonomy';
 
@@ -134,23 +134,32 @@ const ctaLine = (cta: PageCta | null | undefined, origin: string): string | null
 const termNames = (terms: TaxonomyTerm[] | undefined): string | null =>
 	terms && terms.length ? terms.map((term) => term.title).join(', ') : null;
 
-/** The repeatable title + rich-text blocks events, projects and basic pages share. */
-const contentBlocks = (blocks: ContentBlock[] | undefined, level = 2): string | null =>
-	blocks && blocks.length
-		? join(
-				blocks.map((block) =>
-					join([heading(level, block.title), htmlToMarkdown(block.description, level + 1)])
-				)
-			)
-		: null;
+/** A title + rich-text block: `content-text` blocks and the basic-page structure rows. */
+const contentBlock = (block: ContentBlock, level = 2): string | null =>
+	join([heading(level, block.title), htmlToMarkdown(block.description, level + 1)]);
 
-const externalLinks = (links: ContentExternalLink[] | undefined, origin: string): string | null =>
+/** The repeatable title + rich-text blocks of basic pages. */
+const contentBlocks = (blocks: ContentBlock[] | undefined, level = 2): string | null =>
+	blocks && blocks.length ? join(blocks.map((block) => contentBlock(block, level))) : null;
+
+const externalLinks = (
+	links: ContentExternalLink[] | undefined,
+	origin: string,
+	title: string | null = null
+): string | null =>
 	links && links.length
 		? join([
-				heading(2, 'Liens'),
+				heading(2, title || 'Liens'),
 				links.map((link) => `- [${link.title}](${markdownUrl(link.url, origin)})`).join('\n')
 			])
 		: null;
+
+/** A `content-video` block: the video itself, as a link the reader can follow. */
+const videoLine = (video: VideoItem | null | undefined): string | null => {
+	if (!video) return null;
+	const url = video.source === 'youtube' ? video.embed.url : video.file.url;
+	return `- [Vidéo](${url})`;
+};
 
 /**
  * The `body` blockbuilder. Each module is reduced to the text it carries: the
@@ -310,6 +319,19 @@ function renderBlock(block: Block, origin: string): string | null {
 				})
 			]);
 
+		// `fields/contentBody` (events and projects): the mirror of `EventProjectBody.svelte`.
+		case 'content-medias':
+			return bullets(c.medias, (media: CmsMedia) => (media.caption ? `- ${media.caption}` : null));
+
+		case 'content-video':
+			return videoLine(c.video as VideoItem | null);
+
+		case 'content-text':
+			return contentBlock(c as unknown as ContentBlock);
+
+		case 'content-links':
+			return externalLinks(c.links as ContentExternalLink[], origin, c.title as string | null);
+
 		default:
 			return head;
 	}
@@ -367,8 +389,7 @@ function renderTemplate(page: CmsContent, origin: string): string {
 					bullet('Programmes', termNames(page.programs)),
 					bullet('Publics', termNames(page.publics))
 				]),
-				contentBlocks(page.blocks),
-				externalLinks(page.externalLinks, origin)
+				bodyBlocks(page.body, origin)
 			]);
 
 		case 'project':
@@ -381,8 +402,7 @@ function renderTemplate(page: CmsContent, origin: string): string {
 					bullet('Programmes', termNames(page.programs)),
 					bullet('Catégories', termNames(page.categories))
 				]),
-				contentBlocks(page.blocks),
-				externalLinks(page.externalLinks, origin)
+				bodyBlocks(page.body, origin)
 			]);
 
 		case 'job-offer':

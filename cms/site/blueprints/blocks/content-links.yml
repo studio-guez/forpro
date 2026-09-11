@@ -1,0 +1,43 @@
+# Event/project content block: a titled list of external links.
+# Serialized by Utils::getContentLinksBlockData() to `{title, links: [{title, url}]}`.
+extends: blocks/base
+
+name:
+  en: External links
+  fr: Liens externes
+
+icon: url
+
+fields:
+  title:
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    help:
+      en: Optional. Defaults to "Liens externes".
+      fr: Facultatif. « Liens externes » par défaut.
+  links:
+    label:
+      en: Links
+      fr: Liens
+    type: structure
+    required: true
+    columns:
+      title:
+        width: 1/2
+      link:
+        width: 1/2
+    fields:
+      title:
+        label:
+          en: Title
+          fr: Titre
+        type: text
+        required: true
+      link:
+        label:
+          en: Link
+          fr: Lien
+        type: url
+        required: true
