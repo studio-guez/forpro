@@ -263,13 +263,14 @@ trait UtilsBlocks
 
     /**
      * Steps of a timeline. Shared with the `job-offer` template, whose
-     * `recruitingSteps` are rendered by the same module.
+     * `recruitingSteps` are rendered by the same module. `shortDesc` is HTML limited
+     * to `<a>` tags (see `getLinkedText()`), the frontend renders it with `@html`.
      */
     static function getTimelineSteps(\Kirby\Content\Field $field): array
     {
         return array_values($field->toStructure()->map(fn($step) => [
             'title'     => $step->title()->value(),
-            'shortDesc' => $step->shortDesc()->value(),
+            'shortDesc' => self::getLinkedText($step->shortDesc()),
         ])->data());
     }
 
