@@ -24,7 +24,9 @@
 				<div class="flex gap-3 mt-4.5 lg:mt-3">
 					{#if page.collectiveName}
 						<strong>{page.collectiveName}</strong>
+						{#if page.collectiveMembers.length > 0}
 						<span aria-hidden="true">·</span>
+						{/if}
 					{/if}
 					{#if page.collectiveMembers.length > 0}
 						<ul class="flex gap-3">
