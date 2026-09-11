@@ -13,7 +13,8 @@ fields:
       en: Title
       fr: Titre
     type: text
-    required: true
+  hideTitle:
+    extends: fields/hideTitle
   shortDesc:
     width: 1/2
     label:
