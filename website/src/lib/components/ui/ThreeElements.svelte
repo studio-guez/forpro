@@ -70,8 +70,14 @@
 				style:transform="rotate({rotations[i % rotations.length]}deg)"
 				style:color={textColor}
 			>
-				<h3 class="text-lg lg:text-3xl font-bold">{element.title}</h3>
-				<p class="text-base lg:text-2xl lg:font-bold mt-3 lg:mt-6 whitespace-pre-line">
+				{#if element.title}
+					<h3 class="text-lg lg:text-3xl font-bold">{element.title}</h3>
+				{/if}
+				<p
+					class="text-base lg:text-2xl lg:font-bold whitespace-pre-line"
+					class:mt-3={element.title}
+					class:lg:mt-6={element.title}
+				>
 					{element.description}
 				</p>
 			</div>
