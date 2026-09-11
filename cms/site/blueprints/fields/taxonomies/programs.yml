@@ -1,6 +1,6 @@
 extends: fields/taxonomies/taxonomy
 label:
-  en: Programs
-  fr: Programmes
+  en: Pages
+  fr: Pages
 options:
   query: site.find("taxonomies").find("programs").children

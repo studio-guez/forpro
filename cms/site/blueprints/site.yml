@@ -129,8 +129,8 @@ tabs:
             type: pages
             image: false
             label:
-              en: Programs
-              fr: Programmes
+              en: Pages
+              fr: Pages
             templates:
               - program
             parent: site.index.template("programs").first()
