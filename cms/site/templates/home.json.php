@@ -8,8 +8,13 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'home');
 
-// `.json` or `.lottie`, served as-is and played by the frontend.
-$json['lottie'] = Utils::getJsonEncodeDocumentDataOrNull($page->lottie()->toFile());
+// `.json` or `.lottie`, served as-is and played by the frontend. An empty `alt` means
+// decorative: the frontend then hides the canvas from assistive tech.
+$lottie = $page->lottie()->toFile();
+$json['lottie'] = $lottie ? [
+    ...Utils::getJsonEncodeDocumentDataOrNull($lottie),
+    'alt' => $lottie->alt()->value(),
+] : null;
 
 $json['welcomeTitle']     = $page->welcomeTitle()->value();
 $json['welcomeShortDesc'] = $page->welcomeShortDesc()->value();
