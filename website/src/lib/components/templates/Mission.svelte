@@ -5,12 +5,9 @@
 	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
 	import ApplicationsClosedNotice from '$lib/components/ui/ApplicationsClosedNotice.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
-	import { formatShortDate, toDate } from '$lib/utils/date';
 	import type { MissionPage } from '$lib/interfaces/missions';
 
 	let { page }: { page: MissionPage } = $props();
-
-	const publishedDate = $derived(toDate(page.publishedDate));
 
 	const sections = $derived([
 		{ label: 'Ton profil :', html: page.profile },
@@ -41,12 +38,9 @@
 
 		{#snippet meta()}
 			<p class="text-label text-grey-dark flex flex-wrap gap-x-12 gap-y-2 mt-4.5 lg:mt-3">
-				<span>
-					Publiée le
-					<time datetime={page.publishedDate}>
-						{publishedDate ? formatShortDate(publishedDate) : page.publishedDate}
-					</time>
-				</span>
+				{#if page.date}
+					<span>{page.date}</span>
+				{/if}
 				<span>Annonceur : {page.announcer}</span>
 			</p>
 
