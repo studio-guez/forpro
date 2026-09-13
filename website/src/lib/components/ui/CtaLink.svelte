@@ -6,6 +6,7 @@
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
 	import {
 		CTA_BASE,
+		CTA_LABEL,
 		ctaColorClasses,
 		ctaIconSizeClasses,
 		ctaSizeClasses,
@@ -39,10 +40,11 @@
 	target={cta.target ?? undefined}
 	rel={cta.target === '_blank' ? 'noopener noreferrer' : undefined}
 	aria-label={ariaLabel}
+	title={cta.label}
 	style:--color-cta={color}
 	class="{CTA_BASE} {colorClasses} {ctaSizeClasses[size]} {className}"
 >
-	<span class="text-trim">{cta.label}</span>
+	<span class={CTA_LABEL}>{cta.label}</span>
 	{#if cta.icon === 'arrow'}<IconArrow class={ctaIconSizeClasses[size]} />
 	{:else if cta.icon === 'email'}<IconEmail class={ctaIconSizeClasses[size]} />
 	{:else if cta.icon === 'phone'}<IconPhone class={ctaIconSizeClasses[size]} />

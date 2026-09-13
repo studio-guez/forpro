@@ -30,9 +30,9 @@
 	>
 		<!-- Same two halves as the access plate below, copy inset on the left, so the FoodLab
 			 card starts where the map starts; unlike the map it runs to the plate's outer edge. -->
-		<div class="grid lg:grid-cols-2 gap-6 items-stretch text-blue">
+		<div class="grid lg:grid-cols-2 gap-y-9 gap-x-6 items-stretch text-blue">
 			{#if hasHours}
-				<div class="px-5 lg:pl-15 xl:pl-30 lg:pr-8 py-12">
+				<div class="px-5 lg:pl-15 xl:pl-30 lg:pr-8 lg:py-12">
 					{#if page.openingHoursTitle}
 						<h2 id="opening-hours-title" class="text-h4">{page.openingHoursTitle}</h2>
 					{/if}
@@ -46,7 +46,7 @@
 			{/if}
 
 			{#if hasFoodlab}
-				<div class="px-5 lg:px-0 lg:col-start-2">
+				<div class="lg:col-start-2">
 					<div class="relative overflow-hidden rounded-3xl bg-blue text-white h-full">
 						{#if page.foodlabImage}
 							<Img
@@ -67,7 +67,7 @@
 								<h2 id="foodlab-hours-title" class="text-h4">{page.foodlabOpeningHoursTitle}</h2>
 							{/if}
 							{#if page.foodlabCta}
-								<CtaLink cta={page.foodlabCta} inverted class="self-end mt-auto" />
+								<CtaLink cta={page.foodlabCta} inverted class="self-end mt-15 lg:mt-8" />
 							{/if}
 						</div>
 					</div>
