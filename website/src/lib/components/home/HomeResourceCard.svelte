@@ -54,7 +54,7 @@
 			<Shape class="w-full h-auto" />
 		</div>
 
-		<div class="relative flex-1 flex items-end justify-between gap-3 py-2 px-2 min-h-45" style:color={background}>
+		<div class="relative flex-1 flex items-end justify-between gap-3 py-2 px-2 min-h-30 md:min-h-45" style:color={background}>
 			<div class="min-w-0 text-white">
 				{#if resource.overtitle}
 					<p class="text-caption">{resource.overtitle}</p>
