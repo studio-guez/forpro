@@ -20,13 +20,18 @@ export interface HomeResourceCard {
 	readonly url: string;
 }
 
+export interface HomeLottie extends CmsDocument {
+	/** Text alternative for screen readers; null when the animation is decorative. */
+	readonly alt: string | null;
+}
+
 export interface HomePage {
 	readonly template: 'home';
 	readonly title: string;
 	readonly slug: string;
 	readonly path: string;
 	/** `.json` or `.lottie` file, served as-is; null until the editor uploads one. */
-	readonly lottie: CmsDocument | null;
+	readonly lottie: HomeLottie | null;
 	readonly welcomeTitle: string;
 	readonly welcomeShortDesc: string;
 	/** Always 3 entries (the blueprint has one title + CTA pair per card). */

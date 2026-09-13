@@ -8,9 +8,10 @@
 </script>
 
 {#if page.lottie}
-	<section class="px-base" aria-hidden="true">
-		<LottiePlayer file={page.lottie} />
-	</section>
+	<!-- The player hides itself from assistive tech unless the editor gave it an alt. -->
+	<div class="px-base">
+		<LottiePlayer file={page.lottie} alt={page.lottie.alt} />
+	</div>
 {/if}
 
 <section class="px-card mt-12 lg:mt-24" aria-labelledby="home-welcome-title">
@@ -27,7 +28,7 @@
 </section>
 
 {#if page.resources.length > 0}
-	<section class="mt-16 lg:mt-32 pb-16 lg:pb-32 isolate" aria-labelledby="home-resources-title">
+	<section class="mt-16 lg:mt-32 isolate" aria-labelledby="home-resources-title">
 		<h2 id="home-resources-title" class="text-h2 text-center px-card">{page.resourcesTitle}</h2>
 		<HomeResourcesCoverflow
 			resources={page.resources}

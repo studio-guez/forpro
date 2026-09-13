@@ -5,11 +5,16 @@
 	interface Props {
 		/** A `.json` or `.lottie` export, served as-is by the CMS. */
 		file: CmsDocument;
+		/**
+		 * Text alternative, exposed as an image to assistive tech. Omit (or pass empty)
+		 * for a decorative animation, which is then hidden from it.
+		 */
+		alt?: string | null;
 		/** Box the animation is fitted into; the canvas fills it. */
 		class?: string;
 	}
 
-	let { file, class: className = '' }: Props = $props();
+	let { file, alt = null, class: className = '' }: Props = $props();
 
 	let canvas: HTMLCanvasElement | undefined = $state();
 
@@ -48,5 +53,11 @@
 </script>
 
 <div class={className}>
-	<canvas bind:this={canvas} class="block w-full h-full" aria-hidden="true"></canvas>
+	<canvas
+		bind:this={canvas}
+		class="block w-full h-full"
+		role={alt ? 'img' : undefined}
+		aria-label={alt || undefined}
+		aria-hidden={alt ? undefined : 'true'}
+	></canvas>
 </div>

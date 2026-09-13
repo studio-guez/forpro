@@ -8,3 +8,13 @@ accept:
   extension:
     - json
     - lottie
+
+fields:
+  alt:
+    label:
+      en: Alternative text
+      fr: Texte alternatif
+    type: text
+    help:
+      en: What the animation shows, for screen readers. Leave empty if it is purely decorative.
+      fr: Ce que montre l'animation, pour les lecteurs d'écran. Laisser vide si elle est purement décorative.
