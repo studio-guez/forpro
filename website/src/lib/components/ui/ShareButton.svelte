@@ -2,6 +2,7 @@
 	import IconShare from '$lib/components/svg/IconShare.svelte';
 	import {
 		CTA_BASE,
+		CTA_LABEL,
 		ctaColorClasses,
 		ctaIconSizeClasses,
 		ctaSizeClasses,
@@ -63,6 +64,6 @@
 	class="{CTA_BASE} {colorClasses} {ctaSizeClasses[size]} {className}"
 	onclick={share}
 >
-	<span class="text-trim" aria-live="polite">{shared ? copiedLabel : label}</span>
+	<span class={CTA_LABEL} aria-live="polite">{shared ? copiedLabel : label}</span>
 	<IconShare class={ctaIconSizeClasses[size]} />
 </button>

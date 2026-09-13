@@ -8,8 +8,13 @@
 
 export type CtaSize = 'md' | 'lg';
 
+// `max-w-full` keeps the pill inside its container so a long label can be truncated by
+// `CTA_LABEL` instead of overflowing the fixed-height pill onto a second line.
 export const CTA_BASE =
-	'font-bold leading-none inline-flex items-center rounded-full bg-transparent backdrop-blur-xs transition-colors';
+	'font-bold leading-none inline-flex items-center max-w-full rounded-full bg-transparent backdrop-blur-xs transition-colors';
+
+/** Label span: single line, ellipsis when the pill runs out of room. */
+export const CTA_LABEL = 'text-trim min-w-0 truncate';
 
 export const ctaSizeClasses: Record<CtaSize, string> = {
 	md: 'text-base lg:text-lg gap-2 lg:gap-2.5 px-2.25 lg:px-5.5 h-10.5 lg:h-12.5 border-3',
@@ -17,8 +22,8 @@ export const ctaSizeClasses: Record<CtaSize, string> = {
 };
 
 export const ctaIconSizeClasses: Record<CtaSize, string> = {
-	md: 'w-6 lg:w-7 h-6 lg:h-7',
-	lg: 'w-6 lg:w-9.5 h-6 lg:h-9.5'
+	md: 'shrink-0 w-6 lg:w-7 h-6 lg:h-7',
+	lg: 'shrink-0 w-6 lg:w-9.5 h-6 lg:h-9.5'
 };
 
 /** Inverted swaps the pill onto a dark surface: white outline, themed text on hover. */
