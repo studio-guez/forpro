@@ -474,14 +474,21 @@ function renderTemplate(page: CmsContent, origin: string): string {
 					page.sections.map((teamSection) =>
 						join([
 							heading(2, teamSection.title),
-							teamSection.members
-								.map((member) => {
-									const name = member.linkedin
-										? `[${member.name}](${member.linkedin})`
-										: member.name;
-									return `- ${name}${member.role ? ` — ${member.role}` : ''}`;
-								})
-								.join('\n')
+							join(
+								teamSection.groups.map((group) =>
+									join([
+										heading(3, group.title),
+										group.members
+											.map((member) => {
+												const name = member.linkedin
+													? `[${member.name}](${member.linkedin})`
+													: member.name;
+												return `- ${name}${member.role ? ` — ${member.role}` : ''}`;
+											})
+											.join('\n')
+									])
+								)
+							)
 						])
 					)
 				),
