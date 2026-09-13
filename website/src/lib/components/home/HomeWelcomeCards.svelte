@@ -50,7 +50,7 @@
 			class={[
 				'slot relative lg:w-[70%] max-w-full',
 				slot.side === 'left' ? 'self-start' : 'self-end',
-				i > 0 && '-mt-2 lg:-mt-20'
+				i > 0 && '-mt-1 lg:-mt-20'
 			]}
 			style:z-index={i + 1}
 		>
