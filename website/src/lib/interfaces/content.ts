@@ -9,6 +9,7 @@ import type { MissionPage, MissionsPage } from './missions';
 import type { ImpressumPage } from './impressum';
 import type { PressPage } from './press';
 import type { FactoryLabPage } from './factoryLab';
+import type { InfosPratiquesPage } from './infosPratiques';
 
 // Any CMS content resolved by the [...slug] route, discriminated by `template`.
 export type CmsContent =
@@ -26,4 +27,5 @@ export type CmsContent =
 	| MissionsPage
 	| ImpressumPage
 	| PressPage
-	| FactoryLabPage;
+	| FactoryLabPage
+	| InfosPratiquesPage;

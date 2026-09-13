@@ -39,16 +39,19 @@
 	--color-brown: #b8b09f;
 
 	/* LINE HEIGHTS */
-	--text-xs--line-height: 1.1;
-	--text-sm--line-height: 1.15;
-	--text-base--line-height: 1.2;
-	--text-lg--line-height: 1.2;
-	--text-xl--line-height: 1.2;
-	--text-2xl--line-height: 1.2;
-	--text-3xl--line-height: 1.05;
-	--text-4xl--line-height: 1.05;
-	--text-5xl--line-height: 1;
-	--text-6xl--line-height: 1;
+	--text-xs--line-height: 1.25;
+	--text-sm--line-height: 1.25;
+	--text-base--line-height: 1.25;
+	--text-lg--line-height: 1.25;
+	--text-xl--line-height: 1.25;
+	--text-2xl--line-height: 1.25;
+	--text-3xl--line-height: 1.25;
+	--text-4xl--line-height: 1.25;
+	--text-5xl--line-height: 1.25;
+	--text-6xl--line-height: 1.25;
+	--text-7xl--line-height: 1.25;
+	--text-8xl--line-height: 1.25;
+	--text-9xl--line-height: 1.25;
 
 	/* TRANSITION */
 	--default-transition-duration: 250ms;
@@ -92,6 +95,7 @@
 		scrollbar-width: thin;
 		scrollbar-gutter: stable;
 		scroll-padding-top: 6.75rem;
+		letter-spacing: 0.02em;
 	}
 	button:not(:disabled) {
 		@apply cursor-pointer;

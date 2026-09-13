@@ -1,6 +1,5 @@
 <script lang="ts">
 	import TermTags from '$lib/components/ui/TermTags.svelte';
-	import { formatShortDate, toDate } from '$lib/utils/date';
 	import type { MissionCard } from '$lib/interfaces/missions';
 
 	interface Props {
@@ -9,8 +8,6 @@
 	}
 
 	let { mission, headingTag = 'h2' }: Props = $props();
-
-	const date = $derived(toDate(mission.date));
 </script>
 
 <article class="relative h-full flex flex-col gap-3">
@@ -21,8 +18,10 @@
 	</svelte:element>
 
 	<p class="text-label">
-		<time datetime={mission.date}>{date ? formatShortDate(date) : mission.date}</time>
-		<span aria-hidden="true">·</span>
+		{#if mission.date}
+			{mission.date}
+			<span aria-hidden="true">·</span>
+		{/if}
 		{mission.location}
 	</p>
 

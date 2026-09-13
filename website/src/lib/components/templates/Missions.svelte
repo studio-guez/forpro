@@ -24,9 +24,10 @@
 	const color = 'var(--color-blue)';
 	const noResultsText = 'Aucune mission ne correspond à votre sélection.';
 
-	// The values the CMS sorts on. An unset sort is not an absence of order: the
-	// CMS falls back to the most recent missions first, so that is the empty
-	// option rather than a `dateDesc` of its own.
+	// The values the CMS sorts on (`date*` orders by publication date: the
+	// mission date is free text). An unset sort is not an absence of order: the
+	// CMS falls back to the most recently published missions first, so that is
+	// the empty option rather than a `dateDesc` of its own.
 	const sortOptions = [
 		{ value: '', label: 'Date (plus récentes)' },
 		{ value: 'dateAsc', label: 'Date (plus anciennes)' },
