@@ -63,8 +63,8 @@
 	>
 		<IconChevron
 			class="w-7 h-7 {direction === 'prev'
-				? 'rotate-90 translate-x-0.5'
-				: '-rotate-90 -translate-x-0.5'}"
+				? 'rotate-90 translate-x-px'
+				: '-rotate-90 -translate-x-px'}"
 		/>
 	</button>
 {/snippet}
@@ -78,13 +78,13 @@
 			onpointerdown={onPointerDown}
 			onpointerup={onPointerUp}
 			onpointercancel={() => (pointerStartX = null)}
-			class="grid touch-pan-y select-none [--step:18%] lg:[--step:60%]"
+			class="grid touch-pan-y select-none [--step:15%] sm:[--step:40%] md:[--step:50%] lg:[--step:40%] xl:[--step:60%]"
 		>
 			{#each resources as resource, i (i)}
 				{@const d = offset(i)}
 				<!-- Every card shares the one grid cell; the offset fans them out from there. -->
 				<li
-					class="col-start-1 row-start-1 justify-self-center w-60 lg:w-88 transition-[translate,scale] duration-500 ease-out"
+					class="col-start-1 row-start-1 justify-self-center w-50 sm:w-60 lg:w-88 transition-[translate,scale] duration-500 ease-out"
 					class:pointer-events-none={Math.abs(d) === 2}
 					style:translate="calc({d} * var(--step)) {Math.abs(d) * 2}%"
 					style:scale={1 - Math.abs(d) * 0.1}
@@ -104,8 +104,8 @@
 		</ul>
 
 		{#if count > 1}
-			{@render arrow('prev', 'absolute left-2 lg:left-11 top-1/2 -translate-y-1/2 z-20')}
-			{@render arrow('next', 'absolute right-2 lg:right-11 top-1/2 -translate-y-1/2 z-20')}
+			{@render arrow('prev', 'absolute left-2 lg:left-9 top-1/2 -translate-y-1/2 z-20')}
+			{@render arrow('next', 'absolute right-2 lg:right-9 top-1/2 -translate-y-1/2 z-20')}
 		{/if}
 	</div>
 

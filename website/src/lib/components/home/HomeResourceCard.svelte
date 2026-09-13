@@ -36,7 +36,7 @@
 		class="group relative flex flex-col h-full rounded-3xl overflow-hidden p-3 text-white"
 		style:background-color={background}
 	>
-		<div class="relative rounded-2xl overflow-hidden aspect-16/10 bg-white/10">
+		<div class="relative rounded-2xl overflow-hidden aspect-4/3 sm:aspect-16/10 bg-white/10">
 			{#if resource.cover}
 				<Img
 					image={resource.cover}
