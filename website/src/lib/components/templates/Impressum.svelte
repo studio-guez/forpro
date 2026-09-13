@@ -55,7 +55,7 @@
 {/if}
 
 {#each page.sections as section, sectionIndex (sectionIndex)}
-	<section aria-labelledby="impressum-section-{sectionIndex}" class={LABELLED_SECTION}>
+	<section aria-labelledby="impressum-section-{sectionIndex}" class="px-base {LABELLED_SECTION}">
 		<h2 id="impressum-section-{sectionIndex}" class="text-label font-bold">{section.title}</h2>
 
 		<dl class={LABELLED_SECTION_ITEMS}>
