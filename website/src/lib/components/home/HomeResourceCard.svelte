@@ -9,7 +9,7 @@
 
 	interface Props {
 		resource: HomeResourceCard;
-		/** Position in the carousel: page cards cycle through their 3 shapes with it. */
+		/** Rank among the page cards (not the carousel slot): picks one of their 3 shapes. */
 		index: number;
 		headingTag?: string;
 		/** Rendered slot width — the card is laid out by its parent, which owns the geometry. */
