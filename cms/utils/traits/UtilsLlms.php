@@ -31,7 +31,7 @@ trait UtilsLlms
      */
     private const LLMS_SECTIONS = [
         'Pages' => [
-            'templates' => ['page', 'team', 'press', 'factory-lab'],
+            'templates' => ['page', 'team', 'press', 'factory-lab', 'infos-pratiques'],
         ],
         'Index et listes' => [
             'templates' => ['events', 'projects', 'job-offers', 'missions', 'faq'],

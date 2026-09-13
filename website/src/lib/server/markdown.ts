@@ -635,6 +635,18 @@ function renderTemplate(page: CmsContent, origin: string): string {
 				bodyBlocks(page.body, origin)
 			]);
 
+		case 'infos-pratiques':
+			return join([
+				section(page.openingHoursTitle ?? 'Horaires d’ouverture', page.openingHoursContent),
+				page.foodlabOpeningHoursTitle || page.foodlabCta
+					? join([
+							heading(2, page.foodlabOpeningHoursTitle ?? 'FoodLab'),
+							ctaLine(page.foodlabCta, origin)
+						])
+					: null,
+				section(page.accessTitle ?? 'Accès', page.accessContent)
+			]);
+
 		// `page` and anything added later: the shared header plus the body.
 		default:
 			return join([

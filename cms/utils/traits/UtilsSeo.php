@@ -18,6 +18,7 @@ trait UtilsSeo
         'faq',
         'team',
         'press',
+        'infos-pratiques',
         'impressum',
         'factory-lab',
         'events',
