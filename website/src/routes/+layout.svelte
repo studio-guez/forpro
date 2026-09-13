@@ -93,10 +93,14 @@
 	<SiteHeader header={data.header} />
 {/if}
 
+<!-- `overflow-x-clip`: entrance animations park elements past the viewport edge (the home
+	 welcome cards); clipping here, at the page level, keeps them from widening the document
+	 without any section having to crop them on the way in. `clip` is not a scroll container,
+	 so sticky positioning inside keeps working. -->
 <main
 	id="main-content"
 	tabindex="-1"
-	class="pt-27 space-y-9 lg:space-y-18 pb-18 focus:outline-none"
+	class="pt-27 space-y-9 lg:space-y-18 pb-18 focus:outline-none overflow-x-clip"
 >
 	{@render children?.()}
 </main>

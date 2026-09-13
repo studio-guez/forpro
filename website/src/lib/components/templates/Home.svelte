@@ -22,9 +22,7 @@
 	</div>
 </section>
 
-<!-- `overflow-x-clip`: before the reveal fires the cards sit 40% off to the sides, which
-	 would otherwise widen the document and give the page a horizontal scrollbar. -->
-<section class="px-base mt-12 lg:mt-20 overflow-x-clip">
+<section class="px-base mt-12 lg:mt-20">
 	<HomeWelcomeCards cards={page.welcomeCards} />
 </section>
 
