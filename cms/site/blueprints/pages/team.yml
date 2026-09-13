@@ -50,11 +50,14 @@ tabs:
         label:
           en: Team members
           fr: Membres de l'équipe
+        help:
+          en: Each section is an expandable band on the page, holding one or more labelled groups of members.
+          fr: Chaque section est un bandeau dépliable sur la page, contenant un ou plusieurs groupes de membres.
         type: structure
         columns:
           title:
             width: 1/2
-          members:
+          groups:
             width: 1/2
         fields:
           title:
@@ -63,50 +66,67 @@ tabs:
               fr: Titre de la section
             type: text
             required: true
-          members:
+          groups:
             label:
-              en: Members
-              fr: Membres
+              en: Groups
+              fr: Groupes
             type: structure
             columns:
-              name:
-                width: 1/4
-              role:
-                width: 1/4
-              status:
-                width: 1/4
-              linkedin:
-                width: 1/4
+              title:
+                width: 1/2
+              members:
+                width: 1/2
             fields:
-              name:
+              title:
                 label:
-                  en: Name
-                  fr: Nom
+                  en: Group title
+                  fr: Titre du groupe
                 type: text
                 required: true
-              status:
-                required: true
+              members:
                 label:
-                  en: Status
-                  fr: Statut
-                type: select
-                default: employe
-                options:
-                  - value: apprenti
-                    text: { en: Apprentice, fr: Apprenti·e }
-                  - value: employe
-                    text: { en: Employee, fr: Employé·e }
-              role:
-                required: true
-                label:
-                  en: Role
-                  fr: Fonction
-                type: text
-              linkedin:
-                label:
-                  en: LinkedIn link
-                  fr: Lien LinkedIn
-                type: url
+                  en: Members
+                  fr: Membres
+                type: structure
+                columns:
+                  name:
+                    width: 1/4
+                  role:
+                    width: 1/4
+                  status:
+                    width: 1/4
+                  linkedin:
+                    width: 1/4
+                fields:
+                  name:
+                    label:
+                      en: Name
+                      fr: Nom
+                    type: text
+                    required: true
+                  status:
+                    required: true
+                    label:
+                      en: Status
+                      fr: Statut
+                    type: select
+                    default: employe
+                    options:
+                      - value: apprenti
+                        text: { en: Apprentice, fr: Apprenti·e }
+                      - value: employe
+                        text: { en: Employee, fr: Employé·e }
+                  role:
+                    required: true
+                    label:
+                      en: Role
+                      fr: Fonction
+                    type: text
+                  linkedin:
+                    label:
+                      en: LinkedIn link
+                      fr: Lien LinkedIn
+                    type: url
       body:
         extends: fields/bodyExtra
 

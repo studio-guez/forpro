@@ -16,12 +16,15 @@ $json['introTitle'] = $page->introTitle()->value();
 $json['intro'] = $page->intro()->value();
 
 $json['sections'] = $page->sections()->toStructure()->map(fn($section) => [
-    'title'   => $section->title()->value(),
-    'members' => $section->members()->toStructure()->map(fn($member) => [
-        'name'     => $member->name()->value(),
-        'role'     => $member->role()->isNotEmpty() ? $member->role()->value() : null,
-        'status'   => $member->status()->isNotEmpty() ? $member->status()->value() : null,
-        'linkedin' => $member->linkedin()->isNotEmpty() ? $member->linkedin()->value() : null,
+    'title'  => $section->title()->value(),
+    'groups' => $section->groups()->toStructure()->map(fn($group) => [
+        'title'   => $group->title()->value(),
+        'members' => $group->members()->toStructure()->map(fn($member) => [
+            'name'     => $member->name()->value(),
+            'role'     => $member->role()->isNotEmpty() ? $member->role()->value() : null,
+            'status'   => $member->status()->isNotEmpty() ? $member->status()->value() : null,
+            'linkedin' => $member->linkedin()->isNotEmpty() ? $member->linkedin()->value() : null,
+        ])->values(),
     ])->values(),
 ])->values();
 
