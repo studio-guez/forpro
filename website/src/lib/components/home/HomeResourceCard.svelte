@@ -59,7 +59,7 @@
 				{#if resource.overtitle}
 					<p class="text-caption">{resource.overtitle}</p>
 				{/if}
-				<svelte:element this={headingTag} class="text-h4 mt-0.5">{resource.title}</svelte:element>
+				<svelte:element this={headingTag} class="text-h4">{resource.title}</svelte:element>
 			</div>
 			<span
 				class="shrink-0 w-10 h-10 lg:w-11 lg:h-11 rounded-full border-3 border-white text-white! flex items-center justify-center transition-colors group-hover:bg-white group-hover:text-current!"
