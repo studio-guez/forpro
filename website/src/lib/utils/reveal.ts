@@ -7,7 +7,69 @@ interface RevealOptions {
 	 * as it shows), `0.5` the middle of the screen. Default `0.85`.
 	 */
 	trigger?: number;
+	/**
+	 * Gap, in milliseconds, before the next element's entrance when the whole group plays
+	 * at hydration, so they come in one after the other instead of all at once. Default
+	 * `150`.
+	 */
+	stagger?: number;
 }
+
+interface Pending {
+	node: HTMLElement;
+	trigger: number;
+	stagger: number;
+	/** Undoes whatever `flush` scheduled for this element; set once it has run. */
+	cancel?: () => void;
+}
+
+// Elements mounted in the same synchronous pass form a group, decided on together one
+// frame later (see `flush`). The frame gap is also what lets the parked state get painted
+// before `done` lands, otherwise the browser sees no change and nothing transitions.
+let group: Pending[] = [];
+let flushQueued = false;
+
+const flush = () => {
+	const batch = group;
+	group = [];
+	flushQueued = false;
+
+	// If any of the group is on screen at hydration, the visitor is looking at it and the
+	// whole group plays right away, in order and `stagger` apart: waiting for the others
+	// to cross the trigger line would leave the sequence half done. Otherwise each element
+	// enters on its own as it scrolls in.
+	const onScreen = batch.some(({ node }) => {
+		const { top, bottom } = node.getBoundingClientRect();
+		return bottom > 0 && top < window.innerHeight;
+	});
+
+	let delay = 0;
+	for (const entry of batch) {
+		const { node, trigger, stagger } = entry;
+
+		if (onScreen) {
+			const timer = setTimeout(() => {
+				node.dataset.reveal = 'done';
+			}, delay);
+			delay += stagger;
+			entry.cancel = () => clearTimeout(timer);
+			continue;
+		}
+
+		// The root is shrunk from the bottom so that "intersecting" means the element's
+		// top has crossed the trigger line, not merely the bottom edge of the viewport.
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (!entries.some((e) => e.isIntersecting)) return;
+				node.dataset.reveal = 'done';
+				observer.disconnect();
+			},
+			{ rootMargin: `0px 0px ${-Math.round((1 - trigger) * 100)}% 0px` }
+		);
+		observer.observe(node);
+		entry.cancel = () => observer.disconnect();
+	}
+};
 
 /**
  * Drives a one-shot entrance: `data-reveal` goes `pending` on mount and `done` the first
@@ -15,36 +77,32 @@ interface RevealOptions {
  * the entrance plays once, not on every pass. The element's CSS keys its offset state on
  * `[data-reveal='pending']` (see `HomeWelcomeCards`).
  *
- * Two cases skip `pending` on purpose. Without JavaScript the attribute never appears
- * and the element simply renders in its final state. And an element already on screen at
- * hydration time goes straight to `done`, whatever the trigger: the server-rendered page
- * has shown it in place already, so pushing it out and sliding it back in would read as a
- * glitch, not an entrance.
+ * Elements mounted together are a group. If any of them is on screen at hydration time,
+ * none waits for the trigger line: they all play their entrance right away, in order and
+ * `stagger` apart. Without JavaScript the attribute never appears, so the element simply
+ * renders in its final state.
  */
 export const reveal: Action<HTMLElement, RevealOptions | undefined> = (node, options) => {
-	const trigger = options?.trigger ?? 0.85;
-
-	const { top } = node.getBoundingClientRect();
-	if (top < window.innerHeight) {
-		node.dataset.reveal = 'done';
-		return;
-	}
-
 	node.dataset.reveal = 'pending';
 
-	// The root is shrunk from the bottom so that "intersecting" means the element's top
-	// has crossed the trigger line, not merely the bottom edge of the viewport.
-	const observer = new IntersectionObserver(
-		(entries) => {
-			if (!entries.some((entry) => entry.isIntersecting)) return;
-			node.dataset.reveal = 'done';
-			observer.disconnect();
-		},
-		{ rootMargin: `0px 0px ${-Math.round((1 - trigger) * 100)}% 0px` }
-	);
-	observer.observe(node);
+	const entry: Pending = {
+		node,
+		trigger: options?.trigger ?? 0.85,
+		stagger: options?.stagger ?? 150
+	};
+	group.push(entry);
+
+	if (!flushQueued) {
+		flushQueued = true;
+		// Two frames, not one: a callback queued from inside a frame callback runs in the
+		// *next* frame, by which time the first one, with the parked state, is committed.
+		requestAnimationFrame(() => requestAnimationFrame(flush));
+	}
 
 	return {
-		destroy: () => observer.disconnect()
+		destroy: () => {
+			group = group.filter((pending) => pending !== entry);
+			entry.cancel?.();
+		}
 	};
 };
