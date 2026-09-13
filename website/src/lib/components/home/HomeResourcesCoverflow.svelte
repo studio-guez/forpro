@@ -42,19 +42,25 @@
 	// nobody has a card pulled from under their cursor or their keyboard focus, and the
 	// timer restarts after every manual turn (the effect re-runs on `active`) so the deck
 	// never turns again right after the user did. Reduced motion gets no spin at all: a
-	// carousel turning on its own is exactly the motion the setting is about.
+	// carousel turning on its own is exactly the motion the setting is about. Neither do
+	// touch screens: there is no hover to hold the spin, so the deck would turn under a
+	// thumb that is about to tap a card; the arrows and the swipe are how it moves there.
 	let hovered = $state(false);
 	let focused = $state(false);
 	let reduced = $state(false);
-	const spinning = $derived(count > 1 && !hovered && !focused && !reduced);
+	let touch = $state(false);
+	const spinning = $derived(count > 1 && !hovered && !focused && !reduced && !touch);
 
-	$effect(() => {
-		const query = window.matchMedia('(prefers-reduced-motion: reduce)');
-		const sync = () => (reduced = query.matches);
+	const watchMedia = (query: string, set: (matches: boolean) => void) => {
+		const list = window.matchMedia(query);
+		const sync = () => set(list.matches);
 		sync();
-		query.addEventListener('change', sync);
-		return () => query.removeEventListener('change', sync);
-	});
+		list.addEventListener('change', sync);
+		return () => list.removeEventListener('change', sync);
+	};
+
+	$effect(() => watchMedia('(prefers-reduced-motion: reduce)', (m) => (reduced = m)));
+	$effect(() => watchMedia('(hover: none)', (m) => (touch = m)));
 
 	$effect(() => {
 		if (!spinning) return;
