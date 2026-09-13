@@ -325,9 +325,10 @@ trait UtilsPages
         );
 
         // Sorting reads two fields per comparison, so both are resolved once.
+        // The mission `date` is free text, so the order comes from `publishedDate`.
         $items = $missions->values(fn($mission) => [
             'page'  => $mission,
-            'date'  => (string)$mission->date()->toDate('Y-m-d'),
+            'date'  => (string)$mission->publishedDate()->toDate('Y-m-d'),
             'title' => (string)$mission->title()->value(),
         ]);
 
@@ -396,7 +397,7 @@ trait UtilsPages
         return [
             'title'     => $page->title()->value(),
             'url'       => '/' . $page->virtualPath(),
-            'date'      => $page->date()->toDate('Y-m-d'),
+            'date'      => $page->date()->value(),
             'location'  => $page->location()->value(),
             'shortDesc' => $page->shortDesc()->value(),
             'terms'     => self::resolveTaxonomyTerms($page->categories(), 'categories'),

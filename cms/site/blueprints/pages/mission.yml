@@ -58,14 +58,17 @@ tabs:
                 required: true
               publishedDate:
                 extends: fields/publishedDate
-                width: 1/2
+                help:
+                  en: Not shown on the site, but orders the missions index (most recent first).
+                  fr: Non affichée sur le site, mais ordonne l'index des missions (plus récentes en premier).
               date:
                 label:
                   en: Mission date
                   fr: Date de la mission
-                type: date
-                required: true
-                width: 1/2
+                type: text
+                help:
+                  en: Free text shown as is on the mission page and its card, e.g. "From 15 September" or "Every Wednesday".
+                  fr: Texte libre affiché tel quel sur la page de la mission et sa carte, p. ex. « Dès le 15 septembre » ou « Tous les mercredis ».
               location:
                 label:
                   en: Place

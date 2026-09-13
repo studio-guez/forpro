@@ -17,12 +17,12 @@ $json['categories'] = Utils::resolveTaxonomyTerms($page->categories(), 'categori
 // button by a notice rather than 404ing.
 $json['openToApplications'] = Utils::isOpenToApplications($page);
 
-$json['announcer']     = $page->announcer()->value();
-$json['publishedDate'] = $page->publishedDate()->toDate('Y-m-d');
-$json['date']          = $page->date()->toDate('Y-m-d');
-$json['location']      = $page->location()->value();
+$json['announcer'] = $page->announcer()->value();
+// Free text, shown as is; `publishedDate` only orders the index and is not shipped.
+$json['date']      = $page->date()->value();
+$json['location']  = $page->location()->value();
 // Closed missions ship no way to apply at all, not even in the page payload.
-$json['applyCta']      = $json['openToApplications']
+$json['applyCta']  = $json['openToApplications']
     ? Utils::resolveCtaStructure($page->applyCta())
     : null;
 
