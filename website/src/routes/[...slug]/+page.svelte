@@ -14,6 +14,7 @@
 	import Impressum from '$lib/components/templates/Impressum.svelte';
 	import Press from '$lib/components/templates/Press.svelte';
 	import FactoryLab from '$lib/components/templates/FactoryLab.svelte';
+	import InfosPratiques from '$lib/components/templates/InfosPratiques.svelte';
 	import JsonLd from '$lib/components/layout/JsonLd.svelte';
 	import type { PageData } from './$types';
 	import { IS_PROD } from '$lib/env';
@@ -123,6 +124,8 @@
 	<Press {page} />
 {:else if page.template === 'factory-lab'}
 	<FactoryLab {page} />
+{:else if page.template === 'infos-pratiques'}
+	<InfosPratiques {page} />
 {:else}
 	<Page {page} />
 {/if}
