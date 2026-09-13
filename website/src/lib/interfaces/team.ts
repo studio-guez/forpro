@@ -9,9 +9,16 @@ export interface TeamMember {
 	readonly linkedin: string | null;
 }
 
-export interface TeamSection {
+/** A labelled group of members inside a section (a pôle, a team...). */
+export interface TeamGroup {
 	readonly title: string;
 	readonly members: TeamMember[];
+}
+
+/** An expandable section of the team page, holding one or more groups. */
+export interface TeamSection {
+	readonly title: string;
+	readonly groups: TeamGroup[];
 }
 
 export interface TeamPage {
