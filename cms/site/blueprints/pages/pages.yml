@@ -27,6 +27,7 @@ sections:
       - missions
       - impressum
       - press
+      - infos-pratiques
       - factory-lab
     text: "{{ page.breadcrumbTitle }}"
     create: 

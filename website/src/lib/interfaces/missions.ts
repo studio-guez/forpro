@@ -6,7 +6,7 @@ import type { TaxonomyFilterTerm, TaxonomyTerm } from './taxonomy';
 export interface MissionCard {
 	readonly title: string;
 	readonly url: string;
-	/** ISO date `YYYY-MM-DD`. */
+	/** Optional free text, shown as is (e.g. "Dès le 15 septembre"). */
 	readonly date: string;
 	readonly location: string;
 	readonly shortDesc: string;
@@ -23,9 +23,7 @@ export interface MissionPage {
 	readonly openToApplications: boolean;
 	readonly categories: TaxonomyTerm[];
 	readonly announcer: string;
-	/** ISO date `YYYY-MM-DD`. */
-	readonly publishedDate: string;
-	/** ISO date `YYYY-MM-DD`. */
+	/** Optional free text, shown as is (e.g. "Dès le 15 septembre"). */
 	readonly date: string;
 	readonly location: string;
 	readonly applyCta: PageCta | null;
@@ -42,7 +40,7 @@ export interface MissionPage {
 export type MissionsList = PaginatedList<MissionCard>;
 
 // The missions index page (missions.json.php): the filters, and the first
-// unfiltered page of the paginated list in CMS order.
+// unfiltered page of the paginated list, most recently published first.
 export interface MissionsPage {
 	readonly template: 'missions';
 	readonly title: string;

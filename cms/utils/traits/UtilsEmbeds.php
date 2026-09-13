@@ -1,11 +1,37 @@
 <?php
 
 /**
- * Video serialization: the shared `fields/video` structure (an uploaded file
- * or a YouTube URL per row) and the YouTube URL parsing behind it.
+ * Third-party embeds: the shared `fields/video` structure (an uploaded file
+ * or a YouTube URL per row), the YouTube URL parsing behind it, and the
+ * Google Maps iframe URL check.
  */
 trait UtilsEmbeds
 {
+    /**
+     * Returns the URL when it is a Google Maps embed (the `src` of the iframe
+     * offered by "Share → Embed a map"), null otherwise. The frontend drops it
+     * straight into an iframe, so anything not served by Google Maps is
+     * refused rather than framed.
+     */
+    static function getGoogleMapsEmbedUrl(?string $url): ?string
+    {
+        if (!$url) return null;
+
+        $parts = parse_url($url);
+        if (($parts['scheme'] ?? '') !== 'https') return null;
+        if (!in_array($parts['host'] ?? '', ['www.google.com', 'maps.google.com'], true)) return null;
+
+        $path = $parts['path'] ?? '';
+        parse_str($parts['query'] ?? '', $query);
+
+        // `/maps/embed?pb=…` is the current share format; `/maps?…&output=embed`
+        // the legacy one still found in older embed codes.
+        $isEmbed = str_starts_with($path, '/maps/embed')
+            || ($path === '/maps' && ($query['output'] ?? null) === 'embed');
+
+        return $isEmbed ? $url : null;
+    }
+
     /**
      * Extracts the 11-character YouTube video id from any common URL shape
      * (watch?v=, youtu.be/, /shorts/, /embed/, /v/). Returns null when the URL
