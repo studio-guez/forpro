@@ -57,8 +57,10 @@
 	--default-transition-duration: 250ms;
 
 	/* SPACING */
-	--spacing-lh: 1em;
+	--spacing-lh: 1.25em;
 	--spacing-lh: 1lh;
+	--spacing-prose-p: .9375em;
+	--spacing-prose-p: .75lh;
 
 	/* ANIMATION */
 	/* Duration and shift are set per instance: the scroll speed stays constant whatever the
@@ -199,7 +201,7 @@
 		p:not(:last-child),
 		ul:not(:last-child),
 		ol:not(:last-child) {
-			@apply mb-[.75lh];
+			@apply mb-prose-p;
 		}
 		ul,
 		ol {
