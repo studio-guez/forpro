@@ -14,6 +14,7 @@ trait UtilsSearch
      * Taxonomy terms and the `pages` container are structural only.
      */
     private const SEARCHABLE_TEMPLATES = [
+        'home'            => 'Page',
         'page'            => 'Page',
         'faq'             => 'Page',
         'event'           => 'Événement',

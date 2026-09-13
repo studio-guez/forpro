@@ -13,6 +13,7 @@ trait UtilsSeo
      * own. The structural containers and the taxonomy terms have no URL.
      */
     private const INDEXABLE_TEMPLATES = [
+        'home',
         'page',
         'basic-page',
         'faq',

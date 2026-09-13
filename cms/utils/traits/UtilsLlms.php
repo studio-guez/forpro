@@ -31,7 +31,7 @@ trait UtilsLlms
      */
     private const LLMS_SECTIONS = [
         'Pages' => [
-            'templates' => ['page', 'team', 'press', 'factory-lab', 'infos-pratiques'],
+            'templates' => ['home', 'page', 'team', 'press', 'factory-lab', 'infos-pratiques'],
         ],
         'Index et listes' => [
             'templates' => ['events', 'projects', 'job-offers', 'missions', 'faq'],
@@ -222,7 +222,7 @@ trait UtilsLlms
             return '';
         }
 
-        foreach ([$home->metadata()->get('metaDescription')->value(), $home->intro()->value()] as $candidate) {
+        foreach ([$home->metadata()->get('metaDescription')->value(), $home->welcomeShortDesc()->value(), $home->intro()->value()] as $candidate) {
             if (($text = self::toPlainText($candidate)) !== '') {
                 return $text;
             }

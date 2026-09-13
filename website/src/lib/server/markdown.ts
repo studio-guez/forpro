@@ -647,6 +647,29 @@ function renderTemplate(page: CmsContent, origin: string): string {
 				section(page.accessTitle ?? 'Accès', page.accessContent)
 			]);
 
+		// The resources are a random draw of 5, so the list is what this
+		// particular reader was shown, not the whole set of pages on offer.
+		case 'home':
+			return join([
+				heading(2, page.welcomeTitle),
+				htmlToMarkdown(page.welcomeShortDesc),
+				join(
+					page.welcomeCards.map((card) => join([heading(3, card.title), ctaLine(card.cta, origin)]))
+				),
+				page.resources.length
+					? join([
+							heading(2, page.resourcesTitle),
+							page.resources
+								.map((resource) => {
+									const title = [resource.overtitle, resource.title].filter(Boolean).join(' — ');
+									const description = htmlToMarkdown(resource.shortDesc).replace(/\s+/g, ' ');
+									return `- [${inline(title)}](${markdownUrl(resource.url, origin)})${description ? `: ${description}` : ''}`;
+								})
+								.join('\n')
+						])
+					: null
+			]);
+
 		// `page` and anything added later: the shared header plus the body.
 		default:
 			return join([
