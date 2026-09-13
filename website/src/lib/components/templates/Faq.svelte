@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { slide } from 'svelte/transition';
 	import { page as appPage } from '$app/state';
-	import IconChevron from '$lib/components/svg/IconChevron.svelte';
 	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
+	import ExpandableSection from '$lib/components/ui/ExpandableSection.svelte';
 	import FaqQuestion from '$lib/components/ui/FaqQuestion.svelte';
-	import ListHeader from '$lib/components/ui/ListHeader.svelte';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import FilterTags from '$lib/components/ui/FilterTags.svelte';
@@ -141,10 +139,8 @@
 	let openSections = $state<number[]>([Math.max(sectionOfQuestion(requestedQuestion), 0)]);
 	const isSectionOpen = (index: number): boolean => isFiltering || openSections.includes(index);
 
-	const toggleSection = (index: number): void => {
-		openSections = openSections.includes(index)
-			? openSections.filter((i) => i !== index)
-			: [...openSections, index];
+	const setSectionOpen = (index: number, open: boolean): void => {
+		openSections = open ? [...openSections, index] : openSections.filter((i) => i !== index);
 	};
 
 	const clearSearch = (): void => {
@@ -253,45 +249,30 @@
 		</p>
 	{:else}
 		{#each filteredSections as section (section.index)}
-			{@const open = isSectionOpen(section.index)}
-			<!-- Every section is browsed with the same band the other lists use, the
-			     heading itself opening and closing it. -->
-			<ListHeader {color} class="mt-12 lg:mt-18">
-				<h2 class="text-h2 text-(--list-color) h-12.5">
-					<button
-						type="button"
-						class="w-full flex items-center justify-between gap-4 text-left"
-						aria-expanded={open}
-						aria-controls={open ? `faq-section-${section.index}` : undefined}
-						onclick={() => toggleSection(section.index)}
-					>
-						{section.title}
-						<IconChevron class="shrink-0 transition-transform {open ? 'rotate-180' : ''}" />
-					</button>
-				</h2>
-
-				<div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
-					<p class="text-label text-(--list-color)">
-						{@render questionCount(section.faqs.length)}
-					</p>
-					<TermTags terms={section.commonTerms} label="Secteurs" size="md" />
-				</div>
-			</ListHeader>
-
-			{#if open}
-				<div
-					id="faq-section-{section.index}"
-					role="region"
-					aria-label={section.title}
-					transition:slide={{ duration: 300 }}
-				>
-					<div class="mt-9 space-y-6">
-						{#each section.faqs as faq (questionId(faq))}
-							{@render questionItem(faq)}
-						{/each}
+			<ExpandableSection
+				id="faq-section-{section.index}"
+				title={section.title}
+				{color}
+				class="mt-12 lg:mt-18"
+				bind:open={
+					() => isSectionOpen(section.index), (value) => setSectionOpen(section.index, value)
+				}
+			>
+				{#snippet meta()}
+					<div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
+						<p class="text-label text-(--list-color)">
+							{@render questionCount(section.faqs.length)}
+						</p>
+						<TermTags terms={section.commonTerms} label="Secteurs" size="md" />
 					</div>
+				{/snippet}
+
+				<div class="mt-9 space-y-6">
+					{#each section.faqs as faq (questionId(faq))}
+						{@render questionItem(faq)}
+					{/each}
 				</div>
-			{/if}
+			</ExpandableSection>
 		{/each}
 	{/if}
 </section>
