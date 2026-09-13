@@ -44,14 +44,24 @@ reproductibles.
 
 ## 2. Le restaurant a son propre espace
 
-**Les contenus du restaurant ont quitté les réglages du site web.** Textes,
-horaires, images, fichiers et liens se gèrent maintenant dans un espace
-**Restaurant** dédié de l'administration, à côté de l'espace **Menu**. Les
-contenus existants ont été migrés automatiquement. Le formulaire enregistre au
-fur et à mesure, et un PDF « menu pop-up » a été ajouté à côté du menu publié.
-*Pourquoi :* l'équipe du restaurant travaille dans un espace qui lui est propre,
-réservé aux personnes autorisées, sans risque de modifier par erreur un réglage
-du site web, et sans perte de saisie.
+**Les contenus du restaurant ont quitté les réglages du site web.** Jusqu'ici,
+les textes, horaires, images et fichiers du restaurant étaient rangés dans le
+même « tiroir » que les réglages généraux du site web. Ils se gèrent maintenant
+dans un espace **Restaurant** dédié de l'administration, à côté de l'espace
+**Menu**, et sont stockés à part. Les contenus existants ont été migrés
+automatiquement. Le formulaire enregistre au fur et à mesure, et un PDF
+« menu pop-up » a été ajouté à côté du menu publié.
+*Pourquoi :* tant que les deux contenus étaient mélangés, impossible de toucher
+à l'un sans risquer d'abîmer l'autre. Nous l'avons constaté pendant la refonte :
+transférer les contenus du site web obligeait à transporter aussi ceux du
+restaurant, et inversement, avec à chaque fois un risque d'écraser des
+informations à jour par une version plus ancienne. Désormais, chaque partie
+vit dans sa propre boîte étanche : le site web, le site du restaurant et les
+écrans de menus peuvent être mis à jour, sauvegardés ou déplacés séparément,
+sans effet de bord sur les autres. Au quotidien, l'équipe du restaurant
+travaille dans un espace qui lui est propre, réservé aux personnes autorisées,
+sans risque de modifier par erreur un réglage du site web, et sans perte de
+saisie.
 
 **Le site du restaurant se présente correctement à Google.** Il transmet des
 informations structurées de type « Restaurant » (nom, adresse, horaires) et un
