@@ -133,7 +133,7 @@
 				{@const d = offset(i)}
 				<!-- Every card shares the one grid cell; the offset fans them out from there. -->
 				<li
-					class="col-start-1 row-start-1 justify-self-center w-50 sm:w-60 lg:w-88 transition-[translate,scale] duration-500 ease-out motion-reduce:transition-none"
+					class="col-start-1 row-start-1 justify-self-center w-60 lg:w-88 transition-[translate,scale] duration-500 ease-out motion-reduce:transition-none"
 					style:translate="calc({d} * var(--step)) {Math.abs(d) * 2}%"
 					style:scale={1 - Math.abs(d) * 0.1}
 					style:z-index={10 - Math.abs(d)}
