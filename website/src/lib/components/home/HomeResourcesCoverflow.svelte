@@ -69,6 +69,14 @@
 		return () => clearInterval(id);
 	});
 
+	// Keyboard focus on a card brings it to the front, so Tab walks the deck 1 -> 5 in DOM
+	// order and the focused card is always the leading one. Only keyboard focus: a mouse
+	// press focuses the link too, and turning the deck at that moment would pull the card
+	// out from under the click before it lands.
+	const onCardFocus = (event: FocusEvent, i: number) => {
+		if ((event.target as HTMLElement).matches(':focus-visible')) goTo(i);
+	};
+
 	const onFocusOut = (event: FocusEvent) => {
 		const stage = event.currentTarget as HTMLElement;
 		if (!stage.contains(event.relatedTarget as Node | null)) focused = false;
@@ -85,14 +93,6 @@
 		pointerStartX = null;
 		if (Math.abs(delta) < 40) return;
 		goTo(delta < 0 ? active + 1 : active - 1);
-	};
-
-	// A click on a side card brings it to the front rather than leaving the page; the
-	// active card stays a plain link.
-	const onClickCapture = (event: MouseEvent, i: number) => {
-		if (i === active) return;
-		event.preventDefault();
-		goTo(i);
 	};
 
 	const cardSizes = '(min-width: 1024px) 22rem, 16rem';
@@ -144,15 +144,9 @@
 					style:scale={1 - Math.abs(d) * 0.1}
 					style:z-index={10 - Math.abs(d)}
 					aria-current={d === 0 ? 'true' : undefined}
-					onclickcapture={(event) => onClickCapture(event, i)}
-					onfocusin={() => goTo(i)}
+					onfocusin={(event) => onCardFocus(event, i)}
 				>
-					<HomeResourceCard
-						{resource}
-						index={pageRank[i]}
-						sizes={cardSizes}
-						tabindex={d === 0 ? undefined : -1}
-					/>
+					<HomeResourceCard {resource} index={pageRank[i]} sizes={cardSizes} />
 				</li>
 			{/each}
 		</ul>
