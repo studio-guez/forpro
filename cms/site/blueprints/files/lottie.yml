@@ -1,0 +1,10 @@
+title:
+  en: Lottie animation
+  fr: Animation Lottie
+
+# Extension only: a `.lottie` is a zip archive, so a mime rule would have to
+# allow `application/zip` and let any archive through.
+accept:
+  extension:
+    - json
+    - lottie
