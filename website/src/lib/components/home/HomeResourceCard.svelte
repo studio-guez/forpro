@@ -14,11 +14,9 @@
 		headingTag?: string;
 		/** Rendered slot width — the card is laid out by its parent, which owns the geometry. */
 		sizes?: string;
-		/** Off the active slot the card is decorative: keep it out of the tab order. */
-		tabindex?: number;
 	}
 
-	let { resource, index, headingTag = 'h3', sizes, tabindex }: Props = $props();
+	let { resource, index, headingTag = 'h3', sizes }: Props = $props();
 
 	const pageShapes = [ShapeHomeResource1, ShapeHomeResource2, ShapeHomeResource3];
 
@@ -32,7 +30,6 @@
 <article class="h-full drop-shadow">
 	<a
 		href={resource.url}
-		{tabindex}
 		class="group relative flex flex-col h-full rounded-3xl overflow-hidden p-3 text-white"
 		style:background-color={background}
 	>
@@ -47,7 +44,10 @@
 			{/if}
 		</div>
 
-		<div class="relative flex-1 flex items-end justify-between gap-3 py-2 px-2 min-h-30 md:min-h-45" style:color={background}>
+		<div
+			class="relative flex-1 flex items-end justify-between gap-3 py-2 px-2 min-h-30 md:min-h-45"
+			style:color={background}
+		>
 			<div class="min-w-0 text-white relative z-1">
 				{#if resource.overtitle}
 					<p class="text-caption">{resource.overtitle}</p>
