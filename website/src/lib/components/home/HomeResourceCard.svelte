@@ -47,26 +47,26 @@
 			{/if}
 		</div>
 
-		<div
-			class="absolute bottom-0 right-0 w-2/5 pointer-events-none"
-			style:color={shapeColor}
-		>
-			<Shape class="w-full h-auto" />
-		</div>
-
 		<div class="relative flex-1 flex items-end justify-between gap-3 py-2 px-2 min-h-30 md:min-h-45" style:color={background}>
-			<div class="min-w-0 text-white">
+			<div class="min-w-0 text-white relative z-1">
 				{#if resource.overtitle}
 					<p class="text-caption">{resource.overtitle}</p>
 				{/if}
 				<svelte:element this={headingTag} class="text-h4">{resource.title}</svelte:element>
 			</div>
 			<span
-				class="max-sm:hidden shrink-0 w-10 h-10 lg:w-11 lg:h-11 rounded-full border-3 border-white text-white! flex items-center justify-center transition-colors group-hover:bg-white group-hover:text-current!"
+				class="max-sm:hidden shrink-0 w-10 h-10 lg:w-11 lg:h-11 rounded-full border-3 border-white text-white! flex items-center justify-center transition-colors group-hover:bg-white group-hover:text-current! relative z-1"
 				aria-hidden="true"
 			>
 				<IconArrow class="w-6 h-6" />
 			</span>
+
+			<div
+				class="absolute -bottom-3 -right-3 top-0 flex items-end justify-end pointer-events-none"
+				style:color={shapeColor}
+			>
+				<Shape class="w-auto h-1/2" />
+			</div>
 		</div>
 	</a>
 </article>
