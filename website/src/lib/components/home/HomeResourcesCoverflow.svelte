@@ -13,6 +13,12 @@
 
 	const count = $derived(resources.length);
 
+	// Page cards each get their own shape: number them among themselves, not by slot, since
+	// the CMS shuffles pages and projects together and a slot index would repeat shapes.
+	const pageRank = $derived(
+		resources.map((_, i) => resources.slice(0, i).filter((o) => o.type === 'page').length)
+	);
+
 	// The middle card leads: with the 5 the CMS sends that is 2 on each side.
 	// svelte-ignore state_referenced_locally
 	let active = $state(Math.floor(resources.length / 2));
@@ -95,7 +101,7 @@
 				>
 					<HomeResourceCard
 						{resource}
-						index={i}
+						index={pageRank[i]}
 						sizes={cardSizes}
 						tabindex={d === 0 ? undefined : -1}
 					/>
