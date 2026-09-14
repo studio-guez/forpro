@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BackLink from '$lib/components/ui/BackLink.svelte';
 	import EventProjectHeader from '$lib/components/blocks/EventProjectHeader.svelte';
 	import EventProjectBody from '$lib/components/blocks/EventProjectBody.svelte';
 	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
@@ -22,7 +23,7 @@
 	const timeEnd = $derived(formatEventTime(page.timeEnd));
 </script>
 
-<article class="py-12 lg:py-16 space-y-12 lg:space-y-16">
+<article class="space-y-12 lg:space-y-16">
 	<EventProjectHeader
 		title={page.title}
 		subtitle={page.subtitle}
@@ -30,6 +31,11 @@
 		cover={page.cover}
 		variant="event"
 	>
+		{#snippet before()}
+			{#if page.parentPage}
+				<BackLink parentPage={page.parentPage} />
+			{/if}
+		{/snippet}
 		{#snippet meta()}
 			{#if start}
 				<div class="flex flex-col gap-1 mt-4.5 lg:mt-3">
