@@ -18,21 +18,31 @@
 	}: Props = $props();
 </script>
 
+<!-- Drawn as the dropdowns are (`SelectDropdown`, `FilterDropdown`): the same
+     underlined row, the icon where their chevron sits, pulled out by the same
+     margin so it lines up with them in a toolbar. Full width on narrow screens,
+     a fixed field otherwise, so it sits at the end of the row without stretching. -->
 <form
 	role="search"
-	class="flex justify-center {className}"
+	style:color={`var(--color-${color})`}
+	style:--search-tint="color-mix(in oklab, var(--color-{color}) 12%, transparent)"
+	class={['-mx-3 w-full sm:w-auto', className]}
 	onsubmit={(event) => event.preventDefault()}
 >
-	<label class="relative block w-full max-w-90" style:color={`var(--color-${color})`}>
+	<!-- Focus tints the field the way hovering a dropdown trigger does, so the
+	     field in use reads the same across the toolbar. -->
+	<label
+		class="block w-full sm:w-96 px-3 py-2 rounded-xl transition-colors focus-within:bg-(--search-tint)"
+	>
 		<span class="sr-only">{label}</span>
-		<input
-			type="search"
-			bind:value
-			{placeholder}
-			class="search-input w-full rounded-full border-2 border-current bg-transparent text-current placeholder-current font-bold text-lg px-5 py-3 pr-13 focus:border-current focus:ring-current"
-		/>
-		<IconSearch
-			class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none w-7.25 h-7.25"
-		/>
+		<div class="border-b-2 border-current flex items-center gap-3 pb-1">
+			<input
+				type="search"
+				bind:value
+				{placeholder}
+				class="text-label flex-1 min-w-0 p-0 border-0 bg-transparent text-current placeholder-current/50 focus:ring-0 focus:outline-none"
+			/>
+			<IconSearch class="shrink-0 w-5.25 h-5.25 pointer-events-none" />
+		</div>
 	</label>
 </form>
