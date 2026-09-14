@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BackLink from '$lib/components/ui/BackLink.svelte';
 	import EventProjectHeader from '$lib/components/blocks/EventProjectHeader.svelte';
 	import EventProjectBody from '$lib/components/blocks/EventProjectBody.svelte';
 	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
@@ -8,7 +9,7 @@
 	let { page }: { page: ProjectPage } = $props();
 </script>
 
-<article class="py-12 lg:py-16 space-y-12 lg:space-y-16">
+<article class="space-y-12 lg:space-y-16">
 	<EventProjectHeader
 		title={page.title}
 		subtitle={page.subtitle}
@@ -16,6 +17,11 @@
 		cover={page.cover}
 		variant="project"
 	>
+		{#snippet before()}
+			{#if page.parentPage}
+				<BackLink parentPage={page.parentPage} color="var(--color-orange)" />
+			{/if}
+		{/snippet}
 		{#snippet meta()}
 			{#if page.collectiveName || page.collectiveMembers.length > 0}
 				<div class="flex gap-3 mt-4.5 lg:mt-3">
