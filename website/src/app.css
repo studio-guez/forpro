@@ -195,6 +195,18 @@
 	}
 }
 
+@layer utilities {
+		.truncate-x {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		@supports (overflow: clip) {
+			overflow-x: clip;
+			overflow-y: visible;
+		}
+	}
+}
+
 @layer components {
 	/* PROSE */
 	.prose {
