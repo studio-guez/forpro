@@ -244,7 +244,16 @@ trait UtilsBlocks
         }
 
         // The CTA URL is resolved here so a FAQ slug change never breaks the frontend link.
-        $ctaUrl = $faqPage ? '/' . $faqPage->virtualPath() : null;
+        // The block's filters travel along as `?sectors=a,b&programs=…&publics=…`, the
+        // query string the FAQ page reads to pre-select its filters.
+        $ctaUrl = null;
+        if ($faqPage) {
+            $query = [];
+            foreach ($filters as $field => $slugs) {
+                if ($slugs) $query[] = $field . '=' . implode(',', $slugs);
+            }
+            $ctaUrl = '/' . $faqPage->virtualPath() . ($query ? '?' . implode('&', $query) : '');
+        }
 
         return [
             'title'    => $block->title()->value(),

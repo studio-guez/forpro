@@ -130,7 +130,7 @@
 			>
 				<span
 					aria-hidden="true"
-					class="max-lg:hidden text-body-2 font-bold text-left truncate min-w-0 transition-all duration-300 ease-out text-trim {searchModalOpen
+					class="max-lg:hidden text-body-2 font-bold text-left truncate-x min-w-0 transition-all duration-300 ease-out text-trim {searchModalOpen
 						? 'w-48 opacity-100 pl-3'
 						: 'w-0 opacity-0 group-hover:w-48 group-hover:opacity-100 group-hover:pl-3'} {searchQuery
 						? 'text-blue'

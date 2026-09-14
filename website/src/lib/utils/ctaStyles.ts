@@ -14,7 +14,7 @@ export const CTA_BASE =
 	'font-bold leading-none inline-flex items-center max-w-full rounded-full bg-transparent backdrop-blur-xs transition-colors';
 
 /** Label span: single line, ellipsis when the pill runs out of room. */
-export const CTA_LABEL = 'text-trim min-w-0 truncate';
+export const CTA_LABEL = 'text-trim min-w-0 truncate-x';
 
 export const ctaSizeClasses: Record<CtaSize, string> = {
 	md: 'text-base lg:text-lg gap-2 lg:gap-2.5 px-2.25 lg:px-5.5 h-10.5 lg:h-12.5 border-3',
