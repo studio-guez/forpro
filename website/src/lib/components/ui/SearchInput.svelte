@@ -20,19 +20,20 @@
 
 <!-- Drawn as the dropdowns are (`SelectDropdown`, `FilterDropdown`): the same
      underlined row, the icon where their chevron sits, pulled out by the same
-     margin so it lines up with them in a toolbar. Full width on narrow screens,
-     a fixed field otherwise, so it sits at the end of the row without stretching. -->
+     margin so it lines up with them in a toolbar. Full width below the toolbar's
+     breakpoint, where it stacks in its modal, a fixed field from there up so it
+     sits at the end of the row without stretching. -->
 <form
 	role="search"
 	style:color={`var(--color-${color})`}
 	style:--search-tint="color-mix(in oklab, var(--color-{color}) 12%, transparent)"
-	class={['-mx-3 w-full sm:w-auto', className]}
+	class={['-mx-3 w-full md:w-auto', className]}
 	onsubmit={(event) => event.preventDefault()}
 >
 	<!-- Focus tints the field the way hovering a dropdown trigger does, so the
 	     field in use reads the same across the toolbar. -->
 	<label
-		class="block w-full sm:w-96 px-3 py-2 rounded-xl transition-colors focus-within:bg-(--search-tint)"
+		class="block w-full md:w-96 px-3 py-2 rounded-xl transition-colors focus-within:bg-(--search-tint)"
 	>
 		<span class="sr-only">{label}</span>
 		<div class="border-b-2 border-current flex items-center gap-3 pb-1">

@@ -92,7 +92,7 @@
 <BasicHeader title={page.title} {color} id="projects-title"></BasicHeader>
 
 <section aria-label="Projets" class="px-base pb-12 lg:pb-16">
-	<ListToolbar>
+	<ListToolbar {color}>
 		<FilterDropdown
 			terms={programTerms}
 			bind:selected={selectedPrograms}
@@ -133,11 +133,13 @@
 		</div>
 	{:else}
 		<!-- The band the archive is browsed with, without a rule: the toolbar already
-		     parts it from the header. Only the count is announced. -->
+		     parts it from the header. Only the count is announced. On narrow screens
+		     the heading stays for assistive tech only: the count line is all the band
+		     shows. -->
 		<ListHeader {color} rule={false}>
-			<h2 class="text-h2 text-(--list-color)">Tous les projets</h2>
+			<h2 class="sr-only md:not-sr-only text-h2 text-(--list-color)">Tous les projets</h2>
 
-			<div class="mt-2 flex flex-wrap items-center gap-x-6 gap-y-3">
+			<div class="md:mt-2 flex flex-wrap items-center gap-x-6 gap-y-3">
 				{#if archive.total > 0}
 					<p class="text-label text-(--list-color)" aria-live="polite">
 						{archive.total}
@@ -153,7 +155,7 @@
 	{/if}
 
 	{#if archive.items.length > 0}
-		<ul class="mt-9 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+		<ul class="mt-9 grid max-sm:gap-y-12 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 			{#each archive.items as project (project.url)}
 				<li>
 					<ProjectCard {project} headingTag="h3" variant="inverted" sizes={cardSizes} />

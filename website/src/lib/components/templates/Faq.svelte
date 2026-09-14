@@ -186,7 +186,7 @@
 <BasicHeader title={page.title} {color} id="faq-title"></BasicHeader>
 
 <section aria-label="Questions et réponses" class="px-base pb-12 lg:pb-16">
-	<ListToolbar>
+	<ListToolbar {color}>
 		<FilterDropdown terms={sectorTerms} bind:selected={selectedSectors} label="Secteurs" {color} />
 		<FilterDropdown
 			terms={programTerms}

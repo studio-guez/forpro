@@ -23,7 +23,7 @@
 	>
 		<h2 id="impressum-partners" class="text-body-2 font-bold">{page.partnersTitle}</h2>
 
-		<ul class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
+		<ul class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-sm:gap-y-12 gap-6">
 			{#each page.partners as partner, partnerIndex (partnerIndex)}
 				<li>
 					{#if partner.image}

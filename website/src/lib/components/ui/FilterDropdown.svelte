@@ -4,6 +4,7 @@
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
 	import type { TaxonomyFilterTerm, TaxonomyTerm } from '$lib/interfaces/taxonomy';
 	import { listenForDismiss } from '$lib/utils/dismiss';
+	import { dropdownGroup } from '$lib/utils/dropdownGroup.svelte';
 
 	interface Props {
 		terms: TaxonomyFilterTerm[];
@@ -46,9 +47,20 @@
 	};
 
 	// Clicking outside is the pointer way out; Escape is the keyboard one.
+	// Clicking another dropdown is neither: it takes the group, which closes
+	// this one only once its own click has landed.
 	$effect(() => {
 		if (!open || !rootEl) return;
-		return listenForDismiss(rootEl, close);
+		return listenForDismiss(rootEl, close, '[data-dropdown]');
+	});
+
+	const token = Symbol();
+	$effect(() => {
+		if (open) dropdownGroup.take(token);
+		else dropdownGroup.release(token);
+	});
+	$effect(() => {
+		if (open && !dropdownGroup.holds(token)) close(false);
 	});
 
 	// Sub-terms are always listed, but only a selected parent's count: it stands
@@ -119,14 +131,21 @@
 {#if terms.length > 0}
 	<div
 		bind:this={rootEl}
+		data-dropdown
 		style:--select-color={color}
 		style:--select-tint="color-mix(in oklab, {color} 12%, transparent)"
 		class={['text-(--select-color) -mx-3 max-w-full', className]}
 	>
-		<!-- The panel overlays the page rather than pushing it down: the field row is
-		     the top of the card and stays in flow, the panel is its bottom, positioned
-		     under it. The panel paints over the row's shadow, so the two read as one card. -->
-		<div class="relative w-fit min-w-64 max-w-lg">
+		<!-- From the tablet breakpoint up the panel overlays the page rather than
+		     pushing it down: the field row is the top of the card and stays in flow,
+		     the panel is its bottom, positioned under it. The panel paints over the
+		     row's shadow, so the two read as one card. Below it, in the toolbar's
+		     modal, the panel takes up space instead and the field runs full width. -->
+		<div
+			class="relative w-full md:w-fit min-w-64 md:max-w-lg rounded-xl transition-shadow {open
+				? 'max-md:shadow-lg'
+				: ''}"
+		>
 			<!-- The panel is out of flow, so it cannot size the field: the label and
 			     every term are laid out again here, invisibly, one line each, with the
 			     rows' own padding and room for their icons. The field is then as wide as
@@ -160,7 +179,7 @@
 				bind:this={triggerEl}
 				type="button"
 				class="text-label w-full text-left px-3 py-2 rounded-t-xl transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current {open
-					? 'shadow-lg'
+					? 'md:shadow-lg'
 					: 'rounded-b-xl'} {isActive ? 'bg-(--select-tint)' : open ? 'bg-white' : ''} {!open &&
 				!isActive
 					? 'hover:bg-(--select-tint)'
@@ -191,7 +210,7 @@
 			{#if open}
 				<div
 					id={panelId}
-					class="absolute inset-x-0 top-full z-20 pb-2 rounded-b-xl bg-white shadow-lg"
+					class="md:absolute md:inset-x-0 md:top-full md:z-20 pb-2 rounded-b-xl bg-white md:shadow-lg"
 					transition:slide={panelSlide}
 				>
 					<fieldset class="pt-2">

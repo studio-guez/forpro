@@ -2,6 +2,7 @@
 	import { page as appPage } from '$app/state';
 	import { fly } from 'svelte/transition';
 	import { prefersReducedMotion } from 'svelte/motion';
+	import { MediaQuery } from 'svelte/reactivity';
 	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import CardTitle from '$lib/components/ui/CardTitle.svelte';
@@ -54,10 +55,16 @@
 	// view can be shared too.
 	type UpcomingView = 'month' | 'all';
 	let upcomingView = $state<UpcomingView>(initialParams.get('view') === 'month' ? 'month' : 'all');
-	const showAllUpcoming = $derived(upcomingView === 'all');
+
+	// The month view is only offered from the toolbar's breakpoint up: below it
+	// there is no toggle and every upcoming event is listed. The choice is kept,
+	// so it comes back with the room for it. The server assumes a wide screen,
+	// so a shared `?view=month` link still renders its month server-side.
+	const isWide = new MediaQuery('(width >= 48rem)', true);
+	const showAllUpcoming = $derived(!isWide.current || upcomingView === 'all');
 
 	const toggleUpcomingView = (): void => {
-		upcomingView = showAllUpcoming ? 'month' : 'all';
+		upcomingView = upcomingView === 'all' ? 'month' : 'all';
 	};
 
 	// The toggle is a smaller pill than the CTAs, but shares their outline and hover.
@@ -186,28 +193,32 @@
 			publics: activePublics,
 			pastQ: pastSearch,
 			month: activeMonth,
-			view: showAllUpcoming ? '' : 'month'
+			view: upcomingView === 'all' ? '' : 'month'
 		});
 	});
 </script>
 
+<!-- Wide screens only: the wrapper drops out of the layout from the breakpoint up
+     and takes the toggle with it below. -->
 {#snippet viewToggle()}
-	<button
-		type="button"
-		style:--color-cta="var(--list-color)"
-		class={viewToggleClasses}
-		aria-pressed={showAllUpcoming}
-		onclick={toggleUpcomingView}
-	>
-		<span class="text-trim">{showAllUpcoming ? 'Vue par mois' : 'Tous les événements'}</span>
-		<IconHamburger class="w-6 h-6" />
-	</button>
+	<div class="hidden md:contents">
+		<button
+			type="button"
+			style:--color-cta="var(--list-color)"
+			class={viewToggleClasses}
+			aria-pressed={showAllUpcoming}
+			onclick={toggleUpcomingView}
+		>
+			<span class="text-trim">{showAllUpcoming ? 'Vue par mois' : 'Tous les événements'}</span>
+			<IconHamburger class="w-6 h-6" />
+		</button>
+	</div>
 {/snippet}
 
 <BasicHeader title={page.title} {color} id="events-title"></BasicHeader>
 
 <section aria-label="Événements à venir" class="px-base pb-12 lg:pb-16">
-	<ListToolbar>
+	<ListToolbar {color}>
 		<FilterDropdown
 			terms={publicTerms}
 			bind:selected={selectedPublics}
@@ -245,10 +256,14 @@
 			Aucun événement à venir pour le moment.
 		</p>
 	{:else if showAllUpcoming}
-		<!-- The first band has no rule: the toolbar already parts it from the header. -->
+		<!-- The first band has no rule: the toolbar already parts it from the header.
+		     On narrow screens the heading stays for assistive tech only: the count
+		     line is all the band shows. -->
 		<ListHeader {color} count={upcoming.length} nouns={['événement', 'événements']} rule={false}>
 			<div class="flex flex-wrap items-center justify-between gap-4">
-				<h2 class="text-h2 text-(--list-color) h-12.5">Tous les événements</h2>
+				<h2 class="sr-only md:not-sr-only text-h2 text-(--list-color) md:h-12.5">
+					Tous les événements
+				</h2>
 				{@render viewToggle()}
 			</div>
 		</ListHeader>
@@ -330,7 +345,7 @@
 
 		<!-- The archive is browsed with its own toolbar: the month at the start,
 		     its own search at the end. -->
-		<ListToolbar class="mt-12 lg:mt-18">
+		<ListToolbar {color} class="mt-12 lg:mt-18">
 			<SelectDropdown
 				bind:value={selectedMonth}
 				options={pastMonths}
