@@ -8,7 +8,6 @@
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import FilterDropdown from '$lib/components/ui/FilterDropdown.svelte';
 	import ListToolbar from '$lib/components/ui/ListToolbar.svelte';
-	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import {
 		expandSelection,
 		filterUsedTerms,
@@ -102,13 +101,7 @@
 			.map((section, index) => ({
 				index,
 				title: section.title,
-				faqs: section.faqs.filter(matchesFilters),
-				// Terms shared by every question of the section (shown next to the counter).
-				commonTerms: section.faqs.length
-					? section.faqs[0].sectors.filter((term) =>
-							section.faqs.every((faq) => faq.sectors.some((t) => t.slug === term.slug))
-						)
-					: []
+				faqs: section.faqs.filter(matchesFilters)
 			}))
 			.filter((section) => section.faqs.length > 0)
 	);
@@ -246,12 +239,9 @@
 				}
 			>
 				{#snippet meta()}
-					<div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
-						<p class="text-label text-(--list-color)">
-							{@render questionCount(section.faqs.length)}
-						</p>
-						<TermTags terms={section.commonTerms} label="Secteurs" size="md" />
-					</div>
+					<p class="mt-2.5 text-label text-(--list-color)">
+						{@render questionCount(section.faqs.length)}
+					</p>
 				{/snippet}
 
 				<div class="mt-9 space-y-6">

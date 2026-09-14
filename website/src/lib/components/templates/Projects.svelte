@@ -136,22 +136,15 @@
 		     parts it from the header. Only the count is announced. On narrow screens
 		     the heading stays for assistive tech only: the count line is all the band
 		     shows. -->
-		<ListHeader {color} rule={false}>
-			<h2 class="sr-only md:not-sr-only text-h2 text-(--list-color)">Tous les projets</h2>
+		<div aria-live="polite">
+			<ListHeader {color} count={archive.total} nouns={['projet', 'projets']} rule={false}>
+				<h2 class="sr-only md:not-sr-only text-h2 text-(--list-color) lg:h-15">Tous les projets</h2>
 
-			<div class="md:mt-2 flex flex-wrap items-center gap-x-6 gap-y-3">
-				{#if archive.total > 0}
-					<p class="text-label text-(--list-color)" aria-live="polite">
-						{archive.total}
-						{archive.total > 1 ? 'projets' : 'projet'}
-					</p>
+				{#if archive.total === 0}
+					<p class="text-body-1 text-(--list-color) mt-2.5">{noResultsText}</p>
 				{/if}
-			</div>
-
-			{#if archive.total === 0}
-				<p class="text-body-1 text-(--list-color) mt-4" aria-live="polite">{noResultsText}</p>
-			{/if}
-		</ListHeader>
+			</ListHeader>
+		</div>
 	{/if}
 
 	{#if archive.items.length > 0}

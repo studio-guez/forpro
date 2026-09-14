@@ -35,7 +35,7 @@
 <!-- The section is browsed with the same band the other lists use, the heading
      itself opening and closing it. -->
 <ListHeader {color} {rule} class={className}>
-	<h2 class="text-h2 text-(--list-color) h-12.5">
+	<h2 class="text-h2 text-(--list-color) lg:min-h-15">
 		<button
 			type="button"
 			class="w-full flex items-center justify-between gap-4 text-left"
