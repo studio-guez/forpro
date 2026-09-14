@@ -1,7 +1,6 @@
-// Pill styling shared by every taxonomy term tag: the read-only ones listed by
-// `TermTags` and the toggles rendered by `FilterTags`. It lives here because the two
-// render different elements — a list item for reading, a button for filtering — so the
-// classes cannot be shared by wrapping.
+// Pill styling shared by every taxonomy term tag: the ones listed by `TermTags` and the
+// badges `FactoryLab` draws on its cards. It lives here because the two render different
+// elements, so the classes cannot be shared by wrapping.
 //
 // The colour comes from the term, so it is passed as the `--term-color` custom property
 // by the caller (`style:--term-color={termColor(term)}`) and read back through Tailwind's

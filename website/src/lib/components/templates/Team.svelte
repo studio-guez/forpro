@@ -32,15 +32,15 @@
 				{#each section.groups as group, groupIndex (groupIndex)}
 					{@const groupId = `team-group-${sectionIndex}-${groupIndex}`}
 					<section aria-labelledby={groupId} class={LABELLED_SECTION}>
-						<h3 id={groupId} class="text-label font-bold">{group.title}</h3>
+						<h3 id={groupId} class="text-body-2 font-bold">{group.title}</h3>
 
 						<ul class={LABELLED_SECTION_ITEMS}>
 							{#each group.members as member, memberIndex (memberIndex)}
 								<li>
-									<p class="text-label font-bold">{member.name}</p>
+									<p class="text-body-2 font-bold">{member.name}</p>
 
 									{#if member.role}
-										<p class="text-label flex items-center gap-2 mt-1">
+										<p class="text-body-2 flex items-center gap-2 mt-1">
 											{#if member.status === 'apprenti'}
 												<IconApprentice class="shrink-0 w-4.5 h-4.5" />
 											{:else}

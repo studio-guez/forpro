@@ -2,8 +2,9 @@
 	import { page as appPage } from '$app/state';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import PageHeader from '$lib/components/blocks/PageHeader.svelte';
-	import FilterTags from '$lib/components/ui/FilterTags.svelte';
+	import FilterDropdown from '$lib/components/ui/FilterDropdown.svelte';
 	import InfiniteScroll from '$lib/components/ui/InfiniteScroll.svelte';
+	import ListToolbar from '$lib/components/ui/ListToolbar.svelte';
 	import MissionCard from '$lib/components/ui/MissionCard.svelte';
 	import SelectDropdown from '$lib/components/ui/SelectDropdown.svelte';
 	import {
@@ -71,32 +72,32 @@
 
 <PageHeader {page} />
 
-<section aria-label="Filtres" class="px-base py-12 lg:py-16">
-	<FilterTags
-		terms={categoryTerms}
-		bind:selected={selectedCategories}
-		{color}
-		legend="Missions concernant :"
-	/>
+<section aria-label="Missions" class="px-base py-12 lg:py-16">
+	<ListToolbar {color}>
+		<SelectDropdown
+			bind:value={sort}
+			options={sortOptions}
+			label="Trier par..."
+			clearable={false}
+			{color}
+		/>
+		<FilterDropdown
+			terms={categoryTerms}
+			bind:selected={selectedCategories}
+			label="Catégories"
+			{color}
+		/>
+	</ListToolbar>
 
-	<SelectDropdown
-		bind:value={sort}
-		options={sortOptions}
-		label="Trier par..."
-		clearable={false}
-		{color}
-		class="mt-12 lg:mt-18"
-	/>
-</section>
-
-<section aria-label="Missions" class="px-base pb-12 lg:pb-16">
 	<p class="sr-only" aria-live="polite">
 		{list.total}
 		{list.total > 1 ? 'missions' : 'mission'}
 	</p>
 
 	{#if list.items.length > 0}
-		<ul class="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+		<!-- No band here: the grid follows the toolbar at the distance a band plus
+		     its grid margin would take on the projects page. -->
+		<ul class="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
 			{#each list.items as mission (mission.url)}
 				<li>
 					<MissionCard {mission} headingTag="h2" />
@@ -104,7 +105,7 @@
 			{/each}
 		</ul>
 	{:else}
-		<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
+		<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12 mt-12">
 			{noResultsText}
 		</p>
 	{/if}

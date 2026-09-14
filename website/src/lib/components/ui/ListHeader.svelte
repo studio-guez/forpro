@@ -14,6 +14,8 @@
 		count?: number;
 		/** Count noun, e.g. `['événement', 'événements']`. */
 		nouns?: [string, string];
+		/** Whether the band is topped by its rule; off where something else already parts it from what is above. The padding stays. */
+		rule?: boolean;
 		class?: string;
 		/** The heading row: title on the left, controls on the right. */
 		children: Snippet;
@@ -24,6 +26,7 @@
 		variant = 'section',
 		count = 0,
 		nouns = ['résultat', 'résultats'],
+		rule = true,
 		class: className = '',
 		children
 	}: Props = $props();
@@ -31,12 +34,15 @@
 	// The two rules differ in weight, so the room they need above the heading
 	// differs with them.
 	const chrome = {
-		section: { rule: 'border-t-3 border-(--list-color) pt-3', count: 'mt-4' },
-		plain: { rule: 'border-t border-black pt-6 lg:pt-8', count: 'mt-1' }
+		section: { rule: 'border-t-3 border-(--list-color)', pad: 'pt-3', count: 'mt-4' },
+		plain: { rule: 'border-t border-black', pad: 'pt-6 lg:pt-8', count: 'mt-1' }
 	};
 </script>
 
-<div style:--list-color={color} class={[chrome[variant].rule, className]}>
+<div
+	style:--list-color={color}
+	class={[rule && chrome[variant].rule, chrome[variant].pad, className]}
+>
 	{@render children()}
 
 	{#if count > 0}
