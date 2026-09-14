@@ -124,7 +124,7 @@
 			onclick={() => (open = !open)}
 		>
 			<div class="border-b-2 border-current flex items-center justify-between gap-3 pb-1">
-				<div class="truncate">{selectedLabel}</div>
+				<div class="truncate-x">{selectedLabel}</div>
 				<IconChevron
 					class="shrink-0 w-5.25 h-5.25 transition-transform {open ? 'rotate-180' : ''}"
 				/>
@@ -146,7 +146,7 @@
 						<label
 							class="text-label flex items-center justify-between gap-3 px-3 py-1 cursor-pointer transition-colors hover:bg-(--select-tint)"
 						>
-							<span class="truncate">{option.label}</span>
+							<span class="truncate-x">{option.label}</span>
 							<input
 								type="radio"
 								name={panelId}
