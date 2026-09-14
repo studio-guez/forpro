@@ -14,7 +14,9 @@ export interface InfosPratiquesPage {
 	readonly accessTitle: string | null;
 	/** Rich text (writer). */
 	readonly accessContent: string | null;
-	/** `src` of a Google Maps embed iframe, already vetted by the CMS; null hides the map. */
-	readonly mapEmbedUrl: string | null;
+	/** Static picture of the access map; it opens `mapUrl` when one is set. */
+	readonly mapImage: CmsImage | null;
+	/** Public Google Maps link ("Share → Copy link"); null hides the link. */
+	readonly mapUrl: string | null;
 	readonly seo: Seo;
 }
