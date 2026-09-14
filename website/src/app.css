@@ -147,7 +147,7 @@
 	}
 
 	.text-body-2 {
-		@apply text-lg lg:text-xl;
+		@apply text-base lg:text-xl;
 	}
 
 	.text-label {
