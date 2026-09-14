@@ -29,11 +29,11 @@
 </script>
 
 <ListHeader {color} {variant} {count} {nouns} {rule} class={className}>
-	<h2 class="text-h2 h-12.5 text-(--list-color)">
+	<h2 class="text-h2 lg:h-15 text-(--list-color)">
 		Résultats pour : <span class="opacity-50">{query}</span>
 	</h2>
 
 	{#if count === 0}
-		<p class="text-body-1 mt-4 text-(--list-color)">{noResultsText}</p>
+		<p class="text-body-1 mt-2.5 text-(--list-color)">{noResultsText}</p>
 	{/if}
 </ListHeader>

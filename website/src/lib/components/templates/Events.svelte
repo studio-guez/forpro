@@ -261,7 +261,7 @@
 		     line is all the band shows. -->
 		<ListHeader {color} count={upcoming.length} nouns={['événement', 'événements']} rule={false}>
 			<div class="flex flex-wrap items-center justify-between gap-4">
-				<h2 class="sr-only md:not-sr-only text-h2 text-(--list-color) md:h-12.5">
+				<h2 class="sr-only md:not-sr-only text-h2 text-(--list-color) lg:h-15">
 					Tous les événements
 				</h2>
 				{@render viewToggle()}
@@ -275,7 +275,7 @@
 			rule={false}
 		>
 			<div class="flex flex-wrap items-center justify-between gap-4">
-				<div class="flex items-center gap-2 lg:gap-4 h-12.5">
+				<div class="flex items-center gap-2 lg:gap-4 lg:h-15">
 					<button
 						type="button"
 						class="text-(--list-color) p-1 disabled:opacity-30"
