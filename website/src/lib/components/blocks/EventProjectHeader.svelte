@@ -20,7 +20,7 @@
 	const textColor = $derived(variant === 'project' ? 'text-orange' : 'text-blue');
 </script>
 
-<section class="px-base">
+<section class="px-base lg:pt-13">
 	{#if before}
 		<div class="space-y-6 mb-6">
 			{@render before()}
@@ -28,7 +28,7 @@
 	{/if}
 
 	<div class={textColor}>
-		<h1 class="text-h1 mt-2">{title}</h1>
+		<h1 class="text-h1">{title}</h1>
 		{#if meta}
 			<div class="lg:pt-1.5">
 				{@render meta()}
