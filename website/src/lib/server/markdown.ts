@@ -644,7 +644,8 @@ function renderTemplate(page: CmsContent, origin: string): string {
 							ctaLine(page.foodlabCta, origin)
 						])
 					: null,
-				section(page.accessTitle ?? 'Accès', page.accessContent)
+				section(page.accessTitle ?? 'Accès', page.accessContent),
+				page.mapUrl ? `- [Ouvrir dans Google Maps](${page.mapUrl})` : null
 			]);
 
 		// The resources are a random draw of 5, so the list is what this

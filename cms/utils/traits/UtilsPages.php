@@ -140,15 +140,20 @@ trait UtilsPages
     /**
      * Filtered, paginated past events of an events page, most recent first.
      *
-     * The filters mirror the frontend ones: `$query` is matched as a whole
-     * phrase, accent- and case-insensitively, against title, short description
-     * and term titles; `$publics` is a **raw** selection of `publics` slugs, as
-     * it appears in the URL; `$month` is a `YYYY-MM` key on `dateStart`.
+     * The filters mirror the frontend ones: `$publics` is a **raw** selection
+     * of `publics` slugs, as it appears in the URL; `$query` is the archive's
+     * own search (the agenda's other search only answers across upcoming
+     * events), matched as a whole phrase, accent- and case-insensitively,
+     * against title, short description and term titles; `$month` is a
+     * `YYYY-MM` key on `dateStart`.
      *
      * `total` counts the events the returned page is sliced out of, so it
-     * drives the pagination. `matchTotal` and `months` deliberately ignore
-     * `$month`: the results header counts every match, and the month dropdown
-     * has to keep offering the months the selection excludes.
+     * drives the pagination. `matchTotal` ignores the search and the month:
+     * it says whether the archive has anything to search or browse at all,
+     * which is what shows the archive, its search box included, so a search
+     * with no result cannot make its own box disappear. `months` ignores the
+     * month only, so the dropdown keeps offering the months the selection
+     * excludes, but follows the search: it only offers months with a match.
      *
      * Month keys, not labels: formatting them is the frontend's job.
      *
@@ -156,8 +161,8 @@ trait UtilsPages
      */
     static function getPastEvents(
         \Kirby\Cms\Pages $events,
-        string $query = '',
         array $publics = [],
+        string $query = '',
         string $month = '',
         int $offset = 0,
         int $limit = 10
@@ -174,6 +179,8 @@ trait UtilsPages
             self::resolveTaxonomySelection('publics', $publics),
             false
         );
+
+        $matchTotal = $past->count();
 
         $past = $past->filter(fn($event) => self::matchesSearchFields($query, [
             $event->title()->value(),
@@ -212,7 +219,7 @@ trait UtilsPages
                 $limit,
                 fn(array $entry) => self::getEventCardData($entry['page'])
             ),
-            'matchTotal' => count($matched),
+            'matchTotal' => $matchTotal,
             'months'     => $months,
         ];
     }

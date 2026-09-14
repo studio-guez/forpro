@@ -2,17 +2,19 @@
 	import { page as appPage } from '$app/state';
 	import { fly } from 'svelte/transition';
 	import { prefersReducedMotion } from 'svelte/motion';
+	import { MediaQuery } from 'svelte/reactivity';
 	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
 	import CardTitle from '$lib/components/ui/CardTitle.svelte';
 	import EventCard from '$lib/components/ui/EventCard.svelte';
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import EventListItem from '$lib/components/ui/EventListItem.svelte';
-	import FilterTags from '$lib/components/ui/FilterTags.svelte';
+	import FilterDropdown from '$lib/components/ui/FilterDropdown.svelte';
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
 	import IconHamburger from '$lib/components/svg/IconHamburger.svelte';
 	import InfiniteScroll from '$lib/components/ui/InfiniteScroll.svelte';
 	import ListHeader from '$lib/components/ui/ListHeader.svelte';
+	import ListToolbar from '$lib/components/ui/ListToolbar.svelte';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import SelectDropdown from '$lib/components/ui/SelectDropdown.svelte';
@@ -38,12 +40,14 @@
 	const cardSizes = toSizes(cell(PAGE, { 0: 1, 640: 2, 1024: 3 }, 1.5));
 
 	const color = 'var(--color-blue)';
-	const noResultsText = 'Aucun événement ne correspond à votre recherche.';
+	const noResultsText = 'Aucun événement à venir ne correspond à votre recherche.';
 
 	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
 	let selectedPublics = $state<string[]>(parseListParam(initialParams.get('publics')));
+	// The past archive has a search of its own: `q` above only covers upcoming events.
+	let pastSearch = $state(initialParams.get('pastQ') ?? '');
 	let selectedMonth = $state(initialParams.get('month') ?? '');
 
 	// Every upcoming event is listed at once by default; the toggle swaps to
@@ -51,10 +55,16 @@
 	// view can be shared too.
 	type UpcomingView = 'month' | 'all';
 	let upcomingView = $state<UpcomingView>(initialParams.get('view') === 'month' ? 'month' : 'all');
-	const showAllUpcoming = $derived(upcomingView === 'all');
+
+	// The month view is only offered from the toolbar's breakpoint up: below it
+	// there is no toggle and every upcoming event is listed. The choice is kept,
+	// so it comes back with the room for it. The server assumes a wide screen,
+	// so a shared `?view=month` link still renders its month server-side.
+	const isWide = new MediaQuery('(width >= 48rem)', true);
+	const showAllUpcoming = $derived(!isWide.current || upcomingView === 'all');
 
 	const toggleUpcomingView = (): void => {
-		upcomingView = showAllUpcoming ? 'month' : 'all';
+		upcomingView = upcomingView === 'all' ? 'month' : 'all';
 	};
 
 	// The toggle is a smaller pill than the CTAs, but shares their outline and hover.
@@ -141,14 +151,16 @@
 	// The past archive is paginated by the CMS, so it is filtered there too — the
 	// page payload embeds the first page for the filters in the URL, so a shared
 	// or reloaded filtered link renders the right archive server-side. Filters
-	// travel raw, exactly as they appear in the URL.
+	// travel raw, exactly as they appear in the URL. The agenda's search is not
+	// one of them: it only answers across upcoming events. The archive has its
+	// own, `pastQ` in the URL, sent to the archive route as its `q`.
 	const archive = createPaginatedList<AgendaEventCard, PastEventsList>({
 		kind: 'past-events',
 		path: () => page.path,
 		seed: () => page.pastEvents,
 		filters: () => ({
-			q: search.trim(),
 			publics: activePublics.join(','),
+			q: pastSearch.trim(),
 			month: activeMonth
 		})
 	});
@@ -167,63 +179,63 @@
 	);
 
 	const hasSearch = $derived(search.trim() !== '');
-	// Past events are listed further down, so they count as results too. The
-	// archive's `matchTotal` ignores the month, so the count covers every match.
-	const resultCount = $derived(upcoming.length + archive.current.matchTotal);
 
-	// A search is answered across the whole agenda: the month browser steps aside
-	// for the results header, and every matching upcoming event is listed at once —
+	// A search is answered across every upcoming event: the month browser steps
+	// aside for the results header, and every matching event is listed at once —
 	// as it is when the visitor asked for the whole list.
 	const visibleUpcoming = $derived(hasSearch || showAllUpcoming ? upcoming : upcomingForMonth);
-	const announcedCount = $derived(hasSearch ? resultCount : visibleUpcoming.length);
-
-	const clearSearch = (): void => {
-		search = '';
-	};
+	const announcedCount = $derived(visibleUpcoming.length);
 
 	// Mirror search + filters into the query string without triggering navigation.
 	$effect(() => {
 		syncQueryString({
 			q: search,
 			publics: activePublics,
+			pastQ: pastSearch,
 			month: activeMonth,
-			view: showAllUpcoming ? '' : 'month'
+			view: upcomingView === 'all' ? '' : 'month'
 		});
 	});
 </script>
 
+<!-- Wide screens only: the wrapper drops out of the layout from the breakpoint up
+     and takes the toggle with it below. -->
 {#snippet viewToggle()}
-	<button
-		type="button"
-		style:--color-cta="var(--list-color)"
-		class={viewToggleClasses}
-		aria-pressed={showAllUpcoming}
-		onclick={toggleUpcomingView}
-	>
-		<span class="text-trim">{showAllUpcoming ? 'Vue par mois' : 'Tous les événements'}</span>
-		<IconHamburger class="w-6 h-6" />
-	</button>
+	<div class="hidden md:contents">
+		<button
+			type="button"
+			style:--color-cta="var(--list-color)"
+			class={viewToggleClasses}
+			aria-pressed={showAllUpcoming}
+			onclick={toggleUpcomingView}
+		>
+			<span class="text-trim">{showAllUpcoming ? 'Vue par mois' : 'Tous les événements'}</span>
+			<IconHamburger class="w-6 h-6" />
+		</button>
+	</div>
 {/snippet}
 
-<BasicHeader title={page.title} {color} id="events-title">
-	<SearchInput
-		bind:value={search}
-		label="Rechercher un événement"
-		placeholder="Rechercher un événement..."
-		color="blue"
-		class="mt-12 lg:mt-18"
-	/>
-
-	<FilterTags
-		terms={publicTerms}
-		bind:selected={selectedPublics}
-		{color}
-		legend="Événements concernant :"
-		class="mt-12 lg:mt-18"
-	/>
-</BasicHeader>
+<BasicHeader title={page.title} {color} id="events-title"></BasicHeader>
 
 <section aria-label="Événements à venir" class="px-base pb-12 lg:pb-16">
+	<ListToolbar {color}>
+		<FilterDropdown
+			terms={publicTerms}
+			bind:selected={selectedPublics}
+			label="Événements concernant"
+			{color}
+		/>
+
+		{#snippet end()}
+			<SearchInput
+				bind:value={search}
+				label="Rechercher un événement"
+				placeholder="Rechercher un événement"
+				color="blue"
+			/>
+		{/snippet}
+	</ListToolbar>
+
 	<p class="sr-only" aria-live="polite">
 		{announcedCount}
 		{announcedCount > 1 ? 'événements' : 'événement'}
@@ -232,32 +244,26 @@
 	{#if hasSearch}
 		<ResultsHeader
 			query={search.trim()}
-			count={resultCount}
+			count={upcoming.length}
 			nouns={['événement', 'événements']}
-			onClear={clearSearch}
 			{noResultsText}
 			{color}
 			variant="section"
-			class="mt-12 lg:mt-18"
+			rule={false}
 		/>
-		{#if upcoming.length === 0 && archive.current.matchTotal > 0}
-			<p class="text-body-1 text-grey-dark mt-4">
-				Aucun événement à venir, voir les événements passés ci-dessous.
-			</p>
-		{/if}
 	{:else if upcoming.length === 0}
 		<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
 			Aucun événement à venir pour le moment.
 		</p>
 	{:else if showAllUpcoming}
-		<ListHeader
-			{color}
-			count={upcoming.length}
-			nouns={['événement', 'événements']}
-			class="mt-12 lg:mt-18"
-		>
+		<!-- The first band has no rule: the toolbar already parts it from the header.
+		     On narrow screens the heading stays for assistive tech only: the count
+		     line is all the band shows. -->
+		<ListHeader {color} count={upcoming.length} nouns={['événement', 'événements']} rule={false}>
 			<div class="flex flex-wrap items-center justify-between gap-4">
-				<h2 class="text-h2 text-(--list-color) h-12.5">Tous les événements</h2>
+				<h2 class="sr-only md:not-sr-only text-h2 text-(--list-color) lg:h-15">
+					Tous les événements
+				</h2>
 				{@render viewToggle()}
 			</div>
 		</ListHeader>
@@ -266,10 +272,10 @@
 			{color}
 			count={upcomingForMonth.length}
 			nouns={['événement', 'événements']}
-			class="mt-12 lg:mt-18"
+			rule={false}
 		>
 			<div class="flex flex-wrap items-center justify-between gap-4">
-				<div class="flex items-center gap-2 lg:gap-4 h-12.5">
+				<div class="flex items-center gap-2 lg:gap-4 lg:h-15">
 					<button
 						type="button"
 						class="text-(--list-color) p-1 disabled:opacity-30"
@@ -337,25 +343,43 @@
 			pillClass="bg-blue text-white"
 		/>
 
-		<SelectDropdown
-			bind:value={selectedMonth}
-			options={pastMonths}
-			label="Mois"
-			allLabel="Tous les mois"
-			{color}
-			class="mt-12 lg:mt-18"
-		/>
+		<!-- The archive is browsed with its own toolbar: the month at the start,
+		     its own search at the end. -->
+		<ListToolbar {color} class="mt-12 lg:mt-18">
+			<SelectDropdown
+				bind:value={selectedMonth}
+				options={pastMonths}
+				label="Mois"
+				allLabel="Tous les mois"
+				{color}
+			/>
+
+			{#snippet end()}
+				<SearchInput
+					bind:value={pastSearch}
+					label="Rechercher un événement passé"
+					placeholder="Rechercher un événement passé"
+					color="blue"
+				/>
+			{/snippet}
+		</ListToolbar>
 
 		<p class="sr-only" aria-live="polite">
 			{archive.total}
 			{archive.total > 1 ? 'événements passés' : 'événement passé'}
 		</p>
 
-		<div class="mt-6">
-			{#each archive.items as event (event.url)}
-				<EventListItem {event} {color} headingTag="h3" />
-			{/each}
-		</div>
+		{#if archive.total === 0}
+			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12 mt-6">
+				Aucun événement passé ne correspond à votre recherche.
+			</p>
+		{:else}
+			<div class="mt-6">
+				{#each archive.items as event (event.url)}
+					<EventListItem {event} {color} headingTag="h3" />
+				{/each}
+			</div>
+		{/if}
 
 		<InfiniteScroll
 			hasMore={archive.hasMore}

@@ -303,8 +303,8 @@ return [
 
                 return \Kirby\Http\Response::json(Utils::getPastEvents(
                     $page->children()->listed(),
-                    mb_substr((string)(get('q') ?? ''), 0, 100),
                     array_filter(explode(',', (string)(get('publics') ?? ''))),
+                    mb_substr((string)(get('q') ?? ''), 0, 100),
                     (string)(get('month') ?? ''),
                     max((int)(get('offset') ?? 0), 0),
                     min(max((int)(get('limit') ?? 10), 1), 50)

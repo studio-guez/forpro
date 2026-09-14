@@ -18,8 +18,8 @@
 {#if links.length > 0}
 	<section class={['px-base', className]} aria-label={title}>
 		<div class="grid grid-cols-1 lg:grid-cols-3 gap-y-3 gap-x-6">
-			<h2 class="text-body-3 font-bold">{title}</h2>
-			<ul class="lg:col-span-2">
+			<h2 class="text-body-2 font-bold">{title}</h2>
+			<ul class="text-body-2 lg:col-span-2">
 				{#each links as link, index (index)}
 					<li>
 						<a

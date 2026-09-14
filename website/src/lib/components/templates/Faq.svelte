@@ -6,8 +6,8 @@
 	import FaqQuestion from '$lib/components/ui/FaqQuestion.svelte';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
-	import FilterTags from '$lib/components/ui/FilterTags.svelte';
-	import TermTags from '$lib/components/ui/TermTags.svelte';
+	import FilterDropdown from '$lib/components/ui/FilterDropdown.svelte';
+	import ListToolbar from '$lib/components/ui/ListToolbar.svelte';
 	import {
 		expandSelection,
 		filterUsedTerms,
@@ -101,13 +101,7 @@
 			.map((section, index) => ({
 				index,
 				title: section.title,
-				faqs: section.faqs.filter(matchesFilters),
-				// Terms shared by every question of the section (shown next to the counter).
-				commonTerms: section.faqs.length
-					? section.faqs[0].sectors.filter((term) =>
-							section.faqs.every((faq) => faq.sectors.some((t) => t.slug === term.slug))
-						)
-					: []
+				faqs: section.faqs.filter(matchesFilters)
 			}))
 			.filter((section) => section.faqs.length > 0)
 	);
@@ -141,10 +135,6 @@
 
 	const setSectionOpen = (index: number, open: boolean): void => {
 		openSections = open ? [...openSections, index] : openSections.filter((i) => i !== index);
-	};
-
-	const clearSearch = (): void => {
-		search = '';
 	};
 
 	// Mirror search + filters into the query string without triggering navigation.
@@ -186,40 +176,28 @@
 	/>
 {/snippet}
 
-<BasicHeader title={page.title} {color} id="faq-title">
-	<SearchInput
-		bind:value={search}
-		label="Rechercher une question"
-		placeholder="Rechercher une question..."
-		class="mt-12 lg:mt-18"
-	/>
-
-	<FilterTags
-		terms={sectorTerms}
-		bind:selected={selectedSectors}
-		{color}
-		legend="Questions concernant :"
-		class="mt-12 lg:mt-18"
-	/>
-
-	<FilterTags
-		terms={programTerms}
-		bind:selected={selectedPrograms}
-		{color}
-		legend="Programmes :"
-		class="mt-9 lg:mt-12"
-	/>
-
-	<FilterTags
-		terms={publicTerms}
-		bind:selected={selectedPublics}
-		{color}
-		legend="Publics :"
-		class="mt-9 lg:mt-12"
-	/>
-</BasicHeader>
+<BasicHeader title={page.title} {color} id="faq-title"></BasicHeader>
 
 <section aria-label="Questions et réponses" class="px-base pb-12 lg:pb-16">
+	<ListToolbar {color}>
+		<FilterDropdown terms={sectorTerms} bind:selected={selectedSectors} label="Secteurs" {color} />
+		<FilterDropdown
+			terms={programTerms}
+			bind:selected={selectedPrograms}
+			label="Programmes"
+			{color}
+		/>
+		<FilterDropdown terms={publicTerms} bind:selected={selectedPublics} label="Publics" {color} />
+
+		{#snippet end()}
+			<SearchInput
+				bind:value={search}
+				label="Rechercher une question"
+				placeholder="Rechercher une question"
+			/>
+		{/snippet}
+	</ListToolbar>
+
 	<p class="sr-only" aria-live="polite">
 		{@render questionCount(announcedCount)}
 	</p>
@@ -229,11 +207,10 @@
 			query={search.trim()}
 			count={searchResults.length}
 			nouns={['question', 'questions']}
-			onClear={clearSearch}
 			{noResultsText}
 			{color}
 			variant="section"
-			class="mt-12 lg:mt-18"
+			rule={false}
 		/>
 
 		{#if searchResults.length > 0}
@@ -248,23 +225,23 @@
 			{noResultsText}
 		</p>
 	{:else}
-		{#each filteredSections as section (section.index)}
+		{#each filteredSections as section, position (section.index)}
+			<!-- The first band follows the toolbar directly, without a rule: the toolbar
+			     already parts it from the header. The others keep their rule and distance. -->
 			<ExpandableSection
 				id="faq-section-{section.index}"
 				title={section.title}
 				{color}
-				class="mt-12 lg:mt-18"
+				rule={position !== 0}
+				class={position === 0 ? '' : 'mt-12 lg:mt-18'}
 				bind:open={
 					() => isSectionOpen(section.index), (value) => setSectionOpen(section.index, value)
 				}
 			>
 				{#snippet meta()}
-					<div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
-						<p class="text-label text-(--list-color)">
-							{@render questionCount(section.faqs.length)}
-						</p>
-						<TermTags terms={section.commonTerms} label="Secteurs" size="md" />
-					</div>
+					<p class="mt-2.5 text-label text-(--list-color)">
+						{@render questionCount(section.faqs.length)}
+					</p>
 				{/snippet}
 
 				<div class="mt-9 space-y-6">

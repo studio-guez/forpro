@@ -1,7 +1,8 @@
 <?php
 
 /**
- * URL / label resolution for the shared link, CTA and external-link structures.
+ * URL / label resolution for the shared link, CTA and external-link structures, and
+ * the Panel permalinks found in writer (rich text) fields.
  */
 trait UtilsLinks
 {
@@ -21,6 +22,30 @@ trait UtilsLinks
             return '';
         }
         return strip_tags(\Kirby\Sane\Html::sanitize($html), '<a>');
+    }
+
+    /**
+     * Writer (rich text) HTML with its Panel permalinks resolved for the decoupled
+     * frontend. The writer stores links to pages and files as `/@/page/<uuid>` and
+     * `/@/file/<uuid>`, which only Kirby itself can serve: pages are rewritten to their
+     * frontend path (see pageUrl()) and files to their absolute URL on the CMS. A
+     * permalink whose target no longer exists is left untouched. Null when the field is
+     * empty, so templates can emit the result as-is.
+     */
+    static function getRichText(\Kirby\Content\Field $field): ?string
+    {
+        if ($field->isEmpty()) {
+            return null;
+        }
+        return preg_replace_callback(
+            '~(href|src)="/@/(page|file)/([^"/]+)"~',
+            function (array $m): string {
+                $model = \Kirby\Uuid\Uuid::for($m[2] . '://' . $m[3])->model();
+                $url   = $model instanceof \Kirby\Cms\Page ? self::pageUrl($model) : $model?->url();
+                return $url ? $m[1] . '="' . htmlspecialchars($url, ENT_QUOTES) . '"' : $m[0];
+            },
+            $field->value()
+        );
     }
 
     /**

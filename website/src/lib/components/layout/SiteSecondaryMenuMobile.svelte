@@ -64,7 +64,7 @@
 								{#if group.title}
 									<p class="text-label leading-none text-blue mb-0.75">{group.title}</p>
 								{/if}
-								<ul class="flex flex-col">
+								<ul class="flex flex-col gap-1">
 									{#each group.links as link (link)}
 										<li
 											class="leading-none {hasLevel2 && link.level !== 2

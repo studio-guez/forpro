@@ -20,15 +20,18 @@ export interface EventPage extends EventProjectBase {
  * One page of the past-events archive, from `/api/list/past-events` or embedded
  * unfiltered in the events page payload.
  *
- * `total` counts search + publics + month, so it drives the pagination;
- * `matchTotal` and `months` deliberately ignore the month, since the results
- * header counts every match and the dropdown has to keep offering the months
- * the current selection excludes.
+ * The archive is filtered by publics, its own search and month: the agenda's
+ * other search answers across upcoming events alone. `total` counts all three,
+ * so it drives the pagination. `matchTotal` ignores the search and the month:
+ * it is what shows the archive, its search box included, so a search with no
+ * result cannot hide its own box. `months` ignores the month only, so the
+ * dropdown keeps offering the months the selection excludes, but follows the
+ * search.
  */
 export interface PastEventsList extends PaginatedList<AgendaEventCard> {
-	/** Events matching search + publics, whatever the month. */
+	/** Events matching the publics, whatever the search and the month. */
 	readonly matchTotal: number;
-	/** Month keys (`YYYY-MM`) of the matches, most recent first; unlabelled. */
+	/** Month keys (`YYYY-MM`) of the search matches, most recent first; unlabelled. */
 	readonly months: string[];
 }
 

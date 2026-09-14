@@ -23,14 +23,16 @@ $json['upcomingEvents'] = array_values(
 );
 
 // Past events are paginated: this is the first page. The agenda's filters are
-// read off the query string so a shared or reloaded `?q=…&publics=…&month=…`
+// read off the query string so a shared or reloaded `?publics=…&pastQ=…&month=…`
 // URL renders the archive it actually asks for — otherwise the first paint
-// would show ten unrelated events and swap them out on hydration. Every later
-// page comes from the `past-events.json` route.
+// would show ten unrelated events and swap them out on hydration. The archive
+// has a search of its own, `pastQ`: `?q=` is the upcoming events' search and
+// is left out on purpose. Every later page comes from the `past-events.json`
+// route, where the archive search is plain `q`.
 $json['pastEvents'] = Utils::getPastEvents(
     $events,
-    mb_substr((string)(get('q') ?? ''), 0, 100),
     array_filter(explode(',', (string)(get('publics') ?? ''))),
+    mb_substr((string)(get('pastQ') ?? ''), 0, 100),
     (string)(get('month') ?? '')
 );
 

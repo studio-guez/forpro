@@ -2,9 +2,10 @@
 	import { page as appPage } from '$app/state';
 	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
-	import FilterTags from '$lib/components/ui/FilterTags.svelte';
+	import FilterDropdown from '$lib/components/ui/FilterDropdown.svelte';
 	import InfiniteScroll from '$lib/components/ui/InfiniteScroll.svelte';
 	import ListHeader from '$lib/components/ui/ListHeader.svelte';
+	import ListToolbar from '$lib/components/ui/ListToolbar.svelte';
 	import ProjectCard from '$lib/components/ui/ProjectCard.svelte';
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
@@ -78,10 +79,6 @@
 		})
 	});
 
-	const clearSearch = (): void => {
-		search = '';
-	};
-
 	// Mirror search + filters into the query string without triggering navigation.
 	$effect(() => {
 		syncQueryString({
@@ -92,71 +89,66 @@
 	});
 </script>
 
-<BasicHeader title={page.title} {color} id="projects-title">
-	<SearchInput
-		bind:value={search}
-		label="Rechercher un projet"
-		placeholder="Rechercher un projet..."
-		color="orange"
-		class="mt-12 lg:mt-18"
-	/>
-
-	<FilterTags
-		terms={programTerms}
-		bind:selected={selectedPrograms}
-		{color}
-		legend="Projets concernant :"
-		class="mt-12 lg:mt-18"
-	/>
-</BasicHeader>
+<BasicHeader title={page.title} {color} id="projects-title"></BasicHeader>
 
 <section aria-label="Projets" class="px-base pb-12 lg:pb-16">
+	<ListToolbar {color}>
+		<FilterDropdown
+			terms={programTerms}
+			bind:selected={selectedPrograms}
+			label="Projets concernant"
+			{color}
+		/>
+		{#if yearOptions.length > 0}
+			<SelectDropdown
+				bind:value={selectedYear}
+				options={yearOptions}
+				label="Années"
+				allLabel="Toutes les années"
+				{color}
+			/>
+		{/if}
+
+		{#snippet end()}
+			<SearchInput
+				bind:value={search}
+				label="Rechercher un projet"
+				placeholder="Rechercher un projet"
+				color="orange"
+			/>
+		{/snippet}
+	</ListToolbar>
+
 	{#if hasSearch}
 		<div aria-live="polite">
 			<ResultsHeader
 				query={search.trim()}
 				count={archive.total}
 				nouns={['projet', 'projets']}
-				onClear={clearSearch}
 				{noResultsText}
 				{color}
 				variant="section"
-				class="mt-12 lg:mt-18"
+				rule={false}
 			/>
 		</div>
 	{:else}
-		<!-- The band the archive is browsed with. Only the count is announced: the
-		     year panel opening is not a change of results. -->
-		<ListHeader {color} class="mt-12 lg:mt-18">
-			<h2 class="text-h2 text-(--list-color)">Tous les projets</h2>
+		<!-- The band the archive is browsed with, without a rule: the toolbar already
+		     parts it from the header. Only the count is announced. On narrow screens
+		     the heading stays for assistive tech only: the count line is all the band
+		     shows. -->
+		<div aria-live="polite">
+			<ListHeader {color} count={archive.total} nouns={['projet', 'projets']} rule={false}>
+				<h2 class="sr-only md:not-sr-only text-h2 text-(--list-color) lg:h-15">Tous les projets</h2>
 
-			<div class="mt-2 flex flex-wrap items-center gap-x-6 gap-y-3">
-				{#if yearOptions.length > 0}
-					<SelectDropdown
-						bind:value={selectedYear}
-						options={yearOptions}
-						label="Années"
-						allLabel="Toutes les années"
-						{color}
-					/>
+				{#if archive.total === 0}
+					<p class="text-body-1 text-(--list-color) mt-2.5">{noResultsText}</p>
 				{/if}
-
-				{#if archive.total > 0}
-					<p class="text-label text-(--list-color)" aria-live="polite">
-						{archive.total}
-						{archive.total > 1 ? 'projets' : 'projet'}
-					</p>
-				{/if}
-			</div>
-
-			{#if archive.total === 0}
-				<p class="text-body-1 text-(--list-color) mt-4" aria-live="polite">{noResultsText}</p>
-			{/if}
-		</ListHeader>
+			</ListHeader>
+		</div>
 	{/if}
 
 	{#if archive.items.length > 0}
-		<ul class="mt-9 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+		<ul class="mt-9 grid max-sm:gap-y-12 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 			{#each archive.items as project (project.url)}
 				<li>
 					<ProjectCard {project} headingTag="h3" variant="inverted" sizes={cardSizes} />

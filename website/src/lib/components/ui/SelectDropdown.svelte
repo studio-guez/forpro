@@ -2,6 +2,8 @@
 	import { slide } from 'svelte/transition';
 	import { prefersReducedMotion } from 'svelte/motion';
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
+	import { listenForDismiss } from '$lib/utils/dismiss';
+	import { dropdownGroup } from '$lib/utils/dropdownGroup.svelte';
 
 	interface Option {
 		readonly value: string;
@@ -57,41 +59,64 @@
 	};
 
 	// Clicking outside is the pointer way out; Escape is the keyboard one.
+	// Clicking another dropdown is neither: it takes the group, which closes
+	// this one only once its own click has landed.
 	$effect(() => {
-		if (!open) return;
+		if (!open || !rootEl) return;
+		return listenForDismiss(rootEl, close, '[data-dropdown]');
+	});
 
-		const handlePointerDown = (event: PointerEvent) => {
-			if (rootEl && !rootEl.contains(event.target as Node)) close(false);
-		};
-		const handleKeydown = (event: KeyboardEvent) => {
-			if (event.key === 'Escape') close(true);
-		};
-
-		document.addEventListener('pointerdown', handlePointerDown);
-		document.addEventListener('keydown', handleKeydown);
-		return () => {
-			document.removeEventListener('pointerdown', handlePointerDown);
-			document.removeEventListener('keydown', handleKeydown);
-		};
+	const token = Symbol();
+	$effect(() => {
+		if (open) dropdownGroup.take(token);
+		else dropdownGroup.release(token);
+	});
+	$effect(() => {
+		if (open && !dropdownGroup.holds(token)) close(false);
 	});
 </script>
 
 <div
 	bind:this={rootEl}
+	data-dropdown
 	style:--select-color={color}
 	style:--select-tint="color-mix(in oklab, {color} 12%, transparent)"
-	class="text-(--select-color) -mx-3 {className}"
+	class="text-(--select-color) -mx-3 max-w-full {className}"
 >
+	<!-- From the tablet breakpoint up the panel overlays the page rather than
+	     pushing it down: the trigger is the top of the card and stays in flow, the
+	     panel is its bottom, positioned under it. The panel paints over the
+	     trigger's shadow, so the two read as one card. Below it, in the toolbar's
+	     modal, the panel takes up space instead and the field runs full width. -->
 	<div
-		class="w-64 max-w-full rounded-xl overflow-hidden transition-shadow {open
-			? 'bg-white shadow-lg'
+		class="relative w-full md:w-fit min-w-64 md:max-w-lg rounded-xl transition-shadow {open
+			? 'max-md:shadow-lg'
 			: ''}"
 	>
+		<!-- The panel is out of flow, so it cannot size the field: the label and
+		     every option are laid out again here, invisibly, one line each, with the
+		     rows' own padding and room for their icons. The field is then as wide as
+		     the widest of them, whatever is selected, and the panel never wraps or
+		     clips one. The max width is a safeguard only; the rows truncate once it
+		     is reached. -->
+		<div class="h-0 overflow-hidden invisible whitespace-nowrap" aria-hidden="true">
+			<div class="text-label flex gap-3 px-3">
+				<span>{label}</span>
+				<span class="shrink-0 w-5.25"></span>
+			</div>
+			{#each options as option (option.value)}
+				<div class="text-label flex gap-3 px-3">
+					<span>{option.label}</span>
+					<span class="shrink-0 w-4.5"></span>
+				</div>
+			{/each}
+		</div>
+
 		<button
 			bind:this={triggerEl}
 			type="button"
 			class="text-label w-full text-left px-3 py-2 rounded-t-xl transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current {open
-				? ''
+				? 'bg-white md:shadow-lg'
 				: 'rounded-b-xl hover:bg-(--select-tint)'}"
 			aria-expanded={open}
 			aria-controls={open ? panelId : undefined}
@@ -107,7 +132,11 @@
 		</button>
 
 		{#if open}
-			<div id={panelId} class="pb-2" transition:slide={panelSlide}>
+			<div
+				id={panelId}
+				class="md:absolute md:inset-x-0 md:top-full md:z-20 pb-2 rounded-b-xl bg-white md:shadow-lg"
+				transition:slide={panelSlide}
+			>
 				<!-- Arrow keys move *and* select inside a radio group, so the panel only
 				     closes on a real click (`detail` is 0 for a keyboard-driven one) or
 				     on an explicit Enter. -->
