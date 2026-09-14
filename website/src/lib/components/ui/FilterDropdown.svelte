@@ -206,7 +206,7 @@
 								class="text-caption font-bold min-w-5 h-5 px-1.5 inline-flex items-center justify-center rounded-full bg-(--select-color) text-white"
 								aria-hidden="true"
 							>
-								{count}
+								<span class="block text-trim leading-none">{count}</span>
 							</span>
 						{/if}
 						<IconChevron
