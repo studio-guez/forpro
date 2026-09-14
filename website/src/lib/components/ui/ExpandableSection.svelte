@@ -11,6 +11,8 @@
 		/** Any CSS colour: drives the rule, the heading and the chevron. */
 		color?: string;
 		open?: boolean;
+		/** Whether the band is topped by its rule, see `ListHeader`. */
+		rule?: boolean;
 		class?: string;
 		/** Optional row under the heading, inside the band (a count, tags...). */
 		meta?: Snippet;
@@ -23,6 +25,7 @@
 		title,
 		color = 'var(--color-blue)',
 		open = $bindable(false),
+		rule = true,
 		class: className = '',
 		meta,
 		children
@@ -31,7 +34,7 @@
 
 <!-- The section is browsed with the same band the other lists use, the heading
      itself opening and closing it. -->
-<ListHeader {color} class={className}>
+<ListHeader {color} {rule} class={className}>
 	<h2 class="text-h2 text-(--list-color) h-12.5">
 		<button
 			type="button"

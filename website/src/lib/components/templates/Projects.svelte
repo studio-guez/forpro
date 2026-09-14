@@ -2,9 +2,10 @@
 	import { page as appPage } from '$app/state';
 	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
-	import FilterTags from '$lib/components/ui/FilterTags.svelte';
+	import FilterDropdown from '$lib/components/ui/FilterDropdown.svelte';
 	import InfiniteScroll from '$lib/components/ui/InfiniteScroll.svelte';
 	import ListHeader from '$lib/components/ui/ListHeader.svelte';
+	import ListToolbar from '$lib/components/ui/ListToolbar.svelte';
 	import ProjectCard from '$lib/components/ui/ProjectCard.svelte';
 	import { PAGE, cell, toSizes } from '$lib/utils/imgSizes';
 	import ResultsHeader from '$lib/components/ui/ResultsHeader.svelte';
@@ -78,10 +79,6 @@
 		})
 	});
 
-	const clearSearch = (): void => {
-		search = '';
-	};
-
 	// Mirror search + filters into the query string without triggering navigation.
 	$effect(() => {
 		syncQueryString({
@@ -92,55 +89,55 @@
 	});
 </script>
 
-<BasicHeader title={page.title} {color} id="projects-title">
-	<SearchInput
-		bind:value={search}
-		label="Rechercher un projet"
-		placeholder="Rechercher un projet..."
-		color="orange"
-		class="mt-12 lg:mt-18"
-	/>
-
-	<FilterTags
-		terms={programTerms}
-		bind:selected={selectedPrograms}
-		{color}
-		legend="Projets concernant :"
-		class="mt-12 lg:mt-18"
-	/>
-</BasicHeader>
+<BasicHeader title={page.title} {color} id="projects-title"></BasicHeader>
 
 <section aria-label="Projets" class="px-base pb-12 lg:pb-16">
+	<ListToolbar>
+		<FilterDropdown
+			terms={programTerms}
+			bind:selected={selectedPrograms}
+			label="Projets concernant"
+			{color}
+		/>
+		{#if yearOptions.length > 0}
+			<SelectDropdown
+				bind:value={selectedYear}
+				options={yearOptions}
+				label="Années"
+				allLabel="Toutes les années"
+				{color}
+			/>
+		{/if}
+
+		{#snippet end()}
+			<SearchInput
+				bind:value={search}
+				label="Rechercher un projet"
+				placeholder="Rechercher un projet"
+				color="orange"
+			/>
+		{/snippet}
+	</ListToolbar>
+
 	{#if hasSearch}
 		<div aria-live="polite">
 			<ResultsHeader
 				query={search.trim()}
 				count={archive.total}
 				nouns={['projet', 'projets']}
-				onClear={clearSearch}
 				{noResultsText}
 				{color}
 				variant="section"
-				class="mt-12 lg:mt-18"
+				rule={false}
 			/>
 		</div>
 	{:else}
-		<!-- The band the archive is browsed with. Only the count is announced: the
-		     year panel opening is not a change of results. -->
-		<ListHeader {color} class="mt-12 lg:mt-18">
+		<!-- The band the archive is browsed with, without a rule: the toolbar already
+		     parts it from the header. Only the count is announced. -->
+		<ListHeader {color} rule={false}>
 			<h2 class="text-h2 text-(--list-color)">Tous les projets</h2>
 
 			<div class="mt-2 flex flex-wrap items-center gap-x-6 gap-y-3">
-				{#if yearOptions.length > 0}
-					<SelectDropdown
-						bind:value={selectedYear}
-						options={yearOptions}
-						label="Années"
-						allLabel="Toutes les années"
-						{color}
-					/>
-				{/if}
-
 				{#if archive.total > 0}
 					<p class="text-label text-(--list-color)" aria-live="polite">
 						{archive.total}
