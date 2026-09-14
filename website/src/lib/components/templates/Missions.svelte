@@ -73,7 +73,7 @@
 <PageHeader {page} />
 
 <section aria-label="Missions" class="px-base py-12 lg:py-16">
-	<ListToolbar>
+	<ListToolbar {color}>
 		<SelectDropdown
 			bind:value={sort}
 			options={sortOptions}
