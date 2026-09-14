@@ -4,6 +4,7 @@
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
 	import type { TaxonomyFilterTerm, TaxonomyTerm } from '$lib/interfaces/taxonomy';
 	import { listenForDismiss } from '$lib/utils/dismiss';
+	import { termColor } from '$lib/utils/shared';
 	import { dropdownGroup } from '$lib/utils/dropdownGroup.svelte';
 
 	interface Props {
@@ -111,11 +112,19 @@
 	const clear = (): void => {
 		selected = [];
 	};
+
+	// A term without a colour of its own takes the dropdown's, not the site-wide
+	// fallback: the panel then stays in the page colour rather than turning teal.
+	const optionColor = (term: TaxonomyTerm): string => (term.color ? termColor(term) : color);
 </script>
 
+<!-- Each row is drawn in its term's own colour, as the term tags are: text, tick
+     box and hover tint alike. -->
 {#snippet option(term: TaxonomyTerm, isSelected: boolean, onchange: () => void, isChild: boolean)}
 	<label
-		class="text-label flex items-center justify-between gap-3 py-1 pr-3 cursor-pointer transition-colors hover:bg-(--select-tint) {isChild
+		style:color={optionColor(term)}
+		style:--option-tint="color-mix(in oklab, {optionColor(term)} 12%, transparent)"
+		class="text-label flex items-center justify-between gap-3 py-1 pr-3 cursor-pointer transition-colors hover:bg-(--option-tint) {isChild
 			? 'pl-8'
 			: 'pl-3'}"
 	>
