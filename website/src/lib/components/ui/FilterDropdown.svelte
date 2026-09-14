@@ -128,7 +128,7 @@
 			? 'pl-8'
 			: 'pl-3'}"
 	>
-		<span class="truncate">{term.title}</span>
+		<span class="truncate-x">{term.title}</span>
 		<input type="checkbox" checked={isSelected} {onchange} class="sr-only peer" />
 		<!-- Clipping the fill to the content box leaves the ring and its gap: a tick box. -->
 		<span
@@ -199,7 +199,7 @@
 				onclick={() => (open = !open)}
 			>
 				<div class="border-b-2 border-current flex items-center justify-between gap-3 pb-1">
-					<div class="truncate">{label}</div>
+					<div class="truncate-x">{label}</div>
 					<div class="shrink-0 flex items-center gap-2">
 						{#if isActive}
 							<span
