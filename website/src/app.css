@@ -119,11 +119,11 @@
 	/* FONT STYLES */
 
 	.text-h0 {
-		@apply text-5xl lg:text-8xl font-bold text-balance;
+		@apply text-4xl sm:text-5xl lg:text-8xl font-bold text-balance;
 	}
 
 	.text-h1 {
-		@apply text-5xl lg:text-6xl font-bold text-balance;
+		@apply text-4xl sm:text-5xl lg:text-6xl font-bold text-balance;
 	}
 
 	.text-h2 {
