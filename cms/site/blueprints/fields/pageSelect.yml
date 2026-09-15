@@ -4,3 +4,6 @@ link: false
 max: 1
 query: site.index.listed.filterBy('template', 'in', ['home', 'page', 'faq', 'events', 'projects', 'team', 'job-offers', 'missions', 'impressum', 'press', 'infos-pratiques', 'basic-page', 'factory-lab']).sortBy('breadcrumbtitle', 'asc')
 text: "{{ page.breadcrumbTitle }}"
+image:
+  query: page.cover.toFile
+  cover: true
