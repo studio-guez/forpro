@@ -42,7 +42,7 @@
 						{/if}
 					</div>
 					{#if media.caption}
-						<figcaption class="text-caption text-grey-dark mt-2">{media.caption}</figcaption>
+						<figcaption class="text-caption text-black mt-2">{media.caption}</figcaption>
 					{/if}
 				</figure>
 			{/each}
