@@ -1,0 +1,15 @@
+width: 1/2
+label:
+  en: Image fit
+  fr: Ajustement des images
+type: select
+default: cover
+required: true
+help:
+  en: "Cover fills the whole frame and crops the edges of the image if its proportions differ — best for photos. Contain shows the entire image, uncropped, leaving empty space around it if needed — best for logos, illustrations and screenshots."
+  fr: "Couvrir remplit tout le cadre et rogne les bords de l'image si ses proportions diffèrent : idéal pour les photos. Contenir affiche l'image entière, sans recadrage, en laissant du vide autour si nécessaire : idéal pour les logos, illustrations et captures d'écran."
+options:
+  - value: cover
+    text: { en: "Cover (fill the frame, crop)", fr: "Couvrir (remplir le cadre, rogner)" }
+  - value: contain
+    text: { en: "Contain (show the whole image)", fr: "Contenir (afficher l'image entière)" }
