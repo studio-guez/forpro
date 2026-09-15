@@ -5,17 +5,19 @@ type: structure
 max: 1
 columns:
   label:
-    width: 1/6
+    width: 1/7
   page:
-    width: 1/6
+    width: 1/7
   url:
-    width: 1/6
+    width: 1/7
   email:
-    width: 1/6
+    width: 1/7
   phone:
-    width: 1/6
+    width: 1/7
+  file:
+    width: 1/7
   icon:
-    width: 1/6
+    width: 1/7
 fields:
   label:
     label: { en: Label, fr: Libellé }
@@ -34,6 +36,8 @@ fields:
         text: { en: Email, fr: Email }
       - value: tel
         text: { en: Phone, fr: Téléphone }
+      - value: file
+        text: { en: File, fr: Fichier }
   page:
     extends: fields/pageLink
   url:
@@ -51,6 +55,14 @@ fields:
     type: tel
     when:
       type: tel
+  file:
+    label: { en: File, fr: Fichier }
+    type: files
+    max: 1
+    layout: list
+    uploads: document
+    when:
+      type: file
   icon:
     label: { en: Icon, fr: Icône }
     type: select
