@@ -20,8 +20,8 @@ export interface EventPage extends EventProjectBase {
  * One page of the past-events archive, from `/api/list/past-events` or embedded
  * unfiltered in the events page payload.
  *
- * The archive is filtered by publics, its own search and month: the agenda's
- * other search answers across upcoming events alone. `total` counts all three,
+ * The archive is filtered by its own search and month only: the agenda's
+ * publics filter and search narrow upcoming events alone. `total` counts both,
  * so it drives the pagination. `matchTotal` ignores the search and the month:
  * it is what shows the archive, its search box included, so a search with no
  * result cannot hide its own box. `months` ignores the month only, so the
@@ -29,7 +29,7 @@ export interface EventPage extends EventProjectBase {
  * search.
  */
 export interface PastEventsList extends PaginatedList<AgendaEventCard> {
-	/** Events matching the publics, whatever the search and the month. */
+	/** Every past event, whatever the search and the month. */
 	readonly matchTotal: number;
 	/** Month keys (`YYYY-MM`) of the search matches, most recent first; unlabelled. */
 	readonly months: string[];
@@ -42,7 +42,7 @@ export interface EventsPage {
 	readonly path: string;
 	readonly programs: TaxonomyFilterTerm[];
 	readonly publics: TaxonomyFilterTerm[];
-	/** Public term slugs carried by at least one event, past or upcoming. */
+	/** Public term slugs carried by at least one upcoming event: the filter never reaches the archive. */
 	readonly usedPublics: string[];
 	readonly upcomingEvents: AgendaEventCard[];
 	readonly pastEvents: PastEventsList;

@@ -16,7 +16,7 @@ import type { RequestHandler } from './$types';
 const LISTS = {
 	'past-events': {
 		endpoint: 'past-events.json',
-		params: ['publics', 'q', 'month'],
+		params: ['q', 'month'],
 		pageSize: 10,
 		empty: { matchTotal: 0, months: [] }
 	},
