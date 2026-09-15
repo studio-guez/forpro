@@ -278,6 +278,8 @@ export interface PageCta {
 	readonly icon: CtaIcon | null;
 	/** Set by the CMS from the link type the editor picked; never inferred from the URL. */
 	readonly target: '_blank' | null;
+	/** True for CMS `file` CTAs: the anchor downloads the document rather than navigating to it. */
+	readonly download?: boolean;
 }
 
 export type PageLayout = '1col' | '2col';

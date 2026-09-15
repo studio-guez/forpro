@@ -62,6 +62,9 @@ trait UtilsLinks
         if ($item->type()->value() === 'tel') {
             return self::telHref($item->phone());
         }
+        if ($item->type()->value() === 'file') {
+            return $item->file()->toFile()?->url();
+        }
         return $item->url()->isNotEmpty() ? $item->url()->value() : null;
     }
 
@@ -108,12 +111,16 @@ trait UtilsLinks
         if ($item->type()->value() === 'tel') {
             return $item->phone()->isNotEmpty() ? $item->phone()->value() : null;
         }
+        if ($item->type()->value() === 'file') {
+            return $item->file()->toFile()?->filename();
+        }
         return $item->url()->isNotEmpty() ? $item->url()->value() : null;
     }
 
     /**
-     * Link target for a structure item. Only the `url` type leaves the site, so it is the
-     * only one opened in a new tab — `page` stays internal, `mailto`/`tel` hand off to the OS.
+     * Link target for a structure item. `url` leaves the site and `file` opens a document
+     * served by the CMS, so both open in a new tab — `page` stays internal, `mailto`/`tel`
+     * hand off to the OS.
      * Derived from the editor's choice rather than sniffed from the URL on the frontend, so a
      * self-referencing absolute URL is still treated as internal.
      */
@@ -124,6 +131,8 @@ trait UtilsLinks
 
     /**
      * Resolves a single CTA structure item, or null when it has no resolvable URL or label.
+     * `download` is true for the `file` type, so the frontend renders the anchor with a
+     * `download` attribute instead of navigating to the document.
      */
     private static function resolveCtaItem(\Kirby\Cms\StructureObject $item): ?array
     {
@@ -131,10 +140,11 @@ trait UtilsLinks
         $label = self::resolvePageOrUrlLabel($item);
         if (!$url || !$label) return null;
         return [
-            'label'  => $label,
-            'url'    => $url,
-            'icon'   => $item->icon()->isNotEmpty() ? $item->icon()->value() : null,
-            'target' => self::resolvePageOrUrlTarget($item),
+            'label'    => $label,
+            'url'      => $url,
+            'icon'     => $item->icon()->isNotEmpty() ? $item->icon()->value() : null,
+            'target'   => self::resolvePageOrUrlTarget($item),
+            'download' => $item->type()->value() === 'file',
         ];
     }
 

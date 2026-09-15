@@ -39,6 +39,7 @@
 	href={cta.url}
 	target={cta.target ?? undefined}
 	rel={cta.target === '_blank' ? 'noopener noreferrer' : undefined}
+	download={cta.download ? '' : undefined}
 	aria-label={ariaLabel}
 	title={cta.label}
 	style:--color-cta={color}
