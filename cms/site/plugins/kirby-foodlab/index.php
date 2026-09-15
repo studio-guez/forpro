@@ -28,7 +28,6 @@ load([
 $pluginPermissionNameForBlueprint = 'eclypsys.foodlab';
 
 Kirby::plugin("eclypsys/foodlab", [
-    // catégorie de permission « eclypsys.foodlab » utilisée par les blueprints de rôles
     'permissions' => [
         'access' => false,
     ],
@@ -55,77 +54,66 @@ Kirby::plugin("eclypsys/foodlab", [
                     require __DIR__ . '/views/deniedAccess.php',
                 ],
                 "dialogs" => [
-                    // Beer
                     require __DIR__ . "/dialogs/menu/beer/fields.php",
                     require __DIR__ . "/dialogs/menu/beer/create.php",
                     require __DIR__ . "/dialogs/menu/beer/delete.php",
                     require __DIR__ . "/dialogs/menu/beer/edit.php",
                     require __DIR__ . "/dialogs/menu/beer/hide.php",
                     require __DIR__ . "/dialogs/menu/beer/title.php",
-                    // Bubble Wine
                     require __DIR__ . "/dialogs/menu/bubblewine/fields.php",
                     require __DIR__ . "/dialogs/menu/bubblewine/create.php",
                     require __DIR__ . "/dialogs/menu/bubblewine/delete.php",
                     require __DIR__ . "/dialogs/menu/bubblewine/edit.php",
                     require __DIR__ . "/dialogs/menu/bubblewine/hide.php",
                     require __DIR__ . "/dialogs/menu/bubblewine/title.php",
-                    // Cocktail
                     require __DIR__ . "/dialogs/menu/cocktail/fields.php",
                     require __DIR__ . "/dialogs/menu/cocktail/create.php",
                     require __DIR__ . "/dialogs/menu/cocktail/delete.php",
                     require __DIR__ . "/dialogs/menu/cocktail/edit.php",
                     require __DIR__ . "/dialogs/menu/cocktail/hide.php",
                     require __DIR__ . "/dialogs/menu/cocktail/title.php",
-                    // Dessert
                     require __DIR__ . "/dialogs/menu/dessert/fields.php",
                     require __DIR__ . "/dialogs/menu/dessert/create.php",
                     require __DIR__ . "/dialogs/menu/dessert/delete.php",
                     require __DIR__ . "/dialogs/menu/dessert/edit.php",
                     require __DIR__ . "/dialogs/menu/dessert/hide.php",
                     require __DIR__ . "/dialogs/menu/dessert/title.php",
-                    // Hot Drink
                     require __DIR__ . "/dialogs/menu/hotdrink/fields.php",
                     require __DIR__ . "/dialogs/menu/hotdrink/create.php",
                     require __DIR__ . "/dialogs/menu/hotdrink/delete.php",
                     require __DIR__ . "/dialogs/menu/hotdrink/edit.php",
                     require __DIR__ . "/dialogs/menu/hotdrink/hide.php",
                     require __DIR__ . "/dialogs/menu/hotdrink/title.php",
-                    // Main Course
                     require __DIR__ . "/dialogs/menu/maincourse/fields.php",
                     require __DIR__ . "/dialogs/menu/maincourse/create.php",
                     require __DIR__ . "/dialogs/menu/maincourse/delete.php",
                     require __DIR__ . "/dialogs/menu/maincourse/edit.php",
                     require __DIR__ . "/dialogs/menu/maincourse/hide.php",
                     require __DIR__ . "/dialogs/menu/maincourse/title.php",
-                    // Red Wine
                     require __DIR__ . "/dialogs/menu/redwine/fields.php",
                     require __DIR__ . "/dialogs/menu/redwine/create.php",
                     require __DIR__ . "/dialogs/menu/redwine/delete.php",
                     require __DIR__ . "/dialogs/menu/redwine/edit.php",
                     require __DIR__ . "/dialogs/menu/redwine/hide.php",
                     require __DIR__ . "/dialogs/menu/redwine/title.php",
-                    // Soft Drink
                     require __DIR__ . "/dialogs/menu/softdrink/fields.php",
                     require __DIR__ . "/dialogs/menu/softdrink/create.php",
                     require __DIR__ . "/dialogs/menu/softdrink/delete.php",
                     require __DIR__ . "/dialogs/menu/softdrink/edit.php",
                     require __DIR__ . "/dialogs/menu/softdrink/hide.php",
                     require __DIR__ . "/dialogs/menu/softdrink/title.php",
-                    // Starter
                     require __DIR__ . "/dialogs/menu/starter/fields.php",
                     require __DIR__ . "/dialogs/menu/starter/create.php",
                     require __DIR__ . "/dialogs/menu/starter/delete.php",
                     require __DIR__ . "/dialogs/menu/starter/edit.php",
                     require __DIR__ . "/dialogs/menu/starter/hide.php",
                     require __DIR__ . "/dialogs/menu/starter/title.php",
-                    // White Wine
                     require __DIR__ . "/dialogs/menu/whitewine/fields.php",
                     require __DIR__ . "/dialogs/menu/whitewine/create.php",
                     require __DIR__ . "/dialogs/menu/whitewine/delete.php",
                     require __DIR__ . "/dialogs/menu/whitewine/edit.php",
                     require __DIR__ . "/dialogs/menu/whitewine/hide.php",
                     require __DIR__ . "/dialogs/menu/whitewine/title.php",
-                    // Origins
                     require __DIR__ . "/dialogs/menu/origin/fields.php",
                     require __DIR__ . "/dialogs/menu/origin/create.php",
                     require __DIR__ . "/dialogs/menu/origin/delete.php",
@@ -142,16 +130,13 @@ Kirby::plugin("eclypsys/foodlab", [
                 "view" => "k-menu-special-view",
                 "views" => [require __DIR__ . "/views/menu-special.php"],
                 "dialogs" => [
-                    // Dish
                     require __DIR__ . "/dialogs/menu-special/dish/fields.php",
                     require __DIR__ . "/dialogs/menu-special/dish/add.php",
                     require __DIR__ . "/dialogs/menu-special/dish/delete.php",
                     require __DIR__ . "/dialogs/menu-special/dish/edit.php",
-                    // Dish2
                     require __DIR__ . "/dialogs/menu-special/dish2/add.php",
                     require __DIR__ . "/dialogs/menu-special/dish2/delete.php",
                     require __DIR__ . "/dialogs/menu-special/dish2/edit.php",
-                    // Wine
                     require __DIR__ . "/dialogs/menu-special/wine/fields.php",
                     require __DIR__ . "/dialogs/menu-special/wine/add.php",
                     require __DIR__ . "/dialogs/menu-special/wine/delete.php",
@@ -161,7 +146,6 @@ Kirby::plugin("eclypsys/foodlab", [
         }
     ],
     "fields" => [
-        // field types of the restaurant form, see fields/restaurant.php
         "restaurantfiles" => require __DIR__ . "/fields/restaurantfiles.php",
         "restaurantlink" => require __DIR__ . "/fields/restaurantlink.php",
     ],

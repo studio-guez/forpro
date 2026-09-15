@@ -17,7 +17,6 @@ trait UtilsMedia
         if (!isset($content['content'][$contentTypeKey])) return;
 
         foreach ($content['content'][$contentTypeKey] as &$itemArray) {
-            //todo: images with s for profiles importation | change images to image in dataBase and profiles json result
             if (isset($itemArray['images']))    $itemArray['imageData'] = self::getImageArrayDataInArray($itemArray, 'images');
             if (isset($itemArray['image']))     $itemArray['imageData'] = self::getImageArrayDataInArray($itemArray, 'image');
         }
@@ -49,9 +48,6 @@ trait UtilsMedia
     static function getJsonEncodeImageData(\Kirby\Cms\File $file): array
     {
         return self::getImageData($file, [
-            // `width`/`height` are the intrinsic dimensions so the frontend can
-            // reserve space (avoid CLS). `url` is a mid-size WebP fallback for
-            // `src`; `srcset` lets the browser pick per viewport × pixel density.
             'width'         => $file->width(),
             'height'        => $file->height(),
             'url'           => $file->resize(1920)->url(),

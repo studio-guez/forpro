@@ -1,5 +1,3 @@
-# Steps of a timeline, shared by the `module-timeline` block and the
-# `job-offer` recruiting steps so both render through the same module.
 label:
   en: Steps
   fr: Étapes

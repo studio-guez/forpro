@@ -121,7 +121,6 @@ trait UtilsTaxonomies
 
         $terms = $parent->children()->listed();
 
-        // A sub-term is only kept while its parent is selected.
         $kept = array_values(array_filter($selected, function (string $slug) use ($terms, $selected): bool {
             if ($terms->findBy('slug', $slug)) return true;
 

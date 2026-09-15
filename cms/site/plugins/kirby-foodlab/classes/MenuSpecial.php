@@ -38,18 +38,15 @@ class MenuSpecial extends BaseClass
 
         $menu = parent::list();
 
-        // Migrate old textInfo → textAboveQr
         if (isset($menu['textInfo']) && !isset($menu['textAboveQr'])) {
             $menu['textAboveQr'] = $menu['textInfo'];
             unset($menu['textInfo']);
         }
 
-        // Top-level defaults for new fields
         $menu['qrUrl']         = $menu['qrUrl'] ?? "";
         $menu['textAboveQr']   = $menu['textAboveQr'] ?? "";
         $menu['showPartner']   = $menu['showPartner'] ?? false;
 
-        // Normalize each page with new fields
         if (isset($menu['pages']) && is_array($menu['pages'])) {
             foreach ($menu['pages'] as &$page) {
                 $page['layout']       = $page['layout'] ?? 'wines-dishes';

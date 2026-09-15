@@ -49,7 +49,6 @@ $textarea = [
     "uploads" => true,
 ];
 
-// the old blueprint left these unlabelled, which reads as an empty field
 $button = [
     "type" => "object",
     "width" => "1/2",

@@ -31,8 +31,6 @@ const empty = (query: string, group: SearchGroup): SearchResponse => ({
 	results: []
 });
 
-// Proxies the CMS search so the browser talks to the site origin only, and the
-// request can take the internal Docker network like every other CMS fetch.
 export const GET: RequestHandler = async ({ url }) => {
 	const query = (url.searchParams.get('q') ?? '').trim().slice(0, 100);
 	const requested = url.searchParams.get('group') as SearchGroup | null;

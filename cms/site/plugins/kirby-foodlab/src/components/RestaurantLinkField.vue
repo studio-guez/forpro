@@ -31,8 +31,7 @@ export default {
                 value: (value) => value,
             };
 
-            // `custom` matches anything, so it has to stay last for
-            // `$helper.link.detect()` to reach `media` at all
+            // `custom` matches anything, so it must stay last or `$helper.link.detect()` never reaches `media`.
             const { custom, ...rest } = types;
 
             return custom === undefined

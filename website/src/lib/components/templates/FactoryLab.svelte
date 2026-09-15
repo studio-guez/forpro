@@ -14,8 +14,6 @@
 
 	const companySizes = toSizes(cell(CARD, { 0: 1, 1024: 2 }, 1.5));
 
-	// Same pill as the taxonomy tags, in its filled `sm` variant: the colour comes from the
-	// `--term-color` custom property set on the list item.
 	const badgeClass = [
 		TAG_BASE,
 		tagSizeClasses.sm,
@@ -23,8 +21,7 @@
 		'inline-flex items-center gap-1.5'
 	].join(' ');
 
-	// This module is specific to the FactoryLab page: its colours are fixed by design and
-	// deliberately ignore the page theme and the module variant.
+	// Colours are fixed by design and deliberately ignore the page theme and the module variant.
 	const trainingColor = 'var(--color-pink)';
 	const availabilityColor = 'var(--color-teal)';
 </script>

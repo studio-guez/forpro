@@ -10,7 +10,6 @@
 
 	let { page }: { page: TeamPage } = $props();
 
-	// The first section starts open, the others are unfolded on demand.
 	let openSections = $state<number[]>([0]);
 	const isSectionOpen = (index: number): boolean => openSections.includes(index);
 	const setSectionOpen = (index: number, open: boolean): void => {

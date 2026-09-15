@@ -1,4 +1,3 @@
-# Repeatable title + rich-text block, serialized by Utils::getContentBlocks().
 label:
   en: Content blocks
   fr: Blocs de contenu

@@ -50,11 +50,8 @@
 		const observer = new IntersectionObserver(
 			(entries) => {
 				clearTimeout(timer);
-				// Debounced: a fast flick past the sentinel must not queue a fetch per page.
 				if (entries[0].isIntersecting) timer = setTimeout(loadMore, 200);
 			},
-			// Pulled before the end of the list is actually reached, so the next
-			// page is usually in place by the time it would have been needed.
 			{ root, rootMargin }
 		);
 		observer.observe(sentinel);

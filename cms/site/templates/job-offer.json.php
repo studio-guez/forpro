@@ -8,13 +8,11 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'job-offer');
 
-// The index the "back" link points to, i.e. the real Kirby parent (job-offers).
 $json['parentPage'] = Utils::getParentPageData($page);
 
 $json['sectors'] = Utils::resolveTaxonomyTerms($page->sectors(), 'sectors');
 
-// Closed offers stay reachable at their URL: the frontend replaces the
-// application details by a notice rather than 404ing.
+// Closed offers stay reachable: the frontend shows a notice instead of the application details.
 $json['openToApplications'] = Utils::isOpenToApplications($page);
 
 $json['description'] = $page->description()->value();

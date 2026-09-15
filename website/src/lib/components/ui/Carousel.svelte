@@ -28,9 +28,7 @@
 
 	let track: HTMLUListElement | undefined = $state();
 	let index = $state(0);
-	// Number of distinct scroll positions. When several slides are visible at once the
-	// last ones can never become the leading slide, so this is usually less than `items.length`.
-	// Starts at the item count as an SSR fallback, then gets measured on mount.
+	// Usually less than `items.length`: with several slides visible the last ones can never lead.
 	// svelte-ignore state_referenced_locally
 	let steps = $state(items.length);
 
@@ -49,7 +47,6 @@
 		track.scrollTo({ left: snapOffset(target, all), behavior });
 	};
 
-	// The scroll position is the source of truth: it also covers swipes and keyboard scrolling.
 	const onScroll = () => {
 		if (!track) return;
 		const all = slides();
@@ -74,7 +71,6 @@
 		if (!track) return;
 		const all = slides();
 		if (all.length === 0) return;
-		// Every slide whose snap point lies at or beyond the end of the track shares the last position.
 		const beyond = all.findIndex((slide) => snapOffset(slide, all) >= maxScroll() - 1);
 		steps = beyond === -1 ? all.length : beyond + 1;
 		onScroll();
@@ -82,7 +78,6 @@
 
 	$effect(() => {
 		if (!track) return;
-		// Re-run when the list changes so the new slides get observed too.
 		void items;
 		const observer = new ResizeObserver(measure);
 		for (const element of [track, ...slides()]) observer.observe(element);

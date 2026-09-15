@@ -23,9 +23,7 @@ interface Pending {
 	cancel?: () => void;
 }
 
-// Elements mounted in the same synchronous pass form a group, decided on together one
-// frame later (see `flush`). The frame gap is also what lets the parked state get painted
-// before `done` lands, otherwise the browser sees no change and nothing transitions.
+// The frame gap lets the parked state get painted before `done` lands, otherwise nothing transitions.
 let group: Pending[] = [];
 let flushQueued = false;
 
@@ -34,10 +32,6 @@ const flush = () => {
 	group = [];
 	flushQueued = false;
 
-	// If any of the group is on screen at hydration, the visitor is looking at it and the
-	// whole group plays right away, in order and `stagger` apart: waiting for the others
-	// to cross the trigger line would leave the sequence half done. Otherwise each element
-	// enters on its own as it scrolls in.
 	const onScreen = batch.some(({ node }) => {
 		const { top, bottom } = node.getBoundingClientRect();
 		return bottom > 0 && top < window.innerHeight;
@@ -56,8 +50,7 @@ const flush = () => {
 			continue;
 		}
 
-		// The root is shrunk from the bottom so that "intersecting" means the element's
-		// top has crossed the trigger line, not merely the bottom edge of the viewport.
+		// The root is shrunk from the bottom so "intersecting" means the top has crossed the trigger line.
 		const observer = new IntersectionObserver(
 			(entries) => {
 				if (!entries.some((e) => e.isIntersecting)) return;
@@ -94,8 +87,7 @@ export const reveal: Action<HTMLElement, RevealOptions | undefined> = (node, opt
 
 	if (!flushQueued) {
 		flushQueued = true;
-		// Two frames, not one: a callback queued from inside a frame callback runs in the
-		// *next* frame, by which time the first one, with the parked state, is committed.
+		// Two frames, not one: a callback queued from inside a frame callback runs in the next frame.
 		requestAnimationFrame(() => requestAnimationFrame(flush));
 	}
 

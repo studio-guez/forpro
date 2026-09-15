@@ -30,9 +30,6 @@
 	const timeStart = $derived(formatEventTime(event.timeStart));
 	const timeEnd = $derived(formatEventTime(event.timeEnd));
 
-	// Hover tint: the programme colour over the cover, or equal stripes across them
-	// all. Each colour holds flat over most of its band and only blends over a
-	// narrow seam, so it reads as stripes rather than as one long gradient.
 	const SEAM = 0.5; // share of a band spent fading into the next one
 	const programColors = $derived(event.programs.map(termColor));
 	const stripes = $derived(
@@ -40,7 +37,6 @@
 			.map((color, i) => {
 				const band = 100 / programColors.length;
 				const feather = (band * SEAM) / 2;
-				// The outer edges of the card stay flush — only interior seams feather.
 				const from = i === 0 ? 0 : i * band + feather;
 				const to = i === programColors.length - 1 ? 100 : (i + 1) * band - feather;
 				return `${color} ${from.toFixed(3)}% ${to.toFixed(3)}%`;

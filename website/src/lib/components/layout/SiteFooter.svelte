@@ -17,8 +17,7 @@
 	let { footer }: Props = $props();
 
 	const address = $derived(footer.address);
-	// Postal code and city share a line; either can be empty, so they are joined rather than
-	// laid out with a fixed separator. `region`/`country` are deliberately not shown here.
+	// `region`/`country` are deliberately not shown here.
 	const cityLine = $derived([address.postalCode, address.locality].filter(Boolean).join(' '));
 	const hasAddress = $derived(Boolean(address.street || cityLine));
 
@@ -28,7 +27,6 @@
 	let newsletterStatus = $state<NewsletterStatus | 'idle'>('idle');
 	let submitting = $state(false);
 
-	// Every message is CMS-managed, so the endpoint only reports which one to show.
 	const newsletterMessage = $derived.by(() => {
 		switch (newsletterStatus) {
 			case 'ok':
@@ -42,8 +40,7 @@
 		}
 	});
 
-	// Posts to our own origin rather than to the provider: `/api/newsletter` forwards it
-	// server-side, which is what lets us answer here instead of in a new tab.
+	// Posts to `/api/newsletter`, not the provider: a cross-origin post could only answer in a new tab.
 	const onNewsletterSubmit = async (event: SubmitEvent) => {
 		event.preventDefault();
 		if (submitting) return;
@@ -60,7 +57,6 @@
 			const result: NewsletterResponse = await response.json();
 			newsletterStatus = result.status;
 		} catch {
-			// Offline, or an answer that was not the JSON the endpoint always returns.
 			newsletterStatus = 'error';
 		} finally {
 			submitting = false;
@@ -194,9 +190,7 @@
 				{#if newsletter.title}
 					{@render columnTitle(newsletter.title)}
 				{/if}
-				<!-- Same pill as the header's search control, but permanently expanded and on white. -->
-				<!-- `novalidate`: the CMS owns the wording of the invalid-address message, so the
-				 browser's own validation bubble would say the same thing twice, in its language. -->
+				<!-- `novalidate`: the CMS owns the invalid-address wording, so the browser's bubble would say it twice. -->
 				<form
 					onsubmit={onNewsletterSubmit}
 					novalidate
@@ -227,8 +221,7 @@
 					</button>
 				</form>
 
-				<!-- Always in the DOM so screen readers announce the message when it appears
-				 rather than when the region itself is inserted. -->
+				<!-- Always in the DOM: a live region only announces changes made after it was inserted. -->
 				<p
 					id="footer-newsletter-message"
 					aria-live="polite"

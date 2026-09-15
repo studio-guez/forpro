@@ -6,9 +6,7 @@
 	let { class: className = '' }: Props = $props();
 </script>
 
-<!-- Fixed size, never stretched: the coordinates are those of the 1512px desktop design frame,
-	 and the viewBox starts at the frame's top edge, 280px left of it, so the parent only has
-	 to anchor the element at `top:0; left:-280px` of the content column. -->
+<!-- 1512px design-frame coordinates; the viewBox starts 280px left of the frame, hence the parent's `top:0; left:-280px`. -->
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	width="980"

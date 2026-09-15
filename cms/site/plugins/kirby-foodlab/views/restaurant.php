@@ -14,10 +14,7 @@ return [
         return [
             "component" => "k-restaurant-view",
             "props" => [
-                // deliberately not named `api`/`versions`: those props drive
-                // Kirby's own $panel.content state, which posts to
-                // `<api>/changes/…` — a path this view cannot serve, see
-                // routes/index.php
+                // Not `api`/`versions`: those props drive Kirby's $panel.content state, which posts to `<api>/changes/…`, unserved here.
                 "endpoint" => Restaurant::API_PATH,
                 "fields" => Restaurant::fieldProps(),
                 "latest" => $versions["latest"],

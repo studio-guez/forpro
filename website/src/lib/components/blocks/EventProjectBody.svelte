@@ -11,9 +11,6 @@
 		ContentVideoContent
 	} from '$lib/interfaces/eventProject';
 
-	// The `fields/contentBody` blockbuilder of events and projects: the
-	// counterpart of `Blocks.svelte` for the lighter `content-*` block set.
-	// Each block renders as its own section, spaced by the parent `space-y`.
 	interface Props {
 		blocks: Block[];
 		/** Page title, used for the media / video accessible labels. */

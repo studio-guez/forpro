@@ -1,5 +1,3 @@
-# Event/project content block: a title + rich-text paragraph.
-# Serialized by Utils::getContentTextBlockData() to `{title, description}`.
 extends: blocks/base
 
 name:

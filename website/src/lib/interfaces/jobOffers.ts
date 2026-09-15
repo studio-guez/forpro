@@ -15,7 +15,6 @@ export interface JobOfferQuestion {
 	readonly answer: string;
 }
 
-// Card payload of a job offer listed on the job offers index.
 export interface JobOfferCard {
 	readonly title: string;
 	readonly url: string;
@@ -58,7 +57,6 @@ export interface JobOfferPage {
 	readonly seo: Seo;
 }
 
-// The job offers index page (job-offers.json.php): every published offer.
 export interface JobOffersPage {
 	readonly template: 'job-offers';
 	readonly title: string;

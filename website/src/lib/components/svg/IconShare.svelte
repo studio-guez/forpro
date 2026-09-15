@@ -6,8 +6,7 @@
 	let { class: className = '' }: Props = $props();
 </script>
 
-<!-- Exported on a 28x29 artboard; the viewBox is squared to 28x28 so the icon keeps its
-     aspect ratio in a square `w-* h-*` box. The cropped strip is empty, nothing clips. -->
+<!-- Exported on a 28x29 artboard, viewBox squared to 28x28; the cropped strip is empty. -->
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	width="28"

@@ -33,23 +33,18 @@
 	let rootEl = $state<HTMLDivElement>();
 	let triggerEl = $state<HTMLButtonElement>();
 
-	// The trigger never lists what is selected, only how much: the panel is a
-	// click away, and the count keeps the pill the same size whatever is picked.
 	const count = $derived(selected.length);
 	const isActive = $derived(count > 0);
 
 	const panelSlide = $derived({ duration: prefersReducedMotion.current ? 0 : 250 });
 
-	// Focus goes back to the trigger whenever the panel is closed from the inside
-	// (Escape), otherwise it would be left on a gone element.
+	// Focus goes back to the trigger on Escape, otherwise it is left on a gone element.
 	const close = (focusTrigger: boolean): void => {
 		open = false;
 		if (focusTrigger) triggerEl?.focus();
 	};
 
-	// Clicking outside is the pointer way out; Escape is the keyboard one.
-	// Clicking another dropdown is neither: it takes the group, which closes
-	// this one only once its own click has landed.
+	// Clicking another dropdown is not a dismissal: it takes the group, which closes this one once its own click has landed.
 	$effect(() => {
 		if (!open || !rootEl) return;
 		return listenForDismiss(rootEl, close, '[data-dropdown]');
@@ -64,18 +59,10 @@
 		if (open && !dropdownGroup.holds(token)) close(false);
 	});
 
-	// Sub-terms are always listed, but only a selected parent's count: it stands
-	// for all of them, so they all read as selected until one of them narrows the
-	// selection down.
 	const isChildSelected = (parent: TaxonomyFilterTerm, child: TaxonomyTerm): boolean =>
 		selected.includes(parent.slug) &&
 		(selected.includes(child.slug) || !parent.children.some((c) => selected.includes(c.slug)));
 
-	// Sub-terms read as selected while their parent is, so unticking one takes it
-	// out: the parent narrows down to the sub-terms left. Taking the last one out
-	// deselects the parent as well, and leaving them all in is stored as the
-	// parent alone, its default state. Ticking a sub-term of an unselected parent
-	// selects the parent, narrowed down to that sub-term.
 	const toggleChild = (parent: TaxonomyFilterTerm, child: TaxonomyTerm): void => {
 		if (!selected.includes(parent.slug)) {
 			selected = [...selected, parent.slug, child.slug];
@@ -97,8 +84,6 @@
 		selected = kept.length === parent.children.length ? base : [...base, ...kept];
 	};
 
-	// Deselecting a parent takes its sub-terms' selection with it: they only
-	// count while it is selected.
 	const toggleParent = (term: TaxonomyFilterTerm): void => {
 		if (!selected.includes(term.slug)) {
 			selected = [...selected, term.slug];
@@ -113,13 +98,10 @@
 		selected = [];
 	};
 
-	// A term without a colour of its own takes the dropdown's, not the site-wide
-	// fallback: the panel then stays in the page colour rather than turning teal.
+	// A term without a colour takes the dropdown's, not the site-wide teal fallback.
 	const optionColor = (term: TaxonomyTerm): string => (term.color ? termColor(term) : color);
 </script>
 
-<!-- Each row is drawn in its term's own colour, as the term tags are: text, tick
-     box and hover tint alike. -->
 {#snippet option(term: TaxonomyTerm, isSelected: boolean, onchange: () => void, isChild: boolean)}
 	<label
 		style:color={optionColor(term)}
@@ -145,21 +127,12 @@
 		style:--select-tint="color-mix(in oklab, {color} 12%, transparent)"
 		class={['text-(--select-color) -mx-3 max-w-full', className]}
 	>
-		<!-- From the tablet breakpoint up the panel overlays the page rather than
-		     pushing it down: the field row is the top of the card and stays in flow,
-		     the panel is its bottom, positioned under it. The panel paints over the
-		     row's shadow, so the two read as one card. Below it, in the toolbar's
-		     modal, the panel takes up space instead and the field runs full width. -->
 		<div
 			class="relative w-full md:w-fit min-w-64 md:max-w-lg rounded-xl transition-shadow {open
 				? 'max-md:shadow-lg'
 				: ''}"
 		>
-			<!-- The panel is out of flow, so it cannot size the field: the label and
-			     every term are laid out again here, invisibly, one line each, with the
-			     rows' own padding and room for their icons. The field is then as wide as
-			     the widest of them and the panel never wraps or clips one. The max width
-			     is a safeguard only; the rows truncate once it is reached. -->
+			<!-- The panel is out of flow and cannot size the field, so the label and every term are laid out again here, invisibly. -->
 			<div class="h-0 overflow-hidden invisible whitespace-nowrap" aria-hidden="true">
 				<div class="text-label flex gap-3 px-3">
 					<span>{label}</span>
@@ -182,8 +155,6 @@
 				{/each}
 			</div>
 
-			<!-- The field tints as soon as something is selected, so an active filter
-			     reads from across the page; the count only comes with it. -->
 			<button
 				bind:this={triggerEl}
 				type="button"
@@ -226,7 +197,6 @@
 						<legend class="sr-only">{label}</legend>
 						{#each terms as term (term.slug)}
 							{@render option(term, selected.includes(term.slug), () => toggleParent(term), false)}
-							<!-- Sub-terms are listed right under their parent, selected or not. -->
 							{#each term.children as child (child.slug)}
 								{@render option(
 									child,

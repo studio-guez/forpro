@@ -23,7 +23,6 @@
 		return !(index % 2 === 0);
 	};
 
-	// For single-media rows, alternate the media column span in a 2/1/1/2 pattern.
 	const singleMediaSpan = (index: number) => [2, 2, 1, 1][index % 4];
 
 	const mediaSizes = (index: number) =>

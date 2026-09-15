@@ -20,7 +20,6 @@ $json['introCta'] = Utils::resolveCtaStructure($page->introCta());
 
 $json['cover'] = Utils::getJsonEncodeImageDataOrNull($page->cover()->toFile());
 
-// Same `label` + optional `url` pair on the trainings and on the availability badges.
 $resolveBadges = fn(\Kirby\Content\Field $field) => $field->toStructure()->map(fn($badge) => [
     'label' => $badge->label()->value(),
     'url'   => $badge->url()->isNotEmpty() ? $badge->url()->value() : null,

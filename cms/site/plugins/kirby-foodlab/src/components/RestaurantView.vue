@@ -38,16 +38,13 @@
  */
 export default {
     props: {
-        // api path of the plugin endpoints, without the /api prefix
         endpoint: String,
         fields: Object,
-        // published content, to compare the form against
         latest: {
             type: Object,
             default: () => ({}),
         },
         modified: String,
-        // unsaved version, the form is filled with it
         changes: {
             type: Object,
             default: () => ({}),
@@ -58,7 +55,6 @@ export default {
             values: this.$helper.object.clone(this.changes),
             isProcessing: false,
             isSaved: true,
-            // pending autosave: the debounce timer and the in-flight request
             saveTimer: null,
             saveAbortController: null,
         };
@@ -87,7 +83,6 @@ export default {
         },
     },
     watch: {
-        // the view is refreshed after saving and discarding
         changes(changes) {
             this.values = this.$helper.object.clone(changes);
             this.isSaved = true;

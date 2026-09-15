@@ -2,8 +2,7 @@
 	import type { CmsImage } from '$lib/interfaces/page';
 	import { PAGE, toSizes } from '$lib/utils/imgSizes';
 
-	// No image reaches past the content column, so this is the safe upper bound when a
-	// caller gives no `sizes` — much tighter than the browser's own `100vw` default.
+	// No image reaches past the content column, so this is the safe default `sizes` (far tighter than 100vw).
 	const DEFAULT_SIZES = toSizes(PAGE);
 
 	interface Props {

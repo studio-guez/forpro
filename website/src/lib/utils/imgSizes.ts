@@ -74,9 +74,7 @@ export const cell = (
 				const width = at(container, breakpoint);
 				const count = at(columns, breakpoint);
 				if (count === 1) return [breakpoint, width];
-				// A cell can never span more columns than the grid has.
 				const spanned = Math.min(span, count);
-				// A fractional count is a plain percentage of the track, gutters included.
 				const gutters = Number.isInteger(count) ? `${(count - 1) * gap}rem` : null;
 				const track = `(${width}${gutters ? ` - ${gutters}` : ''}) / ${count}`;
 				return [

@@ -8,12 +8,10 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'faq');
 
-// All terms in their CMS-defined order, so the frontend can order filters accordingly.
 $json['sectors']  = Utils::getTaxonomyTerms('sectors');
 $json['programs'] = Utils::getTaxonomyTerms('programs');
 $json['publics']  = Utils::getTaxonomyTerms('publics');
 
-// Optional pre-filtering: /faq.json?sectors=slug-a,slug-b&programs=…&publics=…
 $readSlugs = fn(string $param): array => array_values(array_filter(
     array_slice(explode(',', (string)get($param)), 0, 20),
     fn(string $slug) => preg_match('/^[a-z0-9-]+$/', $slug) === 1

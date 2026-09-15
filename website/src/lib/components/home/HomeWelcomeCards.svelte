@@ -11,8 +11,6 @@
 
 	let { cards, class: className = '' }: Props = $props();
 
-	// Design constants per slot: colours, which side the card sits on (and enters from) and
-	// its resting tilt. Cards alternate sides so each one overlaps the previous corner.
 	const slots = [
 		{
 			background: 'var(--color-green)',
@@ -41,10 +39,7 @@
 <div class={['flex flex-col', className]}>
 	{#each cards as card, i (i)}
 		{@const slot = slots[i % slots.length]}
-		<!-- Each card is its own reveal target, so it enters when *it* scrolls into view, not
-			 when the group does. The action sits on an untransformed slot wrapper: the card
-			 itself is parked off-screen while pending, and an element that far outside the
-			 viewport would never intersect it. -->
+		<!-- The reveal action sits on the untransformed wrapper: the parked card is too far off-screen to ever intersect. -->
 		<div
 			use:reveal={{ trigger: 0.7 }}
 			class={[
@@ -65,7 +60,6 @@
 					<div
 						class={['mt-6 lg:mt-9 flex', slot.side === 'left' ? 'justify-start' : 'justify-end']}
 					>
-						<!-- Inverted pills turn to the card colour on hover, so that is the colour they take. -->
 						<CtaLink
 							cta={card.cta}
 							color={slot.inverted ? slot.background : slot.color}
@@ -83,22 +77,14 @@
 		rotate: var(--tilt);
 	}
 
-	/* The entrance: parked past the edge of the screen on its side and over-rotated while
-	   the card waits, then slid and turned back onto its resting tilt — clockwise from the
-	   left, counter-clockwise from the right. The offset is the card's own width (its inner
-	   edge reaches the container edge) plus a slice of the viewport that covers the page
-	   gutter and the corners the tilt pushes out, so nothing peeks in before it starts.
-	   `reveal` only ever sets `pending` on the client, so reduced motion, no-JS and the
-	   server render all get the resting state above. The attribute is set by the action on
-	   the wrapper, not the markup, hence `:global` — Svelte would prune the rule otherwise. */
+	/* `:global` because the attribute is set by the action, not the markup; Svelte would prune the rule otherwise. */
 	@media (prefers-reduced-motion: no-preference) {
-		/* Only the way in is animated: the jump *to* the parked position happens at hydration,
-		   after the server render has painted the card in place, and must be instant. */
+		/* Only the way in is animated: the jump to the parked position at hydration must be instant. */
 		.slot:global([data-reveal='done']) .card {
 			transition:
 				translate 0.8s cubic-bezier(0.22, 1, 0.36, 1),
 				rotate 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-				/* Invisible while parked, and solid again well before it lands. */ opacity 0.15s ease-out;
+				opacity 0.15s ease-out;
 		}
 		.slot:global([data-reveal='pending']) .card {
 			opacity: 0;

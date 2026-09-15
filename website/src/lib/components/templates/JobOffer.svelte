@@ -16,7 +16,6 @@
 	const terms = $derived(page.sectors);
 	const deadline = $derived(toDate(page.deadline));
 
-	// The maximum is only set when the rate is a range.
 	const activityRate = $derived(
 		page.activityRateMax === null || page.activityRateMax === page.activityRateMin
 			? `${page.activityRateMin}%`

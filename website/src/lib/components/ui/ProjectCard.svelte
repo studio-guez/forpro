@@ -14,8 +14,6 @@
 
 	let { project, headingTag = 'h3', variant = 'default', sizes }: Props = $props();
 
-	// Below lg the copy is overlaid on the cover and stays white whatever the block sits on;
-	// from lg it flows under the cover and takes the variant colour.
 	const textColor = $derived(variant === 'inverted' ? 'lg:text-orange' : 'lg:text-white');
 
 	const meta = $derived(

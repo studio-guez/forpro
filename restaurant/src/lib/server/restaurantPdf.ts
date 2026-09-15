@@ -1,7 +1,6 @@
 import { CMS_SERVER_BASE_URL, toInternalUrl } from './cms';
 import { PUBLIC_CMS_BASE_URL } from '$env/static/public';
 
-// Shape of the /api/restaurant payload, limited to what the PDF routes read
 type RestaurantPage = {
 	lab?: { btn?: { link?: string } };
 	univers?: { popupMenuUrl?: string };
@@ -9,10 +8,7 @@ type RestaurantPage = {
 
 const MEDIA_URL_PREFIX = `${PUBLIC_CMS_BASE_URL}/api/restaurant/media/`;
 
-// The PDFs live in the foodlab plugin's media library and their filenames
-// change on every upload/publication, so the current URL is resolved through
-// the restaurant API instead of being hardcoded. Only files of that library
-// are proxied.
+// PDF filenames change on every upload, so the URL is resolved through the restaurant API; only that library's files are proxied.
 export async function proxyRestaurantPdf(
 	fetch: typeof globalThis.fetch,
 	pick: (page: RestaurantPage) => string | undefined

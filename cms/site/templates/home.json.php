@@ -8,8 +8,7 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'home');
 
-// `.json` or `.lottie`, served as-is and played by the frontend. An empty `alt` means
-// decorative: the frontend then hides the canvas from assistive tech.
+// Empty `alt` = decorative: the frontend hides the canvas from assistive tech.
 $lottie = $page->lottie()->toFile();
 $json['lottie'] = $lottie ? [
     ...Utils::getJsonEncodeDocumentDataOrNull($lottie),
@@ -26,7 +25,6 @@ $json['welcomeCards'] = array_map(fn(int $index) => [
 
 $json['resourcesTitle'] = $page->resourcesTitle()->value();
 
-// One card shape for both kinds of resource; `type` picks the colour on the frontend.
 $card = fn(string $type, ?string $overtitle, string $title, string $shortDesc, ?\Kirby\Cms\File $cover, \Kirby\Cms\Page $target) => [
     'type'      => $type,
     'overtitle' => $overtitle !== '' ? $overtitle : null,
@@ -36,7 +34,6 @@ $card = fn(string $type, ?string $overtitle, string $title, string $shortDesc, ?
     'url'       => '/' . $target->virtualPath(),
 ];
 
-// The editor's entries, each falling back to the page it points at.
 $pageCards = [];
 foreach ($page->resourcesAvailablePages()->toStructure() as $entry) {
     $target = $entry->page()->toPage();
@@ -66,8 +63,6 @@ $projectCards = $projectsPage
     ))->values()
     : [];
 
-// 3 pages + 2 projects, drawn anew on every request, then mixed so the
-// colours alternate unpredictably rather than grouping by kind.
 shuffle($pageCards);
 shuffle($projectCards);
 $resources = [...array_slice($pageCards, 0, 3), ...array_slice($projectCards, 0, 2)];

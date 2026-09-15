@@ -1,15 +1,7 @@
-// Pill styling shared by `CtaLink` and every control that has to look identical to it
-// (`ShareButton`). It lives here because the two render different elements — an anchor
-// for navigation, a button for an action — so the classes cannot be shared by wrapping.
-//
-// The colour is a prop, so it is passed as the `--color-cta` custom property by the
-// caller (`style:--color-cta={color}`) and read back through Tailwind's arbitrary
-// property syntax, which keeps every class a literal the scanner can find.
+// The colour travels as the `--color-cta` custom property so every Tailwind class stays a literal the scanner can find.
 
 export type CtaSize = 'md' | 'lg';
 
-// `max-w-full` keeps the pill inside its container so a long label can be truncated by
-// `CTA_LABEL` instead of overflowing the fixed-height pill onto a second line.
 export const CTA_BASE =
 	'font-bold leading-none inline-flex items-center max-w-full rounded-full bg-transparent backdrop-blur-xs transition-colors';
 

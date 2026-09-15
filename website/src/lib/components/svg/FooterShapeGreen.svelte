@@ -6,9 +6,7 @@
 	let { class: className = '' }: Props = $props();
 </script>
 
-<!-- Fixed size, never stretched: the coordinates are those of the 1512×477 desktop design
-	 frame. The viewBox ends 188px past the frame's right edge and 683px below its bottom, so the
-	 parent anchors the element at `bottom:-683px; right:-188px` of the content column. -->
+<!-- 1512×477 design-frame coordinates; the viewBox overshoots 188px right and 683px down, hence the parent's `bottom:-683px; right:-188px`. -->
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	width="1010"

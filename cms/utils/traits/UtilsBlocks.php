@@ -103,7 +103,6 @@ trait UtilsBlocks
             $partners[] = [
                 'logo'  => self::getJsonEncodeImageData($logoFile),
                 'url'   => $partner->url()->isNotEmpty() ? $partner->url()->value() : null,
-                // The logo alt is the accessible name; fall back to the link target.
                 'label' => $logoFile->alt()->isNotEmpty()
                     ? $logoFile->alt()->value()
                     : $partner->url()->value(),
@@ -222,7 +221,6 @@ trait UtilsBlocks
             'publics'  => array_column(self::resolveTaxonomyTerms($block->publics(), 'publics'), 'slug'),
         ];
 
-        // The first matching FAQ questions, pulled from the FAQ page.
         $faqPage = site()->index()->template('faq')->first();
         $faqs = [];
         if ($faqPage) {
@@ -243,9 +241,7 @@ trait UtilsBlocks
             }
         }
 
-        // The CTA URL is resolved here so a FAQ slug change never breaks the frontend link.
-        // The block's filters travel along as `?sectors=a,b&programs=…&publics=…`, the
-        // query string the FAQ page reads to pre-select its filters.
+        // The filters travel as `?sectors=a,b&programs=…&publics=…`, which the FAQ page reads to pre-select its own.
         $ctaUrl = null;
         if ($faqPage) {
             $query = [];
@@ -307,13 +303,11 @@ trait UtilsBlocks
                 $children = self::filterPagesByTaxonomy($children, $field, $slugs);
             }
 
-            // Upcoming events only (an event stays listed until it is over), soonest first.
             $children = self::splitEventsByDate($children)['upcoming'];
 
             $events = array_values($children->map(fn($event) => self::getEventCardData($event))->data());
         }
 
-        // Resolved here so an agenda slug change never breaks the frontend link.
         $ctaUrl = $eventsPage ? '/' . $eventsPage->virtualPath() : null;
 
         return [
@@ -368,7 +362,6 @@ trait UtilsBlocks
     {
         $slugs = array_column(self::resolveTaxonomyTerms($block->programs(), 'programs'), 'slug');
 
-        // The resources page has no frontend route: it is only a content library for this block.
         $resourcesPage = site()->index()->template('resources')->first();
         $resources = [];
         if ($resourcesPage) {
@@ -389,9 +382,6 @@ trait UtilsBlocks
         ];
     }
 
-    /* ---------------------------------------------------------------------
-       `fields/contentBody` blocks (event / project pages)
-       --------------------------------------------------------------------- */
 
     private static function getContentMediasBlockData(\Kirby\Cms\Block $block): array
     {

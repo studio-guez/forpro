@@ -3,8 +3,7 @@ extends: seo/site
 columns:
   main:
     fields:
-      # Social accounts are managed in the Social tab; only fed twitter:site
-      # meta which the frontend never renders, so hide this unused field.
+      # Only feeds twitter:site meta, which the frontend never renders.
       socialMediaAccounts: false
       llmsLabel:
         label:
