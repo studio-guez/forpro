@@ -15,20 +15,16 @@
 
 	const count = $derived(resources.length);
 
-	// Page cards each get their own shape: number them among themselves, not by slot, since
-	// the CMS shuffles pages and projects together and a slot index would repeat shapes.
+	// Numbered among page cards, not by slot: the CMS shuffles pages and projects, so a slot index would repeat shapes.
 	const pageRank = $derived(
 		resources.map((_, i) => resources.slice(0, i).filter((o) => o.type === 'page').length)
 	);
 
-	// The middle card leads: with the 5 the CMS sends that is 2 on each side.
 	// svelte-ignore state_referenced_locally
 	let active = $state(Math.floor(resources.length / 2));
 
 	const wrap = (i: number) => ((i % count) + count) % count;
 
-	// Signed distance from the active slot, wrapped so the deck is circular: the card that
-	// just left on one side re-enters on the other, and the arrows never run out.
 	const offset = (i: number) => {
 		const half = Math.floor(count / 2);
 		return wrap(i - active + half) - half;
@@ -38,13 +34,7 @@
 		active = wrap(i);
 	};
 
-	// Auto spin. It holds while the pointer is over the deck or the focus is inside it, so
-	// nobody has a card pulled from under their cursor or their keyboard focus, and the
-	// timer restarts after every manual turn (the effect re-runs on `active`) so the deck
-	// never turns again right after the user did. Reduced motion gets no spin at all: a
-	// carousel turning on its own is exactly the motion the setting is about. Neither do
-	// touch screens: there is no hover to hold the spin, so the deck would turn under a
-	// thumb that is about to tap a card; the arrows and the swipe are how it moves there.
+	// No auto spin on touch screens: without hover to hold it, the deck would turn under a thumb about to tap.
 	let hovered = $state(false);
 	let focused = $state(false);
 	let reduced = $state(false);
@@ -69,10 +59,7 @@
 		return () => clearInterval(id);
 	});
 
-	// Keyboard focus on a card brings it to the front, so Tab walks the deck 1 -> 5 in DOM
-	// order and the focused card is always the leading one. Only keyboard focus: a mouse
-	// press focuses the link too, and turning the deck at that moment would pull the card
-	// out from under the click before it lands.
+	// Keyboard focus only: a mouse press focuses the link too, and turning the deck then would pull the card from under the click.
 	const onCardFocus = (event: FocusEvent, i: number) => {
 		if ((event.target as HTMLElement).matches(':focus-visible')) goTo(i);
 	};
@@ -82,7 +69,6 @@
 		if (!stage.contains(event.relatedTarget as Node | null)) focused = false;
 	};
 
-	// Swipe on the stage: a horizontal drag past the threshold turns the deck one step.
 	let pointerStartX: number | null = null;
 	const onPointerDown = (event: PointerEvent) => {
 		pointerStartX = event.clientX;
@@ -125,8 +111,6 @@
 	onfocusin={() => (focused = true)}
 	onfocusout={onFocusOut}
 >
-	<!-- Clipped: the two outermost cards reach past a phone screen, and the page must
-		 never scroll sideways. -->
 	<div class="relative overflow-hidden py-2">
 		<ul
 			id={deckId}
@@ -137,7 +121,6 @@
 		>
 			{#each resources as resource, i (i)}
 				{@const d = offset(i)}
-				<!-- Every card shares the one grid cell; the offset fans them out from there. -->
 				<li
 					class="col-start-1 row-start-1 justify-self-center w-60 lg:w-88 transition-[translate,scale] duration-500 ease-out motion-reduce:transition-none"
 					style:translate="calc({d} * var(--step)) {Math.abs(d) * 2}%"
@@ -157,12 +140,7 @@
 		{/if}
 	</div>
 
-	<!-- What the leading card is about. Announced when the user turns the deck, but muted
-		 while it spins on its own: a screen reader repeating a new description every few
-		 seconds would be noise. Every description shares the one grid cell, so the block
-		 keeps the height of the tallest one and the page never jumps when the deck turns;
-		 only the active one is visible, cross-fading with the previous. `inert` keeps the
-		 hidden ones out of the tab order and the accessibility tree. -->
+	<!-- aria-live is muted while the deck spins on its own; the descriptions share one grid cell so the height never jumps. -->
 	<div aria-live={spinning ? 'off' : 'polite'} class="mt-6 lg:mt-9 px-card grid">
 		{#each resources as resource, i (i)}
 			{#if resource.shortDesc}

@@ -41,8 +41,7 @@ function read(): CookieConsent | null {
 			marketing: stored.marketing === true
 		};
 	} catch {
-		// Private browsing modes throw on localStorage, and a hand-edited value throws on
-		// parse. Either way there is no usable record: ask again.
+		// Private browsing throws on localStorage and a hand-edited value throws on parse: ask again.
 		return null;
 	}
 }
@@ -52,8 +51,7 @@ function write(value: CookieConsent): void {
 		const stored: StoredConsent = { ...value, version: VERSION, date: new Date().toISOString() };
 		localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
 	} catch {
-		// Storage unavailable: the choice still holds for this page view, we just cannot
-		// remember it. Failing here would break the banner for no gain.
+		// Storage unavailable: the choice still holds for this page view, it just cannot be remembered.
 	}
 }
 
@@ -90,8 +88,6 @@ export const cookieConsent = {
 		consent = null;
 		try {
 			localStorage.removeItem(STORAGE_KEY);
-		} catch {
-			// See `write()`.
-		}
+		} catch {}
 	}
 };

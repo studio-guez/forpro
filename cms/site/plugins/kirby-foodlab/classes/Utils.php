@@ -8,7 +8,6 @@ class Utils
     {
         $deniedAccessRedirectionPath = 'foodlab/denied-access';
 
-        //  limit to this plugin
         if($path === null) return;
         if($path == $deniedAccessRedirectionPath) return;
         if( ! str_starts_with($path, 'foodlab') ) return;

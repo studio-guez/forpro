@@ -25,8 +25,6 @@
 
 	const steps = $derived(content.steps);
 
-	// Only `projets_jeunes` departs from the default palette; every other theme keeps
-	// the green/blue/pink set of the design.
 	const palettes = {
 		default: {
 			shape: 'text-green',
@@ -44,9 +42,6 @@
 
 	const colors = $derived(theme === 'projets_jeunes' ? palettes.projets_jeunes : palettes.default);
 
-	// Shapes and connectors are cycled, so any number of steps keeps the rhythm
-	// of the design. The desktop arrows alternate down/up, which matches the
-	// zigzag: odd steps sit on the top row, even ones on the bottom row.
 	const shapes = [ShapeStep1, ShapeStep2, ShapeStep3, ShapeStep4, ShapeStep5];
 	const desktopArrows = [
 		ArrowStepDesktop1,
@@ -129,13 +124,8 @@
 
 {#snippet stepContent(step: TimelineStep, index: number)}
 	{@const Shape = shapes[index % shapes.length]}
-	<!--
-		The step is a container and its type is sized in `cqw`, i.e. as a share of the
-		step itself: the copy keeps the `text-h4` / `text-body-1` proportions of the
-		design at full size and still sits inside the blob once the step shrinks.
-	-->
+	<!-- Type is sized in cqw so the copy keeps its proportions and stays inside the blob as the step shrinks. -->
 	<div class="@container relative aspect-square w-full {colors.shape}">
-		<!-- The blob is drawn wider than the text box so the copy sits well inside it. -->
 		<div class="absolute -inset-2/25 lg:-inset-1/8">
 			<Shape class="w-full h-full" />
 		</div>
@@ -155,12 +145,7 @@
 
 {#if steps.length > 0}
 	<section aria-label={content.title} class="max-w-none">
-		<!--
-			Mobile: one step per row, alternating sides. Narrow screens give each step two
-			of three columns, from `md` the grid halves so the steps stay a sensible size.
-			The wrapper clips because the blobs are drawn past their box, and that overhang
-			must not turn into a horizontal page scroll.
-		-->
+		<!-- The wrapper clips: the blobs overhang their box and must not create a horizontal page scroll. -->
 		<div class="lg:hidden overflow-x-clip">
 			{@render title()}
 			<ol class="px-card mt-12 grid grid-cols-3 md:grid-cols-2 gap-y-16 md:gap-y-8 lg:gap-y-24">
@@ -177,7 +162,6 @@
 					>
 						{@render stepContent(step, i)}
 						{#if i < steps.length - 1}
-							<!-- The connector hangs off the corner that faces the next step. -->
 							<div
 								class="absolute top-[28%] max-w-200 z-1 {colors.arrow} {isLeft
 									? 'left-[112%]'
@@ -191,11 +175,6 @@
 			</ol>
 		</div>
 
-		<!--
-			Desktop: one step per column, odd steps on the top row, even ones below.
-			The block runs edge to edge; only the first column keeps the page gutter so
-			it lines up with the rest of the content.
-		-->
 		<div
 			bind:this={spacer}
 			class="max-lg:hidden"
@@ -206,10 +185,6 @@
 				class="sticky top-27 flex min-h-[calc(100vh-12rem)] flex-col justify-start gap-6"
 			>
 				{@render title()}
-				<!--
-					Every distance is a fraction of `--step`, so the zigzag and the arrows
-					drawn in its empty cells keep their proportions whatever the step size.
-				-->
 				<ol
 					bind:this={track}
 					style="--step: min(22.5rem, calc(40vh - 120px))"
@@ -225,7 +200,6 @@
 						>
 							{@render stepContent(step, i)}
 							{#if i < steps.length - 1}
-								<!-- The connector is drawn in the empty cell the zigzag leaves free. -->
 								<div
 									class="absolute pointer-events-none {colors.arrow} {isTop
 										? 'left-[18%] w-[70%] top-[110%]'

@@ -1,6 +1,4 @@
-// Matomo is a performance cookie: it must not load before the visitor has accepted that
-// category, so the tracker is injected from here on demand instead of from a `<script>`
-// tag in `<svelte:head>` (which would also never re-run on a client-side navigation).
+// Injected on demand: Matomo must not load before the performance category is accepted, and a `<svelte:head>` script never re-runs on client-side navigation.
 
 declare global {
 	interface Window {
@@ -42,8 +40,7 @@ export function trackPageView(url: string): void {
 		return;
 	}
 
-	// A SPA navigation: Matomo keeps the URL of the first page view until told otherwise,
-	// and needs the previous one as the referrer to keep the visit's path intact.
+	// Matomo keeps the first page view's URL until told otherwise and needs the previous one as the referrer.
 	if (previousUrl) {
 		paq.push(['setReferrerUrl', previousUrl]);
 	}

@@ -10,31 +10,25 @@
 
 	let { announcements }: Props = $props();
 
-	// WCAG 2.2.2: the banner scrolls on its own for longer than 5s, so it needs a control that
-	// is not hover-only — hovering is unavailable to keyboard and touch users.
+	// WCAG 2.2.2: auto-scrolling longer than 5s needs a pause control that is not hover-only.
 	let paused = $state(false);
 
 	let copyWidth = $state(0);
 	let viewportWidth = $state(0);
 
-	// Short content needs more than two copies: the track must stay wider than the viewport
-	// even once a full copy has scrolled out, otherwise a gap appears before the loop restarts.
+	// The track must stay wider than the viewport once a full copy has scrolled out, or a gap appears before the loop restarts.
 	const copies = $derived(
 		copyWidth > 0 ? Math.max(Math.ceil(viewportWidth / copyWidth) + 1, 2) : 2
 	);
 	// translateX percentages resolve against the track's own width, so one copy is 100 / copies.
 	const shift = $derived(100 / copies);
-	// One copy scrolls past at ~60px/s, whatever the amount of text.
 	const duration = $derived(Math.max(copyWidth / 60, 10));
 
-	// Until the first copy has been measured, `duration` is still the 10s floor and `copies` the
-	// provisional 2 — animating through that shows a burst of speed and a jump as both settle.
+	// Not animated until the first copy is measured: the provisional values would show a burst of speed and a jump.
 	const measured = $derived(copyWidth > 0 && viewportWidth > 0);
 
-	// `animate-marquee` sets the `animation` shorthand, which resets `animation-play-state` to
-	// `running`. Tailwind emits it after the utilities, so a pause class of equal specificity
-	// always loses to it: the button state rides on an inline style, and the hover pause on an
-	// `!important` utility (the only class that can outrank the inline style in turn).
+	// `animate-marquee` sets the `animation` shorthand, emitted after the utilities, so an equal-specificity pause class always loses to it.
+	// Hence the button state on an inline style and the hover pause on an `!important` utility.
 </script>
 
 <svelte:window bind:innerWidth={viewportWidth} />

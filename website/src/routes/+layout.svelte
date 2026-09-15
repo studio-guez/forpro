@@ -76,12 +76,9 @@
 	{/if}
 </svelte:head>
 
-<!-- Organization + WebSite, emitted once for the whole site: every page's own
-	 JSON-LD references these two nodes by `@id` instead of restating them. -->
 <JsonLd schemas={data.schemas} />
 
-<!-- Bypass block (WCAG 2.4.1): the header carries the whole navigation, so keyboard and
-	 screen reader users get a first tab stop that jumps straight past it. -->
+<!-- Bypass block (WCAG 2.4.1). -->
 <a
 	href="#main-content"
 	class="sr-only text-body-2 font-bold focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-blue focus:px-5 focus:py-3 focus:text-white focus:outline-2 focus:outline-offset-2 focus:outline-blue"
@@ -93,10 +90,7 @@
 	<SiteHeader header={data.header} />
 {/if}
 
-<!-- `overflow-x-clip`: entrance animations park elements past the viewport edge (the home
-	 welcome cards); clipping here, at the page level, keeps them from widening the document
-	 without any section having to crop them on the way in. `clip` is not a scroll container,
-	 so sticky positioning inside keeps working. -->
+<!-- `overflow-x-clip`: entrance animations park elements past the viewport edge; `clip`, unlike `hidden`, is not a scroll container, so sticky inside keeps working. -->
 <main
 	id="main-content"
 	tabindex="-1"

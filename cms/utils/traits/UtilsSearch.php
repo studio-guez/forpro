@@ -115,7 +115,6 @@ trait UtilsSearch
                 }
             }
 
-            // Whole-query matches rank above pages that only match word by word.
             if ($normalizedTitle === $normalizedQuery) {
                 $score += 50;
             } elseif (str_contains($normalizedTitle, $normalizedQuery)) {
@@ -185,7 +184,6 @@ trait UtilsSearch
         }
 
         return self::getImageData($file, [
-            // The crop already honours the file's focus point.
             'focus'       => null,
             'width'       => 240,
             'height'      => 240,

@@ -31,7 +31,6 @@
 
 	const arrowFill = $derived(arrowFillByTheme[theme] ?? 'fill-white');
 
-	// The hero plate fills the section, minus its px-5 / lg:px-9 gutter.
 	const coverSizes = toSizes({
 		0: 'calc(100vw - 2.5rem)',
 		1024: 'calc(min(100vw, 90rem) - 4.5rem)'

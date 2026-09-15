@@ -2,7 +2,6 @@ import type { Block, CmsImage, HeaderType, PageCta, PageParent, Seo, Theme } fro
 import type { PaginatedList } from './pagination';
 import type { TaxonomyFilterTerm, TaxonomyTerm } from './taxonomy';
 
-// Card payload of a mission listed on the missions index.
 export interface MissionCard {
 	readonly title: string;
 	readonly url: string;
@@ -39,8 +38,6 @@ export interface MissionPage {
 /** One page of the missions list, from `/api/list/missions`. */
 export type MissionsList = PaginatedList<MissionCard>;
 
-// The missions index page (missions.json.php): the filters, and the first
-// unfiltered page of the paginated list, most recently published first.
 export interface MissionsPage {
 	readonly template: 'missions';
 	readonly title: string;

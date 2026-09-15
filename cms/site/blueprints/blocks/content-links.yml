@@ -1,5 +1,3 @@
-# Event/project content block: a titled list of external links.
-# Serialized by Utils::getContentLinksBlockData() to `{title, links: [{title, url}]}`.
 extends: blocks/base
 
 name:

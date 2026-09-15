@@ -22,7 +22,6 @@
 	const start = $derived(toDate(event.dateStart));
 	const terms = $derived(event.programs);
 
-	// The row links to the event, so it is a CTA like any other pill button.
 	const cta = $derived({
 		label: detailsLabel,
 		url: event.url,

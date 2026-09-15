@@ -12,8 +12,6 @@
 
 	let { medias = [], title, class: className = '' }: Props = $props();
 
-	// A lone media takes the whole column at 16/9; otherwise alternate the column span in
-	// a 2/2/1/1 pattern, like `BlockModuleCases`.
 	const isSingle = $derived(medias.length === 1);
 	const mediaSpan = (index: number) => (isSingle ? 3 : [2, 1, 1, 2][index % 4]);
 

@@ -8,17 +8,14 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'mission');
 
-// The index the "back" link points to, i.e. the real Kirby parent (missions).
 $json['parentPage'] = Utils::getParentPageData($page);
 
 $json['categories'] = Utils::resolveTaxonomyTerms($page->categories(), 'categories');
 
-// Closed missions stay reachable at their URL: the frontend replaces the apply
-// button by a notice rather than 404ing.
+// Closed missions stay reachable: the frontend shows a notice instead of the apply button.
 $json['openToApplications'] = Utils::isOpenToApplications($page);
 
 $json['announcer'] = $page->announcer()->value();
-// Free text, shown as is; `publishedDate` only orders the index and is not shipped.
 $json['date']      = $page->date()->value();
 $json['location']  = $page->location()->value();
 // Closed missions ship no way to apply at all, not even in the page payload.

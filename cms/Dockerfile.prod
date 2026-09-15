@@ -4,11 +4,10 @@ ENV TZ=Europe/Zurich
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# mod_rewrite pour Kirby ; mod_headers pour le Cache-Control de /media et les
-# en-têtes de sécurité du .htaccess (sans lui, ces blocs sont des no-op).
+# Sans mod_headers, le Cache-Control de /media et les en-têtes de sécurité du .htaccess sont des no-op.
 RUN a2enmod rewrite headers
 
-# Installer dépendances système + extensions PHP (curl : healthcheck Docker)
+# curl : healthcheck Docker
 RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     curl \
@@ -22,31 +21,25 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && docker-php-ext-install -j"$(nproc)" zip gd intl opcache \
     && rm -rf /var/lib/apt/lists/*
 
-# Node + Chromium: requis par Browsershot/puppeteer (génération des PDF du menu)
+# Node + Chromium : requis par Browsershot (PDF du menu).
 RUN apt-get update && apt-get install -y --no-install-recommends \
     nodejs \
     chromium \
     fonts-liberation \
     && rm -rf /var/lib/apt/lists/*
 
-# puppeteer n'embarque pas de binaire ici : on pointe sur le Chromium système
 ENV PUPPETEER_SKIP_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
-# Installe Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Ajouter un ServerName pour éviter les logs
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Activer config Apache custom
 COPY apache.conf /etc/apache2/conf-available/custom.conf
 RUN a2enconf custom
 
-# Appliquer la config PHP custom (memory_limit, upload_max_filesize, ...)
 COPY php.ini /usr/local/etc/php/conf.d/zz-custom.ini
 
-# Production php.ini: display_errors off, sensible defaults
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 RUN rm -rf /var/www/html/*
@@ -55,21 +48,15 @@ WORKDIR /var/www/html
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader
 
-# content, media, site/accounts, site/sessions, site/cache et les dossiers `data`
-# des plugins sont bind-mountés depuis l'hôte (voir compose.prod.yml).
+# content, media, site/accounts, site/sessions, site/cache et les `data` des plugins sont bind-mountés (compose.prod.yml).
 RUN rm -rf /var/www/html/content
 
-# Bake custom site files (blueprints, config, plugins, templates, ...) into the
-# image. In dev these are overlaid by bind-mounts from compose.dev.yml; in prod
-# only the mutable state is bind-mounted from the host (see compose.prod.yml).
 COPY site /var/www/html/site
 COPY utils /var/www/html/utils
 COPY index.php /var/www/html/index.php
 COPY favicon.ico /var/www/html/favicon.ico
 COPY _custom-panel /var/www/html/_custom-panel
 
-# Use the version-controlled .htaccess (front-controller rewrites + rules that
-# block direct access to content, site and kirby sources).
 COPY .htaccess /var/www/html/.htaccess
 
 RUN mkdir -p /var/www/html/site/sessions \

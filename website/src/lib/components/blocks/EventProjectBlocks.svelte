@@ -2,8 +2,6 @@
 	import EventProjectText from '$lib/components/blocks/EventProjectText.svelte';
 	import type { ContentBlock } from '$lib/interfaces/eventProject';
 
-	// The `fields/contentBlocks` structure of basic pages: a fixed list of
-	// title + rich-text blocks, each rendered like a `content-text` block.
 	interface Props {
 		blocks: ContentBlock[];
 		class?: string;

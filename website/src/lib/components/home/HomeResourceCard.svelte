@@ -20,7 +20,6 @@
 
 	const pageShapes = [ShapeHomeResource1, ShapeHomeResource2, ShapeHomeResource3];
 
-	// Pages are blue, projects orange; the shape sits in the lighter tint of each.
 	const isProject = $derived(resource.type === 'project');
 	const Shape = $derived(isProject ? ShapeHomeProject : pageShapes[index % pageShapes.length]);
 	const background = $derived(isProject ? 'var(--color-orange)' : 'var(--color-blue)');

@@ -21,7 +21,6 @@ Kirby::plugin('forpro/parent-page', [
                         if ($current->is($self)) {
                             return false;
                         }
-                        // guard against pre-existing cycles in content
                         if (in_array($current->id(), $visited, true)) {
                             return false;
                         }
@@ -59,8 +58,6 @@ Kirby::plugin('forpro/parent-page', [
          * structural only and never appear in the URL.
          */
         'virtualPath' => function (): string {
-            // Each ancestor contributes its own parentPage chain, so a child
-            // inherits the full virtual path of its parent, not just its slug.
             $ancestors = $this->parents()->flip()
                 ->filter(fn($p) => $p->parent() !== null)
                 ->values(fn($p) => implode('/', array_map(fn($a) => $a->slug(), $p->parentChain())));
@@ -80,8 +77,7 @@ Kirby::plugin('forpro/parent-page', [
             ));
         },
 
-        // Lowercase alias for blueprint `sortBy`, which lowercases field names
-        // before resolving them (camelCase methods wouldn't be found).
+        // Blueprint `sortBy` lowercases field names, so it needs this alias.
         'breadcrumbtitle' => function (): string {
             return $this->breadcrumbTitle();
         },

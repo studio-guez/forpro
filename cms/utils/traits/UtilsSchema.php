@@ -65,8 +65,7 @@ trait UtilsSchema
         $webPageId = $canonical . '#webpage';
         $template  = $page->intendedTemplate()->name();
 
-        // FAQPage needs its questions on the page node itself, so they are
-        // resolved before the type is decided: no questions, no FAQPage.
+        // FAQPage needs its questions on the page node, so they are resolved before the type is decided.
         $questions = $template === 'faq' ? self::getFaqQuestionSchemas($page) : [];
 
         $webPage = self::withoutEmpty([
@@ -197,9 +196,7 @@ trait UtilsSchema
             return null;
         }
 
-        // An `endDate` is only emitted when the event really ends elsewhere in
-        // time: repeating the start as a bare date next to a start datetime
-        // reads as an event that ends before it begins.
+        // A bare-date endDate equal to the start would read as ending before the start datetime, so it is omitted.
         $start   = self::schemaDateTime($dateStart, $timeStart);
         $lastDay = $dateEnd !== null && $dateEnd !== $dateStart ? $dateEnd : null;
         $end     = $lastDay !== null || $timeEnd !== null
@@ -254,8 +251,7 @@ trait UtilsSchema
 
         ['activityRateMin' => $rateMin, 'activityRateMax' => $rateMax] = self::getActivityRate($page);
 
-        // The three rich-text sections the page shows, in page order: Google
-        // reads the description as the whole offer, not just its intro.
+        // Google reads JobPosting.description as the whole offer, so all three sections go in.
         $description = implode('', array_filter([
             $page->description()->value(),
             $page->profile()->value(),

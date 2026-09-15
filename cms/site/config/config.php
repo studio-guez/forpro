@@ -10,13 +10,8 @@ $noIndex = getenv('KIRBY_ROBOTS_INDEX') === 'false';
 return [
     'debug' => getenv('KIRBY_DEBUG') === 'true',
     'home' => 'pages/home',
-    // Pin the base URL when set: the frontends fetch the API over the internal
-    // Docker network (Host: cms), and Kirby would otherwise derive media/file
-    // URLs from that internal host, which browsers cannot resolve.
+    // Without a pinned url, Kirby derives media/file URLs from the internal Docker host (Host: cms), which browsers cannot resolve.
     ...($cmsUrl ? ['url' => $cmsUrl] : []),
-    // WebP for every generated thumb (GD driver, installed --with-webp).
-    // `default` is the width ladder used for srcset: it spans small phones
-    // up to 4K / high-DPR displays so the browser can pick per viewport × dpr.
     'thumbs' => [
         'driver' => 'gd',
         'quality' => 80,
@@ -25,8 +20,7 @@ return [
             'default' => [480, 768, 1024, 1366, 1600, 1920, 2560, 3840],
         ],
     ],
-    // Sizes (px) downscaled from the 512×512 favicon PNG masters to cover every
-    // standard favicon `<link>` (16/32/48 browsers, 180 apple-touch, 192/512 PWA).
+    // 180 = apple-touch-icon, 192/512 = PWA manifest.
     'favicon' => [
         'resize' => [16, 32, 48, 180, 192, 512],
     ],
@@ -34,18 +28,11 @@ return [
         'canonicalBase' => $frontendUrl,
         'lang' => 'fr_CH',
         'robots' => [
-            // disallow everything in /robots.txt (and noindex the meta default)
-            // when explicitly turned off (e.g. preprod), editable in cms.env
-            // without rebuilding the image.
             'index' => !$noIndex,
         ],
         'sitemap' => [
             'active' => true,
-            // The default generator walks the whole Kirby index and builds URLs
-            // from the content structure. Neither matches the decoupled
-            // frontend: only `page`/`faq` entries have a route there (the
-            // containers and taxonomies don't), and their canonical path is the
-            // parentPage-based `virtualPath`, not `/pages/<slug>`.
+            // The default generator builds `/pages/<slug>` URLs for the whole index; only page/faq have a frontend route, at their virtualPath.
             'generator' => function (\tobimori\Seo\Sitemap\SitemapIndex $sitemap) {
                 require_once 'utils/Utils.php';
 
@@ -63,8 +50,7 @@ return [
             },
         ],
         'default' => [
-            // The home page is titled after the site itself, so appending the
-            // site title there would render "ForPro - ForPro".
+            // The home page is titled after the site, so the suffix would render "ForPro - ForPro".
             'metaTemplate' => fn($page) => $page->site()->title()->isNotEmpty()
                 && $page->title()->value() !== $page->site()->title()->value()
                 ? '{{ title }} - {{ site.title }}'
@@ -108,8 +94,7 @@ return [
                 ])->values();
 
                 $secondaryMenu = [];
-                // The burger menu has 4 CMS-managed columns (see blueprints/tabs/navigation.yml);
-                // the frontend adds a 5th column with external links and social medias.
+                // The frontend adds a 5th column itself (external links + socials).
                 foreach ([1, 2, 3, 4] as $index) {
                     $groups = $site->{"secondaryColumn{$index}Groups"}()->toBlocks()->map(fn($block) => [
                         'title' => $block->title()->isEmpty() ? null : $block->title()->value(),
@@ -173,8 +158,6 @@ return [
                     'target' => Utils::resolvePageOrUrlTarget($item),
                 ])->values();
 
-                // `null` rather than `""` for every optional footer string, so the frontend
-                // can drop the whole line/column instead of rendering an empty node.
                 $orNull = fn(\Kirby\Content\Field $field) => $field->isEmpty() ? null : $field->value();
 
                 return \Kirby\Http\Response::json([
@@ -188,7 +171,6 @@ return [
                         'socialLinks'   => $socialLinks,
                     ],
                     'footer' => [
-                        // Same file as the header logo: it is managed once, in the Website tab.
                         'logo'                     => Utils::getJsonEncodeImageData($logoFile),
                         'logoEntrepriseFormatrice' => Utils::getJsonEncodeImageDataOrNull($logoEntrepriseFormatriceFile),
                         'address' => [
@@ -204,14 +186,9 @@ return [
                         'phone'           => $orNull($site->contactPhone()),
                         'phoneUrl'        => Utils::telHref($site->contactPhone()),
                         'socialsTitle'    => $orNull($site->footerSocialsTitle()),
-                        // Same list as the burger menu's 5th column: the links themselves
-                        // are managed once, in the Social networks tab.
                         'socialLinks'     => $socialLinks,
                         'menuTitle'       => $orNull($site->footerMenuTitle()),
                         'menuLinks'       => $footerMenuLinks,
-                        // Copy shown around the footer form. The provider credentials it
-                        // posts to are deliberately *not* in here: see the top-level
-                        // `newsletter` key below.
                         'newsletter' => [
                             'title'        => $orNull($site->footerNewsletterTitle()),
                             'placeholder'  => $orNull($site->newsletterPlaceholder()),
@@ -223,19 +200,13 @@ return [
                             ],
                         ],
                     ],
-                    // Submit settings for the newsletter provider. Kept out of `footer`
-                    // on purpose: `+layout.server.ts` only forwards the keys it names, so
-                    // this one stays server-side and the subscription is proxied by the
-                    // frontend's /api/newsletter route instead of posted from the browser
-                    // (a cross-origin post gives an opaque response — no success/error).
+                    // Kept out of `footer` so +layout.server.ts never forwards it to the browser; the frontend's /api/newsletter route proxies the post.
                     'newsletter' => [
                         'actionUrl'      => $orNull($site->newsletterActionUrl()),
                         'challengeUrl'   => $orNull($site->newsletterChallengeUrl()),
                         'key'            => $orNull($site->newsletterKey()),
                         'webformId'      => $orNull($site->newsletterWebformId()),
                         'emailFieldName' => $orNull($site->newsletterEmailFieldName()),
-                        // Decoy inputs, submitted empty. Comma-separated in the Panel so the
-                        // list can follow the provider's markup without a code change.
                         'honeypotFields' => array_values(array_filter(array_map(
                             'trim',
                             explode(',', (string)$site->newsletterHoneypotFields())
@@ -243,14 +214,10 @@ return [
                     ],
                     'banner'  => $bannerAnnouncements,
                     'favicon' => Utils::getFaviconData($site),
-                    // Site-wide JSON-LD (Organization, WebSite). Every page schema
-                    // links back to these by `@id`, so they are emitted once, in
-                    // the layout, rather than repeated on every page.
+                    // Page schemas reference these by @id, so they are emitted once in the layout.
                     'schemas' => Utils::getSiteSchemas(),
                     'cookies' => [
                         'text' => $orNull($site->cookiesText()),
-                        // Null when no page is picked: the banner then drops the link
-                        // rather than pointing at a 404.
                         'privacyPolicyUrl' => Utils::pageUrl($site->privacyPolicyPage()->toPage()),
                     ],
                 ]);
@@ -265,13 +232,11 @@ return [
             },
         ],
         [
-            // Site-wide search over every page that has a frontend route.
             "pattern" => "search.json",
             "action" => function () {
                 require_once 'utils/Utils.php';
 
                 $query = (string)(get('q') ?? '');
-                // `searchPages()` owns the group vocabulary and rejects unknown values.
                 $group = (string)(get('group') ?? 'all');
                 $offset = max((int)(get('offset') ?? 0), 0);
                 $limit = min(max((int)(get('limit') ?? 10), 1), 50);
@@ -281,17 +246,9 @@ return [
                 );
             },
         ],
-        // The three paginated index lists behind the frontends' infinite scroll.
-        // Each takes `?path=`, the index page's `virtualPath` (not its Kirby id,
-        // see `pages/(:all).json` below), and returns one page of the envelope
-        // `{offset, total, hasMore, items}`. Every taxonomy parameter is an
-        // *already expanded* selection of term slugs, because the frontend
-        // narrows a selected parent down to its selected sub-terms and
-        // re-expanding here would undo that. Returning null on an unknown or
-        // wrong-template path falls through to Kirby's own routing (404 page).
+        // Taxonomy params are already-expanded term slugs: the frontend narrows a parent to its selected sub-terms, re-expanding here would undo that.
+        // Returning null falls through to Kirby's own routing (404 page).
         [
-            // Paginated archive of an events page, filtered the way the agenda
-            // filters it.
             "pattern" => "past-events.json",
             "action" => function () {
                 require_once 'utils/Utils.php';
@@ -312,8 +269,6 @@ return [
             },
         ],
         [
-            // Paginated projects of a projects index, filtered the way the
-            // projects page filters them.
             "pattern" => "projects.json",
             "action" => function () {
                 require_once 'utils/Utils.php';
@@ -334,8 +289,7 @@ return [
             },
         ],
         [
-            // Paginated missions of a missions index. `?sort=` has to be applied
-            // here rather than on the frontend: it decides what lands in a page.
+            // Sorting has to happen here, not on the frontend: it decides what lands in a page.
             "pattern" => "missions.json",
             "action" => function () {
                 require_once 'utils/Utils.php';
@@ -355,12 +309,7 @@ return [
             },
         ],
         [
-            // The frontend routes on `virtualPath` (real ancestors, minus the
-            // top-level containers, then the `parentPage` chain), which is not
-            // a Kirby page id: `/pages/evenements/evenement-de-test.json` has
-            // to resolve `pages/evenements/evenement-de-test`, while
-            // `/pages/entreprendre/mentorat.json` has to resolve `pages/mentorat`.
-            // Returning null falls through to Kirby's own routing (404 page).
+            // The path is the parent-page virtualPath, not a Kirby id: /pages/entreprendre/mentorat.json resolves pages/mentorat.
             "pattern" => "pages/(:all).json",
             "action" => function (string $path) {
                 require_once 'utils/Utils.php';

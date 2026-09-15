@@ -1,12 +1,7 @@
 <template>
-    <!--
-        Media links get the same tag preview Kirby gives a `file` link: icon
-        (or thumbnail) plus filename. Everything else is left to Kirby.
-    -->
     <ul v-if="file" class="k-restaurantlink-field-preview k-tags">
         <li>
-            <!-- no `link`: the path is not a panel route, and clicking the
-                 row already opens the editor -->
+            <!-- no `link`: the path is not a panel route -->
             <k-tag
                 :image="file.image"
                 :text="file.text"

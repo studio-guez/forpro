@@ -1,5 +1,3 @@
-# Shared setup for structural pages that must always exist:
-# they can be edited, but never created, deleted, moved or unpublished.
 num: zero
 
 status:

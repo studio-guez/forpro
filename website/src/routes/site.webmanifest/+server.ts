@@ -3,8 +3,7 @@ import { fetchFromAPI, getHeaders } from '$lib/utils/shared';
 import type { Global } from '$lib/interfaces/global';
 import type { RequestHandler } from '@sveltejs/kit';
 
-// PWA manifest built from the same global.json favicon data as the <head> icons.
-// Manifests ignore prefers-color-scheme, so we use the light PNG masters.
+// Manifests ignore prefers-color-scheme, so the light PNG masters are used.
 export const GET: RequestHandler = async () => {
 	const request = new Request(`${CMS_SERVER_BASE_URL}/global.json`, {
 		headers: getHeaders()

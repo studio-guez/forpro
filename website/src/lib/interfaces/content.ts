@@ -12,7 +12,6 @@ import type { FactoryLabPage } from './factoryLab';
 import type { InfosPratiquesPage } from './infosPratiques';
 import type { HomePage } from './home';
 
-// Any CMS content resolved by the [...slug] route, discriminated by `template`.
 export type CmsContent =
 	| Page
 	| BasicPage

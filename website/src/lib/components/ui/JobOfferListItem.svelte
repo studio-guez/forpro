@@ -20,10 +20,8 @@
 
 	const published = $derived(toDate(offer.publishedDate));
 
-	// Sectors read as plain text here, not as tags: the row already carries its colour.
 	const sectors = $derived(offer.terms.map((term) => term.title).join(', '));
 
-	// The row links to the offer, so it is a CTA like any other pill button.
 	const cta = $derived({
 		label: applyLabel,
 		url: offer.url,

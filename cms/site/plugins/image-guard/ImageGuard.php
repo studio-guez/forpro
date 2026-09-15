@@ -69,8 +69,6 @@ class ImageGuard
             return $report;
         }
 
-        // Give this one-off conversion plenty of headroom regardless of the
-        // currently configured memory_limit.
         $previousLimit = ini_get('memory_limit');
         ini_set('memory_limit', '1024M');
 
@@ -87,8 +85,7 @@ class ImageGuard
                 }
             }
 
-            // toFile() re-encodes through GD, which always writes RGB
-            // truecolor, so this also strips the CMYK color space.
+            // GD always re-encodes as RGB truecolor, so toFile() also strips the CMYK color space.
             $image->toFile($root, null, ['quality' => static::JPEG_QUALITY]);
 
             $report['newWidth']  = $image->getWidth();

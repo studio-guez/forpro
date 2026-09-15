@@ -41,7 +41,6 @@
 
 	let shared = $state(false);
 
-	// Native share sheet when available (mobile), clipboard fallback otherwise.
 	const share = async (): Promise<void> => {
 		const shareUrl = url ? new URL(url, window.location.href).href : window.location.href;
 		try {
@@ -52,9 +51,7 @@
 			await navigator.clipboard.writeText(shareUrl);
 			shared = true;
 			setTimeout(() => (shared = false), 3000);
-		} catch {
-			// The user dismissed the share sheet, or the clipboard is unavailable.
-		}
+		} catch {}
 	};
 </script>
 

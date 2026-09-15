@@ -31,8 +31,6 @@
 		children
 	}: Props = $props();
 
-	// The two rules differ in weight, so the room they need above the heading
-	// differs with them.
 	const chrome = {
 		section: { rule: 'border-t-3 border-(--list-color)', pad: 'pt-3', count: 'mt-4' },
 		plain: { rule: 'border-t border-black', pad: 'pt-6 lg:pt-8', count: 'mt-1' }

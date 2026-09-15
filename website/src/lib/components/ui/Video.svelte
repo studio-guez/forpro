@@ -3,8 +3,6 @@
 	import VideoPlayer from '$lib/components/ui/VideoPlayer.svelte';
 	import YoutubeEmbed from '$lib/components/ui/YoutubeEmbed.svelte';
 
-	// One item of the shared CMS `fields/video` structure: an uploaded file
-	// (self-hosted player) or a YouTube embed (iframe).
 	interface Props {
 		video: VideoItem;
 		title?: string;
@@ -13,7 +11,6 @@
 
 	let { video, title = 'Vidéo', class: className = '' }: Props = $props();
 
-	// Shorts are vertical: keep them narrow and centered instead of stretching them to the column.
 	const isShort = $derived(video.source === 'youtube' && video.embed.type === 'short');
 </script>
 

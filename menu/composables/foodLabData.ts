@@ -28,8 +28,7 @@ export async function getfoodLabData(): Promise<IMenuData__foodLab> {
 }
 
 export function foodLab_GetCurrentWeekMenu(menus: IMenuData__foodLab): IMenuData__foodLab__weekMenu | null {
-  // Les menus sont enregistrés à la date du lundi, mais la bascule doit se faire
-  // dans la nuit du vendredi au samedi : on compare avec 2 jours d'avance.
+  // Menus are dated on Monday but must switch over on Friday night, hence the 2-day offset.
   const reference = new Date()
   reference.setHours(0, 0, 0, 0)
   reference.setDate(reference.getDate() + 2)

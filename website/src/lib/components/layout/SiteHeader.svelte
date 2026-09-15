@@ -22,8 +22,6 @@
 	let searchQuery = $state('');
 	let searchModalOpen = $state(false);
 
-	// The header control is only the entry point: the query lives in the modal,
-	// which focuses its own field on open.
 	const openSearch = () => {
 		searchModalOpen = true;
 		closeMenu();
@@ -41,7 +39,6 @@
 		menuOpen = false;
 	};
 
-	// The panels scroll inside the header instead, so the page underneath stays put.
 	$effect(() => {
 		if (!menuOpen) return;
 		return lockPageScroll();
@@ -58,8 +55,7 @@
 		return () => document.removeEventListener('pointerdown', handlePointerDown);
 	});
 
-	// Clicking outside is the pointer way out; Escape is the keyboard one. Focus goes back to
-	// the toggle, otherwise it would be left on a panel that no longer exists.
+	// Focus goes back to the toggle, otherwise it is left on a panel that no longer exists.
 	$effect(() => {
 		if (!menuOpen) return;
 		const handleKeydown = (event: KeyboardEvent) => {

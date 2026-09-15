@@ -6,9 +6,7 @@
 	let { class: className = '' }: Props = $props();
 </script>
 
-<!-- Fixed size, never stretched. The box is only 110px tall on purpose: the path runs on far
-	 below it and the SVG clips it, so the parent anchors the element at the bottom-left of the
-	 content column and the footer's bottom edge is the shape's bottom edge. -->
+<!-- Only 110px tall on purpose: the path runs on below and is clipped, so the footer's bottom edge is the shape's. -->
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	width="402"

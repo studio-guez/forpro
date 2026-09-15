@@ -13,7 +13,6 @@ use Spatie\Browsershot\Browsershot;
 return [
     "routes" => function ($kirby) {
         return [
-            /* Menu */
             [
                 "pattern" => "restaurant/menu/create",
                 "method" => "POST",
@@ -226,7 +225,6 @@ return [
             [
                 "pattern" => [
                     Restaurant::API_PATH . "/fields/(:any)",
-                    // the file button of the textarea toolbar
                     Restaurant::API_PATH . "/fields/(:any)/files",
                 ],
                 "method" => "GET",
@@ -383,7 +381,6 @@ return [
                     return false;
                 },
             ],
-            /* Menu Special */
             [
                 "pattern" => "restaurant/menu/special/create",
                 "method" => "POST",

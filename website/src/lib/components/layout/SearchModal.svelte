@@ -45,7 +45,6 @@
 	let loading = $state(false);
 	let loadingMore = $state(false);
 	let failed = $state(false);
-	// Query the current `results` belong to, used to highlight the matches.
 	let matched = $state('');
 
 	const query = $derived(value.trim());
@@ -117,7 +116,6 @@
 				matched = current;
 				failed = false;
 			} catch (error) {
-				// A newer keystroke aborted this request: its own run owns the state.
 				if (error instanceof DOMException && error.name === 'AbortError') return;
 				results = [];
 				total = 0;
@@ -125,7 +123,6 @@
 				failed = true;
 			}
 			loading = false;
-			// Back to the top: the list now belongs to another query or tab.
 			scroller?.scrollTo({ top: 0 });
 		}, 250);
 
@@ -152,13 +149,11 @@
 		loadingMore = false;
 	};
 
-	// The FAQ page filters its questions on `?q=`, so a FAQ hit can land the
-	// visitor directly on the matching question instead of the whole list.
+	// The FAQ page filters its questions on `?q=`, so a FAQ hit lands on the matching question.
 	const resultUrl = (result: SearchResult): string =>
 		result.type === 'faq' ? `${result.url}?q=${encodeURIComponent(query)}` : result.url;
 
-	// Accent- and case-folded copy of the text. Folding happens per UTF-16 unit
-	// so indexes stay aligned with the original string and can be sliced back.
+	// Folded per UTF-16 unit so indexes stay aligned with the original string.
 	const fold = (text: string): string =>
 		text
 			.split('')
@@ -177,8 +172,6 @@
 			.filter((word) => word.length >= 2)
 	);
 
-	// Splits a text into consecutive matched/unmatched segments so the matches
-	// can be wrapped in <mark> without injecting HTML.
 	const highlight = (text: string): { text: string; match: boolean }[] => {
 		if (text === '' || words.length === 0) return [{ text, match: false }];
 

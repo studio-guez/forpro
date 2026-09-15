@@ -35,8 +35,7 @@ trait UtilsLlms
         ],
         'Index et listes' => [
             'templates' => ['events', 'projects', 'job-offers', 'missions', 'faq'],
-            // Read in the order they are declared above, which is the order
-            // they matter in, not the alphabetical accident of their URLs.
+            // Declaration order above is the output order.
             'sort'      => 'templates',
         ],
         'Optional' => [
@@ -74,10 +73,7 @@ trait UtilsLlms
 
         $paragraphs = self::getLlmsPresentation();
 
-        // The blockquote is the one-line answer to "what is this site". The SEO
-        // description is written for exactly that, so it wins; failing that the
-        // presentation opens with it, and that opening paragraph is then spent
-        // — it is the blurb, and is not repeated three lines lower.
+        // When the presentation's opening paragraph serves as the blurb, it is not repeated below.
         $summary = self::toPlainText($site->metaDescription()->value());
 
         if ($summary === '' && $paragraphs !== []) {
@@ -92,8 +88,6 @@ trait UtilsLlms
             $blocks[] = '> ' . self::truncateAtWord($summary, self::LLMS_SUMMARY_LENGTH);
         }
 
-        // Own block, so the editor's paragraphs stay paragraphs instead of
-        // running into the facts underneath them.
         if ($paragraphs !== []) {
             $blocks[] = implode("\n\n", $paragraphs);
         }
@@ -119,8 +113,6 @@ trait UtilsLlms
             $blocks[] = '## ' . $heading . "\n\n" . implode("\n", $links);
         }
 
-        // Trailing newline: the file is read as text, and every line of it is a
-        // statement, the last one included.
         return implode("\n\n", $blocks) . "\n";
     }
 
@@ -136,9 +128,6 @@ trait UtilsLlms
     {
         $sorted = $pages->values();
 
-        // What comes first: the declared position of a page's template, or —
-        // by default — nothing except the home page, which is the site's entry
-        // point and leads its section instead of being sorted into it.
         $rank = ($section['sort'] ?? null) === 'templates'
             ? fn(\Kirby\Cms\Page $page) => array_search($page->intendedTemplate()->name(), $section['templates'], true)
             : fn(\Kirby\Cms\Page $page) => $page->isHomePage() ? -1 : 0;
@@ -160,7 +149,6 @@ trait UtilsLlms
 
         $link = '- [' . $title . '](' . self::getLlmsMarkdownUrl($page) . ')';
 
-        // A list page states what it lists before whatever it says of itself.
         $role = self::LLMS_ROLES[$page->intendedTemplate()->name()] ?? '';
 
         $description = trim($role . ' ' . self::getLlmsDescription($page));
@@ -192,8 +180,6 @@ trait UtilsLlms
      */
     private static function getLlmsDescription(\Kirby\Cms\Page $page): string
     {
-        // Ordered by how deliberate the text is: what an editor wrote for
-        // search engines first, then the lead the page shows.
         $candidates = [
             $page->metadata()->get('metaDescription')->value(),
             $page->shortDesc()->value(),
@@ -260,9 +246,6 @@ trait UtilsLlms
             $address === '' ? null : $address . '.',
             $contact === '' ? null : 'Contact : ' . $contact . '.',
             'Site en français.',
-            // The links are Markdown, so the note now runs the other way: it
-            // says where the citable address is rather than how to reach the
-            // Markdown, which is no longer something a reader has to work out.
             'Les liens ci-dessous mènent à la version Markdown de chaque page. '
                 . 'Chaque fichier rappelle en tête son URL HTML canonique, celle à citer ; '
                 . 'c’est la même adresse sans « .md ».',

@@ -52,7 +52,6 @@
             :fields="formFields"
         />
 
-        <!-- Page 2 -->
         <k-grid style="margin-bottom: 40px; margin-top: 40px">
             <div class="k-column" style="--width: 1/3">
                 <hr class="k-line-field" type="line" />
@@ -99,7 +98,6 @@
             />
         </template>
 
-        <!-- Page 3 -->
         <k-grid style="margin-bottom: 40px; margin-top: 40px">
             <div class="k-column" style="--width: 1/3">
                 <hr class="k-line-field" type="line" />
@@ -146,7 +144,6 @@
             />
         </template>
 
-        <!-- Page 4 -->
         <k-grid style="margin-bottom: 40px; margin-top: 40px">
             <div class="k-column" style="--width: 1/3">
                 <hr class="k-line-field" type="line" />
@@ -193,7 +190,6 @@
             />
         </template>
 
-        <!-- Divers -->
         <k-grid style="margin-bottom: 40px; margin-top: 40px">
             <div class="k-column" style="--width: 1">
                 <hr class="k-line-field" type="line" />
@@ -441,7 +437,6 @@ export default {
             this.isGeneratingPDF = true;
 
             if (publish) {
-                // Authenticated POST: the endpoint writes files and updates site content
                 this.$api
                     .post("/restaurant/menu/generate/with-assets/publish")
                     .then(() => {
@@ -460,7 +455,7 @@ export default {
                 return;
             }
 
-            // Preview: open in new tab via link click (avoids popup blocker)
+            // A link click rather than window.open, which popup blockers stop.
             const url =
                 this.$api.endpoint +
                 "/restaurant/menu/generate/" +
@@ -481,7 +476,6 @@ export default {
             this.$api
                 .post(`/restaurant/menu/${category}/reorder`, updatedList)
                 .then(() => {
-                    // The list is already updated in the component's data, so we don't need to set it again
                     this.$panel.notification.success("Order updated successfully",
                     );
                 })

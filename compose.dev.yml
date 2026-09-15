@@ -10,12 +10,11 @@ services:
       - "--entrypoints.web.address=:80"
     ports:
       - "80:80"
-      - "8888:8080"  # Traefik dashboard
+      - "8888:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
 
-  # SvelteKit
   restaurant:
     build:
       context: ./restaurant
@@ -29,10 +28,8 @@ services:
       - NODE_ENV=development
       - PUBLIC_CMS_BASE_URL=http://cms.localhost
       - PUBLIC_MENU_BASE_URL=http://menu.localhost
-      # 'preprod' disables indexing (noindex + robots.txt disallow) and analytics.
       - PUBLIC_ENVIRONMENT=development
-    # Make `cms.localhost` resolvable from inside the container so SSR fetches
-    # hit Traefik on the Docker host (same URL the browser uses).
+    # SSR inside the container needs cms.localhost to resolve to the Docker host (Traefik).
     extra_hosts:
       - "cms.localhost:host-gateway"
     restart: unless-stopped
@@ -44,7 +41,6 @@ services:
       - "traefik.http.routers.restaurant.entrypoints=web"
       - "traefik.http.services.restaurant.loadbalancer.server.port=5173"
 
-  # SvelteKit
   website:
     build:
       context: ./website
@@ -57,10 +53,8 @@ services:
     environment:
       - NODE_ENV=development
       - PUBLIC_CMS_BASE_URL=http://cms.localhost
-      # 'preprod' disables indexing (noindex + robots.txt disallow) and analytics.
       - PUBLIC_ENVIRONMENT=development
-    # Make `cms.localhost` resolvable from inside the container so SSR fetches
-    # hit Traefik on the Docker host (same URL the browser uses).
+    # SSR inside the container needs cms.localhost to resolve to the Docker host (Traefik).
     extra_hosts:
       - "cms.localhost:host-gateway"
     restart: unless-stopped
@@ -72,7 +66,6 @@ services:
       - "traefik.http.routers.website.entrypoints=web"
       - "traefik.http.services.website.loadbalancer.server.port=5173"
 
-  # Nuxt
   menu:
     build:
       context: ./menu
@@ -85,7 +78,6 @@ services:
     environment:
       - NODE_ENV=development
       - NUXT_PUBLIC_CMS_BASE_URL=http://cms.localhost
-      # 'preprod' disables indexing (noindex + robots.txt disallow).
       - NUXT_PUBLIC_ENVIRONMENT=development
     extra_hosts:
       - "cms.localhost:host-gateway"
@@ -98,7 +90,6 @@ services:
       - "traefik.http.routers.menu.entrypoints=web"
       - "traefik.http.services.menu.loadbalancer.server.port=3000"
 
-  # Kirby CMS
   cms:
     build:
       context: ./cms
@@ -147,13 +138,12 @@ services:
       - "traefik.http.routers.cms.entrypoints=web"
       - "traefik.http.services.cms.loadbalancer.server.port=80"
 
-  # Mailpit — catches all outgoing mail in dev (SMTP on 1025, web UI on 8025)
   mailpit:
     image: axllent/mailpit:latest
     restart: unless-stopped
     ports:
-      - "1025:1025"  # SMTP
-      - "8025:8025"  # Web UI
+      - "1025:1025"
+      - "8025:8025"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.mailpit.rule=Host(`mailpit.localhost`)"

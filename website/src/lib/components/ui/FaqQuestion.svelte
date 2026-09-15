@@ -70,8 +70,6 @@
 				</div>
 
 				{#if shareUrl}
-					<!-- The open panel takes the faq colour, so the pill is drawn the other
-					     way round from the collapsed box it sits in. -->
 					<div class="mt-6 lg:mt-8 flex justify-end">
 						<ShareButton url={shareUrl} title={question} {color} inverted={!inverted} />
 					</div>
