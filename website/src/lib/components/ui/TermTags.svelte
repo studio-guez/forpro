@@ -18,7 +18,7 @@
 		class={[
 			'flex flex-wrap items-center gap-y-1.5',
 			className,
-			size === 'sm' ? 'gap-x-1.5' : 'gap-x-3'
+			size === 'sm' ? 'gap-x-1.5' : 'gap-x-1.5 md:gap-x-3'
 		]}
 		aria-label={label ?? undefined}
 	>

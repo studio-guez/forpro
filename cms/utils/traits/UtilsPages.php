@@ -144,8 +144,7 @@ trait UtilsPages
      * of `publics` slugs, as it appears in the URL; `$query` is the archive's
      * own search (the agenda's other search only answers across upcoming
      * events), matched as a whole phrase, accent- and case-insensitively,
-     * against title, short description and term titles; `$month` is a
-     * `YYYY-MM` key on `dateStart`.
+     * against the title only; `$month` is a `YYYY-MM` key on `dateStart`.
      *
      * `total` counts the events the returned page is sliced out of, so it
      * drives the pagination. `matchTotal` ignores the search and the month:
@@ -182,14 +181,11 @@ trait UtilsPages
 
         $matchTotal = $past->count();
 
-        $past = $past->filter(fn($event) => self::matchesSearchFields($query, [
-            $event->title()->value(),
-            self::stripHtmlTags($event->shortDesc()->value()),
-            ...array_column([
-                ...self::resolveTaxonomyTerms($event->programs(), 'programs'),
-                ...self::resolveTaxonomyTerms($event->publics(), 'publics'),
-            ], 'title'),
-        ]));
+        // Titles only: a search is a way to find an event by name, not a way to
+        // dig through descriptions or the terms the dropdown already filters on.
+        $past = $past->filter(
+            fn($event) => self::matchesSearchFields($query, [$event->title()->value()])
+        );
 
         // The month key is needed twice below, so it is resolved once per event.
         $matched = [];
@@ -228,11 +224,9 @@ trait UtilsPages
      * Filtered, paginated projects of a projects index, in CMS order.
      *
      * The filters mirror the frontend ones: `$query` is matched as a whole
-     * phrase against title, short description, collective name and term titles
-     * (categories included: they are still carried by a project, they are just
-     * not filtered on); `$programs` is a **raw** selection of term slugs;
-     * `$years` is a list of years as strings, matched on the `year` field,
-     * which exists only to filter.
+     * phrase against the title only; `$programs` is a **raw** selection of
+     * term slugs; `$years` is a list of years as strings, matched on the
+     * `year` field, which exists only to filter.
      *
      * @return array{offset:int, total:int, hasMore:bool, items:array<int,array>}
      */
@@ -259,15 +253,11 @@ trait UtilsPages
             );
         }
 
-        $projects = $projects->filter(fn($project) => self::matchesSearchFields($query, [
-            $project->title()->value(),
-            self::stripHtmlTags($project->shortDesc()->value()),
-            $project->collectiveName()->value(),
-            ...array_column([
-                ...self::resolveTaxonomyTerms($project->programs(), 'programs'),
-                ...self::resolveTaxonomyTerms($project->categories(), 'categories'),
-            ], 'title'),
-        ]));
+        // Titles only: a search is a way to find a project by name, not a way to
+        // dig through descriptions or the terms the dropdown already filters on.
+        $projects = $projects->filter(
+            fn($project) => self::matchesSearchFields($query, [$project->title()->value()])
+        );
 
         return self::paginate(
             $projects->values(),
