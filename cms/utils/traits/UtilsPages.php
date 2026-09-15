@@ -140,9 +140,8 @@ trait UtilsPages
     /**
      * Filtered, paginated past events of an events page, most recent first.
      *
-     * The filters mirror the frontend ones: `$publics` is a **raw** selection
-     * of `publics` slugs, as it appears in the URL; `$query` is the archive's
-     * own search (the agenda's other search only answers across upcoming
+     * The filters mirror the frontend ones: `$query` is the archive's own
+     * search (the agenda's publics filter and search only narrow upcoming
      * events), matched as a whole phrase, accent- and case-insensitively,
      * against the title only; `$month` is a `YYYY-MM` key on `dateStart`.
      *
@@ -160,21 +159,12 @@ trait UtilsPages
      */
     static function getPastEvents(
         \Kirby\Cms\Pages $events,
-        array $publics = [],
         string $query = '',
         string $month = '',
         int $offset = 0,
         int $limit = 10
     ): array {
         $past = self::splitEventsByDate($events)['past'];
-
-        // resolveTaxonomySelection() mirrors the frontend rule, so a URL means the same on both ends.
-        $past = self::filterPagesByTaxonomy(
-            $past,
-            'publics',
-            self::resolveTaxonomySelection('publics', $publics),
-            false
-        );
 
         $matchTotal = $past->count();
 

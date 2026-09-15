@@ -43,7 +43,7 @@
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
 	let selectedPublics = $state<string[]>(parseListParam(initialParams.get('publics')));
-	// The past archive has a search of its own: `q` above only covers upcoming events.
+	// `publics` and `q` above only narrow upcoming events: the past archive has a search of its own.
 	let pastSearch = $state(initialParams.get('pastQ') ?? '');
 	let selectedMonth = $state(initialParams.get('month') ?? '');
 
@@ -64,7 +64,6 @@
 
 	const activePublics = $derived(keepKnownSlugs(selectedPublics, publicTerms));
 
-	// Upcoming only: the past archive is filtered by the CMS, which resolves the raw selection itself.
 	const publicFilter = $derived(expandSelection(activePublics, publicTerms));
 
 	// Titles only, by design: descriptions and the dropdown's terms are not searched.
@@ -127,7 +126,6 @@
 		path: () => page.path,
 		seed: () => page.pastEvents,
 		filters: () => ({
-			publics: activePublics.join(','),
 			q: pastSearch.trim(),
 			month: activeMonth
 		})
