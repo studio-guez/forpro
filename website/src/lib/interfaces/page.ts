@@ -48,12 +48,14 @@ export interface Seo {
 
 export type Variant = 'default' | 'inverted';
 export type ImagePosition = 'left' | 'right';
+export type ImageFit = 'cover' | 'contain';
 
 export interface ModuleTitreTexteImageContent {
 	readonly title: string;
 	readonly description: string;
 	readonly image: CmsImage | null;
 	readonly imagePosition: ImagePosition;
+	readonly imageFit: ImageFit;
 	readonly variant: Variant;
 	readonly cta: PageCta | null;
 }
@@ -106,6 +108,7 @@ export interface ModuleCasesContent {
 	readonly rows: ModuleCasesRow[];
 	readonly cta: PageCta | null;
 	readonly layout: CasesLayout;
+	readonly imageFit: ImageFit;
 	readonly variant: Variant;
 }
 

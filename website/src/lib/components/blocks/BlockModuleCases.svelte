@@ -25,6 +25,10 @@
 
 	const singleMediaSpan = (index: number) => [2, 2, 1, 1][index % 4];
 
+	const imageFitClass = $derived(
+		content.imageFit === 'contain' ? 'object-contain' : 'object-cover'
+	);
+
 	const mediaSizes = (index: number) =>
 		toSizes(cell(CARD, { 0: 1, 1024: 3 }, 1.5, singleMediaSpan(index)));
 
@@ -59,7 +63,7 @@
 						{#if media.type === 'video'}
 							<VideoPlayer src={media.url} />
 						{:else}
-							<Img image={media} sizes={mediaSizes(m)} class="w-full h-full object-cover" />
+							<Img image={media} sizes={mediaSizes(m)} class="w-full h-full {imageFitClass}" />
 						{/if}
 					</div>
 				{/each}

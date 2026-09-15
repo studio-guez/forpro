@@ -15,6 +15,9 @@
 
 	const colors = $derived(getThemeColors(theme, content.variant));
 	const isImageLeft = $derived(content.imagePosition === 'left');
+	const imageFitClass = $derived(
+		content.imageFit === 'contain' ? 'object-contain' : 'object-cover'
+	);
 
 	const imageSizes = toSizes(cell(CARD, { 0: 1, 1280: 2 }, 1.5));
 </script>
@@ -32,7 +35,7 @@
 				class="overflow-hidden rounded-2xl [contain:size] min-h-75"
 				class:xl:order-last={!isImageLeft}
 			>
-				<Img image={content.image} sizes={imageSizes} class="w-full h-full object-cover" />
+				<Img image={content.image} sizes={imageSizes} class="w-full h-full {imageFitClass}" />
 			</div>
 		{/if}
 		<div class="flex flex-col justify-center">
