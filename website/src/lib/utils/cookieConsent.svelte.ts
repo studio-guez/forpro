@@ -28,6 +28,8 @@ interface StoredConsent extends CookieConsent {
 let consent = $state<CookieConsent | null>(null);
 /** Stays false until the first client-side read, so SSR renders no banner and hydration matches. */
 let loaded = $state(false);
+/** Set by a "manage my cookies" control: the banner shows again although a choice is stored. */
+let reopened = $state(false);
 
 function read(): CookieConsent | null {
 	try {
@@ -64,6 +66,10 @@ export const cookieConsent = {
 	get decided(): boolean {
 		return consent !== null;
 	},
+	/** True while the visitor has asked to revisit a stored choice; cleared by the next save. */
+	get reopened(): boolean {
+		return reopened;
+	},
 	get performance(): boolean {
 		return consent?.performance ?? false;
 	},
@@ -78,16 +84,14 @@ export const cookieConsent = {
 	},
 	save(choice: CookieChoice): void {
 		consent = { necessary: true, ...choice };
+		reopened = false;
 		write(consent);
 	},
 	acceptAll(): void {
 		cookieConsent.save({ performance: true, marketing: true });
 	},
-	/** Drops the record so the banner comes back — for a "manage my cookies" control. */
-	reset(): void {
-		consent = null;
-		try {
-			localStorage.removeItem(STORAGE_KEY);
-		} catch {}
+	/** Brings the banner back on its preferences view; the stored choice stays until it is saved again. */
+	reopen(): void {
+		reopened = true;
 	}
 };
