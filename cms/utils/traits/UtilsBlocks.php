@@ -75,6 +75,7 @@ trait UtilsBlocks
             'description'   => $block->description()->value(),
             'image'         => self::getJsonEncodeImageDataOrNull($block->image()->toFile()),
             'imagePosition' => $block->content()->get('imagePosition')->or('right')->value(),
+            'imageFit'      => $block->imageFit()->or('cover')->value(),
             'variant'       => $block->variant()->or('default')->value(),
             'cta'           => self::resolveCtaStructure($block->cta()),
         ];
@@ -136,6 +137,7 @@ trait UtilsBlocks
             'rows'      => $rows,
             'cta'       => self::resolveCtaStructure($block->cta()),
             'layout'    => $block->layout()->or('alternate')->value(),
+            'imageFit'  => $block->imageFit()->or('cover')->value(),
             'variant'   => $block->variant()->or('default')->value(),
         ];
     }

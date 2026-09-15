@@ -12,26 +12,12 @@ $json['sectors']  = Utils::getTaxonomyTerms('sectors');
 $json['programs'] = Utils::getTaxonomyTerms('programs');
 $json['publics']  = Utils::getTaxonomyTerms('publics');
 
-$readSlugs = fn(string $param): array => array_values(array_filter(
-    array_slice(explode(',', (string)get($param)), 0, 20),
-    fn(string $slug) => preg_match('/^[a-z0-9-]+$/', $slug) === 1
-));
-
-$filters = [
-    'sectors'  => $readSlugs('sectors'),
-    'programs' => $readSlugs('programs'),
-    'publics'  => $readSlugs('publics'),
-];
-
-$json['sections'] = $page->sections()->toStructure()->map(function ($section) use ($filters) {
-    $faqs = $section->faqs()->toStructure();
-    foreach ($filters as $field => $slugs) {
-        $faqs = Utils::filterStructureByTaxonomy($faqs, $field, $slugs);
-    }
-
+// Every question ships regardless of the query string: the frontend filters the whole list itself
+// and derives its dropdowns from it, so a prefiltered payload would hide questions and options for good.
+$json['sections'] = $page->sections()->toStructure()->map(function ($section) {
     return [
         'title' => $section->title()->value(),
-        'faqs'  => $faqs->map(fn($item) => [
+        'faqs'  => $section->faqs()->toStructure()->map(fn($item) => [
             'question' => $item->question()->value(),
             'answer'   => $item->answer()->value(),
             'sectors'  => Utils::resolveTaxonomyTerms($item->sectors(), 'sectors'),
