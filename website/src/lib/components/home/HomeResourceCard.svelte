@@ -14,9 +14,11 @@
 		headingTag?: string;
 		/** Rendered slot width — the card is laid out by its parent, which owns the geometry. */
 		sizes?: string;
+		/** id of an element describing the card, when the parent renders its description elsewhere. */
+		describedBy?: string;
 	}
 
-	let { resource, index, headingTag = 'h3', sizes }: Props = $props();
+	let { resource, index, headingTag = 'h3', sizes, describedBy }: Props = $props();
 
 	const pageShapes = [ShapeHomeResource1, ShapeHomeResource2, ShapeHomeResource3];
 
@@ -29,6 +31,7 @@
 <article class="h-full drop-shadow">
 	<a
 		href={resource.url}
+		aria-describedby={describedBy}
 		class="group relative flex flex-col h-full rounded-3xl overflow-hidden p-3 text-white"
 		style:background-color={background}
 	>
