@@ -309,7 +309,7 @@
 									{/each}
 								</p>
 								{#if result.excerpt}
-									<p class="text-label text-grey-dark mt-1">
+									<p class="text-label text-black mt-1">
 										{#each highlight(result.excerpt) as part, index (index)}
 											{#if part.match}<mark class="bg-green/60 text-grey-dark">{part.text}</mark
 												>{:else}{part.text}{/if}

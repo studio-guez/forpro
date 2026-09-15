@@ -37,7 +37,7 @@
 		{/snippet}
 
 		{#snippet meta()}
-			<p class="text-label text-grey-dark flex flex-wrap gap-x-12 gap-y-2 mt-4.5 lg:mt-3">
+			<p class="text-label text-black flex flex-wrap gap-x-12 gap-y-2 mt-4.5 lg:mt-3">
 				{#if page.date}
 					<span>{page.date}</span>
 				{/if}
