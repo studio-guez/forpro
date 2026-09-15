@@ -8,8 +8,11 @@
 </script>
 
 {#if page.lottie}
-	<div class="px-base h-[calc(100vh-6.75rem)] flex items-center justify-center rounded-3xl" style="background-image: linear-gradient(180deg, rgba(148, 175, 255, 0.20) 0%, rgba(166, 189, 255, 0.00) 100%);">
-		<LottiePlayer file={page.lottie} alt={page.lottie.alt} />
+
+	<div class="px-base">
+		<div class="min-h-[calc(100vh-6.75rem)] flex items-center justify-center rounded-3xl" style="background-image: linear-gradient(180deg, rgba(148, 175, 255, 0.20) 0%, rgba(166, 189, 255, 0.00) 100%);">
+			<LottiePlayer file={page.lottie} alt={page.lottie.alt} />
+		</div>
 	</div>
 {/if}
 
