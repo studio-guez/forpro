@@ -26,16 +26,8 @@ export default function restaurantLinkDialog(name) {
         props: {
             fields: {
                 default() {
-                    // Vue calls prop defaults with the component instance as
-                    // `this`. Kirby's plugin installer resolved the string
-                    // `extends` above into the core constructor before
-                    // registering this override under the same name
-                    // (panel/src/panel/plugins.ts, resolveComponentExtension),
-                    // so the untouched core default is reachable through it.
-                    // Looking it up in the component registry instead would
-                    // return this very override and recurse; reading it when
-                    // the plugin bundle loads is not possible either, the
-                    // Panel app does not exist yet at that point.
+                    // Kirby's plugin installer resolves the string `extends` into the core constructor before registering this override (panel/src/panel/plugins.ts, resolveComponentExtension), so the untouched core default is reachable through it.
+                    // The registry would return this very override and recurse, and the Panel app does not exist yet when the bundle loads.
                     const fields =
                         this.$options.extends.options.props.fields.default.call(
                             this,
@@ -51,8 +43,7 @@ export default function restaurantLinkDialog(name) {
                             ...fields.href,
                             type: "restaurantlink",
                             options: ["url", "email", "tel", "anchor", "custom"],
-                            // matches Restaurant::MEDIA_PATH, see
-                            // fields/restaurantlink.php
+                            // matches Restaurant::MEDIA_PATH (fields/restaurantlink.php)
                             mediaPath: "/api/restaurant/media/",
                         },
                     };

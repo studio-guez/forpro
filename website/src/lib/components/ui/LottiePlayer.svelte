@@ -12,14 +12,15 @@
 		alt?: string | null;
 		/** Box the animation is fitted into; the canvas fills it. */
 		class?: string;
+		/** Restart the animation when it ends. Defaults to a single play-through. */
+		loop?: boolean;
 	}
 
-	let { file, alt = null, class: className = '' }: Props = $props();
+	let { file, alt = null, class: className = '', loop = false }: Props = $props();
 
 	let canvas: HTMLCanvasElement | undefined = $state();
 
-	// The player is loaded on mount only: it needs a canvas and a WASM runtime, neither of
-	// which exists during SSR, and a dynamic import keeps the ~200 KB out of every other page.
+	// Loaded on mount only: it needs a canvas and a WASM runtime, and the dynamic import keeps ~200 KB off every other page.
 	onMount(() => {
 		if (!canvas) return;
 
@@ -38,8 +39,7 @@
 			player = new DotLottie({
 				canvas,
 				src: file.url,
-				loop: true,
-				// Reduced motion still gets the artwork: the first frame, standing still.
+				loop,
 				autoplay: !reduced,
 				renderConfig: { autoResize: true }
 			});

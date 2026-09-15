@@ -2,8 +2,7 @@ status:
   draft: true
   listed: true
 
-# Sections rather than root-level `fields` so a term blueprint can add its own
-# sections (Kirby drops `sections` as soon as `fields` is set at the root).
+# Kirby drops `sections` as soon as `fields` is set at the root, so term blueprints extend via sections.
 sections:
   content:
     type: fields

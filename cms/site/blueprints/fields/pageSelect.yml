@@ -1,6 +1,3 @@
-# Bare page picker over every template that has a frontend route. `pageLink` extends
-# it with the `when: type: page` condition the link structures need; use this one
-# directly for a standalone "point at that page" setting.
 label: { en: Page, fr: Page }
 type: pages
 link: false

@@ -49,7 +49,6 @@ if (file_exists($dataFile) === true && $force === false && $dryRun === false) {
     exit(1);
 }
 
-// fields/restaurant.php drives both the export and the site.txt cleanup
 $fields = Restaurant::fields();
 $layout = ['headline', 'line'];
 
@@ -63,9 +62,6 @@ if (count(array_filter($sourceKeys, fn($key) => $site->$key()->isNotEmpty())) ==
     exit(1);
 }
 
-/* -------------------------------------------------------------------------
-   1. + 2. export the fields and collect the media
-   ------------------------------------------------------------------------- */
 
 $copied = [];
 
@@ -91,7 +87,6 @@ $copy = function ($file) use ($mediaDir, $dryRun, &$copied) {
     return $filename;
 };
 
-// a link either points at an uploaded file or is a plain url/anchor
 $link = function ($field) use ($copy) {
     if ($file = $field->toFile()) {
         return '/' . Restaurant::MEDIA_PATH . '/' . $copy($file);
@@ -147,13 +142,10 @@ foreach ($fields as $name => $field) {
     $data[$key] = $export($field['type'], $site->$name());
 }
 
-// the published menu PDF is tracked separately so the panel can replace it
 if ($pdf = $site->btnLab()->toObject()->link()->toFile()) {
     $data['menupdf'] = $pdf->filename();
 }
 
-// the PopUp Café menu was uploaded by hand as a site file and linked from the
-// restaurant frontend by a hardcoded media path; it becomes a regular field
 if ($popup = $site->file('menu_popup.pdf')) {
     $data['popupmenupdf'] = $copy($popup);
 } else {
@@ -172,9 +164,6 @@ if ($dryRun === false) {
 echo "\n" . count($copied) . " media files -> {$mediaDir}\n";
 echo count($data) . " keys -> {$dataFile}\n";
 
-/* -------------------------------------------------------------------------
-   3. strip the migrated keys from site.txt
-   ------------------------------------------------------------------------- */
 
 // Kirby lowercases keys and writes underscores as dashes
 $remove = array_map(
@@ -182,8 +171,7 @@ $remove = array_map(
     [...$sourceKeys, 'menuPdf']
 );
 
-// site.txt is rewritten block by block instead of through Data::write, so the
-// keys we keep are left byte for byte as they are
+// Not Data::write: the kept keys must stay byte for byte as they are.
 foreach (glob($kirby->root('content') . '/site*.txt') as $path) {
     $blocks = preg_split('/\n----\n/', file_get_contents($path));
     $keep   = [];

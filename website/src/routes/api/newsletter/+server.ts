@@ -38,18 +38,15 @@ interface SubmitError {
 	error?: { code?: string; description?: string };
 }
 
-// Deliberately loose: the provider re-validates, and a stricter pattern would reject
-// valid addresses. This only exists to keep obvious junk off the provider.
+// Deliberately loose: the provider re-validates, and a stricter pattern would reject valid addresses.
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const MAX_EMAIL_LENGTH = 254;
 const TIMEOUT_MS = 10_000;
 
-// The provider's challenges are sized at 100k (~40ms). The ceiling is a guard against a
-// hostile or mis-sized `maxNumber` pinning a server thread, not a real expectation.
+// The provider's challenges are ~100k (~40ms); the ceiling only guards against a hostile `maxNumber` pinning a thread.
 const MAX_SOLVE_ITERATIONS = 2_000_000;
 
-// Solving the proof-of-work here rather than in the browser means this endpoint, not the
-// provider's captcha, is what stands between a bot and the mailing list.
+// Solving the proof-of-work server-side means this endpoint, not the provider's captcha, is what stops bots.
 const RATE_LIMIT = 3;
 const RATE_WINDOW_MS = 60_000;
 const recentSubmissions = new Map<string, number[]>();
@@ -58,7 +55,6 @@ const isRateLimited = (address: string): boolean => {
 	const now = Date.now();
 	const fresh = (recentSubmissions.get(address) ?? []).filter((at) => now - at < RATE_WINDOW_MS);
 
-	// Drop addresses that aged out entirely, so the map cannot grow without bound.
 	for (const [key, times] of recentSubmissions) {
 		if (times.every((at) => now - at >= RATE_WINDOW_MS)) recentSubmissions.delete(key);
 	}
@@ -120,8 +116,7 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 	);
 	const provider = global?.newsletter;
 
-	// Read from the CMS rather than from the request body: the browser must not get to
-	// choose where the site submits to.
+	// From the CMS, never the request body: the browser must not choose where the site submits to.
 	if (
 		!provider?.actionUrl ||
 		!provider.challengeUrl ||
@@ -158,8 +153,7 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 
 		const challenge: AltchaChallenge = await challengeResponse.json();
 
-		// The payload below is only valid for SHA-256; a different algorithm means the
-		// provider changed the scheme and needs a code change, not a silent wrong answer.
+		// Only valid for SHA-256: another algorithm means the provider changed the scheme and needs a code change.
 		if (challenge.algorithm !== 'SHA-256') {
 			console.error(`Newsletter: unsupported captcha algorithm (${challenge.algorithm})`);
 
@@ -194,7 +188,6 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 			altcha
 		});
 
-		// Decoys, submitted empty exactly as a real visitor's browser would.
 		for (const name of provider.honeypotFields ?? []) payload.set(name, '');
 
 		const submitResponse = await fetch(provider.actionUrl, {
@@ -208,8 +201,6 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 		});
 
 		if (submitResponse.ok === false) {
-			// The provider describes these in the body; the status alone does not say
-			// whether we were throttled, mis-configured, or hit a bug on their side.
 			const details: SubmitError = await submitResponse.json().catch(() => ({}));
 			const code = details.error?.code ?? 'no code';
 			const description = details.error?.description ?? 'no description';
@@ -226,15 +217,13 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 
 		if (errors.length === 0) return reply('ok', 200);
 
-		// A rejected captcha is our problem, not the visitor's — it must not be reported
-		// as a bad address, and it is the first thing to look at if this starts failing.
+		// A rejected captcha is our problem, not the visitor's: never report it as a bad address.
 		if (errors.includes('altcha')) {
 			console.error('Newsletter: the provider rejected our captcha solution');
 
 			return reply('error', 502);
 		}
 
-		// Anything else is a per-field complaint, and the form has one field.
 		return reply('invalidEmail', 400);
 	} catch (error) {
 		console.error(`Newsletter: could not reach the provider: ${error}`);

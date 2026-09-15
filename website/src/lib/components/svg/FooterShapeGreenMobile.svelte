@@ -6,8 +6,7 @@
 	let { class: className = '' }: Props = $props();
 </script>
 
-<!-- Fixed size, never stretched: the parent anchors the element at the top-right of the
-	 content column, where the box's top and right edges coincide with the shape's. -->
+<!-- The box's top and right edges coincide with the shape's, so the parent anchors it top-right. -->
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	width="381"

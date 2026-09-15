@@ -122,7 +122,6 @@ tabs:
                   headerType: full
               sepIntro:
                 type: line
-          # Module specific to this template: rendered between the header and the body.
           companies:
             type: fields
             fields:

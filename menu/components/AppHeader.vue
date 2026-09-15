@@ -27,8 +27,8 @@ function formatDates (startDate: Date, endDate: Date): string {
 
     const startDay = startDate.getDate();
     const endDay = endDate.getDate();
-    const startMonth = formatter.format(startDate); // Formatte le mois en français
-    const endMonth = formatter.format(endDate); // Formatte le mois en français
+    const startMonth = formatter.format(startDate);
+    const endMonth = formatter.format(endDate);
 
 
 

@@ -1,23 +1,14 @@
 import type { Block, CmsImage, CmsMedia, PageParent, Seo, VideoItem } from './page';
 
-// A title + rich-text pair: the `content-text` block of events and projects,
-// and the rows of the `fields/contentBlocks` structure of basic pages.
 export interface ContentBlock {
 	readonly title: string;
 	readonly description: string;
 }
 
-// An external link (title + URL) of a `content-links` block.
 export interface ContentExternalLink {
 	readonly title: string;
 	readonly url: string;
 }
-
-/*
- * The `fields/contentBody` blocks (`body` of events and projects), keyed by
- * `Block.type`. Serialized by the CMS `Utils::getContent*BlockData()` helpers
- * and rendered by `EventProjectBody.svelte`.
- */
 
 /** `content-medias`: a gallery of uploaded images and/or videos. */
 export interface ContentMediasContent {
@@ -38,7 +29,6 @@ export interface ContentLinksContent {
 	readonly links: ContentExternalLink[];
 }
 
-// Fields shared by every event and project page (pages/event-project-base.yml).
 export interface EventProjectBase {
 	readonly title: string;
 	readonly slug: string;

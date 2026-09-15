@@ -2,7 +2,6 @@ import { browser } from '$app/environment';
 import { replaceState } from '$app/navigation';
 import type { TaxonomyFilterTerm, TaxonomyTerm } from '$lib/interfaces/taxonomy';
 
-// Lowercased, accent-insensitive text, so "evenement" matches "événement".
 export const normalizeText = (value: string): string =>
 	value
 		.toLowerCase()
@@ -18,7 +17,6 @@ export const slugify = (value: string): string =>
 		.replace(/[^a-z0-9]+/g, '-')
 		.replace(/^-+|-+$/g, '');
 
-// Rich-text fields are stored as HTML; only their text content is searchable.
 export const stripTags = (html: string | null | undefined): string =>
 	(html ?? '').replace(/<[^>]*>/g, ' ');
 
@@ -34,7 +32,6 @@ export const matchesSearch = (query: string, fields: (string | null | undefined)
 	return normalizeText(fields.filter(Boolean).join(' ')).includes(normalizedQuery);
 };
 
-// True when the item carries none of the selected terms (an empty selection matches everything).
 export const matchesTerms = (selected: string[], terms: TaxonomyTerm[]): boolean =>
 	selected.length === 0 || terms.some((term) => selected.includes(term.slug));
 
@@ -53,9 +50,7 @@ export const filterUsedTerms = (
 		.filter((term) => usedSlugs.has(term.slug) || term.children.length > 0);
 };
 
-// Drops slugs coming from the URL that no longer exist, so counters stay
-// accurate. A sub-term is only kept while its parent is selected, since that is
-// the only state in which the UI offers it.
+// A sub-term is only kept while its parent is selected: the only state in which the UI offers it.
 export const keepKnownSlugs = (selected: string[], terms: TaxonomyFilterTerm[]): string[] =>
 	selected.filter((slug) => {
 		if (terms.some((term) => term.slug === slug)) return true;
@@ -83,7 +78,6 @@ export const expandSelection = (selected: string[], terms: TaxonomyFilterTerm[])
 	return [...slugs];
 };
 
-// A comma-separated URL parameter (`?programs=a,b`) as a list of slugs.
 export const parseListParam = (value: string | null): string[] =>
 	(value ?? '').split(',').filter(Boolean);
 

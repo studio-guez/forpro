@@ -1,5 +1,3 @@
-# Reusable cover image field. A single required image, uploaded to the `image`
-# file blueprint and displayed as a card in the panel.
 label:
   en: Cover image
   fr: Image de couverture

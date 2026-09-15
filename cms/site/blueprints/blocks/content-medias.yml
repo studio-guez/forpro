@@ -1,5 +1,3 @@
-# Event/project content block: a gallery of uploaded images and/or videos.
-# Serialized by Utils::getContentMediasBlockData() to `{medias: <media>[]}`.
 extends: blocks/base
 
 name:

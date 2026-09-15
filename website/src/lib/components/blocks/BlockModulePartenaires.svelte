@@ -12,8 +12,6 @@
 	const onDark = $derived(content.variant === 'default');
 	const background = $derived(onDark ? 'var(--color-hotpink)' : 'var(--color-white)');
 	const textColor = $derived(onDark ? 'var(--color-white)' : 'var(--color-hotpink)');
-	// Each logo sits on its own plate: white on the pink section, beige on the white one,
-	// so the plates never blend into the card background.
 	const plateClass = $derived(
 		`flex h-full items-center justify-center rounded-xl p-3 ${onDark ? 'bg-(--color-white)' : ''}`
 	);

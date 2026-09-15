@@ -23,13 +23,11 @@
 
 	let { page }: { page: ProjectsPage } = $props();
 
-	// Card grid: full-width section, 1 / sm:2 / lg:3 columns with a 1.5rem gutter.
 	const cardSizes = toSizes(cell(PAGE, { 0: 1, 640: 2, 1024: 3 }, 1.5));
 
 	const color = 'var(--color-orange)';
 	const noResultsText = 'Aucun projet ne correspond à votre recherche.';
 
-	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
 	let selectedPrograms = $state<string[]>(parseListParam(initialParams.get('programs')));
@@ -37,16 +35,10 @@
 
 	const hasSearch = $derived(search.trim() !== '');
 
-	// Only offer terms actually used by at least one project, in CMS order. The
-	// archive is paginated, so which terms it uses is answered by the CMS rather
-	// than counted here.
 	const programTerms = $derived(filterUsedTerms(page.programs, page.usedPrograms));
 
-	// Drop stale slugs coming from the URL so counters stay accurate.
 	const activePrograms = $derived(keepKnownSlugs(selectedPrograms, programTerms));
 
-	// Years are not a taxonomy and only one is browsed at a time, so they are
-	// picked in the archive band rather than tagged in the header.
 	// A project with no year is stored as 0, which is not a year to offer.
 	const yearOptions = $derived(
 		page.years
@@ -54,20 +46,11 @@
 			.map((year) => ({ value: String(year), label: String(year) }))
 	);
 
-	// A year coming from the URL that no project uses is dropped, so the counter
-	// stays accurate. A search is answered across the whole archive, so the year
-	// steps aside while one runs — the band it is picked in gives way to the
-	// results header, and a filter the visitor cannot see must not narrow them
-	// down. It comes back as soon as the search is cleared.
+	// The year steps aside while a search runs: its band gives way to the results header, and a filter the visitor cannot see must not narrow them.
 	const activeYear = $derived(
 		!hasSearch && yearOptions.some((option) => option.value === selectedYear) ? selectedYear : ''
 	);
 
-	// The archive is paginated by the CMS, so it is filtered there too — the page
-	// payload embeds the first page for the filters in the URL, so a shared or
-	// reloaded filtered link renders the right projects server-side. Filters
-	// travel raw, exactly as they appear in the URL: the CMS resolves a selected
-	// parent term into its sub-terms itself.
 	const archive = createPaginatedList<ProjetCard, ProjectsList>({
 		kind: 'projects',
 		path: () => page.path,
@@ -79,7 +62,6 @@
 		})
 	});
 
-	// Mirror search + filters into the query string without triggering navigation.
 	$effect(() => {
 		syncQueryString({
 			q: search,
@@ -132,10 +114,6 @@
 			/>
 		</div>
 	{:else}
-		<!-- The band the archive is browsed with, without a rule: the toolbar already
-		     parts it from the header. Only the count is announced. On narrow screens
-		     the heading stays for assistive tech only: the count line is all the band
-		     shows. -->
 		<div aria-live="polite">
 			<ListHeader {color} count={archive.total} nouns={['projet', 'projets']} rule={false}>
 				<h2 class="sr-only md:not-sr-only text-h2 text-(--list-color) lg:h-15">Tous les projets</h2>

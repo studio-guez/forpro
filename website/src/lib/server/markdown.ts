@@ -30,8 +30,7 @@ export function htmlToMarkdown(html: string | null | undefined, level = 3): stri
 
 	let text = html.replace(/\r/g, '');
 
-	// Lists first: their items must keep their inline marks, and the markers
-	// have to survive the paragraph pass below.
+	// Lists first: their markers have to survive the paragraph pass below.
 	text = text.replace(
 		/<ul[^>]*>([\s\S]*?)<\/ul>/gi,
 		(_, body: string) =>
@@ -47,8 +46,6 @@ export function htmlToMarkdown(html: string | null | undefined, level = 3): stri
 				.join('\n') + '\n\n'
 	);
 
-	// Headings are pushed below the level of the section they sit in, so the
-	// document keeps one descending outline.
 	text = text.replace(/<h([1-6])[^>]*>([\s\S]*?)<\/h\1>/gi, (_, depth: string, body: string) => {
 		const own = Math.min(level + Number(depth) - 1, 6);
 		return `\n\n${'#'.repeat(own)} ${inline(body)}\n\n`;
@@ -62,7 +59,6 @@ export function htmlToMarkdown(html: string | null | undefined, level = 3): stri
 
 const listItems = (html: string): string[] =>
 	[...html.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)]
-		// A list item wraps its text in a paragraph; the bullet is the block here.
 		.map((match) => inline(match[1].replace(/<\/?p[^>]*>/gi, ' ')))
 		.filter(Boolean);
 
@@ -172,9 +168,6 @@ function bodyBlocks(blocks: Block[] | undefined, origin: string): string | null 
 }
 
 function renderBlock(block: Block, origin: string): string | null {
-	// The payloads are template-shaped rather than typed per module here; the
-	// interfaces live in `$lib/interfaces/page` and every field is optional in
-	// practice, so each is read defensively.
 	const c = block.content as Record<string, never> & Record<string, unknown>;
 	const title = typeof c.title === 'string' && !c.hideTitle ? c.title : null;
 	const head = heading(2, title);
@@ -319,7 +312,6 @@ function renderBlock(block: Block, origin: string): string | null {
 				})
 			]);
 
-		// `fields/contentBody` (events and projects): the mirror of `EventProjectBody.svelte`.
 		case 'content-medias':
 			return bullets(c.medias, (media: CmsMedia) => (media.caption ? `- ${media.caption}` : null));
 
@@ -545,9 +537,6 @@ function renderTemplate(page: CmsContent, origin: string): string {
 					: null
 			]);
 
-		// The index pages: their whole point is the list they carry, so the
-		// Markdown carries it too — this is the page a reader is sent to when
-		// llms.txt declines to enumerate a collection.
 		case 'events':
 			return join([
 				page.upcomingEvents.length
@@ -648,8 +637,6 @@ function renderTemplate(page: CmsContent, origin: string): string {
 				page.mapUrl ? `- [Ouvrir dans Google Maps](${page.mapUrl})` : null
 			]);
 
-		// The resources are a random draw of 5, so the list is what this
-		// particular reader was shown, not the whole set of pages on offer.
 		case 'home':
 			return join([
 				heading(2, page.welcomeTitle),
@@ -671,7 +658,6 @@ function renderTemplate(page: CmsContent, origin: string): string {
 					: null
 			]);
 
-		// `page` and anything added later: the shared header plus the body.
 		default:
 			return join([
 				heading(2, page.introTitle),

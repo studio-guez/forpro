@@ -23,21 +23,13 @@ $json['parentPage'] = $parentPage ? [
     'path'  => $parentPage->virtualPath(),
 ] : null;
 
-// All terms in their CMS-defined order, so the frontend can order filters accordingly.
 $json['categories'] = Utils::getTaxonomyTerms('categories');
 
-// A mission closed to applications keeps its page but leaves the index, so it
-// is out before the filters and the counts are built from what is left.
 $missions = Utils::filterOpenToApplications($page->children()->listed());
 
-// Only the terms actually carried by a mission, so the frontend can offer
-// filters that lead somewhere without being shipped the whole list.
 $json['usedCategories'] = Utils::getUsedTaxonomySlugs($missions, 'categories');
 
-// First page of the list. The filters are read off the query string so a shared
-// or reloaded `?categories=…&sort=…` URL renders the missions it actually asks
-// for — the sort especially, since it decides which ones land in the page at
-// all. Later pages come from `/missions.json`.
+// Filters (the sort especially) come from the query string so a shared/reloaded URL renders the missions it asks for.
 $json['missions'] = Utils::getMissions(
     $missions,
     array_filter(explode(',', (string)(get('categories') ?? ''))),

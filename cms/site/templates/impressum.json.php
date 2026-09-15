@@ -8,7 +8,6 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'impressum');
 
-// Same `linkLabel` + `link` pair on partners and on credits.
 $resolveLink = fn(\Kirby\Cms\StructureObject $item) => $item->link()->isNotEmpty() ? [
     'label' => $item->linkLabel()->or($item->link())->value(),
     'url'   => $item->link()->value(),

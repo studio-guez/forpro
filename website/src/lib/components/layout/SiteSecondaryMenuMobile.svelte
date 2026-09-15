@@ -15,8 +15,7 @@
 
 	let { header, onNavigate }: Props = $props();
 
-	// The component is created when the burger menu opens, so the accordion always
-	// starts collapsed without anything having to reset it.
+	// Created when the burger menu opens, so the accordion always starts collapsed.
 	let openColumns = $state<number[]>([]);
 
 	const toggleColumn = (index: number) => {

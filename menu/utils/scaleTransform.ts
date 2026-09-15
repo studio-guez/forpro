@@ -2,7 +2,6 @@ export function scaleTransform({elementToScale, elementForSize}: {
     elementToScale: HTMLElement,
     elementForSize: HTMLElement
 }) {
-    //prevent scale transformation
     elementToScale.style.transform = ""
 
     const sizeReferencePadding = 5;

@@ -4,7 +4,6 @@
       Menu du jour
     </k-header>
 
-    <!-- Image slider écran d'entrée -->
     <k-headline
       class="k-menu-du-jour__title"
       tag="h2"
@@ -129,7 +128,6 @@
       Aucun élément pour le FoodCourt
     </k-empty>
 
-    <!-- FoodLab -->
     <k-headline
       class="k-menu-du-jour__title"
       tag="h2"
@@ -195,7 +193,6 @@
       Aucun élément pour le FoodLab
     </k-empty>
 
-    <!-- Texte writer field -->
     <k-headline
       class="k-menu-du-jour__subtitle"
       tag="h3"

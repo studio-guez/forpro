@@ -10,7 +10,6 @@
 
 	let { page }: { page: InfosPratiquesPage } = $props();
 
-	// The FoodLab card and the map each fill the right half of their two-column plate.
 	const halfPlateSizes = toSizes(cell(CARD_SMALL, { 0: 1, 1024: 2 }, 1.5));
 
 	const MAP_LINK_LABEL = 'Ouvrir dans Google Maps';
@@ -20,7 +19,6 @@
 		!!(page.foodlabOpeningHoursTitle || page.foodlabImage || page.foodlabCta)
 	);
 	const hasAccess = $derived(!!(page.accessContent || page.mapImage || page.mapUrl));
-	// Without a map image the Google Maps link falls back to a plain CTA on the plate.
 	const mapCta: PageCta | null = $derived(
 		page.mapUrl
 			? { label: MAP_LINK_LABEL, url: page.mapUrl, icon: 'arrow', target: '_blank' }
@@ -39,8 +37,6 @@
 				: undefined}
 		class="lg:px-9"
 	>
-		<!-- Same two halves as the access plate below, copy inset on the left, so the FoodLab
-			 card starts where the map starts; unlike the map it runs to the plate's outer edge. -->
 		<div class="grid lg:grid-cols-2 gap-y-9 gap-x-6 items-stretch text-blue">
 			{#if hasHours}
 				<div class="px-5 lg:pl-15 xl:pl-30 lg:pr-8 lg:py-12">
@@ -66,7 +62,6 @@
 								sizes={halfPlateSizes}
 								class="absolute inset-0 w-full h-full object-cover"
 							/>
-							<!-- Keeps the white copy readable on a light photo. -->
 							<div
 								aria-hidden="true"
 								class="absolute inset-0 bg-linear-to-b from-black/30 via-black/0 to-black/30"
@@ -89,8 +84,6 @@
 {/if}
 
 {#if hasAccess}
-	<!-- Not `CardSmall2Cols`: the copy keeps the regular `px-card` inset (aligned with the
-		 hours copy above) while the map is padded like a small card, flush with the plate. -->
 	<section class="lg:px-9" aria-labelledby="access-title">
 		<div class="bg-blue text-white rounded-3xl overflow-hidden grid lg:grid-cols-2 gap-6">
 			<div class="px-5 lg:pl-15 xl:pl-30 lg:pr-8 pt-6 pb-9 lg:py-12">
@@ -122,7 +115,6 @@
 									sizes={halfPlateSizes}
 									class="absolute inset-0 w-full h-full object-cover"
 								/>
-								<!-- Drawn like `CtaLink`, but as a span: the whole picture is the link. -->
 								<span
 									aria-hidden="true"
 									class="{CTA_BASE} {ctaSizeClasses.md} absolute right-4 bottom-4 text-blue border-blue group-hover:bg-blue group-hover:text-white"

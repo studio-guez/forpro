@@ -6,14 +6,7 @@
 
 	let { schemas }: Props = $props();
 
-	// A single node is emitted on its own, several as an array: both are valid
-	// JSON-LD, and one script tag per page keeps the graph together.
-	//
-	// The payload only becomes a script through `{@html}`, so every opening
-	// angle bracket it carries is escaped: a CMS string holding a closing script
-	// tag would otherwise end the tag early. The brackets of the tag itself are
-	// written as `\u003c` for the mirror reason — spelled out, a closing script
-	// tag here would end this component's own script block.
+	// Angle brackets are escaped: a CMS string holding a closing script tag would otherwise end the tag early (the tag's own brackets too, or they would end this component's script block).
 	const tag = $derived.by(() => {
 		if (schemas.length === 0) return '';
 

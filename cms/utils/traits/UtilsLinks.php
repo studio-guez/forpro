@@ -82,9 +82,7 @@ trait UtilsLinks
      */
     static function telHref(\Kirby\Content\Field $field): ?string
     {
-        // "+41 (0) 21 ..." — the parenthesised trunk prefix is only for national
-        // dialling and must be dropped, not just stripped of its parentheses.
-        // Only after a country code: without one the 0 is part of the number.
+        // "+41 (0) 21…": the parenthesised trunk prefix is dropped entirely, but only after a country code.
         $raw   = preg_replace('/(\+\s*\d[\d\s.-]*)\(\s*0\s*\)/', '$1', (string)$field->value());
         $phone = preg_replace('/[^0-9+]/', '', $raw);
         // tel: URIs allow a single leading "+" only

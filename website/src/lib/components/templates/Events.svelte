@@ -35,13 +35,11 @@
 
 	let { page }: { page: EventsPage } = $props();
 
-	// Card grid: full-width section, 1 / sm:2 / lg:3 columns with a 1.5rem gutter.
 	const cardSizes = toSizes(cell(PAGE, { 0: 1, 640: 2, 1024: 3 }, 1.5));
 
 	const color = 'var(--color-blue)';
 	const noResultsText = 'Aucun événement à venir ne correspond à votre recherche.';
 
-	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
 	let selectedPublics = $state<string[]>(parseListParam(initialParams.get('publics')));
@@ -49,16 +47,10 @@
 	let pastSearch = $state(initialParams.get('pastQ') ?? '');
 	let selectedMonth = $state(initialParams.get('month') ?? '');
 
-	// Every upcoming event is listed at once by default; the toggle swaps to
-	// browsing them one month at a time. Mirrored into the URL so the month
-	// view can be shared too.
 	type UpcomingView = 'month' | 'all';
 	let upcomingView = $state<UpcomingView>(initialParams.get('view') === 'month' ? 'month' : 'all');
 
-	// The month view is only offered from the toolbar's breakpoint up: below it
-	// there is no toggle and every upcoming event is listed. The choice is kept,
-	// so it comes back with the room for it. The server assumes a wide screen,
-	// so a shared `?view=month` link still renders its month server-side.
+	// The month view only exists from the toolbar breakpoint up, but the server assumes a wide screen so a shared `?view=month` link renders server-side.
 	const isWide = new MediaQuery('(width >= 48rem)', true);
 	const showAllUpcoming = $derived(!isWide.current || upcomingView === 'all');
 
@@ -66,31 +58,22 @@
 		upcomingView = upcomingView === 'all' ? 'month' : 'all';
 	};
 
-	// The toggle is a smaller pill than the CTAs, but shares their outline and hover.
 	const viewToggleClasses = `${CTA_BASE} ${ctaColorClasses(false)} text-sm gap-2 px-3.5 h-10 border-3 shrink-0`;
 
-	// Events are only filtered by public; only offer terms actually used by at
-	// least one event, in CMS order. The past archive is paginated, so which
-	// terms it uses is answered by the CMS rather than counted here.
 	const publicTerms = $derived(filterUsedTerms(page.publics, page.usedPublics));
 
-	// Drop stale slugs coming from the URL so counters stay accurate.
 	const activePublics = $derived(keepKnownSlugs(selectedPublics, publicTerms));
 
-	// Selecting a parent term also matches events tagged with one of its sub-terms.
-	// Only the upcoming list needs this: the past archive is filtered by the CMS,
-	// which resolves the raw selection itself.
+	// Upcoming only: the past archive is filtered by the CMS, which resolves the raw selection itself.
 	const publicFilter = $derived(expandSelection(activePublics, publicTerms));
 
-	// Titles only: a search is a way to find an event by name, not a way to
-	// dig through descriptions or the terms the dropdown already filters on.
+	// Titles only, by design: descriptions and the dropdown's terms are not searched.
 	const matchesFilters = (event: AgendaEventCard): boolean =>
 		matchesTerms(publicFilter, event.publics) && matchesSearch(search, [event.title]);
 
 	const upcoming = $derived(page.upcomingEvents.filter(matchesFilters));
 
-	// Months already over are never offered, so an event that started in February
-	// and runs until October is only listed from the current month on.
+	// Months already over are never offered: a February–October event is listed from the current month on.
 	const currentMonth = monthKeyOf(new Date());
 
 	/** Every month an upcoming event runs in, from the current one at the earliest. */
@@ -102,10 +85,7 @@
 		return monthKeysBetween(start < currentMonth ? currentMonth : start, end < start ? start : end);
 	};
 
-	// Upcoming events are paginated one month at a time, soonest month first; an
-	// event spanning several months shows up under each of them. The selection
-	// falls back to the first month, so a filter change that drops the current
-	// month lands on a non-empty page.
+	// Falls back to the first month so a filter change that drops the current month lands on a non-empty page.
 	const upcomingMonths = $derived(
 		[...new Set(upcoming.flatMap(eventMonths))]
 			.sort()
@@ -122,9 +102,6 @@
 		upcoming.filter((event) => eventMonths(event).includes(upcomingMonth?.value ?? ''))
 	);
 
-	// Direction of the last month change. Both labels travel a full box width in
-	// lockstep, so the leaving month looks pushed out by the arriving one. Motion
-	// is dropped entirely when the visitor asked for it.
 	let slideDirection = $state(1);
 	const monthSlideDuration = $derived(prefersReducedMotion.current ? 0 : 500);
 	const monthEnter = $derived({
@@ -144,12 +121,7 @@
 		selectedUpcomingMonth = month.value;
 	};
 
-	// The past archive is paginated by the CMS, so it is filtered there too — the
-	// page payload embeds the first page for the filters in the URL, so a shared
-	// or reloaded filtered link renders the right archive server-side. Filters
-	// travel raw, exactly as they appear in the URL. The agenda's search is not
-	// one of them: it only answers across upcoming events. The archive has its
-	// own, `pastQ` in the URL, sent to the archive route as its `q`.
+	// The archive search is `pastQ` in the URL, sent to the archive route as its `q`; the agenda's `q` is not an archive filter.
 	const archive = createPaginatedList<AgendaEventCard, PastEventsList>({
 		kind: 'past-events',
 		path: () => page.path,
@@ -161,12 +133,7 @@
 		})
 	});
 
-	// Past events are browsed month by month, most recent month first. The CMS
-	// lists the months of the current match set whatever month is selected, so
-	// the dropdown keeps offering the ones the selection excludes.
-	//
-	// Annotated because the months close a type cycle: they come out of the
-	// archive, which is filtered by `activeMonth`, which is picked out of them.
+	// Annotated: the months close a type cycle (archive → activeMonth → months).
 	const pastMonths: { value: string; label: string }[] = $derived(
 		archive.current.months.map((value) => ({ value, label: monthKeyLabel(value) }))
 	);
@@ -176,13 +143,9 @@
 
 	const hasSearch = $derived(search.trim() !== '');
 
-	// A search is answered across every upcoming event: the month browser steps
-	// aside for the results header, and every matching event is listed at once —
-	// as it is when the visitor asked for the whole list.
 	const visibleUpcoming = $derived(hasSearch || showAllUpcoming ? upcoming : upcomingForMonth);
 	const announcedCount = $derived(visibleUpcoming.length);
 
-	// Mirror search + filters into the query string without triggering navigation.
 	$effect(() => {
 		syncQueryString({
 			q: search,
@@ -194,8 +157,6 @@
 	});
 </script>
 
-<!-- Wide screens only: the wrapper drops out of the layout from the breakpoint up
-     and takes the toggle with it below. -->
 {#snippet viewToggle()}
 	<div class="hidden md:contents">
 		<button
@@ -252,9 +213,6 @@
 			Aucun événement à venir pour le moment.
 		</p>
 	{:else if showAllUpcoming}
-		<!-- The first band has no rule: the toolbar already parts it from the header.
-		     On narrow screens the heading stays for assistive tech only: the count
-		     line is all the band shows. -->
 		<ListHeader {color} count={upcoming.length} nouns={['événement', 'événements']} rule={false}>
 			<div class="flex flex-wrap items-center justify-between gap-4">
 				<h2 class="sr-only md:not-sr-only text-h2 text-(--list-color) lg:h-15">
@@ -281,10 +239,7 @@
 					>
 						<IconChevron class="w-6.25 h-6.25 rotate-90" />
 					</button>
-					<!-- Every month is laid out in the same cell, so the box keeps the width of the
-					     longest label, the arrows never move and each label stays centred whatever
-					     its length. The two labels in flight travel a full box width in lockstep,
-					     which is what makes the leaving one look pushed out by the arriving one. -->
+					<!-- Every month shares the same cell so the box keeps the width of the longest label and the arrows never move. -->
 					<div class="grid overflow-hidden">
 						{#each upcomingMonths as month (month.value)}
 							<span
@@ -339,8 +294,6 @@
 			pillClass="bg-blue text-white"
 		/>
 
-		<!-- The archive is browsed with its own toolbar: the month at the start,
-		     its own search at the end. -->
 		<ListToolbar {color} class="mt-12 lg:mt-18">
 			<SelectDropdown
 				bind:value={selectedMonth}

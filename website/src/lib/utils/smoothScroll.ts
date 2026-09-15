@@ -10,9 +10,7 @@ let lenis: Lenis | null = null;
  * Returns its teardown, so it can be returned straight from `onMount`.
  */
 export function initSmoothScroll(): () => void {
-	// Hijacking the scroller is exactly the motion `prefers-reduced-motion` is about, so the
-	// native scroller is left alone when it is set. `html { scroll-padding-top }` keeps anchor
-	// targets clear of the fixed header in that case, standing in for Lenis' anchor offset.
+	// With `prefers-reduced-motion` the native scroller is kept; `html { scroll-padding-top }` then stands in for Lenis' anchor offset.
 	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 	const sync = () => {

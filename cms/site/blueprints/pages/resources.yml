@@ -6,8 +6,7 @@ extends: pages/core-page
 
 icon: box
 
-# Content library only: the page has no frontend route, its entries are pulled
-# by the `module-resources` block.
+# No frontend route: entries are pulled by the `module-resources` block.
 options:
   preview: false
 

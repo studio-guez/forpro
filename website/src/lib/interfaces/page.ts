@@ -19,8 +19,6 @@ export interface Block {
 	readonly content: Record<string, unknown>;
 }
 
-// A downloadable file (PDF offer, ZIP of press resources). Documents are served
-// as-is by the CMS, so they only expose what a download link needs.
 export interface CmsDocument {
 	readonly url: string;
 	readonly filename: string;
@@ -80,8 +78,6 @@ export interface CmsVideo {
 
 export type CmsMedia = (CmsImage & { readonly type: 'image' }) | CmsVideo;
 
-// A YouTube embed resolved by the CMS. `type` distinguishes a regular 16:9
-// video from a vertical Short; `embedUrl` is the privacy-friendly nocookie URL.
 export interface YoutubeEmbedData {
 	readonly id: string;
 	readonly type: 'video' | 'short';

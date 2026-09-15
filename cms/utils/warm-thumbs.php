@@ -62,8 +62,7 @@ foreach ($parents as $parent) {
 
         $scanned++;
 
-        // Printed before the work, not after: an oversized original can hit
-        // PHP's memory limit, which kills the process without a catchable error.
+        // Printed before the work: an oversized original can hit the memory limit, which kills the process uncatchably.
         echo str_pad((string) $scanned, 5, ' ', STR_PAD_LEFT) . "  {$file->id()}";
 
         if ($dryRun) {
