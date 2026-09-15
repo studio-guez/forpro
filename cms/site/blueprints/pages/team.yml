@@ -82,7 +82,6 @@ tabs:
                   en: Group title
                   fr: Titre du groupe
                 type: text
-                required: true
               members:
                 label:
                   en: Members
@@ -105,17 +104,19 @@ tabs:
                     type: text
                     required: true
                   status:
-                    required: true
                     label:
                       en: Status
                       fr: Statut
                     type: select
-                    default: employe
+                    default: other
+                    required: true
                     options:
-                      - value: apprenti
+                      - value: other
+                        text: { en: Other, fr: Autre }
+                      - value: apprentice
                         text: { en: Apprentice, fr: Apprenti·e }
-                      - value: employe
-                        text: { en: Employee, fr: Employé·e }
+                      - value: teacher
+                        text: { en: Teacher, fr: Enseignant·e }
                   role:
                     required: true
                     label:
