@@ -83,6 +83,7 @@
 
 	const cardSizes = '(min-width: 1024px) 22rem, 16rem';
 	const deckId = 'home-resources-deck';
+	const descId = (i: number) => `${deckId}-desc-${i}`;
 </script>
 
 {#snippet arrow(direction: 'prev' | 'next', extraClass: string)}
@@ -129,7 +130,12 @@
 					aria-current={d === 0 ? 'true' : undefined}
 					onfocusin={(event) => onCardFocus(event, i)}
 				>
-					<HomeResourceCard {resource} index={pageRank[i]} sizes={cardSizes} />
+					<HomeResourceCard
+						{resource}
+						index={pageRank[i]}
+						sizes={cardSizes}
+						describedBy={resource.shortDesc ? descId(i) : undefined}
+					/>
 				</li>
 			{/each}
 		</ul>
@@ -140,7 +146,12 @@
 		{/if}
 	</div>
 
-	<!-- aria-live is muted while the deck spins on its own; the descriptions share one grid cell so the height never jumps. -->
+	<!--
+		Each description is the accessible description of its card (aria-describedby), even while hidden.
+		The live region is a bonus for arrow-button users: it is muted while the deck spins on its own and
+		names the card so the announced text is never an orphan. All descriptions share one grid cell so
+		the height never jumps.
+	-->
 	<div aria-live={spinning ? 'off' : 'polite'} class="mt-6 lg:mt-9 px-card grid">
 		{#each resources as resource, i (i)}
 			{#if resource.shortDesc}
@@ -149,7 +160,8 @@
 					class:opacity-0={i !== active}
 					inert={i !== active}
 				>
-					{@html resource.shortDesc}
+					<span class="sr-only">{resource.title}&nbsp;: </span>
+					<div id={descId(i)}>{@html resource.shortDesc}</div>
 				</div>
 			{/if}
 		{/each}

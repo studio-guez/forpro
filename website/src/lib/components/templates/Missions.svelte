@@ -88,7 +88,7 @@
 			{/each}
 		</ul>
 	{:else}
-		<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12 mt-12">
+		<p class="text-body-1 text-black text-center border-t border-black pt-12 mt-12">
 			{noResultsText}
 		</p>
 	{/if}

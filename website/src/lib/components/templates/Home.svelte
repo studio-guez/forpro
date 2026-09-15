@@ -8,15 +8,18 @@
 </script>
 
 {#if page.lottie}
-	<div class="px-base h-[calc(100vh-6.75rem)] flex items-center justify-center">
-		<LottiePlayer file={page.lottie} alt={page.lottie.alt} />
+
+	<div class="px-base">
+		<div class="min-h-[calc(100vh-6.75rem)] flex items-center justify-center rounded-3xl" style="background-image: linear-gradient(180deg, rgba(148, 175, 255, 0.20) 0%, rgba(166, 189, 255, 0.00) 100%);">
+			<LottiePlayer file={page.lottie} alt={page.lottie.alt} />
+		</div>
 	</div>
 {/if}
 
-<section class="px-card mt-12 lg:mt-24" aria-labelledby="home-welcome-title">
+<section class="px-card" aria-labelledby="home-welcome-title">
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-25">
 		<h1 id="home-welcome-title" class="text-h2 max-lg:text-center">{page.welcomeTitle}</h1>
-		<div class="prose text-highlight text-balance text-grey-dark max-lg:text-center">
+		<div class="prose text-highlight text-balance text-black max-lg:text-center">
 			{@html page.welcomeShortDesc}
 		</div>
 	</div>
