@@ -67,7 +67,7 @@
 				{/if}
 			</h2>
 			<div class="lg:col-span-2">
-				<div class="prose max-lg:text-center text-grey-dark">
+				<div class="prose max-lg:text-center">
 					{@html text}
 				</div>
 				{#if hasCta}
@@ -90,7 +90,7 @@
 				{title}
 			{/if}
 		</h2>
-		<div class="prose text-center text-grey-dark">
+		<div class="prose text-center">
 			{@html text}
 		</div>
 		{#if hasCta}
