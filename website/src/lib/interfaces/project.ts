@@ -18,8 +18,6 @@ export interface ProjectPage extends EventProjectBase {
 /** One page of the projects archive, from `/api/list/projects`. */
 export type ProjectsList = PaginatedList<ProjetCard>;
 
-// The projects index page (projects.json.php): the filters, and the first
-// unfiltered page of the paginated archive.
 export interface ProjectsPage {
 	readonly template: 'projects';
 	readonly title: string;

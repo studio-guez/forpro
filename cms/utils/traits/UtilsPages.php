@@ -166,12 +166,9 @@ trait UtilsPages
         int $offset = 0,
         int $limit = 10
     ): array {
-        // `splitEventsByDate()` already sorts past events most recent first and
-        // drops the ones without a start date.
         $past = self::splitEventsByDate($events)['past'];
 
-        // Raw selection in, resolved here: `resolveTaxonomySelection()` is the
-        // mirror of the frontend's own rule, so a URL means the same on both ends.
+        // resolveTaxonomySelection() mirrors the frontend rule, so a URL means the same on both ends.
         $past = self::filterPagesByTaxonomy(
             $past,
             'publics',
@@ -181,13 +178,11 @@ trait UtilsPages
 
         $matchTotal = $past->count();
 
-        // Titles only: a search is a way to find an event by name, not a way to
-        // dig through descriptions or the terms the dropdown already filters on.
+        // Titles only, by design: descriptions and the dropdown's terms are not searched.
         $past = $past->filter(
             fn($event) => self::matchesSearchFields($query, [$event->title()->value()])
         );
 
-        // The month key is needed twice below, so it is resolved once per event.
         $matched = [];
         foreach ($past as $event) {
             $matched[] = [
@@ -198,10 +193,7 @@ trait UtilsPages
 
         $months = array_values(array_unique(array_filter(array_column($matched, 'month'))));
 
-        // A month the current match set does not offer is ignored rather than
-        // matched, exactly as the frontend drops it from the dropdown: a stale
-        // `?month=` then widens the archive instead of emptying it, and both
-        // ends agree on what the URL means.
+        // An unknown ?month= is ignored, not matched, like the frontend dropdown: a stale one widens the archive instead of emptying it.
         $month = in_array($month, $months, true) ? $month : '';
 
         $forMonth = $month === ''
@@ -238,8 +230,7 @@ trait UtilsPages
         int $offset = 0,
         int $limit = 12
     ): array {
-        // Raw selection in, resolved here: `resolveTaxonomySelection()` is the
-        // mirror of the frontend's own rule, so a URL means the same on both ends.
+        // resolveTaxonomySelection() mirrors the frontend rule, so a URL means the same on both ends.
         $projects = self::filterPagesByTaxonomy(
             $projects,
             'programs',
@@ -253,8 +244,7 @@ trait UtilsPages
             );
         }
 
-        // Titles only: a search is a way to find a project by name, not a way to
-        // dig through descriptions or the terms the dropdown already filters on.
+        // Titles only, by design: descriptions and the dropdown's terms are not searched.
         $projects = $projects->filter(
             fn($project) => self::matchesSearchFields($query, [$project->title()->value()])
         );
@@ -309,11 +299,9 @@ trait UtilsPages
         int $offset = 0,
         int $limit = 24
     ): array {
-        // Closed missions never reach the index, whichever page of it is asked for.
         $missions = self::filterOpenToApplications($missions);
 
-        // Raw selection in, resolved here: `resolveTaxonomySelection()` is the
-        // mirror of the frontend's own rule, so a URL means the same on both ends.
+        // resolveTaxonomySelection() mirrors the frontend rule, so a URL means the same on both ends.
         $missions = self::filterPagesByTaxonomy(
             $missions,
             'categories',
@@ -321,7 +309,6 @@ trait UtilsPages
             false
         );
 
-        // Sorting reads two fields per comparison, so both are resolved once.
         // The mission `date` is free text, so the order comes from `publishedDate`.
         $items = $missions->values(fn($mission) => [
             'page'  => $mission,
@@ -333,8 +320,7 @@ trait UtilsPages
             $sort = self::MISSION_SORT_DEFAULT;
         }
 
-        // `localeCompare(…, 'fr')` on the frontend: accented titles have to
-        // sort where a French reader expects them, not by code point.
+        // Matches the frontend's localeCompare(…, 'fr'): accented titles sort as a French reader expects, not by code point.
         $collator = class_exists('Collator') ? new \Collator('fr_FR') : null;
 
         usort($items, match ($sort) {
@@ -483,7 +469,6 @@ trait UtilsPages
             'subtitle'      => $page->subtitle()->value(),
             'shortDesc'     => $page->shortDesc()->value(),
             'cover'         => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
-            // `fields/contentBody`: medias / video / text / links blocks, freely ordered.
             'body'          => self::getBodyBlocks($page->body()),
             'parentPage'    => self::getParentPageData($page),
             'seo'           => self::getSeoDataFromPage($page),

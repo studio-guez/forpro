@@ -55,14 +55,11 @@
 </div>
 {/if}
 
-<!-- Navbar -->
 <nav class="px-3 pb-6 pt-3 lg:px-6">
 	<div class="grid grid-cols-2">
-		<!-- Title -->
 		<div class="font-regular uppercase text-secondary">
 			{@html data.page.menu.baseline}
 		</div>
-		<!-- Button -->
 		<div class="flex justify-end">
 			<button
 				on:click={handleMenuClick}
@@ -150,12 +147,9 @@
 	</div>
 {/if}
 
-<!-- Hero -->
 <section class="relative block h-[60vh] w-full px-3 py-6 pt-5 lg:h-auto lg:px-6">
 	<div class="flex h-full items-start justify-center">
-		<!-- Grid -->
 		<div class="h-full w-full grid-cols-12 grid-rows-2 lg:grid">
-			<!-- Image CTA -->
 			<div
 				class="relative z-10 col-span-7 hidden aspect-video w-full rounded-2xl lg:block"
 				style:background-image="url({data.page.hero.pictureURL1})"
@@ -173,21 +167,18 @@
 				{/if}
 			</div>
 
-			<!-- Logo Rounded -->
 			<div class="col-span-5 -mt-28 hidden items-center justify-center lg:flex">
 				<a href="https://for-pro.ch" target="_blank">
 					<img class="w-40" src={data.page.hero.pictureURL2} alt="imaginé par forpro" />
 				</a>
 			</div>
 
-			<!-- Text -->
 			<div
 				class="col-span-5 -mt-8 hidden items-center justify-center text-center text-2xl uppercase text-primary lg:flex"
 			>
 				{@html data.page.hero.text}
 			</div>
 
-			<!-- Image CTA -->
 			<div
 				class="s-button-resa relative col-span-7 -mt-20 hidden aspect-video w-full rounded-2xl lg:block"
 				style:background-image="url({data.page.hero.pictureURL3})"
@@ -206,7 +197,6 @@
 			</div>
 		</div>
 
-		<!-- Badge overlay !-->
 		<img
 			class="absolute z-40 -mt-6 hidden h-[80%] lg:block lg:h-[90%]"
 			src="/hero_overlay.svg"
@@ -261,12 +251,9 @@
 </section>
 
 <section id="lefood" class="relative mt-24 w-full lg:mt-20">
-	<!-- Background -->
 	<img class="absolute -left-10 -top-10 z-10 lg:-left-10 lg:-top-10 lg:w-3/5" src="/bg_2_1.svg" alt="" />
 
-	<!-- Container -->
 	<div class="grid h-full w-full grid-cols-1 px-3 lg:grid-cols-12 lg:px-0">
-		<!-- Title -->
 		<div
 			class="z-30 flex items-center justify-center text-5xl uppercase text-white lg:col-span-12 lg:text-6xl"
 		>
@@ -283,7 +270,6 @@
 				style:background-size="cover"
 			></div>
 
-			<!-- Text -->
 			<div class="font-regular z-20 col-span-1 flex flex-col pt-0 text-primary lg:pt-10">
 				<div class="prose-sm mt-3 leading-4 lg:mt-10 lg:pr-10">
 					{@html data.page.food.text}
@@ -302,7 +288,6 @@
 				</div>
 			</div>
 
-			<!-- Image -->
 			<div
 				class="z-20 col-span-1 hidden aspect-square rounded-2xl lg:block"
 				style:background-image="url({data.page.food.pictureURL})"
@@ -314,9 +299,7 @@
 </section>
 
 <section id="lelab" class="relative mt-16 min-h-72 w-full bg-background pb-10 lg:mt-32 lg:pb-20 overflow-hidden">
-	<!-- Container -->
 	<div class="grid h-full w-full grid-cols-1 space-y-5 lg:grid-cols-12 lg:space-y-0">
-		<!-- Title -->
 		<div
 			class="z-30 flex items-center justify-center text-5xl uppercase text-white lg:relative lg:top-4 lg:col-span-12 lg:text-6xl"
 		>
@@ -324,7 +307,6 @@
 		</div>
 
 		<div class="mx-5 grid grid-cols-1 lg:col-span-full lg:mx-20 lg:-mt-10 lg:grid-cols-2">
-			<!-- Image -->
 			<div
 				class="z-20 col-span-1 aspect-square rounded-2xl"
 				style:background-image="url({data.page.lab.pictureURL})"
@@ -332,7 +314,6 @@
 				style:background-size="cover"
 			></div>
 
-			<!-- Text -->
 			<div class="font-regular relative z-20 col-span-1 flex flex-col text-primary lg:pt-10">
 				<div class="prose-sm mt-10 leading-4 lg:pl-10">
 					{@html data.page.lab.text}
@@ -353,7 +334,6 @@
 		</div>
 	</div>
 
-	<!-- Background -->
 	<img
 		class="absolute -right-20 bottom-20 z-10 lg:-bottom-52 lg:-right-52 lg:w-3/5"
 		src="/bg_3_1.svg"
@@ -371,9 +351,7 @@
 </section>
 
 <section id="equipe-formation" class="relative w-full rounded-3xl bg-primary pb-10 lg:pb-20">
-	<!-- Container -->
 	<div class="h-full w-full lg:grid lg:grid-cols-12">
-		<!-- Title -->
 		<div
 			class="z-30 flex items-center justify-center pt-10 text-center text-3xl uppercase text-white lg:col-span-12 lg:mt-20 lg:pt-0 lg:text-6xl"
 		>
@@ -381,7 +359,6 @@
 		</div>
 
 		<div class="mx-5 grid grid-cols-1 lg:col-span-full lg:mx-20 lg:-mt-8 lg:grid-cols-2">
-			<!-- Text -->
 			<div class="font-regular z-20 col-span-1 pt-12 text-center text-secondary lg:text-left">
 				<div class="prose-sm mt-2 leading-4 lg:pr-10">
 					<span>{@html data.page.formation.text}</span>
@@ -399,7 +376,6 @@
 				{/if}
 			</div>
 
-			<!-- Image -->
 			<div
 				class="z-40 col-span-1 mt-10 h-56 rounded-2xl brightness-90 lg:z-20 lg:mt-0 lg:h-auto"
 				style:background-image="url({data.page.formation.pictureURL})"
@@ -414,16 +390,13 @@
 	id="foodcourt-popup-cafe"
 	class="relative mt-20 w-full bg-background px-3 pb-5 lg:px-0 lg:pb-20 overflow-hidden"
 >
-	<!-- Container -->
 	<div class="relative z-20 h-full w-full lg:grid lg:grid-cols-12">
-		<!-- Title -->
 		<div
 			class="z-30 col-span-12 mx-auto flex items-center justify-center text-center text-3xl text-primary lg:text-6xl"
 		>
 			<span>{data.page.univers.title}</span>
 		</div>
 
-		<!-- Description -->
 		<div
 			class="z-30 col-span-12 mx-auto mt-10 flex items-center justify-center text-center text-[0.875rem] text-primary lg:w-1/2 lg:text-xs"
 		>
@@ -436,7 +409,6 @@
 			<span class="text-xl font-bold">{data.page.univers.blogTitle1}</span>
 		</div>
 
-		<!-- Image -->
 		<div
 			class="relative z-30 col-span-1 mx-auto mt-5 grid min-h-0 grid-cols-12 items-center justify-center rounded-3xl lg:col-span-12"
 		>
@@ -461,12 +433,10 @@
 		</div>
 	</div>
 
-	<!-- Background -->
 	<img class="absolute -right-32 top-20 z-10 w-[50em] lg:-right-64 lg:top-0" src="/bg_5_1.svg" alt="" />
 </section>
 
 <section class="relative mt-10 bg-background px-5 pb-20 lg:px-0">
-	<!-- Container -->
 	<div class="relative z-20 lg:grid lg:grid-cols-12">
 		<div
 			class="z-30 col-span-12 mx-auto mt-10 flex items-center justify-center text-center text-primary"
@@ -474,7 +444,6 @@
 			<span class="text-xl font-bold">{data.page.univers.blogTitle2}</span>
 		</div>
 
-		<!-- Image -->
 		<div
 			class="relative z-30 col-span-1 mx-auto mt-5 grid min-h-0 grid-cols-12 items-center justify-center rounded-3xl lg:col-span-12"
 		>
@@ -492,7 +461,6 @@
 			</a>
 		</div>
 
-		<!-- Description -->
 		<div
 			class="col-span-1 mx-auto mt-5 grid grid-cols-1 gap-5 text-primary lg:col-span-10 lg:col-start-3 lg:mt-10 lg:grid-cols-2"
 		>
@@ -500,7 +468,6 @@
 		</div>
 	</div>
 
-	<!-- Background -->
 	<img
 		class="z-1 absolute left-[-6rem] top-[-0rem] lg:left-[-23rem] lg:top-[-5rem] lg:w-[175em]"
 		src="/bg_5_2.svg"
@@ -509,9 +476,7 @@
 </section>
 
 <section id="engagements" class="relative w-full rounded-3xl bg-primary pb-20">
-	<!-- Container -->
 	<div class="grid h-full w-full lg:px-36">
-		<!-- Title -->
 		<div
 			class="z-30 mt-20 items-center justify-center text-center text-3xl uppercase text-white lg:text-6xl"
 		>
@@ -519,7 +484,6 @@
 		</div>
 
 		<div class="-mt-8">
-			<!-- Text -->
 			<div class="font-regular z-20 pt-12 text-center text-white">
 				<div class="mt-2 px-5 lg:pr-10">
 					{@html data.page.values.text}

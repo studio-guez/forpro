@@ -8,7 +8,6 @@
 </script>
 
 {#if page.lottie}
-	<!-- The player hides itself from assistive tech unless the editor gave it an alt. -->
 	<div class="px-base">
 		<LottiePlayer file={page.lottie} alt={page.lottie.alt} />
 	</div>

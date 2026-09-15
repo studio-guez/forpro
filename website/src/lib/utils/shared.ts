@@ -1,6 +1,5 @@
 import type { TaxonomyTerm } from '$lib/interfaces/taxonomy';
 
-// Resolve a taxonomy term to a CSS color, falling back to teal when unset.
 export const termColor = (term: TaxonomyTerm): string =>
 	term.color ? `var(--color-${term.color})` : 'var(--color-teal)';
 
@@ -19,8 +18,7 @@ export const fetchFromAPI = async <T>(request: Request, errorMsg: string): Promi
 	try {
 		const response = await fetch(request);
 		if (!response.ok) {
-			// A 404 is an expected outcome (unknown slug / short link): let the
-			// caller decide what to do with `null` without polluting the logs.
+			// A 404 is expected (unknown slug / short link), so it is not logged.
 			if (response.status !== 404) {
 				handleError(
 					errorMsg,

@@ -1,5 +1,3 @@
-// Date helpers shared by the event pages, cards and listings.
-
 const longDateFormat = new Intl.DateTimeFormat('fr-CH', {
 	weekday: 'long',
 	day: 'numeric',

@@ -27,16 +27,11 @@
 
 	const page = $derived(data.page);
 
-	// The CMS resolves the Open Graph cascade (page -> parent -> site), but only
-	// over the fields an editor filled in: the meta title and description are the
-	// sensible fallbacks for the ones left empty.
 	const seo = $derived(page.seo);
 	const ogTitle = $derived(seo.ogTitle || seo.title);
 	const ogDescription = $derived(seo.ogDescription || seo.description);
 
-	// Markdown twin of this page, for readers that would rather not parse the
-	// HTML. The home page's canonical ends in a slash, where `.md` alone would
-	// make a dotfile path.
+	// The home canonical ends in a slash, where `.md` alone would make a dotfile path.
 	const markdownUrl = $derived(
 		seo.canonicalUrl.endsWith('/') ? `${seo.canonicalUrl}index.md` : `${seo.canonicalUrl}.md`
 	);
@@ -66,7 +61,6 @@
 		<link rel="alternate" type="text/markdown" href={markdownUrl} />
 	{/if}
 
-	<!-- Open Graph: what a link to this page looks like once it is shared. -->
 	<meta property="og:type" content={seo.ogType || 'website'} />
 	<meta property="og:title" content={ogTitle} />
 	{#if ogDescription}
@@ -85,16 +79,13 @@
 		<meta property="og:image" content={seo.ogImage} />
 	{/if}
 
-	<!-- Twitter/X reads the Open Graph tags, except for the card format and the
-		 image, which it wants under its own names. -->
+	<!-- Twitter/X reads the Open Graph tags except the card format and the image. -->
 	<meta name="twitter:card" content={seo.twitterCardType || 'summary_large_image'} />
 	{#if seo.ogImage}
 		<meta name="twitter:image" content={seo.ogImage} />
 	{/if}
 </svelte:head>
 
-<!-- WebPage, breadcrumb, and the entity this template is about (Event,
-	 JobPosting, FAQ, ...) — all assembled by the CMS. -->
 <JsonLd schemas={seo.schemas} />
 
 {#if page.template === 'basic-page'}

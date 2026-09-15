@@ -127,9 +127,7 @@ class Restaurant
 
         return [
             "latest" => static::form($latest)->toFormValues(),
-            // a draft is always a complete version, but merging keeps the form
-            // whole should a field ever be added to fields/restaurant.php
-            // while an editor has unsaved changes
+            // Merging keeps the form whole if a field is added to fields/restaurant.php while an editor has unsaved changes.
             "changes" => static::form(
                 $changes === null ? $latest : [...$latest, ...$changes]
             )->toFormValues(),
@@ -356,8 +354,7 @@ class Restaurant
             "info" => F::niceSize($path),
             "link" => $url,
             "url" => $url,
-            // what a media link field stores, kept relative so the content
-            // survives a change of host
+            // Relative so the content survives a change of host.
             "path" => "/" . static::MEDIA_PATH . "/" . $filename,
             "image" => [
                 "back" => "pattern",
@@ -369,8 +366,7 @@ class Restaurant
             "permissions" => ["delete" => false, "sort" => true],
             "sortable" => true,
             "type" => $isImage === true ? "image" : "document",
-            // what the file button of the textarea toolbar inserts; the path
-            // stays relative so the content survives a change of host
+            // Relative so the content survives a change of host.
             "dragText" => $isImage === true
                 ? "(image: /" . static::MEDIA_PATH . "/" . $filename . ")"
                 : "(link: /" . static::MEDIA_PATH . "/" . $filename .
@@ -440,10 +436,7 @@ class Restaurant
             );
         }
 
-        // the extension alone is not enough: a html document renamed to
-        // `.jpg` would otherwise be stored and served from this origin, so
-        // the detected content has to be of a type the extension stands for
-        // (`Mime::type()` also recognises svg files finfo reports as text)
+        // The sniffed type must match the extension, otherwise an html document renamed `.jpg` would be served from this origin.
         $mime = Mime::type($source, $extension);
 
         if (
@@ -475,8 +468,6 @@ class Restaurant
             throw new Exception(message: "Failed to write media file to disk.");
         }
 
-        // same downscale/CMYK handling the image-guard plugin applies to
-        // files uploaded through Kirby
         if ($extension !== "svg" && class_exists("ImageGuard") === true) {
             \ImageGuard::process($path);
         }
@@ -507,17 +498,13 @@ class Restaurant
             "Cache-Control" => "public, max-age=3600",
         ];
 
-        // the sandboxed CSP is only meant to neutralise SVGs (the one type
-        // here that can carry a script); applying it to every file breaks
-        // PDFs in Chrome, which refuses to render a PDF served with a
-        // sandbox CSP at all
+        // Sandbox CSP only for SVG: Chrome refuses to render a PDF served with a sandbox CSP.
         if ($extension === "svg") {
             $headers["Content-Security-Policy"] =
                 "default-src 'none'; style-src 'unsafe-inline'; sandbox";
         }
 
-        // the type is derived from the extension checked on upload rather
-        // than sniffed from the file, so nothing is ever served as html
+        // Type from the upload-checked extension, never sniffed, so nothing is ever served as html.
         return new Response(
             F::read($path),
             Mime::fromExtension($extension),
@@ -558,8 +545,7 @@ class Restaurant
             }
         );
 
-        // an editor may have unsaved changes open; the published menu must
-        // not be undone the next time they hit save
+        // The published menu must not be undone when an editor next saves their open draft.
         if (F::exists(static::changesFile()) === true) {
             static::modify(
                 static::changesFile(),

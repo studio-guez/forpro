@@ -6,8 +6,7 @@
 	let { class: className = '' }: Props = $props();
 </script>
 
-<!-- Only the top-left corner of the path falls inside the viewBox: the shape is meant to be
-	 pinned to a bottom-right corner and clipped by its container. -->
+<!-- Only the top-left corner of the path is inside the viewBox: the shape is meant to be pinned bottom-right and clipped. -->
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	width="222"

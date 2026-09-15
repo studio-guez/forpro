@@ -32,7 +32,6 @@ interface Options<R> {
  * from a set the visitor can never scroll to.
  */
 export const createPaginatedList = <T, R extends PaginatedList<T>>(options: Options<R>) => {
-	// Null while the embedded page still answers the current filters.
 	let fetched = $state<R | null>(null);
 	let loadingMore = $state(false);
 
@@ -53,21 +52,16 @@ export const createPaginatedList = <T, R extends PaginatedList<T>>(options: Opti
 		return response.json();
 	};
 
-	// A new payload (client-side navigation to another index) owns the list again.
 	$effect(() => {
 		void seed;
 		fetched = null;
 	});
 
-	// Any change of filters restarts the list at its first page. Debounced and
-	// abortable: a keystroke must not queue a request.
 	let seeded = true;
 	$effect(() => {
 		void filters;
 
-		// The embedded first page was rendered for the filters in the URL, which
-		// are the ones this list starts with, so the first run has nothing to ask
-		// for. Fetching anyway would replace a correct list with an identical one.
+		// The embedded first page already matches the URL filters, so the first run fetches nothing.
 		if (seeded) {
 			seeded = false;
 			return;
@@ -78,9 +72,7 @@ export const createPaginatedList = <T, R extends PaginatedList<T>>(options: Opti
 			try {
 				fetched = await load(0, controller.signal);
 			} catch (error) {
-				// A newer filter change aborted this request: its own run owns the state.
 				if (error instanceof DOMException && error.name === 'AbortError') return;
-				// Derived from the seed, so list-specific keys keep a sane value.
 				fetched = { ...seed, offset: 0, total: 0, hasMore: false, items: [] };
 			}
 		}, DEBOUNCE_MS);

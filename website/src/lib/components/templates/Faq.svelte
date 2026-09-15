@@ -26,7 +26,6 @@
 	const color = 'var(--color-teal)';
 	const noResultsText = 'Aucune question ne correspond à votre recherche.';
 
-	// Filters are initialised from the URL so filtered views can be shared/reloaded.
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
 	let selectedSectors = $state<string[]>(parseListParam(initialParams.get('sectors')));
@@ -35,8 +34,7 @@
 
 	const allFaqs = $derived(page.sections.flatMap((section) => section.faqs));
 
-	// A shareable id per question, so `?question=<id>` opens one directly. Two
-	// questions worded the same are told apart by a suffix, in page order.
+	// Two questions worded the same are told apart by a suffix, in page order.
 	const questionIds = $derived.by(() => {
 		const ids = new Map<FaqItem, string>();
 		const seen = new Map<string, number>();
@@ -52,8 +50,6 @@
 	});
 	const questionId = (faq: FaqItem): string => questionIds.get(faq) ?? '';
 
-	// Only offer terms that are actually used by at least one question,
-	// kept in the CMS-defined taxonomy order.
 	const sectorTerms = $derived(
 		filterUsedTerms(
 			page.sectors,
@@ -73,12 +69,10 @@
 		)
 	);
 
-	// Drop stale slugs coming from the URL so counters stay accurate.
 	const activeSectors = $derived(keepKnownSlugs(selectedSectors, sectorTerms));
 	const activePrograms = $derived(keepKnownSlugs(selectedPrograms, programTerms));
 	const activePublics = $derived(keepKnownSlugs(selectedPublics, publicTerms));
 
-	// Selecting a parent term also matches questions tagged with one of its sub-terms.
 	const sectorFilter = $derived(expandSelection(activeSectors, sectorTerms));
 	const programFilter = $derived(expandSelection(activePrograms, programTerms));
 	const publicFilter = $derived(expandSelection(activePublics, publicTerms));
@@ -106,7 +100,6 @@
 			.filter((section) => section.faqs.length > 0)
 	);
 
-	// A search term collapses every section into a single flat result list.
 	const hasSearch = $derived(search.trim() !== '');
 	const searchResults = $derived(
 		hasSearch ? page.sections.flatMap((section) => section.faqs.filter(matchesFilters)) : []
@@ -118,8 +111,7 @@
 			: filteredSections.reduce((total, section) => total + section.faqs.length, 0)
 	);
 
-	// A shared link names one question: it is rendered open, inside its own
-	// section, server-side — so the answer is there before any script runs.
+	// The deep-linked question is rendered open server-side, so the answer is there before any script runs.
 	const requestedQuestion = initialParams.get('question') ?? '';
 	const sectionOfQuestion = (id: string): number =>
 		page.sections.findIndex((section) => section.faqs.some((faq) => questionId(faq) === id));
@@ -128,8 +120,6 @@
 		requestedQuestion ? { [requestedQuestion]: true } : {}
 	);
 
-	// The deep-linked section starts open, the first one otherwise; filtering
-	// expands every matching section.
 	let openSections = $state<number[]>([Math.max(sectionOfQuestion(requestedQuestion), 0)]);
 	const isSectionOpen = (index: number): boolean => isFiltering || openSections.includes(index);
 
@@ -137,9 +127,6 @@
 		openSections = open ? [...openSections, index] : openSections.filter((i) => i !== index);
 	};
 
-	// Mirror search + filters into the query string without triggering navigation.
-	// The deep-linked question travels with them for as long as it stays open, so
-	// the page can be reloaded on it.
 	$effect(() => {
 		syncQueryString({
 			q: search,
@@ -150,8 +137,6 @@
 		});
 	});
 
-	// Rendering it open is not enough to find it: a question further down the page
-	// is brought into view once the page is interactive.
 	$effect(() => {
 		if (!requestedQuestion) return;
 
@@ -226,8 +211,6 @@
 		</p>
 	{:else}
 		{#each filteredSections as section, position (section.index)}
-			<!-- The first band follows the toolbar directly, without a rule: the toolbar
-			     already parts it from the header. The others keep their rule and distance. -->
 			<ExpandableSection
 				id="faq-section-{section.index}"
 				title={section.title}

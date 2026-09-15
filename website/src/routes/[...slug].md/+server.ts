@@ -99,9 +99,7 @@ async function withCompleteLists(page: CmsContent): Promise<CmsContent> {
 export const GET: RequestHandler = async ({ params, url }) => {
 	const path = params.slug ?? '';
 
-	// The home page answers at `/index.md`, not at `/.md`: a path starting with
-	// a dot is what dotfile rules on a reverse proxy are written to block, and
-	// the proxy in front of production is not ours to check.
+	// `/index.md`, not `/.md`: a reverse proxy's dotfile rules would block the latter.
 	const isHome = path === '' || path === 'home' || path === 'index';
 
 	const request = new Request(`${CMS_SERVER_BASE_URL}/pages/${isHome ? 'home' : path}.json`, {

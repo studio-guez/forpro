@@ -1,5 +1,3 @@
-# Extra module blockbuilder appended at the bottom of every structural
-# (`pages/core-page`) template, after that template's own content.
 extends: fields/body
 label:
   en: Extra content

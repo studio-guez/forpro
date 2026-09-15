@@ -11,7 +11,6 @@
 
 	let { content }: Props = $props();
 
-	// The block is always teal; the default variant is filled (teal bg), inverted is light.
 	const colors = { main: 'var(--color-teal)', blob: 'var(--color-teal-light)' };
 
 	const filled = $derived(content.variant !== 'inverted');

@@ -41,7 +41,6 @@
 		class: className = ''
 	}: Props = $props();
 
-	// Vertical padding is only needed when the card sits on its own coloured background.
 	const padded = $derived(
 		!!background && background !== 'transparent' && background !== 'var(--color-white)'
 	);

@@ -16,7 +16,6 @@
 
 	const colors = $derived(getThemeColors(theme, content.variant));
 
-	// 5 images on a 6-column grid: 2 on the first row, 3 on the second.
 	const span = (index: number) => (index < 2 ? 3 : 2);
 	const imageSizes = (index: number) => toSizes(cell(CARD, { 0: 1, 1024: 6 }, 1.5, span(index)));
 

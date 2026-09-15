@@ -18,7 +18,6 @@
 	let { text, privacyPolicyUrl, raised = false }: Props = $props();
 
 	let view = $state<'intro' | 'preferences'>('intro');
-	// Draft choice: only written to storage when "Enregistrer mes préférences" is pressed.
 	let choice = $state<CookieChoice>({ performance: false, marketing: false });
 
 	let saveButton = $state<HTMLButtonElement | null>(null);
@@ -29,8 +28,7 @@
 
 	async function openPreferences() {
 		view = 'preferences';
-		// The button that had focus is gone with the intro view; without this the focus ring
-		// falls back to <body> and keyboard users lose their place.
+		// The focused button is gone with the intro view; without this, focus falls back to <body>.
 		await tick();
 		saveButton?.focus();
 	}
@@ -106,7 +104,6 @@
 				<div class="flex flex-col gap-1.5 py-6">
 					{#each categories as category (category.key)}
 						{#if category.key === 'necessary'}
-							<!-- Always on: the site cannot work without them, so there is nothing to consent to. -->
 							{@render toggle(category.label, true, null)}
 						{:else}
 							{@const key = category.key}

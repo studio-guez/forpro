@@ -43,24 +43,18 @@
 	let rootEl = $state<HTMLDivElement>();
 	let triggerEl = $state<HTMLButtonElement>();
 
-	// The trigger reads as the current selection; with none it reads as the field
-	// itself. A list may offer the empty value as a real option (a default order,
-	// say), and then it is a selection like any other.
 	const selectedOption = $derived(options.find((option) => option.value === value));
 	const selectedLabel = $derived(selectedOption?.label ?? label);
 
 	const panelSlide = $derived({ duration: prefersReducedMotion.current ? 0 : 250 });
 
-	// Focus goes back to the trigger whenever the panel is closed from the inside
-	// (Escape, picking an option), otherwise it would be left on a gone element.
+	// Focus goes back to the trigger when the panel closes from the inside, otherwise it is left on a gone element.
 	const close = (focusTrigger: boolean): void => {
 		open = false;
 		if (focusTrigger) triggerEl?.focus();
 	};
 
-	// Clicking outside is the pointer way out; Escape is the keyboard one.
-	// Clicking another dropdown is neither: it takes the group, which closes
-	// this one only once its own click has landed.
+	// Clicking another dropdown is not a dismissal: it takes the group, which closes this one once its own click has landed.
 	$effect(() => {
 		if (!open || !rootEl) return;
 		return listenForDismiss(rootEl, close, '[data-dropdown]');
@@ -83,22 +77,12 @@
 	style:--select-tint="color-mix(in oklab, {color} 12%, transparent)"
 	class="text-(--select-color) -mx-3 max-w-full {className}"
 >
-	<!-- From the tablet breakpoint up the panel overlays the page rather than
-	     pushing it down: the trigger is the top of the card and stays in flow, the
-	     panel is its bottom, positioned under it. The panel paints over the
-	     trigger's shadow, so the two read as one card. Below it, in the toolbar's
-	     modal, the panel takes up space instead and the field runs full width. -->
 	<div
 		class="relative w-full md:w-fit min-w-64 md:max-w-lg rounded-xl transition-shadow {open
 			? 'max-md:shadow-lg'
 			: ''}"
 	>
-		<!-- The panel is out of flow, so it cannot size the field: the label and
-		     every option are laid out again here, invisibly, one line each, with the
-		     rows' own padding and room for their icons. The field is then as wide as
-		     the widest of them, whatever is selected, and the panel never wraps or
-		     clips one. The max width is a safeguard only; the rows truncate once it
-		     is reached. -->
+		<!-- The panel is out of flow and cannot size the field, so the label and every option are laid out again here, invisibly. -->
 		<div class="h-0 overflow-hidden invisible whitespace-nowrap" aria-hidden="true">
 			<div class="text-label flex gap-3 px-3">
 				<span>{label}</span>
@@ -137,9 +121,7 @@
 				class="md:absolute md:inset-x-0 md:top-full md:z-20 pb-2 rounded-b-xl bg-white md:shadow-lg"
 				transition:slide={panelSlide}
 			>
-				<!-- Arrow keys move *and* select inside a radio group, so the panel only
-				     closes on a real click (`detail` is 0 for a keyboard-driven one) or
-				     on an explicit Enter. -->
+				<!-- Arrow keys move and select inside a radio group, so the panel only closes on a real click (`detail` 0 = keyboard) or an explicit Enter. -->
 				<fieldset class="pt-2">
 					<legend class="sr-only">{label}</legend>
 					{#each options as option (option.value)}

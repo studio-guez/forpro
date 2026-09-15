@@ -3,6 +3,5 @@ label:
   en: Publics
   fr: Publics
 options:
-  # `index` instead of `children`: publics is a two-level taxonomy and sub-terms
-  # have to be selectable at the same level as their parent.
+  # `index`, not `children`: sub-publics must be selectable alongside their parent.
   query: site.find("taxonomies").find("publics").index.listed

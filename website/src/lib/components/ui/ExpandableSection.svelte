@@ -32,8 +32,6 @@
 	}: Props = $props();
 </script>
 
-<!-- The section is browsed with the same band the other lists use, the heading
-     itself opening and closing it. -->
 <ListHeader {color} {rule} class={className}>
 	<h2 class="text-h2 text-(--list-color) lg:min-h-15">
 		<button

@@ -35,8 +35,6 @@ export interface PastEventsList extends PaginatedList<AgendaEventCard> {
 	readonly months: string[];
 }
 
-// The events index page (events.json.php): every upcoming event, and the first
-// page of the paginated past archive.
 export interface EventsPage {
 	readonly template: 'events';
 	readonly title: string;

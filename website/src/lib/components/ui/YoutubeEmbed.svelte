@@ -9,7 +9,6 @@
 
 	let { embed, title = 'Vidéo YouTube', class: className = '' }: Props = $props();
 
-	// Shorts are vertical (9:16); regular videos keep the standard 16:9 ratio.
 	const aspect = $derived(embed.type === 'short' ? 'aspect-[9/16]' : 'aspect-video');
 </script>
 

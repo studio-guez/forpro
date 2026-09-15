@@ -262,7 +262,6 @@ trait UtilsSearchText
         $excerpt = mb_substr($text, $start, $length);
 
         if ($start > 0) {
-            // Drop the partial first word left by the cut.
             $excerpt = '…' . ltrim(mb_substr($excerpt, (int)mb_strpos($excerpt, ' ')));
         }
         if (mb_strlen($text) > $start + $length) {

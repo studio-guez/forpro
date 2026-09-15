@@ -13,7 +13,6 @@
 		content.variant === 'backgroundImage' && !!content.backgroundImage
 	);
 
-	// Both the blue and the photo variants draw white on a dark surface.
 	const onDark = $derived(hasBackgroundImage || content.variant === 'default');
 	const background = $derived(
 		hasBackgroundImage ? null : onDark ? 'var(--color-blue)' : 'var(--color-white)'

@@ -57,29 +57,23 @@ trait UtilsSeo
         $meta = $kirbyPage->metadata();
 
         $data = [
-            // General
             'title'           => $meta->metaTitle()->value(),
             'description'     => $meta->get('metaDescription')->value(),
-            // Not the plugin's own `canonicalUrl()`: it derives the URL from
-            // the Kirby page, but a page is published under its `virtualPath`,
-            // so `/pages/<id>` does not exist on the frontend.
+            // Not the plugin's canonicalUrl(): it derives /pages/<id>, which does not exist on the frontend.
             'canonicalUrl'    => $kirbyPage->frontendUrl(),
             'robots'          => $meta->robots(),
             'locale'          => $meta->get('lang')->value(),
-            // Open Graph
             'ogTitle'         => $meta->ogTitle()->value(),
             'ogDescription'   => $meta->get('ogDescription')->value(),
             'ogSiteName'      => $meta->get('ogSiteName')->value(),
             'ogType'          => $meta->get('ogType')->value(),
             'ogImage'         => self::getOgImage($kirbyPage, $meta),
-            // Twitter
             'twitterCardType' => $meta->get('twitterCardType')->value(),
             'twitterSite'     => $meta->twitterSite()->value(),
             'twitterCreator'  => $meta->get('twitterCreator')->value(),
         ];
 
-        // Schema.org JSON-LD, built out of the payload above so the structured
-        // data can never contradict the meta tags. See `UtilsSchema`.
+        // Built from the payload above so the structured data can never contradict the meta tags.
         $data['schemas'] = option('tobimori.seo.generateSchema', false)
             ? self::getPageSchemas($kirbyPage, $data)
             : [];

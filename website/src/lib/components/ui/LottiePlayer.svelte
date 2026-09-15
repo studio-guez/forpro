@@ -18,8 +18,7 @@
 
 	let canvas: HTMLCanvasElement | undefined = $state();
 
-	// The player is loaded on mount only: it needs a canvas and a WASM runtime, neither of
-	// which exists during SSR, and a dynamic import keeps the ~200 KB out of every other page.
+	// Loaded on mount only: it needs a canvas and a WASM runtime, and the dynamic import keeps ~200 KB off every other page.
 	onMount(() => {
 		if (!canvas) return;
 
@@ -39,7 +38,6 @@
 				canvas,
 				src: file.url,
 				loop: true,
-				// Reduced motion still gets the artwork: the first frame, standing still.
 				autoplay: !reduced,
 				renderConfig: { autoResize: true }
 			});

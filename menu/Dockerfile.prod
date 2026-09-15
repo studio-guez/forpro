@@ -9,12 +9,7 @@ RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-# The app is a SPA (`ssr: false`), so the public runtime config is baked in at
-# build time. No defaults: the values come from the PREPROD_*/PRODUCTION_*
-# repository variables in CI, and a missing one must fail rather than silently
-# bake another environment's URL into the bundle.
-# NUXT_PUBLIC_ENVIRONMENT is 'preprod' or 'production'; 'preprod' disables
-# indexing (noindex + robots.txt disallow).
+# No defaults on purpose: a missing PREPROD_*/PRODUCTION_* CI variable must fail the build rather than bake another environment's URL.
 ARG NUXT_PUBLIC_CMS_BASE_URL
 ARG NUXT_PUBLIC_ENVIRONMENT
 ENV NUXT_PUBLIC_CMS_BASE_URL=$NUXT_PUBLIC_CMS_BASE_URL

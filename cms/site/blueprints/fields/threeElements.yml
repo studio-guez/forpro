@@ -1,5 +1,3 @@
-# Three title/description pairs, shared by the `module-infos-pratiques` and
-# `module-3-elements` blocks so both render through the same UI component.
 label:
   en: Elements
   fr: Éléments

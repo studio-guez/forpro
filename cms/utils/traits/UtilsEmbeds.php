@@ -49,9 +49,7 @@ trait UtilsEmbeds
         try {
             $rows = $field->toStructure();
         } catch (\Kirby\Exception\InvalidArgumentException) {
-            // Content still in the pre-`fields/video` shape (a bare files list):
-            // degrade to "no video" instead of a 500 until
-            // `utils/migrate-event-project-body.php` has been run.
+            // Pre-`fields/video` content (a bare files list) degrades to no video until utils/migrate-event-project-body.php has run.
             return [];
         }
 
@@ -74,8 +72,7 @@ trait UtilsEmbeds
 
     private static function getVideoRowData(\Kirby\Cms\StructureObject $row): ?array
     {
-        // Row fields are read through get(): `file`/`url` would otherwise be easy
-        // to confuse with model methods of the same name.
+        // get(): `file`/`url` collide with model methods of the same name.
         $content = $row->content();
 
         if ($content->get('source')->value() === 'youtube') {
