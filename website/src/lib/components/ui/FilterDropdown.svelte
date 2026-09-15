@@ -190,7 +190,7 @@
 			{#if open}
 				<div
 					id={panelId}
-					class="md:absolute md:inset-x-0 md:top-full md:z-20 pb-2 rounded-b-xl bg-white md:shadow-lg"
+					class="md:absolute md:inset-x-0 md:top-full md:z-2 pb-2 rounded-b-xl bg-white md:shadow-lg"
 					transition:slide={panelSlide}
 				>
 					<fieldset class="pt-2">

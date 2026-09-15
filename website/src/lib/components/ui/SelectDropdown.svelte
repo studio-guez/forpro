@@ -118,7 +118,7 @@
 		{#if open}
 			<div
 				id={panelId}
-				class="md:absolute md:inset-x-0 md:top-full md:z-20 pb-2 rounded-b-xl bg-white md:shadow-lg"
+				class="md:absolute md:inset-x-0 md:top-full md:z-2 pb-2 rounded-b-xl bg-white md:shadow-lg"
 				transition:slide={panelSlide}
 			>
 				<!-- Arrow keys move and select inside a radio group, so the panel only closes on a real click (`detail` 0 = keyboard) or an explicit Enter. -->
