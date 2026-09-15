@@ -6,8 +6,8 @@
 	import FooterShapeYellow from '$lib/components/svg/FooterShapeYellow.svelte';
 	import FooterShapeYellowMobile from '$lib/components/svg/FooterShapeYellowMobile.svelte';
 	import IconEmail from '$lib/components/svg/IconEmail.svelte';
-	import IconPhone from '$lib/components/svg/IconPhone.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
+	import { cookieConsent } from '$lib/utils/cookieConsent.svelte';
 	import { socialLabels } from '$lib/utils/socials';
 
 	interface Props {
@@ -168,22 +168,29 @@
 				{#if footer.menuTitle}
 					{@render columnTitle(footer.menuTitle)}
 				{/if}
-				{#if footer.menuLinks.length > 0}
-					<ul class="flex flex-col">
-						{#each footer.menuLinks as link (link)}
-							<li>
-								<a
-									href={link.url}
-									target={link.target ?? undefined}
-									rel={link.target === '_blank' ? 'noopener noreferrer' : undefined}
-									class="underline decoration-transparent hover:decoration-current transition-colors"
-								>
-									{link.label}
-								</a>
-							</li>
-						{/each}
-					</ul>
-				{/if}
+				<ul class="flex flex-col">
+					{#each footer.menuLinks as link (link)}
+						<li>
+							<a
+								href={link.url}
+								target={link.target ?? undefined}
+								rel={link.target === '_blank' ? 'noopener noreferrer' : undefined}
+								class="underline decoration-transparent hover:decoration-current transition-colors"
+							>
+								{link.label}
+							</a>
+						</li>
+					{/each}
+					<li>
+						<button
+							type="button"
+							onclick={cookieConsent.reopen}
+							class="cursor-pointer text-left underline decoration-transparent hover:decoration-current transition-colors"
+						>
+							Paramètres des cookies
+						</button>
+					</li>
+				</ul>
 			</nav>
 
 			<div class="col-span-2 lg:col-span-1 xl:col-span-2">
