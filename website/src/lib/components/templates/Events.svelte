@@ -25,7 +25,6 @@
 		matchesSearch,
 		matchesTerms,
 		parseListParam,
-		stripTags,
 		syncQueryString
 	} from '$lib/utils/filters';
 	import { createPaginatedList } from '$lib/utils/paginatedList.svelte';
@@ -83,13 +82,10 @@
 	// which resolves the raw selection itself.
 	const publicFilter = $derived(expandSelection(activePublics, publicTerms));
 
+	// Titles only: a search is a way to find an event by name, not a way to
+	// dig through descriptions or the terms the dropdown already filters on.
 	const matchesFilters = (event: AgendaEventCard): boolean =>
-		matchesTerms(publicFilter, event.publics) &&
-		matchesSearch(search, [
-			event.title,
-			stripTags(event.shortDesc),
-			...[...event.programs, ...event.publics].map((term) => term.title)
-		]);
+		matchesTerms(publicFilter, event.publics) && matchesSearch(search, [event.title]);
 
 	const upcoming = $derived(page.upcomingEvents.filter(matchesFilters));
 
