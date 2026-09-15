@@ -12,9 +12,11 @@
 		alt?: string | null;
 		/** Box the animation is fitted into; the canvas fills it. */
 		class?: string;
+		/** Restart the animation when it ends. Defaults to a single play-through. */
+		loop?: boolean;
 	}
 
-	let { file, alt = null, class: className = '' }: Props = $props();
+	let { file, alt = null, class: className = '', loop = false }: Props = $props();
 
 	let canvas: HTMLCanvasElement | undefined = $state();
 
@@ -37,7 +39,7 @@
 			player = new DotLottie({
 				canvas,
 				src: file.url,
-				loop: true,
+				loop,
 				autoplay: !reduced,
 				renderConfig: { autoResize: true }
 			});
