@@ -16,7 +16,7 @@
 	</div>
 {/if}
 
-<section class="px-card mt-12 lg:mt-24" aria-labelledby="home-welcome-title">
+<section class="px-card" aria-labelledby="home-welcome-title">
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-25">
 		<h1 id="home-welcome-title" class="text-h2 max-lg:text-center">{page.welcomeTitle}</h1>
 		<div class="prose text-highlight text-balance text-black max-lg:text-center">
