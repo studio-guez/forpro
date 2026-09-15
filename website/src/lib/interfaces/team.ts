@@ -1,6 +1,6 @@
 import type { Block, CmsImage, HeaderType, Seo } from './page';
 
-export type TeamMemberStatus = 'apprenti' | 'employe';
+export type TeamMemberStatus = 'other' | 'apprentice' | 'teacher';
 
 export interface TeamMember {
 	readonly name: string;
@@ -11,7 +11,7 @@ export interface TeamMember {
 
 /** A labelled group of members inside a section (a pôle, a team...). */
 export interface TeamGroup {
-	readonly title: string;
+	readonly title: string | null;
 	readonly members: TeamMember[];
 }
 

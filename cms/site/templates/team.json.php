@@ -18,7 +18,7 @@ $json['intro'] = $page->intro()->value();
 $json['sections'] = $page->sections()->toStructure()->map(fn($section) => [
     'title'  => $section->title()->value(),
     'groups' => $section->groups()->toStructure()->map(fn($group) => [
-        'title'   => $group->title()->value(),
+        'title'   => $group->title()->isNotEmpty() ? $group->title()->value() : null,
         'members' => $group->members()->toStructure()->map(fn($member) => [
             'name'     => $member->name()->value(),
             'role'     => $member->role()->isNotEmpty() ? $member->role()->value() : null,

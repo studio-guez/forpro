@@ -3,7 +3,7 @@
 	import PageHeader from '$lib/components/blocks/PageHeader.svelte';
 	import ExpandableSection from '$lib/components/ui/ExpandableSection.svelte';
 	import IconApprentice from '$lib/components/svg/IconApprentice.svelte';
-	import IconEmployee from '$lib/components/svg/IconEmployee.svelte';
+	import IconTeacher from '$lib/components/svg/IconTeacher.svelte';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
 	import { LABELLED_SECTION, LABELLED_SECTION_ITEMS } from '$lib/utils/sectionStyles';
 	import type { TeamPage } from '$lib/interfaces/team';
@@ -30,20 +30,22 @@
 			<div class="mt-9 lg:mt-12 space-y-12 lg:space-y-16">
 				{#each section.groups as group, groupIndex (groupIndex)}
 					{@const groupId = `team-group-${sectionIndex}-${groupIndex}`}
-					<section aria-labelledby={groupId} class={LABELLED_SECTION}>
-						<h3 id={groupId} class="text-body-2 font-bold">{group.title}</h3>
+					<section aria-labelledby={group.title ? groupId : undefined} class={LABELLED_SECTION}>
+						{#if group.title}
+							<h3 id={groupId} class="text-body-2 font-bold">{group.title}</h3>
+						{/if}
 
-						<ul class={LABELLED_SECTION_ITEMS}>
+						<ul class="{LABELLED_SECTION_ITEMS} {group.title ? '' : 'lg:col-start-2'}">
 							{#each group.members as member, memberIndex (memberIndex)}
 								<li>
 									<p class="text-body-2 font-bold">{member.name}</p>
 
 									{#if member.role}
-										<p class="text-body-2 flex items-center gap-2 mt-1">
-											{#if member.status === 'apprenti'}
-												<IconApprentice class="shrink-0 w-4.5 h-4.5" />
-											{:else}
-												<IconEmployee class="shrink-0 w-4.5 h-4.5" />
+										<p class="text-body-2 mt-1">
+											{#if member.status === 'apprentice'}
+												<IconApprentice class="inline-block w-4.5 h-4.5 mb-1 mr-0.5" />
+											{:else if member.status === 'teacher'}
+												<IconTeacher class="inline-block w-4.5 h-4.5 mb-1 mr-0.5" />
 											{/if}
 											{member.role}
 										</p>

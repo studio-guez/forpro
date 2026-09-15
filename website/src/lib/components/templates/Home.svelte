@@ -8,7 +8,7 @@
 </script>
 
 {#if page.lottie}
-	<div class="px-base">
+	<div class="px-base h-[calc(100vh-6.75rem)] flex items-center justify-center">
 		<LottiePlayer file={page.lottie} alt={page.lottie.alt} />
 	</div>
 {/if}
