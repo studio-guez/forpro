@@ -24,7 +24,9 @@
 
 	onMount(cookieConsent.load);
 
-	const visible = $derived(cookieConsent.loaded && !cookieConsent.decided);
+	const visible = $derived(
+		cookieConsent.loaded && (!cookieConsent.decided || cookieConsent.reopened)
+	);
 
 	async function openPreferences() {
 		view = 'preferences';
@@ -32,6 +34,13 @@
 		await tick();
 		saveButton?.focus();
 	}
+
+	// Reopened from the footer: skip the intro and start from what the visitor chose last time.
+	$effect(() => {
+		if (!cookieConsent.reopened) return;
+		choice = { performance: cookieConsent.performance, marketing: cookieConsent.marketing };
+		openPreferences();
+	});
 
 	const categories: { key: keyof CookieChoice | 'necessary'; label: string }[] = [
 		{ key: 'necessary', label: 'Cookies Nécessaires' },
