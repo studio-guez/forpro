@@ -52,6 +52,7 @@ fields:
   cta:
     extends: fields/cta
   layout:
+    width: 1/2
     label:
       en: Layout
       fr: Disposition
@@ -65,5 +66,7 @@ fields:
         text: { en: Images right, fr: Images à droite }
       - value: images-left
         text: { en: Images left, fr: Images à gauche }
+  imageFit:
+    extends: fields/imageFit
   variant:
     extends: fields/variant
