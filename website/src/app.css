@@ -54,8 +54,8 @@
 
 	--spacing-lh: 1.25em;
 	--spacing-lh: 1lh;
-	--spacing-prose-p: .9375em;
-	--spacing-prose-p: .75lh;
+	--spacing-prose-p: 0.9375em;
+	--spacing-prose-p: 0.75lh;
 
 	/* Duration and shift are set per instance so the scroll speed stays constant; the shift is exactly one copy of the track. */
 	--animate-marquee: marquee 30s linear infinite;
@@ -106,7 +106,6 @@
 }
 
 @layer utilities {
-
 	.text-h0 {
 		@apply text-4xl sm:text-5xl lg:text-8xl font-bold text-balance;
 	}
@@ -147,7 +146,6 @@
 		@apply text-xs lg:text-base;
 	}
 
-
 	.px-base {
 		@apply px-5 lg:px-9;
 	}
@@ -182,7 +180,7 @@
 }
 
 @layer utilities {
-		.truncate-x {
+	.truncate-x {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;

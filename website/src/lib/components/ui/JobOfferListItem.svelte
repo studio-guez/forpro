@@ -20,8 +20,6 @@
 
 	const published = $derived(toDate(offer.publishedDate));
 
-	const sectors = $derived(offer.terms.map((term) => term.title).join(', '));
-
 	const cta = $derived({
 		label: applyLabel,
 		url: offer.url,
@@ -35,10 +33,10 @@
 		{offer.title}
 	</svelte:element>
 
-	{#if sectors || offer.publishedDate}
+	{#if offer.sector || offer.publishedDate}
 		<div class="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-body-2 text-(--row-color)">
-			{#if sectors}
-				<p>{sectors}</p>
+			{#if offer.sector}
+				<p>{offer.sector}</p>
 				{#if offer.publishedDate}
 					<span aria-hidden="true">·</span>
 				{/if}

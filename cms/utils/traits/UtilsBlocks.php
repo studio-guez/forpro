@@ -294,6 +294,7 @@ trait UtilsBlocks
     {
         $filters = [
             'programs' => array_column(self::resolveTaxonomyTerms($block->programs(), 'programs'), 'slug'),
+            'sectors'  => array_column(self::resolveTaxonomyTerms($block->sectors(), 'sectors'), 'slug'),
             'publics'  => array_column(self::resolveTaxonomyTerms($block->publics(), 'publics'), 'slug'),
         ];
 
@@ -329,8 +330,8 @@ trait UtilsBlocks
     private static function getProjetsBlockData(\Kirby\Cms\Block $block): array
     {
         $filters = [
-            'programs'   => array_column(self::resolveTaxonomyTerms($block->programs(), 'programs'), 'slug'),
-            'categories' => array_column(self::resolveTaxonomyTerms($block->categories(), 'categories'), 'slug'),
+            'programs' => array_column(self::resolveTaxonomyTerms($block->programs(), 'programs'), 'slug'),
+            'sectors'  => array_column(self::resolveTaxonomyTerms($block->sectors(), 'sectors'), 'slug'),
         ];
 
         $projectsPage = site()->index()->template('projects')->first();

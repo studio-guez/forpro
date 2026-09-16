@@ -166,8 +166,8 @@ tabs:
             type: pages
             image: false
             label:
-              en: Categories (missions)
-              fr: Catégories (missions)
+              en: Categories
+              fr: Catégories
             templates:
               - category
             parent: site.index.template("categories").first()

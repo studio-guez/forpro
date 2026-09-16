@@ -16,6 +16,7 @@ $json += Utils::getEventDateFields($page);
 $json['location'] = $page->location()->isNotEmpty() ? $page->location()->value() : null;
 
 $json['programs'] = Utils::resolveTaxonomyTerms($page->programs(), 'programs');
+$json['sectors']  = Utils::resolveTaxonomyTerms($page->sectors(), 'sectors');
 $json['publics']  = Utils::resolveTaxonomyTerms($page->publics(), 'publics');
 
 echo json_encode($json);

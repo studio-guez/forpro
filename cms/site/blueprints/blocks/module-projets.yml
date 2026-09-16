@@ -28,8 +28,8 @@ fields:
     help:
       en: Filters the projects shown in the block.
       fr: Filtre les projets affichés dans le module.
-  categories:
-    extends: fields/taxonomies/categories
+  sectors:
+    extends: fields/taxonomies/sectors
     width: 1/2
     help:
       en: Filters the projects shown in the block.

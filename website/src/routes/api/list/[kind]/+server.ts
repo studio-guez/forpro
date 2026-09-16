@@ -22,7 +22,7 @@ const LISTS = {
 	},
 	projects: {
 		endpoint: 'projects.json',
-		params: ['q', 'programs', 'years'],
+		params: ['q', 'sectors', 'categories', 'years'],
 		pageSize: 12,
 		empty: {}
 	},

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { termColor } from '$lib/utils/shared';
 	import { TAG_BASE, tagColorClasses, tagSizeClasses, type TagSize } from '$lib/utils/tagStyles';
-	import type { TaxonomyTerm } from '$lib/interfaces/taxonomy';
+	import type { KeyedTerm, TaxonomyTerm } from '$lib/interfaces/taxonomy';
 
 	interface Props {
-		terms: TaxonomyTerm[];
+		terms: (TaxonomyTerm | KeyedTerm)[];
 		label?: string | null;
 		size?: TagSize;
 		class?: string;
@@ -22,7 +22,7 @@
 		]}
 		aria-label={label ?? undefined}
 	>
-		{#each terms as term (term.slug)}
+		{#each terms as term ('key' in term ? term.key : term.slug)}
 			<li
 				style:--term-color={termColor(term)}
 				class={[TAG_BASE, tagSizeClasses[size], tagColorClasses(size, false)]}
