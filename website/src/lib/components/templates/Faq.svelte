@@ -156,7 +156,6 @@
 		question={faq.question}
 		answer={faq.answer}
 		{color}
-		shareUrl="?question={id}"
 		bind:open={() => openQuestions[id] ?? false, (value) => (openQuestions[id] = value)}
 	/>
 {/snippet}

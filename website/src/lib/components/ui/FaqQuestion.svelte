@@ -2,7 +2,6 @@
 	import { slide } from 'svelte/transition';
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
 	import IconClose from '$lib/components/svg/IconClose.svelte';
-	import ShareButton from '$lib/components/ui/ShareButton.svelte';
 
 	interface Props {
 		id: string;
@@ -11,12 +10,6 @@
 		color?: string;
 		inverted?: boolean;
 		open?: boolean;
-		/**
-		 * Link the answer offers to share, resolved against the current page — so
-		 * `?question=slug` shares the list opened on this question. No link, no
-		 * share button: a question listed inside a block is not addressable.
-		 */
-		shareUrl?: string | null;
 	}
 
 	let {
@@ -25,8 +18,7 @@
 		answer,
 		color = 'var(--color-teal)',
 		inverted = false,
-		open = $bindable(false),
-		shareUrl = null
+		open = $bindable(false)
 	}: Props = $props();
 
 	const borderClass = $derived(inverted ? 'border-white' : 'border-(--faq-color)');
@@ -68,12 +60,6 @@
 				<div class="prose">
 					{@html answer}
 				</div>
-
-				{#if shareUrl}
-					<div class="mt-6 lg:mt-8 flex justify-end">
-						<ShareButton url={shareUrl} title={question} {color} inverted={!inverted} />
-					</div>
-				{/if}
 			</div>
 		</div>
 	{/if}
