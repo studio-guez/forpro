@@ -1,9 +1,9 @@
-title: Secteurs
+title: Ressources
 
 extends: pages/taxonomy
 
 sections:
   terms:
-    label: Secteurs
+    label: Ressources
     templates:
       - sector

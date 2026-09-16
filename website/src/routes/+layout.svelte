@@ -94,7 +94,7 @@
 <main
 	id="main-content"
 	tabindex="-1"
-	class="pt-27 space-y-9 lg:space-y-18 pb-18 focus:outline-none overflow-x-clip"
+	class="pt-27 space-y-18 pb-18 focus:outline-none overflow-x-clip"
 >
 	{@render children?.()}
 </main>

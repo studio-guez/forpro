@@ -176,7 +176,7 @@
 		<FilterDropdown
 			terms={publicTerms}
 			bind:selected={selectedPublics}
-			label="Événements concernant"
+			label="Type de public"
 			{color}
 		/>
 
