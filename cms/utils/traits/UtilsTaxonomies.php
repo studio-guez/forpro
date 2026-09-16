@@ -21,6 +21,17 @@ trait UtilsTaxonomies
     }
 
     /**
+     * A taxonomy is named after its field (`programs`, `resourcesTaxonomy`, ...)
+     * and its term pages live under `content/taxonomies/<kebab-case name>`:
+     * field keys cannot carry a hyphen while slugs cannot carry an uppercase
+     * letter, so `resourcesTaxonomy` maps to `taxonomies/resources-taxonomy`.
+     */
+    private static function taxonomyPage(string $taxonomy): ?\Kirby\Cms\Page
+    {
+        return page('taxonomies/' . \Kirby\Toolkit\Str::kebab($taxonomy));
+    }
+
+    /**
      * `{slug, title, color}` shape shared by every taxonomy term payload.
      */
     private static function getTaxonomyTermData(\Kirby\Cms\Page $term): array
@@ -34,13 +45,13 @@ trait UtilsTaxonomies
 
     /**
      * Returns all terms of a taxonomy in their CMS-defined order (the order of
-     * the term pages under content/taxonomies/<taxonomy>), in the same
+     * the term pages under content/taxonomies/<taxonomy>, see taxonomyPage()), in the same
      * `{slug, title, color}` shape as resolveTaxonomyTerms(), each with its
      * sub-terms under `children` (empty for single-level taxonomies).
      */
     static function getTaxonomyTerms(string $taxonomy): array
     {
-        $parent = page('taxonomies/' . $taxonomy);
+        $parent = self::taxonomyPage($taxonomy);
         if (!$parent) return [];
 
         return $parent->children()->listed()->map(fn($term) => [
@@ -80,7 +91,7 @@ trait UtilsTaxonomies
      */
     private static function expandTaxonomySlugs(string $taxonomy, array $slugs): array
     {
-        $parent = page('taxonomies/' . $taxonomy);
+        $parent = self::taxonomyPage($taxonomy);
         if (!$parent) return $slugs;
 
         foreach ($slugs as $slug) {
@@ -116,7 +127,7 @@ trait UtilsTaxonomies
      */
     static function resolveTaxonomySelection(string $taxonomy, array $selected): array
     {
-        $parent = page('taxonomies/' . $taxonomy);
+        $parent = self::taxonomyPage($taxonomy);
         if (!$parent) return $selected;
 
         $terms = $parent->children()->listed();
@@ -162,7 +173,7 @@ trait UtilsTaxonomies
      */
     private static function taxonomyMatcher(string $fieldName, array $slugs, bool $expand = true): \Closure
     {
-        // On every call site the field name is also the taxonomy name.
+        // On every call site the field name is also the taxonomy name (see taxonomyPage()).
         $slugs = $expand ? self::expandTaxonomySlugs($fieldName, $slugs) : $slugs;
         $slugCache = [];
 

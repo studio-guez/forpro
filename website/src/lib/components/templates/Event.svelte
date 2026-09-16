@@ -4,6 +4,7 @@
 	import EventProjectBody from '$lib/components/blocks/EventProjectBody.svelte';
 	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
+	import { mergeTerms } from '$lib/utils/shared';
 	import {
 		formatEventDate,
 		formatEventDateRange,
@@ -21,6 +22,10 @@
 	const range = $derived(start && end ? formatEventDateRange(start, end) : null);
 	const timeStart = $derived(formatEventTime(page.timeStart));
 	const timeEnd = $derived(formatEventTime(page.timeEnd));
+
+	const terms = $derived(
+		mergeTerms({ programs: page.programs, resourcesTaxonomy: page.resourcesTaxonomy })
+	);
 </script>
 
 <article class="space-y-12 lg:space-y-16">
@@ -62,9 +67,9 @@
 				</div>
 			{/if}
 
-			{#if page.programs.length > 0}
+			{#if terms.length > 0}
 				<div class="mt-4.5">
-					<TermTags terms={page.programs} label="Programmes" class="mt-2" />
+					<TermTags {terms} label="Tags" class="mt-2" />
 				</div>
 			{/if}
 		{/snippet}

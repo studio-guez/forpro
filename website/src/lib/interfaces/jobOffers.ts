@@ -7,7 +7,6 @@ import type {
 	Seo,
 	TimelineStep
 } from './page';
-import type { TaxonomyTerm } from './taxonomy';
 
 export interface JobOfferQuestion {
 	/** Short heading shown next to the text, e.g. "Question 1". */
@@ -26,7 +25,8 @@ export interface JobOfferCard {
 	/** Percentages; the maximum is only set when the rate is a range. */
 	readonly activityRateMin: number;
 	readonly activityRateMax: number | null;
-	readonly terms: TaxonomyTerm[];
+	/** Free text, e.g. "Santé et social". */
+	readonly sector: string | null;
 }
 
 export interface JobOfferPage {
@@ -37,7 +37,8 @@ export interface JobOfferPage {
 	readonly parentPage: PageParent | null;
 	/** A closed offer keeps its page, but leaves the index and the sitemap. */
 	readonly openToApplications: boolean;
-	readonly sectors: TaxonomyTerm[];
+	/** Free text, e.g. "Santé et social". */
+	readonly sector: string | null;
 	readonly description: string;
 	readonly profile: string;
 	readonly conditions: string;
