@@ -6,6 +6,7 @@ export interface TeamMember {
 	readonly name: string;
 	readonly role: string | null;
 	readonly status: TeamMemberStatus | null;
+	readonly roleLink: string | null;
 	readonly linkedin: string | null;
 }
 

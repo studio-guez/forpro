@@ -16,6 +16,8 @@ $json['cover']     = Utils::getJsonEncodeImageDataOrNull($page->cover()->toFile(
 $json['introTitle'] = $page->introTitle()->value();
 $json['intro']      = $page->intro()->value();
 
+$json['noResultsText'] = $page->noResultsText()->value();
+
 $parentPage = $page->parentPage()->toPage();
 $json['parentPage'] = $parentPage ? [
     'title' => $parentPage->title()->value(),

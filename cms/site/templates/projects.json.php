@@ -8,15 +8,15 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'projects');
 
+$json['noResultsText'] = $page->noResultsText()->value();
+
 $json['programs'] = Utils::getTaxonomyTerms('programs');
 
 $projects = $page->children()->listed();
 
 $json['usedPrograms'] = Utils::getUsedTaxonomySlugs($projects, 'programs');
 
-$years = array_values(array_unique($projects->values(fn($project) => (int)$project->year()->value())));
-rsort($years);
-$json['years'] = $years;
+$json['years'] = Utils::getProjectYears($projects);
 
 // Filters come from the query string so a shared/reloaded URL doesn't first paint unrelated projects and swap them on hydration.
 $json['projects'] = Utils::getProjects(

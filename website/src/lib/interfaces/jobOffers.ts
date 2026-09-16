@@ -67,6 +67,8 @@ export interface JobOffersPage {
 	readonly overtitle: string | null;
 	readonly introTitle: string;
 	readonly intro: string;
+	/** HTML, shown when no offer is open to applications. */
+	readonly noOffersText: string;
 	readonly jobOffers: JobOfferCard[];
 	readonly body: Block[];
 	readonly seo: Seo;

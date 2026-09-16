@@ -89,6 +89,23 @@ tabs:
                 required: true
               sepIntro:
                 type: line
+          messages:
+            type: fields
+            fields:
+              messagesLabel:
+                label:
+                  en: Empty-state messages
+                  fr: Messages d'absence de résultats
+                type: headline
+              noResultsText:
+                label:
+                  en: No mission for the selection
+                  fr: Aucune mission pour la sélection
+                extends: fields/writer
+                required: true
+                default: "<p>Aucune mission ne correspond à votre sélection.</p>"
+              sepMessages:
+                type: line
           extra:
             type: fields
             fields:

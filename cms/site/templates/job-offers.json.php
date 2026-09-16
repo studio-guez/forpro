@@ -15,6 +15,8 @@ $json['overtitle'] = $page->overtitle()->value();
 $json['introTitle'] = $page->introTitle()->value();
 $json['intro'] = $page->intro()->value();
 
+$json['noOffersText'] = $page->noOffersText()->value();
+
 $json['jobOffers'] = array_values(Utils::filterOpenToApplications($page->children()->listed())
     ->map(fn($offer) => Utils::getJobOfferCardData($offer))->data());
 

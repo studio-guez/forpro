@@ -89,13 +89,15 @@ tabs:
                 type: structure
                 columns:
                   name:
-                    width: 1/4
+                    width: 1/5
                   role:
-                    width: 1/4
+                    width: 1/5
                   status:
-                    width: 1/4
+                    width: 1/5
+                  roleLink:
+                    width: 1/5
                   linkedin:
-                    width: 1/4
+                    width: 1/5
                 fields:
                   name:
                     label:
@@ -123,6 +125,14 @@ tabs:
                       en: Role
                       fr: Fonction
                     type: text
+                  roleLink:
+                    label:
+                      en: Role link
+                      fr: Lien de la fonction
+                    help:
+                      en: Optional. Makes the role clickable (e.g. the company or school website).
+                      fr: Optionnel. Rend la fonction cliquable (p. ex. le site de l'entreprise ou de l'école).
+                    type: url
                   linkedin:
                     label:
                       en: LinkedIn link

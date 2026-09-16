@@ -38,7 +38,6 @@
 	const cardSizes = toSizes(cell(PAGE, { 0: 1, 640: 2, 1024: 3 }, 1.5));
 
 	const color = 'var(--color-blue)';
-	const noResultsText = 'Aucun événement à venir ne correspond à votre recherche.';
 
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
@@ -201,15 +200,16 @@
 			query={search.trim()}
 			count={upcoming.length}
 			nouns={['événement', 'événements']}
-			{noResultsText}
+			noResultsText={page.noResultsText}
 			{color}
 			variant="section"
 			rule={false}
 		/>
 	{:else if upcoming.length === 0}
-		<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
-			Aucun événement à venir pour le moment.
-		</p>
+		<div class="prose text-body-1 text-grey-dark text-center border-t border-black pt-12">
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -- rich text comes from the trusted CMS writer field -->
+			{@html page.noUpcomingText}
+		</div>
 	{:else if showAllUpcoming}
 		<ListHeader {color} count={upcoming.length} nouns={['événement', 'événements']} rule={false}>
 			<div class="flex flex-wrap items-center justify-between gap-4">
@@ -317,9 +317,10 @@
 		</p>
 
 		{#if archive.total === 0}
-			<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12 mt-6">
-				Aucun événement passé ne correspond à votre recherche.
-			</p>
+			<div class="prose text-body-1 text-grey-dark text-center border-t border-black pt-12 mt-6">
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -- rich text comes from the trusted CMS writer field -->
+				{@html page.noPastResultsText}
+			</div>
 		{:else}
 			<div class="mt-6">
 				{#each archive.items as event (event.url)}

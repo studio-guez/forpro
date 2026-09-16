@@ -203,12 +203,43 @@ trait UtilsPages
     }
 
     /**
-     * Filtered, paginated projects of a projects index, in CMS order.
+     * Projects most recent first, the order of every projects listing.
+     *
+     * Sorting has to happen here rather than on the frontend: it decides
+     * which projects land in a page at all.
+     */
+    static function sortProjects(\Kirby\Cms\Pages $projects): \Kirby\Cms\Pages
+    {
+        return $projects->sortBy('date', 'desc');
+    }
+
+    /** Year of a project's `date`, null while the date is not set. */
+    static function getProjectYear(\Kirby\Cms\Page $project): ?int
+    {
+        $year = $project->date()->toDate('Y');
+
+        return $year === null ? null : (int)$year;
+    }
+
+    /** Years carried by at least one project, most recent first. */
+    static function getProjectYears(\Kirby\Cms\Pages $projects): array
+    {
+        $years = array_values(array_unique(array_filter(
+            $projects->values(fn($project) => self::getProjectYear($project)),
+            fn(?int $year) => $year !== null
+        )));
+        rsort($years);
+
+        return $years;
+    }
+
+    /**
+     * Filtered, paginated projects of a projects index, most recent first.
      *
      * The filters mirror the frontend ones: `$query` is matched as a whole
      * phrase against the title only; `$programs` is a **raw** selection of
-     * term slugs; `$years` is a list of years as strings, matched on the
-     * `year` field, which exists only to filter.
+     * term slugs; `$years` is a list of years as strings, matched on the year
+     * of the `date` field.
      *
      * @return array{offset:int, total:int, hasMore:bool, items:array<int,array>}
      */
@@ -230,7 +261,7 @@ trait UtilsPages
 
         if ($years !== []) {
             $projects = $projects->filter(
-                fn($project) => in_array((string)(int)$project->year()->value(), $years, true)
+                fn($project) => in_array((string)self::getProjectYear($project), $years, true)
             );
         }
 
@@ -240,7 +271,7 @@ trait UtilsPages
         );
 
         return self::paginate(
-            $projects->values(),
+            self::sortProjects($projects)->values(),
             $offset,
             $limit,
             fn(\Kirby\Cms\Page $project) => self::getProjectCardData($project)
@@ -340,7 +371,7 @@ trait UtilsPages
             'shortDesc'      => $page->shortDesc()->value(),
             'cover'          => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             'collectiveName' => $page->collectiveName()->isNotEmpty() ? $page->collectiveName()->value() : null,
-            'year'           => (int)$page->year()->value(),
+            'date'           => $page->date()->toDate('Y-m-d'),
             'programs'       => self::resolveTaxonomyTerms($page->programs(), 'programs'),
             'categories'     => self::resolveTaxonomyTerms($page->categories(), 'categories'),
         ];

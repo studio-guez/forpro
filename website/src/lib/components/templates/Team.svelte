@@ -47,7 +47,18 @@
 											{:else if member.status === 'teacher'}
 												<IconTeacher class="inline-block w-4.5 h-4.5 mb-1 mr-0.5" />
 											{/if}
-											{member.role}
+											{#if member.roleLink}
+												<a
+													href={member.roleLink}
+													target="_blank"
+													rel="noopener noreferrer"
+													class="underline hover:opacity-50 transition-opacity"
+												>
+													{member.role}
+												</a>
+											{:else}
+												{member.role}
+											{/if}
 										</p>
 									{/if}
 

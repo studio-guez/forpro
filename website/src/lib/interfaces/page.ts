@@ -202,8 +202,8 @@ export interface ProjetCard {
 	readonly shortDesc: string;
 	readonly cover: CmsImage | null;
 	readonly collectiveName: string | null;
-	/** Only used to filter projects on the projects page. */
-	readonly year: number;
+	/** `YYYY-MM-DD`. Orders every projects listing; its year is the filter on the projects page. */
+	readonly date: string;
 	readonly programs: TaxonomyTerm[];
 	readonly categories: TaxonomyTerm[];
 }
