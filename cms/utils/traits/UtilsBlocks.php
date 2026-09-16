@@ -341,7 +341,7 @@ trait UtilsBlocks
                 $children = self::filterPagesByTaxonomy($children, $field, $slugs);
             }
 
-            $projects = array_values($children->map(fn($project) => self::getProjectCardData($project))->data());
+            $projects = array_values(self::sortProjects($children)->map(fn($project) => self::getProjectCardData($project))->data());
         }
 
         $ctaUrl = $projectsPage ? '/' . $projectsPage->virtualPath() : null;

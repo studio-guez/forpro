@@ -23,6 +23,8 @@ export interface ProjectsPage {
 	readonly title: string;
 	readonly slug: string;
 	readonly path: string;
+	/** HTML, shown when the search or the filters match no project. */
+	readonly noResultsText: string;
 	readonly programs: TaxonomyFilterTerm[];
 	/** Program term slugs carried by at least one project. */
 	readonly usedPrograms: string[];

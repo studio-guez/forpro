@@ -23,18 +23,12 @@ tabs:
             fields:
               sepTaxonomies:
                 type: line
-              year:
+              date:
                 label:
-                  en: Year
-                  fr: Année
-                help:
-                  en: Only used to filter projects on the projects page.
-                  fr: Utilisée uniquement pour filtrer les projets sur la page des projets.
-                type: number
+                  en: Date
+                  fr: Date
+                type: date
                 required: true
-                step: 1
-                min: 1990
-                max: 2100
               programs:
                 extends: fields/taxonomies/programs
               categories:

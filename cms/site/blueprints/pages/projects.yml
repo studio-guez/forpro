@@ -22,6 +22,21 @@ tabs:
               fr: Titre
             type: text
             required: true
+      messages:
+        type: fields
+        fields:
+          messagesLabel:
+            label:
+              en: Empty-state messages
+              fr: Messages d'absence de résultats
+            type: headline
+          noResultsText:
+            label:
+              en: No search result
+              fr: Aucun résultat de recherche
+            extends: fields/writer
+            required: true
+            default: "<p>Aucun projet ne correspond à votre recherche.</p>"
       extra:
         type: fields
         fields:
@@ -38,5 +53,6 @@ tabs:
         templates:
           - project
         create: project
+        sortBy: date desc
 
   seo: tabs/seo

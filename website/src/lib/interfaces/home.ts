@@ -32,6 +32,8 @@ export interface HomePage {
 	readonly path: string;
 	/** `.json` or `.lottie` file, served as-is; null until the editor uploads one. */
 	readonly lottie: HomeLottie | null;
+	/** Small-screen variant; null means `lottie` is shown on every viewport. */
+	readonly lottieMobile: HomeLottie | null;
 	readonly welcomeTitle: string;
 	readonly welcomeShortDesc: string;
 	/** Always 3 entries (the blueprint has one title + CTA pair per card). */

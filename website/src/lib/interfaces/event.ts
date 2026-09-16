@@ -40,6 +40,12 @@ export interface EventsPage {
 	readonly title: string;
 	readonly slug: string;
 	readonly path: string;
+	/** HTML, shown when the agenda search matches no upcoming event. */
+	readonly noResultsText: string;
+	/** HTML, shown when there is no upcoming event at all. */
+	readonly noUpcomingText: string;
+	/** HTML, shown when the archive search matches no past event. */
+	readonly noPastResultsText: string;
 	readonly programs: TaxonomyFilterTerm[];
 	readonly publics: TaxonomyFilterTerm[];
 	/** Public term slugs carried by at least one upcoming event: the filter never reaches the archive. */
