@@ -43,7 +43,7 @@
 		<div
 			use:reveal={{ trigger: 0.7 }}
 			class={[
-				'slot relative lg:w-[70%] max-w-full',
+				'slot relative lg:w-6/10 xl:w-7/10 max-w-full',
 				slot.side === 'left' ? 'self-start' : 'self-end',
 				i > 0 && '-mt-1 lg:-mt-20'
 			]}
