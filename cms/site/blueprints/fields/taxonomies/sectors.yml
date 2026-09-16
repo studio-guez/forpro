@@ -1,6 +1,6 @@
 extends: fields/taxonomies/taxonomy
 label:
-  en: Sectors
-  fr: Secteurs
+  en: Resources
+  fr: Ressources
 options:
   query: site.find("taxonomies").find("sectors").children
