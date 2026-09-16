@@ -164,14 +164,14 @@
 
 <section aria-label="Questions et réponses" class="px-base pb-12 lg:pb-16">
 	<ListToolbar {color}>
-		<FilterDropdown terms={sectorTerms} bind:selected={selectedSectors} label="Secteurs" {color} />
+		<FilterDropdown terms={publicTerms} bind:selected={selectedPublics} label="Publics" {color} />
+		<FilterDropdown terms={sectorTerms} bind:selected={selectedSectors} label="Ressources" {color} />
 		<FilterDropdown
 			terms={programTerms}
 			bind:selected={selectedPrograms}
 			label="Programmes"
 			{color}
 		/>
-		<FilterDropdown terms={publicTerms} bind:selected={selectedPublics} label="Publics" {color} />
 
 		{#snippet end()}
 			<SearchInput
