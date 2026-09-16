@@ -38,5 +38,6 @@ tabs:
         templates:
           - project
         create: project
+        sortBy: date desc
 
   seo: tabs/seo

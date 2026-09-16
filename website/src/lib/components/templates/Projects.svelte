@@ -39,11 +39,8 @@
 
 	const activePrograms = $derived(keepKnownSlugs(selectedPrograms, programTerms));
 
-	// A project with no year is stored as 0, which is not a year to offer.
 	const yearOptions = $derived(
-		page.years
-			.filter((year) => year > 0)
-			.map((year) => ({ value: String(year), label: String(year) }))
+		page.years.map((year) => ({ value: String(year), label: String(year) }))
 	);
 
 	// The year steps aside while a search runs: its band gives way to the results header, and a filter the visitor cannot see must not narrow them.
