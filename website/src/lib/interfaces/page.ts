@@ -185,7 +185,7 @@ export interface AgendaEventCard {
 	readonly timeStart: string | null;
 	readonly timeEnd: string | null;
 	readonly programs: TaxonomyTerm[];
-	readonly sectors: TaxonomyTerm[];
+	readonly resourcesTaxonomy: TaxonomyTerm[];
 	readonly publics: TaxonomyTerm[];
 }
 
@@ -206,7 +206,7 @@ export interface ProjetCard {
 	/** `YYYY-MM-DD`. Orders every projects listing; its year is the filter on the projects page. */
 	readonly date: string;
 	readonly programs: TaxonomyTerm[];
-	readonly sectors: TaxonomyTerm[];
+	readonly resourcesTaxonomy: TaxonomyTerm[];
 	readonly categories: TaxonomyTerm[];
 }
 

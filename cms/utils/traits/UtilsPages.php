@@ -133,7 +133,7 @@ trait UtilsPages
             'cover'     => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             ...self::getEventDateFields($page),
             'programs'  => self::resolveTaxonomyTerms($page->programs(), 'programs'),
-            'sectors'   => self::resolveTaxonomyTerms($page->sectors(), 'sectors'),
+            'resourcesTaxonomy' => self::resolveTaxonomyTerms($page->resourcesTaxonomy(), 'resourcesTaxonomy'),
             'publics'   => self::resolveTaxonomyTerms($page->publics(), 'publics'),
         ];
     }
@@ -238,7 +238,7 @@ trait UtilsPages
      * Filtered, paginated projects of a projects index, most recent first.
      *
      * The filters mirror the frontend ones: `$query` is matched as a whole
-     * phrase against the title only; `$sectors` and `$categories` are **raw**
+     * phrase against the title only; `$resources` and `$categories` are **raw**
      * selections of term slugs; `$years` is a list of years as strings, matched
      * on the year of the `date` field.
      *
@@ -247,14 +247,14 @@ trait UtilsPages
     static function getProjects(
         \Kirby\Cms\Pages $projects,
         string $query = '',
-        array $sectors = [],
+        array $resources = [],
         array $categories = [],
         array $years = [],
         int $offset = 0,
         int $limit = 12
     ): array {
         // resolveTaxonomySelection() mirrors the frontend rule, so a URL means the same on both ends.
-        foreach (['sectors' => $sectors, 'categories' => $categories] as $taxonomy => $selection) {
+        foreach (['resourcesTaxonomy' => $resources, 'categories' => $categories] as $taxonomy => $selection) {
             $projects = self::filterPagesByTaxonomy(
                 $projects,
                 $taxonomy,
@@ -377,7 +377,7 @@ trait UtilsPages
             'collectiveName' => $page->collectiveName()->isNotEmpty() ? $page->collectiveName()->value() : null,
             'date'           => $page->date()->toDate('Y-m-d'),
             'programs'       => self::resolveTaxonomyTerms($page->programs(), 'programs'),
-            'sectors'        => self::resolveTaxonomyTerms($page->sectors(), 'sectors'),
+            'resourcesTaxonomy' => self::resolveTaxonomyTerms($page->resourcesTaxonomy(), 'resourcesTaxonomy'),
             'categories'     => self::resolveTaxonomyTerms($page->categories(), 'categories'),
         ];
     }

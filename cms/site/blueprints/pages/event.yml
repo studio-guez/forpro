@@ -67,5 +67,5 @@ tabs:
                 extends: fields/taxonomies/programs
               publics:
                 extends: fields/taxonomies/publics
-              sectors:
-                extends: fields/taxonomies/sectors
+              resourcesTaxonomy:
+                extends: fields/taxonomies/resourcesTaxonomy

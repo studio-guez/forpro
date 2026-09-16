@@ -379,7 +379,7 @@ function renderTemplate(page: CmsContent, origin: string): string {
 					bullet('Horaire', [page.timeStart, page.timeEnd].filter(Boolean).join(' – ')),
 					bullet('Lieu', page.location),
 					bullet('Programmes', termNames(page.programs)),
-					bullet('Ressources', termNames(page.sectors)),
+					bullet('Ressources', termNames(page.resourcesTaxonomy)),
 					bullet('Publics', termNames(page.publics))
 				]),
 				bodyBlocks(page.body, origin)
@@ -393,7 +393,7 @@ function renderTemplate(page: CmsContent, origin: string): string {
 					bullet('Collectif', page.collectiveName),
 					bullet('Membres', page.collectiveMembers.map((member) => member.name).join(', ')),
 					bullet('Programmes', termNames(page.programs)),
-					bullet('Ressources', termNames(page.sectors)),
+					bullet('Ressources', termNames(page.resourcesTaxonomy)),
 					bullet('Catégories', termNames(page.categories))
 				]),
 				bodyBlocks(page.body, origin)

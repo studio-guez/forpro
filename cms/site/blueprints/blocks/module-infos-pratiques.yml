@@ -34,8 +34,8 @@ fields:
     help:
       en: Filters the questions shown in the block.
       fr: Filtre les questions affichées dans le module.
-  sectors:
-    extends: fields/taxonomies/sectors
+  resourcesTaxonomy:
+    extends: fields/taxonomies/resourcesTaxonomy
     width: 1/2
     help:
       en: Filters the questions shown in the block.

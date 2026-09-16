@@ -280,7 +280,7 @@ return [
                 return \Kirby\Http\Response::json(Utils::getProjects(
                     $page->children()->listed(),
                     mb_substr((string)(get('q') ?? ''), 0, 100),
-                    array_filter(explode(',', (string)(get('sectors') ?? ''))),
+                    array_filter(explode(',', (string)(get('resources') ?? ''))),
                     array_filter(explode(',', (string)(get('categories') ?? ''))),
                     array_filter(explode(',', (string)(get('years') ?? ''))),
                     max((int)(get('offset') ?? 0), 0),

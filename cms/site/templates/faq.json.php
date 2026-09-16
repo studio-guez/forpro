@@ -10,7 +10,7 @@ $json = Utils::getPageBaseData($page, 'faq');
 
 $json['noResultsText'] = $page->noResultsText()->value();
 
-$json['sectors']  = Utils::getTaxonomyTerms('sectors');
+$json['resourcesTaxonomy'] = Utils::getTaxonomyTerms('resourcesTaxonomy');
 $json['programs'] = Utils::getTaxonomyTerms('programs');
 $json['publics']  = Utils::getTaxonomyTerms('publics');
 
@@ -22,7 +22,7 @@ $json['sections'] = $page->sections()->toStructure()->map(function ($section) {
         'faqs'  => $section->faqs()->toStructure()->map(fn($item) => [
             'question' => $item->question()->value(),
             'answer'   => $item->answer()->value(),
-            'sectors'  => Utils::resolveTaxonomyTerms($item->sectors(), 'sectors'),
+            'resourcesTaxonomy' => Utils::resolveTaxonomyTerms($item->resourcesTaxonomy(), 'resourcesTaxonomy'),
             'programs' => Utils::resolveTaxonomyTerms($item->programs(), 'programs'),
             'publics'  => Utils::resolveTaxonomyTerms($item->publics(), 'publics'),
         ])->values(),

@@ -7,7 +7,7 @@ export interface TaxonomyTerm {
 /**
  * A term qualified by the taxonomy it comes from, so terms merged across
  * taxonomies stay distinct even when their slugs collide (e.g. the `makerlab`
- * program and sector). Built by `mergeTerms()`.
+ * program and resource). Built by `mergeTerms()`.
  */
 export interface KeyedTerm extends TaxonomyTerm {
 	readonly key: string;

@@ -3,4 +3,4 @@ label:
   en: Resources
   fr: Ressources
 options:
-  query: site.find("taxonomies").find("sectors").children
+  query: site.find("taxonomies").find("resources-taxonomy").children

@@ -10,7 +10,11 @@
 	let { page }: { page: ProjectPage } = $props();
 
 	const terms = $derived(
-		mergeTerms({ programs: page.programs, sectors: page.sectors, categories: page.categories })
+		mergeTerms({
+			programs: page.programs,
+			resourcesTaxonomy: page.resourcesTaxonomy,
+			categories: page.categories
+		})
 	);
 </script>
 

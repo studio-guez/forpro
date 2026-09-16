@@ -29,16 +29,18 @@
 
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
-	let selectedSectors = $state<string[]>(parseListParam(initialParams.get('sectors')));
+	let selectedResources = $state<string[]>(parseListParam(initialParams.get('resources')));
 	let selectedCategories = $state<string[]>(parseListParam(initialParams.get('categories')));
 	let selectedYear = $state(initialParams.get('years') ?? '');
 
 	const hasSearch = $derived(search.trim() !== '');
 
-	const sectorTerms = $derived(filterUsedTerms(page.sectors, page.usedSectors));
+	const resourceTerms = $derived(
+		filterUsedTerms(page.resourcesTaxonomy, page.usedResourcesTaxonomy)
+	);
 	const categoryTerms = $derived(filterUsedTerms(page.categories, page.usedCategories));
 
-	const activeSectors = $derived(keepKnownSlugs(selectedSectors, sectorTerms));
+	const activeResources = $derived(keepKnownSlugs(selectedResources, resourceTerms));
 	const activeCategories = $derived(keepKnownSlugs(selectedCategories, categoryTerms));
 
 	const yearOptions = $derived(
@@ -56,7 +58,7 @@
 		seed: () => page.projects,
 		filters: () => ({
 			q: search.trim(),
-			sectors: activeSectors.join(','),
+			resources: activeResources.join(','),
 			categories: activeCategories.join(','),
 			years: activeYear
 		})
@@ -65,7 +67,7 @@
 	$effect(() => {
 		syncQueryString({
 			q: search,
-			sectors: activeSectors,
+			resources: activeResources,
 			categories: activeCategories,
 			years: activeYear
 		});
@@ -77,8 +79,8 @@
 <section aria-label="Projets" class="px-base pb-12 lg:pb-16">
 	<ListToolbar {color}>
 		<FilterDropdown
-			terms={sectorTerms}
-			bind:selected={selectedSectors}
+			terms={resourceTerms}
+			bind:selected={selectedResources}
 			label="Ressources"
 			{color}
 		/>

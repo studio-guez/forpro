@@ -23,7 +23,9 @@
 	const timeStart = $derived(formatEventTime(page.timeStart));
 	const timeEnd = $derived(formatEventTime(page.timeEnd));
 
-	const terms = $derived(mergeTerms({ programs: page.programs, sectors: page.sectors }));
+	const terms = $derived(
+		mergeTerms({ programs: page.programs, resourcesTaxonomy: page.resourcesTaxonomy })
+	);
 </script>
 
 <article class="space-y-12 lg:space-y-16">
