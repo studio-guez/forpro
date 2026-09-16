@@ -6,23 +6,21 @@
 
 	let { page }: { page: HomePage } = $props();
 
-	// As wide as the hero allows, capped so the animation stays inside the hero: it is centered
-	// then shifted up by 10% of its own height, which needs a 20% margin on top of that height.
-	const lottieBox = 'w-full max-w-[calc(var(--hero-h)/1.2*var(--lottie-ratio))] -translate-y-1/10';
+	// Below md the animation simply spans the hero at its native ratio. From md up it is as wide as
+	// the hero allows, capped so it stays inside: it is centered then shifted up by 10% of its own
+	// height, which needs a 20% margin on top of that height.
+	const lottieBox =
+		'w-full md:max-w-[calc(var(--hero-h)/1.2*var(--lottie-ratio))] md:-translate-y-1/10';
 </script>
 
 {#if page.lottie}
 	<div class="lg:px-9">
 		<div
-			class="[--hero-h:30vh] sm:[--hero-h:50vh] md:[--hero-h:calc(100vh-6.75rem)] min-h-(--hero-h) flex items-end md:items-center justify-center rounded-3xl"
+			class="md:[--hero-h:calc(100vh-6.75rem)] md:min-h-(--hero-h) flex items-center justify-center rounded-3xl max-lg:px-5"
 			style="background-image: linear-gradient(180deg, rgba(148, 175, 255, 0.20) 0%, rgba(166, 189, 255, 0.00) 100%);"
 		>
 			{#if page.lottieMobile}
-				<LottiePlayer
-					file={page.lottieMobile}
-					alt={page.lottieMobile.alt}
-					class="{lottieBox} md:hidden"
-				/>
+				<LottiePlayer file={page.lottieMobile} alt={page.lottieMobile.alt} class="w-full md:hidden" />
 				<LottiePlayer file={page.lottie} alt={page.lottie.alt} class="{lottieBox} max-md:hidden" />
 			{:else}
 				<LottiePlayer file={page.lottie} alt={page.lottie.alt} class={lottieBox} />
