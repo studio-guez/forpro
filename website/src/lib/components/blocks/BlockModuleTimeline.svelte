@@ -77,7 +77,7 @@
 
 	const measure = (): void => {
 		if (!track || !stage) return;
-		// Both are 0 while the desktop layout is hidden, which leaves the block unpinned.
+		// Only the desktop grid overflows; the mobile column measures 0, which leaves the block unpinned.
 		overflow = Math.max(track.scrollWidth - track.clientWidth, 0);
 		stageHeight = stage.offsetHeight;
 		sync();
@@ -98,15 +98,6 @@
 
 <svelte:window onscroll={sync} onresize={measure} />
 
-{#snippet title()}
-	<CardTitle
-		title={content.title}
-		hideTitle={content.hideTitle}
-		class="text-center relative z-2"
-		pillClass={colors.pill}
-	/>
-{/snippet}
-
 {#snippet stepText(step: TimelineStep, titleClass: string, descClass: string)}
 	<p class="font-bold {titleClass}">{step.title}</p>
 	{#if step.shortDesc}
@@ -120,7 +111,7 @@
 {/snippet}
 
 {#snippet stepCard(step: TimelineStep)}
-	<div class="w-full rounded-2xl px-6 py-4.5 text-center {colors.card} {colors.step}">
+	<div class="w-full rounded-2xl px-6 py-4.5 text-center lg:hidden {colors.card} {colors.step}">
 		{@render stepText(step, 'text-h3', 'text-body-1 mt-4')}
 	</div>
 {/snippet}
@@ -128,7 +119,7 @@
 {#snippet stepBlob(step: TimelineStep, index: number)}
 	{@const Shape = shapes[index % shapes.length]}
 	<!-- Type is sized in cqw so the copy keeps its proportions and stays inside the blob as the step shrinks. -->
-	<div class="@container relative aspect-square w-full {colors.shape}">
+	<div class="@container relative aspect-square w-full max-lg:hidden {colors.shape}">
 		<div class="absolute -inset-1/8">
 			<Shape class="w-full h-full" />
 		</div>
@@ -140,47 +131,38 @@
 
 {#if steps.length > 0}
 	<section aria-label={content.title} class="max-w-none">
-		<div class="lg:hidden px-base">
-			{@render title()}
-			<ol class="mt-12 flex flex-col items-center">
-				{#each steps as step, i (i)}
-					<li class="flex w-full flex-col items-center sm:max-w-100">
-						{@render stepCard(step)}
-						{#if i < steps.length - 1}
-							<ArrowStepDown class="-mb-2 h-11 w-auto relative z-1 {colors.arrow}" />
-						{/if}
-					</li>
-				{/each}
-			</ol>
-		</div>
-
-		<div
-			bind:this={spacer}
-			class="max-lg:hidden"
-			style={overflow > 0 ? `height: ${stageHeight + runway}px` : ''}
-		>
+		<div bind:this={spacer} style={overflow > 0 ? `height: ${stageHeight + runway}px` : ''}>
 			<div
 				bind:this={stage}
-				class="sticky top-27 flex min-h-[calc(100vh-12rem)] flex-col justify-start gap-6"
+				class="flex flex-col justify-start gap-12 lg:sticky lg:top-27 lg:min-h-[calc(100vh-12rem)] lg:gap-6"
 			>
-				{@render title()}
+				<CardTitle
+					title={content.title}
+					hideTitle={content.hideTitle}
+					class="text-center relative z-2 max-lg:px-5"
+					pillClass={colors.pill}
+				/>
 				<ol
 					bind:this={track}
 					style="--step: min(22.5rem, calc(40vh - 120px))"
-					class="grid grid-rows-2 auto-cols-[var(--step)] gap-x-[calc(var(--step)*0.16)] gap-y-[calc(var(--step)*0.18)] py-[calc(var(--step)*0.12)] px-card-bleed overflow-x-auto overflow-y-clip scrollbar-none"
+					class="flex flex-col items-center px-card-bleed lg:grid lg:grid-rows-2 lg:auto-cols-[var(--step)] lg:gap-x-[calc(var(--step)*0.16)] lg:gap-y-[calc(var(--step)*0.18)] lg:py-[calc(var(--step)*0.12)] lg:overflow-x-auto lg:overflow-y-clip scrollbar-none"
 				>
 					{#each steps as step, i (i)}
 						{@const isTop = i % 2 === 0}
 						{@const Arrow = desktopArrows[i % desktopArrows.length]}
 						<!-- The column is set explicitly so a step never stacks under its neighbour. -->
 						<li
-							class="relative {isTop ? 'row-start-1' : 'row-start-2'}"
+							class="relative flex w-full flex-col items-center sm:max-w-100 lg:max-w-none {isTop
+								? 'lg:row-start-1'
+								: 'lg:row-start-2'}"
 							style="grid-column: {i + 1}"
 						>
+							{@render stepCard(step)}
 							{@render stepBlob(step, i)}
 							{#if i < steps.length - 1}
+								<ArrowStepDown class="-mb-2 h-11 w-auto relative z-1 lg:hidden {colors.arrow}" />
 								<div
-									class="absolute pointer-events-none {colors.arrow} {isTop
+									class="absolute pointer-events-none max-lg:hidden {colors.arrow} {isTop
 										? 'left-[18%] w-[70%] top-[110%]'
 										: 'left-[10%] w-[65%] bottom-[120%]'}"
 								>
