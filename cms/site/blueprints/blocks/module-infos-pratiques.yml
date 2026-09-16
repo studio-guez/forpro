@@ -28,14 +28,14 @@ fields:
     help:
       en: Optional. If added, all 3 descriptions must be filled in; titles are optional.
       fr: Optionnel. Si ajouté, les 3 descriptions doivent être remplies ; les titres sont facultatifs.
-  sectors:
-    extends: fields/taxonomies/sectors
+  programs:
+    extends: fields/taxonomies/programs
     width: 1/2
     help:
       en: Filters the questions shown in the block.
       fr: Filtre les questions affichées dans le module.
-  programs:
-    extends: fields/taxonomies/programs
+  resourcesTaxonomy:
+    extends: fields/taxonomies/resourcesTaxonomy
     width: 1/2
     help:
       en: Filters the questions shown in the block.

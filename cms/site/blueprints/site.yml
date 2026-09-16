@@ -151,23 +151,23 @@ tabs:
             info: "{{ page.hasListedChildren ? page.children.listed.count : '' }}{{ page.hasListedChildren ? ' sous-publics' : '' }}"
       - width: 1/2
         sections:
-          sectors:
+          resourcesTaxonomy:
             type: pages
             image: false
             label:
               en: Resources
               fr: Ressources
             templates:
-              - sector
-            parent: site.index.template("sectors").first()
+              - resource-taxonomy-term
+            parent: site.index.template("resources-taxonomy").first()
       - width: 1/2
         sections:
           categories:
             type: pages
             image: false
             label:
-              en: Categories (missions)
-              fr: Catégories (missions)
+              en: Categories
+              fr: Catégories
             templates:
               - category
             parent: site.index.template("categories").first()

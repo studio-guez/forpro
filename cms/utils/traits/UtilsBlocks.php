@@ -218,7 +218,7 @@ trait UtilsBlocks
         $elements = self::getThreeElements($block->elements());
 
         $filters = [
-            'sectors'  => array_column(self::resolveTaxonomyTerms($block->sectors(), 'sectors'), 'slug'),
+            'resourcesTaxonomy' => array_column(self::resolveTaxonomyTerms($block->resourcesTaxonomy(), 'resourcesTaxonomy'), 'slug'),
             'programs' => array_column(self::resolveTaxonomyTerms($block->programs(), 'programs'), 'slug'),
             'publics'  => array_column(self::resolveTaxonomyTerms($block->publics(), 'publics'), 'slug'),
         ];
@@ -243,12 +243,13 @@ trait UtilsBlocks
             }
         }
 
-        // The filters travel as `?sectors=a,b&programs=…&publics=…`, which the FAQ page reads to pre-select its own.
+        // The filters travel as `?resources=a,b&programs=…&publics=…`, which the FAQ page reads to pre-select its own.
         $ctaUrl = null;
         if ($faqPage) {
+            $queryParams = ['resourcesTaxonomy' => 'resources'];
             $query = [];
             foreach ($filters as $field => $slugs) {
-                if ($slugs) $query[] = $field . '=' . implode(',', $slugs);
+                if ($slugs) $query[] = ($queryParams[$field] ?? $field) . '=' . implode(',', $slugs);
             }
             $ctaUrl = '/' . $faqPage->virtualPath() . ($query ? '?' . implode('&', $query) : '');
         }
@@ -294,6 +295,7 @@ trait UtilsBlocks
     {
         $filters = [
             'programs' => array_column(self::resolveTaxonomyTerms($block->programs(), 'programs'), 'slug'),
+            'resourcesTaxonomy' => array_column(self::resolveTaxonomyTerms($block->resourcesTaxonomy(), 'resourcesTaxonomy'), 'slug'),
             'publics'  => array_column(self::resolveTaxonomyTerms($block->publics(), 'publics'), 'slug'),
         ];
 
@@ -329,8 +331,8 @@ trait UtilsBlocks
     private static function getProjetsBlockData(\Kirby\Cms\Block $block): array
     {
         $filters = [
-            'programs'   => array_column(self::resolveTaxonomyTerms($block->programs(), 'programs'), 'slug'),
-            'categories' => array_column(self::resolveTaxonomyTerms($block->categories(), 'categories'), 'slug'),
+            'programs' => array_column(self::resolveTaxonomyTerms($block->programs(), 'programs'), 'slug'),
+            'resourcesTaxonomy' => array_column(self::resolveTaxonomyTerms($block->resourcesTaxonomy(), 'resourcesTaxonomy'), 'slug'),
         ];
 
         $projectsPage = site()->index()->template('projects')->first();

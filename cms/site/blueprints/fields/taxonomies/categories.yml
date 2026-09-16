@@ -1,6 +1,6 @@
 extends: fields/taxonomies/taxonomy
 label:
-  en: Categories (missions)
-  fr: Catégories (missions)
+  en: Categories
+  fr: Catégories
 options:
   query: site.find("taxonomies").find("categories").children

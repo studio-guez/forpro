@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CtaLink from '$lib/components/ui/CtaLink.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
+	import { mergeTerms } from '$lib/utils/shared';
 	import { formatShortDate, toDate } from '$lib/utils/date';
 	import type { AgendaEventCard } from '$lib/interfaces/page';
 
@@ -20,7 +21,9 @@
 	}: Props = $props();
 
 	const start = $derived(toDate(event.dateStart));
-	const terms = $derived(event.programs);
+	const terms = $derived(
+		mergeTerms({ programs: event.programs, resourcesTaxonomy: event.resourcesTaxonomy })
+	);
 
 	const cta = $derived({
 		label: detailsLabel,
@@ -47,7 +50,7 @@
 					<span class="text-label text-(--row-color)" aria-hidden="true">·</span>
 				{/if}
 			{/if}
-			<TermTags {terms} label="Thématiques" size="md" />
+			<TermTags {terms} label="Tags" size="md" />
 		</div>
 	</div>
 

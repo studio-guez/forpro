@@ -42,7 +42,7 @@ tabs:
             columns:
               question:
                 width: 1/2
-              sectors:
+              resourcesTaxonomy:
                 width: 1/2
             fields:
               question:
@@ -57,12 +57,12 @@ tabs:
                   en: Answer
                   fr: Réponse
                 required: true
-              sectors:
-                extends: fields/taxonomies/sectors
-              programs:
-                extends: fields/taxonomies/programs
               publics:
                 extends: fields/taxonomies/publics
+              programs:
+                extends: fields/taxonomies/programs
+              resourcesTaxonomy:
+                extends: fields/taxonomies/resourcesTaxonomy
       messagesLabel:
         label:
           en: Empty-state messages

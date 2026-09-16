@@ -3,17 +3,16 @@
 	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
 	import IconArrow from '$lib/components/svg/IconArrow.svelte';
 	import BlockModuleTimeline from '$lib/components/blocks/BlockModuleTimeline.svelte';
-	import TermTags from '$lib/components/ui/TermTags.svelte';
 	import CardSmall2Cols from '$lib/components/ui/CardSmall2Cols.svelte';
 	import ApplicationsClosedNotice from '$lib/components/ui/ApplicationsClosedNotice.svelte';
 	import { toDate } from '$lib/utils/date';
+	import { TAG_BASE, tagColorClasses, tagSizeClasses } from '$lib/utils/tagStyles';
 	import type { JobOfferPage } from '$lib/interfaces/jobOffers';
 
 	let { page }: { page: JobOfferPage } = $props();
 
 	const dateFormat = new Intl.DateTimeFormat('fr-CH', { dateStyle: 'long' });
 
-	const terms = $derived(page.sectors);
 	const deadline = $derived(toDate(page.deadline));
 
 	const activityRate = $derived(
@@ -44,7 +43,14 @@
 
 			<h1 class="text-h1 text-blue">{page.title}</h1>
 
-			<TermTags {terms} label="Catégories" />
+			{#if page.sector}
+				<p
+					style:--term-color="var(--color-teal)"
+					class={['inline-block', TAG_BASE, tagSizeClasses.lg, tagColorClasses('lg', false)]}
+				>
+					{page.sector}
+				</p>
+			{/if}
 		</section>
 
 		<div class="px-base space-y-10">

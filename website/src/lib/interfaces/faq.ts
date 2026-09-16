@@ -6,7 +6,7 @@ export type { TaxonomyTerm };
 export interface FaqItem {
 	readonly question: string;
 	readonly answer: string;
-	readonly sectors: TaxonomyTerm[];
+	readonly resourcesTaxonomy: TaxonomyTerm[];
 	readonly programs: TaxonomyTerm[];
 	readonly publics: TaxonomyTerm[];
 }
@@ -23,7 +23,7 @@ export interface FaqPage {
 	readonly path: string;
 	/** HTML, shown when the search or the filters match no question. */
 	readonly noResultsText: string;
-	readonly sectors: TaxonomyFilterTerm[];
+	readonly resourcesTaxonomy: TaxonomyFilterTerm[];
 	readonly programs: TaxonomyFilterTerm[];
 	readonly publics: TaxonomyFilterTerm[];
 	readonly sections: FaqSection[];

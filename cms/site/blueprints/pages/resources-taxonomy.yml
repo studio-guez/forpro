@@ -6,4 +6,4 @@ sections:
   terms:
     label: Ressources
     templates:
-      - sector
+      - resource-taxonomy-term
