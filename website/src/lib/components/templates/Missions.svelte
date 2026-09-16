@@ -23,7 +23,6 @@
 	let { page }: { page: MissionsPage } = $props();
 
 	const color = 'var(--color-blue)';
-	const noResultsText = 'Aucune mission ne correspond à votre sélection.';
 
 	// An unset sort is the CMS default (most recently published first), so that is the empty option rather than a `dateDesc` of its own.
 	const sortOptions = [
@@ -88,9 +87,10 @@
 			{/each}
 		</ul>
 	{:else}
-		<p class="text-body-1 text-black text-center border-t border-black pt-12 mt-12">
-			{noResultsText}
-		</p>
+		<div class="prose text-body-1 text-black text-center border-t border-black pt-12 mt-12">
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -- rich text comes from the trusted CMS writer field -->
+			{@html page.noResultsText}
+		</div>
 	{/if}
 
 	<InfiniteScroll

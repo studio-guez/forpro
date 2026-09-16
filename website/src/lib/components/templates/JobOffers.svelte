@@ -28,9 +28,10 @@
 			{/each}
 		</div>
 	{:else}
-		<p class="text-body-1 text-grey-dark text-center border-t border-black mt-9 pt-12">
-			Aucune offre d'emploi n'est ouverte pour le moment.
-		</p>
+		<div class="prose text-body-1 text-grey-dark text-center border-t border-black mt-9 pt-12">
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -- rich text comes from the trusted CMS writer field -->
+			{@html page.noOffersText}
+		</div>
 	{/if}
 </section>
 

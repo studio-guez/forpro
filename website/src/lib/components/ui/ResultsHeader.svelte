@@ -7,6 +7,7 @@
 		count: number;
 		/** Result noun, e.g. `['événement', 'événements']`. */
 		nouns: [string, string];
+		/** HTML (writer field). */
 		noResultsText?: string;
 		color?: string;
 		/** Band it is drawn as; `section` where it stands in for a browsable band. */
@@ -34,6 +35,7 @@
 	</h2>
 
 	{#if count === 0}
-		<p class="text-body-1 mt-2.5 text-(--list-color)">{noResultsText}</p>
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -- rich text comes from the trusted CMS writer field -->
+		<div class="prose text-body-1 mt-2.5 text-(--list-color)">{@html noResultsText}</div>
 	{/if}
 </ListHeader>

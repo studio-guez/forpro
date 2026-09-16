@@ -21,6 +21,8 @@ export interface FaqPage {
 	readonly title: string;
 	readonly slug: string;
 	readonly path: string;
+	/** HTML, shown when the search or the filters match no question. */
+	readonly noResultsText: string;
 	readonly sectors: TaxonomyFilterTerm[];
 	readonly programs: TaxonomyFilterTerm[];
 	readonly publics: TaxonomyFilterTerm[];

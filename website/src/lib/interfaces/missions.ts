@@ -50,6 +50,8 @@ export interface MissionsPage {
 	readonly introTitle: string;
 	readonly intro: string;
 	readonly parentPage: PageParent | null;
+	/** HTML, shown when the filters match no mission. */
+	readonly noResultsText: string;
 	readonly categories: TaxonomyFilterTerm[];
 	/** Category term slugs carried by at least one mission. */
 	readonly usedCategories: string[];
