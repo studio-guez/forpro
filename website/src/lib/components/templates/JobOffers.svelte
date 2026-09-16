@@ -16,6 +16,7 @@
 	<CardTitle
 		id="job-offers-title"
 		title="Offres d'emploi disponibles"
+		hideTitle="true"
 		class="text-center"
 		pillClass="bg-blue text-white"
 	/>
