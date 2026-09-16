@@ -1,5 +1,5 @@
 title:
-  en: Sector
-  fr: Secteur
+  en: Resource
+  fr: Ressource
 
 extends: pages/taxonomy-term

@@ -129,8 +129,8 @@ tabs:
             type: pages
             image: false
             label:
-              en: Pages (taxonomy)
-              fr: Pages (taxonomie)
+              en: Programs
+              fr: Programmes
             templates:
               - program
             parent: site.index.template("programs").first()
@@ -155,8 +155,8 @@ tabs:
             type: pages
             image: false
             label:
-              en: Sectors
-              fr: Secteurs
+              en: Resources
+              fr: Ressources
             templates:
               - sector
             parent: site.index.template("sectors").first()
@@ -166,8 +166,8 @@ tabs:
             type: pages
             image: false
             label:
-              en: Categories
-              fr: Catégories
+              en: Categories (missions)
+              fr: Catégories (missions)
             templates:
               - category
             parent: site.index.template("categories").first()
