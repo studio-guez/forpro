@@ -63,6 +63,18 @@ tabs:
                 extends: fields/taxonomies/programs
               publics:
                 extends: fields/taxonomies/publics
+      messagesLabel:
+        label:
+          en: Empty-state messages
+          fr: Messages d'absence de résultats
+        type: headline
+      noResultsText:
+        label:
+          en: No search result
+          fr: Aucun résultat de recherche
+        extends: fields/writer
+        required: true
+        default: "<p>Aucune question ne correspond à votre recherche.</p>"
       body:
         extends: fields/bodyExtra
         # The infos pratiques module would just duplicate the listing above.

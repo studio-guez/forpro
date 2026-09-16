@@ -26,7 +26,6 @@
 	const cardSizes = toSizes(cell(PAGE, { 0: 1, 640: 2, 1024: 3 }, 1.5));
 
 	const color = 'var(--color-orange)';
-	const noResultsText = 'Aucun projet ne correspond à votre recherche.';
 
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
@@ -104,7 +103,7 @@
 				query={search.trim()}
 				count={archive.total}
 				nouns={['projet', 'projets']}
-				{noResultsText}
+				noResultsText={page.noResultsText}
 				{color}
 				variant="section"
 				rule={false}
@@ -116,7 +115,8 @@
 				<h2 class="sr-only md:not-sr-only text-h2 text-(--list-color) lg:h-15">Tous les projets</h2>
 
 				{#if archive.total === 0}
-					<p class="text-body-1 text-(--list-color) mt-2.5">{noResultsText}</p>
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -- rich text comes from the trusted CMS writer field -->
+					<div class="prose text-body-1 text-(--list-color) mt-2.5">{@html page.noResultsText}</div>
 				{/if}
 			</ListHeader>
 		</div>

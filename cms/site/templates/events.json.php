@@ -8,6 +8,10 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'events');
 
+$json['noResultsText']     = $page->noResultsText()->value();
+$json['noUpcomingText']    = $page->noUpcomingText()->value();
+$json['noPastResultsText'] = $page->noPastResultsText()->value();
+
 $json['programs'] = Utils::getTaxonomyTerms('programs');
 $json['publics']  = Utils::getTaxonomyTerms('publics');
 

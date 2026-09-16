@@ -8,6 +8,8 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'faq');
 
+$json['noResultsText'] = $page->noResultsText()->value();
+
 $json['sectors']  = Utils::getTaxonomyTerms('sectors');
 $json['programs'] = Utils::getTaxonomyTerms('programs');
 $json['publics']  = Utils::getTaxonomyTerms('publics');

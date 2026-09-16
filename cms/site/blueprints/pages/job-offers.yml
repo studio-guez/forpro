@@ -49,6 +49,21 @@ tabs:
               en: Introduction
               fr: Introduction
             extends: fields/writer
+      messages:
+        type: fields
+        fields:
+          messagesLabel:
+            label:
+              en: Empty-state messages
+              fr: Messages d'absence de résultats
+            type: headline
+          noOffersText:
+            label:
+              en: No open job offer
+              fr: Aucune offre ouverte
+            extends: fields/writer
+            required: true
+            default: "<p>Aucune offre d'emploi n'est ouverte pour le moment.</p>"
       extra:
         type: fields
         fields:

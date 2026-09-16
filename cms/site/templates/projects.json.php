@@ -8,6 +8,8 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'projects');
 
+$json['noResultsText'] = $page->noResultsText()->value();
+
 $json['programs'] = Utils::getTaxonomyTerms('programs');
 
 $projects = $page->children()->listed();

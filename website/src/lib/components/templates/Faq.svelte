@@ -24,7 +24,6 @@
 	let { page }: { page: FaqPage } = $props();
 
 	const color = 'var(--color-teal)';
-	const noResultsText = 'Aucune question ne correspond à votre recherche.';
 
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
@@ -192,7 +191,7 @@
 			query={search.trim()}
 			count={searchResults.length}
 			nouns={['question', 'questions']}
-			{noResultsText}
+			noResultsText={page.noResultsText}
 			{color}
 			variant="section"
 			rule={false}
@@ -206,9 +205,10 @@
 			</div>
 		{/if}
 	{:else if filteredSections.length === 0}
-		<p class="text-body-1 text-grey-dark text-center border-t border-black pt-12">
-			{noResultsText}
-		</p>
+		<div class="prose text-body-1 text-grey-dark text-center border-t border-black pt-12">
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -- rich text comes from the trusted CMS writer field -->
+			{@html page.noResultsText}
+		</div>
 	{:else}
 		{#each filteredSections as section, position (section.index)}
 			<ExpandableSection
