@@ -8,11 +8,7 @@
 	import ArrowStepDesktop2 from '$lib/components/svg/ArrowStepDesktop2.svelte';
 	import ArrowStepDesktop3 from '$lib/components/svg/ArrowStepDesktop3.svelte';
 	import ArrowStepDesktop4 from '$lib/components/svg/ArrowStepDesktop4.svelte';
-	import ArrowStepMobile1 from '$lib/components/svg/ArrowStepMobile1.svelte';
-	import ArrowStepMobile2 from '$lib/components/svg/ArrowStepMobile2.svelte';
-	import ArrowStepMobile3 from '$lib/components/svg/ArrowStepMobile3.svelte';
-	import ArrowStepMobile4 from '$lib/components/svg/ArrowStepMobile4.svelte';
-	import ArrowStepMobile5 from '$lib/components/svg/ArrowStepMobile5.svelte';
+	import ArrowStepDown from '$lib/components/svg/ArrowStepDown.svelte';
 	import CardTitle from '$lib/components/ui/CardTitle.svelte';
 	import type { ModuleTimelineContent, Theme, TimelineStep } from '$lib/interfaces/page';
 
@@ -28,12 +24,14 @@
 	const palettes = {
 		default: {
 			shape: 'text-green',
+			card: 'bg-green',
 			step: 'text-blue',
 			pill: 'bg-blue text-white',
 			arrow: 'text-pink'
 		},
 		projets_jeunes: {
 			shape: 'text-orange-pale',
+			card: 'bg-orange-pale',
 			step: 'text-orange',
 			pill: 'bg-orange text-white',
 			arrow: 'text-orange'
@@ -49,19 +47,6 @@
 		ArrowStepDesktop3,
 		ArrowStepDesktop4
 	];
-	const mobileArrows = [
-		ArrowStepMobile1,
-		ArrowStepMobile2,
-		ArrowStepMobile3,
-		ArrowStepMobile4,
-		ArrowStepMobile5
-	];
-	/**
-	 * Which way each mobile connector is drawn. A step on the left needs one pointing
-	 * right and vice versa, so the ones that come out of the cycle facing the wrong way
-	 * are mirrored rather than duplicated as extra assets.
-	 */
-	const mobileArrowPointsLeft = [true, false, true, false, true];
 
 	/** Scroll runway: as tall as the horizontal distance the steps have to travel. */
 	let spacer: HTMLDivElement | undefined = $state();
@@ -117,58 +102,52 @@
 	<CardTitle
 		title={content.title}
 		hideTitle={content.hideTitle}
-		class="text-center px-card relative z-2"
+		class="text-center relative z-2"
 		pillClass={colors.pill}
 	/>
 {/snippet}
 
-{#snippet stepContent(step: TimelineStep, index: number)}
+{#snippet stepText(step: TimelineStep, titleClass: string, descClass: string)}
+	<p class="font-bold {titleClass}">{step.title}</p>
+	{#if step.shortDesc}
+		<p
+			class="font-bold whitespace-pre-line [&_a]:underline [&_a]:transition-opacity [&_a:hover]:opacity-50 {descClass}"
+		>
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -- sanitized by the CMS: `<a>` is the only tag `Utils::getLinkedText()` lets through -->
+			{@html step.shortDesc}
+		</p>
+	{/if}
+{/snippet}
+
+{#snippet stepCard(step: TimelineStep)}
+	<div class="w-full rounded-2xl px-6 py-4.5 text-center {colors.card} {colors.step}">
+		{@render stepText(step, 'text-h3', 'text-body-1 mt-4')}
+	</div>
+{/snippet}
+
+{#snippet stepBlob(step: TimelineStep, index: number)}
 	{@const Shape = shapes[index % shapes.length]}
 	<!-- Type is sized in cqw so the copy keeps its proportions and stays inside the blob as the step shrinks. -->
 	<div class="@container relative aspect-square w-full {colors.shape}">
-		<div class="absolute -inset-2/25 lg:-inset-1/8">
+		<div class="absolute -inset-1/8">
 			<Shape class="w-full h-full" />
 		</div>
 		<div class="absolute inset-0 flex flex-col justify-center px-[15%] {colors.step}">
-			<p class="text-[9cqw]/[1.05] font-bold">{step.title}</p>
-			{#if step.shortDesc}
-				<p
-					class="text-[6.6cqw]/[1.2] font-bold mt-[5cqw] whitespace-pre-line [&_a]:underline [&_a]:transition-opacity [&_a:hover]:opacity-50"
-				>
-					<!-- eslint-disable-next-line svelte/no-at-html-tags -- sanitized by the CMS: `<a>` is the only tag `Utils::getLinkedText()` lets through -->
-					{@html step.shortDesc}
-				</p>
-			{/if}
+			{@render stepText(step, 'text-[9cqw]/[1.05]', 'text-[6.6cqw]/[1.2] mt-[5cqw]')}
 		</div>
 	</div>
 {/snippet}
 
 {#if steps.length > 0}
 	<section aria-label={content.title} class="max-w-none">
-		<!-- The wrapper clips: the blobs overhang their box and must not create a horizontal page scroll. -->
-		<div class="lg:hidden overflow-x-clip">
+		<div class="lg:hidden px-base">
 			{@render title()}
-			<ol class="px-card mt-12 grid grid-cols-3 md:grid-cols-2 gap-y-16 md:gap-y-8 lg:gap-y-24">
+			<ol class="mt-12 flex flex-col items-center">
 				{#each steps as step, i (i)}
-					{@const isLeft = i % 2 === 0}
-					{@const arrowIndex = i % mobileArrows.length}
-					{@const Arrow = mobileArrows[arrowIndex]}
-					{@const mirrored = mobileArrowPointsLeft[arrowIndex] !== isLeft}
-					<li
-						class="relative col-span-2 md:col-span-1 {isLeft
-							? 'col-start-1'
-							: 'col-start-2 md:col-start-2'}"
-						style="grid-row: {i + 1}"
-					>
-						{@render stepContent(step, i)}
+					<li class="flex w-full flex-col items-center sm:max-w-100">
+						{@render stepCard(step)}
 						{#if i < steps.length - 1}
-							<div
-								class="absolute top-[28%] max-w-200 z-1 {colors.arrow} {isLeft
-									? 'left-[112%]'
-									: 'right-[112%]'} {mirrored ? '-scale-x-100' : ''}"
-							>
-								<Arrow class="max-md:max-w-25" />
-							</div>
+							<ArrowStepDown class="-mb-2 h-11 w-auto relative z-1 {colors.arrow}" />
 						{/if}
 					</li>
 				{/each}
@@ -198,7 +177,7 @@
 							class="relative {isTop ? 'row-start-1' : 'row-start-2'}"
 							style="grid-column: {i + 1}"
 						>
-							{@render stepContent(step, i)}
+							{@render stepBlob(step, i)}
 							{#if i < steps.length - 1}
 								<div
 									class="absolute pointer-events-none {colors.arrow} {isTop
