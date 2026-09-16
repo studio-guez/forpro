@@ -119,7 +119,8 @@
 		requestedQuestion ? { [requestedQuestion]: true } : {}
 	);
 
-	let openSections = $state<number[]>([Math.max(sectionOfQuestion(requestedQuestion), 0)]);
+	const requestedSection = sectionOfQuestion(requestedQuestion);
+	let openSections = $state<number[]>(requestedSection === -1 ? [] : [requestedSection]);
 	const isSectionOpen = (index: number): boolean => isFiltering || openSections.includes(index);
 
 	const setSectionOpen = (index: number, open: boolean): void => {
