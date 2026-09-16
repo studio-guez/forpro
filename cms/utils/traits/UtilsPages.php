@@ -133,6 +133,7 @@ trait UtilsPages
             'cover'     => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             ...self::getEventDateFields($page),
             'programs'  => self::resolveTaxonomyTerms($page->programs(), 'programs'),
+            'sectors'   => self::resolveTaxonomyTerms($page->sectors(), 'sectors'),
             'publics'   => self::resolveTaxonomyTerms($page->publics(), 'publics'),
         ];
     }
@@ -237,27 +238,30 @@ trait UtilsPages
      * Filtered, paginated projects of a projects index, most recent first.
      *
      * The filters mirror the frontend ones: `$query` is matched as a whole
-     * phrase against the title only; `$programs` is a **raw** selection of
-     * term slugs; `$years` is a list of years as strings, matched on the year
-     * of the `date` field.
+     * phrase against the title only; `$sectors` and `$categories` are **raw**
+     * selections of term slugs; `$years` is a list of years as strings, matched
+     * on the year of the `date` field.
      *
      * @return array{offset:int, total:int, hasMore:bool, items:array<int,array>}
      */
     static function getProjects(
         \Kirby\Cms\Pages $projects,
         string $query = '',
-        array $programs = [],
+        array $sectors = [],
+        array $categories = [],
         array $years = [],
         int $offset = 0,
         int $limit = 12
     ): array {
         // resolveTaxonomySelection() mirrors the frontend rule, so a URL means the same on both ends.
-        $projects = self::filterPagesByTaxonomy(
-            $projects,
-            'programs',
-            self::resolveTaxonomySelection('programs', $programs),
-            false
-        );
+        foreach (['sectors' => $sectors, 'categories' => $categories] as $taxonomy => $selection) {
+            $projects = self::filterPagesByTaxonomy(
+                $projects,
+                $taxonomy,
+                self::resolveTaxonomySelection($taxonomy, $selection),
+                false
+            );
+        }
 
         if ($years !== []) {
             $projects = $projects->filter(
@@ -373,6 +377,7 @@ trait UtilsPages
             'collectiveName' => $page->collectiveName()->isNotEmpty() ? $page->collectiveName()->value() : null,
             'date'           => $page->date()->toDate('Y-m-d'),
             'programs'       => self::resolveTaxonomyTerms($page->programs(), 'programs'),
+            'sectors'        => self::resolveTaxonomyTerms($page->sectors(), 'sectors'),
             'categories'     => self::resolveTaxonomyTerms($page->categories(), 'categories'),
         ];
     }
@@ -389,7 +394,7 @@ trait UtilsPages
             'location'      => $page->location()->value(),
             'deadline'      => $page->deadline()->toDate('Y-m-d'),
             ...self::getActivityRate($page),
-            'terms'         => self::resolveTaxonomyTerms($page->sectors(), 'sectors'),
+            'sector'        => $page->sector()->isNotEmpty() ? $page->sector()->value() : null,
         ];
     }
 

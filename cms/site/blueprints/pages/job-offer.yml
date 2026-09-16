@@ -35,8 +35,11 @@ tabs:
                 required: true
               sepTaxonomies:
                 type: line
-              sectors:
-                extends: fields/taxonomies/sectors
+              sector:
+                label:
+                  en: Sector
+                  fr: Secteur
+                type: text
           infos:
             type: fields
             fields:

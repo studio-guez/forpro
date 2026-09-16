@@ -28,6 +28,12 @@ fields:
     help:
       en: Filters the events shown in the block.
       fr: Filtre les événements affichés dans le module.
+  sectors:
+    extends: fields/taxonomies/sectors
+    width: 1/2
+    help:
+      en: Filters the events shown in the block.
+      fr: Filtre les événements affichés dans le module.
   publics:
     extends: fields/taxonomies/publics
     width: 1/2

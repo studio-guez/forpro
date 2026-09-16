@@ -29,14 +29,17 @@
 
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
-	let selectedPrograms = $state<string[]>(parseListParam(initialParams.get('programs')));
+	let selectedSectors = $state<string[]>(parseListParam(initialParams.get('sectors')));
+	let selectedCategories = $state<string[]>(parseListParam(initialParams.get('categories')));
 	let selectedYear = $state(initialParams.get('years') ?? '');
 
 	const hasSearch = $derived(search.trim() !== '');
 
-	const programTerms = $derived(filterUsedTerms(page.programs, page.usedPrograms));
+	const sectorTerms = $derived(filterUsedTerms(page.sectors, page.usedSectors));
+	const categoryTerms = $derived(filterUsedTerms(page.categories, page.usedCategories));
 
-	const activePrograms = $derived(keepKnownSlugs(selectedPrograms, programTerms));
+	const activeSectors = $derived(keepKnownSlugs(selectedSectors, sectorTerms));
+	const activeCategories = $derived(keepKnownSlugs(selectedCategories, categoryTerms));
 
 	const yearOptions = $derived(
 		page.years.map((year) => ({ value: String(year), label: String(year) }))
@@ -53,7 +56,8 @@
 		seed: () => page.projects,
 		filters: () => ({
 			q: search.trim(),
-			programs: activePrograms.join(','),
+			sectors: activeSectors.join(','),
+			categories: activeCategories.join(','),
 			years: activeYear
 		})
 	});
@@ -61,7 +65,8 @@
 	$effect(() => {
 		syncQueryString({
 			q: search,
-			programs: activePrograms,
+			sectors: activeSectors,
+			categories: activeCategories,
 			years: activeYear
 		});
 	});
@@ -72,9 +77,15 @@
 <section aria-label="Projets" class="px-base pb-12 lg:pb-16">
 	<ListToolbar {color}>
 		<FilterDropdown
-			terms={programTerms}
-			bind:selected={selectedPrograms}
+			terms={sectorTerms}
+			bind:selected={selectedSectors}
 			label="Ressources"
+			{color}
+		/>
+		<FilterDropdown
+			terms={categoryTerms}
+			bind:selected={selectedCategories}
+			label="Catégories"
 			{color}
 		/>
 		{#if yearOptions.length > 0}

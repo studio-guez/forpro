@@ -2,7 +2,7 @@
 	import Img from '$lib/components/ui/Img.svelte';
 	import IconArrow from '$lib/components/svg/IconArrow.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
-	import { termColor } from '$lib/utils/shared';
+	import { mergeTerms, termColor } from '$lib/utils/shared';
 	import {
 		formatEventDate,
 		formatEventDateRange,
@@ -29,6 +29,8 @@
 	const range = $derived(start && end ? formatEventDateRange(start, end) : null);
 	const timeStart = $derived(formatEventTime(event.timeStart));
 	const timeEnd = $derived(formatEventTime(event.timeEnd));
+
+	const terms = $derived(mergeTerms({ programs: event.programs, sectors: event.sectors }));
 
 	const SEAM = 0.5; // share of a band spent fading into the next one
 	const programColors = $derived(event.programs.map(termColor));
@@ -87,7 +89,7 @@
 				{/if}
 				<div class="flex items-end justify-between gap-4">
 					<div class="min-w-0">
-						<TermTags terms={event.programs} label="Programmes" size="sm" class="mb-1.5" />
+						<TermTags {terms} label="Tags" size="sm" class="mb-1.5" />
 						{#if start}
 							<p class="text-body-2">
 								{#if range}

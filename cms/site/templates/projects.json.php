@@ -10,11 +10,13 @@ $json = Utils::getPageBaseData($page, 'projects');
 
 $json['noResultsText'] = $page->noResultsText()->value();
 
-$json['programs'] = Utils::getTaxonomyTerms('programs');
+$json['sectors']    = Utils::getTaxonomyTerms('sectors');
+$json['categories'] = Utils::getTaxonomyTerms('categories');
 
 $projects = $page->children()->listed();
 
-$json['usedPrograms'] = Utils::getUsedTaxonomySlugs($projects, 'programs');
+$json['usedSectors']    = Utils::getUsedTaxonomySlugs($projects, 'sectors');
+$json['usedCategories'] = Utils::getUsedTaxonomySlugs($projects, 'categories');
 
 $json['years'] = Utils::getProjectYears($projects);
 
@@ -22,7 +24,8 @@ $json['years'] = Utils::getProjectYears($projects);
 $json['projects'] = Utils::getProjects(
     $projects,
     mb_substr((string)(get('q') ?? ''), 0, 100),
-    array_filter(explode(',', (string)(get('programs') ?? ''))),
+    array_filter(explode(',', (string)(get('sectors') ?? ''))),
+    array_filter(explode(',', (string)(get('categories') ?? ''))),
     array_filter(explode(',', (string)(get('years') ?? '')))
 );
 

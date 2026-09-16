@@ -165,7 +165,12 @@
 <section aria-label="Questions et réponses" class="px-base pb-12 lg:pb-16">
 	<ListToolbar {color}>
 		<FilterDropdown terms={publicTerms} bind:selected={selectedPublics} label="Publics" {color} />
-		<FilterDropdown terms={sectorTerms} bind:selected={selectedSectors} label="Ressources" {color} />
+		<FilterDropdown
+			terms={sectorTerms}
+			bind:selected={selectedSectors}
+			label="Ressources"
+			{color}
+		/>
 		<FilterDropdown
 			terms={programTerms}
 			bind:selected={selectedPrograms}

@@ -20,7 +20,11 @@
 			style="background-image: linear-gradient(180deg, rgba(148, 175, 255, 0.20) 0%, rgba(166, 189, 255, 0.00) 100%);"
 		>
 			{#if page.lottieMobile}
-				<LottiePlayer file={page.lottieMobile} alt={page.lottieMobile.alt} class="w-full md:hidden" />
+				<LottiePlayer
+					file={page.lottieMobile}
+					alt={page.lottieMobile.alt}
+					class="w-full md:hidden"
+				/>
 				<LottiePlayer file={page.lottie} alt={page.lottie.alt} class="{lottieBox} max-md:hidden" />
 			{:else}
 				<LottiePlayer file={page.lottie} alt={page.lottie.alt} class={lottieBox} />
