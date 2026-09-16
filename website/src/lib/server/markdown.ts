@@ -379,6 +379,7 @@ function renderTemplate(page: CmsContent, origin: string): string {
 					bullet('Horaire', [page.timeStart, page.timeEnd].filter(Boolean).join(' – ')),
 					bullet('Lieu', page.location),
 					bullet('Programmes', termNames(page.programs)),
+					bullet('Ressources', termNames(page.resourcesTaxonomy)),
 					bullet('Publics', termNames(page.publics))
 				]),
 				bodyBlocks(page.body, origin)
@@ -392,6 +393,7 @@ function renderTemplate(page: CmsContent, origin: string): string {
 					bullet('Collectif', page.collectiveName),
 					bullet('Membres', page.collectiveMembers.map((member) => member.name).join(', ')),
 					bullet('Programmes', termNames(page.programs)),
+					bullet('Ressources', termNames(page.resourcesTaxonomy)),
 					bullet('Catégories', termNames(page.categories))
 				]),
 				bodyBlocks(page.body, origin)
@@ -409,7 +411,7 @@ function renderTemplate(page: CmsContent, origin: string): string {
 					),
 					bullet('Entrée en fonction', page.startDate),
 					bullet('Délai de candidature', page.deadline),
-					bullet('Secteurs', termNames(page.sectors)),
+					bullet('Secteur', page.sector),
 					bullet(
 						'Candidatures',
 						page.openToApplications ? (page.applicationEmail ?? 'ouvertes') : 'closes'

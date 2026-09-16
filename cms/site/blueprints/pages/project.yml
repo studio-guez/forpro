@@ -31,6 +31,8 @@ tabs:
                 required: true
               programs:
                 extends: fields/taxonomies/programs
+              resourcesTaxonomy:
+                extends: fields/taxonomies/resourcesTaxonomy
               categories:
                 extends: fields/taxonomies/categories
                 max: 1

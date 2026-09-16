@@ -1,7 +1,13 @@
-import type { TaxonomyTerm } from '$lib/interfaces/taxonomy';
+import type { KeyedTerm, TaxonomyTerm } from '$lib/interfaces/taxonomy';
 
 export const termColor = (term: TaxonomyTerm): string =>
 	term.color ? `var(--color-${term.color})` : 'var(--color-teal)';
+
+/** Flattens terms from several taxonomies, keyed by `<taxonomy>-<slug>`, in insertion order. */
+export const mergeTerms = (groups: Record<string, TaxonomyTerm[]>): KeyedTerm[] =>
+	Object.entries(groups).flatMap(([taxonomy, terms]) =>
+		terms.map((term) => ({ ...term, key: `${taxonomy}-${term.slug}` }))
+	);
 
 const headers = new Headers();
 headers.append('Content-Type', 'application/json');
