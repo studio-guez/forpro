@@ -12,9 +12,9 @@
 </script>
 
 {#if page.lottie}
-	<div class="px-base">
+	<div class="lg:px-9">
 		<div
-			class="[--hero-h:50vh] md:[--hero-h:calc(100vh-6.75rem)] min-h-(--hero-h) flex items-end md:items-center justify-center rounded-3xl"
+			class="[--hero-h:30vh] sm:[--hero-h:50vh] md:[--hero-h:calc(100vh-6.75rem)] min-h-(--hero-h) flex items-end md:items-center justify-center rounded-3xl"
 			style="background-image: linear-gradient(180deg, rgba(148, 175, 255, 0.20) 0%, rgba(166, 189, 255, 0.00) 100%);"
 		>
 			{#if page.lottieMobile}
