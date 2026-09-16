@@ -23,6 +23,7 @@ $json['sections'] = $page->sections()->toStructure()->map(fn($section) => [
             'name'     => $member->name()->value(),
             'role'     => $member->role()->isNotEmpty() ? $member->role()->value() : null,
             'status'   => $member->status()->isNotEmpty() ? $member->status()->value() : null,
+            'roleLink' => $member->roleLink()->isNotEmpty() ? $member->roleLink()->value() : null,
             'linkedin' => $member->linkedin()->isNotEmpty() ? $member->linkedin()->value() : null,
         ])->values(),
     ])->values(),
