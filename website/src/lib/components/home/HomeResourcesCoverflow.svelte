@@ -156,7 +156,7 @@
 		{#each resources as resource, i (i)}
 			{#if resource.shortDesc}
 				<div
-					class="col-start-1 row-start-1 prose text-caption text-center max-w-md mx-auto transition-opacity duration-200 ease-out"
+					class="col-start-1 row-start-1 prose text-sm lg:text-base text-center max-w-md mx-auto transition-opacity duration-200 ease-out"
 					class:opacity-0={i !== active}
 					inert={i !== active}
 				>
