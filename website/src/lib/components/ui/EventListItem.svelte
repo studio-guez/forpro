@@ -21,7 +21,9 @@
 	}: Props = $props();
 
 	const start = $derived(toDate(event.dateStart));
-	const terms = $derived(mergeTerms({ programs: event.programs, sectors: event.sectors }));
+	const terms = $derived(
+		mergeTerms({ programs: event.programs, resourcesTaxonomy: event.resourcesTaxonomy })
+	);
 
 	const cta = $derived({
 		label: detailsLabel,

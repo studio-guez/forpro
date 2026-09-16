@@ -30,7 +30,9 @@
 	const timeStart = $derived(formatEventTime(event.timeStart));
 	const timeEnd = $derived(formatEventTime(event.timeEnd));
 
-	const terms = $derived(mergeTerms({ programs: event.programs, sectors: event.sectors }));
+	const terms = $derived(
+		mergeTerms({ programs: event.programs, resourcesTaxonomy: event.resourcesTaxonomy })
+	);
 
 	const SEAM = 0.5; // share of a band spent fading into the next one
 	const programColors = $derived(event.programs.map(termColor));

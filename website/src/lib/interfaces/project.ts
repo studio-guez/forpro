@@ -10,7 +10,7 @@ export interface CollectiveMember {
 export interface ProjectPage extends EventProjectBase {
 	readonly template: 'project';
 	readonly programs: TaxonomyTerm[];
-	readonly sectors: TaxonomyTerm[];
+	readonly resourcesTaxonomy: TaxonomyTerm[];
 	readonly categories: TaxonomyTerm[];
 	readonly collectiveName: string | null;
 	readonly collectiveMembers: CollectiveMember[];
@@ -26,9 +26,9 @@ export interface ProjectsPage {
 	readonly path: string;
 	/** HTML, shown when the search or the filters match no project. */
 	readonly noResultsText: string;
-	readonly sectors: TaxonomyFilterTerm[];
+	readonly resourcesTaxonomy: TaxonomyFilterTerm[];
 	/** Resource term slugs carried by at least one project. */
-	readonly usedSectors: string[];
+	readonly usedResourcesTaxonomy: string[];
 	readonly categories: TaxonomyFilterTerm[];
 	/** Category term slugs carried by at least one project. */
 	readonly usedCategories: string[];

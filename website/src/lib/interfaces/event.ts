@@ -13,7 +13,7 @@ export interface EventPage extends EventProjectBase {
 	/** Venue; null when the event is held at the foundation's own address. */
 	readonly location: string | null;
 	readonly programs: TaxonomyTerm[];
-	readonly sectors: TaxonomyTerm[];
+	readonly resourcesTaxonomy: TaxonomyTerm[];
 	readonly publics: TaxonomyTerm[];
 }
 

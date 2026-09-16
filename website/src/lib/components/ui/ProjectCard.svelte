@@ -20,7 +20,7 @@
 	const terms = $derived(
 		mergeTerms({
 			programs: project.programs,
-			sectors: project.sectors,
+			resourcesTaxonomy: project.resourcesTaxonomy,
 			categories: project.categories
 		})
 	);
