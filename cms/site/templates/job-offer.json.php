@@ -10,7 +10,7 @@ $json = Utils::getPageBaseData($page, 'job-offer');
 
 $json['parentPage'] = Utils::getParentPageData($page);
 
-$json['sectors'] = Utils::resolveTaxonomyTerms($page->sectors(), 'sectors');
+$json['sector'] = $page->sector()->isNotEmpty() ? $page->sector()->value() : null;
 
 // Closed offers stay reachable: the frontend shows a notice instead of the application details.
 $json['openToApplications'] = Utils::isOpenToApplications($page);

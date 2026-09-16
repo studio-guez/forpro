@@ -27,7 +27,7 @@
 
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
-	let selectedSectors = $state<string[]>(parseListParam(initialParams.get('sectors')));
+	let selectedResources = $state<string[]>(parseListParam(initialParams.get('resources')));
 	let selectedPrograms = $state<string[]>(parseListParam(initialParams.get('programs')));
 	let selectedPublics = $state<string[]>(parseListParam(initialParams.get('publics')));
 
@@ -49,10 +49,10 @@
 	});
 	const questionId = (faq: FaqItem): string => questionIds.get(faq) ?? '';
 
-	const sectorTerms = $derived(
+	const resourceTerms = $derived(
 		filterUsedTerms(
-			page.sectors,
-			allFaqs.flatMap((faq) => faq.sectors.map((term) => term.slug))
+			page.resourcesTaxonomy,
+			allFaqs.flatMap((faq) => faq.resourcesTaxonomy.map((term) => term.slug))
 		)
 	);
 	const programTerms = $derived(
@@ -68,23 +68,23 @@
 		)
 	);
 
-	const activeSectors = $derived(keepKnownSlugs(selectedSectors, sectorTerms));
+	const activeResources = $derived(keepKnownSlugs(selectedResources, resourceTerms));
 	const activePrograms = $derived(keepKnownSlugs(selectedPrograms, programTerms));
 	const activePublics = $derived(keepKnownSlugs(selectedPublics, publicTerms));
 
-	const sectorFilter = $derived(expandSelection(activeSectors, sectorTerms));
+	const resourceFilter = $derived(expandSelection(activeResources, resourceTerms));
 	const programFilter = $derived(expandSelection(activePrograms, programTerms));
 	const publicFilter = $derived(expandSelection(activePublics, publicTerms));
 
 	const matchesFilters = (faq: FaqItem): boolean =>
-		matchesTerms(sectorFilter, faq.sectors) &&
+		matchesTerms(resourceFilter, faq.resourcesTaxonomy) &&
 		matchesTerms(programFilter, faq.programs) &&
 		matchesTerms(publicFilter, faq.publics) &&
 		matchesSearch(search, [faq.question, stripTags(faq.answer)]);
 
 	const isFiltering = $derived(
 		search.trim() !== '' ||
-			activeSectors.length > 0 ||
+			activeResources.length > 0 ||
 			activePrograms.length > 0 ||
 			activePublics.length > 0
 	);
@@ -130,7 +130,7 @@
 	$effect(() => {
 		syncQueryString({
 			q: search,
-			sectors: activeSectors,
+			resources: activeResources,
 			programs: activePrograms,
 			publics: activePublics,
 			question: openQuestions[requestedQuestion] ? requestedQuestion : ''
@@ -165,7 +165,12 @@
 <section aria-label="Questions et réponses" class="px-base pb-12 lg:pb-16">
 	<ListToolbar {color}>
 		<FilterDropdown terms={publicTerms} bind:selected={selectedPublics} label="Publics" {color} />
-		<FilterDropdown terms={sectorTerms} bind:selected={selectedSectors} label="Ressources" {color} />
+		<FilterDropdown
+			terms={resourceTerms}
+			bind:selected={selectedResources}
+			label="Ressources"
+			{color}
+		/>
 		<FilterDropdown
 			terms={programTerms}
 			bind:selected={selectedPrograms}

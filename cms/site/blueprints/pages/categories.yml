@@ -1,9 +1,9 @@
-title: Catégories (missions)
+title: Catégories
 
 extends: pages/taxonomy
 
 sections:
   terms:
-    label: Catégories (missions)
+    label: Catégories
     templates:
       - category

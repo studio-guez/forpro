@@ -11,6 +11,7 @@ $json = Utils::getEventProjectBaseData($page);
 $json['template'] = 'project';
 
 $json['programs']   = Utils::resolveTaxonomyTerms($page->programs(), 'programs');
+$json['resourcesTaxonomy'] = Utils::resolveTaxonomyTerms($page->resourcesTaxonomy(), 'resourcesTaxonomy');
 $json['categories'] = Utils::resolveTaxonomyTerms($page->categories(), 'categories');
 
 $json['collectiveName']    = $page->collectiveName()->value();

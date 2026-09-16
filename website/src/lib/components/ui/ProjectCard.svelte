@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Img from '$lib/components/ui/Img.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
+	import { mergeTerms } from '$lib/utils/shared';
 	import type { ProjetCard, Variant } from '$lib/interfaces/page';
 
 	interface Props {
@@ -16,10 +17,12 @@
 
 	const textColor = $derived(variant === 'inverted' ? 'lg:text-orange' : 'lg:text-white');
 
-	const meta = $derived(
-		[project.collectiveName, ...project.categories.map((category) => category.title)]
-			.filter(Boolean)
-			.join(' · ')
+	const terms = $derived(
+		mergeTerms({
+			programs: project.programs,
+			resourcesTaxonomy: project.resourcesTaxonomy,
+			categories: project.categories
+		})
 	);
 </script>
 
@@ -40,18 +43,13 @@
 			<div
 				class="lg:hidden absolute inset-0 bg-linear-to-b from-black/15 via-black/0 to-black/30 group-hover:opacity-30 transition-opacity"
 			></div>
-			<TermTags
-				terms={project.programs}
-				label="Programmes"
-				size="sm"
-				class="absolute top-5 left-5 lg:top-6 lg:left-6"
-			/>
+			<TermTags {terms} label="Tags" size="sm" class="absolute top-5 left-5 lg:top-6 lg:left-6" />
 		</div>
 
 		<div class={['absolute inset-x-0 bottom-0 p-5 text-white lg:static lg:mt-3 lg:p-0', textColor]}>
 			<svelte:element this={headingTag} class="text-h4">{project.title}</svelte:element>
-			{#if meta}
-				<p class="text-label mt-1">{meta}</p>
+			{#if project.collectiveName}
+				<p class="text-label mt-1">{project.collectiveName}</p>
 			{/if}
 		</div>
 	</a>

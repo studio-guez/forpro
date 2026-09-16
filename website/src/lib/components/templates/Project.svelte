@@ -4,9 +4,18 @@
 	import EventProjectBody from '$lib/components/blocks/EventProjectBody.svelte';
 	import SingleContentFooter from '$lib/components/blocks/SingleContentFooter.svelte';
 	import TermTags from '$lib/components/ui/TermTags.svelte';
+	import { mergeTerms } from '$lib/utils/shared';
 	import type { ProjectPage } from '$lib/interfaces/project';
 
 	let { page }: { page: ProjectPage } = $props();
+
+	const terms = $derived(
+		mergeTerms({
+			programs: page.programs,
+			resourcesTaxonomy: page.resourcesTaxonomy,
+			categories: page.categories
+		})
+	);
 </script>
 
 <article class="space-y-12 lg:space-y-16">
@@ -43,19 +52,9 @@
 				</div>
 			{/if}
 
-			{#if page.categories.length > 0}
-				<ul class="mt-4.5 lg:mt-3">
-					{#each page.categories as category, index (index)}
-						<li class="inline font-bold">
-							{category.title}{index < page.categories.length - 1 ? ', ' : ''}
-						</li>
-					{/each}
-				</ul>
-			{/if}
-
-			{#if page.programs.length > 0}
+			{#if terms.length > 0}
 				<div class="mt-4.5">
-					<TermTags terms={page.programs} label="Programmes" class="mt-2" />
+					<TermTags {terms} label="Tags" class="mt-2" />
 				</div>
 			{/if}
 		{/snippet}
