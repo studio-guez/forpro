@@ -217,7 +217,7 @@
 			}
 		}
 		a {
-			@apply underline hover:opacity-50 transition-opacity;
+			@apply underline wrap-anywhere hover:opacity-50 transition-opacity;
 		}
 	}
 }
