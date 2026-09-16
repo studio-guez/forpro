@@ -74,7 +74,7 @@
 		<FilterDropdown
 			terms={programTerms}
 			bind:selected={selectedPrograms}
-			label="Projets concernant"
+			label="Ressources"
 			{color}
 		/>
 		{#if yearOptions.length > 0}
