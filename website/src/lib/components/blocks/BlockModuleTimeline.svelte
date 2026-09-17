@@ -118,13 +118,12 @@
 
 {#snippet stepBlob(step: TimelineStep, index: number)}
 	{@const Shape = shapes[index % shapes.length]}
-	<!-- Type is sized in cqw so the copy keeps its proportions and stays inside the blob as the step shrinks. -->
-	<div class="@container relative aspect-square w-full max-lg:hidden {colors.shape}">
+	<div class="relative aspect-square w-full max-lg:hidden {colors.shape}">
 		<div class="absolute -inset-1/8">
 			<Shape class="w-full h-full" />
 		</div>
 		<div class="absolute inset-0 flex flex-col justify-center px-[15%] {colors.step}">
-			{@render stepText(step, 'text-[9cqw]/[1.05]', 'text-[6.6cqw]/[1.2] mt-[5cqw]')}
+			{@render stepText(step, 'text-h4', 'text-body-1 mt-6')}
 		</div>
 	</div>
 {/snippet}
