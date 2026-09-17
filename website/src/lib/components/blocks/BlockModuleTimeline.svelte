@@ -122,7 +122,7 @@
 		<div class="absolute -inset-1/8">
 			<Shape class="w-full h-full" />
 		</div>
-		<div class="absolute inset-0 flex flex-col justify-center px-[15%] {colors.step}">
+		<div class="absolute inset-0 flex flex-col justify-center pl-[15%] {colors.step}">
 			{@render stepText(step, 'text-h4', 'text-body-1 mt-6')}
 		</div>
 	</div>
