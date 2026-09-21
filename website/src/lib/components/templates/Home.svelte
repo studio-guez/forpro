@@ -22,12 +22,23 @@
 			{#if page.lottieMobile}
 				<LottiePlayer
 					file={page.lottieMobile}
+					poster={page.lottieMobile.poster}
 					alt={page.lottieMobile.alt}
 					class="w-full md:hidden"
 				/>
-				<LottiePlayer file={page.lottie} alt={page.lottie.alt} class="{lottieBox} max-md:hidden" />
+				<LottiePlayer
+					file={page.lottie}
+					poster={page.lottie.poster}
+					alt={page.lottie.alt}
+					class="{lottieBox} max-md:hidden"
+				/>
 			{:else}
-				<LottiePlayer file={page.lottie} alt={page.lottie.alt} class={lottieBox} />
+				<LottiePlayer
+					file={page.lottie}
+					poster={page.lottie.poster}
+					alt={page.lottie.alt}
+					class={lottieBox}
+				/>
 			{/if}
 		</div>
 	</div>

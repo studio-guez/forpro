@@ -50,6 +50,30 @@ tabs:
         help:
           en: Variant shown on small screens. Leave empty to reuse the desktop animation.
           fr: Variante affichée sur petits écrans. Laisser vide pour réutiliser l'animation desktop.
+      lottiePoster:
+        label:
+          en: Fallback image
+          fr: Image de secours
+        type: files
+        uploads: image
+        max: 1
+        layout: list
+        width: 1/2
+        help:
+          en: Shown instead of the animation when the browser cannot play it (no WebAssembly, animation file blocked by a network filter). Same proportions as the animation.
+          fr: Affichée à la place de l'animation quand le navigateur ne peut pas la jouer (pas de WebAssembly, fichier bloqué par un filtre réseau). Mêmes proportions que l'animation.
+      lottiePosterMobile:
+        label:
+          en: Fallback image (mobile)
+          fr: Image de secours (mobile)
+        type: files
+        uploads: image
+        max: 1
+        layout: list
+        width: 1/2
+        help:
+          en: Fallback for the mobile animation. Leave empty to reuse the desktop fallback image.
+          fr: Secours pour l'animation mobile. Laisser vide pour réutiliser l'image de secours desktop.
 
       welcomeLabel:
         label:
