@@ -9,12 +9,14 @@ require_once 'utils/Utils.php';
 $json = Utils::getPageBaseData($page, 'home');
 
 // Empty `alt` = decorative: the frontend hides the canvas from assistive tech.
-$lottieData = fn(?\Kirby\Cms\File $lottie) => $lottie ? [
+$lottieData = fn(?\Kirby\Cms\File $lottie, ?\Kirby\Cms\File $poster) => $lottie ? [
     ...Utils::getJsonEncodeDocumentDataOrNull($lottie),
-    'alt' => $lottie->alt()->value(),
+    'alt'    => $lottie->alt()->value(),
+    'poster' => Utils::getJsonEncodeImageDataOrNull($poster),
 ] : null;
-$json['lottie']       = $lottieData($page->lottie()->toFile());
-$json['lottieMobile'] = $lottieData($page->lottieMobile()->toFile());
+$poster = $page->lottiePoster()->toFile();
+$json['lottie']       = $lottieData($page->lottie()->toFile(), $poster);
+$json['lottieMobile'] = $lottieData($page->lottieMobile()->toFile(), $page->lottiePosterMobile()->toFile() ?? $poster);
 
 $json['welcomeTitle']     = $page->welcomeTitle()->value();
 $json['welcomeShortDesc'] = $page->welcomeShortDesc()->value();

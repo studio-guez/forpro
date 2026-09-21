@@ -23,6 +23,8 @@ export interface HomeResourceCard {
 export interface HomeLottie extends CmsDocument {
 	/** Text alternative for screen readers; null when the animation is decorative. */
 	readonly alt: string | null;
+	/** Still image shown when the animation cannot be played; null until the editor uploads one. */
+	readonly poster: CmsImage | null;
 }
 
 export interface HomePage {
