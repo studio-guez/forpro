@@ -37,7 +37,7 @@ tabs:
         width: 1/2
         help:
           en: A `.json` or `.lottie` export, played in a loop above the welcome text.
-          fr: Un export `.json` ou `.lottie`, joué en boucle au-dessus du texte de bienvenue.
+          fr: Un export `.json` ou `.lottie`, joué une fois au-dessus du texte de bienvenue.
       lottieMobile:
         label:
           en: Lottie animation (mobile)
