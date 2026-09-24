@@ -37,9 +37,8 @@
 	// No auto spin on touch screens: without hover to hold it, the deck would turn under a thumb about to tap.
 	let hovered = $state(false);
 	let focused = $state(false);
-	let reduced = $state(false);
 	let touch = $state(false);
-	const spinning = $derived(count > 1 && !hovered && !focused && !reduced && !touch);
+	const spinning = $derived(count > 1 && !hovered && !focused && !touch);
 
 	const watchMedia = (query: string, set: (matches: boolean) => void) => {
 		const list = window.matchMedia(query);
@@ -49,7 +48,6 @@
 		return () => list.removeEventListener('change', sync);
 	};
 
-	$effect(() => watchMedia('(prefers-reduced-motion: reduce)', (m) => (reduced = m)));
 	$effect(() => watchMedia('(hover: none)', (m) => (touch = m)));
 
 	$effect(() => {
@@ -123,7 +121,7 @@
 			{#each resources as resource, i (i)}
 				{@const d = offset(i)}
 				<li
-					class="col-start-1 row-start-1 justify-self-center w-60 lg:w-88 transition-[translate,scale] duration-500 ease-out motion-reduce:transition-none"
+					class="col-start-1 row-start-1 justify-self-center w-60 lg:w-88 transition-[translate,scale] duration-500 ease-out"
 					style:translate="calc({d} * var(--step)) {Math.abs(d) * 2}%"
 					style:scale={1 - Math.abs(d) * 0.1}
 					style:z-index={10 - Math.abs(d)}
