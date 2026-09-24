@@ -7,11 +7,9 @@
 		/** A `.json` or `.lottie` export, served as-is by the CMS. */
 		file: CmsDocument;
 		/**
-		 * Still image shown in place of the canvas when the visitor prefers reduced motion,
-		 * or when the animation cannot play: no WebAssembly (Safari Lockdown Mode,
-		 * locked-down browsers), or the runtime or the file blocked by a network filter.
-		 * Without one, reduced motion shows the animation's first frame and a failure
-		 * leaves the box empty.
+		 * Still image shown in place of the canvas when the animation cannot play: no
+		 * WebAssembly (Safari Lockdown Mode, locked-down browsers), or the runtime or the
+		 * file blocked by a network filter. Without one, a failure leaves the box empty.
 		 */
 		poster?: CmsImage | null;
 		/**
@@ -48,9 +46,7 @@
 	onMount(() => {
 		if (!canvas) return;
 
-		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-		if (typeof WebAssembly === 'undefined' || (reduced && poster)) {
+		if (typeof WebAssembly === 'undefined') {
 			usePoster();
 			return;
 		}
@@ -70,7 +66,7 @@
 					canvas,
 					src: file.url,
 					loop,
-					autoplay: !reduced,
+					autoplay: true,
 					renderConfig: { autoResize: true }
 				});
 				dotLottie.addEventListener('load', () => {

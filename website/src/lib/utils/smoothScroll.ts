@@ -10,25 +10,14 @@ let lenis: Lenis | null = null;
  * Returns its teardown, so it can be returned straight from `onMount`.
  */
 export function initSmoothScroll(): () => void {
-	// With `prefers-reduced-motion` the native scroller is kept; `html { scroll-padding-top }` then stands in for Lenis' anchor offset.
-	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-	const sync = () => {
-		lenis?.destroy();
-		lenis = null;
-		if (reduced.matches) return;
-		lenis = new Lenis({
-			autoRaf: true,
-			anchors: { offset: -HEADER_OFFSET },
-			allowNestedScroll: true
-		});
-	};
-
-	sync();
-	reduced.addEventListener('change', sync);
+	lenis?.destroy();
+	lenis = new Lenis({
+		autoRaf: true,
+		anchors: { offset: -HEADER_OFFSET },
+		allowNestedScroll: true
+	});
 
 	return () => {
-		reduced.removeEventListener('change', sync);
 		lenis?.destroy();
 		lenis = null;
 	};

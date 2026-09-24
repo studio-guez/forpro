@@ -78,24 +78,22 @@
 	}
 
 	/* `:global` because the attribute is set by the action, not the markup; Svelte would prune the rule otherwise. */
-	@media (prefers-reduced-motion: no-preference) {
-		/* Only the way in is animated: the jump to the parked position at hydration must be instant. */
-		.slot:global([data-reveal='done']) .card {
-			transition:
-				translate 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-				rotate 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-				opacity 0.15s ease-out;
-		}
-		.slot:global([data-reveal='pending']) .card {
-			opacity: 0;
-		}
-		.slot:global([data-reveal='pending']) .from-left {
-			translate: calc(-100% - 10vw) 0;
-			rotate: calc(var(--tilt) - 15deg);
-		}
-		.slot:global([data-reveal='pending']) .from-right {
-			translate: calc(100% + 10vw) 0;
-			rotate: calc(var(--tilt) + 15deg);
-		}
+	/* Only the way in is animated: the jump to the parked position at hydration must be instant. */
+	.slot:global([data-reveal='done']) .card {
+		transition:
+			translate 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+			rotate 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+			opacity 0.15s ease-out;
+	}
+	.slot:global([data-reveal='pending']) .card {
+		opacity: 0;
+	}
+	.slot:global([data-reveal='pending']) .from-left {
+		translate: calc(-100% - 10vw) 0;
+		rotate: calc(var(--tilt) - 15deg);
+	}
+	.slot:global([data-reveal='pending']) .from-right {
+		translate: calc(100% + 10vw) 0;
+		rotate: calc(var(--tilt) + 15deg);
 	}
 </style>

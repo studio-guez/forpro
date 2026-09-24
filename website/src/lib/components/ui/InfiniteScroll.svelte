@@ -67,7 +67,7 @@
 
 {#if hasMore}
 	<p style:--spinner-color={color} class="text-(--spinner-color) flex justify-center {className}">
-		<IconSpinner class="motion-safe:animate-spin w-8 h-8" />
+		<IconSpinner class="animate-spin w-8 h-8" />
 		<span class="sr-only">{label}</span>
 	</p>
 {/if}
