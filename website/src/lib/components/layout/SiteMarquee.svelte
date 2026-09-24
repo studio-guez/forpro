@@ -85,7 +85,7 @@
 
 	<div
 		class="flex h-full items-center w-max hover:[animation-play-state:paused]! {measured
-			? 'motion-safe:animate-marquee'
+			? 'animate-marquee'
 			: ''}"
 		style="animation-duration: {duration}s; --marquee-shift: {shift}%; animation-play-state: {paused
 			? 'paused'

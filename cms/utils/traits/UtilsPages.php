@@ -238,8 +238,8 @@ trait UtilsPages
      * Filtered, paginated projects of a projects index, most recent first.
      *
      * The filters mirror the frontend ones: `$query` is matched as a whole
-     * phrase against the title only; `$resources` and `$categories` are **raw**
-     * selections of term slugs; `$years` is a list of years as strings, matched
+     * phrase against the title only; `$resources`, `$programs` and `$categories`
+     * are **raw** selections of term slugs; `$years` is a list of years as strings, matched
      * on the year of the `date` field.
      *
      * @return array{offset:int, total:int, hasMore:bool, items:array<int,array>}
@@ -248,13 +248,14 @@ trait UtilsPages
         \Kirby\Cms\Pages $projects,
         string $query = '',
         array $resources = [],
+        array $programs = [],
         array $categories = [],
         array $years = [],
         int $offset = 0,
         int $limit = 12
     ): array {
         // resolveTaxonomySelection() mirrors the frontend rule, so a URL means the same on both ends.
-        foreach (['resourcesTaxonomy' => $resources, 'categories' => $categories] as $taxonomy => $selection) {
+        foreach (['resourcesTaxonomy' => $resources, 'programs' => $programs, 'categories' => $categories] as $taxonomy => $selection) {
             $projects = self::filterPagesByTaxonomy(
                 $projects,
                 $taxonomy,

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page as appPage } from '$app/state';
 	import { fly } from 'svelte/transition';
-	import { prefersReducedMotion } from 'svelte/motion';
 	import { MediaQuery } from 'svelte/reactivity';
 	import BasicHeader from '$lib/components/blocks/BasicHeader.svelte';
 	import Blocks from '$lib/components/blocks/Blocks.svelte';
@@ -101,7 +100,7 @@
 	);
 
 	let slideDirection = $state(1);
-	const monthSlideDuration = $derived(prefersReducedMotion.current ? 0 : 500);
+	const monthSlideDuration = 500;
 	const monthEnter = $derived({
 		duration: monthSlideDuration,
 		x: `${100 * slideDirection}%`
