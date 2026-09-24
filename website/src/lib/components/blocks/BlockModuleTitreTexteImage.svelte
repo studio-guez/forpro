@@ -16,7 +16,11 @@
 	const colors = $derived(getThemeColors(theme, content.variant));
 	const isImageLeft = $derived(content.imagePosition === 'left');
 	const imageFitClass = $derived(
-		content.imageFit === 'contain' ? 'object-contain lg:h-8/10' : 'object-cover h-full'
+		content.imageFit === 'contain' ? 'object-contain' : 'object-cover'
+	);
+
+	const imageFitContainerClass = $derived(
+		content.imageFit === 'contain' ? 'min-h-75 lg:min-h-60' : 'min-h-75'
 	);
 
 	const imageSizes = toSizes(cell(CARD, { 0: 1, 1280: 2 }, 1.5));
@@ -32,10 +36,10 @@
 	<div class="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-y-12">
 		{#if content.image}
 			<div
-				class="overflow-hidden rounded-2xl [contain:size] min-h-75 flex items-center"
+				class="overflow-hidden rounded-2xl [contain:size] {imageFitContainerClass} flex items-center"
 				class:xl:order-last={!isImageLeft}
 			>
-				<Img image={content.image} sizes={imageSizes} class="w-full {imageFitClass}" />
+				<Img image={content.image} sizes={imageSizes} class="w-full h-full {imageFitClass}" />
 			</div>
 		{/if}
 		<div class="flex flex-col justify-center">

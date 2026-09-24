@@ -26,7 +26,11 @@
 	const singleMediaSpan = (index: number) => [2, 2, 1, 1][index % 4];
 
 	const imageFitClass = $derived(
-		content.imageFit === 'contain' ? 'object-contain lg:h-8/10' : 'object-cover h-full'
+		content.imageFit === 'contain' ? 'object-contain' : 'object-cover'
+	);
+
+	const imageFitContainerClass = $derived(
+		content.imageFit === 'contain' ? 'min-h-75 lg:min-h-60' : 'min-h-75'
 	);
 
 	const mediaSizes = (index: number) =>
@@ -56,14 +60,14 @@
 			<div class="grid grid-cols-1 lg:grid-cols-3 gap-y-3 gap-x-6 items-stretch group">
 				{#each row.media as media, m (m)}
 					<div
-						class="overflow-hidden rounded-2xl min-h-75 flex items-center"
+						class="overflow-hidden rounded-2xl {imageFitContainerClass} flex items-center"
 						class:[contain:size]={media.type !== 'video'}
 						class:lg:col-span-2={singleMediaSpan(m) === 2}
 					>
 						{#if media.type === 'video'}
 							<VideoPlayer src={media.url} />
 						{:else}
-							<Img image={media} sizes={mediaSizes(m)} class="w-full {imageFitClass}" />
+							<Img image={media} sizes={mediaSizes(m)} class="w-full h-full {imageFitClass}" />
 						{/if}
 					</div>
 				{/each}
