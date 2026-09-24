@@ -16,7 +16,7 @@
 	const colors = $derived(getThemeColors(theme, content.variant));
 	const isImageLeft = $derived(content.imagePosition === 'left');
 	const imageFitClass = $derived(
-		content.imageFit === 'contain' ? 'object-contain h-8/10' : 'object-cover h-full'
+		content.imageFit === 'contain' ? 'object-contain lg:h-8/10' : 'object-cover h-full'
 	);
 
 	const imageSizes = toSizes(cell(CARD, { 0: 1, 1280: 2 }, 1.5));

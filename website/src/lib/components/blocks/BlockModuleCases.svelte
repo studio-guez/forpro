@@ -26,7 +26,7 @@
 	const singleMediaSpan = (index: number) => [2, 2, 1, 1][index % 4];
 
 	const imageFitClass = $derived(
-		content.imageFit === 'contain' ? 'object-contain h-8/10' : 'object-cover h-full'
+		content.imageFit === 'contain' ? 'object-contain lg:h-8/10' : 'object-cover h-full'
 	);
 
 	const mediaSizes = (index: number) =>
