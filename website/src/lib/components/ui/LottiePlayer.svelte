@@ -7,9 +7,11 @@
 		/** A `.json` or `.lottie` export, served as-is by the CMS. */
 		file: CmsDocument;
 		/**
-		 * Still image shown in place of the canvas when the animation cannot play: no
-		 * WebAssembly (Safari Lockdown Mode, locked-down browsers), or the runtime or the
-		 * file blocked by a network filter. Without one the box simply stays empty.
+		 * Still image shown in place of the canvas when the visitor prefers reduced motion,
+		 * or when the animation cannot play: no WebAssembly (Safari Lockdown Mode,
+		 * locked-down browsers), or the runtime or the file blocked by a network filter.
+		 * Without one, reduced motion shows the animation's first frame and a failure
+		 * leaves the box empty.
 		 */
 		poster?: CmsImage | null;
 		/**
@@ -32,13 +34,13 @@
 
 	let canvas: HTMLCanvasElement | undefined = $state();
 	let ratio: number | null = $state(null);
-	let failed = $state(false);
+	let posterWanted = $state(false);
 
 	// The poster keeps the box at the animation's proportions so the surrounding layout does not jump.
-	const showPoster = $derived(failed && poster !== null);
+	const showPoster = $derived(posterWanted && poster !== null);
 
-	function fail() {
-		failed = true;
+	function usePoster() {
+		posterWanted = true;
 		if (poster) ratio = poster.width / poster.height;
 	}
 
@@ -46,15 +48,15 @@
 	onMount(() => {
 		if (!canvas) return;
 
-		if (typeof WebAssembly === 'undefined') {
-			fail();
+		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		if (typeof WebAssembly === 'undefined' || (reduced && poster)) {
+			usePoster();
 			return;
 		}
 
 		let destroyed = false;
 		let player: { destroy(): void } | null = null;
-
-		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 		void Promise.all([
 			import('@lottiefiles/dotlottie-web'),
@@ -78,12 +80,12 @@
 				// Fired for a failed file fetch as well as a runtime that could not be loaded from any source.
 				dotLottie.addEventListener('loadError', () => {
 					if (destroyed) return;
-					fail();
+					usePoster();
 				});
 				player = dotLottie;
 			})
 			.catch(() => {
-				if (!destroyed) fail();
+				if (!destroyed) usePoster();
 			});
 
 		return () => {
