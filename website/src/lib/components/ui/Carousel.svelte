@@ -41,10 +41,7 @@
 		const all = slides();
 		const target = all[Math.min(Math.max(i, 0), steps - 1)];
 		if (!target || !track) return;
-		const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-			? 'auto'
-			: 'smooth';
-		track.scrollTo({ left: snapOffset(target, all), behavior });
+		track.scrollTo({ left: snapOffset(target, all), behavior: 'smooth' });
 	};
 
 	const onScroll = () => {

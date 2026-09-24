@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	import { prefersReducedMotion } from 'svelte/motion';
 	import IconChevron from '$lib/components/svg/IconChevron.svelte';
 	import type { TaxonomyFilterTerm, TaxonomyTerm } from '$lib/interfaces/taxonomy';
 	import { listenForDismiss } from '$lib/utils/dismiss';
@@ -36,7 +35,7 @@
 	const count = $derived(selected.length);
 	const isActive = $derived(count > 0);
 
-	const panelSlide = $derived({ duration: prefersReducedMotion.current ? 0 : 250 });
+	const panelSlide = { duration: 250 };
 
 	// Focus goes back to the trigger on Escape, otherwise it is left on a gone element.
 	const close = (focusTrigger: boolean): void => {
