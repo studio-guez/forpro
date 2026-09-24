@@ -30,6 +30,7 @@
 	const initialParams = appPage.url.searchParams;
 	let search = $state(initialParams.get('q') ?? '');
 	let selectedResources = $state<string[]>(parseListParam(initialParams.get('resources')));
+	let selectedPrograms = $state<string[]>(parseListParam(initialParams.get('programs')));
 	let selectedCategories = $state<string[]>(parseListParam(initialParams.get('categories')));
 	let selectedYear = $state(initialParams.get('years') ?? '');
 
@@ -38,9 +39,11 @@
 	const resourceTerms = $derived(
 		filterUsedTerms(page.resourcesTaxonomy, page.usedResourcesTaxonomy)
 	);
+	const programTerms = $derived(filterUsedTerms(page.programs, page.usedPrograms));
 	const categoryTerms = $derived(filterUsedTerms(page.categories, page.usedCategories));
 
 	const activeResources = $derived(keepKnownSlugs(selectedResources, resourceTerms));
+	const activePrograms = $derived(keepKnownSlugs(selectedPrograms, programTerms));
 	const activeCategories = $derived(keepKnownSlugs(selectedCategories, categoryTerms));
 
 	const yearOptions = $derived(
@@ -59,6 +62,7 @@
 		filters: () => ({
 			q: search.trim(),
 			resources: activeResources.join(','),
+			programs: activePrograms.join(','),
 			categories: activeCategories.join(','),
 			years: activeYear
 		})
@@ -68,6 +72,7 @@
 		syncQueryString({
 			q: search,
 			resources: activeResources,
+			programs: activePrograms,
 			categories: activeCategories,
 			years: activeYear
 		});
@@ -82,6 +87,12 @@
 			terms={resourceTerms}
 			bind:selected={selectedResources}
 			label="Ressources"
+			{color}
+		/>
+		<FilterDropdown
+			terms={programTerms}
+			bind:selected={selectedPrograms}
+			label="Programmes"
 			{color}
 		/>
 		<FilterDropdown

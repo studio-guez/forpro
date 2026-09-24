@@ -29,6 +29,9 @@ export interface ProjectsPage {
 	readonly resourcesTaxonomy: TaxonomyFilterTerm[];
 	/** Resource term slugs carried by at least one project. */
 	readonly usedResourcesTaxonomy: string[];
+	readonly programs: TaxonomyFilterTerm[];
+	/** Program term slugs carried by at least one project. */
+	readonly usedPrograms: string[];
 	readonly categories: TaxonomyFilterTerm[];
 	/** Category term slugs carried by at least one project. */
 	readonly usedCategories: string[];
