@@ -19,4 +19,3 @@ fields:
     buttons:
       - link
     size: small
-    maxlength: 80
