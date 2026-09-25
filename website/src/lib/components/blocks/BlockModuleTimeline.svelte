@@ -107,7 +107,7 @@
 		<p
 			class="mt-4 lg:mt-6 font-bold text-body-1 [&_a]:underline [&_a]:transition-opacity [&_a:hover]:opacity-50"
 		>
-			<!-- eslint-disable-next-line svelte/no-at-html-tags -- sanitized by the CMS: `<a>` is the only tag `Utils::getLinkedText()` lets through -->
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -- sanitized by the CMS: `Utils::getTimelineSteps()` only lets `<a>` and `<br>` through -->
 			{@html step.shortDesc}
 		</p>
 	{/if}
