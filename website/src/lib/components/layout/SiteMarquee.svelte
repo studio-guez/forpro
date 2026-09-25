@@ -1,17 +1,21 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- hrefs come from the CMS */
 	import type { BannerAnnouncement } from '$lib/interfaces/global';
-	import IconPause from '$lib/components/svg/IconPause.svelte';
-	import IconPlaySmall from '$lib/components/svg/IconPlaySmall.svelte';
+	import IconClose from '$lib/components/svg/IconClose.svelte';
+	import { dismissBanner } from '$lib/utils/bannerDismissal';
 
 	interface Props {
 		announcements: BannerAnnouncement[];
+		onclose: () => void;
 	}
 
-	let { announcements }: Props = $props();
+	let { announcements, onclose }: Props = $props();
 
-	// WCAG 2.2.2: auto-scrolling longer than 5s needs a pause control that is not hover-only.
-	let paused = $state(false);
+	// WCAG 2.2.2: auto-scrolling longer than 5s needs a pause, stop or hide control that is not hover-only.
+	const close = () => {
+		dismissBanner();
+		onclose();
+	};
 
 	let copyWidth = $state(0);
 	let viewportWidth = $state(0);
@@ -28,7 +32,7 @@
 	const measured = $derived(copyWidth > 0 && viewportWidth > 0);
 
 	// `animate-marquee` sets the `animation` shorthand, emitted after the utilities, so an equal-specificity pause class always loses to it.
-	// Hence the button state on an inline style and the hover pause on an `!important` utility.
+	// Hence the hover pause on an `!important` utility.
 </script>
 
 <svelte:window bind:innerWidth={viewportWidth} />
@@ -61,35 +65,21 @@
 		</li>
 	{/each}
 {/snippet}
-<aside
-	aria-label="Annonces"
-	class="sticky bottom-0 z-20 h-12 bg-green text-black overflow-hidden group"
->
+<aside aria-label="Annonces" class="sticky bottom-0 z-20 h-12 bg-green text-black overflow-hidden">
 	<button
 		type="button"
-		onclick={() => (paused = !paused)}
-		aria-pressed={paused}
-		aria-label={paused
-			? 'Reprendre le défilement des annonces'
-			: 'Mettre en pause le défilement des annonces'}
-		class="absolute right-1 top-1/2 z-10 -translate-y-1/2 shrink-0 rounded-full bg-black p-1 text-green transition-opacity group-hover:opacity-100 focus-visible:opacity-100 [@media(hover:none)]:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black {paused
-			? ''
-			: 'opacity-0'}"
+		onclick={close}
+		aria-label="Fermer les annonces"
+		class="absolute right-1 top-1/2 z-10 -translate-y-1/2 shrink-0 rounded-full bg-black p-1 text-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
 	>
-		{#if paused}
-			<IconPlaySmall class="w-5 h-5" />
-		{:else}
-			<IconPause class="w-5 h-5" />
-		{/if}
+		<IconClose class="w-5 h-5" />
 	</button>
 
 	<div
 		class="flex h-full items-center w-max hover:[animation-play-state:paused]! {measured
 			? 'animate-marquee'
 			: ''}"
-		style="animation-duration: {duration}s; --marquee-shift: {shift}%; animation-play-state: {paused
-			? 'paused'
-			: 'running'}"
+		style="animation-duration: {duration}s; --marquee-shift: {shift}%"
 	>
 		<ul bind:clientWidth={copyWidth} class="flex items-center">
 			{@render items(false)}
