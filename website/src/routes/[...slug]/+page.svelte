@@ -21,7 +21,7 @@
 	import { IS_PROD } from '$lib/env';
 	import { page as currentPage } from '$app/state';
 	import { cookieConsent } from '$lib/utils/cookieConsent.svelte';
-	import { trackPageView } from '$lib/utils/matomo';
+	import { setCookieConsent, trackPageView } from '$lib/utils/matomo';
 
 	let { data }: { data: PageData } = $props();
 
@@ -39,7 +39,8 @@
 	const trackable = $derived(IS_PROD && page.seo.trackWithMatomo);
 
 	$effect(() => {
-		if (trackable && cookieConsent.performance) {
+		if (trackable && cookieConsent.loaded) {
+			setCookieConsent(cookieConsent.accepted);
 			trackPageView(currentPage.url.href);
 		}
 	});

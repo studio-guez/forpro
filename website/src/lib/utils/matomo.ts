@@ -1,4 +1,5 @@
-// Injected on demand: Matomo must not load before the performance category is accepted, and a `<svelte:head>` script never re-runs on client-side navigation.
+// Injected on demand: a `<svelte:head>` script never re-runs on client-side navigation.
+// Matomo tracks cookieless (`requireCookieConsent`) until `setCookieConsent(true)`.
 
 declare global {
 	interface Window {
@@ -12,6 +13,19 @@ const SITE_ID = '1';
 let injected = false;
 /** Guards against double counting when an effect re-runs on the same URL. */
 let lastTrackedUrl: string | null = null;
+let lastConsent: boolean | null = null;
+
+const queue = (): unknown[][] => (window._paq = window._paq ?? []);
+
+/**
+ * Lets Matomo set its cookies, or withdraws that and deletes the ones already set. Safe to call
+ * before the first page view: commands queued before `matomo.js` loads run in order.
+ */
+export function setCookieConsent(granted: boolean): void {
+	if (typeof window === 'undefined' || granted === lastConsent) return;
+	lastConsent = granted;
+	queue().push([granted ? 'rememberCookieConsentGiven' : 'forgetCookieConsentGiven']);
+}
 
 /**
  * Tracks one page view, injecting `matomo.js` on the first call. Safe to call on every
@@ -23,10 +37,11 @@ export function trackPageView(url: string): void {
 	const previousUrl = lastTrackedUrl;
 	lastTrackedUrl = url;
 
-	const paq = (window._paq = window._paq ?? []);
+	const paq = queue();
 
 	if (injected === false) {
 		injected = true;
+		paq.push(['requireCookieConsent']);
 		paq.push(['setTrackerUrl', MATOMO_URL + 'matomo.php']);
 		paq.push(['setSiteId', SITE_ID]);
 		paq.push(['setCustomUrl', url]);

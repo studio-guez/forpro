@@ -1,10 +1,9 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- the href comes from the CMS */
-	import { onMount, tick } from 'svelte';
-	import { cookieConsent, type CookieChoice } from '$lib/utils/cookieConsent.svelte';
-	import { CTA_BASE, ctaSizeClasses } from '$lib/utils/ctaStyles';
+	import { onMount } from 'svelte';
+	import { cookieConsent } from '$lib/utils/cookieConsent.svelte';
+	import { CTA_BASE, CTA_LABEL, ctaColorClasses, ctaSizeClasses } from '$lib/utils/ctaStyles';
 	import ShapeCookies from '$lib/components/svg/ShapeCookies.svelte';
-	import IconCheck from '$lib/components/svg/IconCheck.svelte';
 
 	interface Props {
 		/** Intro copy, from the Panel's Cookies tab. */
@@ -17,10 +16,7 @@
 
 	let { text, privacyPolicyUrl, raised = false }: Props = $props();
 
-	let view = $state<'intro' | 'preferences'>('intro');
-	let choice = $state<CookieChoice>({ performance: false, marketing: false });
-
-	let saveButton = $state<HTMLButtonElement | null>(null);
+	let acceptButton = $state<HTMLButtonElement | null>(null);
 
 	onMount(cookieConsent.load);
 
@@ -28,52 +24,14 @@
 		cookieConsent.loaded && (!cookieConsent.decided || cookieConsent.reopened)
 	);
 
-	async function openPreferences() {
-		view = 'preferences';
-		// The focused button is gone with the intro view; without this, focus falls back to <body>.
-		await tick();
-		saveButton?.focus();
-	}
-
-	// Reopened from the footer: skip the intro and start from what the visitor chose last time.
+	// Reopened from the footer: move focus into the banner rather than leaving it on the footer link.
 	$effect(() => {
-		if (!cookieConsent.reopened) return;
-		choice = { performance: cookieConsent.performance, marketing: cookieConsent.marketing };
-		openPreferences();
+		if (cookieConsent.reopened) acceptButton?.focus();
 	});
 
-	const categories: { key: keyof CookieChoice | 'necessary'; label: string }[] = [
-		{ key: 'necessary', label: 'Cookies Nécessaires' },
-		{ key: 'performance', label: 'Cookies de Performance' },
-		{ key: 'marketing', label: 'Cookies de Marketing' }
-	];
-
 	const RULE = 'h-px shrink-0 bg-white';
-	const BUTTON = `${CTA_BASE} ${ctaSizeClasses.md} justify-center border-white`;
+	const BUTTON = `${CTA_BASE} ${ctaSizeClasses.md} justify-center`;
 </script>
-
-{#snippet toggle(label: string, checked: boolean, onchange: ((value: boolean) => void) | null)}
-	<label
-		class="flex items-center justify-between gap-4 {onchange
-			? 'cursor-pointer'
-			: 'cursor-default opacity-60'}"
-	>
-		<span class="text-body-1 font-bold">{label}</span>
-		<input
-			type="checkbox"
-			{checked}
-			disabled={onchange === null}
-			onchange={(event) => onchange?.(event.currentTarget.checked)}
-			class="peer sr-only"
-		/>
-		<span
-			aria-hidden="true"
-			class="grid size-7 shrink-0 place-items-center rounded-full border-3 border-white text-pink transition-colors peer-checked:bg-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-white"
-		>
-			<IconCheck class="size-4 {checked ? '' : 'invisible'}" />
-		</span>
-	</label>
-{/snippet}
 
 {#if visible}
 	<aside
@@ -84,58 +42,32 @@
 	>
 		<ShapeCookies class="pointer-events-none absolute right-0 bottom-0 text-green" />
 
-		<div class="relative flex flex-col gap-6">
-			<h2 id="cookie-banner-title" class="text-h4">Ce site utilise des cookies ! 🍪</h2>
+		<div class="relative flex flex-col gap-4">
+			<h2 id="cookie-banner-title">Ce site utilise des cookies ! 🍪</h2>
 			<div class={RULE}></div>
 
-			{#if view === 'intro'}
-				{#if text}
-					<p class="text-body-1 py-6 whitespace-pre-line">{text}</p>
-				{/if}
-				<div class={RULE}></div>
-				<div class="flex flex-wrap justify-end gap-3">
-					<button
-						type="button"
-						onclick={openPreferences}
-						class="{BUTTON} text-white hover:bg-white/15"
-					>
-						Modifier mes préférences
-					</button>
-					<button
-						type="button"
-						onclick={cookieConsent.acceptAll}
-						class="{BUTTON} bg-white text-pink hover:bg-transparent hover:text-white"
-					>
-						Tout accepter
-					</button>
-				</div>
-			{:else}
-				<div class="flex flex-col gap-1.5 py-6">
-					{#each categories as category (category.key)}
-						{#if category.key === 'necessary'}
-							{@render toggle(category.label, true, null)}
-						{:else}
-							{@const key = category.key}
-							{@render toggle(
-								category.label,
-								choice[key],
-								(value) => (choice = { ...choice, [key]: value })
-							)}
-						{/if}
-					{/each}
-				</div>
-				<div class={RULE}></div>
-				<div class="flex justify-end">
-					<button
-						type="button"
-						bind:this={saveButton}
-						onclick={() => cookieConsent.save(choice)}
-						class="{BUTTON} text-white hover:bg-white/15"
-					>
-						Enregistrer mes préférences
-					</button>
-				</div>
+			{#if text}
+				<p class="text-body-2 whitespace-pre-line">{text}</p>
 			{/if}
+			<div class={RULE}></div>
+			<div class="flex flex-wrap justify-end gap-3">
+				<button
+					type="button"
+					onclick={cookieConsent.refuse}
+					style:--color-cta="var(--color-pink)"
+					class="{BUTTON} {ctaColorClasses(true)}"
+				>
+					<span class={CTA_LABEL}>Refuser</span>
+				</button>
+				<button
+					type="button"
+					bind:this={acceptButton}
+					onclick={cookieConsent.accept}
+					class="{BUTTON} border-white bg-white text-pink hover:bg-transparent hover:text-white"
+				>
+					<span class={CTA_LABEL}>Accepter</span>
+				</button>
+			</div>
 
 			{#if privacyPolicyUrl}
 				<a
