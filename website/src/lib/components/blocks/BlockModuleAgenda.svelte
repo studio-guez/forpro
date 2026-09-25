@@ -1,0 +1,57 @@
+<script lang="ts">
+	import type { ModuleAgendaContent } from '$lib/interfaces/page';
+	import Card from '$lib/components/ui/Card.svelte';
+	import Carousel from '$lib/components/ui/Carousel.svelte';
+	import CtaLink from '$lib/components/ui/CtaLink.svelte';
+	import EventCard from '$lib/components/ui/EventCard.svelte';
+	import { CARD, cell, toSizes } from '$lib/utils/imgSizes';
+	import ShapeAgenda1 from '$lib/components/svg/ShapeAgenda1.svelte';
+	import ShapeAgenda2 from '$lib/components/svg/ShapeAgenda2.svelte';
+
+	interface Props {
+		content: ModuleAgendaContent;
+	}
+
+	let { content }: Props = $props();
+
+	const colors = { main: 'var(--color-blue)', deco: 'var(--color-blue-light)' };
+
+	const filled = $derived(content.variant !== 'inverted');
+
+	const cardSizes = toSizes(cell(CARD, { 0: 1.25, 768: 3 }, 1.5));
+</script>
+
+{#if content.events.length > 0}
+	<Card
+		title={content.title}
+		shortDesc={content.shortDesc}
+		titleBackground={filled ? 'var(--color-white)' : colors.main}
+		titleColor={filled ? colors.main : 'var(--color-white)'}
+		background={filled ? colors.main : null}
+		color={filled ? 'var(--color-white)' : colors.main}
+		shapeLeft={filled ? ShapeAgenda1 : null}
+		shapeRight={filled ? ShapeAgenda2 : null}
+		shapeLeftClasses="absolute top-0 left-0 -translate-x-1/5 -translate-y-1/8 w-1/3"
+		shapeRightClasses="absolute bottom-0 lg:top-0 right-0 translate-x-1/12 translate-y-1/5 lg:-translate-y-1/10 w-1/4 max-lg:rotate-180 max-lg:-scale-x-100"
+		shapeColor={colors.deco}
+	>
+		<Carousel
+			items={content.events}
+			label={content.title}
+			color={colors.main}
+			inverted={filled}
+			itemClass="w-4/5 md:w-[calc((100%-3rem)/3)] aspect-3/4"
+			class="mt-12"
+		>
+			{#snippet item(event)}
+				<EventCard {event} color={colors.main} sizes={cardSizes} />
+			{/snippet}
+		</Carousel>
+
+		{#if content.cta}
+			<div class="flex justify-center md:justify-end mt-8">
+				<CtaLink cta={content.cta} color={colors.main} inverted={filled} />
+			</div>
+		{/if}
+	</Card>
+{/if}

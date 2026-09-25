@@ -1,0 +1,49 @@
+extends: blocks/base
+
+name:
+  en: Module - Video
+  fr: Module - Vidéo
+
+icon: video
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  hideTitle:
+    extends: fields/hideTitle
+  shortDesc:
+    width: 1/2
+    label:
+      en: Short description
+      fr: Description courte
+    help:
+      en: Displayed above the video
+      fr: Affichée au-dessus de la vidéo
+    extends: fields/writer
+  video:
+    extends: fields/video
+    label:
+      en: Video
+      fr: Vidéo
+    max: 1
+    required: true
+  contentTitle:
+    label:
+      en: Below the video — Title
+      fr: Sous la vidéo — Titre
+    help:
+      en: Optional. When filled, the title is displayed on the left and the text on the right.
+      fr: Facultatif. Si rempli, le titre est affiché à gauche et le texte à droite.
+    type: text
+  content:
+    label:
+      en: Below the video — Text
+      fr: Sous la vidéo — Texte
+    extends: fields/writer
+  variant:
+    extends: fields/variant

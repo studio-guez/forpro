@@ -1,0 +1,15 @@
+node_modules
+.nuxt
+.output
+.data
+.nitro
+.cache
+dist
+.git
+.gitignore
+Dockerfile.dev
+Dockerfile.prod
+.dockerignore
+README.md
+menus.conf
+menus-le-ssl.conf

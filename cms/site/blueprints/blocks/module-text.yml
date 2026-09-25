@@ -1,0 +1,31 @@
+extends: blocks/base
+
+name:
+  en: Module - Text
+  fr: Module - Texte
+
+icon: text
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  hideTitle:
+    extends: fields/hideTitle
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    extends: fields/writer
+  ctas:
+    extends: fields/cta
+    label:
+      en: CTAs
+      fr: CTAs
+    max: ~
+  variant:
+    extends: fields/variant

@@ -1,0 +1,133 @@
+import type { CmsImage } from '$lib/interfaces/page';
+
+export interface MenuLink {
+	readonly label: string;
+	readonly url: string | null;
+	/** Set by the CMS from the link type the editor picked; never inferred from the URL. */
+	readonly target: '_blank' | null;
+}
+
+export interface SecondaryMenuLink extends MenuLink {
+	readonly level: 1 | 2;
+}
+
+export interface SecondaryMenuGroup {
+	readonly title: string | null;
+	readonly links: SecondaryMenuLink[];
+}
+
+export interface SecondaryMenuColumn {
+	readonly title: string | null;
+	readonly groups: SecondaryMenuGroup[];
+}
+
+export type SocialPlatform =
+	'facebook' | 'instagram' | 'linkedin' | 'youtube' | 'tiktok' | 'snapchat' | 'x';
+
+export interface SocialLink {
+	readonly platform: SocialPlatform;
+	readonly url: string;
+}
+
+export interface ExternalLink {
+	readonly label: string;
+	readonly url: string;
+}
+
+export interface Header {
+	readonly siteTitle: string;
+	readonly logo: CmsImage;
+	readonly mainMenu: MenuLink[];
+	readonly secondaryMenu: SecondaryMenuColumn[];
+	readonly externalLinksTitle: string | null;
+	readonly externalLinks: ExternalLink[];
+	readonly socialLinks: SocialLink[];
+}
+
+export interface FooterAddress {
+	readonly name: string | null;
+	readonly street: string | null;
+	readonly postalCode: string | null;
+	readonly locality: string | null;
+	readonly region: string | null;
+	readonly country: string | null;
+	readonly mapUrl: string | null;
+}
+
+export interface Footer {
+	/** The same file as `Header.logo`; the CMS serialises it into both payloads. */
+	readonly logo: CmsImage;
+	readonly logoEntrepriseFormatrice: CmsImage | null;
+	readonly address: FooterAddress;
+	readonly email: string | null;
+	/** Human-readable phone number, as typed in the Panel. */
+	readonly phone: string | null;
+	/** The same number normalised into a `tel:` URI by the CMS. */
+	readonly phoneUrl: string | null;
+	readonly socialsTitle: string | null;
+	readonly socialLinks: SocialLink[];
+	readonly menuTitle: string | null;
+	readonly menuLinks: MenuLink[];
+	readonly newsletter: Newsletter;
+}
+
+export interface NewsletterMessages {
+	readonly success: string | null;
+	readonly error: string | null;
+	readonly invalidEmail: string | null;
+}
+
+/**
+ * Copy for the footer subscription form. The provider credentials it posts to stay
+ * server-side (see `routes/api/newsletter`), so nothing here is a secret.
+ */
+export interface Newsletter {
+	readonly title: string | null;
+	readonly placeholder: string | null;
+	readonly submitLabel: string | null;
+	readonly messages: NewsletterMessages;
+}
+
+/** Outcome of a `POST /api/newsletter`; the footer maps it to a CMS-managed message. */
+export type NewsletterStatus = 'ok' | 'invalidEmail' | 'error';
+
+export interface NewsletterResponse {
+	readonly status: NewsletterStatus;
+}
+
+export interface BannerAnnouncement {
+	readonly title: string;
+	readonly description: string | null;
+	readonly url: string | null;
+	readonly target: '_blank' | null;
+}
+
+export interface FaviconPng {
+	readonly size: number;
+	readonly url: string;
+}
+
+export interface FaviconVariant {
+	readonly svg: string | null;
+	readonly png: FaviconPng[];
+}
+
+export interface Favicon {
+	readonly light: FaviconVariant;
+	readonly dark: FaviconVariant;
+}
+
+export interface CookieSettings {
+	readonly text: string | null;
+	readonly privacyPolicyUrl: string | null;
+}
+
+export interface Global {
+	readonly header: Header;
+	readonly footer: Footer;
+	readonly banner: BannerAnnouncement[];
+	readonly favicon: Favicon | null;
+	readonly cookies: CookieSettings;
+	/** Site-wide JSON-LD (Organization, WebSite); page schemas link back to it. */
+	readonly schemas: Record<string, unknown>[];
+}

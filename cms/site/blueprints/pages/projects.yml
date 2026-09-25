@@ -1,0 +1,58 @@
+title:
+  en: Projects
+  fr: Projets
+
+extends: pages/core-page
+
+icon: folder
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    sections:
+      meta:
+        type: fields
+        fields:
+          title:
+            label:
+              en: Title
+              fr: Titre
+            type: text
+            required: true
+      messages:
+        type: fields
+        fields:
+          messagesLabel:
+            label:
+              en: Empty-state messages
+              fr: Messages d'absence de résultats
+            type: headline
+          noResultsText:
+            label:
+              en: No search result
+              fr: Aucun résultat de recherche
+            extends: fields/writer
+            required: true
+            default: "<p>Aucun projet ne correspond à votre recherche.</p>"
+      extra:
+        type: fields
+        fields:
+          body:
+            extends: fields/bodyExtra
+            # The projects module would just duplicate the listing above.
+            fieldsets:
+              module-projects: false
+      projects:
+        extends: sections/child-pages
+        label:
+          en: Projects
+          fr: Projets
+        templates:
+          - project
+        create: project
+        sortBy: date desc
+
+  seo: tabs/seo

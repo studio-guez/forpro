@@ -2,7 +2,8 @@
 
 .idea/*
 docker/*
-deploy.md
+deploy.*md
+.vscode/*
 
 ### FRONTENDS ===========================================================================================================
 
@@ -52,8 +53,15 @@ cms/**/site/sessions/index.html
 # License
 cms/site/config/.license
 
+# Environment files with secrets (use cms/.env.example as template)
+cms/.env
+
 # Content
 cms/content
+
+# Kirby core & composer vendor (baked into Docker image, not tracked in git)
+cms/kirby/
+cms/vendor/
 
 # NODE
 cms/site/plugins/**/node_modules/*
@@ -61,7 +69,11 @@ cms/site/plugins/**/node_modules/*
 # DATA PLUGINS
 cms/site/plugins/**/data/*
 
+# ID
+cms/id.env
+
+# Backup files
+cms/bckp
+
 node_modules
 vendor
-
-cms/id.env

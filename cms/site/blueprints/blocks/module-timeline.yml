@@ -1,0 +1,20 @@
+extends: blocks/base
+
+name:
+  en: Module - Timeline
+  fr: Module - Timeline
+
+icon: sort
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  hideTitle:
+    extends: fields/hideTitle
+  steps:
+    extends: fields/timelineSteps

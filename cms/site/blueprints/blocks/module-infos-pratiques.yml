@@ -1,0 +1,58 @@
+extends: blocks/base
+
+name:
+  en: Module - Practical infos
+  fr: Module - Infos pratiques
+
+icon: info
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  hideTitle:
+    extends: fields/hideTitle
+  subtitle:
+    width: 1/2
+    label:
+      en: Subtitle
+      fr: Sous-titre
+    type: text
+    required: true
+  elements:
+    extends: fields/threeElements
+    help:
+      en: Optional. If added, all 3 descriptions must be filled in; titles are optional.
+      fr: Optionnel. Si ajouté, les 3 descriptions doivent être remplies ; les titres sont facultatifs.
+  programs:
+    extends: fields/taxonomies/programs
+    width: 1/2
+    help:
+      en: Filters the questions shown in the block.
+      fr: Filtre les questions affichées dans le module.
+  resourcesTaxonomy:
+    extends: fields/taxonomies/resourcesTaxonomy
+    width: 1/2
+    help:
+      en: Filters the questions shown in the block.
+      fr: Filtre les questions affichées dans le module.
+  publics:
+    extends: fields/taxonomies/publics
+    width: 1/2
+    help:
+      en: Filters the questions shown in the block.
+      fr: Filtre les questions affichées dans le module.
+  ctaLabel:
+    width: 1/2
+    label:
+      en: CTA label
+      fr: Libellé du CTA
+    type: text
+    default: Plus de réponses
+    required: true
+  variant:
+    extends: fields/variant

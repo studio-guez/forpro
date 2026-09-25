@@ -1,0 +1,48 @@
+<script lang="ts">
+	import type { ModuleVideoContent, Theme } from '$lib/interfaces/page';
+	import { getThemeColors } from '$lib/utils/themeColors';
+	import Card from '$lib/components/ui/Card.svelte';
+	import Video from '$lib/components/ui/Video.svelte';
+	import ShapeCasesDefault1 from '$lib/components/svg/ShapeCasesDefault1.svelte';
+	import ShapeCasesDefault2 from '$lib/components/svg/ShapeCasesDefault2.svelte';
+
+	interface Props {
+		content: ModuleVideoContent;
+		theme: Theme;
+	}
+
+	let { content, theme }: Props = $props();
+
+	const colors = $derived(getThemeColors(theme, content.variant));
+</script>
+
+<Card
+	background={colors.bg}
+	color={colors.text}
+	shapeLeft={colors.showShapes ? ShapeCasesDefault1 : null}
+	shapeRight={colors.showShapes ? ShapeCasesDefault2 : null}
+	shapeColor={colors.bgContrast}
+	title={content.title}
+	shortDesc={content.shortDesc}
+	titleBackground={colors.titleBackground}
+	titleColor={colors.title}
+>
+	{#if content.video}
+		<Video video={content.video} title="Vidéo — {content.title}" class="mt-6 lg:mt-12" />
+	{/if}
+
+	{#if content.content}
+		{#if content.contentTitle}
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-x-6 gap-y-3 lg:gap-12 mt-3 lg:mt-8">
+				<h3 class="text-h4 max-lg:text-center">{content.contentTitle}</h3>
+				<div class="prose text-body-2 lg:col-span-2 max-lg:text-center">
+					{@html content.content}
+				</div>
+			</div>
+		{:else}
+			<div class="prose text-body-2 mt-3 lg:mt-8 text-center mx-auto max-w-3xl">
+				{@html content.content}
+			</div>
+		{/if}
+	{/if}
+</Card>

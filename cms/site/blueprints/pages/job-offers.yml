@@ -1,0 +1,82 @@
+title:
+  en: Job offers
+  fr: Offres d'emploi
+
+extends: pages/core-page
+
+icon: briefcase
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    sections:
+      meta:
+        type: fields
+        fields:
+          headerType:
+            extends: fields/headerType
+            default: compact
+          title:
+            width: 1/2
+            label:
+              en: Title
+              fr: Titre
+            type: text
+            required: true
+          cover:
+            width: 1/2
+            extends: fields/cover
+          overtitle:
+            label:
+              en: Overtitle
+              fr: Sur-titre
+            type: text
+            when:
+              headerType: full
+          introTitle:
+            label:
+              en: Intro title
+              fr: Titre introduction
+            type: text
+            required: true
+            when:
+              headerType: full
+          intro:
+            label:
+              en: Introduction
+              fr: Introduction
+            extends: fields/writer
+      messages:
+        type: fields
+        fields:
+          messagesLabel:
+            label:
+              en: Empty-state messages
+              fr: Messages d'absence de résultats
+            type: headline
+          noOffersText:
+            label:
+              en: No open job offer
+              fr: Aucune offre ouverte
+            extends: fields/writer
+            required: true
+            default: "<p>Aucune offre d'emploi n'est ouverte pour le moment.</p>"
+      extra:
+        type: fields
+        fields:
+          body:
+            extends: fields/bodyExtra
+      jobOffers:
+        type: pages
+        image: false
+        label:
+          en: Job offers
+          fr: Offres d'emploi
+        templates:
+          - job-offer
+        create: job-offer
+
+  seo: tabs/seo

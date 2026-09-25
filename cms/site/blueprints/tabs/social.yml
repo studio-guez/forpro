@@ -1,0 +1,44 @@
+label:
+  en: Social networks
+  fr: Réseaux sociaux
+icon: share
+
+columns:
+  - width: 1/1
+    fields:
+      socialLinks:
+        label:
+          en: Social networks
+          fr: Réseaux sociaux
+        type: structure
+        columns:
+          platform:
+            width: 1/2
+          url:
+            width: 1/2
+        fields:
+          platform:
+            label:
+              en: Network
+              fr: Réseau
+            type: select
+            required: true
+            options:
+              - value: facebook
+                text: Facebook
+              - value: instagram
+                text: Instagram
+              - value: linkedin
+                text: LinkedIn
+              - value: youtube
+                text: YouTube
+              - value: tiktok
+                text: TikTok
+              - value: snapchat
+                text: Snapchat
+              - value: x
+                text: X
+          url:
+            label: { en: URL, fr: URL }
+            type: url
+            required: true

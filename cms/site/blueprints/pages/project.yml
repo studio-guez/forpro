@@ -1,0 +1,68 @@
+title:
+  en: Project
+  fr: Projet
+
+extends: pages/event-project-base
+
+status:
+  draft: true
+  listed: true
+
+num: zero
+
+options:
+  preview: "{{ page.frontendUrl }}"
+
+tabs:
+  content:
+    columns:
+      sidebar:
+        sections:
+          taxonomies:
+            type: fields
+            fields:
+              sepTaxonomies:
+                type: line
+              date:
+                label:
+                  en: Date
+                  fr: Date
+                type: date
+                required: true
+              programs:
+                extends: fields/taxonomies/programs
+              resourcesTaxonomy:
+                extends: fields/taxonomies/resourcesTaxonomy
+              categories:
+                extends: fields/taxonomies/categories
+                max: 1
+      main:
+        sections:
+          collective:
+            type: fields
+            fields:
+              collectiveLabel:
+                label:
+                  en: Collective
+                  fr: Collectif
+                type: headline
+              collectiveName:
+                label:
+                  en: Collective name / Contributor name
+                  fr: Nom du collectif / Nom du contributeur
+                  help: 
+                    en: If there is only one contributor, indicate their name and do not add additional members.
+                    fr: Si un seul contributeur, indiquez son nom et ne pas ajouter de membres supplémentaires.
+                type: text
+              collectiveMembers:
+                label:
+                  en: Project by
+                  fr: Projet réalisé par
+                type: structure
+                fields:
+                  name:
+                    label:
+                      en: Last name / First name
+                      fr: Nom / Prénom
+                    type: text
+                    required: true

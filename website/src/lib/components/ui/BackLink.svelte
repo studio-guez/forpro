@@ -1,0 +1,25 @@
+<script lang="ts">
+	import type { PageParent } from '$lib/interfaces/page';
+	import IconArrow from '$lib/components/svg/IconArrow.svelte';
+	import IconChevron from '$lib/components/svg/IconChevron.svelte';
+
+	interface Props {
+		parentPage: PageParent;
+		label?: string;
+		color?: string;
+		class?: string;
+	}
+
+	let { parentPage, label, color = 'var(--color-blue)', class: className = '' }: Props = $props();
+
+	const text = $derived(label ?? `Retour à ${parentPage.title}`);
+</script>
+
+<a
+	href="/{parentPage.path}"
+	style:color
+	class="text-label group inline-flex items-center gap-0.5 {className}"
+>
+	<IconChevron class="rotate-90 group-hover:-translate-x-0.75 transition-transform w-4 h-4" />
+	{text}
+</a>

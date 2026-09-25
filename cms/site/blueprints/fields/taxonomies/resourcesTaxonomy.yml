@@ -1,0 +1,6 @@
+extends: fields/taxonomies/taxonomy
+label:
+  en: Resources
+  fr: Ressources
+options:
+  query: site.find("taxonomies").find("resources-taxonomy").children

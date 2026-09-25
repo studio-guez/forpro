@@ -1,5 +1,5 @@
 <template>
-  <k-inside>
+  <k-panel-inside>
     <k-header>
       Menu Spécial
       <k-button-group slot="buttons">
@@ -121,7 +121,6 @@
         </div>
       </k-grid>
 
-      <!-- Vins section with toggle (hidden for dishes-dishes layout) -->
       <k-grid v-if="(page.layout || 'wines-dishes') !== 'dishes-dishes'" style="margin-top: 40px">
         <div class="k-column" style="--width: 1/2; justify-self: start">
           <k-input
@@ -207,7 +206,6 @@
         </k-draggable>
       </table>
 
-      <!-- Menu section with toggle -->
       <k-grid style="margin-top: 40px">
         <div class="k-column" style="--width: 1/2; justify-self: start">
           <k-input
@@ -295,7 +293,6 @@
         </k-draggable>
       </table>
 
-      <!-- Second dishes section (only for dishes-dishes layout) -->
       <template v-if="(page.layout || 'wines-dishes') === 'dishes-dishes'">
         <k-grid style="margin-top: 40px">
           <div class="k-column" style="--width: 1/2; justify-self: start">
@@ -385,7 +382,7 @@
         </table>
       </template>
     </div>
-  </k-inside>
+  </k-panel-inside>
 </template>
 
 <script>
@@ -508,7 +505,6 @@ export default {
     };
   },
   created() {
-    // Create debounced versions of methods
     this.debouncedGetHtml = this.debounce(this.getHtml, 500);
     this.debouncedUpdateMenu = this.debounce(this.updateMenuOnServer, 500);
   },
@@ -516,13 +512,11 @@ export default {
     this.getHtml();
   },
   beforeDestroy() {
-    // Clean up any pending timeouts
     if (this.updateTimeout) {
       clearTimeout(this.updateTimeout);
     }
   },
   watch: {
-    // Only watch specific properties that should trigger updates
     'menu.qrUrl': 'debouncedUpdateMenu',
     'menu.textAboveQr': 'debouncedUpdateMenu',
     'menu.partnerLogo': 'debouncedUpdateMenu',
@@ -539,7 +533,6 @@ export default {
       return labels[layout] || labels['wines-dishes'];
     },
 
-    // Utility function for debouncing
     debounce(fn, wait) {
       let timeout;
       return function(...args) {
@@ -553,12 +546,10 @@ export default {
       this.debouncedUpdateMenu();
     },
 
-    // Form input handler
     input() {
       this.debouncedUpdateMenu();
     },
 
-    // Updated method for updating wine titles
     updateWinesTitles(value, pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
@@ -567,7 +558,6 @@ export default {
       }
     },
 
-    // Updated method for updating dishes title
     updateDishesTitle(value, pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
@@ -576,12 +566,10 @@ export default {
       }
     },
 
-    // Layout selector
     updatePageLayout(value, pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
         this.$set(page, 'layout', value);
-        // Initialize dishes2 array if switching to dishes-dishes layout
         if (value === 'dishes-dishes' && !page.dishes2) {
           this.$set(page, 'dishes2', []);
           this.$set(page, 'dishesTitle2', 'Plats 2');
@@ -591,7 +579,6 @@ export default {
       }
     },
 
-    // Dishes 2 methods
     updateDishesTitle2(value, pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
@@ -607,9 +594,9 @@ export default {
         this.$set(page, 'showDishes2', newValue);
         this.debouncedUpdateMenu();
         if (newValue) {
-          this.$store.dispatch("notification/success", "Section Plats 2 activée");
+          this.$panel.notification.success("Section Plats 2 activée");
         } else {
-          this.$store.dispatch("notification/info", "Section Plats 2 désactivée");
+          this.$panel.notification.info("Section Plats 2 désactivée");
         }
       }
     },
@@ -622,7 +609,7 @@ export default {
           .then(() => {
             this.isSubmitting = false;
             this.hasBeenSubmitted = true;
-            this.$store.dispatch("notification/success", "Menu enregistré avec succès");
+            this.$panel.notification.success("Menu enregistré avec succès");
             setTimeout(() => {
               this.hasBeenSubmitted = false;
             }, 5000);
@@ -630,7 +617,7 @@ export default {
           })
           .catch(error => {
             this.isSubmitting = false;
-            this.$store.dispatch("notification/error", "Erreur lors de l'enregistrement du menu");
+            this.$panel.notification.error("Erreur lors de l'enregistrement du menu");
             console.error("Error submitting menu:", error);
           });
     },
@@ -638,7 +625,6 @@ export default {
     getHtml() {
       this.$api.get("/restaurant/menu/special/html")
           .then(response => {
-            // Sanitize the HTML content by wrapping it in a restrictive container
             this.html = `
             <html>
               <head>
@@ -663,7 +649,7 @@ export default {
           `;
           })
           .catch(error => {
-            this.$store.dispatch("notification/error", "Erreur lors de la récupération du HTML");
+            this.$panel.notification.error("Erreur lors de la récupération du HTML");
             console.error("Error getting HTML:", error);
           });
     },
@@ -673,31 +659,23 @@ export default {
 
       this.isGeneratingPDF = true;
 
-      // Ensure we have the latest menu saved before generating PDF
       this.submit();
 
       const url = this.$api.endpoint +
           "/restaurant/menu/special/generate/" +
           (withAssets ? "with-assets" : "without-assets");
 
-      // Use a more reliable approach to open the PDF
       const pdfWindow = window.open(url, '_blank');
 
-      // Set a timeout to reset the state, but also handle cases where
-      // the window couldn't be opened (e.g., popup blocked)
       if (pdfWindow) {
         setTimeout(() => {
           this.isGeneratingPDF = false;
-          this.$store.dispatch(
-              "notification/success",
-              "Le PDF a été généré avec succès"
+          this.$panel.notification.success("Le PDF a été généré avec succès"
           );
         }, 1500);
       } else {
         this.isGeneratingPDF = false;
-        this.$store.dispatch(
-            "notification/error",
-            "Le PDF n'a pas pu être généré. Vérifiez que les pop-ups sont autorisés."
+        this.$panel.notification.error("Le PDF n'a pas pu être généré. Vérifiez que les pop-ups sont autorisés."
         );
       }
     },
@@ -714,7 +692,6 @@ export default {
         this.menu.pages = [];
       }
 
-      // Use maximum existing ID + 1 for better reliability
       const maxId = this.menu.pages.reduce((max, page) => Math.max(max, page.id), 0);
       const newId = maxId + 1;
 
@@ -738,46 +715,39 @@ export default {
       this.debouncedUpdateMenu();
     },
 
-// Toggle visibility of Wines section
     toggleWinesSection(pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
-        // Toggle the current value
         const newValue = page.showWines === false;
         this.$set(page, 'showWines', newValue);
         this.debouncedUpdateMenu();
 
-        // Show appropriate notification
         if (newValue) {
-          this.$store.dispatch("notification/success", "Section Vins activée");
+          this.$panel.notification.success("Section Vins activée");
         } else {
-          this.$store.dispatch("notification/info", "Section Vins désactivée");
+          this.$panel.notification.info("Section Vins désactivée");
         }
       }
     },
 
-// Toggle visibility of Dishes section
     toggleDishesSection(pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
-        // Toggle the current value
         const newValue = page.showDishes === false;
         this.$set(page, 'showDishes', newValue);
         this.debouncedUpdateMenu();
 
-        // Show appropriate notification
         if (newValue) {
-          this.$store.dispatch("notification/success", "Section Plats activée");
+          this.$panel.notification.success("Section Plats activée");
         } else {
-          this.$store.dispatch("notification/info", "Section Plats désactivée");
+          this.$panel.notification.info("Section Plats désactivée");
         }
       }
     },
 
     deletePage(pageId) {
-      // Don't allow deleting the last page
       if (this.menu.pages.length <= 1) {
-        this.$store.dispatch("notification/error", "Impossible de supprimer la dernière page");
+        this.$panel.notification.error("Impossible de supprimer la dernière page");
         return;
       }
 
@@ -820,11 +790,10 @@ export default {
     updateMenuOnServer() {
       this.$api.post("restaurant/menu/special/create", this.menu)
           .then(() => {
-            // Only get HTML after successful update
             this.debouncedGetHtml();
           })
           .catch(error => {
-            this.$store.dispatch("notification/error", "Erreur lors de la mise à jour du menu");
+            this.$panel.notification.error("Erreur lors de la mise à jour du menu");
             console.error("Error updating menu:", error);
           });
     },
@@ -839,12 +808,10 @@ export default {
   background-color: hsl(80, 60%, calc(80% + -2.5%)) !important;
 }
 
-/* Additional styles for improved UI */
 .k-table {
   width: 100%;
 }
 
-/* Add transitions for smoother UI */
 .k-button, .k-dropdown-item {
   transition: background-color 0.2s ease;
 }
@@ -866,7 +833,6 @@ export default {
   z-index: 1;
 }
 
-/* Layout badge under page title */
 .page-layout-badge {
   display: inline-block;
   margin-top: 4px;
@@ -879,7 +845,6 @@ export default {
   border-radius: 3px;
 }
 
-/* Button transition for smoother toggle */
 .k-button {
   transition: all 0.2s ease-in-out;
 }

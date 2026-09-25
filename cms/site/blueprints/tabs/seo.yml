@@ -1,0 +1,21 @@
+extends: seo/page
+
+columns:
+  main:
+    fields:
+      matomoSeparator:
+        type: line
+      trackWithMatomo:
+        label:
+          en: Track with Matomo
+          fr: Suivi avec Matomo
+        type: toggle
+        text:
+          - en: No
+            fr: Non
+          - en: Yes
+            fr: Oui
+        default: true
+        help:
+          en: Send visits to this page to Matomo analytics.
+          fr: Envoyer les visites de cette page à Matomo.

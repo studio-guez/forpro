@@ -1,0 +1,71 @@
+title:
+  en: Events
+  fr: Événements
+
+extends: pages/core-page
+
+icon: calendar
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    sections:
+      meta:
+        type: fields
+        fields:
+          title:
+            label:
+              en: Title
+              fr: Titre
+            type: text
+            required: true
+      messages:
+        type: fields
+        fields:
+          messagesLabel:
+            label:
+              en: Empty-state messages
+              fr: Messages d'absence de résultats
+            type: headline
+          noResultsText:
+            label:
+              en: Upcoming events, no search result
+              fr: Événements à venir, aucun résultat de recherche
+            extends: fields/writer
+            required: true
+            default: "<p>Aucun événement à venir ne correspond à votre recherche.</p>"
+          noUpcomingText:
+            label:
+              en: No upcoming event
+              fr: Aucun événement à venir
+            extends: fields/writer
+            required: true
+            default: "<p>Aucun événement à venir pour le moment.</p>"
+          noPastResultsText:
+            label:
+              en: Past events, no search result
+              fr: Événements passés, aucun résultat de recherche
+            extends: fields/writer
+            required: true
+            default: "<p>Aucun événement passé ne correspond à votre recherche.</p>"
+      extra:
+        type: fields
+        fields:
+          body:
+            extends: fields/bodyExtra
+            # The agenda module would just duplicate the listing above.
+            fieldsets:
+              module-agenda: false
+      events:
+        extends: sections/child-pages
+        label:
+          en: Events
+          fr: Événements
+        templates:
+          - event
+        create: event
+
+  seo: tabs/seo

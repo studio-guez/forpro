@@ -2,8 +2,10 @@
 
 use Kirby\Cms\Page;
 use Kirby\Cms\Response;
+use Kirby\Exception\PermissionException;
 use Eclypsys\Menu;
 use Eclypsys\MenuSpecial;
+use Eclypsys\Restaurant;
 use Eclypsys\Menu\Metadata;
 use Eclypsys\MenuSpecial\DishSpecial;
 use Spatie\Browsershot\Browsershot;
@@ -11,7 +13,6 @@ use Spatie\Browsershot\Browsershot;
 return [
     "routes" => function ($kirby) {
         return [
-            /* Menu */
             [
                 "pattern" => "restaurant/menu/create",
                 "method" => "POST",
@@ -25,8 +26,6 @@ return [
                 "auth" => false,
                 "action" => function () {
                     $renderWithAssets = true;
-
-                    kirby()->impersonate("kirby");
 
                     $data = Menu::get($renderWithAssets);
 
@@ -56,18 +55,29 @@ return [
 
                     return new Response($pdfContent, "application/pdf", 200, [
                         "Content-Disposition" =>
-                            'inline; filename="menu.pdf"',
+                        'inline; filename="menu.pdf"',
                     ]);
                 },
             ],
             [
                 "pattern" => "restaurant/menu/generate/with-assets/publish",
-                "method" => "GET",
-                "auth" => false,
+                "method" => "POST",
                 "action" => function () {
                     $renderWithAssets = true;
 
-                    kirby()->impersonate("kirby");
+                    $user = kirby()->user();
+
+                    if (
+                        $user === null ||
+                        $user
+                            ->role()
+                            ->permissions()
+                            ->for("eclypsys.foodlab", "access") !== true
+                    ) {
+                        throw new PermissionException(
+                            message: "You are not allowed to publish the menu PDF"
+                        );
+                    }
 
                     $data = Menu::get($renderWithAssets);
 
@@ -98,58 +108,29 @@ return [
                     $timestamp = date("Y-m-d_H-i-s");
                     $filename = "menu_{$timestamp}.pdf";
 
-                    $source = $this->site()->mediaRoot() . "/" . $filename;
-                    $result = F::write($source, $pdfContent);
-
-                    if ($result) {
-                        try {
-                            $file = $this->site()->createFile([
-                                "filename" => $filename,
-                                "source" => $source,
-                            ]);
-
-                            $btnLab = $this->site()->btnLab()->toObject();
-                            $btnFooter1 = $this->site()
-                                ->btnFooter1()
-                                ->toObject();
-
-                            if ($file) {
-                                $this->site()->update([
-                                    "btnLab" => [
-                                        "link" => $file->uuid(),
-                                        "linkText" => $btnLab
-                                            ->linkText()
-                                            ->value(),
-                                        "target" => true,
-                                    ],
-                                    "btnFooter1" => [
-                                        "link" => $file->uuid(),
-                                        "linkText" => $btnFooter1
-                                            ->linkText()
-                                            ->value(),
-                                        "target" => true,
-                                    ],
-                                ]);
-                                echo "PDF updated successfully: $filename";
-                            } else {
-                                echo "Failed to create file in Kirby.";
-                            }
-                        } catch (Exception $e) {
-                            echo "Error updating PDF: " . $e->getMessage();
-                            F::remove($source);
-                        }
-                    } else {
-                        echo "Failed to write PDF file to disk.";
+                    try {
+                        $url = Restaurant::publishMenuPdf(
+                            $filename,
+                            $pdfContent
+                        );
+                    } catch (Exception $e) {
+                        return \Kirby\Http\Response::json(
+                            json_encode([
+                                "status" => "error",
+                                "message" =>
+                                    "Error updating PDF: " . $e->getMessage(),
+                            ]),
+                            500
+                        );
                     }
 
-                    $pdfHtml = Browsershot::html($html)
-                        ->format("A4")
-                        ->bodyHtml();
-
-                    return new Response($pdfContent, "application/pdf", 200, [
-                        "Content-Disposition" =>
-                            'attachment; filename="menu.pdf"',
-                    ]);
+                    return \Kirby\Http\Response::json(
+                        json_encode([
+                            "status" => "ok",
+                            "filename" => $filename,
+                            "url" => $url,
+                        ])
+                    );
                 },
             ],
             [
@@ -158,8 +139,6 @@ return [
                 "auth" => false,
                 "action" => function () {
                     $renderWithAssets = false;
-
-                    kirby()->impersonate("kirby");
 
                     $data = Menu::get($renderWithAssets);
 
@@ -188,15 +167,97 @@ return [
 
                     return new Response($pdfContent, "application/pdf", 200, [
                         "Content-Disposition" =>
-                            'inline; filename="menu.pdf"',
+                        'inline; filename="menu.pdf"',
                     ]);
                 },
             ],
+            /**
+             * Unsaved draft / publish / discard of the restaurant form, the
+             * three operations Kirby exposes as `<model>/changes/…` for pages
+             * and files.
+             *
+             * They must NOT live under `<path>/changes/…`: Kirby registers
+             * `(:all)/changes/save` as a core api route and core routes are
+             * matched before plugin ones, so the request would end up in
+             * `Find::parent()` ("Invalid model type").
+             */
             [
-                "pattern" => "restaurant/update",
+                "pattern" => Restaurant::API_PATH . "/content/save",
                 "method" => "POST",
                 "action" => function () {
-                    return Restaurant::create(get());
+                    Restaurant::requireEditPermission();
+
+                    Restaurant::saveChanges(get());
+
+                    return ["status" => "ok"];
+                },
+            ],
+            [
+                "pattern" => Restaurant::API_PATH . "/content/publish",
+                "method" => "POST",
+                "action" => function () {
+                    Restaurant::requireEditPermission();
+
+                    Restaurant::publish(get());
+
+                    return ["status" => "ok"];
+                },
+            ],
+            [
+                "pattern" => Restaurant::API_PATH . "/content/discard",
+                "method" => "POST",
+                "action" => function () {
+                    Restaurant::requireEditPermission();
+
+                    Restaurant::discard();
+
+                    return ["status" => "ok"];
+                },
+            ],
+
+            /**
+             * Field endpoints of the restaurant form, mirroring the
+             * `<model>/fields/<name>/…` routes. The media library is shared by
+             * every field, so the field name is only part of the path the
+             * panel builds — `(:any)` also covers the `<field>+<subfield>`
+             * paths of structure and object subfields.
+             */
+            [
+                "pattern" => [
+                    Restaurant::API_PATH . "/fields/(:any)",
+                    Restaurant::API_PATH . "/fields/(:any)/files",
+                ],
+                "method" => "GET",
+                "action" => function () {
+                    Restaurant::requireEditPermission();
+
+                    return Restaurant::picker(
+                        $this->requestQuery("search"),
+                        (int) ($this->requestQuery("page") ?? 1)
+                    );
+                },
+            ],
+            [
+                "pattern" => Restaurant::API_PATH . "/fields/(:any)/upload",
+                "method" => "POST",
+                "action" => function () {
+                    Restaurant::requireEditPermission();
+
+                    return $this->upload(
+                        fn(string $source, string $filename) => Restaurant::upload(
+                            $source,
+                            $filename
+                        ),
+                        single: true
+                    );
+                },
+            ],
+            [
+                "pattern" => "restaurant/media/(:any)",
+                "method" => "GET",
+                "auth" => false,
+                "action" => function (string $filename) {
+                    return Restaurant::serve($filename);
                 },
             ],
             [
@@ -204,161 +265,9 @@ return [
                 "method" => "GET",
                 "auth" => false,
                 "action" => function () {
-                    $json = [];
-
-                    $json["banner_info"] = $this->site()->banner_info()->value();
-
-                    $json["menu"] = [
-                        "baseline" => $this->site()
-                            ->headline()
-                            ->toHtml()
-                            ->value(),
-                    ];
-
-                    $menuElements = $this->site()->menu()->toStructure();
-                    foreach ($menuElements as $element) {
-                        $json["menu"]["content"][] = [
-                            "text" => $element->text()->value(),
-                            "link" => $element->link()->toUrl(),
-                        ];
-                    }
-
-                    $btnHero1 = $this->site()->btnHero1()->toObject();
-
-                    $json["hero"] = [
-                        "btn1" => [
-                            "link" => $btnHero1->link()->toUrl(),
-                            "text" => $btnHero1->linkText()->value(),
-                            "target" => $btnHero1->target()->toBool(),
-                        ],
-                        "pictureURL1" => $this->site()->picHero1()->toFile()
-                            ? $this->site()->picHero1()->toFile()->url()
-                            : "",
-                        "pictureURL2" => $this->site()->picHero2()->toFile()
-                            ? $this->site()->picHero2()->toFile()->url()
-                            : "",
-                        "pictureURL3" => $this->site()->picHero3()->toFile()
-                            ? $this->site()->picHero3()->toFile()->url()
-                            : "",
-                        "text" => $this->site()->textHero1()->kt()->value(),
-                    ];
-
-                    $btnFood = $this->site()->btnFood()->toObject();
-
-                    $json["food"] = [
-                        "title" => $this->site()->titleFood()->value(),
-                        "text" => $this->site()->textFood()->kt()->value(),
-                        "pictureURL" => $this->site()->fileFood1()->toFile()
-                            ? $this->site()->fileFood1()->toFile()->url()
-                            : "",
-                        "btn" => [
-                            "link" => $btnFood->link()->toUrl(),
-                            "text" => $btnFood->linkText()->value(),
-                            "target" => $btnFood->target()->toBool(),
-                        ],
-                    ];
-
-                    $btnLab = $this->site()->btnLab()->toObject();
-
-                    $json["lab"] = [
-                        "title" => $this->site()->titleLab()->value(),
-                        "text" => $this->site()->textLab()->kt()->value(),
-                        "pictureURL" => $this->site()->fileLab1()->toFile()
-                            ? $this->site()->fileLab1()->toFile()->url()
-                            : "",
-                        "btn" => [
-                            "link" => $btnLab->link()->toUrl(),
-                            "text" => $btnLab->linkText()->value(),
-                            "target" => $btnLab->target()->toBool(),
-                        ],
-                    ];
-
-                    $json["highlight"] = [
-                        "pictureURL" => $this->site()->picture1()->toFile()
-                            ? $this->site()->picture1()->toFile()->url()
-                            : "",
-                    ];
-
-                    $btnFormation = $this->site()->btnFormation()->toObject();
-
-                    $json["formation"] = [
-                        "title" => $this->site()->titleFormation()->value(),
-                        "text" => $this->site()->textFormation()->kt()->value(),
-                        "pictureURL" => $this->site()->fileFormation()->toFile()
-                            ? $this->site()->fileFormation()->toFile()->url()
-                            : "",
-                        "btn" => [
-                            "link" => $btnFormation->link()->toUrl(),
-                            "text" => $btnFormation->linkText()->value(),
-                            "target" => $btnFormation->target()->toBool(),
-                        ],
-                    ];
-
-                    $json["univers"] = [
-                        "title" => $this->site()->titleUnivers()->value(),
-                        "subtitle" => $this->site()->subtitleUnivers()->value(),
-                        "blogTitle1" => $this->site()
-                            ->blogUniversTitle1()
-                            ->value(),
-                        "blogPictureUrl1" => $this->site()
-                            ->blogUniversFil1()
-                            ->toFile()
-                            ? $this->site()->blogUniversFil1()->toFile()->url()
-                            : "",
-                        "blogText1" => $this->site()
-                            ->blogUniversText1()
-                            ->kt()
-                            ->value(),
-                        "blogTitle2" => $this->site()
-                            ->blogUniversTitle2()
-                            ->value(),
-                        "blogPictureUrl2" => $this->site()
-                            ->blogUniversFile2()
-                            ->toFile()
-                            ? $this->site()->blogUniversFile2()->toFile()->url()
-                            : "",
-                        "blogText2" => $this->site()
-                            ->blogUniversText2()
-                            ->kt()
-                            ->value(),
-                    ];
-
-                    $json["values"] = [
-                        "title" => $this->site()->titleValues()->value(),
-                        "text" => $this->site()->textValues()->value(),
-                    ];
-
-                    $values = $this->site()->lstValues()->toStructure();
-                    foreach ($values as $value) {
-                        $json["values"]["list"][] = [
-                            "title" => $value->title()->value(),
-                            "icon" => $value->icon()->toFile()
-                                ? $value->icon()->toFile()->url()
-                                : "",
-                        ];
-                    }
-
-                    $btnFooter1 = $this->site()->btnFooter1()->toObject();
-                    $btnFooter2 = $this->site()->btnFooter2()->toObject();
-
-                    $json["footer"] = [
-                        "Headline" => $this->site()->footerHeadline()->value(),
-                        "text1" => $this->site()->textFooter1()->kt()->value(),
-                        "text2" => $this->site()->textFooter2()->kt()->value(),
-                        "text3" => $this->site()->textFooter3()->kt()->value(),
-                        "btn1" => [
-                            "link" => $btnFooter1->link()->toUrl(),
-                            "text" => $btnFooter1->linkText()->value(),
-                            "target" => $btnFooter1->target()->toBool(),
-                        ],
-                        "btn2" => [
-                            "link" => $btnFooter2->link()->toUrl(),
-                            "text" => $btnFooter2->linkText()->value(),
-                            "target" => $btnFooter2->target()->toBool(),
-                        ],
-                    ];
-
-                    return \Kirby\Http\Response::json(json_encode($json));
+                    return \Kirby\Http\Response::json(
+                        json_encode(Restaurant::toApi())
+                    );
                 },
             ],
             [
@@ -472,7 +381,6 @@ return [
                     return false;
                 },
             ],
-            /* Menu Special */
             [
                 "pattern" => "restaurant/menu/special/create",
                 "method" => "POST",
@@ -497,8 +405,6 @@ return [
                 "auth" => false,
                 "action" => function () {
                     $renderWithAssets = true;
-
-                    kirby()->impersonate("kirby");
 
                     $data = MenuSpecial::get($renderWithAssets);
 
@@ -525,13 +431,9 @@ return [
                         ->fullPage()
                         ->pdf();
 
-                    $pdfHtml = Browsershot::html($html)
-                        ->format("A4")
-                        ->bodyHtml();
-
                     return new Response($pdfContent, "application/pdf", 200, [
                         "Content-Disposition" =>
-                            'attachment; filename="menu.pdf"',
+                        'attachment; filename="menu.pdf"',
                     ]);
                 },
             ],
@@ -541,8 +443,6 @@ return [
                 "auth" => false,
                 "action" => function () {
                     $renderWithAssets = true;
-
-                    kirby()->impersonate("kirby");
 
                     $data = MenuSpecial::get($renderWithAssets);
 
@@ -564,8 +464,6 @@ return [
                 "auth" => false,
                 "action" => function () {
                     $renderWithAssets = false;
-
-                    kirby()->impersonate("kirby");
 
                     $data = MenuSpecial::get($renderWithAssets);
 
@@ -592,13 +490,9 @@ return [
                         ->fullPage()
                         ->pdf();
 
-                    $pdfHtml = Browsershot::html($html)
-                        ->format("A4")
-                        ->bodyHtml();
-
                     return new Response($pdfContent, "application/pdf", 200, [
                         "Content-Disposition" =>
-                            'attachment; filename="menu.pdf"',
+                        'attachment; filename="menu.pdf"',
                     ]);
                 },
             ],

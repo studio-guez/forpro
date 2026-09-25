@@ -1,0 +1,52 @@
+extends: blocks/base
+
+name:
+  en: Module - Agenda
+  fr: Module - Agenda
+
+icon: calendar
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  hideTitle:
+    extends: fields/hideTitle
+  shortDesc:
+    width: 1/2
+    label:
+      en: Short description
+      fr: Description courte
+    extends: fields/writer
+  programs:
+    extends: fields/taxonomies/programs
+    width: 1/2
+    help:
+      en: Filters the events shown in the block.
+      fr: Filtre les événements affichés dans le module.
+  resourcesTaxonomy:
+    extends: fields/taxonomies/resourcesTaxonomy
+    width: 1/2
+    help:
+      en: Filters the events shown in the block.
+      fr: Filtre les événements affichés dans le module.
+  publics:
+    extends: fields/taxonomies/publics
+    width: 1/2
+    help:
+      en: Filters the events shown in the block.
+      fr: Filtre les événements affichés dans le module.
+  ctaLabel:
+    width: 1/2
+    label:
+      en: CTA label
+      fr: Libellé du CTA
+    type: text
+    default: Tout l'agenda
+    required: true
+  variant:
+    extends: fields/variant

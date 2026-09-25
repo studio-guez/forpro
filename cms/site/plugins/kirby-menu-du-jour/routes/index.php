@@ -12,8 +12,6 @@ return [
         'method'  => 'GET',
         'auth'    => false,
         'action'  => function () {
-            kirby()->impersonate('kirby');
-
             return Response::json(
                 Json::encode(MenuDuJour::list())
             );
@@ -24,13 +22,11 @@ return [
         'method'  => 'GET',
         'auth'    => false,
         'action'  => function () {
-            kirby()->impersonate('kirby');
-
             return Response::json(
-              array_merge(
-                ['menus' => FoddLab::list()],
-                ['footer' => FoddLab::getTexte()]
-              )
+                array_merge(
+                    ['menus' => FoddLab::list()],
+                    ['footer' => FoddLab::getTexte()]
+                )
             );
         }
     ],
@@ -39,8 +35,6 @@ return [
         'method'  => 'GET',
         'auth'    => false,
         'action'  => function () {
-            kirby()->impersonate('kirby');
-
             return Response::json(
                 Json::encode(SliderImages::list())
             );

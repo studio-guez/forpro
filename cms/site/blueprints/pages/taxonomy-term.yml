@@ -1,0 +1,16 @@
+status:
+  draft: true
+  listed: true
+
+# Kirby drops `sections` as soon as `fields` is set at the root, so term blueprints extend via sections.
+sections:
+  content:
+    type: fields
+    fields:
+      title:
+        label:
+          en: Name
+          fr: Nom
+        type: text
+      color:
+        extends: fields/color

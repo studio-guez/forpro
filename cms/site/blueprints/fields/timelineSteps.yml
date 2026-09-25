@@ -1,0 +1,21 @@
+label:
+  en: Steps
+  fr: Étapes
+type: structure
+min: 1
+fields:
+  title:
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+    maxlength: 40
+  shortDesc:
+    label:
+      en: Short description
+      fr: Description courte
+    type: textarea
+    buttons:
+      - link
+    size: small

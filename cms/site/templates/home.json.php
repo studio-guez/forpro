@@ -1,74 +1,77 @@
 <?php
 
-use Kirby\Cms\App;
-use Kirby\Cms\Page;
-use Kirby\Cms\Site;
+require_once 'utils/Utils.php';
 
 /** @global Kirby\Cms\App $kirby */
 /** @global Kirby\Cms\Site $site */
 /** @global Kirby\Cms\Page $page */
 
-$json = [];
+$json = Utils::getPageBaseData($page, 'home');
 
-$hero = $page->hero()->toStructure()?->get(0);
-$showMenu = $page->showMenu()->toBool();
-$showNewsletter = $page->showNewsletter()->toBool();
-$body = $page->body()->toBlocks()->toArray();
-$pages = $site->children();
+// Empty `alt` = decorative: the frontend hides the canvas from assistive tech.
+$lottieData = fn(?\Kirby\Cms\File $lottie, ?\Kirby\Cms\File $poster) => $lottie ? [
+    ...Utils::getJsonEncodeDocumentDataOrNull($lottie),
+    'alt'    => $lottie->alt()->value(),
+    'poster' => Utils::getJsonEncodeImageDataOrNull($poster),
+] : null;
+$poster = $page->lottiePoster()->toFile();
+$json['lottie']       = $lottieData($page->lottie()->toFile(), $poster);
+$json['lottieMobile'] = $lottieData($page->lottieMobile()->toFile(), $page->lottiePosterMobile()->toFile() ?? $poster);
 
-foreach ($pages as $page) {
-    $menu[] = [
-        'title' => $page->title()->value(),
-        'slug' => $page->slug(),
-        'url' => $page->url(),
-    ];
-}
+$json['welcomeTitle']     = $page->welcomeTitle()->value();
+$json['welcomeShortDesc'] = $page->welcomeShortDesc()->value();
 
-function getValueNotEmpty($pageAttribute, $siteAttribute) {
-    if($pageAttribute->isNotEmpty()) {
-        return $pageAttribute->value();
-    } elseif($siteAttribute->isNotEmpty()) {
-        return $siteAttribute->value();
+$json['welcomeCards'] = array_map(fn(int $index) => [
+    'title' => $page->{"welcomeCardTitle{$index}"}()->value(),
+    'cta'   => Utils::resolveCtaStructure($page->{"welcomeCardCta{$index}"}()),
+], [1, 2, 3]);
+
+$json['resourcesTitle'] = $page->resourcesTitle()->value();
+
+$card = fn(string $type, ?string $overtitle, string $title, string $shortDesc, ?\Kirby\Cms\File $cover, \Kirby\Cms\Page $target) => [
+    'type'      => $type,
+    'overtitle' => $overtitle !== '' ? $overtitle : null,
+    'title'     => $title,
+    'shortDesc' => $shortDesc !== '' ? $shortDesc : null,
+    'cover'     => Utils::getJsonEncodeImageDataOrNull($cover),
+    'url'       => '/' . $target->virtualPath(),
+];
+
+$pageCards = [];
+foreach ($page->resourcesAvailablePages()->toStructure() as $entry) {
+    $target = $entry->page()->toPage();
+    if ($target === null) {
+        continue;
     }
-    return "";
+    $pageCards[] = $card(
+        'page',
+        $entry->overtitle()->value(),
+        $entry->title()->or($target->title())->value(),
+        $entry->shortDesc()->or($target->shortDesc())->or($target->intro())->value(),
+        $entry->cover()->toFile() ?? $target->cover()->toFile(),
+        $target
+    );
 }
 
-$json['website'] = [
-    'title' => $site->title()->value(),
-    'menu' => $menu
-];
+$projectsOvertitle = $page->projectsOvertitle()->value();
+$projectsPage = site()->index()->template('projects')->first();
+$projectCards = $projectsPage
+    ? $projectsPage->children()->listed()->map(fn(\Kirby\Cms\Page $project) => $card(
+        'project',
+        $projectsOvertitle,
+        $project->title()->value(),
+        $project->shortDesc()->value(),
+        $project->cover()->toFile(),
+        $project
+    ))->values()
+    : [];
 
-$json['options'] = [
-    'showMenu' => $showMenu,
-    'showNewsletter' => $showNewsletter,
-    'hero' => $hero ? [
-        'text' => $hero->text()->value(),
-        'backgroundcolor' => $hero->backgroundcolor()->value(),
-        'textcolor' => $hero->textcolor()->value(),
-    ] : [],
-];
+shuffle($pageCards);
+shuffle($projectCards);
+$resources = [...array_slice($pageCards, 0, 3), ...array_slice($projectCards, 0, 2)];
+shuffle($resources);
+$json['resources'] = $resources;
 
-$json['body'] = $body;
-
-$json['seo'] = [
-    // General ===========================================================
-    'metaTemplate'      => getValueNotEmpty($page->metaTemplate(), $site->metaTemplate()),
-    'metaDescription'   => getValueNotEmpty($page->metaDescription(), $site->metaDescription()),
-    'metaAuthor'        => getValueNotEmpty($page->metaAuthor(), $site->metaAuthor()),
-    'metaImage'         => getValueNotEmpty($page->metaImage(), $site->metaImage()),
-    'metaPhoneNumber'   => getValueNotEmpty($page->metaPhoneNumber(), $site->metaPhoneNumber()),
-    // Facebook ===========================================================
-    'ogTemplate'        => getValueNotEmpty($page->ogTemplate(), $site->ogTemplate()),
-    'ogDescription'     => getValueNotEmpty($page->ogDescription(), $site->ogDescription()),
-    'ogImage'           => getValueNotEmpty($page->ogImage(), $site->ogImage()),
-    'ogSiteName'        => getValueNotEmpty($page->ogSiteName(), $site->ogSiteName()),
-    // Twitter ===========================================================
-    'twitterTemplate'   => getValueNotEmpty($page->twitterTemplate(), $site->twitterTemplate()),
-    'twitterDescription'=> getValueNotEmpty($page->twitterDescription(), $site->twitterDescription()),
-    'twitterImage'      => getValueNotEmpty($page->twitterImage(), $site->twitterImage()),
-    'twitterCardType'   => getValueNotEmpty($page->twitterCardType(), $site->twitterCardType()),
-    'twitterSite'       => getValueNotEmpty($page->twitterSite(), $site->twitterSite()),
-    'twitterCreator'    => getValueNotEmpty($page->twitterCreator(), $site->twitterCreator()),
-];
+$json['seo'] = Utils::getSeoDataFromPage($page);
 
 echo json_encode($json);

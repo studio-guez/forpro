@@ -1,0 +1,33 @@
+title:
+  en: Image
+  fr: Image
+
+accept:
+  mime:
+    - image/jpeg
+    - image/png
+    - image/webp
+    - image/gif
+    - image/svg+xml
+
+fields:
+  alt:
+    label:
+      en: Alternative text
+      fr: Texte alternatif
+    type: text
+  caption:
+    label:
+      en: Caption
+      fr: Légende
+    type: text
+  photoCredit:
+    label:
+      en: Photo credit
+      fr: Crédit photo
+    type: text
+  link:
+    label:
+      en: Link
+      fr: Lien
+    type: url

@@ -1,22 +1,11 @@
-import { getItems } from '$lib/data'; // Fonction pour récupérer les données dynamiques
+import { CMS_SERVER_BASE_URL } from '$lib/server/cms';
+import type { RequestHandler } from '@sveltejs/kit';
 
-export async function GET() {
-    const items = (await getItems()).nav;
+export const GET: RequestHandler = async ({ fetch }) => {
+	const response = await fetch(`${CMS_SERVER_BASE_URL}/sitemap.xml`);
+	const xml = await response.text();
 
-    //todo: <lastmod>${item.lastModified}</lastmod>
-    const sitemap = `
-    <?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${items.filter((value) => value.showmenu).map(item => `
-        <url>
-          <loc>${item.url}</loc>
-        </url>
-      `).join('')}
-    </urlset>`.trim(); // Trim to remove any accidental whitespace
-
-    return new Response(sitemap, {
-        headers: {
-            'Content-Type': 'application/xml'
-        }
-    });
-}
+	return new Response(xml, {
+		headers: { 'Content-Type': 'application/xml' }
+	});
+};

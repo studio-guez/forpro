@@ -1,0 +1,17 @@
+type: writer
+marks:
+  - bold
+  - italic
+  - underline
+  - strike
+  - sub
+  - sup
+  - '|'
+  - link
+  - email
+  - '|'
+  - clear
+nodes:
+  - paragraph
+  - bulletList
+  - orderedList

@@ -9,49 +9,181 @@ tabs:
     columns:
       - width: 1/3
 
-        fields:
-          files:
-            label:
-              en: Files
-              fr: Fichiers
-            type: files
-            layout: small
-
-      - width: 2/3
-
         sections:
-          global:
-            create: false
-            label: "Global"
-            type: pages
-            templates:
-              - site-info
-              - home
 
-          short_links_list:
-            create: false
-            label: "Liste de liens courts"
-            type: pages
-            templates:
-              - short-links-list
-
-          events:
-            create: false
-            label: "Événements"
-            type: pages
-            templates:
-              - forpro-events
-
-          pages:
+          home:
+            label: "Page d'accueil"
             type: pages
             image:
+              query: page.cover.toFile
               cover: true
-            limit: 100
+            sortable: false
+            max: 1
+            parent: site.index.template("pages").first()
+            query: page.childrenAndDrafts.filterBy("slug", "home")
+            create: false
+
+          resources:
+            label: "Ressources"
+            type: pages
+            image:
+              query: page.cover.toFile
+              cover: true
+            sortable: false
+            max: 1
+            parent: site.index.template("pages").first()
             templates:
-              - forpro
+              - resources
 
-  restaurant: tabs/restaurant
+          faq:
+            label: "FAQ"
+            type: pages
+            image:
+              query: page.cover.toFile
+              cover: true
+            sortable: false
+            max: 1
+            parent: site.index.template("pages").first()
+            templates:
+              - faq
 
-  booking: tabs/booking
+          pages:
+            label: "Pages"
+            type: pages
+            image:
+              query: page.cover.toFile
+              cover: true
+            text: "{{ page.breadcrumbTitle }}"
+            sortBy: breadcrumbtitle asc
+            sortable: false
+            parent: site.index.template("pages").first()
+            query: page.childrenAndDrafts.filterBy("slug", "!=", "home")
+            templatesIgnore:
+              - faq
+              - resources
+            create: 
+              - page
+              - basic-page
+            
+      - width: 1/3
 
-  seo: seo/site
+        sections:
+          events:
+            label: "Événements"
+            type: pages
+            image:
+              query: page.cover.toFile
+              cover: true
+            parent: site.index.template("events").first()
+            limit: 10
+            sortBy: dateStart desc
+            templates:
+              - event
+            create: event
+
+          projects:
+            label: "Projets"
+            type: pages
+            image:
+              query: page.cover.toFile
+              cover: true
+            parent: site.index.template("projects").first()
+            limit: 10
+            templates:
+              - project
+            create: project
+
+      - width: 1/3
+        sections:
+          jobOffers:
+            label: "Offres d'emploi"
+            type: pages
+            image: false
+            parent: site.index.template("job-offers").first()
+            limit: 10
+            sortBy: openToApplications desc publishedDate desc
+            templates:
+              - job-offer
+            create: job-offer
+
+          missions:
+            label: "Missions"
+            type: pages
+            image: false
+            parent: site.index.template("missions").first()
+            limit: 10
+            sortBy: openToApplications desc publishedDate desc
+            templates:
+              - mission
+            create: mission
+
+  taxonomies:
+    label:
+      en: Taxonomies
+      fr: Taxonomies
+    icon: tag
+    columns:
+      - width: 1/2
+        sections:
+          programs:
+            type: pages
+            image: false
+            label:
+              en: Programs
+              fr: Programmes
+            templates:
+              - program
+            parent: site.index.template("programs").first()
+      - width: 1/2
+        sections:
+          publics:
+            type: pages
+            image: false
+            label:
+              en: Publics
+              fr: Publics
+            templates:
+              - public
+              - subpublic
+            # The query language has no `==`, so a sub-public is detected by depth (a parent three levels up).
+            query: site.find("taxonomies").find("publics").index.listed
+            text: "{{ page.parent.parent.parent ? '↳ ' : '' }}{{ page.title }}"
+            info: "{{ page.hasListedChildren ? page.children.listed.count : '' }}{{ page.hasListedChildren ? ' sous-publics' : '' }}"
+      - width: 1/2
+        sections:
+          resourcesTaxonomy:
+            type: pages
+            image: false
+            label:
+              en: Resources
+              fr: Ressources
+            templates:
+              - resource-taxonomy-term
+            parent: site.index.template("resources-taxonomy").first()
+      - width: 1/2
+        sections:
+          categories:
+            type: pages
+            image: false
+            label:
+              en: Categories
+              fr: Catégories
+            templates:
+              - category
+            parent: site.index.template("categories").first()
+
+  navigation: tabs/navigation
+
+  banner: tabs/banner
+
+  cookies: tabs/cookies
+
+  contact: tabs/contact
+
+  social: tabs/social
+
+  newsletter: tabs/newsletter
+
+  general: tabs/general
+
+  seo: tabs/seo-site

@@ -1,0 +1,84 @@
+title: FAQ
+
+extends: pages/core-page
+
+icon: question
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    fields:
+      title:
+        label:
+          en: Title
+          fr: Titre
+        type: text
+        required: true
+      sections:
+        label:
+          en: Sections
+          fr: Sections
+        type: structure
+        columns:
+          title:
+            width: 1/2
+          faqs:
+            width: 1/2
+        fields:
+          title:
+            label:
+              en: Section title
+              fr: Titre de la section
+            type: text
+            required: true
+          faqs:
+            label:
+              en: Questions
+              fr: Questions
+            type: structure
+            columns:
+              question:
+                width: 1/2
+              resourcesTaxonomy:
+                width: 1/2
+            fields:
+              question:
+                label:
+                  en: Question
+                  fr: Question
+                type: text
+                required: true
+              answer:
+                extends: fields/writer
+                label:
+                  en: Answer
+                  fr: Réponse
+                required: true
+              publics:
+                extends: fields/taxonomies/publics
+              programs:
+                extends: fields/taxonomies/programs
+              resourcesTaxonomy:
+                extends: fields/taxonomies/resourcesTaxonomy
+      messagesLabel:
+        label:
+          en: Empty-state messages
+          fr: Messages d'absence de résultats
+        type: headline
+      noResultsText:
+        label:
+          en: No search result
+          fr: Aucun résultat de recherche
+        extends: fields/writer
+        required: true
+        default: "<p>Aucune question ne correspond à votre recherche.</p>"
+      body:
+        extends: fields/bodyExtra
+        # The infos pratiques module would just duplicate the listing above.
+        fieldsets:
+          module-infos-pratiques: false
+
+  seo: tabs/seo

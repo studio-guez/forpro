@@ -1,171 +1,117 @@
-<svelte:head>
-  {#if trackWithMatomo}
-  <!-- Matomo -->
-  <script>
-      var _paq = window._paq = window._paq || [];
-      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-          var u="//matomo.for-pro.ch/";
-          _paq.push(['setTrackerUrl', u+'matomo.php']);
-          _paq.push(['setSiteId', '1']);
-          var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-          g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-      })();
-  </script>
-  <noscript><p><img referrerpolicy="no-referrer-when-downgrade" src="//matomo.for-pro.ch/matomo.php?idsite=1&amp;rec=1" style="border:0;" alt="" /></p></noscript>
-  <!-- End Matomo Code -->
-  {/if}
-</svelte:head>
-
-
 <script lang="ts">
-    import "../style/_main.scss"
-    import {menuIsOpen, modaleIsOpen, showCookieConsent, siteInfo} from "../store";
-    import AppNav from "$lib/components/AppNav.svelte";
-    import AppFooter from "$lib/components/AppFooter.svelte";
-    import type {ISiteInfo} from "$lib/interfaces/cmsApiResponse";
-    import {page} from '$app/stores';
-    import {afterNavigate, beforeNavigate} from "$app/navigation";
-    import AppModal from "$lib/components/AppModal.svelte";
-    import {onMount} from "svelte";
-    import AppCookieConsent from "$lib/components/AppCookieConsent.svelte";
+	import '../app.css';
+	import 'lenis/dist/lenis.css';
+	import { onMount } from 'svelte';
+	import { initSmoothScroll } from '$lib/utils/smoothScroll';
+	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
+	import SiteMarquee from '$lib/components/layout/SiteMarquee.svelte';
+	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
+	import CookieBanner from '$lib/components/layout/CookieBanner.svelte';
+	import JsonLd from '$lib/components/layout/JsonLd.svelte';
+	import { IS_PROD } from '$lib/env';
+	import { PUBLIC_CMS_BASE_URL } from '$env/static/public';
+	import fontRegular from '$lib/assets/fonts/Jungka_Webfonts/Jungka-Regular.woff2?url';
+	import fontBold from '$lib/assets/fonts/Jungka_Webfonts/Jungka-Bold.woff2?url';
+	import type { LayoutData } from './$types';
 
-    export let data: ISiteInfo;
-    declare var _paq: unknown
+	interface Props {
+		data: LayoutData;
+		children?: import('svelte').Snippet;
+	}
 
-    siteInfo.set(data)
+	let { data, children }: Props = $props();
 
-    // Default to true so unsaved pages and pages without the option keep
-    // their Matomo tracking. Tracking is only disabled when explicitly set
-    // to false on a page.
-    $: trackWithMatomo = $page.data?.options?.trackWithMatomo ?? true
+	onMount(initSmoothScroll);
 
-    onMount(() => {
-      if(  Number($page.url.searchParams.get('m')) === 1 ) modaleIsOpen.set(true)
-    })
+	let bannerDismissed = $derived(data.bannerDismissed);
+	const showBanner = $derived(data.banner.length > 0 && !bannerDismissed);
 
-    beforeNavigate((navigation) => {
-      menuIsOpen.set(false)
-
-      document.querySelectorAll('.s-layout').forEach(value => {
-        value.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        })
-      })
-    })
-
-    afterNavigate((navigation) => {
-        document.querySelectorAll('.s-layout').forEach(value => {
-            value.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-            })
-        })
-
-        if (trackWithMatomo && _paq) {
-            _paq.push(['setCustomUrl', '/' + window.location.href])
-            _paq.push(['setDocumentTitle', window.location.pathname])
-            _paq.push(['setReferrerUrl', navigation.from])
-            _paq.push(['trackPageView'])
-        }
-    })
-
+	const favicon = $derived(data.favicon);
+	// Apple touch icons ignore prefers-color-scheme, so pick the light 180×180 master.
+	const appleTouchIcon = $derived(favicon?.light.png.find((icon) => icon.size === 180) ?? null);
 </script>
 
-<div class="s-layout"
-     class:menu-is-open="{$menuIsOpen}"
+<svelte:head>
+	<link rel="preconnect" href={PUBLIC_CMS_BASE_URL} />
+	<link rel="preload" href={fontRegular} as="font" type="font/woff2" crossorigin="anonymous" />
+	<link rel="preload" href={fontBold} as="font" type="font/woff2" crossorigin="anonymous" />
+	{#if !IS_PROD}
+		<meta name="robots" content="noindex, nofollow" />
+	{/if}
+	{#if favicon}
+		{#if favicon.light.svg}
+			<link
+				rel="icon"
+				type="image/svg+xml"
+				media="(prefers-color-scheme: light)"
+				href={favicon.light.svg}
+			/>
+		{/if}
+		{#if favicon.dark.svg}
+			<link
+				rel="icon"
+				type="image/svg+xml"
+				media="(prefers-color-scheme: dark)"
+				href={favicon.dark.svg}
+			/>
+		{/if}
+		{#each favicon.light.png as icon (icon.size)}
+			<link
+				rel="icon"
+				type="image/png"
+				sizes="{icon.size}x{icon.size}"
+				media="(prefers-color-scheme: light)"
+				href={icon.url}
+			/>
+		{/each}
+		{#each favicon.dark.png as icon (icon.size)}
+			<link
+				rel="icon"
+				type="image/png"
+				sizes="{icon.size}x{icon.size}"
+				media="(prefers-color-scheme: dark)"
+				href={icon.url}
+			/>
+		{/each}
+		{#if appleTouchIcon}
+			<link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon.url} />
+		{/if}
+	{/if}
+</svelte:head>
+
+<JsonLd schemas={data.schemas} />
+
+<!-- Bypass block (WCAG 2.4.1). -->
+<a
+	href="#main-content"
+	class="sr-only text-body-2 font-bold focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-blue focus:px-5 focus:py-3 focus:text-white focus:outline-2 focus:outline-offset-2 focus:outline-blue"
 >
-  {#if ($modaleIsOpen)}
-    <div class="s-layout__modal-box">
-      <AppModal/>
-    </div>
-  {/if}
+	Aller au contenu principal
+</a>
 
-  <div class="s-layout__nav-box">
-    <AppNav/>
-  </div>
+{#if data.header}
+	<SiteHeader header={data.header} />
+{/if}
 
-  {#key $page.params.slug}
-  <div class="s-layout__main"
-  >
-    <slot />
-  </div>
-  {/key}
+<!-- `overflow-x-clip`: entrance animations park elements past the viewport edge; `clip`, unlike `hidden`, is not a scroll container, so sticky inside keeps working. -->
+<main
+	id="main-content"
+	tabindex="-1"
+	class="pt-27 space-y-18 pb-18 focus:outline-none overflow-x-clip"
+>
+	{@render children?.()}
+</main>
 
-  {#if $showCookieConsent}
-    <div class="s-layout__cookie-consent-box"
-    >
-      <AppCookieConsent/>
-    </div>
-  {/if}
+{#if data.footer}
+	<SiteFooter footer={data.footer} />
+{/if}
 
-  <div class="s-layout__footer-box"
-  >
-    <AppFooter/>
-  </div>
-</div>
+{#if showBanner}
+	<SiteMarquee announcements={data.banner} onclose={() => (bannerDismissed = true)} />
+{/if}
 
-<style lang="scss">
-  .s-layout {
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    scrollbar-gutter: stable;
-    box-sizing: border-box;
-    padding-top: var(--app-nav_height);
-
-    &.menu-is-open {
-      overflow: hidden;
-    }
-  }
-
-  .s-layout__main {
-    min-height: calc(100vh - 10rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .s-layout__modal-box {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, .5);
-    backdrop-filter: blur(10px);
-    z-index: 100000;
-  }
-
-  .s-layout__nav-box {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 1000;
-    pointer-events: none;
-  }
-
-  .s-layout__cookie-consent-box {
-    position: fixed;
-    bottom: 2.5rem;
-    right: .5rem;
-    z-index: 100;
-  }
-
-  .s-layout__footer-box {
-    box-sizing: border-box;
-    width: 100%;
-  }
-</style>
-
+<CookieBanner
+	text={data.cookies.text}
+	privacyPolicyUrl={data.cookies.privacyPolicyUrl}
+	raised={showBanner}
+/>

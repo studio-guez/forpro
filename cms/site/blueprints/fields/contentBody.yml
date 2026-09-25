@@ -1,0 +1,9 @@
+label:
+  en: Content
+  fr: Contenu
+type: blocks
+fieldsets:
+  content-medias: true
+  content-video: true
+  content-text: true
+  content-links: true

@@ -1,0 +1,81 @@
+FROM php:8.4-apache
+
+ENV TZ=Europe/Zurich
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Sans mod_headers, le Cache-Control de /media et les en-têtes de sécurité du .htaccess sont des no-op.
+RUN a2enmod rewrite headers
+
+# curl : healthcheck Docker
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    unzip \
+    curl \
+    libzip-dev \
+    libicu-dev \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    libwebp-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install -j"$(nproc)" zip gd intl opcache \
+    && rm -rf /var/lib/apt/lists/*
+
+# Node + Chromium : requis par Browsershot (PDF du menu).
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    nodejs \
+    chromium \
+    fonts-liberation \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PUPPETEER_SKIP_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+COPY apache.conf /etc/apache2/conf-available/custom.conf
+RUN a2enconf custom
+
+COPY php.ini /usr/local/etc/php/conf.d/zz-custom.ini
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+RUN rm -rf /var/www/html/*
+
+WORKDIR /var/www/html
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader
+
+# content, media, site/accounts, site/sessions, site/cache et les `data` des plugins sont bind-mountés (compose.prod.yml).
+RUN rm -rf /var/www/html/content
+
+COPY site /var/www/html/site
+COPY utils /var/www/html/utils
+COPY index.php /var/www/html/index.php
+COPY favicon.ico /var/www/html/favicon.ico
+COPY _custom-panel /var/www/html/_custom-panel
+
+COPY .htaccess /var/www/html/.htaccess
+
+RUN mkdir -p /var/www/html/site/sessions \
+    /var/www/html/site/accounts \
+    /var/www/html/site/plugins \
+    /var/www/html/site/cache \
+    /var/www/html/content \
+    /var/www/html/media
+
+RUN chown -R www-data:www-data /var/www/html/
+
+# Chromium écrit dans $HOME (/var/www) au démarrage : sans droit d'écriture il crashe
+RUN chown www-data:www-data /var/www
+
+RUN apache2ctl configtest
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 80
+
+CMD ["/entrypoint.sh"]

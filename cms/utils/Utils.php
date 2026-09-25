@@ -1,61 +1,52 @@
 <?php
 
-class Utils {
-    static function getHeroFromPage(\Kirby\Cms\Page $kirbyPage): array
-    {
-        $hero = $kirbyPage->hero()->toStructure()?->get(0);
+/**
+ * Shared serialization helpers for the `*.json.php` templates and the CMS
+ * routes. The implementation is split by concern under `utils/traits/`; this
+ * class only composes it, so callers keep the flat `Utils::` API.
+ */
 
-        return $hero ? [
-            'text' => $hero->text()->value(),
-            'backgroundcolor' => $hero->backgroundcolor()->value(),
-            'textcolor' => $hero->textcolor()->value(),
-        ] : [];
-    }
+require_once __DIR__ . '/traits/UtilsMedia.php';
+require_once __DIR__ . '/traits/UtilsLinks.php';
+require_once __DIR__ . '/traits/UtilsTaxonomies.php';
+require_once __DIR__ . '/traits/UtilsSeo.php';
+require_once __DIR__ . '/traits/UtilsSchema.php';
+require_once __DIR__ . '/traits/UtilsLlms.php';
+require_once __DIR__ . '/traits/UtilsEmbeds.php';
+require_once __DIR__ . '/traits/UtilsPages.php';
+require_once __DIR__ . '/traits/UtilsBlocks.php';
+require_once __DIR__ . '/traits/UtilsSearchText.php';
+require_once __DIR__ . '/traits/UtilsSearch.php';
 
-    static function getImageArrayDataInPage(\Kirby\Cms\Files $files): array|null
-    {
-        return $files->map(function (\Kirby\Cms\File $item): array {
-            return self::getJsonEncodeImageData($item);
-        })->data();
-    }
+class Utils
+{
+    /** Images, videos and favicons -> JSON payloads. */
+    use UtilsMedia;
 
-    static function muteImageFilesDataIfBlocksHasKeyValue(string $contentTypeKey, &$content): void
-    {
-        if(!isset($content['content'][$contentTypeKey])) return;
+    /** Link / CTA structures -> `{label, url}` payloads. */
+    use UtilsLinks;
 
-        foreach ($content['content'][$contentTypeKey] as &$itemArray) {
-            //todo: images with s for profiles importation | change images to image in dataBase and profiles json result
-            if(isset($itemArray['images']))    $itemArray['imageData'] = self::getImageArrayDataInArray($itemArray, 'images');
-            if(isset($itemArray['image']))     $itemArray['imageData'] = self::getImageArrayDataInArray($itemArray, 'image');
-        }
-    }
+    /** Taxonomy terms: resolution, filtering, query strings. */
+    use UtilsTaxonomies;
 
-    static function getImageArrayDataInArray(array &$itemArray, string $keyNameForImage): array
-    {
-        $getImageArrayData = Utils::getImageArrayDataInPage(new \Kirby\Cms\Files($itemArray[$keyNameForImage]));
-        return $itemArray['imageData'] = array_values($getImageArrayData);
-    }
+    /** Kirby SEO metadata -> frontend head payload. */
+    use UtilsSeo;
 
+    /** schema.org JSON-LD nodes. */
+    use UtilsSchema;
 
-    static function getJsonEncodeImageData(\Kirby\Cms\File $file): array
-    {
-        return [
-            'focus' => $file->content()->focus()->value(),
-            'caption'       => $file->caption()->value(),
-            'alt'           => $file->alt()->value(),
-            'link'          => $file->link()->value(),
-            'photoCredit'   => $file->photoCredit()->value(),
-            'url'           => $file->url(),
-            'mediaUrl'      => $file->mediaUrl(),
-            'width'         => $file->width(),
-            'height'        => $file->height(),
-            'resize'        => [
-                'tiny'          => $file->resize(50, null, 10)->url(),
-                'small'         => $file->resize(500)->url(),
-                'reg'           => $file->resize(1280)->url(),
-                'large'         => $file->resize(1920)->url(),
-                'xxl'           => $file->resize(2500)->url(),
-            ]
-        ];
-    }
+    /** The `/llms.txt` Markdown index. */
+    use UtilsLlms;
+
+    /** Videos: the `fields/video` structure (upload or YouTube) and YouTube URL parsing. */
+    use UtilsEmbeds;
+
+    /** Page-level payloads: hero, event dates, cards, event/project base. */
+    use UtilsPages;
+
+    /** `body` blockbuilder modules -> JSON payloads. */
+    use UtilsBlocks;
+
+    /** Site search: indexing, scoring, excerpts. */
+    use UtilsSearch;
 }

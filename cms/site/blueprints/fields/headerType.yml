@@ -1,0 +1,11 @@
+label:
+  en: Header type
+  fr: Type d'en-tête
+type: toggles
+default: full
+required: true
+options:
+  - value: full
+    text: { en: Full, fr: Complet }
+  - value: compact
+    text: { en: Compact, fr: Compact }

@@ -1,0 +1,102 @@
+<script lang="ts">
+	import type { CmsImage, PageCta, PageLayout, PageParent, Theme } from '$lib/interfaces/page';
+	import BackLink from '$lib/components/ui/BackLink.svelte';
+	import CtaLink from '$lib/components/ui/CtaLink.svelte';
+	import Img from '$lib/components/ui/Img.svelte';
+
+	interface Props {
+		title: string;
+		text: string;
+		layout?: PageLayout;
+		cta?: PageCta | null;
+		parentPage?: PageParent | null;
+		theme?: Theme;
+		titleImage?: CmsImage | null;
+	}
+
+	let {
+		title,
+		text,
+		layout = '1col',
+		cta = null,
+		parentPage = null,
+		theme = 'default',
+		titleImage = null
+	}: Props = $props();
+
+	const colorByTheme: Record<Theme, string> = {
+		default: 'var(--color-blue)',
+		campus: 'var(--color-blue)',
+		entreprendre: 'var(--color-purple-light)',
+		projets_jeunes: 'var(--color-orange)',
+		tremplin_jobs: 'var(--color-purple-light)',
+		soutiens: 'var(--color-pink)',
+		cekale: 'var(--color-purple)',
+		la_ref: 'var(--color-pink)',
+		learninglab: 'var(--color-teal)',
+		foodlab: 'var(--color-orange)',
+		grandlab: 'var(--color-red)',
+		makerlab: 'var(--color-grey-dark)',
+		factorylab: 'var(--color-teal)'
+	};
+
+	const themeColor = $derived(colorByTheme[theme] ?? 'var(--color-blue)');
+
+	const isTwoCol = $derived(layout === '2col');
+	const hasCta = $derived(!!cta?.label && !!cta?.url);
+</script>
+
+<section class="px-13 lg:px-24 xl:px-39 relative max-lg:py-3" aria-labelledby="page-intro-title">
+	{#if parentPage}
+		<div class="mb-6 mt-[calc(-1.5rem-1lh)] -ml-8 lg:-ml-15 xl:-ml-30">
+			<BackLink {parentPage} color={themeColor} />
+		</div>
+	{/if}
+	{#if isTwoCol}
+		<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
+			<h2 id="page-intro-title" class="text-h4 max-lg:text-center">
+				{#if titleImage}
+					<Img
+						image={titleImage}
+						alt={title}
+						sizes="20rem"
+						class="max-lg:mx-auto max-w-80 max-h-40 object-contain"
+					/>
+				{:else}
+					{title}
+				{/if}
+			</h2>
+			<div class="lg:col-span-2">
+				<div class="prose max-lg:text-center">
+					{@html text}
+				</div>
+				{#if hasCta}
+					<div class="max-lg:text-center mt-6 lg:mt-12">
+						<CtaLink cta={cta!} color={themeColor} />
+					</div>
+				{/if}
+			</div>
+		</div>
+	{:else}
+		<h2 id="page-intro-title" class="text-h2 mb-6 lg:mb-12 text-center">
+			{#if titleImage}
+				<Img
+					image={titleImage}
+					alt={title}
+					sizes="20rem"
+					class="mx-auto max-w-80 max-h-40 object-contain"
+				/>
+			{:else}
+				{title}
+			{/if}
+		</h2>
+		<div class="prose text-center">
+			{@html text}
+		</div>
+		{#if hasCta}
+			<div class="text-center lg:text-right mt-6 lg:mt-12">
+				<CtaLink cta={cta!} color={themeColor} />
+			</div>
+		{/if}
+	{/if}
+</section>

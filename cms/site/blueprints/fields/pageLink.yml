@@ -1,0 +1,3 @@
+extends: fields/pageSelect
+when:
+  type: page

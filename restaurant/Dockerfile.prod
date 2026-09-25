@@ -1,18 +1,28 @@
-FROM node:lts-alpine AS builder
+FROM node:24-alpine AS builder
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml* ./
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml ./
 
 RUN pnpm install
 
 COPY . .
 
-RUN pnpm run build
+# No defaults on purpose: a missing PREPROD_*/PRODUCTION_* CI variable must fail the build rather than bake another environment's URL.
+ARG PUBLIC_CMS_BASE_URL
+ARG PUBLIC_MENU_BASE_URL
+ARG PUBLIC_ENVIRONMENT
+ENV PUBLIC_CMS_BASE_URL=$PUBLIC_CMS_BASE_URL \
+    PUBLIC_MENU_BASE_URL=$PUBLIC_MENU_BASE_URL \
+    PUBLIC_ENVIRONMENT=$PUBLIC_ENVIRONMENT
 
-FROM node:lts-alpine
+RUN [ -n "$PUBLIC_CMS_BASE_URL" ] && [ -n "$PUBLIC_MENU_BASE_URL" ] && [ -n "$PUBLIC_ENVIRONMENT" ] \
+      || { echo "Missing build arg: PUBLIC_CMS_BASE_URL / PUBLIC_MENU_BASE_URL / PUBLIC_ENVIRONMENT" >&2; exit 1; } \
+    && pnpm run build
+
+FROM node:24-alpine
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 

@@ -1,0 +1,71 @@
+title:
+  en: Event
+  fr: Événement
+
+extends: pages/event-project-base
+
+status:
+  draft: true
+  listed: true
+
+num: zero
+
+options:
+  preview: "{{ page.frontendUrl }}"
+
+tabs:
+  content:
+    columns:
+      sidebar:
+        sections:
+          dates:
+            type: fields
+            fields:
+              sepDates:
+                type: line
+              dateStart:
+                label:
+                  en: Start date
+                  fr: Date de début
+                type: date
+                required: true
+                width: 1/2
+              dateEnd:
+                label:
+                  en: End date
+                  fr: Date de fin
+                type: date
+                width: 1/2
+              timeStart:
+                label:
+                  en: Start time
+                  fr: Heure de début
+                type: text
+                placeholder: HH:mm
+                width: 1/2
+              timeEnd:
+                label:
+                  en: End time
+                  fr: Heure de fin
+                type: text
+                placeholder: HH:mm
+                width: 1/2
+              location:
+                label:
+                  en: Venue
+                  fr: Lieu
+                type: text
+                help:
+                  en: Leave empty when the event is held at the foundation's own address.
+                  fr: Laisser vide si l'événement a lieu à l'adresse de la fondation.
+          taxonomies:
+            type: fields
+            fields:
+              sepTaxonomies:
+                type: line
+              programs:
+                extends: fields/taxonomies/programs
+              publics:
+                extends: fields/taxonomies/publics
+              resourcesTaxonomy:
+                extends: fields/taxonomies/resourcesTaxonomy

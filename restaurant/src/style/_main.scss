@@ -1,18 +1,17 @@
 
 
 
+@use 'variables';
+@use 'grid';
+@use 'typography';
+@use 'ui';
 @import '../../node_modules/modern-normalize/modern-normalize.css';
 @import '_jungka-import.css';
-@import 'variables';
-@import "grid";
-@import "typography";
-@import "ui";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-//
 html {
   font-size: var(--app-font-baseline);
   -webkit-font-smoothing: antialiased;
@@ -55,23 +54,19 @@ a {
   }
 }
 
-// scroll
 ::-webkit-scrollbar-thumb {
-  background-color: black; /* Couleur du curseur */
-  border-radius: 10px; /* Arrondi du curseur */
+  background-color: black;
+  border-radius: 10px;
 }
 
-/* Barre de défilement sur hover */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #333; /* Couleur du curseur au survol */
+  background-color: #333;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-  background-color: transparent; /* Couleur de la barre de défilement */
+  background-color: transparent;
 }
 
-/* Coin de la barre de défilement */
 ::-webkit-scrollbar-corner {
-  background-color: transparent; /* Couleur du coin de la barre de défilement */
+  background-color: transparent;
 }

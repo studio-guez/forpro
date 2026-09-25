@@ -1,14 +1,29 @@
 <svelte:head>
+	{#if !IS_PROD}
+		<meta name="robots" content="noindex, nofollow" />
+	{/if}
 	<title>Foodlab - Imaginé par ForPro</title>
 	<meta
 					name="description"
 					content="Le FoodLab est un des 6 labs dédiés à la formation professionnelle au sein du campus ForPro."
 	/>
 
-	<!-- Matomo -->
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Restaurant",
+		"name": "Foodlab - Imaginé par ForPro",
+		"description": "Le FoodLab est un des 6 labs dédiés à la formation professionnelle au sein du campus ForPro.",
+		"url": "https://foodlab.for-pro.ch",
+		"parentOrganization": {
+			"@type": "Organization",
+			"name": "Fondation ForPro",
+			"url": "https://for-pro.ch"
+		}
+	})}</script>`}
+
+	{#if IS_PROD}
 	<script>
 		var _paq = window._paq = window._paq || [];
-		/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
 		_paq.push(['trackPageView']);
 		_paq.push(['enableLinkTracking']);
 		(function() {
@@ -19,17 +34,18 @@
 			g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
 		})();
 	</script>
-	<!-- End Matomo Code -->
+	{/if}
 </svelte:head>
 
 <script lang="ts">
 	import '../style/_main.scss';
 	import {afterNavigate} from "$app/navigation";
+	import { IS_PROD } from '$lib/env';
 
 	declare var _paq: unknown
 
 	afterNavigate((navigation) => {
-		if (_paq) {
+		if (typeof _paq !== 'undefined' && _paq) {
 			_paq.push(['setCustomUrl', '/' + window.location.href])
 			_paq.push(['setDocumentTitle', window.location.pathname])
 			_paq.push(['setReferrerUrl', navigation.from])

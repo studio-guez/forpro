@@ -1,15 +1,23 @@
-import type {ISiteInfo} from "$lib/interfaces/cmsApiResponse";
-import {variables} from "$lib/utils/constants";
-import {fetchFromAPI} from "$lib/utils/shared";
-import type {PageServerLoad} from "../../.svelte-kit/types/src/routes/$types";
+import { CMS_SERVER_BASE_URL } from '$lib/server/cms';
+import { fetchFromAPI, getHeaders } from '$lib/utils/shared';
+import type { Global } from '$lib/interfaces/global';
+import { BANNER_DISMISSED_COOKIE } from '$lib/utils/bannerDismissal';
+import type { LayoutServerLoad } from './$types';
 
-export const prerender = false;
+export const load: LayoutServerLoad = async ({ cookies }) => {
+	const request = new Request(`${CMS_SERVER_BASE_URL}/global.json`, {
+		headers: getHeaders()
+	});
 
-export const load: PageServerLoad = async () => {
+	const global = await fetchFromAPI<Global>(request, 'Failed to load global data');
 
-    const request = new Request(`${variables.CMS_BASE_URL}/site-info.json`, {
-        method: 'GET',
-    })
-
-    return await fetchFromAPI<ISiteInfo>(request, 'Failed to fetch page data')
-}
+	return {
+		header: global?.header ?? null,
+		footer: global?.footer ?? null,
+		banner: global?.banner ?? [],
+		bannerDismissed: cookies.get(BANNER_DISMISSED_COOKIE) === '1',
+		favicon: global?.favicon ?? null,
+		cookies: global?.cookies ?? { text: null, privacyPolicyUrl: null },
+		schemas: global?.schemas ?? []
+	};
+};

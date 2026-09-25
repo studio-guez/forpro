@@ -1,0 +1,144 @@
+title:
+  en: Team
+  fr: Équipe
+
+extends: pages/core-page
+
+icon: users
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    fields:
+      headerType:
+        extends: fields/headerType
+        default: compact
+      title:
+        width: 1/2
+        label:
+          en: Title
+          fr: Titre
+        type: text
+        required: true
+      cover:
+        width: 1/2
+        extends: fields/cover
+      overtitle:
+        label:
+          en: Overtitle
+          fr: Sur-titre
+        type: text
+        when:
+          headerType: full
+      introTitle:
+        label:
+          en: Intro title
+          fr: Titre introduction
+        type: text
+        required: true
+        when:
+          headerType: full
+      intro:
+        label:
+          en: Introduction
+          fr: Introduction
+        extends: fields/writer
+      sections:
+        label:
+          en: Team members
+          fr: Membres de l'équipe
+        help:
+          en: Each section is an expandable band on the page, holding one or more labelled groups of members.
+          fr: Chaque section est un bandeau dépliable sur la page, contenant un ou plusieurs groupes de membres.
+        type: structure
+        columns:
+          title:
+            width: 1/2
+          groups:
+            width: 1/2
+        fields:
+          title:
+            label:
+              en: Section title
+              fr: Titre de la section
+            type: text
+            required: true
+          groups:
+            label:
+              en: Groups
+              fr: Groupes
+            type: structure
+            columns:
+              title:
+                width: 1/2
+              members:
+                width: 1/2
+            fields:
+              title:
+                label:
+                  en: Group title
+                  fr: Titre du groupe
+                type: text
+              members:
+                label:
+                  en: Members
+                  fr: Membres
+                type: structure
+                columns:
+                  name:
+                    width: 1/5
+                  role:
+                    width: 1/5
+                  status:
+                    width: 1/5
+                  roleLink:
+                    width: 1/5
+                  linkedin:
+                    width: 1/5
+                fields:
+                  name:
+                    label:
+                      en: Name
+                      fr: Nom
+                    type: text
+                    required: true
+                  status:
+                    label:
+                      en: Status
+                      fr: Statut
+                    type: select
+                    default: other
+                    required: true
+                    options:
+                      - value: other
+                        text: { en: Other, fr: Autre }
+                      - value: apprentice
+                        text: { en: Apprentice, fr: Apprenti·e }
+                      - value: teacher
+                        text: { en: Teacher, fr: Enseignant·e }
+                  role:
+                    required: true
+                    label:
+                      en: Role
+                      fr: Fonction
+                    type: text
+                  roleLink:
+                    label:
+                      en: Role link
+                      fr: Lien de la fonction
+                    help:
+                      en: Optional. Makes the role clickable (e.g. the company or school website).
+                      fr: Optionnel. Rend la fonction cliquable (p. ex. le site de l'entreprise ou de l'école).
+                    type: url
+                  linkedin:
+                    label:
+                      en: LinkedIn link
+                      fr: Lien LinkedIn
+                    type: url
+      body:
+        extends: fields/bodyExtra
+
+  seo: tabs/seo

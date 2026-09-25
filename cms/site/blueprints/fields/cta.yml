@@ -1,0 +1,79 @@
+label:
+  en: CTA
+  fr: CTA
+type: structure
+max: 1
+columns:
+  label:
+    width: 1/7
+  page:
+    width: 1/7
+  url:
+    width: 1/7
+  email:
+    width: 1/7
+  phone:
+    width: 1/7
+  file:
+    width: 1/7
+  icon:
+    width: 1/7
+fields:
+  label:
+    label: { en: Label, fr: Libellé }
+    type: text
+  type:
+    label: { en: Type, fr: Type }
+    type: select
+    default: page
+    required: true
+    options:
+      - value: page
+        text: { en: Page, fr: Page }
+      - value: url
+        text: { en: External URL, fr: URL externe }
+      - value: mailto
+        text: { en: Email, fr: Email }
+      - value: tel
+        text: { en: Phone, fr: Téléphone }
+      - value: file
+        text: { en: File, fr: Fichier }
+  page:
+    extends: fields/pageLink
+  url:
+    label: { en: URL, fr: URL }
+    type: url
+    when:
+      type: url
+  email:
+    label: { en: Email, fr: Email }
+    type: email
+    when:
+      type: mailto
+  phone:
+    label: { en: Phone, fr: Téléphone }
+    type: tel
+    when:
+      type: tel
+  file:
+    label: { en: File, fr: Fichier }
+    type: files
+    max: 1
+    layout: list
+    uploads: document
+    when:
+      type: file
+  icon:
+    label: { en: Icon, fr: Icône }
+    type: select
+    placeholder: { en: None, fr: Aucun }
+    default: arrow
+    options:
+      - value: arrow
+        text: { en: "→", fr: "→" }
+      - value: plus
+        text: { en: "+", fr: "+" }
+      - value: email
+        text: { en: Email, fr: Email }
+      - value: phone
+        text: { en: Phone, fr: Téléphone }

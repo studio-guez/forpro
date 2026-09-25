@@ -1,0 +1,10 @@
+verifyDepsBeforeRun: false
+allowBuilds:
+  esbuild: false
+  '@parcel/watcher': false
+minimumReleaseAgeExclude:
+  - brace-expansion@5.0.8
+overrides:
+  # nitropack pins archiver@7 (unpatched glob@10 / minimatch@9 / brace-expansion@2); archiver@8 dropped the default export nitropack@2.13.4 relies on, so bump the grandchildren instead.
+  glob: ^13.0.6
+  minimatch: ^10.2.6

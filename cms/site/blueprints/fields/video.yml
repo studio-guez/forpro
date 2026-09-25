@@ -1,0 +1,47 @@
+label:
+  en: Videos
+  fr: Vidéos
+type: structure
+columns:
+  source:
+    width: 1/4
+  file:
+    width: 3/8
+  url:
+    width: 3/8
+fields:
+  source:
+    label:
+      en: Source
+      fr: Source
+    type: toggles
+    default: upload
+    required: true
+    options:
+      - value: upload
+        text: { en: Uploaded file, fr: Fichier téléversé }
+      - value: youtube
+        text: { en: YouTube, fr: YouTube }
+  file:
+    label:
+      en: Video file
+      fr: Fichier vidéo
+    type: files
+    uploads: video
+    query: page.videos
+    max: 1
+    layout: list
+    required: true
+    when:
+      source: upload
+  url:
+    label:
+      en: YouTube URL
+      fr: URL YouTube
+    type: url
+    required: true
+    help:
+      en: Paste a YouTube URL. Regular videos and Shorts are both supported.
+      fr: Collez une URL YouTube. Les vidéos classiques et les Shorts sont pris en charge.
+    when:
+      source: youtube

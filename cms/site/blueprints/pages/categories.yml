@@ -1,0 +1,9 @@
+title: Catégories
+
+extends: pages/taxonomy
+
+sections:
+  terms:
+    label: Catégories
+    templates:
+      - category

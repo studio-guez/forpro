@@ -1,6 +1,4 @@
 title: Admin
 permissions:
-  mediumsans.kirby-calendars:
-    access: true
-  mediumsans.kirby-foodlab:
+  eclypsys.foodlab:
     access: true

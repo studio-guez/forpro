@@ -1,10 +1,9 @@
 <template>
-  <k-inside>
+  <k-panel-inside>
     <k-header>
       Menu du jour
     </k-header>
 
-    <!-- Image slider écran d'entrée -->
     <k-headline
       class="k-menu-du-jour__title"
       tag="h2"
@@ -129,7 +128,6 @@
       Aucun élément pour le FoodCourt
     </k-empty>
 
-    <!-- FoodLab -->
     <k-headline
       class="k-menu-du-jour__title"
       tag="h2"
@@ -195,7 +193,6 @@
       Aucun élément pour le FoodLab
     </k-empty>
 
-    <!-- Texte writer field -->
     <k-headline
       class="k-menu-du-jour__subtitle"
       tag="h3"
@@ -224,7 +221,7 @@
         v-html="texteValue"
       ></div>
     </div>
-  </k-inside>
+  </k-panel-inside>
 </template>
 
 <script>
@@ -414,7 +411,7 @@ export default {
 }
 
 .k-foodcourt-texte-editor {
-  background: var(--color-white);
+  background: var(--input-color-back, var(--color-white));
   border: 1px solid var(--color-border);
   border-radius: var(--rounded);
   padding: 0.5rem 0.75rem;
@@ -448,7 +445,7 @@ export default {
   border-radius: var(--rounded);
   overflow: hidden;
   border: 2px solid var(--color-border);
-  background: var(--color-white);
+  background: var(--item-color-back, var(--color-white));
   cursor: grab;
   transition: border-color 0.15s, opacity 0.15s;
 }

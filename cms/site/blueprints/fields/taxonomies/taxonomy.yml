@@ -1,0 +1,7 @@
+# Stores UUIDs, not slugs, so selections survive a term rename; resolve with Utils::resolveTaxonomyTerms.
+type: tags
+accept: options
+options:
+  type: query
+  text: "{{ page.title }}"
+  value: "{{ page.uuid }}"

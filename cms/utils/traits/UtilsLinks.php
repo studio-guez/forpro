@@ -1,0 +1,189 @@
+<?php
+
+/**
+ * URL / label resolution for the shared link, CTA and external-link structures, and
+ * the Panel permalinks found in writer (rich text) fields.
+ */
+trait UtilsLinks
+{
+    /**
+     * Inline KirbyText reduced to its text and `<a>` tags. The `(link: …)` / `(email: …)`
+     * tags render as links; every other markup (Markdown, raw HTML) is flattened to its
+     * text, and `Kirby\Sane\Html` first strips unsafe attributes and `javascript:` hrefs
+     * from the links that stay. Newlines survive as newlines (the `<br>` Markdown adds is
+     * dropped again), so a `whitespace-pre-line` frontend keeps rendering them. Plain text
+     * passes through untouched apart from entity escaping, which is what lets a field
+     * adopt this helper without migrating its content.
+     */
+    static function getLinkedText(\Kirby\Content\Field $field): string
+    {
+        $html = $field->kirbytextinline()->value();
+        if ($html === null || $html === '') {
+            return '';
+        }
+        return strip_tags(\Kirby\Sane\Html::sanitize($html), '<a>');
+    }
+
+    /**
+     * Writer (rich text) HTML with its Panel permalinks resolved for the decoupled
+     * frontend. The writer stores links to pages and files as `/@/page/<uuid>` and
+     * `/@/file/<uuid>`, which only Kirby itself can serve: pages are rewritten to their
+     * frontend path (see pageUrl()) and files to their absolute URL on the CMS. A
+     * permalink whose target no longer exists is left untouched. Null when the field is
+     * empty, so templates can emit the result as-is.
+     */
+    static function getRichText(\Kirby\Content\Field $field): ?string
+    {
+        if ($field->isEmpty()) {
+            return null;
+        }
+        return preg_replace_callback(
+            '~(href|src)="/@/(page|file)/([^"/]+)"~',
+            function (array $m): string {
+                $model = \Kirby\Uuid\Uuid::for($m[2] . '://' . $m[3])->model();
+                $url   = $model instanceof \Kirby\Cms\Page ? self::pageUrl($model) : $model?->url();
+                return $url ? $m[1] . '="' . htmlspecialchars($url, ENT_QUOTES) . '"' : $m[0];
+            },
+            $field->value()
+        );
+    }
+
+    /**
+     * Resolves the URL from a structure item using the type/page/url pattern.
+     */
+    static function resolvePageOrUrlItem(\Kirby\Cms\StructureObject $item): ?string
+    {
+        if ($item->type()->value() === 'page') {
+            return self::pageUrl($item->page()->toPage());
+        }
+        if ($item->type()->value() === 'mailto') {
+            return $item->email()->isNotEmpty() ? 'mailto:' . $item->email()->value() : null;
+        }
+        if ($item->type()->value() === 'tel') {
+            return self::telHref($item->phone());
+        }
+        if ($item->type()->value() === 'file') {
+            return $item->file()->toFile()?->url();
+        }
+        return $item->url()->isNotEmpty() ? $item->url()->value() : null;
+    }
+
+    /**
+     * Frontend path of a page: its `virtualPath` (see the `parent-page` plugin), with the
+     * home page collapsed to `/`. Null for a missing page, so callers can drop the link.
+     */
+    static function pageUrl(?\Kirby\Cms\Page $page): ?string
+    {
+        if ($page === null) {
+            return null;
+        }
+        return $page->isHomePage() ? '/' : '/' . $page->virtualPath();
+    }
+
+    /**
+     * Builds a `tel:` URI from a free-form phone field, or null when it holds no digits.
+     */
+    static function telHref(\Kirby\Content\Field $field): ?string
+    {
+        // "+41 (0) 21…": the parenthesised trunk prefix is dropped entirely, but only after a country code.
+        $raw   = preg_replace('/(\+\s*\d[\d\s.-]*)\(\s*0\s*\)/', '$1', (string)$field->value());
+        $phone = preg_replace('/[^0-9+]/', '', $raw);
+        // tel: URIs allow a single leading "+" only
+        $phone = preg_replace('/(?<!^)\+/', '', $phone);
+        return preg_match('/\d/', $phone) === 1 ? 'tel:' . $phone : null;
+    }
+
+    /**
+     * Resolves the label from a structure item, falling back to the page title or URL.
+     */
+    static function resolvePageOrUrlLabel(\Kirby\Cms\StructureObject $item): ?string
+    {
+        if ($item->label()->isNotEmpty()) {
+            return $item->label()->value();
+        }
+        if ($item->type()->value() === 'page') {
+            $linkedPage = $item->page()->toPage();
+            return $linkedPage?->title()->value();
+        }
+        if ($item->type()->value() === 'mailto') {
+            return $item->email()->isNotEmpty() ? $item->email()->value() : null;
+        }
+        if ($item->type()->value() === 'tel') {
+            return $item->phone()->isNotEmpty() ? $item->phone()->value() : null;
+        }
+        if ($item->type()->value() === 'file') {
+            return $item->file()->toFile()?->filename();
+        }
+        return $item->url()->isNotEmpty() ? $item->url()->value() : null;
+    }
+
+    /**
+     * Link target for a structure item. `url` leaves the site and `file` opens a document
+     * served by the CMS, so both open in a new tab — `page` stays internal, `mailto`/`tel`
+     * hand off to the OS.
+     * Derived from the editor's choice rather than sniffed from the URL on the frontend, so a
+     * self-referencing absolute URL is still treated as internal.
+     */
+    static function resolvePageOrUrlTarget(\Kirby\Cms\StructureObject $item): ?string
+    {
+        return in_array($item->type()->value(), ['page', 'mailto', 'tel'], true) ? null : '_blank';
+    }
+
+    /**
+     * Resolves a single CTA structure item, or null when it has no resolvable URL or label.
+     * `download` is true for the `file` type, so the frontend renders the anchor with a
+     * `download` attribute instead of navigating to the document.
+     */
+    private static function resolveCtaItem(\Kirby\Cms\StructureObject $item): ?array
+    {
+        $url   = self::resolvePageOrUrlItem($item);
+        $label = self::resolvePageOrUrlLabel($item);
+        if (!$url || !$label) return null;
+        return [
+            'label'    => $label,
+            'url'      => $url,
+            'icon'     => $item->icon()->isNotEmpty() ? $item->icon()->value() : null,
+            'target'   => self::resolvePageOrUrlTarget($item),
+            'download' => $item->type()->value() === 'file',
+        ];
+    }
+
+    /**
+     * Resolves a CTA structure field (max 1) to an array for JSON output, or null if empty.
+     */
+    static function resolveCtaStructure(\Kirby\Content\Field $field): ?array
+    {
+        return self::resolveCtaStructures($field)[0] ?? null;
+    }
+
+    /**
+     * Resolves a multi-entry CTA structure field to a list, dropping unresolvable entries.
+     */
+    static function resolveCtaStructures(\Kirby\Content\Field $field): array
+    {
+        $ctas = [];
+        foreach ($field->toStructure() as $item) {
+            if ($cta = self::resolveCtaItem($item)) {
+                $ctas[] = $cta;
+            }
+        }
+        return $ctas;
+    }
+
+    /**
+     * Resolves an external links structure (`title` + `link`) to a JSON-ready
+     * list of `{title, url}` items, skipping entries without a URL.
+     */
+    static function getExternalLinks(\Kirby\Content\Field $field): array
+    {
+        $links = [];
+        foreach ($field->toStructure() as $item) {
+            if ($item->link()->isEmpty()) continue;
+            $links[] = [
+                'title' => $item->title()->value(),
+                'url'   => $item->link()->value(),
+            ];
+        }
+        return $links;
+    }
+}
