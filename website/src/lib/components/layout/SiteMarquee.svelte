@@ -65,12 +65,15 @@
 		</li>
 	{/each}
 {/snippet}
-<aside aria-label="Annonces" class="sticky bottom-0 z-20 h-12 bg-green text-black overflow-hidden">
+<aside
+	aria-label="Annonces"
+	class="group sticky bottom-0 z-20 h-12 bg-green text-black overflow-hidden"
+>
 	<button
 		type="button"
 		onclick={close}
 		aria-label="Fermer les annonces"
-		class="absolute right-1 top-1/2 z-10 -translate-y-1/2 shrink-0 rounded-full bg-black p-1 text-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+		class="absolute right-1 top-1/2 z-10 -translate-y-1/2 shrink-0 rounded-full bg-black p-1 text-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black transition-opacity [@media(hover:hover)]:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
 	>
 		<IconClose class="w-5 h-5" />
 	</button>
