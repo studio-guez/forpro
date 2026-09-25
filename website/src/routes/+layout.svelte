@@ -23,6 +23,9 @@
 
 	onMount(initSmoothScroll);
 
+	let bannerDismissed = $derived(data.bannerDismissed);
+	const showBanner = $derived(data.banner.length > 0 && !bannerDismissed);
+
 	const favicon = $derived(data.favicon);
 	// Apple touch icons ignore prefers-color-scheme, so pick the light 180×180 master.
 	const appleTouchIcon = $derived(favicon?.light.png.find((icon) => icon.size === 180) ?? null);
@@ -103,12 +106,12 @@
 	<SiteFooter footer={data.footer} />
 {/if}
 
-{#if data.banner.length > 0}
-	<SiteMarquee announcements={data.banner} />
+{#if showBanner}
+	<SiteMarquee announcements={data.banner} onclose={() => (bannerDismissed = true)} />
 {/if}
 
 <CookieBanner
 	text={data.cookies.text}
 	privacyPolicyUrl={data.cookies.privacyPolicyUrl}
-	raised={data.banner.length > 0}
+	raised={showBanner}
 />
