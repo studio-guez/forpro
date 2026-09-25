@@ -157,15 +157,15 @@
 		@apply -mx-5 lg:-mx-15 xl:-mx-30;
 	}
 
-	/* Page gutter plus the margin the centred content column leaves beside it, so a full-bleed section's first item still lines up. */
+	/* A `Card`'s text inset (its `lg:px-9` section plus `px-card`) and the margin the centred content column leaves beside it, so a full-bleed section's items line up with card text. */
 	.px-card-bleed {
 		--bleed: max(0px, calc((100% - var(--content-max)) / 2));
 		padding-inline: calc(var(--bleed) + 1.25rem);
 		@media (width >= 64rem) {
-			padding-inline: calc(var(--bleed) + 3.75rem);
+			padding-inline: calc(var(--bleed) + 6rem);
 		}
 		@media (width >= 80rem) {
-			padding-inline: calc(var(--bleed) + 7.5rem);
+			padding-inline: calc(var(--bleed) + 9.75rem);
 		}
 	}
 
