@@ -75,11 +75,45 @@
 	/** Horizontal distance the steps can travel; 0 on mobile and for two steps or fewer. */
 	let overflow = $state(0);
 
-	/** Where the steps are easing towards, so fast wheel ticks add up instead of reading a mid-animation `scrollLeft`. */
+	/** Where the steps are easing towards, so fast wheel ticks add up instead of reading a mid-glide `scrollLeft`. */
 	let trackTarget = 0;
 
+	/** Unrounded glide position: `scrollLeft` snaps to device pixels, which would stall the last steps of the easing. */
+	let trackPosition = 0;
+
+	let glideFrame = 0;
+	let lastGlideTime = 0;
+
 	/** Page scroll swallowed per pixel of horizontal travel: above 1 the steps drift by slower. */
-	const PACE = 2;
+	const PACE = 1;
+
+	/** Lenis's default easing (`lerp: 0.1` per 60 fps frame) as a per-second rate, so the steps glide like the page. */
+	const GLIDE_RATE = 6;
+
+	const stopGlide = (): void => {
+		cancelAnimationFrame(glideFrame);
+		glideFrame = 0;
+		lastGlideTime = 0;
+	};
+
+	/**
+	 * Eases the steps towards `trackTarget` frame by frame. A native smooth `scrollTo` would
+	 * restart from rest on every wheel event, so a continuous trackpad stream never gets it
+	 * moving. Stops as soon as something else scrolls the track (a swipe, a resize clamp).
+	 */
+	const glide = (time: number): void => {
+		if (!track || Math.abs(track.scrollLeft - trackPosition) > 1) {
+			stopGlide();
+			return;
+		}
+		const elapsed = lastGlideTime ? (time - lastGlideTime) / 1000 : 1 / 60;
+		lastGlideTime = time;
+		trackPosition += (trackTarget - trackPosition) * (1 - Math.exp(-GLIDE_RATE * elapsed));
+		if (Math.abs(trackTarget - trackPosition) < 0.5) trackPosition = trackTarget;
+		track.scrollLeft = trackPosition;
+		if (trackPosition === trackTarget) stopGlide();
+		else glideFrame = requestAnimationFrame(glide);
+	};
 
 	/**
 	 * Page scroll at which the block rests while the wheel drives the steps: centred in the
@@ -109,13 +143,15 @@
 		const approach = forward ? rest - pageTarget : pageTarget - rest;
 		if (approach < -1 || approach > Math.abs(deltaY)) return deltaY;
 
-		const pageStep = Math.max(approach, 0) * Math.sign(deltaY);
-		// Arriving from elsewhere: the steps may have been swiped or resized since the last hold.
-		if (pageStep !== 0) trackTarget = track.scrollLeft;
+		// Within a pixel counts as arrived: once Lenis settles it snaps its target to the rounded
+		// `scrollY`, so the resting spot's sub-pixel offset would otherwise never be reached.
+		const pageStep = approach > 1 ? approach * Math.sign(deltaY) : 0;
+		// A settled track may have been swiped or resized since it last glided.
+		if (!glideFrame) trackTarget = trackPosition = track.scrollLeft;
 		if (forward ? trackTarget >= overflow - 1 : trackTarget <= 1) return deltaY;
 
 		trackTarget = Math.min(Math.max(trackTarget + (deltaY - pageStep) / PACE, 0), overflow);
-		track.scrollTo({ left: trackTarget, behavior: 'smooth' });
+		if (!glideFrame) glideFrame = requestAnimationFrame(glide);
 		return pageStep;
 	};
 
@@ -136,6 +172,7 @@
 		return () => {
 			observer.disconnect();
 			release();
+			stopGlide();
 		};
 	});
 </script>
