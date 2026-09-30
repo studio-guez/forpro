@@ -1,5 +1,15 @@
 <script lang="ts">
+	import type { Component } from 'svelte';
 	import ArrowStepDown from '$lib/components/svg/ArrowStepDown.svelte';
+	import ArrowTimeline1 from '$lib/components/svg/ArrowTimeline1.svelte';
+	import ArrowTimeline2 from '$lib/components/svg/ArrowTimeline2.svelte';
+	import ArrowTimeline3 from '$lib/components/svg/ArrowTimeline3.svelte';
+	import ArrowTimeline4 from '$lib/components/svg/ArrowTimeline4.svelte';
+	import ShapeTimeline1 from '$lib/components/svg/ShapeTimeline1.svelte';
+	import ShapeTimeline2 from '$lib/components/svg/ShapeTimeline2.svelte';
+	import ShapeTimeline3 from '$lib/components/svg/ShapeTimeline3.svelte';
+	import ShapeTimeline4 from '$lib/components/svg/ShapeTimeline4.svelte';
+	import ShapeTimeline5 from '$lib/components/svg/ShapeTimeline5.svelte';
 	import CardTitle from '$lib/components/ui/CardTitle.svelte';
 	import { interceptWheel } from '$lib/utils/smoothScroll';
 	import type { ModuleTimelineContent, Theme, TimelineStep } from '$lib/interfaces/page';
@@ -16,17 +26,46 @@
 	const palettes = {
 		default: {
 			card: 'bg-green',
+			shape: 'text-green',
 			step: 'text-blue',
 			pill: 'bg-blue text-white',
 			arrow: 'text-pink'
 		},
 		projets_jeunes: {
 			card: 'bg-orange-pale',
+			shape: 'text-orange-pale',
 			step: 'text-orange',
 			pill: 'bg-orange text-white',
 			arrow: 'text-orange'
 		}
 	} as const;
+
+	interface Decoration {
+		component: Component<{ class?: string }>;
+		class: string;
+	}
+
+	/*
+	 * Desktop decorations, cycled independently: each step sits on the next shape, and the arrow
+	 * after it is the next arrow. Widths are the SVGs' design sizes over 546px, the widest a step
+	 * gets (at the 90rem content max), so they match the mockup there and shrink with the step.
+	 * Arrows alternate between the upper and lower part of the row; keep an even number of them
+	 * so the alternation survives the wrap.
+	 */
+	const shapes: Decoration[] = [
+		{ component: ShapeTimeline1, class: 'w-[73%]' },
+		{ component: ShapeTimeline2, class: 'w-[77%]' },
+		{ component: ShapeTimeline3, class: 'w-[99%]' },
+		{ component: ShapeTimeline4, class: 'w-[80%]' },
+		{ component: ShapeTimeline5, class: 'w-[70%]' }
+	];
+
+	const arrows: Decoration[] = [
+		{ component: ArrowTimeline1, class: 'top-[17%] w-[36.5%]' },
+		{ component: ArrowTimeline2, class: 'top-[87%] w-[35%]' },
+		{ component: ArrowTimeline3, class: 'top-[14%] w-[33%]' },
+		{ component: ArrowTimeline4, class: 'top-[83.5%] w-[30%]' }
+	];
 
 	const colors = $derived(theme === 'projets_jeunes' ? palettes.projets_jeunes : palettes.default);
 
@@ -122,23 +161,30 @@
 				class="text-center relative z-2 max-lg:px-5"
 				pillClass={colors.pill}
 			/>
-			<!-- The desktop gap is the arrow's length minus the same 0.5rem overlap as the mobile arrow; two steps fill the content column exactly. -->
+			<!-- On desktop two steps fill the content column exactly, and each arrow is centred in the gap after its step (`left-[calc(100%+1.125rem)]` is half of `gap-9`). -->
 			<ol
 				bind:this={track}
 				class="flex flex-col items-center px-card-bleed lg:flex-row lg:items-stretch lg:gap-9 lg:overflow-x-auto lg:overflow-y-clip scrollbar-none"
 			>
 				{#each steps as step, i (i)}
+					{@const shape = shapes[i % shapes.length]}
+					<!-- `grid-cols-1` pins the column to the step's width, which the shapes' percentage widths resolve against. -->
 					<li
-						class="relative flex w-full flex-col items-center sm:max-w-100 lg:max-w-none lg:w-[calc((100%-2.25rem)/2)] lg:shrink-0 lg:items-stretch"
+						class="relative flex w-full flex-col items-center sm:max-w-100 lg:grid lg:grid-cols-1 lg:place-items-center lg:max-w-none lg:w-[calc((100%-2.25rem)/2)] lg:shrink-0"
 					>
+						<shape.component
+							class="col-start-1 row-start-1 h-auto max-lg:hidden {shape.class} {colors.shape}"
+						/>
 						<div
-							class="w-full rounded-2xl px-6 py-4.5 lg:px-12 lg:py-20 text-center lg:flex lg:grow lg:flex-col lg:justify-center {colors.card} {colors.step}"
+							class="w-full rounded-2xl px-6 py-4.5 text-center lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:px-3 lg:py-0 {colors.card} {colors.step}"
 						>
 							{@render stepText(step)}
 						</div>
 						{#if i < steps.length - 1}
-							<ArrowStepDown
-								class="-mb-2 h-11 w-auto relative z-1 lg:absolute lg:mb-0 lg:left-full lg:top-1/2 lg:ml-5.5 lg:-translate-1/2 lg:-rotate-90 {colors.arrow}"
+							{@const arrow = arrows[i % arrows.length]}
+							<ArrowStepDown class="-mb-2 h-11 w-auto relative z-1 lg:hidden {colors.arrow}" />
+							<arrow.component
+								class="absolute left-[calc(100%+1.125rem)] h-auto -translate-1/2 max-lg:hidden {arrow.class} {colors.arrow}"
 							/>
 						{/if}
 					</li>
