@@ -327,6 +327,20 @@ return [
                 );
             },
         ],
+        [
+            // The frontend asks only after `pages/(:all).json` has missed, so a redirect can never shadow a live page.
+            "pattern" => "redirect.json",
+            "action" => function () {
+                require_once 'utils/Utils.php';
+
+                $target = Utils::findRedirectTarget((string)(get('path') ?? ''));
+                if ($target === null) {
+                    return null;
+                }
+
+                return \Kirby\Http\Response::json(['url' => Utils::pageUrl($target)]);
+            },
+        ],
     ],
     "email" => [
         "transport" => [

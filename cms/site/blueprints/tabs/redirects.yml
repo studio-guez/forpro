@@ -1,0 +1,40 @@
+label:
+  en: Redirects
+  fr: Redirections
+icon: shuffle
+
+columns:
+  - width: 1/1
+    fields:
+      redirects:
+        label:
+          en: Redirects
+          fr: Redirections
+        type: structure
+        help:
+          en: Sends visitors of an old address to a page of the site with a permanent (301) redirect. Only applies when no page exists at the old address. The target follows the page, so the redirect keeps working if that page's URL changes.
+          fr: Renvoie les visiteurs d’une ancienne adresse vers une page du site (redirection permanente 301). Ne s’applique que si aucune page n’existe à l’ancienne adresse. La destination suit la page, la redirection reste donc valable si l’URL de cette page change.
+        columns:
+          from:
+            width: 1/2
+          to:
+            width: 1/2
+        fields:
+          from:
+            label:
+              en: Old URL
+              fr: Ancienne URL
+            type: text
+            required: true
+            placeholder: /ancienne-page
+            help:
+              en: A path (/old-page) or a full URL. The domain, query string, trailing slash and letter case are ignored.
+              fr: Un chemin (/ancienne-page) ou une URL complète. Le domaine, les paramètres après le ?, la barre oblique finale et les majuscules sont ignorés.
+          to:
+            extends: fields/pageSelect
+            label:
+              en: Target page
+              fr: Page de destination
+            required: true
+            # Wider than fields/pageSelect: an old URL may have pointed at a single event, project, job offer or mission.
+            query: site.index.listed.filterBy('template', 'in', ['home', 'page', 'basic-page', 'faq', 'team', 'press', 'infos-pratiques', 'impressum', 'factory-lab', 'events', 'event', 'projects', 'project', 'job-offers', 'job-offer', 'missions', 'mission']).sortBy('breadcrumbtitle', 'asc')
