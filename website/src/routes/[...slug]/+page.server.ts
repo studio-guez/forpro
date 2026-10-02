@@ -1,10 +1,11 @@
 import { error, redirect } from '@sveltejs/kit';
 import { CMS_SERVER_BASE_URL } from '$lib/server/cms';
+import { findRedirect, REDIRECT_HEADERS } from '$lib/server/redirects';
 import { fetchFromAPI, getHeaders } from '$lib/utils/shared';
 import type { CmsContent } from '$lib/interfaces/content';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params, url }) => {
+export const load: PageServerLoad = async ({ params, url, setHeaders }) => {
 	const path = params.slug ?? '';
 	const isHome = path === '' || path === 'home';
 
@@ -18,7 +19,15 @@ export const load: PageServerLoad = async ({ params, url }) => {
 
 	const page = await fetchFromAPI<CmsContent>(request, `Failed to load page "${path}"`);
 
-	if (!page) error(404, 'Page introuvable');
+	if (!page) {
+		const target = await findRedirect(path);
+		if (target) {
+			setHeaders(REDIRECT_HEADERS);
+			redirect(301, `${target}${query}`);
+		}
+
+		error(404, 'Page introuvable');
+	}
 
 	// The query string carries the filters, so it has to survive the canonical redirect.
 	const canonicalPath = isHome ? '' : page.path;
