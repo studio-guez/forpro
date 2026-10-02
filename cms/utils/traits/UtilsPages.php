@@ -31,6 +31,44 @@ trait UtilsPages
     }
 
     /**
+     * The page an editor redirected a frontend path to, from the site's
+     * `redirects` structure. The target is stored as a page reference, not a
+     * path, so the redirect follows the page when its `virtualPath` changes.
+     *
+     * A draft target is skipped: its path has no page on the frontend, so the
+     * redirect would only trade one 404 for another.
+     */
+    static function findRedirectTarget(string $path): ?\Kirby\Cms\Page
+    {
+        $path = self::normalizeRedirectPath($path);
+
+        foreach (kirby()->site()->redirects()->toStructure() as $redirect) {
+            if (self::normalizeRedirectPath($redirect->from()->value()) !== $path) {
+                continue;
+            }
+
+            $target = $redirect->to()->toPage();
+            if ($target !== null && $target->isDraft() === false) {
+                return $target;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Editors type a redirect source as a path or paste a full URL, so both
+     * sides are reduced to the bare path: no domain, query string, surrounding
+     * slashes or letter case.
+     */
+    private static function normalizeRedirectPath(string $url): string
+    {
+        $path = (string)parse_url(trim($url), PHP_URL_PATH);
+
+        return mb_strtolower(trim(rawurldecode($path), '/'));
+    }
+
+    /**
      * One page of a filtered list, in the envelope the three index lists share
      * (`PaginatedList<T>` on the frontend).
      *

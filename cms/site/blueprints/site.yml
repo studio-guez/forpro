@@ -187,3 +187,5 @@ tabs:
   general: tabs/general
 
   seo: tabs/seo-site
+
+  redirects: tabs/redirects

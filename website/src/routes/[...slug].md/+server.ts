@@ -2,6 +2,7 @@ import { error, redirect } from '@sveltejs/kit';
 import { CMS_SERVER_BASE_URL } from '$lib/server/cms';
 import { fetchFromAPI, getHeaders } from '$lib/utils/shared';
 import { renderPageMarkdown } from '$lib/server/markdown';
+import { findRedirect, REDIRECT_HEADERS } from '$lib/server/redirects';
 import type { CmsContent } from '$lib/interfaces/content';
 import type { PaginatedList } from '$lib/interfaces/pagination';
 import type { AgendaEventCard, ProjetCard } from '$lib/interfaces/page';
@@ -93,10 +94,11 @@ async function withCompleteLists(page: CmsContent): Promise<CmsContent> {
  * `rel="alternate" type="text/markdown"`, and by the note in llms.txt.
  *
  * It reads the same payload as the HTML route, so the two can never fall out of
- * step, and it mirrors that route's rules: home lives at the root, and a path
- * that is not the page's own redirects to the one that is.
+ * step, and it mirrors that route's rules: home lives at the root, a path that
+ * is not the page's own redirects to the one that is, and so does a path the
+ * editors redirected.
  */
-export const GET: RequestHandler = async ({ params, url }) => {
+export const GET: RequestHandler = async ({ params, url, setHeaders }) => {
 	const path = params.slug ?? '';
 
 	// `/index.md`, not `/.md`: a reverse proxy's dotfile rules would block the latter.
@@ -108,7 +110,15 @@ export const GET: RequestHandler = async ({ params, url }) => {
 
 	const page = await fetchFromAPI<CmsContent>(request, `Failed to load page "${path}"`);
 
-	if (!page) error(404, 'Page introuvable');
+	if (!page) {
+		const target = await findRedirect(path);
+		if (target) {
+			setHeaders(REDIRECT_HEADERS);
+			redirect(301, `${target === '/' ? '/index' : target}.md`);
+		}
+
+		error(404, 'Page introuvable');
+	}
 
 	const canonicalPath = isHome ? 'index' : page.path;
 	if (path !== canonicalPath) redirect(301, `/${canonicalPath}.md`);
