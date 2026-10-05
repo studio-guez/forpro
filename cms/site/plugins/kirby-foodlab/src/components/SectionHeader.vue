@@ -70,15 +70,14 @@ export default {
             this.name = title;
         },
     },
+    created() {
+        this.save = this.$helper.debounce(this.save, 500);
+    },
     methods: {
         input(value) {
             this.name = value;
             this.isEditing = true;
-
-            this.$api.post("/restaurant/menu/metadata/name", {
-                value,
-                category: this.category,
-            });
+            this.save(value);
 
             setTimeout(() => {
                 this.isEditing = false;
@@ -87,6 +86,12 @@ export default {
                     this.hasBeenEdited = false;
                 }, 5000);
             }, 1500);
+        },
+        save(value) {
+            this.$api.post("/restaurant/menu/metadata/name", {
+                value,
+                category: this.category,
+            });
         },
     },
     computed: {

@@ -418,6 +418,9 @@ export default {
             this.originsName = title;
         },
     },
+    created() {
+        this.saveOriginTitle = this.$helper.debounce(this.saveOriginTitle, 500);
+    },
     methods: {
         goto(path) {
             this.$go(path);
@@ -644,6 +647,9 @@ export default {
         },
         updateOriginTitle(value) {
             this.originsName = value;
+            this.saveOriginTitle(value);
+        },
+        saveOriginTitle(value) {
             this.$api
                 .post("/restaurant/menu/metadata/name", {
                     category: "origin",
