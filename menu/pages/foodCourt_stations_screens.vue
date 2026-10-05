@@ -10,8 +10,8 @@
             }"
       >
 <!--        <div class="v-screen-stations__box__item__name" >{{todayMenu[screenIndex]?.name}}</div>-->
-        <div class="v-screen-stations__box__item__foodMain" >{{todayMenu[screenIndex]?.foodMain}}</div>
-        <div class="v-screen-stations__box__item__foodDesc" >{{todayMenu[screenIndex]?.foodDesc}}</div>
+        <div class="v-screen-stations__box__item__foodMain" v-html="flattenLineBreaks(todayMenu[screenIndex]?.foodMain)"/>
+        <div class="v-screen-stations__box__item__foodDesc" v-html="flattenLineBreaks(todayMenu[screenIndex]?.foodDesc)"/>
         <div class="v-screen-stations__box__item__price" >
           <div>{{ formatPrice(todayMenu[screenIndex]?.price1) }}</div>
           <div>{{ formatPrice(todayMenu[screenIndex]?.price2) }}</div>
@@ -33,6 +33,7 @@
 import {computed, onMounted, ref, type Ref} from 'vue'
 import {useHead} from '#imports'
 import {formatPrice} from "~/utils/formatPrice";
+import {flattenLineBreaks} from "~/utils/flattenLineBreaks";
 import {useRouter} from "#app";
 
 import {

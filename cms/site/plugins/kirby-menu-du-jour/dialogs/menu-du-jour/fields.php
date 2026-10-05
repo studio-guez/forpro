@@ -54,7 +54,7 @@ for ($jour = 1; $jour <= 5; $jour++) {
             'label' => 'Menu',
             'type' => 'writer',
             'marks' => ['italic'],
-            'nodes' => false,
+            'nodes' => [],
             'inline' => true,
             'width' => '4/12'
         ];
@@ -63,7 +63,7 @@ for ($jour = 1; $jour <= 5; $jour++) {
             'label' => 'Description',
             'type' => 'writer',
             'marks' => ['italic'],
-            'nodes' => false,
+            'nodes' => [],
             'inline' => true,
             'width' => '4/12'
         ];
