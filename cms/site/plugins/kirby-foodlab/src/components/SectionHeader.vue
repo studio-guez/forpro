@@ -16,11 +16,10 @@
                     @click="$emit('up')"
                 ></k-button>
             </k-button-group>
-            <k-input
-                :value="name"
-                type="text"
-                :icon="titleIcon"
-                @input="input($event)"
+            <k-menu-title-input
+                :title="title"
+                endpoint="/restaurant/menu/metadata/name"
+                :params="{ category }"
             />
         </div>
         <div class="k-column" style="--width: 2/3; justify-self: end">
@@ -54,53 +53,6 @@ export default {
         showHide: {
             type: Boolean,
             required: true,
-        },
-    },
-    data() {
-        return {
-            // `title` only changes when the view reloads: an input bound to it
-            // directly is reset to the old title on every re-render
-            name: this.title,
-            isEditing: false,
-            hasBeenEdited: false,
-        };
-    },
-    watch: {
-        title(title) {
-            this.name = title;
-        },
-    },
-    created() {
-        this.save = this.$helper.debounce(this.save, 500);
-    },
-    methods: {
-        input(value) {
-            this.name = value;
-            this.isEditing = true;
-            this.save(value);
-
-            setTimeout(() => {
-                this.isEditing = false;
-                this.hasBeenEdited = true;
-                setTimeout(() => {
-                    this.hasBeenEdited = false;
-                }, 5000);
-            }, 1500);
-        },
-        save(value) {
-            this.$api.post("/restaurant/menu/metadata/name", {
-                value,
-                category: this.category,
-            });
-        },
-    },
-    computed: {
-        titleIcon() {
-            return this.isEditing
-                ? "loader"
-                : this.hasBeenEdited
-                  ? "check"
-                  : "edit";
         },
     },
 };

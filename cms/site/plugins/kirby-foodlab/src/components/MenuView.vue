@@ -203,11 +203,10 @@
 
         <k-grid style="margin-top: 40px">
             <div class="k-column" style="--width: 1/3; justify-self: start">
-                <k-input
-                    :value="originsName"
-                    type="text"
-                    :icon="originTitleIcon"
-                    @input="updateOriginTitle($event)"
+                <k-menu-title-input
+                    :title="originsTitle"
+                    endpoint="/restaurant/menu/metadata/name"
+                    :params="{ category: 'origin' }"
                 />
             </div>
             <div class="k-column" style="--width: 2/3; justify-self: end">
@@ -339,12 +338,9 @@ export default {
                 textTVA: this.textTVA,
                 textAllergy: this.textAllergy,
             },
-            originsName: this.originsTitle,
             isGeneratingPDF: false,
             isSubmitting: false,
             hasBeenSubmitted: false,
-            isEditing: false,
-            hasBeenEdited: false,
             formFields: {
                 textTitle1: {
                     label: "Titre 1",
@@ -403,14 +399,6 @@ export default {
             page3Order: this.page3Order,
             page4Order: this.page4Order,
         };
-    },
-    watch: {
-        originsTitle(title) {
-            this.originsName = title;
-        },
-    },
-    created() {
-        this.saveOriginTitle = this.$helper.debounce(this.saveOriginTitle, 500);
     },
     methods: {
         goto(path) {
@@ -520,81 +508,6 @@ export default {
                 return { section: this.page4Order, page: 4 };
             return { section: [], page: null };
         },
-        updateUrl(value) {
-            this.isEditing = true;
-            this.$api
-                .post("/restaurant/menu/metadata/url", { value })
-                .then(() => {
-                    this.urlText = value;
-                    this.isEditing = false;
-                    this.hasBeenEdited = true;
-                    setTimeout(() => {
-                        this.hasBeenEdited = false;
-                    }, 2000);
-                })
-                .catch((error) => {
-                    console.error("Error updating page title:", error);
-                    this.isEditing = false;
-                    this.$panel.notification.error("Failed to update URL",
-                    );
-                });
-        },
-        updateTVA(value) {
-            this.isEditing = true;
-            this.$api
-                .post("/restaurant/menu/metadata/tva", { value })
-                .then(() => {
-                    this.tvaText = value;
-                    this.isEditing = false;
-                    this.hasBeenEdited = true;
-                    setTimeout(() => {
-                        this.hasBeenEdited = false;
-                    }, 2000);
-                    this.$panel.notification.success("URL has been updated successfully",
-                    );
-                })
-                .catch((error) => {
-                    console.error("Error updating page title:", error);
-                    this.isEditing = false;
-                    this.$panel.notification.error("Failed to update URL",
-                    );
-                });
-        },
-        updateSectionTitle(category, value) {
-            this.$api
-                .post("/restaurant/menu/metadata/name", { category, value })
-                .then(() => {
-                    const propName = `${this.getSectionProp(category)}Title`;
-                    this.$set(this, propName, value);
-                    this.$panel.notification.success("Section title updated successfully",
-                    );
-                })
-                .catch((error) => {
-                    console.error("Error updating section title:", error);
-                    this.$panel.notification.error("Failed to update section title",
-                    );
-                });
-        },
-        updateOriginTitle(value) {
-            this.originsName = value;
-            this.saveOriginTitle(value);
-        },
-        saveOriginTitle(value) {
-            this.$api
-                .post("/restaurant/menu/metadata/name", {
-                    category: "origin",
-                    value,
-                })
-                .then(() => {
-                    this.$panel.notification.success("Section title updated successfully",
-                    );
-                })
-                .catch((error) => {
-                    console.error("Error updating section title:", error);
-                    this.$panel.notification.error("Failed to update section title",
-                    );
-                });
-        },
         getSectionTitle(category) {
             return this[`${this.getSectionProp(category)}Title`];
         },
@@ -651,17 +564,6 @@ export default {
                     this.$panel.notification.error("Failed to update section order",
                     );
                 });
-        },
-    },
-    computed: {
-        originTitleIcon() {
-            if (this.hasBeenEdited) {
-                return "check";
-            } else if (this.isEditing) {
-                return "loader";
-            } else {
-                return "edit";
-            }
         },
     },
 };
