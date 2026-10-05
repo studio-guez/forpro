@@ -17,7 +17,7 @@
                 ></k-button>
             </k-button-group>
             <k-input
-                :value="title"
+                :value="name"
                 type="text"
                 :icon="titleIcon"
                 @input="input($event)"
@@ -58,12 +58,21 @@ export default {
     },
     data() {
         return {
+            // `title` only changes when the view reloads: an input bound to it
+            // directly is reset to the old title on every re-render
+            name: this.title,
             isEditing: false,
             hasBeenEdited: false,
         };
     },
+    watch: {
+        title(title) {
+            this.name = title;
+        },
+    },
     methods: {
         input(value) {
+            this.name = value;
             this.isEditing = true;
 
             this.$api.post("/restaurant/menu/metadata/name", {

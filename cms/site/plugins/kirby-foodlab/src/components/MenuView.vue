@@ -210,7 +210,7 @@
         <k-grid style="margin-top: 40px">
             <div class="k-column" style="--width: 1/3; justify-self: start">
                 <k-input
-                    :value="originsTitle"
+                    :value="originsName"
                     type="text"
                     :icon="originTitleIcon"
                     @input="updateOriginTitle($event)"
@@ -345,6 +345,7 @@ export default {
                 textTVA: this.textTVA,
                 textAllergy: this.textAllergy,
             },
+            originsName: this.originsTitle,
             isGeneratingPDF: false,
             isSubmitting: false,
             hasBeenSubmitted: false,
@@ -411,6 +412,11 @@ export default {
             pageTitle3: this.pageTitle3,
             pageTitle4: this.pageTitle4,
         };
+    },
+    watch: {
+        originsTitle(title) {
+            this.originsName = title;
+        },
     },
     methods: {
         goto(path) {
@@ -637,6 +643,7 @@ export default {
                 });
         },
         updateOriginTitle(value) {
+            this.originsName = value;
             this.$api
                 .post("/restaurant/menu/metadata/name", {
                     category: "origin",
