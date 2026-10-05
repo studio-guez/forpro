@@ -14,10 +14,14 @@ class Metadata extends BaseClass
         string $key,
         mixed $value
     ): bool {
-        $metadata = self::list();
-        $metadata[$category][$key] = $value;
-
-        return Data::write(static::file(), $metadata);
+        return self::modify(function (array $metadata) use (
+            $category,
+            $key,
+            $value
+        ) {
+            $metadata[$category][$key] = $value;
+            return $metadata;
+        });
     }
 
     public static function get(string $category, mixed $key): mixed
@@ -28,19 +32,49 @@ class Metadata extends BaseClass
 
     public static function updown(string $category, string $direction): bool
     {
-        $metadata = self::list();
-        $level = $metadata[$category]["level"] ?? 0;
+        return self::modify(function (array $metadata) use (
+            $category,
+            $direction
+        ) {
+            $level = $metadata[$category]["level"] ?? 0;
 
-        if ($direction === "down" && $level === 0) {
-            $level = 0;
-        } elseif ($direction === "down") {
-            $level--;
-        } else {
-            $level++;
+            if ($direction === "down" && $level === 0) {
+                $level = 0;
+            } elseif ($direction === "down") {
+                $level--;
+            } else {
+                $level++;
+            }
+
+            $metadata[$category]["level"] = $level;
+            return $metadata;
+        });
+    }
+
+    /**
+     * Every Panel setting shares this one file, and several requests can edit
+     * it at once. The read-modify-write is serialized on a lock file, and the
+     * result is renamed into place so lock-free readers never see a truncated
+     * file: an empty read decodes to [] and would be written back, wiping
+     * every other setting.
+     */
+    private static function modify(callable $change): bool
+    {
+        $lock = fopen(static::file() . ".lock", "c");
+
+        if ($lock === false) {
+            return false;
         }
 
-        $metadata[$category]["level"] = $level;
+        flock($lock, LOCK_EX);
 
-        return Data::write(static::file(), $metadata);
+        try {
+            $tmp = static::file() . ".tmp";
+            Data::write($tmp, $change(self::list()), "json");
+            return rename($tmp, static::file());
+        } finally {
+            flock($lock, LOCK_UN);
+            fclose($lock);
+        }
     }
 }

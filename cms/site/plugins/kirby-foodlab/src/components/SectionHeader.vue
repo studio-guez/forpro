@@ -16,11 +16,10 @@
                     @click="$emit('up')"
                 ></k-button>
             </k-button-group>
-            <k-input
-                :value="title"
-                type="text"
-                :icon="titleIcon"
-                @input="input($event)"
+            <k-menu-title-input
+                :title="title"
+                endpoint="/restaurant/menu/metadata/name"
+                :params="{ category }"
             />
         </div>
         <div class="k-column" style="--width: 2/3; justify-self: end">
@@ -54,39 +53,6 @@ export default {
         showHide: {
             type: Boolean,
             required: true,
-        },
-    },
-    data() {
-        return {
-            isEditing: false,
-            hasBeenEdited: false,
-        };
-    },
-    methods: {
-        input(value) {
-            this.isEditing = true;
-
-            this.$api.post("/restaurant/menu/metadata/name", {
-                value,
-                category: this.category,
-            });
-
-            setTimeout(() => {
-                this.isEditing = false;
-                this.hasBeenEdited = true;
-                setTimeout(() => {
-                    this.hasBeenEdited = false;
-                }, 5000);
-            }, 1500);
-        },
-    },
-    computed: {
-        titleIcon() {
-            return this.isEditing
-                ? "loader"
-                : this.hasBeenEdited
-                  ? "check"
-                  : "edit";
         },
     },
 };

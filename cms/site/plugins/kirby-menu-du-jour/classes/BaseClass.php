@@ -4,6 +4,7 @@ namespace Villa1203\MenuDuJour;
 
 use Kirby\Data\Data;
 use Kirby\Exception\NotFoundException;
+use Kirby\Sane\Sane;
 
 class BaseClass
 {
@@ -89,5 +90,14 @@ class BaseClass
         unset($item);
 
         return Data::write(static::file(), $items);
+    }
+
+    /**
+     * Cleans a value that the menu app renders as raw HTML. Dialog and API
+     * input skips the sanitizing a blueprint writer field gets.
+     */
+    protected static function sanitizeHtml(mixed $html): string
+    {
+        return Sane::sanitize((string) ($html ?? ""), "html");
     }
 }
