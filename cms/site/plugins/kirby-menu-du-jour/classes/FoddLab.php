@@ -46,25 +46,31 @@ class FoddLab extends BaseClass
     public static function setTexte(string $texte): bool
     {
         $data = static::readAll();
-        $data['texte'] = $texte;
+        $data['texte'] = static::sanitizeHtml($texte);
         return static::writeAll($data);
+    }
+
+    /**
+     * Builds a week's item from the given input
+     */
+    private static function buildData(string $id, array $input): array
+    {
+        $data = [
+            "id"   => $id,
+            "date" => $input["date"] ?? "",
+            "prix" => $input["prix"] ?? "",
+        ];
+
+        for ($jour = 1; $jour <= 6; $jour++) {
+            $data["jour{$jour}_menu"] = static::sanitizeHtml($input["jour{$jour}_menu"] ?? "");
+        }
+
+        return $data;
     }
 
     public static function create(array $input): bool
     {
-        $id = uuid();
-
-        $item = [
-            "id"      => $id,
-            "date"    => $input["date"] ?? "",
-            "prix"    => $input["prix"] ?? "",
-            "jour1_menu" => $input["jour1_menu"] ?? "",
-            "jour2_menu" => $input["jour2_menu"] ?? "",
-            "jour3_menu" => $input["jour3_menu"] ?? "",
-            "jour4_menu" => $input["jour4_menu"] ?? "",
-            "jour5_menu" => $input["jour5_menu"] ?? "",
-            "jour6_menu" => $input["jour6_menu"] ?? "",
-        ];
+        $item = self::buildData(uuid(), $input);
 
         $data = static::readAll();
         $data['items'][] = $item;
@@ -74,17 +80,7 @@ class FoddLab extends BaseClass
 
     public static function update(string $id, array $input): bool
     {
-        $item = [
-            "id"      => $id,
-            "date"    => $input["date"] ?? "",
-            "prix"    => $input["prix"] ?? "",
-            "jour1_menu" => $input["jour1_menu"] ?? "",
-            "jour2_menu" => $input["jour2_menu"] ?? "",
-            "jour3_menu" => $input["jour3_menu"] ?? "",
-            "jour4_menu" => $input["jour4_menu"] ?? "",
-            "jour5_menu" => $input["jour5_menu"] ?? "",
-            "jour6_menu" => $input["jour6_menu"] ?? "",
-        ];
+        $item = self::buildData($id, $input);
 
         $data = static::readAll();
         $items = $data['items'] ?? [];

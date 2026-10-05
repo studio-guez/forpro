@@ -71,6 +71,7 @@ import AppHeader from "../components/AppHeader.vue";
 import AppTextContent from "../components/AppTextContent.vue";
 import AppSvgFoodCourt from "../components/AppSvgFoodCourt.vue";
 import {scaleTransform} from "~/utils/scaleTransform";
+import {stripHtml} from "~/utils/stripHtml";
 import {
   foodCourt_GetCurrentWeekMenu,
   getFoodCourtData,
@@ -99,7 +100,7 @@ useHead(computed(() => {
           hasMenuItem: [1, 2, 3, 4].map(s => ({
             '@type': 'MenuItem',
             name: (d as any)[`station${s}_name`],
-            description: [(d as any)[`${jour}_station${s}_menu`], (d as any)[`${jour}_station${s}_description`]].filter(Boolean).join(' — '),
+            description: [(d as any)[`${jour}_station${s}_menu`], (d as any)[`${jour}_station${s}_description`]].map(stripHtml).filter(Boolean).join(' — '),
             offers: { '@type': 'Offer', price: (d as any)[`${jour}_station${s}_prix_public`], priceCurrency: 'CHF' },
           })),
         })),

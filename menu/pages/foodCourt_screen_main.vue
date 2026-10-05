@@ -24,8 +24,8 @@
             }"
        >
          <div class="v-screen-home__box__item__name" >{{menu?.name}}</div>
-         <div class="v-screen-home__box__item__foodMain" >{{menu?.foodMain}}</div>
-         <div class="v-screen-home__box__item__foodDesc" >{{menu?.foodDesc}}</div>
+         <div class="v-screen-home__box__item__foodMain" v-html="flattenLineBreaks(menu?.foodMain)"/>
+         <div class="v-screen-home__box__item__foodDesc" v-html="flattenLineBreaks(menu?.foodDesc)"/>
          <div class="v-screen-home__box__item__price" >
            <div>{{formatPrice(menu?.price1)}}</div>
            <div>{{formatPrice(menu?.price2)}}</div>
@@ -55,6 +55,7 @@ import {
 } from "~/composables/foodCourtData";
 import {getMainScreenData} from "~/composables/mainScreenData";
 import {formatPrice} from "~/utils/formatPrice";
+import {flattenLineBreaks} from "~/utils/flattenLineBreaks";
 import {getCmsBaseUrl} from "~/utils/cmsBaseUrl";
 
 const cmsBaseUrl = getCmsBaseUrl()
