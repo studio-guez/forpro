@@ -71,7 +71,7 @@ useHead({ title: 'Food Lab — Menus de la semaine | ForPro' })
 const foodLabData = ref<null | IMenuData__foodLab__weekMenu>(null)
 const foodLabData_footer = ref<null | string>(null)
 
-const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Suggestion végétarienne']
 
 useHead(computed(() => {
   if (!foodLabData.value) return {}
