@@ -8,6 +8,7 @@ import RestaurantLinkFieldPreview from "./components/RestaurantLinkFieldPreview.
 import RestaurantMediaInput from "./components/RestaurantMediaInput.vue";
 import restaurantLinkDialog from "./components/restaurantLinkDialog.js";
 import SectionHeader from "./components/SectionHeader.vue";
+import MenuTitleInput from "./components/MenuTitleInput.vue";
 import BeerTable from "./components/BeerTable.vue";
 import CocktailTable from "./components/CocktailTable.vue";
 import DessertTable from "./components/DessertTable.vue";
@@ -34,6 +35,7 @@ panel.plugin("eclypsys/foodlab", {
     "k-menu-special-view": MenuSpecialView,
     "k-restaurant-view": RestaurantView,
     "k-section-header": SectionHeader,
+    "k-menu-title-input": MenuTitleInput,
     "k-beer-table": BeerTable,
     "k-dessert-table": DessertTable,
     "k-hot-drink-table": HotDrinkTable,

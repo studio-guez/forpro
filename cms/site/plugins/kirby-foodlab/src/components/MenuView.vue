@@ -65,11 +65,9 @@
                     align-content: center;
                 "
             >
-                <k-input
-                    :value="pageTitle2"
-                    type="text"
-                    :icon="pageTitleIcon2"
-                    @input="updatePageTitle2"
+                <k-menu-title-input
+                    :title="pageTitle2"
+                    endpoint="/restaurant/menu/page-title-2"
                 />
             </div>
             <div class="k-column" style="--width: 1/3">
@@ -111,11 +109,9 @@
                     align-content: center;
                 "
             >
-                <k-input
-                    :value="pageTitle3"
-                    type="text"
-                    :icon="pageTitleIcon3"
-                    @input="updatePageTitle3"
+                <k-menu-title-input
+                    :title="pageTitle3"
+                    endpoint="/restaurant/menu/page-title-3"
                 />
             </div>
             <div class="k-column" style="--width: 1/3">
@@ -157,11 +153,9 @@
                     align-content: center;
                 "
             >
-                <k-input
-                    :value="pageTitle4"
-                    type="text"
-                    :icon="pageTitleIcon4"
-                    @input="updatePageTitle4"
+                <k-menu-title-input
+                    :title="pageTitle4"
+                    endpoint="/restaurant/menu/page-title-4"
                 />
             </div>
             <div class="k-column" style="--width: 1/3">
@@ -408,9 +402,6 @@ export default {
             page2Order: this.page2Order,
             page3Order: this.page3Order,
             page4Order: this.page4Order,
-            pageTitle2: this.pageTitle2,
-            pageTitle3: this.pageTitle3,
-            pageTitle4: this.pageTitle4,
         };
     },
     watch: {
@@ -528,67 +519,6 @@ export default {
             if (this.page4Order.includes(category))
                 return { section: this.page4Order, page: 4 };
             return { section: [], page: null };
-        },
-        updatePageTitle2(value) {
-            this.isEditing = true;
-            this.$api
-                .post("/restaurant/menu/page-title-2", { value })
-                .then(() => {
-                    this.pageTitle2 = value;
-                    this.isEditing = false;
-                    this.hasBeenEdited = true;
-                    setTimeout(() => {
-                        this.hasBeenEdited = false;
-                    }, 2000);
-                    this.$panel.notification.success("Page title updated successfully",
-                    );
-                })
-                .catch((error) => {
-                    console.error("Error updating page title:", error);
-                    this.isEditing = false;
-                    this.$panel.notification.error("Failed to update page title",
-                    );
-                });
-        },
-        updatePageTitle3(value) {
-            this.isEditing = true;
-            this.$api
-                .post("/restaurant/menu/page-title-3", { value })
-                .then(() => {
-                    this.pageTitle3 = value;
-                    this.isEditing = false;
-                    this.hasBeenEdited = true;
-                    setTimeout(() => {
-                        this.hasBeenEdited = false;
-                    }, 2000);
-                    this.$panel.notification.success("Page title updated successfully",
-                    );
-                })
-                .catch((error) => {
-                    console.error("Error updating page title:", error);
-                    this.isEditing = false;
-                    this.$panel.notification.error("Failed to update page title",
-                    );
-                });
-        },
-        updatePageTitle4(value) {
-            this.isEditing = true;
-            this.$api
-                .post("/restaurant/menu/page-title-4", { value })
-                .then(() => {
-                    this.pageTitle4 = value;
-                    this.isEditing = false;
-                    this.hasBeenEdited = true;
-                    setTimeout(() => {
-                        this.hasBeenEdited = false;
-                    }, 2000);
-                })
-                .catch((error) => {
-                    console.error("Error updating page title:", error);
-                    this.isEditing = false;
-                    this.$panel.notification.error("Failed to update page title",
-                    );
-                });
         },
         updateUrl(value) {
             this.isEditing = true;
@@ -724,33 +654,6 @@ export default {
         },
     },
     computed: {
-        pageTitleIcon2() {
-            if (this.hasBeenEdited) {
-                return "check";
-            } else if (this.isEditing) {
-                return "loader";
-            } else {
-                return "edit";
-            }
-        },
-        pageTitleIcon3() {
-            if (this.hasBeenEdited) {
-                return "check";
-            } else if (this.isEditing) {
-                return "loader";
-            } else {
-                return "edit";
-            }
-        },
-        pageTitleIcon4() {
-            if (this.hasBeenEdited) {
-                return "check";
-            } else if (this.isEditing) {
-                return "loader";
-            } else {
-                return "edit";
-            }
-        },
         originTitleIcon() {
             if (this.hasBeenEdited) {
                 return "check";
