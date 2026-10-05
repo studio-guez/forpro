@@ -3,7 +3,6 @@
 namespace Villa1203\MenuDuJour;
 
 use Kirby\Data\Data;
-use Kirby\Sane\Sane;
 
 class MenuDuJour extends BaseClass
 {
@@ -29,10 +28,8 @@ class MenuDuJour extends BaseClass
                     $key = "jour{$jour}_station{$station}_$field";
                     $value = $input[$key] ?? "";
 
-                    // Writer fields are rendered as raw HTML by the menu app, and
-                    // dialog input skips the sanitizing a blueprint writer field gets
                     $data[$key] = in_array($field, ["menu", "description"], true)
-                        ? Sane::sanitize((string) $value, "html")
+                        ? static::sanitizeHtml($value)
                         : $value;
                 }
             }
