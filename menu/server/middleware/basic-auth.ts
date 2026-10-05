@@ -1,4 +1,4 @@
-import { defineEventHandler, getRequestHeader, setResponseHeader, setResponseStatus } from '#imports'
+import { defineEventHandler, getRequestHeader, getRequestURL, setResponseHeader, setResponseStatus } from '#imports'
 
 // Optional HTTP Basic auth, used to keep preprod off the public web.
 // Set BASIC_AUTH=user:password (see shared/deploy.env); leaving it unset —
@@ -9,7 +9,7 @@ const expected = process.env.BASIC_AUTH
     : ''
 
 export default defineEventHandler((event) => {
-    if (!expected || event.path === '/health') return
+    if (!expected || getRequestURL(event).pathname === '/health') return
     if (getRequestHeader(event, 'authorization') === expected) return
 
     setResponseStatus(event, 401)
