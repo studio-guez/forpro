@@ -248,7 +248,7 @@
                 element="tbody"
             >
                 <tr v-for="(item, index) in origins" :key="item.id">
-                    <td data-sortable="true">
+                    <td class="k-table-index-column" data-sortable="true">
                       <k-sort-handle />
                     </td>
                     <td>{{ item.name }}</td>
