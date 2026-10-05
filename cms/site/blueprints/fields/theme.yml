@@ -29,3 +29,5 @@ options:
     text: { en: GrandLab, fr: GrandLab }
   - value: makerlab
     text: { en: MakerLab, fr: MakerLab }
+  - value: factorylab
+    text: { en: FactoryLab, fr: FactoryLab }

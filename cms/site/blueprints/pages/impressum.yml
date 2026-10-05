@@ -1,0 +1,130 @@
+title:
+  en: Legal notice
+  fr: Mentions légales
+
+extends: pages/core-page
+
+icon: text
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    fields:
+      title:
+        label:
+          en: Title
+          fr: Titre
+        type: text
+        required: true
+      partnersTitle:
+        label:
+          en: Partners section title
+          fr: Titre de la section partenaires
+        type: text
+      partners:
+        label:
+          en: Partners
+          fr: Partenaires
+        type: structure
+        columns:
+          image:
+            width: 1/4
+          title:
+            width: 1/4
+          linkLabel:
+            width: 1/4
+          link:
+            width: 1/4
+        fields:
+          image:
+            label:
+              en: Image
+              fr: Image
+            type: files
+            uploads: image
+            layout: list
+            max: 1
+            required: true
+          title:
+            label:
+              en: Title
+              fr: Titre
+            type: text
+            required: true
+          linkLabel:
+            label:
+              en: Link label
+              fr: Libellé du lien
+            type: text
+          link:
+            label:
+              en: Link
+              fr: Lien
+            type: url
+      sections:
+        label:
+          en: Credit sections
+          fr: Sections de crédits
+        type: structure
+        columns:
+          title:
+            width: 1/2
+          credits:
+            width: 1/2
+        fields:
+          title:
+            label:
+              en: Section title
+              fr: Titre de la section
+            type: text
+            required: true
+          credits:
+            label:
+              en: Credits
+              fr: Crédits
+            type: structure
+            columns:
+              role:
+                width: 1/4
+              names:
+                width: 1/4
+              linkLabel:
+                width: 1/4
+              link:
+                width: 1/4
+            fields:
+              role:
+                label:
+                  en: Role
+                  fr: Fonction
+                type: text
+                required: true
+              names:
+                label:
+                  en: Names
+                  fr: Noms
+                type: structure
+                fields:
+                  name:
+                    label:
+                      en: Name
+                      fr: Nom
+                    type: text
+                    required: true
+              linkLabel:
+                label:
+                  en: Link label
+                  fr: Libellé du lien
+                type: text
+              link:
+                label:
+                  en: Link
+                  fr: Lien
+                type: url
+      body:
+        extends: fields/bodyExtra
+
+  seo: tabs/seo

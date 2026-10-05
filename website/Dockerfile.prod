@@ -10,12 +10,7 @@ RUN pnpm install
 
 COPY . .
 
-# SvelteKit inlines PUBLIC_* env vars at build time, so these are deliberately
-# left without defaults: the values come from the PREPROD_*/PRODUCTION_*
-# repository variables in CI, and a missing one must fail rather than silently
-# bake another environment's URL into the bundle.
-# PUBLIC_ENVIRONMENT is 'preprod' or 'production'; 'preprod' disables indexing
-# (noindex + robots.txt disallow) and Matomo.
+# No defaults on purpose: a missing PREPROD_*/PRODUCTION_* CI variable must fail the build rather than bake another environment's URL.
 ARG PUBLIC_CMS_BASE_URL
 ARG PUBLIC_ENVIRONMENT
 ENV PUBLIC_CMS_BASE_URL=$PUBLIC_CMS_BASE_URL \

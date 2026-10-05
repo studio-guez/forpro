@@ -6,22 +6,17 @@ require_once 'utils/Utils.php';
 /** @global Kirby\Cms\Site $site */
 /** @global Kirby\Cms\Page $page */
 
-$json = [];
+$json = Utils::getEventProjectBaseData($page);
 
-$json['title'] = $page->title()->value();
-$json['slug'] = $page->slug();
+$json['template'] = 'event';
 
-$coverFile = $page->cover()->toFile();
-$json['cover'] = $coverFile ? Utils::getJsonEncodeImageData($coverFile) : null;
+$json += Utils::getEventDateFields($page);
 
-$json['description'] = $page->description()->value();
-$json['dateStart'] = $page->dateStart()->toDate('Y-m-d');
-$json['dateEnd'] = $page->dateEnd()->toDate('Y-m-d');
-$json['location'] = $page->location()->value();
-$json['registration'] = $page->registration()->value();
+// Optional venue; null means the event is held at the foundation's own address.
+$json['location'] = $page->location()->isNotEmpty() ? $page->location()->value() : null;
 
-$json['body'] = $page->body()->toBlocks()->toArray();
-
-$json['seo'] = Utils::getSeoDataFromPage($page);
+$json['programs'] = Utils::resolveTaxonomyTerms($page->programs(), 'programs');
+$json['resourcesTaxonomy'] = Utils::resolveTaxonomyTerms($page->resourcesTaxonomy(), 'resourcesTaxonomy');
+$json['publics']  = Utils::resolveTaxonomyTerms($page->publics(), 'publics');
 
 echo json_encode($json);

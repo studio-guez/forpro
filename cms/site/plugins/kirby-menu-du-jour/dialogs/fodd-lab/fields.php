@@ -3,20 +3,20 @@
 $daysOfWeek = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Suggestion végétarienne', 'Dimanche'];
 
 $fields = [
-    'date' => [
-      'label' => 'Date (le jours sélectionné représente la semaine entière)',
-      'type' => 'date',
-      'time'    => false,
-      'width' => '1/2',
-    ],
-    'prix' => [
-        'label' => 'Prix unique sur toute la semaine',
-        'type' => 'number',
-        'min' => 0,
-        'placeholder' => '0.00',
-        'step' => '0.5',
-        'width' => '1/2'
-    ],
+  'date' => [
+    'label' => 'Date (le jours sélectionné représente la semaine entière)',
+    'type' => 'date',
+    'time'    => false,
+    'width' => '1/2',
+  ],
+  'prix' => [
+    'label' => 'Prix unique sur toute la semaine',
+    'type' => 'number',
+    'min' => 0,
+    'placeholder' => '0.00',
+    'step' => '0.5',
+    'width' => '1/2'
+  ],
 ];
 
 
@@ -31,7 +31,7 @@ for ($jour = 1; $jour <= 6; $jour++) {
     'label' => 'Menu du jour',
     'type' => 'writer',
     'marks' => ['italic'],
-    'nodes' => false,
+    'nodes' => [],
     'inline' => true,
     'width' => '1/2'
   ];

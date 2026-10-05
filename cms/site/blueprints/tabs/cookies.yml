@@ -1,0 +1,27 @@
+label:
+  en: Cookies
+  fr: Cookies
+icon: check
+
+columns:
+  - width: 1/2
+    fields:
+      cookiesText:
+        label:
+          en: Banner text
+          fr: Texte de la bannière
+        help:
+          en: Shown in the cookie banner, above the buttons.
+          fr: Affiché dans la bannière cookies, au-dessus des boutons.
+        type: textarea
+        buttons: false
+        size: small
+        required: true
+      privacyPolicyPage:
+        extends: fields/pageSelect
+        label:
+          en: Privacy policy page
+          fr: Page politique de confidentialité
+        help:
+          en: Linked from the cookie banner. Leave empty to hide the link.
+          fr: Lien affiché dans la bannière cookies. Laisser vide pour masquer le lien.

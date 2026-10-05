@@ -112,11 +112,13 @@ export async function getFoodCourtData(): Promise<IMenuData__foodCourt> {
 }
 
 export function foodCourt_GetCurrentWeekMenu(menus: IMenuData__foodCourt): IMenuData__foodCourt__weekMenu | null {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
+  // Menus are dated on Monday but must switch over on Friday night, hence the 2-day offset.
+  const reference = new Date()
+  reference.setHours(0, 0, 0, 0)
+  reference.setDate(reference.getDate() + 2)
 
   const currentWeekMenu = menus
-    .filter(menu => new Date(menu.date) <= today)
+    .filter(menu => new Date(menu.date) <= reference)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     [0] || null
 

@@ -1,0 +1,4 @@
+extends: fields/body
+label:
+  en: Extra content
+  fr: Contenu supplémentaire

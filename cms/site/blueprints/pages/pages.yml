@@ -18,6 +18,19 @@ sections:
     image: false
     templates:
       - page
+      - basic-page
       - faq
+      - events
+      - projects
+      - team
+      - job-offers
+      - missions
+      - impressum
+      - press
+      - infos-pratiques
+      - factory-lab
     text: "{{ page.breadcrumbTitle }}"
-    create: page
+    create: 
+      - page
+      - basic-page
+

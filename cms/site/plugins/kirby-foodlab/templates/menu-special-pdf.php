@@ -351,7 +351,6 @@
     </svg>
 </div>
 <?php
-// Helper function to render wines section
 function renderWinesSection($page, $menu) { ?>
     <div class="half-page menu">
         <?php if($page['showWines']): ?>
@@ -376,7 +375,6 @@ function renderWinesSection($page, $menu) { ?>
     </div>
 <?php }
 
-// Helper function to render dishes section
 function renderDishesSection($page, $dishes, $title, $menu) { ?>
     <div class="half-page menu">
         <?php if(!empty($dishes)): ?>

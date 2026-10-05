@@ -246,6 +246,9 @@ runs:
         # backups, which the runner may create as root — end up group-owned by
         # www-data and group-writable, i.e. editable by the deploy user on the
         # host (a member of that group) without sudo.
+        # setgid on the directories so files later created there from the host
+        # (rsync, git, an editor) are group-owned by www-data too — the Panel
+        # cannot write a content file that belongs to another group.
         # The Kirby cache is cleared in the same root shell when a new cms image
         # ships (new templates, blueprints or plugins invalidate it) — done
         # inside the container because the host user cannot delete files owned
@@ -259,7 +262,7 @@ runs:
           --user root \
           --entrypoint sh \
           "$IMAGE_BASE/cms:$CMS_IMAGE_TAG" \
-          -c "${CLEAR_CACHE}chown -R www-data:www-data /shared && chmod -R g+w /shared"
+          -c "${CLEAR_CACHE}chown -R www-data:www-data /shared && chmod -R g+w /shared && find /shared -type d -exec chmod g+s {} +"
 
         # ── Flip the `current` symlink atomically ────────────────────────────
         ln -sfn "$RELEASE_DIR" "$DEPLOY_PATH/current.tmp"

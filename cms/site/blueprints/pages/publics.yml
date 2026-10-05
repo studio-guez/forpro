@@ -1,0 +1,9 @@
+title: Publics
+
+extends: pages/taxonomy
+
+sections:
+  terms:
+    label: Publics
+    templates:
+      - public

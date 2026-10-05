@@ -1,0 +1,33 @@
+extends: blocks/base
+
+name:
+  en: Module - Resources
+  fr: Module - Ressources
+
+icon: box
+
+fields:
+  title:
+    width: 1/2
+    label:
+      en: Title
+      fr: Titre
+    type: text
+    required: true
+  hideTitle:
+    extends: fields/hideTitle
+  shortDesc:
+    width: 1/2
+    label:
+      en: Short description
+      fr: Description courte
+    extends: fields/writer
+  programs:
+    extends: fields/taxonomies/programs
+    width: 1/2
+    help:
+      en: Filters the resources shown in the block.
+      fr: Filtre les ressources affichées dans le module.
+  variant:
+    extends: fields/variant
+    width: 1/2

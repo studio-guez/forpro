@@ -1,20 +1,8 @@
 title: FAQ
 
+extends: pages/core-page
+
 icon: question
-
-num: zero
-
-options:
-  changeTemplate: false
-  changeStatus: false
-  changeTitle: false
-  create: false
-  delete: false
-  duplicate: false
-  move: false
-
-status:   
-  listed: true
 
 tabs:
   content:
@@ -54,7 +42,7 @@ tabs:
             columns:
               question:
                 width: 1/2
-              faqCategories:
+              resourcesTaxonomy:
                 width: 1/2
             fields:
               question:
@@ -69,7 +57,28 @@ tabs:
                   en: Answer
                   fr: Réponse
                 required: true
-              faqCategories:
-                extends: fields/taxonomies/faq-categories
+              publics:
+                extends: fields/taxonomies/publics
+              programs:
+                extends: fields/taxonomies/programs
+              resourcesTaxonomy:
+                extends: fields/taxonomies/resourcesTaxonomy
+      messagesLabel:
+        label:
+          en: Empty-state messages
+          fr: Messages d'absence de résultats
+        type: headline
+      noResultsText:
+        label:
+          en: No search result
+          fr: Aucun résultat de recherche
+        extends: fields/writer
+        required: true
+        default: "<p>Aucune question ne correspond à votre recherche.</p>"
+      body:
+        extends: fields/bodyExtra
+        # The infos pratiques module would just duplicate the listing above.
+        fieldsets:
+          module-infos-pratiques: false
 
   seo: tabs/seo

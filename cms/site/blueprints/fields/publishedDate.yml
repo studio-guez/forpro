@@ -1,0 +1,9 @@
+label:
+  en: Publication date
+  fr: Date de publication
+type: date
+default: today
+required: true
+help:
+  en: Shown as "Published on ..." on the page and in the listings.
+  fr: Affichée « Publiée le ... » sur la page et dans les listes.

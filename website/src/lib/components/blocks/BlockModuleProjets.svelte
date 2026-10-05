@@ -1,0 +1,57 @@
+<script lang="ts">
+	import type { ModuleProjetsContent } from '$lib/interfaces/page';
+	import Card from '$lib/components/ui/Card.svelte';
+	import Carousel from '$lib/components/ui/Carousel.svelte';
+	import CtaLink from '$lib/components/ui/CtaLink.svelte';
+	import ProjectCard from '$lib/components/ui/ProjectCard.svelte';
+	import { CARD, cell, toSizes } from '$lib/utils/imgSizes';
+	import ShapeProjets1 from '$lib/components/svg/ShapeProjets1.svelte';
+	import ShapeProjets2 from '$lib/components/svg/ShapeProjets2.svelte';
+
+	interface Props {
+		content: ModuleProjetsContent;
+	}
+
+	let { content }: Props = $props();
+
+	const colors = { main: 'var(--color-orange)', deco: 'var(--color-orange-light)' };
+
+	const filled = $derived(content.variant !== 'inverted');
+
+	const cardSizes = toSizes(cell(CARD, { 0: 1.25, 768: 2 }, 1.5));
+</script>
+
+{#if content.projects.length > 0}
+	<Card
+		title={content.title}
+		shortDesc={content.shortDesc}
+		titleBackground={filled ? 'var(--color-white)' : colors.main}
+		titleColor={filled ? colors.main : 'var(--color-white)'}
+		background={filled ? colors.main : null}
+		color={filled ? 'var(--color-white)' : colors.main}
+		shapeLeft={filled ? ShapeProjets1 : null}
+		shapeLeftClasses="absolute top-0 left-0 -translate-x-1/10 -translate-y-1/10 w-1/2"
+		shapeRight={filled ? ShapeProjets2 : null}
+		shapeRightClasses="absolute max-lg:bottom-0 lg:top-0 right-0 translate-x-1/6 translate-y-1/10 lg:-translate-y-1/10 w-2/5 max-lg:rotate-180 max-lg:-scale-x-100"
+		shapeColor={colors.deco}
+	>
+		<Carousel
+			items={content.projects}
+			label={content.title}
+			color={colors.main}
+			inverted={filled}
+			itemClass="w-4/5 md:w-[calc((100%-1.5rem)/2)]"
+			class="mt-12"
+		>
+			{#snippet item(project)}
+				<ProjectCard {project} variant={content.variant} sizes={cardSizes} />
+			{/snippet}
+		</Carousel>
+
+		{#if content.cta}
+			<div class="flex justify-center md:justify-end mt-8">
+				<CtaLink cta={content.cta} color={colors.main} inverted={filled} />
+			</div>
+		{/if}
+	</Card>
+{/if}

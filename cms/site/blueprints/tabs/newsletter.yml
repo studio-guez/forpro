@@ -1,0 +1,183 @@
+label:
+  en: Newsletter
+  fr: Newsletter
+icon: email
+
+columns:
+  - width: 1/2
+    sections:
+      newsletterDisplaySection:
+        type: fields
+        fields:
+          newsletterDisplayHeadline:
+            label:
+              en: Footer form
+              fr: Formulaire du pied de page
+            type: headline
+            help:
+              en: Texts shown around the subscription field in the footer.
+              fr: Textes affichés autour du champ d'inscription du pied de page.
+          footerNewsletterTitle:
+            label:
+              en: "Newsletter — Title"
+              fr: "Newsletter — Titre"
+            type: text
+            help:
+              en: Shown above the newsletter subscription field in the footer.
+              fr: Affiché au-dessus du champ d'inscription à la newsletter du pied de page.
+            required: true
+          newsletterPlaceholder:
+            label:
+              en: Field placeholder
+              fr: Texte indicatif du champ
+            type: text
+            width: 1/2
+            required: true
+          newsletterSubmitLabel:
+            label:
+              en: Submit button label
+              fr: Libellé du bouton d'envoi
+            type: text
+            width: 1/2
+            help:
+              en: Read by screen readers — the button itself only shows an icon.
+              fr: Lu par les lecteurs d'écran — le bouton n'affiche qu'une icône.
+            required: true
+
+      newsletterMessagesSection:
+        type: fields
+        fields:
+          newsletterMessagesHeadline:
+            label:
+              en: Messages
+              fr: Messages
+            type: headline
+            help:
+              en: Feedback shown in place of the form's helper line after a submission.
+              fr: Retours affichés sous le formulaire après un envoi.
+          newsletterSuccessMessage:
+            label:
+              en: Success
+              fr: Succès
+            type: text
+            required: true
+          newsletterErrorMessage:
+            label:
+              en: Error
+              fr: Erreur
+            type: text
+            help:
+              en: Shown when the subscription could not be recorded.
+              fr: Affiché lorsque l'inscription n'a pas pu être enregistrée.
+            required: true
+          newsletterInvalidEmailMessage:
+            label:
+              en: Invalid email
+              fr: E-mail invalide
+            type: text
+            required: true
+
+  - width: 1/2
+    sections:
+      newsletterProviderSection:
+        type: fields
+        fields:
+          newsletterProviderHeadline:
+            label:
+              en: Provider (Infomaniak)
+              fr: Fournisseur (Infomaniak)
+            type: headline
+            help:
+              en: >
+                Copy these values from the embed code Infomaniak generates for the web form.
+                They are never called from the browser: the site submits server-side, which is
+                what makes the success and error messages possible. Infomaniak has changed the
+                shape of this form before — if subscriptions stop working, re-copy the embed
+                code and check every value here against it.
+              fr: >
+                Reprenez ces valeurs depuis le code d'intégration généré par Infomaniak pour le
+                formulaire web. Elles ne sont jamais appelées depuis le navigateur : le site
+                envoie l'inscription côté serveur, ce qui permet d'afficher les messages de
+                succès et d'erreur. Infomaniak a déjà modifié la structure de ce formulaire —
+                si les inscriptions ne passent plus, recopiez le code d'intégration et vérifiez
+                chaque valeur ci-dessous.
+          newsletterActionUrl:
+            label:
+              en: Submit URL
+              fr: URL d'envoi
+            type: url
+            icon: url
+            help:
+              en: The <code>action</code> of the provider's form. Must be https.
+              fr: L'<code>action</code> du formulaire du fournisseur. Doit être en https.
+            placeholder: https://newsletter.infomaniak.com/v3/api/1/newsletters/webforms/00000/submit
+            required: true
+          newsletterKey:
+            label:
+              en: Key
+              fr: Clé
+            type: text
+            font: monospace
+            help:
+              en: Value of the hidden <code>key</code> input.
+              fr: Valeur du champ caché <code>key</code>.
+            required: true
+          newsletterWebformId:
+            label:
+              en: Web form ID
+              fr: Identifiant du formulaire
+            type: text
+            font: monospace
+            width: 1/2
+            help:
+              en: Value of the hidden <code>webform_id</code> input.
+              fr: Valeur du champ caché <code>webform_id</code>.
+            required: true
+          newsletterEmailFieldName:
+            label:
+              en: Email field name
+              fr: Nom du champ e-mail
+            type: text
+            font: monospace
+            width: 1/2
+            help:
+              en: >
+                The <code>name</code> of the visible email input in the embed code,
+                e.g. <code>inf[1]</code>. It changes from one web form to another.
+              fr: >
+                Le <code>name</code> du champ e-mail visible dans le code d'intégration,
+                p. ex. <code>inf[1]</code>. Il change d'un formulaire à l'autre.
+            required: true
+          newsletterChallengeUrl:
+            label:
+              en: Captcha challenge URL
+              fr: URL du défi captcha
+            type: url
+            icon: url
+            help:
+              en: >
+                The <code>challengeurl</code> of the <code>&lt;altcha-widget&gt;</code> in the
+                embed code. The provider rejects any submission without a solved challenge.
+              fr: >
+                Le <code>challengeurl</code> de l'<code>&lt;altcha-widget&gt;</code> du code
+                d'intégration. Le fournisseur refuse toute inscription sans défi résolu.
+            placeholder: https://newsletter.infomaniak.com/v3/altcha-challenge
+            required: true
+          newsletterHoneypotFields:
+            label:
+              en: Honeypot fields
+              fr: Champs pièges
+            type: text
+            font: monospace
+            help:
+              en: >
+                Comma-separated <code>name</code>s of the hidden decoy inputs in the embed code
+                (the ones with <code>aria-hidden</code>), e.g.
+                <code>inf_email_check, website</code>. They are submitted empty — a bot filling
+                them in is how the provider spots it.
+              fr: >
+                Les <code>name</code> des champs pièges cachés du code d'intégration (ceux
+                marqués <code>aria-hidden</code>), séparés par des virgules, p. ex.
+                <code>inf_email_check, website</code>. Ils sont envoyés vides — un robot qui les
+                remplit se trahit.
+            required: true

@@ -94,11 +94,24 @@ for f in beer bubblewine cocktail dessert hotdrink maincourse menu menu-special 
 done
 ```
 
+The restaurant page content is stored separately by the plugin, in
+`data/restaurant.json` (with an in-progress draft, if any, in
+`data/restaurant.changes.json`), with its media library in
+`data/restaurant-media/`. Both are created on demand by the plugin the first
+time the restaurant panel view is used, so there is nothing to seed here.
+
 ### 5. Fix permissions
 
 ```bash
 docker compose -f compose.dev.yml exec cms sh -c 'chown -R www-data:www-data /var/www/html/site/sessions /var/www/html/site/accounts /var/www/html/content /var/www/html/media /var/www/html/site/plugins/*/data /var/www/html/site/cache'
 ```
+
+> `docker compose exec` runs as **root** by default, but Apache/PHP runs as `www-data`. Any
+> command that boots Kirby (`php ...`, `composer ...`) writes into `site/cache/` and leaves
+> root-owned files there, after which the Panel returns a 500 on save
+> (`The file "{site}/cache/.../changes/pages.cache" is not writable`). Always run those with
+> `exec --user www-data cms ...`; if it already happened, re-run the chown above or restart
+> the service — `cms/entrypoint.sh` chowns the runtime directories on every start.
 
 ### Access the services
 
@@ -123,10 +136,10 @@ For images that are already in `content/`, run the one-off cleanup script `cms/s
 
 ```bash
 # List what would change, without writing anything:
-docker compose -f compose.dev.yml exec cms php site/plugins/image-guard/fix-large-images.php --dry-run
+docker compose -f compose.dev.yml exec --user www-data cms php site/plugins/image-guard/fix-large-images.php --dry-run
 
 # Actually fix the files in place:
-docker compose -f compose.dev.yml exec cms php site/plugins/image-guard/fix-large-images.php
+docker compose -f compose.dev.yml exec --user www-data cms php site/plugins/image-guard/fix-large-images.php
 ```
 
 Afterwards, clear the media cache so Kirby regenerates thumbnails from the fixed originals:
@@ -137,13 +150,34 @@ docker compose -f compose.dev.yml exec cms sh -c 'rm -rf media/pages media/site'
 
 Both the plugin and the script share the same logic in `cms/site/plugins/image-guard/ImageGuard.php`, so the plugin is fully self-contained.
 
+## Maintenance: pre-generate thumbnails
+
+Kirby writes a rendition (`resize()`, `crop()`, `srcset()`) the first time it is requested, so right after clearing `media/` — or after a content rsync onto a fresh environment — the first visitor pays for generating every WebP of the `[480 … 3840]` srcset ladder. There is no built-in command for this; `cms/utils/warm-thumbs.php` walks every page (drafts included) plus the site files and calls the same renditions the JSON templates emit (`Utils::getJsonEncodeImageData()`, `getFaviconData()`, the search covers).
+
+```bash
+# List the files that would be processed:
+docker compose -f compose.dev.yml exec --user www-data cms php utils/warm-thumbs.php --dry-run
+
+# Generate the missing thumbs (existing ones are skipped by Kirby):
+docker compose -f compose.dev.yml exec --user www-data cms php utils/warm-thumbs.php
+
+# Wipe media/pages + media/site first, then regenerate everything:
+docker compose -f compose.dev.yml exec --user www-data cms php utils/warm-thumbs.php --force
+```
+
+Run it as `www-data`, otherwise the generated files end up owned by root and Apache can't overwrite them later. Each file is printed **before** it is processed: an oversized or CMYK original can exhaust PHP's memory limit, which kills the process without a catchable error, so the last line printed names the culprit — fix it with `fix-large-images.php` above, then re-run.
+
+Whenever a rendition is added or changed in `cms/utils/traits/`, mirror it in the script — a size warmed here but never requested is wasted disk, and a size requested but not warmed is generated on the visitor's request.
+
 ## Sync content from PROD (local)
 
 On the servers, all mutable CMS state lives under `$DEPLOY_PATH/shared/cms/`
-(see [Layout on each target server](#layout-on-each-target-server)):
+(see [Layout on each target server](#layout-on-each-target-server)).
+`cms/content/` is its own git repo, hence `--exclude '.git'`: without it
+`--delete` would wipe the history on the receiving side.
 
 ```bash
-rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/shared/cms/content/ ./cms/content
+rsync -avz --delete --exclude '.git' -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/shared/cms/content/ ./cms/content
 rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/shared/cms/site/plugins/kirby-foodlab/data/ ./cms/site/plugins/kirby-foodlab/data
 rsync -avz --delete -e "ssh -i ~/.ssh/<key>" <user>@<server>:<deploy_path>/shared/cms/site/plugins/kirby-menu-du-jour/data/ ./cms/site/plugins/kirby-menu-du-jour/data
 ```
@@ -507,7 +541,8 @@ exit
 #    (your local clone or the old prod server), not on the target server:
 # --no-perms --omit-dir-times: shared/ is owned by www-data and only the owner
 # may set a directory's mtime or mode, so plain -a exits 23 on every directory.
-rsync -avz --delete --no-perms --omit-dir-times ./cms/content/ deploy@<server>:$DEPLOY_PATH/shared/cms/content
+# --exclude '.git': cms/content/ is its own git repo, don't ship its history.
+rsync -avz --delete --exclude '.git' --no-perms --omit-dir-times ./cms/content/ deploy@<server>:$DEPLOY_PATH/shared/cms/content
 rsync -avz --delete --no-perms --omit-dir-times ./cms/site/accounts/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/accounts
 rsync -avz --delete --no-perms --omit-dir-times ./cms/site/plugins/kirby-foodlab/data/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/plugins/kirby-foodlab/data
 rsync -avz --delete --no-perms --omit-dir-times ./cms/site/plugins/kirby-menu-du-jour/data/ deploy@<server>:$DEPLOY_PATH/shared/cms/site/plugins/kirby-menu-du-jour/data
@@ -654,3 +689,4 @@ deploy. Each step is a no-op when the target already exists:
 | `$SHARED_PATH/deploy.env`                             | `deploy.env.example` — set `BIND_ADDRESS` if the reverse proxy is on another host, edit the ports if the defaults collide (or set the `*_HTTP_PORT` environment variables) |
 | `$SHARED_PATH/cms/…` state directories                | created empty                                                 |
 | `$SHARED_PATH/cms/site/plugins/kirby-foodlab/data/*.json` | seeded as `[]` (overwritten by your rsync of real data)  |
+| `$SHARED_PATH/cms/site/plugins/kirby-foodlab/data/restaurant-media/` | created on demand by the plugin, nothing to seed |

@@ -1,0 +1,5 @@
+title:
+  en: Resource
+  fr: Ressource
+
+extends: pages/taxonomy-term

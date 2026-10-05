@@ -1,4 +1,3 @@
-# pnpm 11 configuration for this single-package project.
 verifyDepsBeforeRun: false
 allowBuilds:
   esbuild: false

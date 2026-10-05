@@ -1,0 +1,7 @@
+extends: fields/taxonomies/taxonomy
+label:
+  en: Publics
+  fr: Publics
+options:
+  # `index`, not `children`: sub-publics must be selectable alongside their parent.
+  query: site.find("taxonomies").find("publics").index.listed

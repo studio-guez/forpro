@@ -1,0 +1,57 @@
+label:
+  en: Banner announcements
+  fr: Annonces bannière
+icon: megaphone
+
+columns:
+  - width: 1/1
+    fields:
+      bannerAnnouncements:
+        label:
+          en: Announcements
+          fr: Annonces
+        type: structure
+        help:
+          en: Shown in the green banner fixed at the bottom of every page. Leave empty to hide the banner.
+          fr: Affichées dans la bannière verte fixée en bas de chaque page. Laisser vide pour masquer la bannière.
+        columns:
+          title:
+            width: 1/4
+          description:
+            width: 1/4
+          page:
+            width: 1/4
+          url:
+            width: 1/4
+        fields:
+          title:
+            label:
+              en: Title
+              fr: Titre
+            type: text
+            required: true
+          description:
+            label:
+              en: Short description
+              fr: Description courte
+            type: textarea
+            buttons: false
+            size: small
+            required: true
+          type:
+            label: { en: Type of link, fr: Type de lien }
+            type: select
+            default: page
+            required: true
+            options:
+              - value: page
+                text: { en: Page, fr: Page }
+              - value: url
+                text: { en: External URL, fr: URL externe }
+          page:
+            extends: fields/pageLink
+          url:
+            label: { en: URL, fr: URL }
+            type: url
+            when:
+              type: url

@@ -1,0 +1,14 @@
+label:
+  en: Open to applications
+  fr: Ouvert aux candidatures
+type: toggle
+text:
+  - en: Closed
+    fr: Fermé
+  - en: Open
+    fr: Ouvert
+default: true
+require: true
+help:
+  en: Once closed, the page stays online but leaves the index and the sitemap, and the application details are replaced by a notice.
+  fr: Une fois fermée, la page reste en ligne mais disparaît de l'index et du sitemap, et les informations de candidature sont remplacées par un message.

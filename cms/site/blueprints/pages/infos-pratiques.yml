@@ -1,0 +1,119 @@
+title:
+  en: Practical information
+  fr: Infos pratiques
+
+extends: pages/core-page
+
+icon: pin
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    columns:
+      main:
+        width: 1/1
+        sections:
+          content:
+            type: fields
+            fields:
+              title:
+                label:
+                  en: Title
+                  fr: Titre
+                type: text
+                required: true
+
+              openingHoursLabel:
+                label:
+                  en: Opening hours
+                  fr: Horaires d'ouverture
+                type: headline
+              openingHoursTitle:
+                label:
+                  en: Section title
+                  fr: Titre de la section
+                type: text
+              openingHoursContent:
+                extends: fields/writer
+                label:
+                  en: Opening hours
+                  fr: Horaires
+
+              foodlabLabel:
+                label:
+                  en: FoodLab card
+                  fr: Carte FoodLab
+                type: headline
+              foodlabOpeningHoursTitle:
+                label:
+                  en: Card title
+                  fr: Titre de la carte
+                type: text
+                width: 1/2
+              foodlabImage:
+                extends: fields/cover
+                label:
+                  en: Card image
+                  fr: Image de la carte
+                required: false
+                width: 1/2
+              foodlabCta:
+                extends: fields/cta
+
+              accessLabel:
+                label:
+                  en: Access
+                  fr: Accès
+                type: headline
+              accessTitle:
+                label:
+                  en: Section title
+                  fr: Titre de la section
+                type: text
+              accessContent:
+                extends: fields/writer
+                label:
+                  en: Access details
+                  fr: Informations d'accès
+                help:
+                  en: 'To link a PDF: upload it in "Documents" at the bottom of this tab, then select some text, click the link icon and pick "File".'
+                  fr: "Pour lier un PDF : le téléverser dans « Documents » en bas de cet onglet, puis sélectionner un texte, cliquer sur l’icône de lien et choisir « Fichier »."
+              mapImage:
+                extends: fields/cover
+                label:
+                  en: Map image
+                  fr: Image du plan
+                required: true
+                width: 1/2
+                help:
+                  en: A picture of the access map (a Google Maps screenshot, for instance). It opens the Google Maps link when one is set.
+                  fr: Une image du plan d’accès (une capture de Google Maps, par exemple). Elle ouvre le lien Google Maps lorsqu’il est renseigné.
+              mapUrl:
+                label:
+                  en: Google Maps link
+                  fr: Lien Google Maps
+                type: url
+                width: 1/2
+                help:
+                  en: 'On Google Maps, open the place, click "Share" → "Copy link" and paste it here.'
+                  fr: "Sur Google Maps, ouvrir le lieu, cliquer sur « Partager » → « Copier le lien » et le coller ici."
+
+          documents:
+            type: files
+            headline:
+              en: Documents
+              fr: Documents
+            help:
+              en: PDF files that can be linked from the texts above.
+              fr: Fichiers PDF pouvant être liés depuis les textes ci-dessus.
+            template: document
+            layout: list
+            info: "{{ file.niceSize }}"
+            empty:
+              en: No document yet
+              fr: Aucun document pour le moment
+
+  seo: tabs/seo

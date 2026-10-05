@@ -14,18 +14,8 @@ fields:
       fr: Titre
     type: text
     required: true
-  hide_title:
-    width: 1/2
-    label:
-      en: Hide title (use as aria-label only)
-      fr: Masquer le titre (utilisé comme aria-label uniquement)
-    type: toggle
-    text: 
-      - en: Visible
-        fr: Visible
-      - en: Hidden
-        fr: Masqué
-    default: false
+  hideTitle:
+    extends: fields/hideTitle
   intro:
     label:
       en: Intro
@@ -39,24 +29,10 @@ fields:
     min: 1
     fields:
       title:
-        width: 1/2
         label:
           en: Title
           fr: Titre
         type: text
-        required: true
-      hide_title:
-        width: 1/2
-        label:
-          en: Hide title (use as aria-label only)
-          fr: Masquer le titre (utilisé comme aria-label uniquement)
-        type: toggle
-        text: 
-          - en: Visible
-            fr: Visible
-          - en: Hidden
-            fr: Masqué
-        default: false
       description:
         label:
           en: Description
@@ -73,7 +49,10 @@ fields:
         min: 1
         required: true
         uploads: media
+  cta:
+    extends: fields/cta
   layout:
+    width: 1/2
     label:
       en: Layout
       fr: Disposition
@@ -87,5 +66,7 @@ fields:
         text: { en: Images right, fr: Images à droite }
       - value: images-left
         text: { en: Images left, fr: Images à gauche }
+  imageFit:
+    extends: fields/imageFit
   variant:
     extends: fields/variant

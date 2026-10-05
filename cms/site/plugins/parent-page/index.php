@@ -21,7 +21,6 @@ Kirby::plugin('forpro/parent-page', [
                         if ($current->is($self)) {
                             return false;
                         }
-                        // guard against pre-existing cycles in content
                         if (in_array($current->id(), $visited, true)) {
                             return false;
                         }
@@ -52,13 +51,20 @@ Kirby::plugin('forpro/parent-page', [
         },
 
         /**
-         * Virtual URL path built from the parentPage chain: "grandparent/parent/slug".
+         * Virtual URL path: real Kirby ancestors first (built-in parent/child,
+         * used by the events/projects children), then the parentPage chain,
+         * e.g. "events/my-event" or "grandparent/parent/slug".
+         * Top-level containers (pages, events, ... at the content root) are
+         * structural only and never appear in the URL.
          */
         'virtualPath' => function (): string {
-            return implode('/', array_map(
-                fn($p) => $p->slug(),
-                $this->parentChain()
-            ));
+            $ancestors = $this->parents()->flip()
+                ->filter(fn($p) => $p->parent() !== null)
+                ->values(fn($p) => implode('/', array_map(fn($a) => $a->slug(), $p->parentChain())));
+
+            $chain = array_map(fn($p) => $p->slug(), $this->parentChain());
+
+            return implode('/', array_merge($ancestors, $chain));
         },
 
         /**
@@ -71,8 +77,7 @@ Kirby::plugin('forpro/parent-page', [
             ));
         },
 
-        // Lowercase alias for blueprint `sortBy`, which lowercases field names
-        // before resolving them (camelCase methods wouldn't be found).
+        // Blueprint `sortBy` lowercases field names, so it needs this alias.
         'breadcrumbtitle' => function (): string {
             return $this->breadcrumbTitle();
         },

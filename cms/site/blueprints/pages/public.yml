@@ -1,0 +1,17 @@
+title:
+  en: Public
+  fr: Public
+
+extends: pages/taxonomy-term
+
+sections:
+  children:
+    type: pages
+    label:
+      en: Sub-publics
+      fr: Sous-publics
+    image: false
+    sortable: true
+    templates:
+      - subpublic
+    create: subpublic

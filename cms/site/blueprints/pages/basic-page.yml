@@ -1,0 +1,32 @@
+title:
+  en: Basic page
+  fr: Page simple
+
+icon: text
+
+status:
+  draft: true
+  listed: true
+
+num: zero
+
+options:
+  preview: "{{ page.frontendUrl }}"
+
+tabs:
+  content:
+    label:
+      en: Content
+      fr: Contenu
+    icon: text
+    fields:
+      title:
+        label:
+          en: Title
+          fr: Titre
+        type: text
+        required: true
+      blocks:
+        extends: fields/contentBlocks
+
+  seo: tabs/seo

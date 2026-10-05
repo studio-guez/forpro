@@ -121,7 +121,6 @@
         </div>
       </k-grid>
 
-      <!-- Vins section with toggle (hidden for dishes-dishes layout) -->
       <k-grid v-if="(page.layout || 'wines-dishes') !== 'dishes-dishes'" style="margin-top: 40px">
         <div class="k-column" style="--width: 1/2; justify-self: start">
           <k-input
@@ -152,62 +151,63 @@
           </k-button-group>
         </div>
       </k-grid>
-      <table v-if="(page.layout || 'wines-dishes') !== 'dishes-dishes'" class="k-table" style="margin-top: 20px; margin-bottom: 25px" :class="{ 'disabled-section': page.showWines === false }">
-        <thead>
-        <tr>
-          <th class="k-table-index-column"></th>
-          <th>Nom</th>
-          <th>Domaine</th>
-          <th>Millésime</th>
-          <th>Description</th>
-          <th class="k-table-options-column"></th>
-        </tr>
-        </thead>
-        <k-draggable
-            :list="page.wines"
-            :handle="true"
-            @change="updateOrder('wines', page.id)"
-            :options="{
-            fallbackClass: 'k-table-row-fallback',
-            ghostClass: 'k-table-row-ghost',
-            disabled: page.showWines === false
-        }"
-            element="tbody"
-        >
-          <tr v-for="(item, index) in page.wines" :key="item.id">
-            <td class="k-table-index-column" data-sortable="true">
-              <span class="k-table-index">{{ index + 1 }}</span>
-              <k-sort-handle />
-            </td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.domain }}</td>
-            <td>{{ item.mill }}</td>
-            <td>{{ item.description }}</td>
-            <td class="k-table-options-column">
-              <k-options-dropdown
-                  :options="[
-                {
-                    text: 'Modifier',
-                    icon: 'edit',
-                    click: () =>
-                        $dialog(`menu/special/wine/${item.id}/edit/${page.id}`),
-                    disabled: page.showWines === false
-                },
-                {
-                    text: 'Supprimer',
-                    icon: 'trash',
-                    click: () =>
-                        $dialog(`menu/special/wine/${item.id}/delete/${page.id}`),
-                    disabled: page.showWines === false
-                },
-            ]"
-              />
-            </td>
+      <div v-if="(page.layout || 'wines-dishes') !== 'dishes-dishes'" class="k-table" style="margin-top: 20px; margin-bottom: 25px" :class="{ 'disabled-section': page.showWines === false }">
+        <table>
+          <thead>
+          <tr>
+            <th class="k-table-index-column"></th>
+            <th>Nom</th>
+            <th>Domaine</th>
+            <th>Millésime</th>
+            <th>Description</th>
+            <th class="k-table-options-column"></th>
           </tr>
-        </k-draggable>
-      </table>
+          </thead>
+          <k-draggable
+              :list="page.wines"
+              :handle="true"
+              @change="updateOrder('wines', page.id)"
+              :options="{
+              fallbackClass: 'k-table-row-fallback',
+              ghostClass: 'k-table-row-ghost',
+              disabled: page.showWines === false
+          }"
+              element="tbody"
+          >
+            <tr v-for="(item, index) in page.wines" :key="item.id">
+              <td class="k-table-index-column" data-sortable="true">
+                <span class="k-table-index">{{ index + 1 }}</span>
+                <k-sort-handle />
+              </td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.domain }}</td>
+              <td>{{ item.mill }}</td>
+              <td>{{ item.description }}</td>
+              <td class="k-table-options-column">
+                <k-options-dropdown
+                    :options="[
+                  {
+                      text: 'Modifier',
+                      icon: 'edit',
+                      click: () =>
+                          $dialog(`menu/special/wine/${item.id}/edit/${page.id}`),
+                      disabled: page.showWines === false
+                  },
+                  {
+                      text: 'Supprimer',
+                      icon: 'trash',
+                      click: () =>
+                          $dialog(`menu/special/wine/${item.id}/delete/${page.id}`),
+                      disabled: page.showWines === false
+                  },
+              ]"
+                />
+              </td>
+            </tr>
+          </k-draggable>
+        </table>
+      </div>
 
-      <!-- Menu section with toggle -->
       <k-grid style="margin-top: 40px">
         <div class="k-column" style="--width: 1/2; justify-self: start">
           <k-input
@@ -238,64 +238,65 @@
           </k-button-group>
         </div>
       </k-grid>
-      <table class="k-table" style="margin-top: 20px; margin-bottom: 25px" :class="{ 'disabled-section': page.showDishes === false }">
-        <thead>
-        <tr>
-          <th class="k-table-index-column"></th>
-          <th>Plat</th>
-          <th>Description</th>
-          <th style="text-align: center;">Choix</th>
-          <th>Plat</th>
-          <th>Description</th>
-          <th class="k-table-options-column"></th>
-        </tr>
-        </thead>
-        <k-draggable
-            :list="page.menu"
-            :handle="true"
-            @change="updateOrder('menu', page.id)"
-            :options="{
-            fallbackClass: 'k-table-row-fallback',
-            ghostClass: 'k-table-row-ghost',
-            disabled: page.showDishes === false
-        }"
-            element="tbody"
-        >
-          <tr v-for="(item, index) in page.dishes" :key="item.id">
-            <td class="k-table-index-column" data-sortable="true">
-              <span class="k-table-index">{{ index + 1 }}</span>
-              <k-sort-handle />
-            </td>
-            <td>{{ item.name1 }}</td>
-            <td>{{ item.description1 }}</td>
-            <td style="text-align: center;">{{ item.option == true ? 'oui' : 'non' }}</td>
-            <td>{{ item.name2 }}</td>
-            <td>{{ item.description2 }}</td>
-            <td class="k-table-options-column">
-              <k-options-dropdown
-                  :options="[
-                {
-                    text: 'Modifier',
-                    icon: 'edit',
-                    click: () =>
-                        $dialog(`menu/special/dish/${item.id}/edit/${page.id}`),
-                    disabled: page.showDishes === false
-                },
-                {
-                    text: 'Supprimer',
-                    icon: 'trash',
-                    click: () =>
-                        $dialog(`menu/special/dish/${item.id}/delete/${page.id}`),
-                    disabled: page.showDishes === false
-                },
-            ]"
-              />
-            </td>
+      <div class="k-table" style="margin-top: 20px; margin-bottom: 25px" :class="{ 'disabled-section': page.showDishes === false }">
+        <table>
+          <thead>
+          <tr>
+            <th class="k-table-index-column"></th>
+            <th>Plat</th>
+            <th>Description</th>
+            <th style="text-align: center;">Choix</th>
+            <th>Plat</th>
+            <th>Description</th>
+            <th class="k-table-options-column"></th>
           </tr>
-        </k-draggable>
-      </table>
+          </thead>
+          <k-draggable
+              :list="page.menu"
+              :handle="true"
+              @change="updateOrder('menu', page.id)"
+              :options="{
+              fallbackClass: 'k-table-row-fallback',
+              ghostClass: 'k-table-row-ghost',
+              disabled: page.showDishes === false
+          }"
+              element="tbody"
+          >
+            <tr v-for="(item, index) in page.dishes" :key="item.id">
+              <td class="k-table-index-column" data-sortable="true">
+                <span class="k-table-index">{{ index + 1 }}</span>
+                <k-sort-handle />
+              </td>
+              <td>{{ item.name1 }}</td>
+              <td>{{ item.description1 }}</td>
+              <td style="text-align: center;">{{ item.option == true ? 'oui' : 'non' }}</td>
+              <td>{{ item.name2 }}</td>
+              <td>{{ item.description2 }}</td>
+              <td class="k-table-options-column">
+                <k-options-dropdown
+                    :options="[
+                  {
+                      text: 'Modifier',
+                      icon: 'edit',
+                      click: () =>
+                          $dialog(`menu/special/dish/${item.id}/edit/${page.id}`),
+                      disabled: page.showDishes === false
+                  },
+                  {
+                      text: 'Supprimer',
+                      icon: 'trash',
+                      click: () =>
+                          $dialog(`menu/special/dish/${item.id}/delete/${page.id}`),
+                      disabled: page.showDishes === false
+                  },
+              ]"
+                />
+              </td>
+            </tr>
+          </k-draggable>
+        </table>
+      </div>
 
-      <!-- Second dishes section (only for dishes-dishes layout) -->
       <template v-if="(page.layout || 'wines-dishes') === 'dishes-dishes'">
         <k-grid style="margin-top: 40px">
           <div class="k-column" style="--width: 1/2; justify-self: start">
@@ -327,62 +328,64 @@
             </k-button-group>
           </div>
         </k-grid>
-        <table class="k-table" style="margin-top: 20px; margin-bottom: 25px" :class="{ 'disabled-section': page.showDishes2 === false }">
-          <thead>
-          <tr>
-            <th class="k-table-index-column"></th>
-            <th>Plat</th>
-            <th>Description</th>
-            <th style="text-align: center;">Choix</th>
-            <th>Plat</th>
-            <th>Description</th>
-            <th class="k-table-options-column"></th>
-          </tr>
-          </thead>
-          <k-draggable
-              :list="page.dishes2 || []"
-              :handle="true"
-              @change="updateOrder('dishes2', page.id)"
-              :options="{
-              fallbackClass: 'k-table-row-fallback',
-              ghostClass: 'k-table-row-ghost',
-              disabled: page.showDishes2 === false
-          }"
-              element="tbody"
-          >
-            <tr v-for="(item, index) in (page.dishes2 || [])" :key="item.id">
-              <td class="k-table-index-column" data-sortable="true">
-                <span class="k-table-index">{{ index + 1 }}</span>
-                <k-sort-handle />
-              </td>
-              <td>{{ item.name1 }}</td>
-              <td>{{ item.description1 }}</td>
-              <td style="text-align: center;">{{ item.option == true ? 'oui' : 'non' }}</td>
-              <td>{{ item.name2 }}</td>
-              <td>{{ item.description2 }}</td>
-              <td class="k-table-options-column">
-                <k-options-dropdown
-                    :options="[
-                  {
-                      text: 'Modifier',
-                      icon: 'edit',
-                      click: () =>
-                          $dialog(`menu/special/dish2/${item.id}/edit/${page.id}`),
-                      disabled: page.showDishes2 === false
-                  },
-                  {
-                      text: 'Supprimer',
-                      icon: 'trash',
-                      click: () =>
-                          $dialog(`menu/special/dish2/${item.id}/delete/${page.id}`),
-                      disabled: page.showDishes2 === false
-                  },
-              ]"
-                />
-              </td>
+        <div class="k-table" style="margin-top: 20px; margin-bottom: 25px" :class="{ 'disabled-section': page.showDishes2 === false }">
+          <table>
+            <thead>
+            <tr>
+              <th class="k-table-index-column"></th>
+              <th>Plat</th>
+              <th>Description</th>
+              <th style="text-align: center;">Choix</th>
+              <th>Plat</th>
+              <th>Description</th>
+              <th class="k-table-options-column"></th>
             </tr>
-          </k-draggable>
-        </table>
+            </thead>
+            <k-draggable
+                :list="page.dishes2 || []"
+                :handle="true"
+                @change="updateOrder('dishes2', page.id)"
+                :options="{
+                fallbackClass: 'k-table-row-fallback',
+                ghostClass: 'k-table-row-ghost',
+                disabled: page.showDishes2 === false
+            }"
+                element="tbody"
+            >
+              <tr v-for="(item, index) in (page.dishes2 || [])" :key="item.id">
+                <td class="k-table-index-column" data-sortable="true">
+                  <span class="k-table-index">{{ index + 1 }}</span>
+                  <k-sort-handle />
+                </td>
+                <td>{{ item.name1 }}</td>
+                <td>{{ item.description1 }}</td>
+                <td style="text-align: center;">{{ item.option == true ? 'oui' : 'non' }}</td>
+                <td>{{ item.name2 }}</td>
+                <td>{{ item.description2 }}</td>
+                <td class="k-table-options-column">
+                  <k-options-dropdown
+                      :options="[
+                    {
+                        text: 'Modifier',
+                        icon: 'edit',
+                        click: () =>
+                            $dialog(`menu/special/dish2/${item.id}/edit/${page.id}`),
+                        disabled: page.showDishes2 === false
+                    },
+                    {
+                        text: 'Supprimer',
+                        icon: 'trash',
+                        click: () =>
+                            $dialog(`menu/special/dish2/${item.id}/delete/${page.id}`),
+                        disabled: page.showDishes2 === false
+                    },
+                ]"
+                  />
+                </td>
+              </tr>
+            </k-draggable>
+          </table>
+        </div>
       </template>
     </div>
   </k-panel-inside>
@@ -508,7 +511,6 @@ export default {
     };
   },
   created() {
-    // Create debounced versions of methods
     this.debouncedGetHtml = this.debounce(this.getHtml, 500);
     this.debouncedUpdateMenu = this.debounce(this.updateMenuOnServer, 500);
   },
@@ -516,13 +518,11 @@ export default {
     this.getHtml();
   },
   beforeDestroy() {
-    // Clean up any pending timeouts
     if (this.updateTimeout) {
       clearTimeout(this.updateTimeout);
     }
   },
   watch: {
-    // Only watch specific properties that should trigger updates
     'menu.qrUrl': 'debouncedUpdateMenu',
     'menu.textAboveQr': 'debouncedUpdateMenu',
     'menu.partnerLogo': 'debouncedUpdateMenu',
@@ -539,7 +539,6 @@ export default {
       return labels[layout] || labels['wines-dishes'];
     },
 
-    // Utility function for debouncing
     debounce(fn, wait) {
       let timeout;
       return function(...args) {
@@ -553,12 +552,10 @@ export default {
       this.debouncedUpdateMenu();
     },
 
-    // Form input handler
     input() {
       this.debouncedUpdateMenu();
     },
 
-    // Updated method for updating wine titles
     updateWinesTitles(value, pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
@@ -567,7 +564,6 @@ export default {
       }
     },
 
-    // Updated method for updating dishes title
     updateDishesTitle(value, pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
@@ -576,12 +572,10 @@ export default {
       }
     },
 
-    // Layout selector
     updatePageLayout(value, pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
         this.$set(page, 'layout', value);
-        // Initialize dishes2 array if switching to dishes-dishes layout
         if (value === 'dishes-dishes' && !page.dishes2) {
           this.$set(page, 'dishes2', []);
           this.$set(page, 'dishesTitle2', 'Plats 2');
@@ -591,7 +585,6 @@ export default {
       }
     },
 
-    // Dishes 2 methods
     updateDishesTitle2(value, pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
@@ -638,7 +631,6 @@ export default {
     getHtml() {
       this.$api.get("/restaurant/menu/special/html")
           .then(response => {
-            // Sanitize the HTML content by wrapping it in a restrictive container
             this.html = `
             <html>
               <head>
@@ -673,18 +665,14 @@ export default {
 
       this.isGeneratingPDF = true;
 
-      // Ensure we have the latest menu saved before generating PDF
       this.submit();
 
       const url = this.$api.endpoint +
           "/restaurant/menu/special/generate/" +
           (withAssets ? "with-assets" : "without-assets");
 
-      // Use a more reliable approach to open the PDF
       const pdfWindow = window.open(url, '_blank');
 
-      // Set a timeout to reset the state, but also handle cases where
-      // the window couldn't be opened (e.g., popup blocked)
       if (pdfWindow) {
         setTimeout(() => {
           this.isGeneratingPDF = false;
@@ -710,7 +698,6 @@ export default {
         this.menu.pages = [];
       }
 
-      // Use maximum existing ID + 1 for better reliability
       const maxId = this.menu.pages.reduce((max, page) => Math.max(max, page.id), 0);
       const newId = maxId + 1;
 
@@ -734,16 +721,13 @@ export default {
       this.debouncedUpdateMenu();
     },
 
-// Toggle visibility of Wines section
     toggleWinesSection(pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
-        // Toggle the current value
         const newValue = page.showWines === false;
         this.$set(page, 'showWines', newValue);
         this.debouncedUpdateMenu();
 
-        // Show appropriate notification
         if (newValue) {
           this.$panel.notification.success("Section Vins activée");
         } else {
@@ -752,16 +736,13 @@ export default {
       }
     },
 
-// Toggle visibility of Dishes section
     toggleDishesSection(pageId) {
       const page = this.menu.pages.find(p => p.id === pageId);
       if (page) {
-        // Toggle the current value
         const newValue = page.showDishes === false;
         this.$set(page, 'showDishes', newValue);
         this.debouncedUpdateMenu();
 
-        // Show appropriate notification
         if (newValue) {
           this.$panel.notification.success("Section Plats activée");
         } else {
@@ -771,7 +752,6 @@ export default {
     },
 
     deletePage(pageId) {
-      // Don't allow deleting the last page
       if (this.menu.pages.length <= 1) {
         this.$panel.notification.error("Impossible de supprimer la dernière page");
         return;
@@ -816,7 +796,6 @@ export default {
     updateMenuOnServer() {
       this.$api.post("restaurant/menu/special/create", this.menu)
           .then(() => {
-            // Only get HTML after successful update
             this.debouncedGetHtml();
           })
           .catch(error => {
@@ -835,12 +814,10 @@ export default {
   background-color: hsl(80, 60%, calc(80% + -2.5%)) !important;
 }
 
-/* Additional styles for improved UI */
 .k-table {
   width: 100%;
 }
 
-/* Add transitions for smoother UI */
 .k-button, .k-dropdown-item {
   transition: background-color 0.2s ease;
 }
@@ -862,7 +839,6 @@ export default {
   z-index: 1;
 }
 
-/* Layout badge under page title */
 .page-layout-badge {
   display: inline-block;
   margin-top: 4px;
@@ -875,7 +851,6 @@ export default {
   border-radius: 3px;
 }
 
-/* Button transition for smoother toggle */
 .k-button {
   transition: all 0.2s ease-in-out;
 }

@@ -1,0 +1,19 @@
+title:
+  en: Lottie animation
+  fr: Animation Lottie
+
+# A `.lottie` is a zip archive, so a mime rule would let any archive through.
+accept:
+  extension:
+    - json
+    - lottie
+
+fields:
+  alt:
+    label:
+      en: Alternative text
+      fr: Texte alternatif
+    type: text
+    help:
+      en: What the animation shows, for screen readers. Leave empty if it is purely decorative.
+      fr: Ce que montre l'animation, pour les lecteurs d'écran. Laisser vide si elle est purement décorative.

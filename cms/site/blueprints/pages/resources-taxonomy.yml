@@ -1,0 +1,9 @@
+title: Ressources
+
+extends: pages/taxonomy
+
+sections:
+  terms:
+    label: Ressources
+    templates:
+      - resource-taxonomy-term

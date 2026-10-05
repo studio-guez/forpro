@@ -20,35 +20,23 @@
 
 <form
 	role="search"
-	class="flex justify-center {className}"
+	style:color={`var(--color-${color})`}
+	style:--search-tint="color-mix(in oklab, var(--color-{color}) 12%, transparent)"
+	class={['-mx-3 w-full md:w-auto', className]}
 	onsubmit={(event) => event.preventDefault()}
 >
-	<label class="relative block w-full max-w-90" style:color={`var(--color-${color})`}>
+	<label
+		class="block w-full md:w-96 px-3 py-2 rounded-xl transition-colors focus-within:bg-(--search-tint)"
+	>
 		<span class="sr-only">{label}</span>
-		<input
-			type="search"
-			bind:value
-			{placeholder}
-			class="search-input w-full rounded-full border-2 border-current bg-transparent text-current placeholder-current font-bold text-lg px-5 py-3 pr-13 focus:border-current focus:ring-current"
-		/>
-		<IconSearch
-			width={28}
-			height={29}
-			class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"
-		/>
+		<div class="border-b-2 border-current flex items-center gap-3 pb-1">
+			<input
+				type="search"
+				bind:value
+				{placeholder}
+				class="text-label flex-1 min-w-0 p-0 border-0 bg-transparent text-current placeholder-current/50 focus:ring-0 focus:outline-none"
+			/>
+			<IconSearch class="shrink-0 w-5.25 h-5.25 pointer-events-none" />
+		</div>
 	</label>
 </form>
-
-<style>
-	.search-input::-webkit-search-cancel-button {
-		-webkit-appearance: none;
-		appearance: none;
-		width: 1em;
-		height: 1em;
-		/* currentColor = the color prop */
-		background-color: currentColor;
-		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='3' stroke-linecap='round' d='M5 5l14 14M19 5L5 19'/%3E%3C/svg%3E")
-			no-repeat center / contain;
-		cursor: pointer;
-	}
-</style>

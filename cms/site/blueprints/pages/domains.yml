@@ -1,9 +1,0 @@
-title: Domaines
-
-extends: pages/taxonomy
-
-sections:
-  terms:
-    label: Domaines
-    templates:
-      - domain

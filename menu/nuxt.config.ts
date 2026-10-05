@@ -1,10 +1,5 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 
-// Deployment target, baked in at build time (see Dockerfile.prod / CI): the
-// `noindex` meta tag below is part of the static head, so NUXT_PUBLIC_ENVIRONMENT
-// must be set at build time (setting it only at runtime would change
-// `robots.txt` but not the meta tag).
-// Only production is indexed; dev and preprod must stay out of search engines.
+// Must be set at build time: the noindex meta below is part of the static head (runtime would only change robots.txt).
 const environment = process.env.NUXT_PUBLIC_ENVIRONMENT || 'production'
 const isProd = environment === 'production'
 
@@ -29,7 +24,6 @@ export default defineNuxtConfig({
     devtools: {enabled: true},
     runtimeConfig: {
         public: {
-            // Override with NUXT_PUBLIC_CMS_BASE_URL (see compose.dev.yml / compose.prod.yml)
             cmsBaseUrl: 'https://api.for-pro.ch',
             environment
         }

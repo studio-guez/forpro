@@ -14,6 +14,7 @@ $json['slug'] = $page->slug();
 
 $json['overtitle'] = $page->overtitle()->value();
 $json['theme'] = $page->theme()->or('default')->value();
+$json['headerType'] = $page->headerType()->or('full')->value();
 
 $json['introTitle'] = $page->introTitle()->value();
 $json['intro'] = $page->intro()->value();
@@ -25,99 +26,9 @@ $json['introCta'] = Utils::resolveCtaStructure($page->introCta());
 $coverFile = $page->cover()->toFile();
 $json['cover'] = $coverFile ? Utils::getJsonEncodeImageData($coverFile) : null;
 
-$blocks = [];
-foreach ($page->body()->toBlocks() as $block) {
-    $content = [];
-    if ($block->type() === 'module-titre-texte-image') {
-        $imageFile  = $block->image()->toFile();
-        $content = [
-            'title'         => $block->title()->value(),
-            'description'   => $block->description()->value(),
-            'image'         => $imageFile ? Utils::getJsonEncodeImageData($imageFile) : null,
-            'imagePosition' => $block->content()->get('image_position')->or('right')->value(),
-            'variant'       => $block->variant()->or('default')->value(),
-            'cta'           => Utils::resolveCtaStructure($block->cta()),
-        ];
-    } elseif ($block->type() === 'module-cases') {
-        $rows = [];
-        foreach ($block->rows()->toStructure() as $row) {
-            $rows[] = [
-                'title'       => $row->title()->value(),
-                'hideTitle'   => $row->hide_title()->toBool(),
-                'description' => $row->description()->value(),
-                'cta'         => Utils::resolveCtaStructure($row->cta()),
-                'media'       => Utils::getJsonEncodeMediaArray($row->media()->toFiles()),
-            ];
-        }
-        $content = [
-            'title'     => $block->title()->value(),
-            'hideTitle' => $block->hide_title()->toBool(),
-            'intro'     => $block->intro()->value(),
-            'rows'      => $rows,
-            'layout'    => $block->layout()->or('alternate')->value(),
-            'variant'   => $block->variant()->or('default')->value(),
-        ];
-    } elseif ($block->type() === 'module-infos-pratiques') {
-        // Either empty or exactly 3 title/description pairs (enforced by the blueprint).
-        $elements = [];
-        $row = $block->elements()->toStructure()->first();
-        if ($row) {
-            foreach ([1, 2, 3] as $i) {
-                $elements[] = [
-                    'title'       => $row->{'title' . $i}()->value(),
-                    'description' => $row->{'description' . $i}()->value(),
-                ];
-            }
-        }
-
-        $categorySlugs = array_column(Utils::resolveTaxonomyTerms($block->faqCategories(), 'faq-categories'), 'slug');
-
-        // All matching FAQ questions, pulled from the FAQ page.
-        $faqPage = $site->index()->template('faq')->first();
-        $faqs = [];
-        if ($faqPage) {
-            foreach ($faqPage->sections()->toStructure() as $faqSection) {
-                foreach (Utils::filterStructureByTaxonomy($faqSection->faqs()->toStructure(), 'faqCategories', $categorySlugs) as $faq) {
-                    $faqs[] = [
-                        'question' => $faq->question()->value(),
-                        'answer'   => $faq->answer()->value(),
-                    ];
-                }
-            }
-        }
-
-        // The CTA URL is resolved here so a FAQ slug change never breaks the frontend link.
-        $ctaUrl = $faqPage
-            ? '/' . $faqPage->virtualPath() . ($categorySlugs !== [] ? '?faqCategories=' . implode(',', $categorySlugs) : '')
-            : null;
-
-        $content = [
-            'title'    => $block->title()->value(),
-            'subtitle' => $block->subtitle()->value(),
-            'elements' => $elements,
-            'faqs'     => $faqs,
-            'cta'      => $ctaUrl ? [
-                'label' => $block->ctaLabel()->or('Plus de réponses')->value(),
-                'url'   => $ctaUrl,
-                'icon'  => 'arrow',
-            ] : null,
-            'variant'  => $block->variant()->or('default')->value(),
-        ];
-    } else {
-        $content = $block->toArray()['content'] ?? [];
-    }
-    $blocks[] = [
-        'id'       => $block->id(),
-        'type'     => $block->type(),
-        'isHidden' => $block->isHidden(),
-        'content'  => $content,
-    ];
-}
-$json['body'] = $blocks;
+$json['body'] = Utils::getBodyBlocks($page->body());
 
 $json['seo'] = Utils::getSeoDataFromPage($page);
-
-$json['trackWithMatomo'] = $page->trackWithMatomo()->toBool();
 
 $json['path'] = $page->virtualPath();
 

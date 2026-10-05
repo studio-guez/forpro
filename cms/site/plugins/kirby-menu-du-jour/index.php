@@ -25,7 +25,6 @@ Kirby::plugin("mediumsans/kirby-menu-du-jour", [
                     require __DIR__ . "/dialogs/menu-du-jour/edit.php",
                     require __DIR__ . "/dialogs/menu-du-jour/delete.php",
                     require __DIR__ . "/dialogs/menu-du-jour/duplicate.php",
-                    // foddLab
                     require __DIR__ . "/dialogs/fodd-lab/create.php",
                     require __DIR__ . "/dialogs/fodd-lab/edit.php",
                     require __DIR__ . "/dialogs/fodd-lab/delete.php",

@@ -1,4 +1,3 @@
-# pnpm configuration for this single-package project.
 verifyDepsBeforeRun: false
 allowBuilds:
   esbuild: false
@@ -6,9 +5,6 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - brace-expansion@5.0.8
 overrides:
-  # nitropack pins archiver@7, which drags in the unmaintained archiver-utils (glob@10,
-  # minimatch@9) and readdir-glob@1 (minimatch@5) -> brace-expansion@2, never patched.
-  # archiver@8 fixes all of it upstream but dropped its default export, which
-  # nitropack@2.13.4 still relies on, so bump the grandchildren instead.
+  # nitropack pins archiver@7 (unpatched glob@10 / minimatch@9 / brace-expansion@2); archiver@8 dropped the default export nitropack@2.13.4 relies on, so bump the grandchildren instead.
   glob: ^13.0.6
   minimatch: ^10.2.6

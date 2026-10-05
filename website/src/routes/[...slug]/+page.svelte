@@ -1,61 +1,126 @@
 <script lang="ts">
-	import Page from '$lib/components/Page.svelte';
-	import Faq from '$lib/components/Faq.svelte';
+	import Page from '$lib/components/templates/Page.svelte';
+	import BasicPage from '$lib/components/templates/BasicPage.svelte';
+	import Faq from '$lib/components/templates/Faq.svelte';
+	import Event from '$lib/components/templates/Event.svelte';
+	import Events from '$lib/components/templates/Events.svelte';
+	import Project from '$lib/components/templates/Project.svelte';
+	import Projects from '$lib/components/templates/Projects.svelte';
+	import Team from '$lib/components/templates/Team.svelte';
+	import JobOffer from '$lib/components/templates/JobOffer.svelte';
+	import JobOffers from '$lib/components/templates/JobOffers.svelte';
+	import Mission from '$lib/components/templates/Mission.svelte';
+	import Missions from '$lib/components/templates/Missions.svelte';
+	import Impressum from '$lib/components/templates/Impressum.svelte';
+	import Press from '$lib/components/templates/Press.svelte';
+	import FactoryLab from '$lib/components/templates/FactoryLab.svelte';
+	import InfosPratiques from '$lib/components/templates/InfosPratiques.svelte';
+	import Home from '$lib/components/templates/Home.svelte';
+	import JsonLd from '$lib/components/layout/JsonLd.svelte';
 	import type { PageData } from './$types';
 	import { IS_PROD } from '$lib/env';
+	import { page as currentPage } from '$app/state';
+	import { cookieConsent } from '$lib/utils/cookieConsent.svelte';
+	import { setCookieConsent, trackPageView } from '$lib/utils/matomo';
 
 	let { data }: { data: PageData } = $props();
 
 	const page = $derived(data.page);
+
+	const seo = $derived(page.seo);
+	const ogTitle = $derived(seo.ogTitle || seo.title);
+	const ogDescription = $derived(seo.ogDescription || seo.description);
+
+	// The home canonical ends in a slash, where `.md` alone would make a dotfile path.
+	const markdownUrl = $derived(
+		seo.canonicalUrl.endsWith('/') ? `${seo.canonicalUrl}index.md` : `${seo.canonicalUrl}.md`
+	);
+
+	const trackable = $derived(IS_PROD && page.seo.trackWithMatomo);
+
+	$effect(() => {
+		if (trackable && cookieConsent.loaded) {
+			setCookieConsent(cookieConsent.accepted);
+			trackPageView(currentPage.url.href);
+		}
+	});
 </script>
 
 <svelte:head>
-	<title>{page.seo.title}</title>
-	{#if page.seo.description}
-		<meta name="description" content={page.seo.description} />
+	<title>{seo.title}</title>
+	{#if seo.description}
+		<meta name="description" content={seo.description} />
 	{/if}
-	{#if page.seo.canonicalUrl}
-		<link rel="canonical" href={page.seo.canonicalUrl} />
+	{#if seo.canonicalUrl}
+		<link rel="canonical" href={seo.canonicalUrl} />
 	{/if}
-	{#if page.seo.robots && IS_PROD}
-		<meta name="robots" content={page.seo.robots} />
+	{#if seo.robots && IS_PROD}
+		<meta name="robots" content={seo.robots} />
 	{/if}
 
-	{#if page.template === 'page' && page.trackWithMatomo && IS_PROD}
-		<!-- Matomo -->
-		<script>
-			var _paq = (window._paq = window._paq || []);
-			/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-			_paq.push(['trackPageView']);
-			_paq.push(['enableLinkTracking']);
-			(function () {
-				var u = '//matomo.for-pro.ch/';
-				_paq.push(['setTrackerUrl', u + 'matomo.php']);
-				_paq.push(['setSiteId', '1']);
-				var d = document,
-					g = d.createElement('script'),
-					s = d.getElementsByTagName('script')[0];
-				g.async = true;
-				g.src = u + 'matomo.js';
-				s.parentNode.insertBefore(g, s);
-			})();
-		</script>
-		<noscript
-			><p>
-				<img
-					referrerpolicy="no-referrer-when-downgrade"
-					src="//matomo.for-pro.ch/matomo.php?idsite=1&amp;rec=1"
-					style="border:0;"
-					alt=""
-				/>
-			</p></noscript
-		>
-		<!-- End Matomo Code -->
+	{#if seo.canonicalUrl}
+		<link rel="alternate" type="text/markdown" href={markdownUrl} />
+	{/if}
+
+	<meta property="og:type" content={seo.ogType || 'website'} />
+	<meta property="og:title" content={ogTitle} />
+	{#if ogDescription}
+		<meta property="og:description" content={ogDescription} />
+	{/if}
+	{#if seo.canonicalUrl}
+		<meta property="og:url" content={seo.canonicalUrl} />
+	{/if}
+	{#if seo.ogSiteName}
+		<meta property="og:site_name" content={seo.ogSiteName} />
+	{/if}
+	{#if seo.locale}
+		<meta property="og:locale" content={seo.locale} />
+	{/if}
+	{#if seo.ogImage}
+		<meta property="og:image" content={seo.ogImage} />
+	{/if}
+
+	<!-- Twitter/X reads the Open Graph tags except the card format and the image. -->
+	<meta name="twitter:card" content={seo.twitterCardType || 'summary_large_image'} />
+	{#if seo.ogImage}
+		<meta name="twitter:image" content={seo.ogImage} />
 	{/if}
 </svelte:head>
 
-{#if page.template === 'faq'}
+<JsonLd schemas={seo.schemas} />
+
+{#if page.template === 'basic-page'}
+	<BasicPage {page} />
+{:else if page.template === 'faq'}
 	<Faq {page} />
+{:else if page.template === 'event'}
+	<Event {page} />
+{:else if page.template === 'events'}
+	<Events {page} />
+{:else if page.template === 'project'}
+	<Project {page} />
+{:else if page.template === 'projects'}
+	<Projects {page} />
+{:else if page.template === 'team'}
+	<Team {page} />
+{:else if page.template === 'job-offer'}
+	<JobOffer {page} />
+{:else if page.template === 'job-offers'}
+	<JobOffers {page} />
+{:else if page.template === 'mission'}
+	<Mission {page} />
+{:else if page.template === 'missions'}
+	<Missions {page} />
+{:else if page.template === 'impressum'}
+	<Impressum {page} />
+{:else if page.template === 'press'}
+	<Press {page} />
+{:else if page.template === 'factory-lab'}
+	<FactoryLab {page} />
+{:else if page.template === 'infos-pratiques'}
+	<InfosPratiques {page} />
+{:else if page.template === 'home'}
+	<Home {page} />
 {:else}
 	<Page {page} />
 {/if}

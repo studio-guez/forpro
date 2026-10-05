@@ -1,0 +1,56 @@
+<script lang="ts">
+	import type { ModuleGrilleImagesContent, Theme } from '$lib/interfaces/page';
+	import { getThemeColors } from '$lib/utils/themeColors';
+	import { getThemeShapes } from '$lib/utils/themeShapes';
+	import Card from '$lib/components/ui/Card.svelte';
+	import CtaLink from '$lib/components/ui/CtaLink.svelte';
+	import Img from '$lib/components/ui/Img.svelte';
+	import { CARD, cell, toSizes } from '$lib/utils/imgSizes';
+
+	interface Props {
+		content: ModuleGrilleImagesContent;
+		theme: Theme;
+	}
+
+	let { content, theme }: Props = $props();
+
+	const colors = $derived(getThemeColors(theme, content.variant));
+
+	const span = (index: number) => (index < 2 ? 3 : 2);
+	const imageSizes = (index: number) => toSizes(cell(CARD, { 0: 1, 1024: 6 }, 1.5, span(index)));
+
+	const [[ShapeLeft, shapeLeftClasses], [ShapeRight, shapeRightClasses]] = $derived(
+		getThemeShapes(theme)
+	);
+</script>
+
+<Card
+	background={colors.bg}
+	color={colors.text}
+	shapeLeft={colors.showShapes ? ShapeLeft : null}
+	shapeRight={colors.showShapes ? ShapeRight : null}
+	{shapeLeftClasses}
+	{shapeRightClasses}
+	shapeColor={colors.bgContrast}
+	title={content.title}
+	shortDesc={content.shortDesc}
+	titleBackground={colors.titleBackground}
+	titleColor={colors.title}
+>
+	<div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-6 max-lg:gap-y-9 gap-6 mt-6 lg:mt-12">
+		{#each content.images as item, i (i)}
+			<figure class={span(i) === 3 ? 'lg:col-span-3' : 'lg:col-span-2'}>
+				<div class="overflow-hidden rounded-2xl aspect-16/9 lg:aspect-4/3">
+					<Img image={item.image} sizes={imageSizes(i)} class="w-full h-full object-cover" />
+				</div>
+				<figcaption class="text-h4 mt-1.5 lg:mt-3 max-lg:text-center">{item.title}</figcaption>
+			</figure>
+		{/each}
+	</div>
+
+	{#if content.cta}
+		<div class="flex justify-center lg:justify-end mt-8">
+			<CtaLink cta={content.cta} color={colors.accent} inverted={colors.onDark} />
+		</div>
+	{/if}
+</Card>
