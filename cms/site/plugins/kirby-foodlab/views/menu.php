@@ -6,18 +6,20 @@ use Eclypsys\Menu\Metadata;
 return [
     "pattern" => "foodlab/restaurant/menu",
     "action" => function () {
-        $maincourses = Menu\Maincourse::list();
-        $starters = Menu\Starter::list();
-        $desserts = Menu\Dessert::list();
-        $softdrinks = Menu\Softdrink::list();
-        $beers = Menu\Beer::list();
-        $redWines = Menu\RedWine::list();
-        $whiteWines = Menu\WhiteWine::list();
-        $bubbleWines = Menu\BubbleWine::list();
-        $cocktails = Menu\Cocktail::list();
-        $hotDrinks = Menu\HotDrink::list();
+        // A data file with gaps in its keys reaches the panel as an object,
+        // and `k-draggable` can only sort (splice) a real array.
+        $maincourses = array_values(Menu\Maincourse::list());
+        $starters = array_values(Menu\Starter::list());
+        $desserts = array_values(Menu\Dessert::list());
+        $softdrinks = array_values(Menu\Softdrink::list());
+        $beers = array_values(Menu\Beer::list());
+        $redWines = array_values(Menu\RedWine::list());
+        $whiteWines = array_values(Menu\WhiteWine::list());
+        $bubbleWines = array_values(Menu\BubbleWine::list());
+        $cocktails = array_values(Menu\Cocktail::list());
+        $hotDrinks = array_values(Menu\HotDrink::list());
 
-        $origins = Menu\Origin::list();
+        $origins = array_values(Menu\Origin::list());
 
         $page2Order = Metadata::get("page", "2") ?? "[]";
         $page3Order = Metadata::get("page", "3") ?? "[]";
