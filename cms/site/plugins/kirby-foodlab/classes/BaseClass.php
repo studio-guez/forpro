@@ -47,7 +47,8 @@ class BaseClass
                 unset($items[$key]);
             }
         }
-        return Data::write(static::file(), $items);
+        // A gap in the keys would make the JSON file an object instead of a list.
+        return Data::write(static::file(), array_values($items));
     }
 
     /**
