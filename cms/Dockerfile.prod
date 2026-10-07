@@ -1,3 +1,11 @@
+# puppeteer pour Browsershot. Étape à part car l'image finale n'a pas npm, et hors de site/plugins
+# car node_modules n'est pas versionné (absent du build CI). Majeure de node = celle du nodejs Debian.
+FROM node:20-slim AS browsershot
+WORKDIR /opt/browsershot
+COPY browsershot/package.json browsershot/package-lock.json ./
+# --ignore-scripts : sinon puppeteer télécharge son propre Chrome, alors qu'on utilise le Chromium système.
+RUN npm ci --omit=dev --ignore-scripts
+
 FROM php:8.4-apache
 
 ENV TZ=Europe/Zurich
@@ -30,6 +38,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ENV PUPPETEER_SKIP_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
+# Chemin repris par setNodeModulePath() dans site/plugins/kirby-foodlab/routes/index.php.
+COPY --from=browsershot /opt/browsershot/node_modules /opt/browsershot/node_modules
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 

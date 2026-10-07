@@ -1,0 +1,8 @@
+{
+  "name": "forpro-cms-browsershot",
+  "private": true,
+  "description": "puppeteer for spatie/browsershot, installed into the CMS image by Dockerfile.dev / Dockerfile.prod",
+  "dependencies": {
+    "puppeteer": "22.15.0"
+  }
+}
