@@ -11,12 +11,8 @@
 
 # Panel build toolchain for kirby-seo (~85 MB). The compiled assets
 # (index.js / index.css) are committed, so this is never needed at runtime.
+# The puppeteer Browsershot needs is installed by the Dockerfiles from browsershot/.
 **/node_modules
-
-# ...sauf puppeteer, dont Browsershot a besoin AU RUNTIME : browser.cjs fait
-# `require('puppeteer')` depuis vendor/spatie/browsershot/bin/ et remonte
-# jusqu'à ce node_modules. Sans lui, la génération des PDF casse en prod.
-!site/plugins/kirby-foodlab/node_modules
 
 # VCS + local dev tooling
 .git
