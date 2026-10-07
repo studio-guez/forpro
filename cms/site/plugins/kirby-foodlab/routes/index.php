@@ -12,6 +12,24 @@ use Spatie\Browsershot\Browsershot;
 
 return [
     "routes" => function ($kirby) {
+        // puppeteer is baked into the image by cms/Dockerfile.*. Browsershot's default
+        // NODE_PATH (`npm root -g`) cannot find it: the image ships node without npm.
+        $browsershot = function (string $html): Browsershot {
+            return Browsershot::html($html)
+                ->setNodeModulePath("/opt/browsershot/node_modules")
+                ->format("A4")
+                ->margins(0, 0, 0, 0)
+                ->setOption(
+                    "addStyleTag",
+                    json_encode([
+                        "content" => "body { margin: 0; padding: 0; }",
+                    ])
+                )
+                ->noSandbox()
+                ->hideFooter()
+                ->fullPage();
+        };
+
         return [
             [
                 "pattern" => "restaurant/menu/create",
@@ -24,7 +42,7 @@ return [
                 "pattern" => "restaurant/menu/generate/with-assets",
                 "method" => "GET",
                 "auth" => false,
-                "action" => function () {
+                "action" => function () use ($browsershot) {
                     $renderWithAssets = true;
 
                     $data = Menu::get($renderWithAssets);
@@ -37,20 +55,9 @@ return [
                     ]);
 
                     $html = $menu_page->render($data);
-                    $pdfContent = Browsershot::html($html)
-                        ->format("A4")
-                        ->margins(0, 0, 0, 0)
-                        ->setOption(
-                            "addStyleTag",
-                            json_encode([
-                                "content" => "body { margin: 0; padding: 0; }",
-                            ])
-                        )
+                    $pdfContent = $browsershot($html)
                         ->scale(1.5)
                         ->showBackground()
-                        ->hideFooter()
-                        ->noSandbox()
-                        ->fullPage()
                         ->pdf();
 
                     return new Response($pdfContent, "application/pdf", 200, [
@@ -62,7 +69,7 @@ return [
             [
                 "pattern" => "restaurant/menu/generate/with-assets/publish",
                 "method" => "POST",
-                "action" => function () {
+                "action" => function () use ($browsershot) {
                     $renderWithAssets = true;
 
                     $user = kirby()->user();
@@ -89,20 +96,9 @@ return [
                     ]);
 
                     $html = $menu_page->render($data);
-                    $pdfContent = Browsershot::html($html)
-                        ->format("A4")
-                        ->margins(0, 0, 0, 0)
-                        ->setOption(
-                            "addStyleTag",
-                            json_encode([
-                                "content" => "body { margin: 0; padding: 0; }",
-                            ])
-                        )
+                    $pdfContent = $browsershot($html)
                         ->scale(1.5)
                         ->showBackground()
-                        ->hideFooter()
-                        ->noSandbox()
-                        ->fullPage()
                         ->pdf();
 
                     $timestamp = date("Y-m-d_H-i-s");
@@ -137,7 +133,7 @@ return [
                 "pattern" => "restaurant/menu/generate/without-assets",
                 "method" => "GET",
                 "auth" => false,
-                "action" => function () {
+                "action" => function () use ($browsershot) {
                     $renderWithAssets = false;
 
                     $data = Menu::get($renderWithAssets);
@@ -150,19 +146,8 @@ return [
                     ]);
 
                     $html = $menu_page->render($data);
-                    $pdfContent = Browsershot::html($html)
-                        ->format("A4")
-                        ->margins(0, 0, 0, 0)
-                        ->setOption(
-                            "addStyleTag",
-                            json_encode([
-                                "content" => "body { margin: 0; padding: 0; }",
-                            ])
-                        )
-                        ->noSandbox()
-                        ->hideFooter()
+                    $pdfContent = $browsershot($html)
                         ->hideBackground()
-                        ->fullPage()
                         ->pdf();
 
                     return new Response($pdfContent, "application/pdf", 200, [
@@ -403,7 +388,7 @@ return [
                 "pattern" => "restaurant/menu/special/generate/with-assets",
                 "method" => "GET",
                 "auth" => false,
-                "action" => function () {
+                "action" => function () use ($browsershot) {
                     $renderWithAssets = true;
 
                     $data = MenuSpecial::get($renderWithAssets);
@@ -416,24 +401,13 @@ return [
                     ]);
 
                     $html = $menu_page->render($data);
-                    $pdfContent = Browsershot::html($html)
-                        ->format("A4")
-                        ->margins(0, 0, 0, 0)
-                        ->setOption(
-                            "addStyleTag",
-                            json_encode([
-                                "content" => "body { margin: 0; padding: 0; }",
-                            ])
-                        )
-                        ->noSandbox()
+                    $pdfContent = $browsershot($html)
                         ->showBackground()
-                        ->hideFooter()
-                        ->fullPage()
                         ->pdf();
 
                     return new Response($pdfContent, "application/pdf", 200, [
                         "Content-Disposition" =>
-                        'attachment; filename="menu.pdf"',
+                        'inline; filename="menu.pdf"',
                     ]);
                 },
             ],
@@ -462,7 +436,7 @@ return [
                 "pattern" => "restaurant/menu/special/generate/without-assets",
                 "method" => "GET",
                 "auth" => false,
-                "action" => function () {
+                "action" => function () use ($browsershot) {
                     $renderWithAssets = false;
 
                     $data = MenuSpecial::get($renderWithAssets);
@@ -475,24 +449,13 @@ return [
                     ]);
 
                     $html = $menu_page->render($data);
-                    $pdfContent = Browsershot::html($html)
-                        ->format("A4")
-                        ->margins(0, 0, 0, 0)
-                        ->setOption(
-                            "addStyleTag",
-                            json_encode([
-                                "content" => "body { margin: 0; padding: 0; }",
-                            ])
-                        )
-                        ->noSandbox()
-                        ->hideFooter()
+                    $pdfContent = $browsershot($html)
                         ->hideBackground()
-                        ->fullPage()
                         ->pdf();
 
                     return new Response($pdfContent, "application/pdf", 200, [
                         "Content-Disposition" =>
-                        'attachment; filename="menu.pdf"',
+                        'inline; filename="menu.pdf"',
                     ]);
                 },
             ],
