@@ -304,6 +304,9 @@ export default {
         cocktails: Array,
         cocktailsShowHide: Boolean,
         cocktailsTitle: String,
+        spirits: Array,
+        spiritsShowHide: Boolean,
+        spiritsTitle: String,
         hotDrinks: Array,
         hotDrinksShowHide: Boolean,
         hotDrinksTitle: String,
@@ -525,6 +528,7 @@ export default {
                 softdrink: "k-soft-drink-table",
                 beer: "k-beer-table",
                 cocktail: "k-cocktail-table",
+                spirit: "k-spirit-table",
                 hotdrink: "k-hot-drink-table",
                 origin: "k-origin-table",
             };
@@ -541,6 +545,7 @@ export default {
                 softdrink: "softDrinks",
                 beer: "beers",
                 cocktail: "cocktails",
+                spirit: "spirits",
                 hotdrink: "hotDrinks",
                 origin: "origins",
             };

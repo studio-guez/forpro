@@ -89,7 +89,7 @@ Create the required JSON files for `kirby-foodlab` (this directory is git-ignore
 
 ```bash
 mkdir -p cms/site/plugins/kirby-foodlab/data
-for f in beer bubblewine cocktail dessert hotdrink maincourse menu menu-special metadata origin redwine softdrink starter whitewine; do
+for f in beer bubblewine cocktail dessert hotdrink maincourse menu menu-special metadata origin redwine softdrink spirit starter whitewine; do
   echo '[]' > cms/site/plugins/kirby-foodlab/data/$f.json
 done
 ```

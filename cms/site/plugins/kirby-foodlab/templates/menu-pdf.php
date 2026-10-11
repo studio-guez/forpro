@@ -1120,6 +1120,57 @@
             </div>
         <?php endif; ?>
 
+        <?php if ($category === "spirit" && !$spiritsHidden): ?>
+            <div class="section" style="margin-top: 20px">
+                <table
+                        style="
+                            width: 100%;
+                            font-size: 9pt;
+                            font-weight: 500;
+                            border-spacing: 0 1em;
+                            line-height: 3px;
+                        "
+                >
+                    <tr>
+                        <th style="display:block; margin-bottom: 10px; width: 75%; text-align: left; font-weight: 500;">
+                            <?= $spiritsTitle ?>
+                        </th>
+                        <th
+                                style="
+                                    width: 13%;
+                                    text-align: right;
+                                    text-decoration: underline;
+                                "
+                        ></th>
+                        <th
+                                style="
+                                    width: 13%;
+                                    text-align: right;
+                                    text-decoration: underline;
+                                "
+                        ></th>
+                    </tr>
+                    <?php foreach ($spirits[0] as $wine): ?>
+                        <tr>
+                            <td>
+                                <span style="font-weight: 800"
+                                ><?= $wine["name"] ?></span
+                                ><?php echo !empty(trim($wine["description"]))
+                                    ? ", " . trim($wine["description"])
+                                    : ""; ?>
+                            </td>
+                            <td style="text-align: right;vertical-align: top; font-weight: 300">
+                                <?= $wine["volume"] ?>
+                            </td>
+                            <td style="text-align: right;vertical-align: top; font-weight: 500">
+                                <?= $wine["price"] ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        <?php endif; ?>
+
         <?php if ($category === "hotdrink" && !$hotDrinksHidden): ?>
             <div class="section" style="margin-top: 20px">
                 <table
