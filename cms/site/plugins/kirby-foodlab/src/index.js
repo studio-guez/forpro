@@ -19,6 +19,7 @@ import WhiteWineTable from "./components/WhiteWineTable.vue";
 import RedWineTable from "./components/RedWineTable.vue";
 import BubbleWineTable from "./components/BubbleWineTable.vue";
 import SoftDrinkTable from "./components/SoftDrinkTable.vue";
+import SpiritTable from "./components/SpiritTable.vue";
 
 panel.plugin("eclypsys/foodlab", {
   fields: {
@@ -46,5 +47,6 @@ panel.plugin("eclypsys/foodlab", {
     "k-bubble-wine-table": BubbleWineTable,
     "k-soft-drink-table": SoftDrinkTable,
     "k-cocktail-table": CocktailTable,
+    "k-spirit-table": SpiritTable,
   },
 });

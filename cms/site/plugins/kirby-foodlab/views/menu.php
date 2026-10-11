@@ -17,6 +17,7 @@ return [
         $whiteWines = array_values(Menu\WhiteWine::list());
         $bubbleWines = array_values(Menu\BubbleWine::list());
         $cocktails = array_values(Menu\Cocktail::list());
+        $spirits = array_values(Menu\Spirit::list());
         $hotDrinks = array_values(Menu\HotDrink::list());
 
         $origins = array_values(Menu\Origin::list());
@@ -57,6 +58,9 @@ return [
                 "cocktails" => $cocktails,
                 "cocktailsShowHide" => Menu\Cocktail::hide(),
                 "cocktailsTitle" => Menu\Cocktail::title(),
+                "spirits" => $spirits,
+                "spiritsShowHide" => Menu\Spirit::hide(),
+                "spiritsTitle" => Menu\Spirit::title(),
                 "hotDrinks" => $hotDrinks,
                 "hotDrinksShowHide" => Menu\HotDrink::hide(),
                 "hotDrinksTitle" => Menu\HotDrink::title(),

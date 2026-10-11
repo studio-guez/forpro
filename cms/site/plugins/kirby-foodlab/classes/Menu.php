@@ -11,6 +11,7 @@ use Eclypsys\Menu\HotDrink;
 use Eclypsys\Menu\MainCourse;
 use Eclypsys\Menu\RedWine;
 use Eclypsys\Menu\SoftDrink;
+use Eclypsys\Menu\Spirit;
 use Eclypsys\Menu\Starter;
 use Eclypsys\Menu\WhiteWine;
 use Eclypsys\Menu\Metadata;
@@ -57,6 +58,10 @@ class Menu extends BaseClass
         $cocktails[] = Cocktail::list();
         $cocktailsTitle = Cocktail::title();
         $cocktailsHidden = Cocktail::hide();
+
+        $spirits[] = Spirit::list();
+        $spiritsTitle = Spirit::title();
+        $spiritsHidden = Spirit::hide();
 
         $hotDrinks[] = HotDrink::list();
         $hotDrinksTitle = HotDrink::title();
@@ -108,6 +113,10 @@ class Menu extends BaseClass
             "cocktails" => $cocktails,
             "cocktailsTitle" => $cocktailsTitle,
             "cocktailsHidden" => $cocktailsHidden,
+
+            "spirits" => $spirits,
+            "spiritsTitle" => $spiritsTitle,
+            "spiritsHidden" => $spiritsHidden,
 
             "hotDrinks" => $hotDrinks,
             "hotDrinksTitle" => $hotDrinksTitle,
@@ -194,6 +203,7 @@ class Menu extends BaseClass
             "softDrinks" => SoftDrink::reorder($data),
             "beers" => Beer::reorder($data),
             "cocktails" => Cocktail::reorder($data),
+            "spirits" => Spirit::reorder($data),
             "hotDrinks" => HotDrink::reorder($data),
             default => false,
         };
