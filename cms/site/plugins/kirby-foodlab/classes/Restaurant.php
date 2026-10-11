@@ -482,13 +482,10 @@ class Restaurant
     public static function serve(string $filename): Response
     {
         $filename = basename($filename);
-        $path = static::mediaDir() . "/" . $filename;
+        $path = static::mediaPath($filename, static::SERVABLE_EXTENSIONS);
         $extension = strtolower(F::extension($filename));
 
-        if (
-            in_array($extension, static::SERVABLE_EXTENSIONS, true) === false ||
-            F::exists($path, static::mediaDir()) === false
-        ) {
+        if ($path === null) {
             throw new NotFoundException(message: "Media not found");
         }
 
@@ -511,6 +508,66 @@ class Restaurant
             200,
             $headers
         );
+    }
+
+    /**
+     * Browsershot renders the PDFs from an HTML string, so it would download
+     * every image from its URL, and a server often cannot reach its own public
+     * domain from inside its container. Media library images are inlined from
+     * disk instead, whatever host their URL names.
+     */
+    public static function embedMediaImages(string $html): string
+    {
+        $pattern =
+            '#(\bsrc\s*=\s*)(["\'])(?:https?://[^/"\']+)?/' .
+            preg_quote(static::MEDIA_PATH, "#") .
+            '/([^"\'?\#]+)\2#i';
+
+        return preg_replace_callback(
+            $pattern,
+            function (array $match): string {
+                $path = static::mediaPath(
+                    rawurldecode($match[3]),
+                    static::IMAGE_EXTENSIONS
+                );
+
+                if ($path === null) {
+                    return $match[0];
+                }
+
+                $mime = Mime::fromExtension(strtolower(F::extension($path)));
+
+                return $match[1] .
+                    $match[2] .
+                    "data:" .
+                    $mime .
+                    ";base64," .
+                    base64_encode(F::read($path)) .
+                    $match[2];
+            },
+            $html
+        );
+    }
+
+    /**
+     * Path of a file of the media library, or null when it does not exist or
+     * its extension is not one of $extensions
+     */
+    private static function mediaPath(
+        string $filename,
+        array $extensions
+    ): string|null {
+        $path = static::mediaDir() . "/" . basename($filename);
+
+        if (
+            in_array(strtolower(F::extension($path)), $extensions, true) ===
+                false ||
+            F::exists($path, static::mediaDir()) === false
+        ) {
+            return null;
+        }
+
+        return $path;
     }
 
     /**
