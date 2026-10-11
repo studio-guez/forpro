@@ -15,7 +15,7 @@ return [
         // puppeteer is baked into the image by cms/Dockerfile.*. Browsershot's default
         // NODE_PATH (`npm root -g`) cannot find it: the image ships node without npm.
         $browsershot = function (string $html): Browsershot {
-            return Browsershot::html($html)
+            return Browsershot::html(Restaurant::embedMediaImages($html))
                 ->setNodeModulePath("/opt/browsershot/node_modules")
                 ->format("A4")
                 ->margins(0, 0, 0, 0)
