@@ -182,7 +182,7 @@ runs:
 
         # Seed the kirby-foodlab data files on first deploy (the plugin expects
         # them to exist; real data is rsynced over them afterwards).
-        for f in beer bubblewine cocktail dessert hotdrink maincourse menu menu-special metadata origin redwine softdrink starter whitewine; do
+        for f in beer bubblewine cocktail dessert hotdrink maincourse menu menu-special metadata origin redwine softdrink spirit starter whitewine; do
           DATA_FILE="$SHARED_DIR/cms/site/plugins/kirby-foodlab/data/$f.json"
           [ -f "$DATA_FILE" ] || echo '[]' > "$DATA_FILE"
         done
