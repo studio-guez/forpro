@@ -89,38 +89,43 @@
 
 <JsonLd schemas={seo.schemas} />
 
-{#if page.template === 'basic-page'}
-	<BasicPage {page} />
-{:else if page.template === 'faq'}
-	<Faq {page} />
-{:else if page.template === 'event'}
-	<Event {page} />
-{:else if page.template === 'events'}
-	<Events {page} />
-{:else if page.template === 'project'}
-	<Project {page} />
-{:else if page.template === 'projects'}
-	<Projects {page} />
-{:else if page.template === 'team'}
-	<Team {page} />
-{:else if page.template === 'job-offer'}
-	<JobOffer {page} />
-{:else if page.template === 'job-offers'}
-	<JobOffers {page} />
-{:else if page.template === 'mission'}
-	<Mission {page} />
-{:else if page.template === 'missions'}
-	<Missions {page} />
-{:else if page.template === 'impressum'}
-	<Impressum {page} />
-{:else if page.template === 'press'}
-	<Press {page} />
-{:else if page.template === 'factory-lab'}
-	<FactoryLab {page} />
-{:else if page.template === 'infos-pratiques'}
-	<InfosPratiques {page} />
-{:else if page.template === 'home'}
-	<Home {page} />
-{:else}
-	<Page {page} />
-{/if}
+<!-- Templates read their filters from the URL once, at mount, then mirror them with `replaceState`,
+     which leaves `page.url` as it is. Every navigation sets a new one, so keying on it remounts the
+     template, and a link to the page being viewed resets its filters to that link's query string. -->
+{#key currentPage.url}
+	{#if page.template === 'basic-page'}
+		<BasicPage {page} />
+	{:else if page.template === 'faq'}
+		<Faq {page} />
+	{:else if page.template === 'event'}
+		<Event {page} />
+	{:else if page.template === 'events'}
+		<Events {page} />
+	{:else if page.template === 'project'}
+		<Project {page} />
+	{:else if page.template === 'projects'}
+		<Projects {page} />
+	{:else if page.template === 'team'}
+		<Team {page} />
+	{:else if page.template === 'job-offer'}
+		<JobOffer {page} />
+	{:else if page.template === 'job-offers'}
+		<JobOffers {page} />
+	{:else if page.template === 'mission'}
+		<Mission {page} />
+	{:else if page.template === 'missions'}
+		<Missions {page} />
+	{:else if page.template === 'impressum'}
+		<Impressum {page} />
+	{:else if page.template === 'press'}
+		<Press {page} />
+	{:else if page.template === 'factory-lab'}
+		<FactoryLab {page} />
+	{:else if page.template === 'infos-pratiques'}
+		<InfosPratiques {page} />
+	{:else if page.template === 'home'}
+		<Home {page} />
+	{:else}
+		<Page {page} />
+	{/if}
+{/key}
