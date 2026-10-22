@@ -6,7 +6,7 @@ COPY browsershot/package.json browsershot/package-lock.json ./
 # --ignore-scripts : sinon puppeteer télécharge son propre Chrome, alors qu'on utilise le Chromium système.
 RUN npm ci --omit=dev --ignore-scripts
 
-FROM php:8.4-apache
+FROM php:8.4.27-apache
 
 ARG UID=1000
 ARG GID=1000
