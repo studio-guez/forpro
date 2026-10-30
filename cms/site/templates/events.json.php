@@ -8,9 +8,9 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'events');
 
-$json['noResultsText']     = $page->noResultsText()->value();
-$json['noUpcomingText']    = $page->noUpcomingText()->value();
-$json['noPastResultsText'] = $page->noPastResultsText()->value();
+$json['noResultsText']     = Utils::getRichText($page->noResultsText());
+$json['noUpcomingText']    = Utils::getRichText($page->noUpcomingText());
+$json['noPastResultsText'] = Utils::getRichText($page->noPastResultsText());
 
 $json['programs'] = Utils::getTaxonomyTerms('programs');
 $json['publics']  = Utils::getTaxonomyTerms('publics');

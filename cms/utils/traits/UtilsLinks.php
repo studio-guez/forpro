@@ -29,14 +29,11 @@ trait UtilsLinks
      * frontend. The writer stores links to pages and files as `/@/page/<uuid>` and
      * `/@/file/<uuid>`, which only Kirby itself can serve: pages are rewritten to their
      * frontend path (see pageUrl()) and files to their absolute URL on the CMS. A
-     * permalink whose target no longer exists is left untouched. Null when the field is
-     * empty, so templates can emit the result as-is.
+     * permalink whose target no longer exists is left untouched. Every writer field a
+     * frontend renders must go through this (or getRichTextOrNull()), never `->value()`.
      */
-    static function getRichText(\Kirby\Content\Field $field): ?string
+    static function getRichText(\Kirby\Content\Field $field): string
     {
-        if ($field->isEmpty()) {
-            return null;
-        }
         return preg_replace_callback(
             '~(href|src)="/@/(page|file)/([^"/]+)"~',
             function (array $m): string {
@@ -44,8 +41,16 @@ trait UtilsLinks
                 $url   = $model instanceof \Kirby\Cms\Page ? self::pageUrl($model) : $model?->url();
                 return $url ? $m[1] . '="' . htmlspecialchars($url, ENT_QUOTES) . '"' : $m[0];
             },
-            $field->value()
+            (string)$field->value()
         );
+    }
+
+    /**
+     * getRichText(), or null when the field is empty.
+     */
+    static function getRichTextOrNull(\Kirby\Content\Field $field): ?string
+    {
+        return $field->isEmpty() ? null : self::getRichText($field);
     }
 
     /**

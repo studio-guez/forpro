@@ -253,9 +253,9 @@ trait UtilsSchema
 
         // Google reads JobPosting.description as the whole offer, so all three sections go in.
         $description = implode('', array_filter([
-            $page->description()->value(),
-            $page->profile()->value(),
-            $page->conditions()->value(),
+            self::getRichText($page->description()),
+            self::getRichText($page->profile()),
+            self::getRichText($page->conditions()),
         ]));
 
         return self::withoutEmpty([
@@ -364,7 +364,7 @@ trait UtilsSchema
                     'name'           => $faq->question()->value(),
                     'acceptedAnswer' => [
                         '@type' => 'Answer',
-                        'text'  => $faq->answer()->value(),
+                        'text'  => self::getRichText($faq->answer()),
                     ],
                 ];
             }

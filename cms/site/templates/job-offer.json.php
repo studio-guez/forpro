@@ -15,9 +15,9 @@ $json['sector'] = $page->sector()->isNotEmpty() ? $page->sector()->value() : nul
 // Closed offers stay reachable: the frontend shows a notice instead of the application details.
 $json['openToApplications'] = Utils::isOpenToApplications($page);
 
-$json['description'] = $page->description()->value();
-$json['profile']     = $page->profile()->value();
-$json['conditions']  = $page->conditions()->value();
+$json['description'] = Utils::getRichText($page->description());
+$json['profile']     = Utils::getRichText($page->profile());
+$json['conditions']  = Utils::getRichText($page->conditions());
 
 $json['location'] = $page->location()->value();
 $json += Utils::getActivityRate($page);
@@ -27,11 +27,11 @@ $json['deadline']  = $page->deadline()->toDate('Y-m-d');
 // Closed offers ship no address to apply to, not even in the page payload.
 $json['applicationEmail']   = $json['openToApplications'] ? $page->applicationEmail()->value() : null;
 $json['pdfOffer']           = Utils::getJsonEncodeDocumentDataOrNull($page->pdfOffer()->toFile());
-$json['applicationContent'] = $page->applicationContent()->value();
+$json['applicationContent'] = Utils::getRichText($page->applicationContent());
 
 $json['applicationQuestions'] = array_values($page->applicationQuestions()->toStructure()->map(fn($item) => [
     'question' => $item->question()->value(),
-    'answer'   => $item->answer()->value(),
+    'answer'   => Utils::getRichText($item->answer()),
 ])->data());
 
 $json['recruitingSteps'] = Utils::getTimelineSteps($page->recruitingSteps());
