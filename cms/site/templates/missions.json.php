@@ -14,9 +14,9 @@ $json['headerType'] = $page->headerType()->or('full')->value();
 $json['cover']     = Utils::getJsonEncodeImageDataOrNull($page->cover()->toFile());
 
 $json['introTitle'] = $page->introTitle()->value();
-$json['intro']      = $page->intro()->value();
+$json['intro']      = Utils::getRichText($page->intro());
 
-$json['noResultsText'] = $page->noResultsText()->value();
+$json['noResultsText'] = Utils::getRichText($page->noResultsText());
 
 $parentPage = $page->parentPage()->toPage();
 $json['parentPage'] = $parentPage ? [

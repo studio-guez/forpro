@@ -17,7 +17,7 @@ $json['theme'] = $page->theme()->or('default')->value();
 $json['headerType'] = $page->headerType()->or('full')->value();
 
 $json['introTitle'] = $page->introTitle()->value();
-$json['intro'] = $page->intro()->value();
+$json['intro'] = Utils::getRichText($page->intro());
 $json['introLayout'] = $page->introLayout()->or('1col')->value();
 $introTitleImageFile = $page->introTitleImage()->toFile();
 $json['introTitleImage'] = $introTitleImageFile ? Utils::getJsonEncodeImageData($introTitleImageFile) : null;

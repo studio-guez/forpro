@@ -72,7 +72,7 @@ trait UtilsBlocks
     {
         return [
             'title'         => $block->title()->value(),
-            'description'   => $block->description()->value(),
+            'description'   => self::getRichText($block->description()),
             'image'         => self::getJsonEncodeImageDataOrNull($block->image()->toFile()),
             'imagePosition' => $block->content()->get('imagePosition')->or('right')->value(),
             'imageFit'      => $block->imageFit()->or('cover')->value(),
@@ -89,7 +89,7 @@ trait UtilsBlocks
         return [
             'title'     => $block->title()->value(),
             'hideTitle' => $block->hideTitle()->toBool(),
-            'content'   => $text->isNotEmpty() ? $text->value() : null,
+            'content'   => self::getRichTextOrNull($text),
             'ctas'      => self::resolveCtaStructures($block->ctas()),
             'variant'   => $block->variant()->or('default')->value(),
         ];
@@ -124,7 +124,7 @@ trait UtilsBlocks
         foreach ($block->rows()->toStructure() as $row) {
             $rows[] = [
                 'title'       => $row->title()->isNotEmpty() ? $row->title()->value() : null,
-                'description' => $row->description()->value(),
+                'description' => self::getRichText($row->description()),
                 'cta'         => self::resolveCtaStructure($row->cta()),
                 'media'       => self::getJsonEncodeMediaArray($row->media()->toFiles()),
             ];
@@ -133,7 +133,7 @@ trait UtilsBlocks
         return [
             'title'     => $block->title()->value(),
             'hideTitle' => $block->hideTitle()->toBool(),
-            'intro'     => $block->intro()->value(),
+            'intro'     => self::getRichText($block->intro()),
             'rows'      => $rows,
             'cta'       => self::resolveCtaStructure($block->cta()),
             'layout'    => $block->layout()->or('alternate')->value(),
@@ -156,7 +156,7 @@ trait UtilsBlocks
 
         return [
             'title'     => $block->title()->value(),
-            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'shortDesc' => self::getRichTextOrNull($block->shortDesc()),
             'images'    => $images,
             'cta'       => self::resolveCtaStructure($block->cta()),
             'variant'   => $block->variant()->or('default')->value(),
@@ -170,10 +170,10 @@ trait UtilsBlocks
 
         return [
             'title'        => $block->title()->value(),
-            'shortDesc'    => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'shortDesc'    => self::getRichTextOrNull($block->shortDesc()),
             'video'        => self::getVideo($block->content()->get('video')),
             'contentTitle' => $block->contentTitle()->isNotEmpty() ? $block->contentTitle()->value() : null,
-            'content'      => $text->isNotEmpty() ? $text->value() : null,
+            'content'      => self::getRichTextOrNull($text),
             'variant'      => $block->variant()->or('default')->value(),
         ];
     }
@@ -204,7 +204,7 @@ trait UtilsBlocks
     {
         return [
             'title'     => $block->title()->value(),
-            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'shortDesc' => self::getRichTextOrNull($block->shortDesc()),
             'elements'  => self::getThreeElements($block->elements()),
             'variant'   => $block->variant()->or('default')->value(),
         ];
@@ -235,7 +235,7 @@ trait UtilsBlocks
                 foreach ($items as $faq) {
                     $faqs[] = [
                         'question' => $faq->question()->value(),
-                        'answer'   => $faq->answer()->value(),
+                        'answer'   => self::getRichText($faq->answer()),
                     ];
 
                     if (count($faqs) === self::INFOS_PRATIQUES_FAQ_LIMIT) break 2;
@@ -316,7 +316,7 @@ trait UtilsBlocks
 
         return [
             'title'     => $block->title()->value(),
-            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'shortDesc' => self::getRichTextOrNull($block->shortDesc()),
             'events'    => $events,
             'cta'       => $ctaUrl ? [
                 'label'  => $block->ctaLabel()->or("Tout l'agenda")->value(),
@@ -350,7 +350,7 @@ trait UtilsBlocks
 
         return [
             'title'     => $block->title()->value(),
-            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'shortDesc' => self::getRichTextOrNull($block->shortDesc()),
             'projects'  => $projects,
             'cta'       => $ctaUrl ? [
                 'label'  => $block->ctaLabel()->or('Voir tous les projets')->value(),
@@ -373,14 +373,14 @@ trait UtilsBlocks
 
             $resources = array_values($items->map(fn($item) => [
                 'title'     => $item->title()->value(),
-                'shortDesc' => $item->shortDesc()->value(),
+                'shortDesc' => self::getRichText($item->shortDesc()),
                 'image'     => self::getJsonEncodeImageDataOrNull($item->image()->toFile()),
             ])->data());
         }
 
         return [
             'title'     => $block->title()->value(),
-            'shortDesc' => $block->shortDesc()->isNotEmpty() ? $block->shortDesc()->value() : null,
+            'shortDesc' => self::getRichTextOrNull($block->shortDesc()),
             'resources' => $resources,
             'variant'   => $block->variant()->or('default')->value(),
         ];
@@ -405,7 +405,7 @@ trait UtilsBlocks
     {
         return [
             'title'       => $block->title()->value(),
-            'description' => $block->description()->value(),
+            'description' => self::getRichText($block->description()),
         ];
     }
 

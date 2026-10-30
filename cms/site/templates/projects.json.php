@@ -8,7 +8,7 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'projects');
 
-$json['noResultsText'] = $page->noResultsText()->value();
+$json['noResultsText'] = Utils::getRichText($page->noResultsText());
 
 $json['resourcesTaxonomy'] = Utils::getTaxonomyTerms('resourcesTaxonomy');
 $json['programs'] = Utils::getTaxonomyTerms('programs');

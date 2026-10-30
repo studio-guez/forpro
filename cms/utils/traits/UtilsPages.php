@@ -167,7 +167,7 @@ trait UtilsPages
         return [
             'title'     => $page->title()->value(),
             'url'       => '/' . $page->virtualPath(),
-            'shortDesc' => $page->shortDesc()->value(),
+            'shortDesc' => self::getRichText($page->shortDesc()),
             'cover'     => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             ...self::getEventDateFields($page),
             'programs'  => self::resolveTaxonomyTerms($page->programs(), 'programs'),
@@ -411,7 +411,7 @@ trait UtilsPages
         return [
             'title'          => $page->title()->value(),
             'url'            => '/' . $page->virtualPath(),
-            'shortDesc'      => $page->shortDesc()->value(),
+            'shortDesc'      => self::getRichText($page->shortDesc()),
             'cover'          => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             'collectiveName' => $page->collectiveName()->isNotEmpty() ? $page->collectiveName()->value() : null,
             'date'           => $page->date()->toDate('Y-m-d'),
@@ -447,7 +447,7 @@ trait UtilsPages
             'url'       => '/' . $page->virtualPath(),
             'date'      => $page->date()->value(),
             'location'  => $page->location()->value(),
-            'shortDesc' => $page->shortDesc()->value(),
+            'shortDesc' => self::getRichText($page->shortDesc()),
             'terms'     => self::resolveTaxonomyTerms($page->categories(), 'categories'),
         ];
     }
@@ -516,7 +516,7 @@ trait UtilsPages
     {
         return array_values($field->toStructure()->map(fn($item) => [
             'title'       => $item->title()->value(),
-            'description' => $item->description()->value(),
+            'description' => self::getRichText($item->description()),
         ])->data());
     }
 
@@ -532,7 +532,7 @@ trait UtilsPages
             'slug'          => $page->slug(),
             'path'          => $page->virtualPath(),
             'subtitle'      => $page->subtitle()->value(),
-            'shortDesc'     => $page->shortDesc()->value(),
+            'shortDesc'     => self::getRichText($page->shortDesc()),
             'cover'         => self::getJsonEncodeImageDataOrNull($page->cover()->toFile()),
             'body'          => self::getBodyBlocks($page->body()),
             'parentPage'    => self::getParentPageData($page),
