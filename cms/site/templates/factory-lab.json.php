@@ -13,7 +13,7 @@ $json['theme'] = $page->theme()->or('default')->value();
 $json['headerType'] = $page->headerType()->or('full')->value();
 
 $json['introTitle'] = $page->introTitle()->value();
-$json['intro'] = $page->intro()->value();
+$json['intro'] = Utils::getRichText($page->intro());
 $json['introLayout'] = $page->introLayout()->or('1col')->value();
 $json['introTitleImage'] = Utils::getJsonEncodeImageDataOrNull($page->introTitleImage()->toFile());
 $json['introCta'] = Utils::resolveCtaStructure($page->introCta());
@@ -27,7 +27,7 @@ $resolveBadges = fn(\Kirby\Content\Field $field) => $field->toStructure()->map(f
 
 $json['companiesModule'] = [
     'title'   => $page->companiesTitle()->value(),
-    'intro'   => $page->companiesIntro()->isNotEmpty() ? $page->companiesIntro()->value() : null,
+    'intro'   => Utils::getRichTextOrNull($page->companiesIntro()),
     'variant' => $page->companiesVariant()->or('default')->value(),
     'labels'  => [
         'trainings'    => $page->companiesTrainingsLabel()->value(),
@@ -38,7 +38,7 @@ $json['companiesModule'] = [
         'image'        => Utils::getJsonEncodeImageDataOrNull($company->image()->toFile()),
         'title'        => $company->title()->value(),
         'url'          => $company->url()->isNotEmpty() ? $company->url()->value() : null,
-        'description'  => $company->description()->isNotEmpty() ? $company->description()->value() : null,
+        'description'  => Utils::getRichTextOrNull($company->description()),
         'trainings'    => $resolveBadges($company->trainings()),
         'availability' => $resolveBadges($company->availability()),
         'followUps'    => $company->followUps()->toStructure()->map(fn($item) => $item->label()->value())->values(),

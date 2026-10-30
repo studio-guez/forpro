@@ -8,7 +8,7 @@ require_once 'utils/Utils.php';
 
 $json = Utils::getPageBaseData($page, 'faq');
 
-$json['noResultsText'] = $page->noResultsText()->value();
+$json['noResultsText'] = Utils::getRichText($page->noResultsText());
 
 $json['resourcesTaxonomy'] = Utils::getTaxonomyTerms('resourcesTaxonomy');
 $json['programs'] = Utils::getTaxonomyTerms('programs');
@@ -21,7 +21,7 @@ $json['sections'] = $page->sections()->toStructure()->map(function ($section) {
         'title' => $section->title()->value(),
         'faqs'  => $section->faqs()->toStructure()->map(fn($item) => [
             'question' => $item->question()->value(),
-            'answer'   => $item->answer()->value(),
+            'answer'   => Utils::getRichText($item->answer()),
             'resourcesTaxonomy' => Utils::resolveTaxonomyTerms($item->resourcesTaxonomy(), 'resourcesTaxonomy'),
             'programs' => Utils::resolveTaxonomyTerms($item->programs(), 'programs'),
             'publics'  => Utils::resolveTaxonomyTerms($item->publics(), 'publics'),

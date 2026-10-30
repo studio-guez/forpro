@@ -19,7 +19,7 @@ $json['lottie']       = $lottieData($page->lottie()->toFile(), $poster);
 $json['lottieMobile'] = $lottieData($page->lottieMobile()->toFile(), $page->lottiePosterMobile()->toFile() ?? $poster);
 
 $json['welcomeTitle']     = $page->welcomeTitle()->value();
-$json['welcomeShortDesc'] = $page->welcomeShortDesc()->value();
+$json['welcomeShortDesc'] = Utils::getRichText($page->welcomeShortDesc());
 
 $json['welcomeCards'] = array_map(fn(int $index) => [
     'title' => $page->{"welcomeCardTitle{$index}"}()->value(),
@@ -47,7 +47,7 @@ foreach ($page->resourcesAvailablePages()->toStructure() as $entry) {
         'page',
         $entry->overtitle()->value(),
         $entry->title()->or($target->title())->value(),
-        $entry->shortDesc()->or($target->shortDesc())->or($target->intro())->value(),
+        Utils::getRichText($entry->shortDesc()->or($target->shortDesc())->or($target->intro())),
         $entry->cover()->toFile() ?? $target->cover()->toFile(),
         $target
     );
@@ -60,7 +60,7 @@ $projectCards = $projectsPage
         'project',
         $projectsOvertitle,
         $project->title()->value(),
-        $project->shortDesc()->value(),
+        Utils::getRichText($project->shortDesc()),
         $project->cover()->toFile(),
         $project
     ))->values()

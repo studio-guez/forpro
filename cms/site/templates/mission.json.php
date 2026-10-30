@@ -25,11 +25,11 @@ $json['applyCta']  = $json['openToApplications']
 
 $json['cover']      = Utils::getJsonEncodeImageDataOrNull($page->cover()->toFile());
 $json['introTitle'] = $page->introTitle()->value();
-$json['shortDesc']  = $page->shortDesc()->value();
+$json['shortDesc']  = Utils::getRichText($page->shortDesc());
 
-$json['profile']  = $page->profile()->value();
-$json['tasks']    = $page->tasks()->value();
-$json['planning'] = $page->planning()->value();
+$json['profile']  = Utils::getRichText($page->profile());
+$json['tasks']    = Utils::getRichText($page->tasks());
+$json['planning'] = Utils::getRichText($page->planning());
 
 $json['seo'] = Utils::getSeoDataFromPage($page);
 

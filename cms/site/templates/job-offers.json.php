@@ -13,9 +13,9 @@ $json['cover'] = Utils::getJsonEncodeImageDataOrNull($page->cover()->toFile());
 $json['headerType'] = $page->headerType()->or('compact')->value();
 $json['overtitle'] = $page->overtitle()->value();
 $json['introTitle'] = $page->introTitle()->value();
-$json['intro'] = $page->intro()->value();
+$json['intro'] = Utils::getRichText($page->intro());
 
-$json['noOffersText'] = $page->noOffersText()->value();
+$json['noOffersText'] = Utils::getRichText($page->noOffersText());
 
 $json['jobOffers'] = array_values(Utils::filterOpenToApplications($page->children()->listed())
     ->map(fn($offer) => Utils::getJobOfferCardData($offer))->data());
