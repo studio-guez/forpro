@@ -59,7 +59,7 @@
 			aria-label="Lire la vidéo"
 			class="absolute inset-0 grid place-items-center cursor-pointer text-white opacity-80 hc:opacity-100"
 		>
-			<IconPlay class="w-24 h-auto" />
+			<IconPlay class="w-24 h-auto hc:drop-shadow-[0_0_2px_var(--color-black)]" />
 		</button>
 	{/if}
 </div>

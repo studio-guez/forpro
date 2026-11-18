@@ -45,7 +45,9 @@
 	}: Props = $props();
 </script>
 
-<div class="relative grid grid-cols-2 xl:grid-cols-3 xl:gap-10 items-start {className}">
+<div
+	class="relative grid grid-cols-2 xl:grid-cols-3 xl:gap-10 items-start hc:grid-cols-1 hc:md:grid-cols-3 hc:gap-8 {className}"
+>
 	{#if decoColor}
 		{#each decoShapes as DecoShape, i (i)}
 			<div class="absolute {decoPositions[i]} hc:hidden" style:color={decoColor}>
@@ -56,7 +58,7 @@
 	{#each elements as element, i (i)}
 		{@const Shape = shapes[i % shapes.length]}
 		<div
-			class="relative aspect-15/13 w-full max-w-90 mx-auto"
+			class="relative aspect-15/13 w-full max-w-90 mx-auto hc:aspect-auto hc:xl:mt-0 hc:max-xl:col-start-auto hc:max-xl:row-start-auto"
 			class:xl:mt-48={i === 1}
 			class:max-xl:col-start-2={i === 0 || i === 2}
 			class:max-xl:row-start-2={i === 1}
@@ -67,7 +69,7 @@
 			</div>
 			<!-- The tilt follows the blob, which high-contrast mode hides; `!` beats the inline transform. -->
 			<div
-				class="absolute inset-0 flex flex-col items-center justify-center text-center px-[5%] hc:transform-none!"
+				class="absolute inset-0 flex flex-col items-center justify-center text-center px-[5%] hc:static hc:transform-none!"
 				style:transform="rotate({rotations[i % rotations.length]}deg)"
 				style:color={textColor}
 			>

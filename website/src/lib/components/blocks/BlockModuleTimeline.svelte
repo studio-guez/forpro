@@ -219,7 +219,9 @@
 						</div>
 						{#if i < steps.length - 1}
 							{@const arrow = arrows[i % arrows.length]}
-							<ArrowStepDown class="-mb-2 h-11 w-auto relative z-1 lg:hidden {colors.arrow}" />
+							<ArrowStepDown
+								class="-mb-2 hc:mb-0 h-11 w-auto relative z-1 lg:hidden {colors.arrow}"
+							/>
 							<arrow.component
 								class="absolute left-[calc(100%+1.125rem)] h-auto -translate-1/2 max-lg:hidden hc:hidden {arrow.class} {colors.arrow}"
 							/>

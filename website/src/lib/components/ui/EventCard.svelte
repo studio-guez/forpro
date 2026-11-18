@@ -59,7 +59,7 @@
 <article class="h-full">
 	<a
 		href={event.url}
-		class="group block relative h-full rounded-2xl overflow-hidden text-white isolate"
+		class="group block relative h-full rounded-2xl overflow-hidden text-white isolate hc:hover:outline-2 hc:hover:-outline-offset-2 hc:hover:outline-current"
 	>
 		{#if event.cover}
 			<Img

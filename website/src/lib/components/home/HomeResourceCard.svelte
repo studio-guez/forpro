@@ -32,7 +32,7 @@
 	<a
 		href={resource.url}
 		aria-describedby={describedBy}
-		class="group relative flex flex-col h-full rounded-3xl overflow-hidden p-3 text-white"
+		class="group relative flex flex-col h-full rounded-3xl overflow-hidden p-3 text-white hc:outline-2 hc:-outline-offset-2 hc:outline-current"
 		style:background-color={background}
 	>
 		<div
