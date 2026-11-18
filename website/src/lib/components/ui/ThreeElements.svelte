@@ -65,8 +65,9 @@
 			<div class="absolute -inset-1/8 object-contain hc:hidden" style:color={blobColor}>
 				<Shape class="w-full h-full" />
 			</div>
+			<!-- The tilt follows the blob, which high-contrast mode hides; `!` beats the inline transform. -->
 			<div
-				class="absolute inset-0 flex flex-col items-center justify-center text-center px-[5%]"
+				class="absolute inset-0 flex flex-col items-center justify-center text-center px-[5%] hc:transform-none!"
 				style:transform="rotate({rotations[i % rotations.length]}deg)"
 				style:color={textColor}
 			>

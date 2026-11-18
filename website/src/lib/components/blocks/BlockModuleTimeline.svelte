@@ -221,7 +221,11 @@
 							{@const arrow = arrows[i % arrows.length]}
 							<ArrowStepDown class="-mb-2 h-11 w-auto relative z-1 lg:hidden {colors.arrow}" />
 							<arrow.component
-								class="absolute left-[calc(100%+1.125rem)] h-auto -translate-1/2 max-lg:hidden {arrow.class} {colors.arrow}"
+								class="absolute left-[calc(100%+1.125rem)] h-auto -translate-1/2 max-lg:hidden hc:hidden {arrow.class} {colors.arrow}"
+							/>
+							<!-- The curved arrows wind around the step shapes; with the shapes hidden, a straight one fits the gap. -->
+							<ArrowStepDown
+								class="absolute left-[calc(100%+1.125rem)] top-1/2 h-8 w-auto -translate-1/2 -rotate-90 hidden hc:lg:block {colors.arrow}"
 							/>
 						{/if}
 					</li>
