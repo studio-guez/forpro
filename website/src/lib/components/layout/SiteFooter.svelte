@@ -7,6 +7,7 @@
 	import FooterShapeYellowMobile from '$lib/components/svg/FooterShapeYellowMobile.svelte';
 	import IconEmail from '$lib/components/svg/IconEmail.svelte';
 	import Img from '$lib/components/ui/Img.svelte';
+	import ContrastToggle from '$lib/components/ui/ContrastToggle.svelte';
 	import { cookieConsent } from '$lib/utils/cookieConsent.svelte';
 	import { socialLabels } from '$lib/utils/socials';
 
@@ -70,9 +71,11 @@
 	<p class="font-bold mb-lh">{title}</p>
 {/snippet}
 
-<footer class="text-body-2 relative isolate overflow-hidden bg-grey-light">
+<footer
+	class="text-body-2 relative isolate overflow-hidden bg-grey-light hc:border-t-2 hc:border-black"
+>
 	<div class="relative w-full max-w-360 mx-auto">
-		<div aria-hidden="true" class="absolute inset-0 -z-10">
+		<div aria-hidden="true" class="absolute inset-0 -z-10 hc:hidden">
 			<FooterShapeYellow class="hidden lg:block absolute top-0 -left-70" />
 			<FooterShapeGreen class="hidden lg:block absolute -bottom-170.5 -right-47" />
 			<FooterShapeGreenMobile class="lg:hidden absolute top-0 left-0" />
@@ -190,6 +193,11 @@
 							Paramètres des cookies
 						</button>
 					</li>
+					<li>
+						<ContrastToggle
+							class="underline decoration-transparent hover:decoration-current transition-colors"
+						/>
+					</li>
 				</ul>
 			</nav>
 
@@ -201,7 +209,7 @@
 				<form
 					onsubmit={onNewsletterSubmit}
 					novalidate
-					class="flex items-center p-1 rounded-full bg-white transition-shadow focus-within:ring-2 focus-within:ring-black"
+					class="flex items-center p-1 rounded-full bg-white transition-shadow focus-within:ring-2 focus-within:ring-black hc:outline-2 hc:-outline-offset-2 hc:outline-black"
 				>
 					<label class="sr-only" for="footer-newsletter-email">
 						{newsletter.submitLabel ?? "S'inscrire à la newsletter"}

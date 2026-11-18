@@ -35,7 +35,9 @@
 		class="group relative flex flex-col h-full rounded-3xl overflow-hidden p-3 text-white"
 		style:background-color={background}
 	>
-		<div class="relative rounded-2xl overflow-hidden aspect-4/3 sm:aspect-16/10 bg-white/10">
+		<div
+			class="relative rounded-2xl overflow-hidden aspect-4/3 sm:aspect-16/10 bg-white/10 hc:bg-transparent"
+		>
 			{#if resource.cover}
 				<Img
 					image={resource.cover}
@@ -64,7 +66,7 @@
 			</span>
 
 			<div
-				class="absolute -bottom-3 -right-3 top-0 flex items-end justify-end pointer-events-none"
+				class="absolute -bottom-3 -right-3 top-0 flex items-end justify-end pointer-events-none hc:hidden"
 				style:color={shapeColor}
 			>
 				<Shape class="w-auto h-1/2" />

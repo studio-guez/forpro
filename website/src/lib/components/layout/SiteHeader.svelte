@@ -120,8 +120,8 @@
 				aria-haspopup="dialog"
 				aria-expanded={searchModalOpen}
 				aria-label="Rechercher"
-				class="group flex items-center p-1 rounded-full transition-colors shrink hover:lg:bg-grey-light focus-visible:ring-2 focus-visible:ring-blue focus:outline-none {searchModalOpen
-					? 'bg-grey-light'
+				class="group flex items-center p-1 rounded-full transition-colors shrink hover:lg:bg-grey-light hc:hover:lg:ring-2 hc:hover:lg:ring-inset hc:hover:lg:ring-black focus-visible:ring-2 focus-visible:ring-blue focus:outline-none {searchModalOpen
+					? 'bg-grey-light hc:ring-2 hc:ring-inset hc:ring-black'
 					: ''}"
 			>
 				<span
@@ -130,7 +130,7 @@
 						? 'w-48 opacity-100 pl-3'
 						: 'w-0 opacity-0 group-hover:w-48 group-hover:opacity-100 group-hover:pl-3'} {searchQuery
 						? 'text-blue'
-						: 'text-blue/50'}"
+						: 'text-blue/50 hc:text-current'}"
 				>
 					{searchQuery || 'Rechercher...'}
 				</span>

@@ -52,7 +52,7 @@
 													href={member.roleLink}
 													target="_blank"
 													rel="noopener noreferrer"
-													class="underline hover:opacity-50 transition-opacity"
+													class="underline hover:opacity-50 hc:hover:opacity-100 hc:hover:decoration-2 transition-opacity"
 												>
 													{member.role}
 												</a>
@@ -67,7 +67,7 @@
 											href={member.linkedin}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="text-label flex items-center gap-2 mt-1 underline hover:opacity-50 transition-opacity"
+											class="text-label flex items-center gap-2 mt-1 underline hover:opacity-50 hc:hover:opacity-100 hc:hover:decoration-2 transition-opacity"
 										>
 											<IconLink class="shrink-0 w-4.5 h-4.5" />
 											LinkedIn

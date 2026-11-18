@@ -5,6 +5,7 @@
 	import IconClose from '$lib/components/svg/IconClose.svelte';
 	import IconPlus from '$lib/components/svg/IconPlus.svelte';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
+	import ContrastToggle from '$lib/components/ui/ContrastToggle.svelte';
 	import { socialIcons, socialLabels } from '$lib/utils/socials';
 
 	interface Props {
@@ -98,7 +99,9 @@
 		{#if header.externalLinks.length > 0}
 			<ul class="flex flex-wrap justify-center gap-3 mb-6">
 				{#each header.externalLinks as link (link)}
-					<li class="leading-none bg-green rounded-full px-3 py-2">
+					<li
+						class="leading-none bg-green rounded-full px-3 py-2 hc:outline-2 hc:-outline-offset-2 hc:outline-black"
+					>
 						<a
 							href={link.url}
 							target="_blank"
@@ -129,5 +132,7 @@
 				{/each}
 			</ul>
 		{/if}
+
+		<ContrastToggle class="text-body-2 font-bold mt-6 first:mt-0" />
 	</div>
 </nav>

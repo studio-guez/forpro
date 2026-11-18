@@ -39,21 +39,28 @@
 
 <section class="px-base" aria-labelledby="page-title">
 	<div
-		class="min-h-69 lg:min-h-138 relative text-white bg-grey-light rounded-3xl overflow-hidden flex"
+		class="min-h-69 lg:min-h-138 relative text-white bg-grey-light hc:bg-black rounded-3xl overflow-hidden flex"
 	>
 		<div
 			class="w-full bg-linear-to-t from-black/20 relative z-1 flex flex-col justify-end p-3 lg:py-6 lg:px-5 xl:px-8"
 		>
 			{#if overtitle}
 				<div>
-					<p class="inline-block text-lg lg:text-3xl font-bold -mb-2">{overtitle}</p>
+					<p
+						class="inline-block text-lg lg:text-3xl font-bold -mb-2 hc:mb-1 hc:bg-black hc:px-2 hc:rounded-lg"
+					>
+						{overtitle}
+					</p>
 					<ArrowOvertitle
 						fill={arrowFill}
-						class="max-lg:hidden inline-block absolute -translate-y-1/2 ml-1 w-32.5 h-16"
+						class="max-lg:hidden hc:hidden inline-block absolute -translate-y-1/2 ml-1 w-32.5 h-16"
 					/>
 				</div>
 			{/if}
-			<h1 id="page-title" class="text-4xl lg:text-8xl font-bold">
+			<h1
+				id="page-title"
+				class="text-4xl lg:text-8xl font-bold hc:self-start hc:bg-black hc:px-3 hc:rounded-xl"
+			>
 				{title}
 			</h1>
 		</div>

@@ -48,7 +48,7 @@
 <div class="relative grid grid-cols-2 xl:grid-cols-3 xl:gap-10 items-start {className}">
 	{#if decoColor}
 		{#each decoShapes as DecoShape, i (i)}
-			<div class="absolute {decoPositions[i]}" style:color={decoColor}>
+			<div class="absolute {decoPositions[i]} hc:hidden" style:color={decoColor}>
 				<DecoShape class="w-full h-auto" />
 			</div>
 		{/each}
@@ -62,7 +62,7 @@
 			class:max-xl:row-start-2={i === 1}
 			class:max-xl:row-start-3={i === 2}
 		>
-			<div class="absolute -inset-1/8 object-contain" style:color={blobColor}>
+			<div class="absolute -inset-1/8 object-contain hc:hidden" style:color={blobColor}>
 				<Shape class="w-full h-full" />
 			</div>
 			<div

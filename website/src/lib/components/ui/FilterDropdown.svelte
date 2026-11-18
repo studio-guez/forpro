@@ -105,7 +105,7 @@
 	<label
 		style:color={optionColor(term)}
 		style:--option-tint="color-mix(in oklab, {optionColor(term)} 12%, transparent)"
-		class="text-label flex items-center justify-between gap-3 py-1 pr-3 cursor-pointer transition-colors hover:bg-(--option-tint) {isChild
+		class="text-label flex items-center justify-between gap-3 py-1 pr-3 cursor-pointer transition-colors hover:bg-(--option-tint) hc:hover:bg-black hc:hover:text-white! {isChild
 			? 'pl-8'
 			: 'pl-3'}"
 	>
@@ -159,9 +159,12 @@
 				type="button"
 				class="text-label w-full text-left px-3 py-2 rounded-t-xl transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current {open
 					? 'md:shadow-lg'
-					: 'rounded-b-xl'} {isActive ? 'bg-(--select-tint)' : open ? 'bg-white' : ''} {!open &&
-				!isActive
-					? 'hover:bg-(--select-tint)'
+					: 'rounded-b-xl'} {isActive
+					? 'bg-(--select-tint) hc:bg-black hc:text-white'
+					: open
+						? 'bg-white'
+						: ''} {!open && !isActive
+					? 'hover:bg-(--select-tint) hc:hover:bg-black hc:hover:text-white'
 					: ''}"
 				aria-expanded={open}
 				aria-controls={open ? panelId : undefined}
@@ -209,7 +212,7 @@
 
 					<button
 						type="button"
-						class="text-label w-full text-left px-3 py-1 transition-colors enabled:hover:bg-(--select-tint) disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+						class="text-label w-full text-left px-3 py-1 transition-colors enabled:hover:bg-(--select-tint) hc:enabled:hover:bg-black hc:enabled:hover:text-white disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
 						disabled={!isActive}
 						aria-label="{clearLabel} : {label}"
 						onclick={clear}

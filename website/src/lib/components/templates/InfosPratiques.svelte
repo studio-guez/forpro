@@ -70,7 +70,12 @@
 
 						<div class="relative flex h-full flex-col justify-between p-5 lg:p-8">
 							{#if page.foodlabOpeningHoursTitle}
-								<h2 id="foodlab-hours-title" class="text-h4">{page.foodlabOpeningHoursTitle}</h2>
+								<h2
+									id="foodlab-hours-title"
+									class="text-h4 hc:self-start hc:bg-black hc:px-3 hc:py-1 hc:rounded-xl"
+								>
+									{page.foodlabOpeningHoursTitle}
+								</h2>
 							{/if}
 							{#if page.foodlabCta}
 								<CtaLink cta={page.foodlabCta} inverted class="self-end mt-15 lg:mt-8" />
@@ -117,7 +122,7 @@
 								/>
 								<span
 									aria-hidden="true"
-									class="{CTA_BASE} {ctaSizeClasses.md} absolute right-4 bottom-4 text-blue border-blue group-hover:bg-blue group-hover:text-white"
+									class="{CTA_BASE} {ctaSizeClasses.md} absolute right-4 bottom-4 text-blue border-blue hc:bg-white group-hover:bg-blue group-hover:text-white"
 								>
 									<span class={CTA_LABEL}>{MAP_LINK_LABEL}</span>
 									<IconArrow class={ctaIconSizeClasses.md} />

@@ -3,6 +3,7 @@
 	import { slide } from 'svelte/transition';
 	import type { Header } from '$lib/interfaces/global';
 	import IconLink from '$lib/components/svg/IconLink.svelte';
+	import ContrastToggle from '$lib/components/ui/ContrastToggle.svelte';
 	import { socialIcons, socialLabels } from '$lib/utils/socials';
 
 	interface Props {
@@ -62,7 +63,9 @@
 		</div>
 	{/each}
 
-	<div class="flex flex-col bg-green rounded-2xl p-6 -my-6">
+	<div
+		class="flex flex-col bg-green rounded-2xl p-6 -my-6 hc:outline-2 hc:-outline-offset-2 hc:outline-black"
+	>
 		{#if header.externalLinksTitle}
 			<p class="text-body-2 font-bold pb-3 mb-6 border-b-2">{header.externalLinksTitle}</p>
 		{/if}
@@ -105,5 +108,9 @@
 				{/each}
 			</ul>
 		{/if}
+
+		<ContrastToggle
+			class="text-body-2 leading-none justify-between mt-6 pt-6 border-t-2 first:mt-0 first:pt-0 first:border-t-0"
+		/>
 	</div>
 </nav>

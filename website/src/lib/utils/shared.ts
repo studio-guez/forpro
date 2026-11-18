@@ -1,7 +1,8 @@
 import type { KeyedTerm, TaxonomyTerm } from '$lib/interfaces/taxonomy';
 
+/** `--hc-ink` is only defined in high-contrast mode, where CMS colours such as `green` turn white. */
 export const termColor = (term: TaxonomyTerm): string =>
-	term.color ? `var(--color-${term.color})` : 'var(--color-teal)';
+	`var(--hc-ink, var(--color-${term.color || 'teal'}))`;
 
 /** Flattens terms from several taxonomies, keyed by `<taxonomy>-<slug>`, in insertion order. */
 export const mergeTerms = (groups: Record<string, TaxonomyTerm[]>): KeyedTerm[] =>

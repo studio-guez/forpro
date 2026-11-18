@@ -35,7 +35,12 @@
 </script>
 
 <section class="lg:px-9" aria-labelledby={titleId}>
-	<div class="px-5 pt-5 pb-6 lg:p-8 rounded-3xl relative overflow-hidden {className}" {style}>
+	<div
+		class="px-5 pt-5 pb-6 lg:p-8 rounded-3xl relative overflow-hidden {className}"
+		class:hc:outline-2={!!background}
+		class:hc:outline-current={!!background}
+		{style}
+	>
 		{#if backgroundImage}
 			<Img
 				image={backgroundImage}
@@ -47,7 +52,9 @@
 		{/if}
 
 		<div class="relative z-1">
-			<div class="lg:max-w-2xl">
+			<div
+				class="lg:max-w-2xl {backgroundImage ? 'hc:w-fit hc:bg-black hc:p-4 hc:rounded-2xl' : ''}"
+			>
 				<h2 id={titleId} class="text-h2">{title}</h2>
 				{#if subtitle}
 					<p class="text-body-1 mt-4">{subtitle}</p>

@@ -26,7 +26,7 @@
 	onsubmit={(event) => event.preventDefault()}
 >
 	<label
-		class="block w-full md:w-96 px-3 py-2 rounded-xl transition-colors focus-within:bg-(--search-tint)"
+		class="block w-full md:w-96 px-3 py-2 rounded-xl transition-colors focus-within:bg-(--search-tint) hc:focus-within:bg-transparent hc:focus-within:outline-2 hc:focus-within:outline-current"
 	>
 		<span class="sr-only">{label}</span>
 		<div class="border-b-2 border-current flex items-center gap-3 pb-1">
@@ -34,7 +34,7 @@
 				type="search"
 				bind:value
 				{placeholder}
-				class="text-label flex-1 min-w-0 p-0 border-0 bg-transparent text-current placeholder-current/50 focus:ring-0 focus:outline-none"
+				class="text-label flex-1 min-w-0 p-0 border-0 bg-transparent text-current placeholder-current/50 hc:placeholder:text-current focus:ring-0 focus:outline-none"
 			/>
 			<IconSearch class="shrink-0 w-5.25 h-5.25 pointer-events-none" />
 		</div>

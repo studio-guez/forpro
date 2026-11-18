@@ -1,3 +1,5 @@
+/* Without this, the `fonts.css` import below would create `base` before Tailwind orders its layers, and `base` could not override `theme` tokens. */
+@layer theme, base, components, utilities;
 @import './lib/assets/fonts.css' layer(base);
 @import 'tailwindcss';
 @plugin "@tailwindcss/forms";
@@ -67,10 +69,55 @@
 	}
 }
 
+/* `data-contrast` is set on `<html>` by `hooks.server.ts`; `auto` defers to the system setting. */
+@custom-variant hc {
+	&:where([data-contrast='high'], [data-contrast='high'] *) {
+		@slot;
+	}
+	@media (prefers-contrast: more) {
+		&:where([data-contrast='auto'], [data-contrast='auto'] *) {
+			@slot;
+		}
+	}
+}
+
 @layer base {
 	:root {
 		/* Sections are capped one by one rather than through `main`, so a block can opt out with `max-w-none` (see `BlockModuleTimeline`). */
 		--content-max: 90rem;
+
+		/*
+		 * Each token goes to the opposite of what it is paired with, not to the closer of black and
+		 * white: `green` and `grey-light` carry dark text, while `purple-pale` and `brown` carry
+		 * white text. Tokens paired both ways only survive in decorative shapes, hidden with `hc:hidden`.
+		 */
+		@variant hc {
+			--hc-ink: var(--color-black);
+
+			--color-blue-pale: var(--color-white);
+			--color-orange-pale: var(--color-white);
+			--color-teal-pale: var(--color-white);
+			--color-beige-light: var(--color-white);
+			--color-grey-light: var(--color-white);
+			--color-green: var(--color-white);
+			--color-yellow: var(--color-white);
+
+			--color-grey-dark: var(--color-black);
+			--color-blue: var(--color-black);
+			--color-blue-light: var(--color-black);
+			--color-orange: var(--color-black);
+			--color-orange-light: var(--color-black);
+			--color-pink: var(--color-black);
+			--color-hotpink: var(--color-black);
+			--color-purple: var(--color-black);
+			--color-purple-light: var(--color-black);
+			--color-purple-pale: var(--color-black);
+			--color-teal: var(--color-black);
+			--color-teal-light: var(--color-black);
+			--color-red: var(--color-black);
+			--color-beige: var(--color-black);
+			--color-brown: var(--color-black);
+		}
 	}
 	main > * {
 		max-width: var(--content-max);
@@ -215,7 +262,7 @@
 			}
 		}
 		a {
-			@apply underline wrap-anywhere hover:opacity-50 transition-opacity;
+			@apply underline wrap-anywhere hover:opacity-50 transition-opacity hc:hover:opacity-100 hc:hover:decoration-2;
 		}
 	}
 }

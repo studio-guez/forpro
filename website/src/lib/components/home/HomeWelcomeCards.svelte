@@ -17,21 +17,25 @@
 			color: 'var(--color-blue)',
 			side: 'left',
 			tilt: -3,
-			inverted: false
+			inverted: false,
+			// In high-contrast mode every card turns black, so this card's outline button takes the inverted look.
+			ctaClass: 'hc:text-white hc:border-white hc:bg-black! hc:hover:bg-white! hc:hover:text-black!'
 		},
 		{
 			background: 'var(--color-blue)',
 			color: 'var(--color-white)',
 			side: 'right',
 			tilt: 2,
-			inverted: true
+			inverted: true,
+			ctaClass: ''
 		},
 		{
 			background: 'var(--color-pink)',
 			color: 'var(--color-white)',
 			side: 'left',
 			tilt: -3,
-			inverted: true
+			inverted: true,
+			ctaClass: ''
 		}
 	] as const;
 </script>
@@ -50,7 +54,10 @@
 			style:z-index={i + 1}
 		>
 			<div
-				class={['card rounded-3xl p-6 lg:p-8', slot.side === 'left' ? 'from-left' : 'from-right']}
+				class={[
+					'card rounded-3xl p-6 lg:p-8 hc:bg-black! hc:text-white! hc:outline-2 hc:outline-current',
+					slot.side === 'left' ? 'from-left' : 'from-right'
+				]}
 				style:--tilt="{slot.tilt}deg"
 				style:background-color={slot.background}
 				style:color={slot.color}
@@ -64,6 +71,7 @@
 							cta={card.cta}
 							color={slot.inverted ? slot.background : slot.color}
 							inverted={slot.inverted}
+							class={slot.ctaClass}
 						/>
 					</div>
 				{/if}

@@ -224,6 +224,12 @@ JSON contract: the two copies drift and only one gets fixed.
   not on a preprod check.
 - Content can contain non-YouTube "video" blocks (e.g. Instagram embeds), so guard any
   YouTube regex match or SSR will 500.
+- `website/` has a high-contrast mode (`<html data-contrast>`, toggled in the burger menu and
+  footer, defaults to `prefers-contrast: more`). It remaps every `--color-*` token to black or
+  white in `src/app.css`, so colours must keep going through those tokens — never a raw hex or
+  rgba. Check new coloured UI with the mode on: fix a black-on-black or white-on-white pair, an
+  alpha colour or a hover fade with the `hc:` variant, and give every new decorative shape
+  `hc:hidden`.
 
 ---
 

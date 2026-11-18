@@ -214,7 +214,9 @@
 	aria-label="Recherche sur le site"
 	class="fixed top-0 left-1/2 mt-4 lg:mt-24 -translate-x-1/2 w-[min(64rem,calc(100vw-1.5rem))] max-h-[calc(100dvh-2rem)] lg:max-h-[calc(100dvh-12rem)] hidden open:flex flex-col overflow-hidden rounded-3xl bg-white p-0 text-blue shadow-2xl backdrop:bg-black/40"
 >
-	<div class="flex items-center gap-x-2 px-5 lg:px-8 py-4 border-b-2 border-grey-light shrink-0">
+	<div
+		class="flex items-center gap-x-2 px-5 lg:px-8 py-4 border-b-2 border-grey-light hc:border-black shrink-0"
+	>
 		<IconSearch class="shrink-0 mr-2" />
 		<input
 			bind:this={input}
@@ -223,7 +225,7 @@
 			type="text"
 			placeholder="Rechercher..."
 			aria-label="Rechercher sur le site"
-			class="text-body-2 font-bold text-blue bg-transparent border-0 grow min-w-0 placeholder:text-blue/50 focus:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue rounded-full"
+			class="text-body-2 font-bold text-blue bg-transparent border-0 grow min-w-0 placeholder:text-blue/50 hc:placeholder:text-current focus:ring-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue rounded-full"
 		/>
 		<button
 			type="button"
@@ -239,7 +241,7 @@
 		<div
 			role="group"
 			aria-label="Filtrer par type de contenu"
-			class="flex flex-wrap gap-2 px-5 lg:px-8 py-3 border-b-2 border-grey-light shrink-0 overflow-x-auto"
+			class="flex flex-wrap gap-2 px-5 lg:px-8 py-3 border-b-2 border-grey-light hc:border-black shrink-0 overflow-x-auto"
 		>
 			{#each TABS as tab (tab.value)}
 				<button
@@ -250,7 +252,7 @@
 					class="text-label font-bold whitespace-nowrap rounded-full border-2 px-4 py-1 transition-colors disabled:opacity-40 disabled:cursor-not-allowed {group ===
 					tab.value
 						? 'bg-blue border-blue text-white'
-						: 'border-grey-light hover:border-blue'}"
+						: 'border-grey-light hc:border-black hover:border-blue'}"
 				>
 					{tab.label}
 					<span class="font-normal">({counts[tab.value]})</span>
@@ -280,13 +282,13 @@
 			<p class="text-label text-grey-dark mb-2">
 				{total} résultat{total > 1 ? 's' : ''}
 			</p>
-			<ul class="flex flex-col divide-y-2 divide-grey-light">
+			<ul class="flex flex-col divide-y-2 divide-grey-light hc:divide-black">
 				{#each results as result (result.id)}
 					<li>
 						<a
 							href={resultUrl(result)}
 							onclick={close}
-							class="flex items-start gap-x-4 py-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue rounded-xl px-2 -mx-2 hover:bg-grey-light/40 transition-colors"
+							class="flex items-start gap-x-4 py-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue rounded-xl px-2 -mx-2 hover:bg-grey-light/40 hc:hover:bg-transparent hc:hover:outline-2 hc:hover:outline-black transition-colors"
 						>
 							{#if result.cover}
 								<Img
@@ -304,14 +306,16 @@
 									class="text-body-2 font-bold underline decoration-transparent group-hover:decoration-current transition-colors"
 								>
 									{#each highlight(result.title) as part, index (index)}
-										{#if part.match}<mark class="bg-green/60 text-blue">{part.text}</mark
+										{#if part.match}<mark class="bg-green/60 text-blue hc:bg-black hc:text-white"
+												>{part.text}</mark
 											>{:else}{part.text}{/if}
 									{/each}
 								</p>
 								{#if result.excerpt}
 									<p class="text-label text-black mt-1">
 										{#each highlight(result.excerpt) as part, index (index)}
-											{#if part.match}<mark class="bg-green/60 text-black">{part.text}</mark
+											{#if part.match}<mark class="bg-green/60 text-black hc:bg-black hc:text-white"
+													>{part.text}</mark
 												>{:else}{part.text}{/if}
 										{/each}
 									</p>
