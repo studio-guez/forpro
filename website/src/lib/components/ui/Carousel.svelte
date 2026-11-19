@@ -84,7 +84,7 @@
 	const circleClass = $derived(
 		inverted
 			? 'bg-white text-(--carousel-color) hover:bg-(--carousel-color) hover:text-white'
-			: 'bg-(--carousel-color) text-white hover:opacity-80'
+			: 'bg-(--carousel-color) text-white hover:opacity-80 hc:hover:opacity-100 hc:hover:outline-2 hc:hover:outline-offset-2 hc:hover:outline-(--carousel-color)'
 	);
 	const dotClass = $derived(inverted ? 'bg-white' : 'bg-(--carousel-color)');
 </script>
@@ -134,8 +134,9 @@
 							onclick={() => goTo(i)}
 							aria-label="Aller à l'élément {i + 1}"
 							aria-current={i === index ? 'true' : undefined}
-							class="w-2.5 h-2.5 rounded-full transition-opacity {dotClass}"
-							class:opacity-30={i !== index}
+							class="w-2.5 h-2.5 rounded-full transition-opacity {dotClass} {i === index
+								? ''
+								: 'opacity-30 hc:opacity-100 hc:bg-transparent hc:border-2 hc:border-current'}"
 						></button>
 					</li>
 				{/each}

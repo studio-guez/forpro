@@ -100,7 +100,7 @@
 			type="button"
 			class="text-label w-full text-left px-3 py-2 rounded-t-xl transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current {open
 				? 'bg-white md:shadow-lg'
-				: 'rounded-b-xl hover:bg-(--select-tint)'}"
+				: 'rounded-b-xl hover:bg-(--select-tint) hc:hover:bg-black hc:hover:text-white'}"
 			aria-expanded={open}
 			aria-controls={open ? panelId : undefined}
 			aria-label={selectedOption ? `${label} : ${selectedLabel}` : label}
@@ -125,7 +125,7 @@
 					<legend class="sr-only">{label}</legend>
 					{#each options as option (option.value)}
 						<label
-							class="text-label flex items-center justify-between gap-3 px-3 py-1 cursor-pointer transition-colors hover:bg-(--select-tint)"
+							class="text-label flex items-center justify-between gap-3 px-3 py-1 cursor-pointer transition-colors hover:bg-(--select-tint) hc:hover:bg-black hc:hover:text-white"
 						>
 							<span class="truncate-x">{option.label}</span>
 							<input
@@ -154,7 +154,7 @@
 				{#if clearable}
 					<button
 						type="button"
-						class="text-label w-full text-left px-3 py-1 transition-colors enabled:hover:bg-(--select-tint) disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+						class="text-label w-full text-left px-3 py-1 transition-colors enabled:hover:bg-(--select-tint) hc:enabled:hover:bg-black hc:enabled:hover:text-white disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
 						disabled={value === ''}
 						aria-label="Effacer : {allLabel}"
 						onclick={() => {

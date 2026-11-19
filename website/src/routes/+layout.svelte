@@ -3,6 +3,7 @@
 	import 'lenis/dist/lenis.css';
 	import { onMount } from 'svelte';
 	import { initSmoothScroll } from '$lib/utils/smoothScroll';
+	import { contrast } from '$lib/utils/contrast.svelte';
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
 	import SiteMarquee from '$lib/components/layout/SiteMarquee.svelte';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
@@ -22,6 +23,7 @@
 	let { data, children }: Props = $props();
 
 	onMount(initSmoothScroll);
+	onMount(contrast.init);
 
 	let bannerDismissed = $derived(data.bannerDismissed);
 	const showBanner = $derived(data.banner.length > 0 && !bannerDismissed);

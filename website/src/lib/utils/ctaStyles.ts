@@ -21,5 +21,5 @@ export const ctaIconSizeClasses: Record<CtaSize, string> = {
 /** Inverted swaps the pill onto a dark surface: white outline, themed text on hover. */
 export const ctaColorClasses = (inverted: boolean): string =>
 	inverted
-		? 'text-white border-white hover:bg-white hover:text-(--color-cta)'
-		: 'text-(--color-cta) border-(--color-cta) hover:bg-(--color-cta) hover:text-white';
+		? 'text-white border-white hc:bg-black hover:bg-white hover:text-(--color-cta)'
+		: 'text-(--color-cta) border-(--color-cta) hc:bg-white hover:bg-(--color-cta) hover:text-white';

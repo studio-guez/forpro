@@ -42,7 +42,7 @@
 							href={partner.link.url}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="text-body-2 flex items-center gap-2 mt-1 underline hover:opacity-50 transition-opacity"
+							class="text-body-2 flex items-center gap-2 mt-1 underline hover:opacity-50 hc:hover:opacity-100 hc:hover:decoration-2 transition-opacity"
 						>
 							<IconLink class="shrink-0 w-4.5 h-4.5" />
 							{partner.link.label}
@@ -73,7 +73,7 @@
 								href={credit.link.url}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="text-body-2 flex items-center gap-2 underline hover:opacity-50 transition-opacity"
+								class="text-body-2 flex items-center gap-2 underline hover:opacity-50 hc:hover:opacity-100 hc:hover:decoration-2 transition-opacity"
 							>
 								<IconLink class="shrink-0 w-4.5 h-4.5" />
 								{credit.link.label}

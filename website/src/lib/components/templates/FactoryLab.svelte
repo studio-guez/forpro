@@ -46,7 +46,7 @@
 							href={badge.url}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="{badgeClass} hover:opacity-50 transition-opacity"
+							class="{badgeClass} hover:opacity-50 hc:hover:opacity-100 hc:hover:underline transition-opacity"
 						>
 							{@render badgeContent(badge)}
 						</a>
@@ -90,7 +90,7 @@
 								href={company.url}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="flex items-center gap-2 hover:opacity-50 transition-opacity"
+								class="flex items-center gap-2 hover:opacity-50 hc:hover:opacity-100 hc:hover:underline transition-opacity"
 							>
 								<IconLink class="shrink-0 w-6 h-6" />
 								{company.title}

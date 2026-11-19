@@ -62,15 +62,17 @@
 		class:pb-9={padded}
 		class:lg:pt-12={padded}
 		class:lg:pb-18={padded}
+		class:hc:outline-2={padded}
+		class:hc:outline-current={padded}
 		{style}
 	>
 		{#if ShapeLeft}
-			<div class={shapeLeftClasses} style:color={shapeColor}>
+			<div class="{shapeLeftClasses} hc:hidden" style:color={shapeColor}>
 				<ShapeLeft class="w-full h-auto" />
 			</div>
 		{/if}
 		{#if ShapeRight}
-			<div class={shapeRightClasses} style:color={shapeColor}>
+			<div class="{shapeRightClasses} hc:hidden" style:color={shapeColor}>
 				<ShapeRight class="w-full h-auto" />
 			</div>
 		{/if}

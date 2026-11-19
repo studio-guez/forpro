@@ -31,7 +31,7 @@
 
 <ListHeader {color} {variant} {count} {nouns} {rule} class={className}>
 	<h2 class="text-h2 lg:h-15 text-(--list-color)">
-		Résultats pour : <span class="opacity-50">{query}</span>
+		Résultats pour : <span class="opacity-50 hc:opacity-100">{query}</span>
 	</h2>
 
 	{#if count === 0}
