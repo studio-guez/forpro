@@ -59,7 +59,7 @@
 <article class="h-full">
 	<a
 		href={event.url}
-		class="group block relative h-full rounded-2xl overflow-hidden text-white isolate"
+		class="group block relative h-full rounded-2xl overflow-hidden text-white isolate hc:hover:outline-2 hc:hover:-outline-offset-2 hc:hover:outline-current"
 	>
 		{#if event.cover}
 			<Img
@@ -69,28 +69,31 @@
 				class="absolute inset-0 -z-1 w-full h-full object-cover transition-all group-hover:scale-110 group-hover:blur-xs"
 			/>
 		{/if}
-		{#if hoverTint}
-			<div
-				class="absolute inset-0 -z-1 opacity-0 transition-opacity group-hover:opacity-30"
-				style:background={hoverTint}
-			></div>
-		{/if}
+		<!-- `!important` beats the inline programme gradient. -->
+		<div
+			class="absolute inset-0 -z-1 opacity-0 transition-opacity group-hover:opacity-30 hc:bg-none! hc:bg-black! hc:group-hover:opacity-100"
+			style:background={hoverTint}
+		></div>
 		<div
 			class="absolute inset-0 -z-1 bg-linear-to-b from-black/15 via-black/0 to-black/30 group-hover:opacity-30 transition-opacity"
 		></div>
 
 		<div class="h-full flex flex-col justify-between gap-8 px-5 lg:px-6 pb-5 lg:pb-6 pt-6 lg:pt-8">
-			<svelte:element this={headingTag} class="text-h4">{event.title}</svelte:element>
+			<svelte:element
+				this={headingTag}
+				class="text-h4 hc:self-start hc:bg-black hc:px-3 hc:py-1 hc:rounded-xl"
+				>{event.title}</svelte:element
+			>
 			<div>
 				{#if event.shortDesc}
 					<div
-						class="prose text-body-2 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity lg:border-b-2 mb-2.5 lg:mb-4 lg:pb-4"
+						class="prose text-body-2 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity lg:border-b-2 mb-2.5 lg:mb-4 lg:pb-4 hc:max-lg:bg-black hc:max-lg:p-3 hc:max-lg:rounded-xl"
 					>
 						{@html event.shortDesc}
 					</div>
 				{/if}
 				<div class="flex items-end justify-between gap-4">
-					<div class="min-w-0">
+					<div class="min-w-0 hc:bg-black hc:p-3 hc:rounded-xl">
 						<TermTags {terms} label="Tags" size="sm" class="mb-1.5" />
 						{#if start}
 							<p class="text-body-2">

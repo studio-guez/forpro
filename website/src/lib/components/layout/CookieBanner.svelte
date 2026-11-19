@@ -36,11 +36,11 @@
 {#if visible}
 	<aside
 		aria-labelledby="cookie-banner-title"
-		class="fixed left-5 z-30 w-[min(36rem,calc(100vw-2.5rem))] overflow-hidden rounded-3xl bg-pink p-6 text-white lg:left-12 {raised
+		class="fixed left-5 z-30 w-[min(36rem,calc(100vw-2.5rem))] overflow-hidden rounded-3xl bg-pink p-6 text-white hc:outline-2 hc:outline-white lg:left-12 {raised
 			? 'bottom-17'
 			: 'bottom-5'}"
 	>
-		<ShapeCookies class="pointer-events-none absolute right-0 bottom-0 text-green" />
+		<ShapeCookies class="pointer-events-none absolute right-0 bottom-0 text-green hc:hidden" />
 
 		<div class="relative flex flex-col gap-4">
 			<h2 id="cookie-banner-title">Ce site utilise des cookies ! 🍪</h2>
@@ -72,7 +72,7 @@
 			{#if privacyPolicyUrl}
 				<a
 					href={privacyPolicyUrl}
-					class="text-label self-start underline underline-offset-4 opacity-80 transition-opacity hover:opacity-100"
+					class="text-label self-start underline underline-offset-4 opacity-80 transition-opacity hover:opacity-100 hc:opacity-100"
 				>
 					Politique de confidentialité
 				</a>

@@ -21,7 +21,7 @@
 					{#if person.email}
 						<a
 							href="mailto:{person.email}"
-							class="mt-4 inline-block underline underline-offset-4 hover:opacity-70 transition"
+							class="mt-4 inline-block underline underline-offset-4 hover:opacity-70 hc:hover:opacity-100 hc:hover:decoration-2 transition"
 						>
 							{person.email}
 						</a>
@@ -30,7 +30,7 @@
 						<p>
 							<a
 								href="tel:{person.phone.replace(/\s+/g, '')}"
-								class="underline underline-offset-4 hover:opacity-70 transition"
+								class="underline underline-offset-4 hover:opacity-70 hc:hover:opacity-100 hc:hover:decoration-2 transition"
 							>
 								{person.phone}
 							</a>

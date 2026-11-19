@@ -67,7 +67,7 @@
 {/snippet}
 <aside
 	aria-label="Annonces"
-	class="group sticky bottom-0 z-20 h-12 bg-green text-black overflow-hidden"
+	class="group sticky bottom-0 z-20 h-12 bg-green text-black hc:border-t-2 hc:border-black overflow-hidden"
 >
 	<button
 		type="button"

@@ -38,7 +38,7 @@
 				/>
 			{/if}
 			<div
-				class="absolute inset-0 opacity-0 transition-opacity group-hover:opacity-30 bg-orange"
+				class="absolute inset-0 opacity-0 transition-opacity group-hover:opacity-30 hc:hidden bg-orange"
 			></div>
 			<div
 				class="lg:hidden absolute inset-0 bg-linear-to-b from-black/15 via-black/0 to-black/30 group-hover:opacity-30 transition-opacity"
@@ -46,7 +46,12 @@
 			<TermTags {terms} label="Tags" size="sm" class="absolute top-5 left-5 lg:top-6 lg:left-6" />
 		</div>
 
-		<div class={['absolute inset-x-0 bottom-0 p-5 text-white lg:static lg:mt-3 lg:p-0', textColor]}>
+		<div
+			class={[
+				'absolute inset-x-0 bottom-0 p-5 text-white lg:static lg:mt-3 lg:p-0 hc:max-lg:bg-black hc:max-lg:rounded-b-2xl',
+				textColor
+			]}
+		>
 			<svelte:element this={headingTag} class="text-h4">{project.title}</svelte:element>
 			{#if project.collectiveName}
 				<p class="text-label mt-1">{project.collectiveName}</p>

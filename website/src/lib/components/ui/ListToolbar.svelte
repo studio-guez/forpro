@@ -83,7 +83,7 @@
 >
 	{#if open}
 		<div
-			class="flex items-center justify-between gap-4 px-5 py-4 border-b-2 border-grey-light shrink-0"
+			class="flex items-center justify-between gap-4 px-5 py-4 border-b-2 border-grey-light hc:border-black shrink-0"
 		>
 			<h2 class="text-body-2 font-bold">{label}</h2>
 			<button
@@ -102,7 +102,7 @@
 			{@render children()}
 		</div>
 
-		<div class="px-5 py-4 border-t-2 border-grey-light shrink-0">
+		<div class="px-5 py-4 border-t-2 border-grey-light hc:border-black shrink-0">
 			<button
 				type="button"
 				style:--color-cta={color}

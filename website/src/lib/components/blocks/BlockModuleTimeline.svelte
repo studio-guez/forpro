@@ -181,7 +181,7 @@
 	<p class="text-h3">{step.title}</p>
 	{#if step.shortDesc}
 		<p
-			class="mt-4 lg:mt-6 font-bold text-body-1 [&_a]:underline [&_a]:transition-opacity [&_a:hover]:opacity-50"
+			class="mt-4 lg:mt-6 font-bold text-body-1 [&_a]:underline [&_a]:transition-opacity [&_a:hover]:opacity-50 hc:[&_a:hover]:opacity-100 hc:[&_a:hover]:decoration-2"
 		>
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -- sanitized by the CMS: `Utils::getTimelineSteps()` only lets `<a>` and `<br>` through -->
 			{@html step.shortDesc}
@@ -210,18 +210,24 @@
 						class="relative flex w-full flex-col items-center sm:max-w-100 lg:grid lg:grid-cols-1 lg:place-items-center lg:max-w-none lg:w-[calc((100%-2.25rem)/2)] lg:shrink-0"
 					>
 						<shape.component
-							class="col-start-1 row-start-1 h-auto max-lg:hidden {shape.class} {colors.shape}"
+							class="col-start-1 row-start-1 h-auto max-lg:hidden hc:hidden {shape.class} {colors.shape}"
 						/>
 						<div
-							class="w-full rounded-2xl px-6 py-4.5 text-center lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:px-3 lg:py-0 {colors.card} {colors.step}"
+							class="w-full rounded-2xl px-6 py-4.5 text-center lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:px-3 lg:py-0 hc:max-lg:outline-2 hc:max-lg:-outline-offset-2 hc:max-lg:outline-black {colors.card} {colors.step}"
 						>
 							{@render stepText(step)}
 						</div>
 						{#if i < steps.length - 1}
 							{@const arrow = arrows[i % arrows.length]}
-							<ArrowStepDown class="-mb-2 h-11 w-auto relative z-1 lg:hidden {colors.arrow}" />
+							<ArrowStepDown
+								class="-mb-2 hc:mb-0 h-11 w-auto relative z-1 lg:hidden {colors.arrow}"
+							/>
 							<arrow.component
-								class="absolute left-[calc(100%+1.125rem)] h-auto -translate-1/2 max-lg:hidden {arrow.class} {colors.arrow}"
+								class="absolute left-[calc(100%+1.125rem)] h-auto -translate-1/2 max-lg:hidden hc:hidden {arrow.class} {colors.arrow}"
+							/>
+							<!-- The curved arrows wind around the step shapes; with the shapes hidden, a straight one fits the gap. -->
+							<ArrowStepDown
+								class="absolute left-[calc(100%+1.125rem)] top-1/2 h-8 w-auto -translate-1/2 -rotate-90 hidden hc:lg:block {colors.arrow}"
 							/>
 						{/if}
 					</li>

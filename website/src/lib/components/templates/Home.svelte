@@ -16,7 +16,7 @@
 {#if page.lottie}
 	<div class="lg:px-9">
 		<div
-			class="md:[--hero-h:calc(100vh-6.75rem)] md:min-h-(--hero-h) flex items-center justify-center rounded-3xl max-lg:px-5"
+			class="md:[--hero-h:calc(100vh-6.75rem)] md:min-h-(--hero-h) flex items-center justify-center rounded-3xl max-lg:px-5 hc:bg-none!"
 			style="background-image: linear-gradient(180deg, rgba(148, 175, 255, 0.20) 0%, rgba(166, 189, 255, 0.00) 100%);"
 		>
 			{#if page.lottieMobile}

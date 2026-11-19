@@ -12,9 +12,10 @@ export const tagSizeClasses: Record<TagSize, string> = {
 
 /**
  * Selected fills the pill with the term colour, unselected keeps it as an outline.
- * `sm` is the card badge: it reads over a cover image, so it is always filled.
+ * `sm` is the card badge: it reads over a cover image, so it is always filled — white in
+ * high-contrast mode, where it sits on a black text panel.
  */
-export const tagColorClasses = (size: TagSize, isSelected: boolean): string =>
-	isSelected || size === 'sm'
-		? 'bg-(--term-color) text-white'
-		: 'bg-transparent text-(--term-color)';
+export const tagColorClasses = (size: TagSize, isSelected: boolean): string => {
+	if (size === 'sm') return 'bg-(--term-color) text-white hc:bg-white hc:text-black';
+	return isSelected ? 'bg-(--term-color) text-white' : 'bg-transparent text-(--term-color)';
+};

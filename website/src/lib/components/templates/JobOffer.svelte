@@ -94,7 +94,7 @@
 						<h2 class="text-h4">Le dossier complet doit être adressé à :</h2>
 						<a
 							href="mailto:{page.applicationEmail}"
-							class="text-body-2 underline underline-offset-4 mt-4 inline-block hover:opacity-70 transition"
+							class="text-body-2 underline underline-offset-4 mt-4 inline-block hover:opacity-70 hc:hover:opacity-100 hc:hover:decoration-2 transition"
 						>
 							{page.applicationEmail}
 						</a>

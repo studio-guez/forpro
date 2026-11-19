@@ -12,7 +12,10 @@
 
 <article class="relative h-full flex flex-col gap-3">
 	<svelte:element this={headingTag} class="text-h4">
-		<a href={mission.url} class="hover:opacity-50 transition after:absolute after:inset-0">
+		<a
+			href={mission.url}
+			class="hover:opacity-50 hc:hover:opacity-100 hc:hover:underline transition after:absolute after:inset-0"
+		>
 			{mission.title}
 		</a>
 	</svelte:element>
