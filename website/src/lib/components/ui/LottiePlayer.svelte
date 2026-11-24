@@ -88,9 +88,6 @@
 			return;
 		}
 
-		// Children mount before the layout that normally initialises it, and the first `src` must already follow the mode.
-		contrast.init();
-
 		let destroyed = false;
 		let instance: DotLottie | null = null;
 
