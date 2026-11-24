@@ -1,0 +1,11 @@
+title:
+  en: High contrast image
+  fr: Image contraste élevé
+
+accept:
+  mime:
+    - image/jpeg
+    - image/png
+    - image/webp
+    - image/gif
+    - image/svg+xml

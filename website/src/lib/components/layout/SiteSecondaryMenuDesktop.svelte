@@ -63,54 +63,56 @@
 		</div>
 	{/each}
 
-	<div
-		class="flex flex-col bg-green rounded-2xl p-6 -my-6 hc:outline-2 hc:-outline-offset-2 hc:outline-black"
-	>
-		{#if header.externalLinksTitle}
-			<p class="text-body-2 font-bold pb-3 mb-6 border-b-2">{header.externalLinksTitle}</p>
-		{/if}
-		{#if header.externalLinks.length > 0}
-			<ul class="flex flex-col gap-y-3 mb-6">
-				{#each header.externalLinks as link (link)}
-					<li class="leading-none">
-						<a
-							href={link.url}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="text-body-2 leading-none flex items-center gap-x-2"
-						>
-							<IconLink class="shrink-0" /> <span class="underline">{link.label}</span>
-						</a>
-					</li>
-				{/each}
-			</ul>
+	<div class="flex flex-col items-center gap-y-6">
+		{#if header.externalLinksTitle || header.externalLinks.length > 0 || header.socialLinks.length > 0}
+			<div
+				class="w-full flex flex-col bg-green rounded-2xl p-6 -mt-6 hc:outline-2 hc:-outline-offset-2 hc:outline-black"
+			>
+				{#if header.externalLinksTitle}
+					<p class="text-body-2 font-bold pb-3 mb-6 border-b-2">{header.externalLinksTitle}</p>
+				{/if}
+				{#if header.externalLinks.length > 0}
+					<ul class="flex flex-col gap-y-3 mb-6">
+						{#each header.externalLinks as link (link)}
+							<li class="leading-none">
+								<a
+									href={link.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="text-body-2 leading-none flex items-center gap-x-2"
+								>
+									<IconLink class="shrink-0" /> <span class="underline">{link.label}</span>
+								</a>
+							</li>
+						{/each}
+					</ul>
+				{/if}
+
+				{#if header.socialLinks.length > 0}
+					<ul class="flex flex-col gap-y-3">
+						{#each header.socialLinks as social, i (`${social.platform}-${i}`)}
+							{@const Icon = socialIcons[social.platform]}
+							<li>
+								<a
+									href={social.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="flex items-center gap-x-2 text-body-2 leading-none hover:text-blue transition-colors"
+								>
+									<span
+										class="flex items-center justify-center h-8 w-8 rounded-full bg-white text-blue shrink-0"
+									>
+										<Icon class="h-6 w-6" />
+									</span>
+									<span>{socialLabels[social.platform]}</span>
+								</a>
+							</li>
+						{/each}
+					</ul>
+				{/if}
+			</div>
 		{/if}
 
-		{#if header.socialLinks.length > 0}
-			<ul class="flex flex-col gap-y-3">
-				{#each header.socialLinks as social, i (`${social.platform}-${i}`)}
-					{@const Icon = socialIcons[social.platform]}
-					<li>
-						<a
-							href={social.url}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="flex items-center gap-x-2 text-body-2 leading-none hover:text-blue transition-colors"
-						>
-							<span
-								class="flex items-center justify-center h-8 w-8 rounded-full bg-white text-blue shrink-0"
-							>
-								<Icon class="h-6 w-6" />
-							</span>
-							<span>{socialLabels[social.platform]}</span>
-						</a>
-					</li>
-				{/each}
-			</ul>
-		{/if}
-
-		<ContrastToggle
-			class="text-body-2 leading-none justify-between mt-6 pt-6 border-t-2 first:mt-0 first:pt-0 first:border-t-0"
-		/>
+		<ContrastToggle class="text-body-2 leading-none" />
 	</div>
 </nav>

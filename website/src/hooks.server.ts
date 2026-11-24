@@ -23,9 +23,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		});
 	}
 
-	const contrastPreference = parseContrastPreference(event.cookies.get(CONTRAST_COOKIE));
+	event.locals.contrast = parseContrastPreference(event.cookies.get(CONTRAST_COOKIE));
 
 	return resolve(event, {
-		transformPageChunk: ({ html }) => html.replace('%forpro.contrast%', contrastPreference)
+		transformPageChunk: ({ html }) => html.replace('%forpro.contrast%', event.locals.contrast)
 	});
 };

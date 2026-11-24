@@ -1,0 +1,12 @@
+label:
+  en: High contrast version
+  fr: Version contraste élevé
+help:
+  en: Shown instead of this image when high-contrast mode is on. Useful for logos, illustrations and diagrams, not for photos.
+  fr: Affichée à la place de cette image en mode contraste élevé. Utile pour les logos, illustrations et schémas, pas pour les photos.
+type: highContrastFiles
+multiple: false
+max: 1
+query: file.siblings.template("high-contrast-image")
+uploads:
+  template: high-contrast-image

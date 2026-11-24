@@ -4,7 +4,7 @@ import type { Global } from '$lib/interfaces/global';
 import { BANNER_DISMISSED_COOKIE } from '$lib/utils/bannerDismissal';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ cookies }) => {
+export const load: LayoutServerLoad = async ({ cookies, locals }) => {
 	const request = new Request(`${CMS_SERVER_BASE_URL}/global.json`, {
 		headers: getHeaders()
 	});
@@ -16,6 +16,7 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
 		footer: global?.footer ?? null,
 		banner: global?.banner ?? [],
 		bannerDismissed: cookies.get(BANNER_DISMISSED_COOKIE) === '1',
+		contrast: locals.contrast,
 		favicon: global?.favicon ?? null,
 		cookies: global?.cookies ?? { text: null, privacyPolicyUrl: null },
 		schemas: global?.schemas ?? []

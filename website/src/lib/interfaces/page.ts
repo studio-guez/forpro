@@ -10,7 +10,11 @@ export interface CmsImage {
 	readonly srcset: string;
 	readonly width: number;
 	readonly height: number;
+	/** Shown instead in high-contrast mode; alt text and focus stay those of this image. */
+	readonly highContrast: CmsImageRendition | null;
 }
+
+export type CmsImageRendition = Pick<CmsImage, 'url' | 'srcset' | 'width' | 'height'>;
 
 export interface Block {
 	readonly id: string;

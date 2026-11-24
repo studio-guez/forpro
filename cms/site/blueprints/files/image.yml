@@ -11,6 +11,7 @@ accept:
     - image/svg+xml
 
 fields:
+  highContrast: fields/highContrast
   alt:
     label:
       en: Alternative text

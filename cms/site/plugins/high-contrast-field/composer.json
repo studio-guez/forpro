@@ -1,0 +1,12 @@
+{
+  "name": "oplus/high-contrast-field",
+  "description": "High-contrast replacement picker for Kirby files, hidden on videos",
+  "type": "kirby-plugin",
+  "version": "1.0.0",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Octoplus Solutions"
+    }
+  ]
+}

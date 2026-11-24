@@ -229,7 +229,10 @@ JSON contract: the two copies drift and only one gets fixed.
   white in `src/app.css`, so colours must keep going through those tokens — never a raw hex or
   rgba. Check new coloured UI with the mode on: fix a black-on-black or white-on-white pair, an
   alpha colour or a hover fade with the `hc:` variant, and give every new decorative shape
-  `hc:hidden`.
+  `hc:hidden`. Editors attach an optional HC version to each image (and Lottie) file through
+  its `highContrast` field (`cms/site/blueprints/fields/highContrast.yml`, emitted as
+  `highContrast` in every image payload); `Img.svelte` swaps it in, so render every visible CMS
+  image through `Img.svelte`, never a raw `<img>`.
 
 ---
 
