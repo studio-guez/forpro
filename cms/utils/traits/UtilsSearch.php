@@ -183,12 +183,18 @@ trait UtilsSearch
             return null;
         }
 
-        return self::getImageData($file, [
-            'focus'       => null,
+        $square = fn(\Kirby\Cms\File $image): array => [
             'width'       => 240,
             'height'      => 240,
-            'url'         => $file->crop(240, 240)->url(),
-            'srcset'      => $file->crop(240, 240)->url() . ' 240w, ' . $file->crop(480, 480)->url() . ' 480w',
+            'url'         => $image->crop(240, 240)->url(),
+            'srcset'      => $image->crop(240, 240)->url() . ' 240w, ' . $image->crop(480, 480)->url() . ' 480w',
+        ];
+        $highContrast = self::getHighContrastFile($file);
+
+        return self::getImageData($file, [
+            'focus'        => null,
+            ...$square($file),
+            'highContrast' => $highContrast ? $square($highContrast) : null,
         ]);
     }
 }

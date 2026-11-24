@@ -13,6 +13,7 @@ $lottieData = fn(?\Kirby\Cms\File $lottie, ?\Kirby\Cms\File $poster) => $lottie 
     ...Utils::getJsonEncodeDocumentDataOrNull($lottie),
     'alt'    => $lottie->alt()->value(),
     'poster' => Utils::getJsonEncodeImageDataOrNull($poster),
+    'highContrast' => Utils::getJsonEncodeDocumentDataOrNull(Utils::getHighContrastFile($lottie)),
 ] : null;
 $poster = $page->lottiePoster()->toFile();
 $json['lottie']       = $lottieData($page->lottie()->toFile(), $poster);

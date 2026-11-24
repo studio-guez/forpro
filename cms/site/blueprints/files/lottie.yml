@@ -9,6 +9,17 @@ accept:
     - lottie
 
 fields:
+  highContrast:
+    extends: fields/highContrast
+    label:
+      en: High contrast animation
+      fr: Animation contraste élevé
+    help:
+      en: Played instead of this animation when high-contrast mode is on.
+      fr: Jouée à la place de cette animation en mode contraste élevé.
+    query: file.siblings.template("high-contrast-animation")
+    uploads:
+      template: high-contrast-animation
   alt:
     label:
       en: Alternative text

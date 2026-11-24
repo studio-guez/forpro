@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import type { DotLottie } from '@lottiefiles/dotlottie-web';
 	import type { CmsDocument, CmsImage } from '$lib/interfaces/page';
 	import Img from '$lib/components/ui/Img.svelte';
+	import { contrast } from '$lib/utils/contrast.svelte';
 
 	interface Props {
-		/** A `.json` or `.lottie` export, served as-is by the CMS. */
-		file: CmsDocument;
+		/** A `.json` or `.lottie` export, served as-is by the CMS, with its optional high-contrast replacement. */
+		file: CmsDocument & { readonly highContrast?: CmsDocument | null };
 		/**
 		 * Still image shown in place of the canvas when the animation cannot play: no
 		 * WebAssembly (Safari Lockdown Mode, locked-down browsers), or the runtime or the
@@ -33,6 +35,17 @@
 	let canvas: HTMLCanvasElement | undefined = $state();
 	let ratio: number | null = $state(null);
 	let posterWanted = $state(false);
+	let player: DotLottie | null = $state.raw(null);
+	let playingSrc: string | null = null;
+
+	const src = $derived(contrast.active && file.highContrast ? file.highContrast.url : file.url);
+
+	// Follows the high-contrast toggle without remounting: `load()` swaps the animation on the same canvas.
+	$effect(() => {
+		if (!player || src === playingSrc) return;
+		playingSrc = src;
+		player.load({ src, loop, autoplay: true, renderConfig: { autoResize: true } });
+	});
 
 	// The poster keeps the box at the animation's proportions so the surrounding layout does not jump.
 	const showPoster = $derived(posterWanted && poster !== null);
@@ -51,8 +64,10 @@
 			return;
 		}
 
+		// Children mount before the layout that normally initialises it, and the first `src` must already follow the mode.
+		contrast.init();
+
 		let destroyed = false;
-		let player: { destroy(): void } | null = null;
 
 		void Promise.all([
 			import('@lottiefiles/dotlottie-web'),
@@ -62,9 +77,10 @@
 			.then(([{ DotLottie }, { default: wasmUrl }]) => {
 				if (destroyed || !canvas) return;
 				DotLottie.setWasmUrl(wasmUrl);
+				playingSrc = src;
 				const dotLottie = new DotLottie({
 					canvas,
-					src: file.url,
+					src,
 					loop,
 					autoplay: true,
 					renderConfig: { autoResize: true }
@@ -87,6 +103,7 @@
 		return () => {
 			destroyed = true;
 			player?.destroy();
+			player = null;
 		};
 	});
 </script>

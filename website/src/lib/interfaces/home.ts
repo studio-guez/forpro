@@ -25,6 +25,8 @@ export interface HomeLottie extends CmsDocument {
 	readonly alt: string | null;
 	/** Still image shown when the animation cannot be played; null until the editor uploads one. */
 	readonly poster: CmsImage | null;
+	/** Played instead in high-contrast mode; null when the editor has not provided one. */
+	readonly highContrast: CmsDocument | null;
 }
 
 export interface HomePage {

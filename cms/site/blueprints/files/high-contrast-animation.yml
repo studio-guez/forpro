@@ -1,0 +1,9 @@
+title:
+  en: High contrast animation
+  fr: Animation contraste élevé
+
+# A `.lottie` is a zip archive, so a mime rule would let any archive through.
+accept:
+  extension:
+    - json
+    - lottie

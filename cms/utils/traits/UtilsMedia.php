@@ -45,14 +45,36 @@ trait UtilsMedia
         ];
     }
 
-    static function getJsonEncodeImageData(\Kirby\Cms\File $file): array
+    /**
+     * Sizing and urls of an image payload, shared with its high-contrast replacement.
+     */
+    private static function getImageRendition(\Kirby\Cms\File $file): array
     {
-        return self::getImageData($file, [
+        return [
             'width'         => $file->width(),
             'height'        => $file->height(),
             'url'           => $file->resize(1920)->url(),
             'srcset'        => $file->srcset('default'),
+        ];
+    }
+
+    static function getJsonEncodeImageData(\Kirby\Cms\File $file): array
+    {
+        $highContrast = self::getHighContrastFile($file);
+
+        return self::getImageData($file, [
+            ...self::getImageRendition($file),
+            'highContrast'  => $highContrast ? self::getImageRendition($highContrast) : null,
         ]);
+    }
+
+    /**
+     * Replacement shown in the frontend's high-contrast mode, picked on the file's own Panel
+     * page (`fields/highContrast`). Its alt text and focus stay those of the original.
+     */
+    static function getHighContrastFile(\Kirby\Cms\File $file): ?\Kirby\Cms\File
+    {
+        return $file->highContrast()->toFile();
     }
 
     /**
