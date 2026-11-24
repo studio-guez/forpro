@@ -14,7 +14,14 @@ export type ContrastPreference = 'high' | 'normal' | 'auto';
 export const parseContrastPreference = (value: string | null | undefined): ContrastPreference =>
 	value === 'high' || value === 'normal' ? value : 'auto';
 
-let preference = $state<ContrastPreference>('auto');
+/** The `<source media>` that matches exactly when the `hc:` variant of `app.css` applies. */
+export const highContrastMedia = (preference: ContrastPreference): string =>
+	preference === 'high' ? 'all' : preference === 'normal' ? 'not all' : SYSTEM_QUERY;
+
+// Read from the server-rendered attribute at load, so hydration already sees the server's value.
+let preference = $state<ContrastPreference>(
+	browser ? parseContrastPreference(document.documentElement.dataset.contrast) : 'auto'
+);
 let systemPrefersMore = $state(false);
 let initialized = false;
 
@@ -23,11 +30,14 @@ export const contrast = {
 	get active(): boolean {
 		return preference === 'high' || (preference === 'auto' && systemPrefersMore);
 	},
-	/** Reads the server-rendered preference and tracks the system setting. Call once, on mount. */
+	/** The visitor's explicit choice, or `auto` to follow the system setting. */
+	get preference(): ContrastPreference {
+		return preference;
+	},
+	/** Tracks the system setting. Call once, on mount. */
 	init(): (() => void) | undefined {
 		if (!browser || initialized) return;
 		initialized = true;
-		preference = parseContrastPreference(document.documentElement.dataset.contrast);
 		const query = window.matchMedia(SYSTEM_QUERY);
 		systemPrefersMore = query.matches;
 		const onChange = (event: MediaQueryListEvent) => (systemPrefersMore = event.matches);
