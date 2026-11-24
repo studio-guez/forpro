@@ -36,15 +36,38 @@
 	let ratio: number | null = $state(null);
 	let posterWanted = $state(false);
 	let player: DotLottie | null = $state.raw(null);
-	let playingSrc: string | null = null;
 
 	const src = $derived(contrast.active && file.highContrast ? file.highContrast.url : file.url);
 
+	const ZIP_SIGNATURE = [0x50, 0x4b, 0x03, 0x04];
+
+	// Decodes like the library's own fetch: a `.lottie` is a zip archive, anything else is Lottie JSON.
+	async function fetchAnimation(url: string, signal: AbortSignal): Promise<string | ArrayBuffer> {
+		const response = await fetch(url, { signal });
+		if (!response.ok) throw new Error(`${response.status} ${response.statusText}: ${url}`);
+		const data = await response.arrayBuffer();
+		const head = new Uint8Array(data.slice(0, ZIP_SIGNATURE.length));
+		return ZIP_SIGNATURE.every((byte, i) => head[i] === byte)
+			? data
+			: new TextDecoder().decode(data);
+	}
+
 	// Follows the high-contrast toggle without remounting: `load()` swaps the animation on the same canvas.
+	// The file is fetched here rather than through `load({ src })`, which never cancels an earlier fetch:
+	// aborting on change keeps an older, slower file from landing after the newer one.
 	$effect(() => {
-		if (!player || src === playingSrc) return;
-		playingSrc = src;
-		player.load({ src, loop, autoplay: true, renderConfig: { autoResize: true } });
+		const target = player;
+		if (!target) return;
+		const current = src;
+		const controller = new AbortController();
+		void fetchAnimation(current, controller.signal)
+			.then((data) => {
+				if (!controller.signal.aborted) target.load({ data, loop, autoplay: true });
+			})
+			.catch(() => {
+				if (!controller.signal.aborted) usePoster();
+			});
+		return () => controller.abort();
 	});
 
 	// The poster keeps the box at the animation's proportions so the surrounding layout does not jump.
@@ -78,16 +101,10 @@
 			.then(([{ DotLottie }, { default: wasmUrl }]) => {
 				if (destroyed || !canvas) return;
 				DotLottie.setWasmUrl(wasmUrl);
-				playingSrc = src;
-				const dotLottie = new DotLottie({
-					canvas,
-					src,
-					loop,
-					autoplay: true,
-					renderConfig: { autoResize: true }
-				});
+				// No `src`: the effect above fetches every file, the first one included.
+				const dotLottie = new DotLottie({ canvas, renderConfig: { autoResize: true } });
 				instance = dotLottie;
-				// `load()` is a no-op until the WASM core exists, so the effect only swaps sources once it does.
+				// `load()` is a no-op until the WASM core exists, so the effect only loads files once it does.
 				dotLottie.addEventListener('ready', () => (player = dotLottie));
 				dotLottie.addEventListener('load', () => {
 					const { width, height } = dotLottie.animationSize();
