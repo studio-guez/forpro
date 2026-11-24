@@ -68,6 +68,7 @@
 		contrast.init();
 
 		let destroyed = false;
+		let instance: DotLottie | null = null;
 
 		void Promise.all([
 			import('@lottiefiles/dotlottie-web'),
@@ -85,6 +86,9 @@
 					autoplay: true,
 					renderConfig: { autoResize: true }
 				});
+				instance = dotLottie;
+				// `load()` is a no-op until the WASM core exists, so the effect only swaps sources once it does.
+				dotLottie.addEventListener('ready', () => (player = dotLottie));
 				dotLottie.addEventListener('load', () => {
 					const { width, height } = dotLottie.animationSize();
 					if (width > 0 && height > 0) ratio = width / height;
@@ -94,7 +98,6 @@
 					if (destroyed) return;
 					usePoster();
 				});
-				player = dotLottie;
 			})
 			.catch(() => {
 				if (!destroyed) usePoster();
@@ -102,7 +105,7 @@
 
 		return () => {
 			destroyed = true;
-			player?.destroy();
+			instance?.destroy();
 			player = null;
 		};
 	});
