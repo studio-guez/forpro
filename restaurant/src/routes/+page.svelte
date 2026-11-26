@@ -240,7 +240,7 @@
 		</a>
 
 		<div
-			class="absolute -bottom-10 grid h-[70lvh] w-[90vw] grid-rows-[80%_20%] justify-center rounded-2xl py-5 lg:hidden"
+			class="absolute -bottom-10 grid h-[70lvh] w-[90vw] grid-rows-[minmax(0,1fr)_minmax(20%,auto)] justify-center rounded-2xl py-5 lg:hidden"
 			style:background-image="url({data.page.hero.pictureURL3})"
 			style:background-position="center"
 			style:background-size="cover"
@@ -660,7 +660,10 @@
 		display: flex;
 		background: rgba(0, 0, 0, .85);
 		z-index: 100;
+		overflow-y: auto;
+		/* Fallback for browsers without the `safe` keyword (Safari < 17.6) */
 		justify-content: center;
+		justify-content: safe center;
 		align-items: center;
 		flex-direction: column;
 		gap: 2rem;
