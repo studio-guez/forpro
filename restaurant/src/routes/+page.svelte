@@ -115,7 +115,6 @@
 		{#each specialMenus as menu (menu.slug)}
 			<a
 							href={resolve('/menus/[slug].pdf', { slug: menu.slug })}
-							type="button"
 							class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 							target="_blank"
 			>
@@ -205,7 +204,6 @@
 							{#each homeMenus as menu (menu.slug)}
 								<a
 									href={resolve('/menus/[slug].pdf', { slug: menu.slug })}
-									type="button"
 									class="whitespace-nowrap rounded-full bg-primary px-6 py-1 text-center text-sm font-semibold text-secondary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 									target="_blank"
 								>
@@ -269,7 +267,6 @@
 				{#each homeMenus as menu (menu.slug)}
 					<a
 						href={resolve('/menus/[slug].pdf', { slug: menu.slug })}
-						type="button"
 						class="h-min rounded-full bg-primary px-6 py-1 text-center text-sm font-semibold text-secondary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 						target="_blank"
 					>
