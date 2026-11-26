@@ -2,32 +2,35 @@
 	import Menu from '$lib/components/Menu.svelte';
 
 	import {linkTreeIsOpen, menuIsOpen, resaButtonIsHidden} from '../store';
-	import {onMount, tick} from "svelte";
+	import {onMount} from "svelte";
 	import {variables} from '$lib/utils/constants';
+	import {resolve} from '$app/paths';
+	import type {SpecialMenu} from '$lib/interfaces/specialMenu';
 
 	export let data;
+
+	let heroMenusButton: HTMLButtonElement;
+
+	$: specialMenus = (data.page.specialMenus ?? []) as SpecialMenu[];
+	$: homeMenus = specialMenus.filter((menu) => menu.showOnHome);
+	$: hasBannerInfo = data.page.banner_info && data.page.banner_info.length > 0;
 
 	const handleMenuClick = () => {
 		$menuIsOpen = !$menuIsOpen;
 	};
 
 	onMount(() => {
-		tick().then(() => {
-			const resaButton = document.querySelector('.s-button-resa')
-
-			const observateur = new IntersectionObserver(entries => {
-				entries.forEach(value => {
-					$resaButtonIsHidden = !value.isIntersecting
-				})
-			})
-
-			if(resaButton) observateur.observe(resaButton)
-
+		const observer = new IntersectionObserver(([entry]) => {
+			$resaButtonIsHidden = !entry.isIntersecting
 		})
+
+		observer.observe(heroMenusButton)
+
+		return () => observer.disconnect()
 	})
 </script>
 
-{#if data.page.banner_info && data.page.banner_info.length > 0}
+{#if hasBannerInfo}
   <div class="app-page__banner-info bg-primary text-white">
     <div class="app-page__banner-info__wrap">
       <div class="app-page__banner-info__wrap__item">
@@ -109,6 +112,17 @@
 				 on:click={() => linkTreeIsOpen.set(false)}
 				 on:keydown={(e) => { if (e.key === 'Escape' || e.key === 'Enter') linkTreeIsOpen.set(false) }}
 		></div>
+		{#each specialMenus as menu (menu.slug)}
+			<a
+							href={resolve('/menus/[slug].pdf', { slug: menu.slug })}
+							type="button"
+							class="bottom-5 left-5 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+							target="_blank"
+			>
+				{menu.title}
+			</a>
+		{/each}
+
 		<a
 						href="/menu_foodlab.pdf"
 						type="button"
@@ -180,20 +194,36 @@
 			</div>
 
 			<div
-				class="s-button-resa relative col-span-7 -mt-20 hidden aspect-video w-full rounded-2xl lg:block"
+				class="relative col-span-7 -mt-20 hidden aspect-video w-full rounded-2xl lg:block"
 				style:background-image="url({data.page.hero.pictureURL3})"
 				style:background-position="center"
 				style:background-size="cover"
 			>
-				<button
-                on:click={() => linkTreeIsOpen.set(true)}
-                type="button"
-                class="absolute -top-3 right-10 rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                class:fixed-toggle-menus="{$resaButtonIsHidden}"
-                class:content-with-fixed-banner="{data.page.banner_info && data.page.banner_info.length > 0}"
-				>
-					Cartes & Plats du jour
-				</button>
+				<div class="absolute -top-3 right-10">
+					{#if homeMenus.length > 0}
+						<div class="absolute bottom-full right-0 mb-2 flex min-w-full flex-col gap-2">
+							{#each homeMenus as menu (menu.slug)}
+								<a
+									href={resolve('/menus/[slug].pdf', { slug: menu.slug })}
+									type="button"
+									class="whitespace-nowrap rounded-full bg-primary px-6 py-1 text-center text-sm font-semibold text-secondary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+									target="_blank"
+								>
+									{menu.title}
+								</a>
+							{/each}
+						</div>
+					{/if}
+
+					<button
+						bind:this={heroMenusButton}
+						on:click={() => linkTreeIsOpen.set(true)}
+						type="button"
+						class="rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					>
+						Cartes & Plats du jour
+					</button>
+				</div>
 			</div>
 		</div>
 
@@ -224,7 +254,7 @@
 					alt="overlay forpro"
 				/>
 			</div>
-			<div class="flex lg:space-y-2 flex-col lg:justify-end justify-start">
+			<div class="flex flex-col justify-start gap-2">
 				{#if data.page.hero.btn1.text}
 				<a
 					href={data.page.hero.btn1.link}
@@ -236,19 +266,30 @@
 				</a>
 					{/if}
 
-				<button
-								on:click={() => linkTreeIsOpen.set(true)}
-								type="button"
-								class="block -top-3 right-10 text-center rounded-full bg-secondary px-6 py-1 text-sm font-semibold text-primary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                class:fixed-toggle-menus="{$resaButtonIsHidden}"
-                class:content-with-fixed-banner="{data.page.banner_info && data.page.banner_info.length > 0}"
-				>
-					Cartes & Plats du jour
-				</button>
+				{#each homeMenus as menu (menu.slug)}
+					<a
+						href={resolve('/menus/[slug].pdf', { slug: menu.slug })}
+						type="button"
+						class="h-min rounded-full bg-primary px-6 py-1 text-center text-sm font-semibold text-secondary shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+						target="_blank"
+					>
+						{menu.title}
+					</a>
+				{/each}
 			</div>
 		</div>
 	</div>
 </section>
+
+<button
+	on:click={() => linkTreeIsOpen.set(true)}
+	type="button"
+	class="fixed-toggle-menus rounded-full bg-secondary px-6 py-1 text-center text-sm font-semibold text-primary hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+	class:lg:hidden={!$resaButtonIsHidden}
+	class:content-with-fixed-banner={hasBannerInfo}
+>
+	Cartes & Plats du jour
+</button>
 
 <section id="lefood" class="relative mt-24 w-full lg:mt-20">
 	<img class="absolute -left-10 -top-10 z-10 lg:-left-10 lg:-top-10 lg:w-3/5" src="/bg_2_1.svg" alt="" />
@@ -630,12 +671,9 @@
 	.fixed-toggle-menus {
 		position: fixed;
 		bottom: 1rem;
-		top: auto;
 		left: 50%;
-		right: auto;
 		transform: translate(-50%, 0);
 		z-index: 50;
-		height: auto;
 		box-shadow: 0 10px 10px 0 rgba(0, 0, 0, .25);
 		width: calc(100% - 4rem);
 

@@ -1,9 +1,11 @@
 import { CMS_SERVER_BASE_URL, toInternalUrl } from './cms';
 import { PUBLIC_CMS_BASE_URL } from '$env/static/public';
+import type { SpecialMenu } from '$lib/interfaces/specialMenu';
 
 type RestaurantPage = {
 	lab?: { btn?: { link?: string } };
 	univers?: { popupMenuUrl?: string };
+	specialMenus?: SpecialMenu[];
 };
 
 const MEDIA_URL_PREFIX = `${PUBLIC_CMS_BASE_URL}/api/restaurant/media/`;
