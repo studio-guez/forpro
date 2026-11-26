@@ -285,6 +285,7 @@
 	on:click={() => linkTreeIsOpen.set(true)}
 	type="button"
 	class="fixed-toggle-menus rounded-full bg-secondary px-6 py-1 text-center text-sm font-semibold text-primary hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+	class:hidden={$menuIsOpen}
 	class:lg:hidden={!$resaButtonIsHidden}
 	class:content-with-fixed-banner={hasBannerInfo}
 >
