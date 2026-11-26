@@ -20,8 +20,8 @@
 	};
 
 	onMount(() => {
-		const observer = new IntersectionObserver(([entry]) => {
-			$resaButtonIsHidden = !entry.isIntersecting
+		const observer = new IntersectionObserver((entries) => {
+			$resaButtonIsHidden = !entries[entries.length - 1].isIntersecting
 		})
 
 		observer.observe(heroMenusButton)
