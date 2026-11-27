@@ -13,6 +13,7 @@ use Kirby\Filesystem\F;
 use Kirby\Filesystem\Mime;
 use Kirby\Form\Form;
 use Kirby\Http\Response;
+use Kirby\Toolkit\Str;
 
 /**
  * Content of the FoodLab restaurant website.
@@ -730,6 +731,8 @@ class Restaurant
             "btn2" => static::button($data, "btnfooter2"),
         ];
 
+        $json["specialMenus"] = static::specialMenus($data);
+
         return $json;
     }
 
@@ -784,11 +787,55 @@ class Restaurant
         return [
             "link" => static::link($button["link"] ?? ""),
             "text" => $button["linktext"] ?? "",
-            "target" => filter_var(
-                $button["target"] ?? false,
-                FILTER_VALIDATE_BOOLEAN
-            ),
+            "target" => static::bool($button["target"] ?? false),
         ];
+    }
+
+    /**
+     * Active special menus, each with a slug unique within the list: the
+     * restaurant frontend serves a menu's PDF under `/menus/<slug>.pdf`.
+     */
+    private static function specialMenus(array $data): array
+    {
+        $menus = [];
+        $slugs = [];
+
+        foreach (static::rows($data, "specialmenus") as $row) {
+            $title = trim(static::value($row, "title"));
+            $pdf = static::value($row, "pdf");
+
+            if (
+                static::bool($row["active"] ?? false) === false ||
+                $title === "" ||
+                $pdf === ""
+            ) {
+                continue;
+            }
+
+            $base = Str::slug($title) ?: "menu";
+            $slug = $base;
+            $index = 2;
+
+            while (in_array($slug, $slugs, true) === true) {
+                $slug = $base . "-" . $index++;
+            }
+
+            $slugs[] = $slug;
+
+            $menus[] = [
+                "title" => $title,
+                "slug" => $slug,
+                "url" => static::mediaUrl($pdf),
+                "showOnHome" => static::bool($row["showonhome"] ?? false),
+            ];
+        }
+
+        return $menus;
+    }
+
+    private static function bool(mixed $value): bool
+    {
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
     /**

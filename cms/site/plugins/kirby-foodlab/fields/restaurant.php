@@ -306,4 +306,41 @@ return [
         "required" => true,
         "help" => 'Bouton "Carte du PopUp" du site, servi sous /menu_popup_cafe.pdf',
     ] + $pdf,
+
+    "line8" => ["type" => "line"],
+
+    "specialMenusHeadline" => [
+        "label" => "Menus spéciaux",
+        "type" => "headline",
+    ],
+
+    "specialMenus" => [
+        "label" => "Menus spéciaux",
+        "type" => "structure",
+        "help" => 'Toujours listés dans "Cartes & Plats du jour", servis sous /menus/titre-du-menu.pdf',
+        "columns" => [
+            "title" => true,
+            "pdf" => true,
+            "showOnHome" => true,
+            "active" => true,
+        ],
+        "fields" => [
+            "title" => [
+                "label" => "Titre",
+                "type" => "text",
+                "required" => true,
+            ],
+            "pdf" => ["label" => "PDF", "required" => true] + $pdf,
+            "showOnHome" => [
+                "label" => "Page d'accueil",
+                "type" => "toggle",
+                "text" => "Afficher aussi un bouton sur la page d'accueil",
+            ],
+            "active" => [
+                "label" => "Actif",
+                "type" => "toggle",
+                "default" => true,
+            ],
+        ],
+    ],
 ];
